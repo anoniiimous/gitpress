@@ -18,7 +18,23 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         if (root) {
 
-            if (root === "activity") {
+            if (root === "comments") {
+                resolve(route);
+            } else if (root === "post") {
+                resolve(route);
+            } else if (root === "media") {
+                resolve(route);
+            } else if (root === "pages") {
+                resolve(route);
+            } else if (root === "appearance") {
+                resolve(route);
+            } else if (root === "plugins") {
+                resolve(route);
+            } else if (root === "users") {
+                resolve(route);
+            } else if (root === "tools") {
+                resolve(route);
+            } else if (root === "settings") {
                 resolve(route);
             } else {
                 resolve(route);
