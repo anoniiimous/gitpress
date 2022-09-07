@@ -53,7 +53,7 @@ function init() {
         firebase.initializeApp(auth.config);
         const load = function(e) {
             const onAuthStateChanged = function(user) {
-                auth.account.change(user).then(authChange);
+                auth.change(user).then(authChange);
             }
             firebase.auth().onAuthStateChanged(onAuthStateChanged);
         };
