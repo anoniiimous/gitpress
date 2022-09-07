@@ -1,7 +1,14 @@
 <html>
     <head>
-        <title>Pages &#8226;&#160;uiOS</title>
+        <title>GitPress</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+        <link href="index.css" rel="stylesheet">
+        <link href="cdn/css/gg.css" rel="stylesheet">
+        <script src="cdn/js/mvc.js"></script>
+        <script src="cdn/js/on.js"></script>
+        <script src="cdn/js/router.js"></script>
+        <script src="cdn/js/vanilla.js"></script>
+        <script src="index.js"></script>
         <script>
             var domains = window.location.host.split('.');
             window.global = {
@@ -11,176 +18,120 @@
                     tld: domains[domains.length - 1]
                 }
             }
-            function Scripts(links) {
-                var f = 0;
-                do {
-                    var l = links[f];
-                    if (l) {
-                        var link = ``;
-                        var script = document.createElement("script");
-                        script.type = "text/javascript";
-                        if (l.link) {
-                            link += (link.includes('https:') ? `` : (link.charAt(0) !== "." && window.location.protocol === "file:" ? `.` : ``));
-                            link += l.link;
-                        } else {
-                            link += (link.includes('https:') ? `` : (link.charAt(0) !== "." && window.location.protocol === "file:" ? `.` : ``));
-                            link += l.cdn;
-                        }
-                        script.src = link;
-                        l && l.async ? script.async = true : null;
-                        document.head.appendChild(script);
-                    }
-                    f++;
-                } while (f < links.length);
-            }
-            function Styles(links) {
-                var f = 0;
-                do {
-                    var l = links[f].link;
-                    var cdn = links[f].link;
-                    var sync = links[f].async;
-                    var link = ``;
-                    link += (l.includes('https:') ? `` : (l.charAt(0) !== "." && window.location.protocol === "file:" ? `.` : ``));
-                    link += links[f].link;
-                    var sync = links[f].sync ? links[f].sync : ``;
-                    var script = ``;
-                    if (link.includes('.css')) {
-                        script = `<link rel="stylesheet" href="` + link + `" ` + sync + `>`;
-                    }
-                    if (link.includes('.js')) {
-                        script = `<script src="` + link + `" ` + sync + `>` + atob('PC9zY3JpcHQ+');
-                    }
-                    document.head.insertAdjacentHTML('beforeend', script);
-                    f++;
-                } while (f < links.length);
-            }
+            const base = document.createElement("base");
+            base.href = window.location.protocol + "//" + (global.domains.subdomain ? global.domains.subdomain + "." : "") + global.domains.domain + "." + global.domains.tld + (global.domains.domain === "github" ? "/gitpress" : "") + "/";
+            document.head.appendChild(base);
         </script>
     </head>
     <body class="-dark-background-color-1f background-color-fff" data-theme="system">
         <boot id="boot"></boot>
-        <header class="background-color-1d2327 height-36px position-fixed width-100pct z-index-5"></header>
-        <nav class="background-color-1d2327 color-fff font-size-14px height-100pct line-height-36px position-fixed width-160px">
-            <section class="margin-top-36px">
-                <card>
-                    <column>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg"></n>
-                                </ico>
-                                <text>Dashboard</text>
-                            </row>
-                        </box>
-                    </column>
-                </card>
-                <card>
-                    <column>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-file-add"></n>
-                                </ico>
-                                <text>Posts</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-music"></n>
-                                </ico>
-                                <text>Media</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-file-document"></n>
-                                </ico>
-                                <text>Pages</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-comment"></n>
-                                </ico>
-                                <text>Comments</text>
-                            </row>
-                        </box>
-                    </column>
-                </card>
-                <card>
-                    <column>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-template"></n>
-                                </ico>
-                                <text>Appearance</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg"></n>
-                                </ico>
-                                <text>Plugins</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-user"></n>
-                                </ico>
-                                <text>Users</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg"></n>
-                                </ico>
-                                <text>Tools</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg-options"></n>
-                                </ico>
-                                <text>Settings</text>
-                            </row>
-                        </box>
-                        <box>
-                            <row>
-                                <ico data-height="36px" data-width="36px">
-                                    <n class="gg"></n>
-                                </ico>
-                                <text>Collapse menu</text>
-                            </row>
-                        </box>
-                    </column>
-                </card>
-            </section>
-        </nav>
+        <pages class="background-color-fff height-100pct noauth position-fixed width-100pct" data-fetch="cdn/html/page/page.login.html" data-pages="/" data-root="/"></pages>
+        <main class="isauth">
+            <header class="background-color-1d2327 height-36px position-fixed width-100pct z-index-5"></header>
+            <nav class="background-color-1d2327 color-fff font-size-14px height-100pct line-height-36px position-fixed width-160px">
+                <section class="margin-top-36px">
+                    <card>
+                        <column>
+                            <box data-href="/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg"></n>
+                                    </ico>
+                                    <text>Dashboard</text>
+                                </row>
+                            </box>
+                        </column>
+                    </card>
+                    <card>
+                        <column>
+                            <box data-href="/post/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-file-add"></n>
+                                    </ico>
+                                    <text>Posts</text>
+                                </row>
+                            </box>
+                            <box data-href="/media/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-music"></n>
+                                    </ico>
+                                    <text>Media</text>
+                                </row>
+                            </box>
+                            <box data-href="/pages/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-file-document"></n>
+                                    </ico>
+                                    <text>Pages</text>
+                                </row>
+                            </box>
+                            <box data-href="/comments/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-comment"></n>
+                                    </ico>
+                                    <text>Comments</text>
+                                </row>
+                            </box>
+                        </column>
+                    </card>
+                    <card>
+                        <column>
+                            <box data-href="/appearance/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-template"></n>
+                                    </ico>
+                                    <text>Appearance</text>
+                                </row>
+                            </box>
+                            <box data-href="/plugins/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg"></n>
+                                    </ico>
+                                    <text>Plugins</text>
+                                </row>
+                            </box>
+                            <box data-href="/users/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-user"></n>
+                                    </ico>
+                                    <text>Users</text>
+                                </row>
+                            </box>
+                            <box data-href="/tools/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg"></n>
+                                    </ico>
+                                    <text>Tools</text>
+                                </row>
+                            </box>
+                            <box data-href="/settings/">
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg-options"></n>
+                                    </ico>
+                                    <text>Settings</text>
+                                </row>
+                            </box>
+                            <box>
+                                <row>
+                                    <ico data-height="36px" data-width="36px">
+                                        <n class="gg"></n>
+                                    </ico>
+                                    <text>Collapse menu</text>
+                                </row>
+                            </box>
+                        </column>
+                    </card>
+                </section>
+            </nav>
+        </main>
     </body>
-    <script>
-        var pre = global.domains.domain === "github" ? "" : "/";
-        Scripts([{
-            "link": pre + "index.js"
-        }, {
-            "link": pre + "cdn/js/mvc.js"
-        }, {
-            "link": pre + "cdn/js/on.js"
-        }, {
-            "link": pre + "cdn/js/router.js"
-        }, {
-            "link": pre + "cdn/js/vanilla.js"
-        }]);
-        Styles([{
-            "link": pre + "index.css"
-        }, {
-            "link": pre + "cdn/css/gg.css"
-        }]);
-    </script>
 </html>
