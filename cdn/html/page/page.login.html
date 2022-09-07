@@ -3,56 +3,13 @@
         <section class="padding-y-50px max-height-100pct-minus-120px">
             <card>
                 <form class="border-radius-20px flex-direction-column flex-unset font-size-13px margin-x-auto padding-y-10px width-300px" id="my-login" onsubmit="controller.my.login(event)">
-                    <box class="border-1px-solid border-radius-5px display-none margin-bottom-10px width-100pc">
-                        <section>
-                            <input class="line-height-36px padding-x-10px width-100pc" placeholder="Email" type="text">
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-5px display-none margin-bottom-10px width-100pc">
-                        <column>
-                            <input class="flex-1 line-height-36px padding-x-10px" placeholder="Password" type="password">
-                            <input class="height-36px invert ui-bg-key width-36px" type="submit">
-                        </column>
-                    </box>
-                    <box class="display-none width-100pc">
-                        <row class="flex-wrap-unset">
-                            <span class="border-1px-solid border-radius-5px display-inline-flex width-50pct">
-                                <ico class="position-absolute left-0 invert" data-height="36px" data-width="36px">
-                                    <n class="ui-bg-google"></n>
-                                </ico>
-                                <text class="flex-1 line-height-36px text-align-center" data-submit="my-login">Log In</text>
-                                <input type="submit">
-                            </span>
-                            <span class="border-1px-solid border-radius-5px fg-black display-inline-flex margin-left-10px width-50pct" data-href="/my/account/">
-                                <ico class="position-absolute height-36px left-0 width-36px" data-height="36px" data-width="36px">
-                                    <n class="ui-bg-email"></n>
-                                </ico>
-                                <text class="flex-1 line-height-36px text-align-center">Sign Up</text>
-                            </span>
-                        </row>
-                    </box>
-                    <box class="background-color-000 border-radius-50pct display-none width-100pct">
-                        <section>
-                            <picture class="display-flex padding-top-100pct width-100pct">
-                                <img class="position-absolute bottom-0 height-75pct left-0 filter-invert-1 fit-contain margin-auto right-0 width-75pct" src="cdn/svg/github.svg">
-                            </picture>
-                        </section>
-                    </box>
-                    <box class="background-color-000 border-radius-5px color-fff margin-auto; margin-top-36px width-100pc" data-href="/">
+                    <box class="background-color-000 border-radius-5px color-fff margin-auto width-100pc" data-href="/">
                         <row class="align-items-center justify-content-center">
                             <picture class="background-color-fff border-radius-50pct display-flex height-30px margin-right-10px position-relative width-30px">
                                 <img class="position-absolute bottom-0 height-75pct left-0 fit-contain margin-auto right-0 width-75pct" src="cdn/svg/github.svg">
                             </picture>
                             <text class="display-flex justify-content-center line-height-50px text-align-center">Login with GitHub</text>
                         </row>
-                    </box>
-                    <box class="display-none padding--10px width-100pc" data-href="/my/account/password/">
-                        <section>
-                            <ico class="position-absolute height-50px invert left-0 width-36px" data-height="50px" data-width="36px">
-                                <n class="ui-bg-incognito"></n>
-                            </ico>
-                            <text class="display-flex flex-1 justify-content-center line-height-50px text-align-center">Forgot Password?</text>
-                        </section>
                     </box>
                 </form>
             </card>
