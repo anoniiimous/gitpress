@@ -1,9 +1,13 @@
 window.api = {
-    endpoint: "https://api.uios.computer"
+    endpoint: "https://api-anon.herokuapp.com"
 };
 
-window.cdn = {
-    endpoint: "https://cdn.uios.computer/file/audio-uios"
+auth.config = {
+    apiKey: "AIzaSyAummb_YtDmqszlA4RO9_eRuDmn2HsK0DI",
+    authDomain: "anon-iii-mous.firebaseapp.com",
+    projectId: "anon-iii-mous",
+    messagingSenderId: "982497253010",
+    appId: "1:982497253010:web:a3bf959a8ebda1dd5fb84b"
 };
 
 window.onload = ()=>{
@@ -11,15 +15,6 @@ window.onload = ()=>{
         body: document.body,
         boot: document.getElementById("boot")
     };
-
-    var domains = window.location.host.split('.');
-    window.global = {
-        domains: {
-            domain: domains.length > 1 ? domains[domains.length - 2] : null,
-            subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
-            tld: domains[domains.length - 1]
-        }
-    }
 
     dom.body.dataset.load = "ing";
 
@@ -41,7 +36,7 @@ function init() {
     };
 
     var url = window.location.pathname;
-    if (window.global.domains.subdomain === "uios") {
+    if (window.globals.domains.subdomain === "uios") {
         var dir = rout.ed.dir(window.location.pathname);
         dir.splice(0, 1)
         var url = rout.ed.url(dir);

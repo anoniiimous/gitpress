@@ -12,7 +12,7 @@ String.prototype.router = async function(params) {
     var vp = page ? page : pages; console.log({vp},'pages[data-pages="' + getRoot() + '"]');
 
     if (vp) {
-        var goto = window.global.domains.subdomain === "uios" ? '/photo' : '';
+        var goto = window.globals.domains.subdomain === "uios" ? '/photo' : '';
         if (vp.innerHTML === "" && vp.dataset.fetch) {
             vp.innerHTML = await ajax(vp.dataset.fetch);
         }
@@ -30,8 +30,8 @@ String.prototype.router = async function(params) {
             lazyLoad(dom.body.all('[data-src]'), vp);
 
             if (!pop && !["blob:"].includes(window.location.protocol)) {
-                const hash = global.domains.domain === "github" ? "/#" : "";
-                var goto = window.global.domains.subdomain === "uios" ? '/photo' : '';
+                const hash = globals.domains.domain === "github" ? "/#" : "";
+                var goto = window.globals.domains.subdomain === "uios" ? '/photo' : '';
                 const link = hash.length > 0 ? 
                     goto + route.search + '#' + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) : 
                     goto + route.path + route.search + route.hash;

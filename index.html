@@ -1,7 +1,28 @@
 <html>
     <head>
         <title>GitPress</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+        <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0'>
+        <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+        <meta name='apple-mobile-web-app-capable' content='yes'>
+        <meta name='apple-mobile-web-app-status-bar-style' content='#021025'>
+        <meta name="apple-mobile-web-app-title" content="Photo">
+        <meta name="application-name" content="GitPress">
+        <meta name="application-shortname" content="gitpress">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name='theme-color' content='#021025'>
+        <script>
+            var domains = window.location.host.split('.');
+            window.globals = {
+                domains: {
+                    domain: domains.length > 1 ? domains[domains.length - 2] : null,
+                    subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
+                    tld: domains[domains.length - 1]
+                }
+            }
+            const base = document.createElement("base");
+            base.href =  (globals.domains.domain === "github" ? "/"+document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+            document.head.appendChild(base);
+        </script>
         <link href="index.css" rel="stylesheet">
         <link href="cdn/css/gg.css" rel="stylesheet">
         <script id="firebase-app" src="cdn/js/firebase-app.js"></script>
@@ -12,19 +33,6 @@
         <script src="cdn/js/router.js"></script>
         <script src="cdn/js/vanilla.js"></script>
         <script src="index.js"></script>
-        <script>
-            var domains = window.location.host.split('.');
-            window.global = {
-                domains: {
-                    domain: domains.length > 1 ? domains[domains.length - 2] : null,
-                    subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
-                    tld: domains[domains.length - 1]
-                }
-            }
-            const base = document.createElement("base");
-            base.href = window.location.protocol + "//" + (global.domains.subdomain ? global.domains.subdomain + "." : "") + global.domains.domain + "." + global.domains.tld + (global.domains.domain === "github" ? "/gitpress" : "") + "/";
-            document.head.appendChild(base);
-        </script>
     </head>
     <body class="-dark-background-color-1f background-color-fff" data-theme="system">
         <boot id="boot"></boot>
