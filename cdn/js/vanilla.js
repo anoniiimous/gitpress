@@ -287,9 +287,10 @@ function ajax(url, settings) {
     var dir = window.location.href.split(url);
     if (!RegExp('^(?:[a-z]+:)?//', 'i').test(url)) {
         if (window.globals.domains.domain === "github") {
-            url = '/' + document.head.querySelector('[name="application-shortname"]').content + url;
+            url = '/' + document.head.querySelector('[name="application-shortname"]').content + '/' + url;
         }
     }
+    console.log({url});
     return new Promise((resolve,reject)=>{
         var req;
         var data = {};
