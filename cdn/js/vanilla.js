@@ -40,10 +40,12 @@ Array.prototype.removeClass = function(name) {
 Array.prototype.attr = function(attr, name) {
     var that = this;
     if (that.length > 1) {
-        for (var i = that.length; i--; ) {
+        var i = 0;
+        do {
             var it = this[i];
             it ? it.setAttribute(attr, name) : null;
-        }
+            i++;
+        } while(i < that.length)
     } else {
         that[0] ? that[0].setAttribute(attr, name) : null;
     }
@@ -286,8 +288,8 @@ window.is = {
 function ajax(url, settings) {
     var dir = window.location.href.split(url);
     if (!RegExp('^(?:[a-z]+:)?//', 'i').test(url)) {
-        if (window.global.domains.subdomain === "uios") {
-            url = '/photo' + url;
+        if (window.globals.domains.domain === "github") {
+            url = '/' + document.head.querySelector('[name="application-shortname"]').content + url;
         }
     }
     return new Promise((resolve,reject)=>{
@@ -430,26 +432,6 @@ function getPath(links) {
     link += links[f].link;
     return link;
 }
-function capFirst(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-window.words = [["Amazing", "Bright", "Cool", "Enthusiastic", "Fun", "Great", "Happy", "Infinite", "Lavish", "Pure", "Real", "Super", "Tough", "Ultra"], ["Art", "Book", "Company", "Drinks", "Entertainment", "Food", "Gifts", "Hair", "Industries", "Jewelry", "Kicks", "Nursery", "Restaurant", "Spa", "Tech", "World"]];
-function generateName(name) {
-    var r1 = getRandomInt(0, words[0].length)
-      , n1 = words[0][r1];
-    var r2 = getRandomInt(0, words[0].length)
-      , n2 = words[1][r2];
-    return capFirst(n1) + ' ' + n2;
-}
-function generateDomain(name) {
-    return (name ? name : generateName()).toLowerCase().replace("-", "-").replace(" ", "-");
-}
-function generateURL(name) {
-    return name.toLowerCase().replace(' ', '-').replace(`'`, '').replace(`"`, '');
-}
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 function getRoot(els) {
     var els = $('[data-root]');
     var root = null;
@@ -479,67 +461,4 @@ function getPages(win) {
         root = paths.page.stringExists(arr);
     }
     return root;
-}
-function resizeIframe(obj) {
-    var el = obj.contentWindow.document.body.firstElementChild;
-    obj.style.height = el ? el.clientHeight + 'px' : null;
-}
-drag.gable = {};
-drag.gable["tools"] = byId('tools');
-drag.ging = null
-var currentX;
-var currentY;
-var initialX;
-var initialY;
-var xOffset = 0;
-var yOffset = 0;
-function dragStart(e) {
-    if (e.type === "touchstart") {
-        initialX = e.touches[0].clientX - xOffset;
-        initialY = e.touches[0].clientY - yOffset;
-    } else {
-        initialX = e.clientX - xOffset;
-        initialY = e.clientY - yOffset;
-    }
-    if (e.target.closest('[data-drag]')) {
-        drag.elem = e.target.closest('[data-drag]')
-        drag.ging = true;
-    }
-}
-function dragEnd(e) {
-    initialX = currentX;
-    initialY = currentY;
-    drag.ging = false;
-}
-function drag(e) {
-    if (drag.ging) {
-        e.preventDefault();
-        if (e.type === "touchmove") {
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
-        } else {
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-        }
-        xOffset = currentX;
-        yOffset = currentY;
-    }
-}
-function setTranslate(xPos, yPos, el) {
-    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-}
-window.notify = {
-    counter: 0,
-    alert: (message,timer)=>{
-        alert(message);
-    }
-    ,
-    dialog: ()=>{}
-    ,
-    confirm: ()=>{}
-    ,
-    zIndex: elem=>elem.forEach((v,k)=>{
-        v.style.zIndex = 123456789 + (elem.length - k);
-    }
-    )
 }

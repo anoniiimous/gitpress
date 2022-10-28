@@ -1,0 +1,82 @@
+<blocks class="display-block overflow-x-hidden">
+    <header class="position-fixed top-0 width-100pct z-index-5">
+        <section>
+            <card class="margin-auto max-width-480px width-100pct">
+                <row class="align-items-center justify-content-space-between">
+                    <box class="margin-20px">
+                        <column class="align-items-center justify-content-center" data-height="50px" data-width="50px">
+                            <flex class="align-items-center background-color-ff3b30 border-radius-50pct color-fff justify-content-center" data-height="50px" data-width="50px">1</flex>
+                        </column>
+                        <text class="margin-top-5px">Name</text>
+                    </box>
+                    <box class="margin-20px">
+                        <column class="align-items-center justify-content-center" data-height="50px" data-width="50px">
+                            <flex class="align-items-center background-color-32cd32 border-radius-50pct color-fff justify-content-center" data-height="30px" data-width="30px">2</flex>
+                        </column>
+                        <text class="margin-top-5px">Brand</text>
+                    </box>
+                    <box class="margin-20px">
+                        <column class="align-items-center justify-content-center" data-height="50px" data-width="50px">
+                            <flex class="align-items-center background-color-0096c7 border-radius-50pct color-fff justify-content-center" data-height="30px" data-width="30px">3</flex>
+                        </column>
+                        <text class="margin-top-5px">Design</text>
+                    </box>
+                </row>
+            </card>
+        </section>
+    </header>
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-20px margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="one">
+        <column>
+            <header class="padding-20px text-align-center">
+                <section>
+                    <text class="font-weight-bolder">Build a name for your brand.</text>
+                </section>
+            </header>
+            <section class="section-step-one">
+                <column class="app-name" data-before="Brand Name">
+                    <picture class="margin-20px">
+                        <img src="cdn/svg/setup-name.svg">
+                    </picture>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-20px position-absolute" data-transform="translate3d(0,-50%,0)">App Title</text>
+                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                            <StripeElement class="padding-x-20px"></StripeElement>
+                        </row>
+                    </box>
+                </column>
+            </section>
+            <footer class="footer-step footer-step-one">
+                <div class="exit step" data-after="Exit" data-href="/build/er/"></div>
+                <div class="next goto-step step" data-disabled="true" data-require="Supply a name for your brand." id="next-step-build-app-name"></div>
+            </footer>
+        </column>
+    </block>
+    <block class="align-items-center display-none justify-content-center margin-x-auto overflow-x-hidden margin-top-120px min-height-100vh"data-step="two">
+        <header class="header-step header-step-two">
+            <div data-before="Create an image for your platform."></div>
+        </header>
+        <!--data-after="Sync your application across multiple workspaces. Keep your data both offline or in the cloud."-->
+        <section class="section-step-two logo-maker">
+            <header class="preview-logo" id="preview-logo" data-after="App Title">
+                <div class="icon" data-char="A" id="build-app-icon"></div>
+                <footer class="color-selected" data-evt="null" data-file="build-app-logo" data-html="build-app-icon">
+                    <div data-evt="file" data-id="build-app-logo">
+                        <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
+                    </div>
+                </footer>
+            </header>
+            <section class="color-picker" data-evt="color" id="color-picker">
+                <div class="build-brand-color iro-color-picker" id="iro-build-er-_-about"></div>
+                <footer class="color-data">
+                    <div class="code" data-before="HEX" id="color-data-hex">#000000</div>
+                    <div class="code" data-before="RGB" id="color-data-rgb">0, 0, 0</div>
+                    <div class="code" data-before="HSL" id="color-data-hsl">0, 0%, 0%</div>
+                </footer>
+            </section>
+        </section>
+        <footer class="footer-step footer-step-two" id="footer-buildapp-steptwo">
+            <div class="back goto-step step" data-after="Back" data-disabled="false"></div>
+            <div class="next goto-step step" data-confirm="true" data-message="Are you sure you want to continue without providing a logo?" id="next-step-build-app-brand"></div>
+        </footer>
+    </block>
+</blocks>

@@ -431,6 +431,35 @@ window.on.touch = {
 
 window.on.focus = {};
 window.on.focus.in = {};
+window.on.focus.in.card = {
+    holder: (event)=>{
+        const target = event.target;
+        var key = event.key;
+        var value = event.target.value;
+        var firstname = ''
+          , lastname = '';
+
+        var parts = event.target.value.trim().split(' ');
+        firstname = parts.length > 2 ? parts[0] : parts[0];
+        lastname = parts.length > 1 ? parts[parts.length - 1] : null;
+
+        const text = target.parentNode.previousElementSibling;
+        
+        target.className = "padding-x-20px";
+        text.className = "background-color-fff color-bbb height-18px line-height-18px padding-x-20px position-absolute";
+        text.dataset.transform = "translate3d(0,-50%,0)";
+
+        if (lastname || value.length === 0) {
+            target.classList.remove('color-ff3b30')
+            text.classList.add('color-bbb')
+            text.classList.remove('color-ff3b30')
+        } else {
+            target.classList.add('color-ff3b30')
+            text.classList.remove('color-bbb')
+            text.classList.add('color-ff3b30')
+        }
+    }
+};
 window.on.focus.in.search = (target)=>{
     const result = target.closest('card').nextElementSibling;
     result.classList.remove('display-none');
@@ -442,147 +471,100 @@ window.on.focus.in.search = (target)=>{
     history.pushState(goto, '', goto);
 }
 window.on.focus.out = {};
-window.on.focus.out.search = (target)=>{
-    const result = target.closest('card');
-    result.classList.add('display-none');
-    const keywords = byId('keywords');
-    byId('exit-search').classList.remove('-tablet-display-none');
-    keywords.value = "";
-    const feed = byId('feed-results');
-    feed.innerHTML = "";
-    byId('cancel-results').classList.add('display-none');
-    //rout.ed.close();
-    var goto = (window.location.pathname) + (window.location.hash ? '#' + window.location.hash : '');
-    history.pushState(goto, '', goto);
-}
+window.on.focus.out.card = {
+    holder: ()=>{
+        const target = event.target;
+        var key = event.key;
+        var value = event.target.value;
+        var firstname = ''
+          , lastname = '';
 
-window.on.keyup = {};
-window.on.keyup.search = async(event)=>{
-    const feed = byId('feed-results');
-    const keywords = byId('keywords').value;
-    var goto = (window.location.pathname + '?keywords') + (keywords.length > 0 ? '=' + keywords : '');
-    searchResults(keywords);
-    event.keyCode === 13 ? null : history.pushState(goto, '', goto);
-}
+        var parts = event.target.value.trim().split(' ');
+        firstname = parts.length > 2 ? parts[0] : parts[0];
+        lastname = parts.length > 1 ? parts[parts.length - 1] : null;
 
-window.on.keydown = {};
-window.on.keydown.search = async(target)=>{
-    const feed = byId('feed-results');
-    const keywords = byId('keywords').value;
-    var goto = (window.location.pathname + '?keywords') + (keywords.length > 0 ? '=' + keywords : '');
-    //searchResults(keywords);
-    //history.pushState(goto, '', goto);
-}
+        const text = target.parentNode.previousElementSibling;
 
-function searchResults(keywords) {
-    const feed = byId('feed-results');
-    if (keywords) {
-        const param = new URLSearchParams(window.location.search).get('keywords');
-        if (feed.dataset.keywords !== keywords) {
-            var endpoint = is.local(window.location.href) ? window.location.protocol + "//api.uios.tld" : api.endpoint;
-            const t = (d)=>{
-                const data = JSON.parse(d);
-
-                feed.innerHTML = "";
-                feed.dataset.keywords = keywords;
-
-                const users = data.users;
-                if (users && users.length > 0) {
-                    const template = byId('template-results-user').content.firstElementChild;
-                    var u = 0;
-                    do {
-                        const user = users[u];
-                        const uid = user.uid;
-
-                        var html = template.cloneNode(true);
-
-                        html.dataset.href = "/users/" + user.username + "/";
-                        html.classList.remove('hide');
-                        html.dataset.uid = uid;
-                        html.find('[placeholder="username"]').textContent = user.username;
-                        html.find('[placeholder="Full Name"]').textContent = user.fullname;
-
-                        feed.insertAdjacentHTML('beforeend', html.outerHTML);
-                        u++;
-                    } while (u < users.length);
-                } else {
-                    feed.innerHTML = "";
-                }
-                resolve(route);
-            }
-            const c = ()=>{}
-
-            if (window.yield) {
-                window.yield.abort()
-            }
-            window.yield = new AbortController()
-            window.signal = window.yield.signal
-
-            ajax(endpoint + '/v1/search?keywords=' + keywords, {
-                signal
-            }).then(t).catch(c);
+        if (lastname || value.length === 0) {
+            target.classList.remove('color-ff3b30')
+            text.classList.add('color-bbb')
+            text.classList.remove('color-ff3b30')
+        } else {
+            target.classList.add('color-ff3b30')
+            text.classList.remove('color-bbb')
+            text.classList.add('color-ff3b30')
         }
-    } else {
-        feed.innerHTML = "";
+
+        if (value.length === 0) {
+            target.className = "opacity-0";
+            text.className = "color-bbb padding-x-20px";
+            text.removeAttribute('data-transform');
+
+        }
     }
-}
+};
 
-window.on["change"] = {
-    file: (event,s)=>{
-        return new Promise((resolve,reject)=>{
-            var target = event.target;
-            var dataset = target.dataset;
-            var FR = new FileReader();
+window.on.key = {};
+window.on.key.down = {};
+window.on.key.down.card = {
+    holder: (target)=>{
+        const text = target.parentNode.previousElementSibling;
+        text.className = "background-color-fff color-bbb height-18px line-height-18px padding-x-20px position-absolute";
+        text.dataset.transform = "translate3d(0,-50%,0)";
+    }
+};
+window.on.key.up = {};
+window.on.key.up.card = {
+    holder: event=>{
+        const target = event.target;
+        var key = event.key;
+        var value = event.target.value;
+        var firstname = ''
+          , lastname = '';
 
-            var files = target.files;
-            console.log({
-                files
-            }, {
-                s,
-                event,
-                target,
-                dataset
-            });
-            if (files && files.length > 0) {
-                if (files.length === 1) {
-                    var reader = FR;
-                    var file = files[0];
-                    var s = {};
-                    if (dataset.onload) {//var x = eval(dataset.onload);
-                    //if(typeof x === 'function') { s.onload = x(); }
-                    }
-                    reader.readAsDataURL(file);
-                    if (s) {
-                        reader.onload = onLoad;
-                        s.onloadstart ? (reader.onloadstart = s.onloadstart) : null;
-                        s.onprogress ? (reader.onprogress = s.onprogress) : null;
-                        s.onabort ? (reader.onabort = s.onabort) : null;
-                        s.onerror ? (reader.onerror = s.onerror) : null;
-                    } else {
-                        reader.onload = onLoad;
-                    }
-                    function onLoad() {
-                        s.onload ? s.onload : null;
-                        resolve(reader.result);
-                        target.insertAdjacentHTML("afterend", target.cloneNode().outerHTML);
-                        target.remove();
-                    }
-                    function onProgress(e) {
-                        if (e.lengthComputable) {
-                            var percentLoaded = Math.round((e.loaded / e.total) * 100);
-                            if (percentLoaded < 100) {
-                                console.log(percentLoaded);
-                            }
-                        }
-                    }
-                }
-            }
+        var parts = event.target.value.trim().split(' ');
+        firstname = parts.length > 2 ? parts[0] : parts[0];
+        lastname = parts.length > 1 ? parts[parts.length - 1] : null;
+
+        const text = target.parentNode.previousElementSibling;
+        if (lastname) {
+            target.classList.remove('color-ff3b30');
+            text.classList.add('color-bbb')
+            text.classList.remove('color-ff3b30')
+        } else {
+            target.classList.add('color-ff3b30');
+            text.classList.remove('color-bbb')
+            text.classList.add('color-ff3b30')            
         }
-        );
+
+        //byId('preview-card').find('.card-holder :first-child').textContent = firstname;
+        //byId('preview-card').find('.card-holder :last-child').textContent = lastname;
     }
 };
 
 window.on["submit"] = {
+    create: {
+        project: event => {
+            event.preventDefault();
+            const form = event.target;
+            const title = form.all('input')[0].value;
+            const shortname = form.all('input')[1].value;
+            if(title && shortname) {
+                ('/dashboard/' + shortname + '/').router();
+            }
+        }
+    },
+    dashboard: {
+        files: (event) => {
+            event.preventDefault();
+        },
+        page: (event) => {
+            event.preventDefault();           
+        },
+        project: (event) => {
+            event.preventDefault();         
+        }
+    },
     my: {
         login: async(event)=>{
             event.preventDefault();
@@ -600,54 +582,5 @@ window.on["submit"] = {
             }
             );
         }
-    },
-
-    find: {
-        query: async(event)=>{
-            console.log(event);
-        }
-    },
-
-    post: {
-        tags: async(event)=>{
-            console.log(event);
-            event.type === "submit" ? event.preventDefault() : null;
-            const form = event.target.closest('form');
-            const search = form.find('#photo-tags-people');
-            const users = search.all('[data-uid]');
-            var uids = [];
-            var ppl = [];
-
-            if (users.length > 0) {
-                var u = 0;
-                var html = '';
-                do {
-                    var user = users[u];
-                    var span = document.createElement('span');
-                    ppl[u] = user.dataset.uid;
-                    uids[u] = {};
-                    uids[u].uid = user.dataset.uid;
-                    uids[u].username = user.find('[placeholder="username"]').textContent;
-                    u++;
-                } while (u < users.length);
-            }
-            byId('post-photo-metadata-people').dataset.json= JSON.stringify(uids);
-            byId('post-photo-metadata-people').dataset.people= JSON.stringify(ppl);
-            byId('post-photo-metadata-people').find('span > text').textContent = uids.length > 1 ? (uids.length + ' people') : (uids.length > 0 ? uids[0].username : "");
-            modal.exit(event.target);
-            console.log('on.submit.post.tags', {
-                users,
-                uids
-            });
-        }
-    },
-
-    search: {
-        query: async(event) => {
-            event.preventDefault();
-            const keywords = new URLSearchParams(window.location.search).get('keywords');
-            //on.focus.out.search(byId('results-blur'));
-            ('/search/' + keywords + '/').router().then(byId('keywords').blur());
-        }
-    }
+    }    
 };

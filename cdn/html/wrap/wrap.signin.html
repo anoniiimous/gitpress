@@ -1,0 +1,80 @@
+<blocks class="-noauth min-height-100vh" data-backdrop-blur="10px">
+    <block class="height-100pct justify-content-center">
+        <picture data-backdrop-filter="blur(10px)" data-background-color="rgba(255,255,255,0.5)" data-tap="rout.ed.close()"></picture>
+        <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
+            <card>
+                <picture></picture>
+                <form class="border-radius-20px flex-direction-column flex-unset font-size-13px margin-x-auto padding-y-10px width-300px" id="my-login" onsubmit="controller.sign.in(event)">
+                    <box class="background-color-fff border-radius-5px margin-bottom-10px box-shadow-0-1px-6px-0 width-100pct">
+                        <section>
+                            <input class="line-height-36px padding-x-10px width-100pct" placeholder="Email" type="text">
+                        </section>
+                    </box>
+                    <box class="background-color-fff border-radius-5px margin-bottom-10px box-shadow-0-1px-6px-0 width-100pct">
+                        <section class="flex-direction-row flex">
+                            <input class="flex-1 line-height-36px padding-x-10px" placeholder="Password" type="password">
+                            <input class="height-36px invert ui-bg-key width-36px" type="submit">
+                        </section>
+                    </box>
+                    <box class="width-100pct">
+                        <row>
+                            <span class="background-color-fff border-radius-5px display-inline-flex box-shadow-0-1px-6px-0 width-50pct">
+                                <ico class="position-absolute left-0 invert" data-height="36px" data-width="36px">
+                                    <n class="ui-bg-google"></n>
+                                </ico>
+                                <text class="flex-grow-1 line-height-36px text-align-center" data-submit="my-login">Log In</text>
+                                <input type="submit">
+                            </span>
+                            <span class="background-color-fff border-radius-5px color-000 display-inline-flex margin-left-10px box-shadow-0-1px-6px-0 width-50pct" data-href="/my/account/">
+                                <ico class="position-absolute height-36px left-0 width-36px" data-height="36px" data-width="36px">
+                                    <n class="ui-bg-email"></n>
+                                </ico>
+                                <text class="flex-grow-1 line-height-36px text-align-center">Sign Up</text>
+                            </span>
+                        </row>
+                    </box>
+                    <box class="background-color-fff border-radius-5px color-000 margin-top-36px box-shadow-0-1px-6px-0 width-100pct" data-href="/">
+                        <row>
+                            <ico class="position-absolute height-36px left-0 width-36px" data-height="36px" data-width="36px">
+                                <n class="ui-bg-email"></n>
+                            </ico>
+                            <text class="flex-grow-1 line-height-36px text-align-center">Continue as Guest</text>
+                        </row>
+                    </box>
+                    <box class="padding--10px width-100pct" data-href="/my/account/password/">
+                        <row>
+                            <ico class="position-absolute height-50px invert left-0 width-36px" data-height="50px" data-width="36px">
+                                <n class="ui-bg-incognito"></n>
+                            </ico>
+                            <text class="flex-grow-1 line-height-50px text-align-center">Forgot Password?</text>
+                        </row>
+                    </box>
+                </form>
+            </card>
+        </column>
+    </block>
+</blocks>
+<blocks class="-isauth min-height-100vh" data-backdrop-blur="10px">
+    <block class="height-100pct justify-content-center">
+        <picture data-backdrop-filter="blur(10px)" data-background-color="rgba(0,0,0,0.5)" data-tap="rout.ed.close()"></picture>
+        <column class="align-items-center justify-content-center padding-y-50px" data-max-height="calc(100% - 120px)">
+            <card class="background-color-fff border-radius-20px width-300px" data-box-shadow="0 1px 6px 0">
+                <column>
+                    <picture class="background-color-f0 border-top-left-radius-20px border-top-right-radius-20px padding-top-50pct width-100pct"></picture>
+                    <ico class="color-ff3b30 position-absolute right-10px" data-tap="auth.account.close()" data-top="-25px">
+                        <n class="--ggs-2 gg-log-off"></n>
+                    </ico>
+                    <box class="bottom-0 height-50pct left-0 margin-auto right-0 position-absolute top-0 width-50pct" data-href="/my/">
+                        <flex class="align-items-center justify-content-center height-100pct width-100pct">
+                            <picture class="align-center flex justify-center"></picture>
+                            <picture class="background-color-db border-radius-50pct empty-state overflow-hidden position-relative" data-height="100%" data-width="100%">
+                                <img class="bottom-0 height-75pct left-0 invert margin-auto right-0 position-absolute width-75pct" src="cdn/svg/user.svg">
+                            </picture>
+                        </flex>
+                    </box>
+                    <box class="padding-top-50pct width-100pct"></box>
+                </column>
+            </card>
+        </column>
+    </block>
+</blocks>

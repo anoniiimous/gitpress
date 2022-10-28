@@ -1,4 +1,190 @@
 @media {
+    .gg-add {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 22px;
+        height: 22px;
+        border: 2px solid;
+        transform: scale(var(--ggs,1));
+        border-radius: 22px
+    }
+
+    .gg-add::after, .gg-add::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 10px;
+        height: 2px;
+        background: currentColor;
+        border-radius: 5px;
+        top: 8px;
+        left: 4px
+    }
+
+    .gg-add::after {
+        width: 2px;
+        height: 10px;
+        top: 4px;
+        left: 8px
+    }
+}
+
+@media {
+    .gg-browser {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 24px;
+        height: 18px;
+        border: 2px solid;
+        border-radius: 3px
+    }
+
+    .gg-browser::after, .gg-browser::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 22px;
+        height: 2px;
+        background: currentColor;
+        top: 4px
+    }
+
+    .gg-browser::after {
+        border-radius: 3px;
+        width: 2px;
+        box-shadow: 3px 0 0, 6px 0 0;
+        top: 1px;
+        left: 1px
+    }
+}
+
+@media {
+    .gg-chart {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid;
+        border-left: 2px solid;
+        margin-left: 7px;
+    }
+
+    .gg-chart::after, .gg-chart::before {
+        content: "";
+        display: block;
+        position: absolute;
+        border: 2px solid;
+        box-sizing: border-box
+    }
+
+    .gg-chart::before {
+        border-top-right-radius: 100px;
+        right: -2px;
+        top: -2px;
+        width: 8px;
+        height: 8px
+    }
+
+    .gg-chart::after {
+        width: 18px;
+        height: 18px;
+        border-radius: 100px;
+        border-right-color: transparent;
+        left: -10px;
+        transform: rotate(-45deg)
+    }
+}
+
+@media {
+    .gg-check-r {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 22px;
+        height: 22px;
+        border: 2px solid;
+        transform: scale(var(--ggs,1));
+        border-radius: 4px
+    }
+
+    .gg-check-r::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        left: 3px;
+        top: -1px;
+        width: 6px;
+        height: 10px;
+        border-width: 0 2px 2px 0;
+        border-style: solid;
+        transform-origin: bottom left;
+        transform: rotate(45deg)
+    }
+}
+
+@media {
+    .gg-chevron-down {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 22px;
+        height: 22px;
+        border: 2px solid transparent;
+        border-radius: 100px
+    }
+
+    .gg-chevron-down::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid;
+        border-right: 2px solid;
+        transform: rotate(45deg);
+        left: 4px;
+        top: 2px
+    }
+}
+
+@media {
+    .gg-chevron-left {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 22px;
+        height: 22px;
+        border: 2px solid transparent;
+        border-radius: 100px
+    }
+
+    .gg-chevron-left::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid;
+        border-left: 2px solid;
+        transform: rotate(45deg);
+        left: 6px;
+        top: 4px
+    }
+}
+
+@media {
     .gg-comment {
         box-sizing: border-box;
         position: relative;
@@ -34,6 +220,74 @@
         box-shadow: 0 4px 0 0;
         left: 4px;
         top: 4px
+    }
+}
+
+@media {
+    .gg-eye {
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 24px;
+        height: 18px;
+        border-bottom-right-radius: 100px;
+        border-bottom-left-radius: 100px;
+        overflow: hidden;
+        box-sizing: border-box
+    }
+
+    .gg-eye::after, .gg-eye::before {
+        content: "";
+        display: block;
+        border-radius: 100px;
+        position: absolute;
+        box-sizing: border-box
+    }
+
+    .gg-eye::after {
+        top: 2px;
+        box-shadow: inset 0 -8px 0 2px, inset 0 0 0 2px;
+        width: 24px;
+        height: 24px
+    }
+
+    .gg-eye::before {
+        width: 8px;
+        height: 8px;
+        border: 2px solid;
+        bottom: 4px;
+        left: 8px
+    }
+}
+
+@media {
+    .gg-file {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 14px;
+        height: 16px;
+        border: 2px solid transparent;
+        border-right: 0;
+        border-top: 0;
+        box-shadow: 0 0 0 2px;
+        border-radius: 1px;
+        border-top-right-radius: 4px;
+        overflow: hidden
+    }
+
+    .gg-file::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-left: 2px solid;
+        border-bottom: 2px solid;
+        right: -1px;
+        top: -1px
     }
 }
 
@@ -123,6 +377,231 @@
 }
 
 @media {
+    .gg-format-bold {
+        transform: scale(var(--ggs,1))
+    }
+
+    .gg-format-bold, .gg-format-bold::after {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 8px;
+        height: 8px;
+        border: 2px solid;
+        border-top-right-radius: 100px;
+        border-bottom-right-radius: 100px
+    }
+
+    .gg-format-bold::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        left: -2px;
+        top: 4px
+    }
+}
+
+@media {
+    .gg-format-center, .gg-format-center::before {
+        display: block;
+        box-sizing: border-box;
+        height: 2px;
+        background: currentColor;
+        border-radius: 3px;
+        box-shadow: 0 8px 0
+    }
+
+    .gg-format-center {
+        margin-top: -12px;
+        position: relative;
+        transform: scale(var(--ggs,1));
+        width: 16px
+    }
+
+    .gg-format-center::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        top: 4px;
+        left: 3px
+    }
+}
+
+@media {
+    .gg-format-italic {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: skewX(-20deg) scale(var(--ggs,1));
+        width: 6px;
+        height: 12px;
+        border-top: 2px solid;
+        border-bottom: 2px solid
+    }
+
+    .gg-format-italic::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        height: 10px;
+        width: 2px;
+        background: currentColor;
+        left: 2px;
+        top: -2px
+    }
+}
+
+@media {
+    .gg-format-underline {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 12px;
+        height: 12px;
+        border: 2px solid;
+        border-top: 0;
+        border-bottom-left-radius: 100px;
+        border-bottom-right-radius: 100px
+    }
+
+    .gg-format-underline::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 12px;
+        height: 2px;
+        background: currentColor;
+        left: -2px;
+        bottom: -6px
+    }
+}
+
+@media {
+    .gg-format-left, .gg-format-left::before {
+        display: block;
+        box-sizing: border-box;
+        height: 2px;
+        background: currentColor;
+        border-radius: 3px;
+        box-shadow: 0 8px 0
+    }
+
+    .gg-format-left {
+        margin-top: -11px;
+        position: relative;
+        transform: scale(var(--ggs,1));
+        width: 16px
+    }
+
+    .gg-format-left::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        top: 4px;
+        left: 0
+    }
+}
+
+@media {
+    .gg-layout-list {
+        transform: scale(var(--ggs,1))
+    }
+
+    .gg-layout-list, .gg-layout-list::after, .gg-layout-list::before {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 10px;
+        height: 2px;
+        border-left: 6px double;
+        border-right: 4px solid
+    }
+
+    .gg-layout-list::after, .gg-layout-list::before {
+        content: "";
+        position: absolute;
+        left: -6px
+    }
+
+    .gg-layout-list::after {
+        bottom: 4px
+    }
+
+    .gg-layout-list::before {
+        top: 4px
+    }
+}
+
+@media {
+    .gg-link {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: rotate(-45deg) scale(var(--ggs,1));
+        width: 8px;
+        height: 2px;
+        background: currentColor;
+        border-radius: 4px
+    }
+
+    .gg-link::after, .gg-link::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 8px;
+        height: 10px;
+        border: 2px solid;
+        top: -4px
+    }
+
+    .gg-link::before {
+        border-right: 0;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+        left: -6px
+    }
+
+    .gg-link::after {
+        border-left: 0;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        right: -6px
+    }
+}
+
+@media {
+    .gg-menu {
+        transform: scale(var(--ggs,1))
+    }
+
+    .gg-menu, .gg-menu::after, .gg-menu::before {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 20px;
+        height: 2px;
+        border-radius: 3px;
+        background: currentColor
+    }
+
+    .gg-menu::after, .gg-menu::before {
+        content: "";
+        position: absolute;
+        top: -6px
+    }
+
+    .gg-menu::after {
+        top: 6px
+    }
+}
+
+@media {
     .gg-options {
         box-sizing: border-box;
         position: relative;
@@ -152,6 +631,77 @@
     .gg-options::after {
         bottom: -7px;
         right: -4px
+    }
+}
+
+@media {
+    .gg-redo {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 14px;
+        height: 14px;
+        border: 2px solid;
+        border-right-color: transparent;
+        border-radius: 100px
+    }
+
+    .gg-redo::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-top: 2px solid;
+        border-right: 2px solid;
+        top: -3px;
+        right: -1px;
+        transform: rotate(68deg)
+    }
+}
+
+@media {
+    .gg-software-upload {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 16px;
+        height: 6px;
+        border: 2px solid;
+        border-top: 0;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        margin-top: 8px
+    }
+
+    .gg-software-upload::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-left: 2px solid;
+        border-top: 2px solid;
+        transform: rotate(45deg);
+        left: 2px;
+        bottom: 4px
+    }
+
+    .gg-software-upload::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 2px;
+        height: 10px;
+        background: currentColor;
+        left: 5px;
+        bottom: 3px
     }
 }
 
@@ -190,6 +740,92 @@
 }
 
 @media {
+    .gg-format-text {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 10px;
+        height: 8px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        box-shadow: 0 -2px 0 0, inset 0 0 0 2px
+    }
+
+    .gg-format-text::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border: 1px dashed;
+        top: -6px;
+        left: -8px
+    }
+}
+
+@media {
+    .gg-more-vertical-alt {
+        transform: scale(var(--ggs,1))
+    }
+
+    .gg-more-vertical-alt, .gg-more-vertical-alt::after, .gg-more-vertical-alt::before {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+        border-radius: 100%
+    }
+
+    .gg-more-vertical-alt::after, .gg-more-vertical-alt::before {
+        content: "";
+        position: absolute
+    }
+
+    .gg-more-vertical-alt::after {
+        left: 0;
+        top: 6px
+    }
+
+    .gg-more-vertical-alt::before {
+        top: -6px;
+        right: 0
+    }
+}
+
+@media {
+    .gg-search {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 16px;
+        height: 16px;
+        border: 2px solid;
+        border-radius: 100%;
+        margin-left: -4px;
+        margin-top: -4px
+    }
+
+    .gg-search::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 2px;
+        height: 8px;
+        background: currentColor;
+        transform: rotate(-45deg);
+        top: 10px;
+        left: 12px
+    }
+}
+
+@media {
     .gg-user {
         display: block;
         transform: scale(var(--ggs,1));
@@ -221,5 +857,43 @@
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         top: 9px
+    }
+}
+
+@media screen {
+    .gg-undo {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 14px;
+        height: 14px;
+        border: 2px solid;
+        border-left-color: transparent;
+        border-radius: 100px
+    }
+
+    .gg-undo::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-top: 2px solid;
+        border-left: 2px solid;
+        top: -3px;
+        left: -1px;
+        transform: rotate(-68deg)
+    }
+}
+
+@media screen {
+    .--ggs-1pt5 {
+        --ggs: 1.5;
+    }
+
+    .--ggs-2 {
+        --ggs: 2;
     }
 }

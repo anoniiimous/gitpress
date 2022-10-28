@@ -1,0 +1,24 @@
+<blocks class="min-height-100vh" data-backdrop-blur="10px">
+    <block class="height-100pct justify-content-center">
+        <picture data-backdrop-filter="blur(10px)" data-background-color="rgba(255,255,255,0.5)" data-href="/dashboard/:get/pages/"></picture>
+        <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
+            <form class="background-color-fff border-radius-10px margin-auto overflow-hidden max-width-480px width-100pct">
+                <picture></picture>
+                <column id="my-login" onsubmit="controller.sign.in(event)">
+                    <box class="margin-20px">
+                        <column>
+                            <text class="line-height-50px">Provide a name for your new page.</text>
+                            <input class="border-1px-solid border-color-bbb line-height-50px padding-x-10px" placeholder="Page Name" type="text">
+                        </column>
+                    </box>
+                    <box class="border-color-bbb border-top-1px-solid line-height-50px padding-top-50pct width-100pct">
+                        <row data-columns="2">
+                            <text class="background-color-333 color-fff text-align-center" data-submit="form-createR">Create</text>
+                            <text class="text-align-center" data-href="/dashboard/:get/pages/">Cancel</text>
+                        </row>
+                    </box>
+                </column>
+            </form>
+        </column>
+    </block>
+</blocks>

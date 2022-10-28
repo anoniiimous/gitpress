@@ -1,0 +1,49 @@
+<blocks>
+    <header>
+        <row class="justify-content-space-between">
+            <card>
+                <row>
+                    <box class="display-none" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico>
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box class="line-height-50px">
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Posts</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row>
+                    <box class="background-color-333 color-fff display-none line-height-50px padding-x-20px">
+                        <section>
+                            <text class="font-size-14px font-weight-bolder">Create Post</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
+    <block></block>
+    <block class="align-items-center empty-state flex-grow-1 justify-content-center">
+        <column class="align-items-center justify-content-center">
+            <picture class="position-relative width-240px">
+                <img class="width-100pct" src="cdn/png/astronaut-pencil.png">
+            </picture>
+            <box>
+                <section>
+                    <text class="font-size-13px"></text>
+                </section>
+            </box>
+            <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative" data-href="/dashboard/:get/posts/post/">
+                <section>
+                    <text class="font-size-14px font-weight-bolder">Add New Post</text>
+                </section>
+            </box>
+        </column>
+    </block>
+</blocks>
