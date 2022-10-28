@@ -292,6 +292,7 @@ function ajax(url, settings) {
             url = '/' + document.head.querySelector('[name="application-shortname"]').content + url;
         }
     }
+    console.log({url});
     return new Promise((resolve,reject)=>{
         var req;
         var data = {};

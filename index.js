@@ -1,5 +1,5 @@
 window.api = {
-    endpoint: "https://api.uios.computer"
+    endpoint: "https://api-anon.herokuapp.com"
 };
 
 window.auth ? null : window.auth = {};
@@ -13,7 +13,7 @@ auth.config = {
 
 window.cdn = {
     endpoint: "https://cdn.uios.computer/file/write-uios"
-};
+}
 
 window.onload = ()=>{
     window.dom = {
@@ -23,7 +23,6 @@ window.onload = ()=>{
     };
 
     window.global = window.globals;
-
     dom.body.dataset.load = "ing";
 
     init();

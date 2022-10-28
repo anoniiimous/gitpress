@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Gitpress &#8226;&#160;Anon</title>
+        <title>GitPress</title>
         <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0'>
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
         <meta name='apple-mobile-web-app-capable' content='yes'>
@@ -20,21 +20,18 @@
                 }
             }
             const base = document.createElement("base");
-            base.href = (globals.domains.domain === "github" ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+            base.href =  (globals.domains.domain === "github" ? "/"+document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
         <link href="index.css" rel="stylesheet">
         <link href="cdn/css/gg.css" rel="stylesheet">
-        <link href="cdn/css/boiler.css" rel="stylesheet">
         <script id="firebase-app" src="cdn/js/firebase-app.js"></script>
         <script id="firebase-auth" src="cdn/js/firebase-auth.js"></script>
-        <script id="script-vanilla" src="cdn/js/vanilla.js"></script>
-        <script id="script-auth" src="cdn/js/auth.js"></script>
-        <script id="script-mvc" src="cdn/js/mvc.js"></script>
-        <script id="script-on" src="cdn/js/on.js"></script>
-        <script id="script-touch" src="cdn/js/touch.js"></script>
-        <script id="script-router" src="cdn/js/router.js"></script>
+        <script src="cdn/js/auth.js"></script>
+        <script src="cdn/js/mvc.js"></script>
+        <script src="cdn/js/on.js"></script>
+        <script src="cdn/js/router.js"></script>
+        <script src="cdn/js/vanilla.js"></script>
         <script src="index.js"></script>
     </head>
     <body class="-dark-background-color-1f background-color-fff" data-theme="system">
