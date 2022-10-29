@@ -590,6 +590,10 @@ window.on["submit"] = {
             if (title && shortname) {
                 ('/dashboard/' + shortname + '/').router();
             }
+            if(shortname) {
+                const data = {name: shortname};
+                github.users.repo(data, "POST")
+            }
         }
     },
     dashboard: {
