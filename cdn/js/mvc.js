@@ -107,17 +107,21 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         in: async(event,f)=>{
             event.preventDefault();
-            alert("controller.sign.in");
-            if (localStorage.githubAccessToken) {
-                var href = (auth.user() ? '/users/' + auth.user().uid + "/" : '/my/');
-                var nav = byId('template-editor-nav').content.firstElementChild;
-                var popup = await modal.popup(nav.outerHTML);
-                popup.className = "absolute-full bg-black-1-2 fixed";
-                popup.dataset.tap = "event.target.tagName === 'ASIDE' ? modal.exit(event.target) : null";
-                popup.dataset.zIndex = 7;
-                console.log({
-                    nav
-                });
+            const token = localStorage.githubAccessToken;
+            if (token) {
+                var credential = firebase.auth.GithubAuthProvider.credential(token);
+                firebase.auth().signInWithCredential(credential).then((result)=>{
+                    //alert("Signed in with credential.");
+                }
+                ).catch((error)=>{
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // The email of the user's account used.
+                    const email = error.email;
+                    // ...
+                }
+                );
             } else {
                 var provider = new firebase.auth.GithubAuthProvider();
                 provider.addScope('repo');
