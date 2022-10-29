@@ -292,7 +292,6 @@ function ajax(url, settings) {
             url = '/' + document.head.querySelector('[name="application-shortname"]').content + url;
         }
     }
-    console.log({url});
     return new Promise((resolve,reject)=>{
         var req;
         var data = {};
@@ -462,4 +461,10 @@ function getPages(win) {
         root = paths.page.stringExists(arr);
     }
     return root;
+}
+
+window.notify = {
+    alert: message => {
+        alert(message);
+    }
 }

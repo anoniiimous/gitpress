@@ -393,22 +393,23 @@ window.on.touch = {
     var className = target.className;
     var elem = target.closest("[data-evt]");
     var evt = elem ? elem.dataset.evt : null;
-    var dataset = target.dataset;
     if (evt === "steps") {
-        if (classList.contains("goto-step")) {
+        const button = target.closest('[data-goto]');
+        if (button) {
+            var dataset = button.dataset;
             if (dataset.disabled) {
                 if (dataset.disabled === "true") {
                     notify.alert(dataset.require, 3);
                 } else {
-                    step(classList);
+                    step(dataset);
                 }
             } else if (dataset.confirm) {
                 if (dataset.confirm === "true") {
                     if (confirm(dataset.message)) {
-                        step(classList);
+                        step(dataset);
                     }
                 } else {
-                    step(classList);
+                    step(dataset);
                 }
             } else if (dataset.complete) {
                 if (dataset.complete === "false") {
@@ -416,12 +417,27 @@ window.on.touch = {
                 } else {
                     popup.page(target.innerHTML);
                 }
+            } else {
+                step(dataset);
             }
-            function step(s) {
-                if (s.contains("back")) {
-                    event.target.closest(".steps").dataset.step = event.target.closest("[data-step]").previousElementSibling.dataset.step;
-                } else if (s.contains("next")) {
-                    event.target.closest(".steps").dataset.step = event.target.closest("[data-step]").nextElementSibling.dataset.step;
+        }
+        function step(dataset) {
+            console.log({
+                dataset
+            });
+            if (dataset.goto) {
+                $(event.target.closest('blocks').all('block[data-step]')).addClass('display-none');
+                $(event.target.closest('blocks').all('block[data-step="' + dataset.goto + '"]')).removeClass('display-none');
+                var link = "";
+                if(dataset.goto === "two") {
+                    const color = 1>0 ? "fff" : "000";
+                    const domain = event.target.closest('block').find('input').value;
+                    link = "/setup/" + domain + '/' + color + "/";
+                    link.router();
+                }
+                if(dataset.goto === "three") {
+                    link = "/setup/:get/:get/_/";
+                    link.router();
                 }
             }
         }
@@ -444,7 +460,7 @@ window.on.focus.in.card = {
         lastname = parts.length > 1 ? parts[parts.length - 1] : null;
 
         const text = target.parentNode.previousElementSibling;
-        
+
         target.className = "padding-x-20px";
         text.className = "background-color-fff color-bbb height-18px line-height-18px padding-x-20px position-absolute";
         text.dataset.transform = "translate3d(0,-50%,0)";
@@ -534,35 +550,59 @@ window.on.key.up.card = {
         } else {
             target.classList.add('color-ff3b30');
             text.classList.remove('color-bbb')
-            text.classList.add('color-ff3b30')            
+            text.classList.add('color-ff3b30')
         }
 
         //byId('preview-card').find('.card-holder :first-child').textContent = firstname;
         //byId('preview-card').find('.card-holder :last-child').textContent = lastname;
     }
 };
+window.on.key.up.setup = {
+    app: event=>{
+        var target = event.target;
+        var keyCode = event.keyCode;
+        var logo = byId("preview-logo");
+        const button = target.closest('block').find('[data-goto="two"]');
+        if (target.value === "") {
+            logo.firstElementChild.dataset.char = "A";
+            logo.dataset.after = "App Title";
+            button.dataset.disabled = "true";
+            button.classList.add('opacity-50pct');
+        } else {
+            logo.firstElementChild.dataset.char = target.value.charAt(0);
+            logo.dataset.after = target.value;
+            button.dataset.disabled = "false";
+            button.classList.remove('opacity-50pct');
+        }
+        if (keyCode === 13) {
+            button.click();
+        }
+    }
+}
 
 window.on["submit"] = {
     create: {
-        project: event => {
+        project: event=>{
             event.preventDefault();
             const form = event.target;
             const title = form.all('input')[0].value;
             const shortname = form.all('input')[1].value;
-            if(title && shortname) {
+            if (title && shortname) {
                 ('/dashboard/' + shortname + '/').router();
             }
         }
     },
     dashboard: {
-        files: (event) => {
+        files: (event)=>{
             event.preventDefault();
-        },
-        page: (event) => {
-            event.preventDefault();           
-        },
-        project: (event) => {
-            event.preventDefault();         
+        }
+        ,
+        page: (event)=>{
+            event.preventDefault();
+        }
+        ,
+        project: (event)=>{
+            event.preventDefault();
         }
     },
     my: {
@@ -582,5 +622,5 @@ window.on["submit"] = {
             }
             );
         }
-    }    
+    }
 };

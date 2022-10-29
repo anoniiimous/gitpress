@@ -20,7 +20,7 @@
                 }
             }
             const base = document.createElement("base");
-            base.href =  (globals.domains.domain === "github" ? "/"+document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+            base.href = (globals.domains.domain === "github" ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
         <link href="index.css" rel="stylesheet">
@@ -35,13 +35,14 @@
         <script src="cdn/js/touch.js"></script>
         <script src="cdn/js/vanilla.js"></script>
         <script src="index.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
     </head>
     <body class="-dark-background-color-1f background-color-fff" data-theme="system">
         <boot id="boot"></boot>
         <page data-fetch="/cdn/html/page/page.index.html" data-page="/"></page>
         <page class="-isauth backdrop-blur-10px flex-grow-1 min-height-100pct position-fixed width-100pct" data-background-color="rgba(0,0,0,0.5)" data-fetch="/cdn/html/page/page.dashboard.blog.pages.page.html" data-page="/dashboard/*/pages/page/"></page>
         <page class="-isauth background-color-bbb flex-grow-1 min-height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.create.html" data-page="/create/"></page>
-        <page class="-isauth flex-grow-1 height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.setup.html" data-page="/setup/"></page>
+        <page class="-isauth flex-grow-1 height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.setup.html" data-pages="/setup/" data-root="/setup/"></page>
         <main data-pages="/dashboard/">
             <pages class="-isauth flex-grow-1 margin-left-280px padding-20px" data-960px-margin-left="0" data-transition="0.3s">
                 <page class="flex-grow-1" data-fetch="/cdn/html/page/page.dashboard.blog.html" data-page="/dashboard/*/"></page>
