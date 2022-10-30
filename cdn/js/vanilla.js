@@ -295,8 +295,8 @@ function ajax(url, settings) {
     return new Promise((resolve,reject)=>{
         var req;
         var data = {};
+        console.log(url, settings);
         if (settings) {
-            settings.headers ? data.headers = settings.headers : null;
             if (settings.dataType) {
                 data = {
                     method: settings.dataType,
@@ -306,10 +306,12 @@ function ajax(url, settings) {
             } else {
                 req = url;
             }
+            settings.headers ? data.headers = settings.headers : null;
             settings.signal ? data.signal = signal : null;
         } else {
             req = url;
         }
+        console.log(url, data);
         fetch(url, data).then(async(response)=>{
             if (!response.ok) {
                 return response.text().then(text=>{

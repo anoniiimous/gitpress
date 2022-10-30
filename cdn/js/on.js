@@ -415,7 +415,7 @@ window.on.touch = {
                 if (dataset.complete === "false") {
                     notify.alert(dataset.require, 3);
                 } else {
-                    popup.page(target.innerHTML);
+                    modal.page(byId(dataset.complete).content.firstElementChild.outerHTML);
                 }
             } else {
                 step(dataset);
@@ -429,13 +429,13 @@ window.on.touch = {
                 $(event.target.closest('blocks').all('block[data-step]')).addClass('display-none');
                 $(event.target.closest('blocks').all('block[data-step="' + dataset.goto + '"]')).removeClass('display-none');
                 var link = "";
-                if(dataset.goto === "two") {
-                    const color = 1>0 ? "fff" : "000";
+                if (dataset.goto === "two") {
+                    const color = 1 > 0 ? "fff" : "000";
                     const domain = event.target.closest('block').find('input').value;
                     link = "/setup/" + domain + '/' + color + "/";
                     link.router();
                 }
-                if(dataset.goto === "three") {
+                if (dataset.goto === "three") {
                     link = "/setup/:get/:get/_/";
                     link.router();
                 }
@@ -585,14 +585,18 @@ window.on["submit"] = {
         project: event=>{
             event.preventDefault();
             const form = event.target;
-            const title = form.all('input')[0].value;
-            const shortname = form.all('input')[1].value;
-            if (title && shortname) {
-                ('/dashboard/' + shortname + '/').router();
-            }
-            if(shortname) {
-                const data = {name: shortname};
-                github.users.repo(data, "POST")
+            const name = form.all('input')[1].value;
+            if (name) {
+                const data = JSON.stringify({
+                    name
+                });
+                const dataType = "POST";
+                const settings = {
+                    data,
+                    dataType
+                };
+                console.log(settings);
+                github.user.repos(settings)
             }
         }
     },
