@@ -415,7 +415,7 @@ window.on.touch = {
                 if (dataset.complete === "false") {
                     notify.alert(dataset.require, 3);
                 } else {
-                    modal.page(byId(dataset.complete).content.firstElementChild.outerHTML);
+                    modal.page(byId(dataset.complete).content.firstElementChild.outerHTML,null,'backdrop-filter-blur-10px position-fixed width-100pct');
                 }
             } else {
                 step(dataset);

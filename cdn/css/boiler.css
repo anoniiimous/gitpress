@@ -6,7 +6,7 @@
 
 /*BACKDROP BLUR*/
 @media screen {
-    .backdrop-blur-10px {
+    .backdrop-blur-10px, .backdrop-filter-blur-10px {
         backdrop-filter: blur(10px);
     }
 }
@@ -358,6 +358,10 @@
 
     .margin-20px {
         margin: 20px;
+    }
+
+    .margin-25px-auto {
+        margin: 25px auto;
     }
 
     .margin-bottom-1px {
@@ -747,6 +751,10 @@
 
     .width-300px, [data-width="300px"] {
         width: 300px;
+    }
+
+    .width-425px, [data-width="4250px"] {
+        width: 425px;
     }
 
     .width-480px {
