@@ -40,6 +40,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         github.user.repos(settings).then(data => {
                             console.log({data});
                             const feed = byId('feed-dashboard');
+                            feed.innerHTML = "";
                             if(data.length > 0) {
                                 const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
                                 var x = 0;

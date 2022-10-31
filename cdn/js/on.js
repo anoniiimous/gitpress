@@ -648,9 +648,10 @@ window.on["submit"] = {
         form: event=>{
             event.preventDefault();
             const form = event.target;
-            const name = form.all('input')[0].value;
+            const name = 'blog.anoniiimous.' + form.all('input')[0].value;
+            const template = 'default';
             if (name) {
-                const data = JSON.stringify({
+                var data = JSON.stringify({
                     name
                 });
                 const dataType = "POST";
@@ -659,11 +660,27 @@ window.on["submit"] = {
                     dataType
                 };
                 console.log(settings);
-                github.user.repos(settings).then((data)=>{
-                    alert("Project created" + data.name);
-                    const html = byId('template-setup-complete').content.firstElementChild;
-                    html.all('box')[3].dataset.href = "/dashboard/" + data.name;
-                    modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                github.repos.generate(settings).then(async(data)=>{
+                    console.log('repos.generate', {data});
+                    var owner = "anoniiimous";
+                    var repo = template;
+                    var path = "/index.html";
+                    var params = {
+                        owner,
+                        repo,
+                        path
+                    }
+                    var data = JSON.stringify({});
+                    const settings = {
+                        data
+                    };
+                    github.repos.contents(params,settings).then(async(data)=>{
+                        alert("Project created" + data.name);
+                        const html = byId('template-setup-complete').content.firstElementChild;
+                        html.all('box')[3].dataset.href = "/dashboard/" + data.name;
+                        modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                    }
+                    );
                 }
                 )
             }
