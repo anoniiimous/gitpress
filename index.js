@@ -104,12 +104,14 @@ function init() {
         firebase.initializeApp(auth.config);
         const onAuthStateChanged = function(user) {
             auth.change(user).then(authChange);
-            if (user) {//byId("avi").innerHTML = "<img onerror='model.error.image(this)' src='" + (cdn.endpoint + "/" + user.uid + "/avi.jpg") + "'>";
-            } else {//byId("avi").innerHTML = "";
+            if (user) {
+                //byId("avi").innerHTML = "<img onerror='model.error.image(this)' src='" + (cdn.endpoint + "/" + user.uid + "/avi.jpg") + "'>";
+            } else {
+                //byId("avi").innerHTML = "";
             }
+            go ? null : uri.router().then(go = true);
         }
         firebase.auth().onAuthStateChanged(onAuthStateChanged);
-        go ? null : uri.router().then(go = true);
     } else {
         uri.router().then(authChange);
     }

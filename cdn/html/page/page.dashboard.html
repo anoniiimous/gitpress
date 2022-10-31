@@ -1,5 +1,5 @@
-<blocks class="flex-grow-1 padding-20px">
-    <header class="line-height-50px width-100pct">
+<blocks class="flex-grow-1">
+    <header class="line-height-50px padding-20px">
         <row class="justify-content-space-between">
             <card class="margin-left-auto">
                 <row>
@@ -20,7 +20,7 @@
             </card>
         </row>
     </header>
-    <block>
+    <block class="padding-20px">
         <column>
             <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px margin-x-auto margin-y-20px max-width-768px width-100pct">
                 <row>
@@ -35,17 +35,18 @@
                 </row>
             </form>
             <card class="line-height-50px margin-auto max-width-768px width-100pct">
-                <column>
-                    <box class="background-color-fff margin-bottom-1px" data-href="/dashboard/demo/">
-                        <row>
-                            <ico>
-                                <n class="gg-search"></n>
-                            </ico>
-                            <text class="font-weight-bolder">Demo</text>
-                        </row>
-                    </box>
-                </column>
+                <column id="feed-dashboard"></column>
             </card>
         </column>
     </block>
 </blocks>
+<template id="template-feed-dashboard">
+    <box class="background-color-fff margin-bottom-1px" data-href="/dashboard/demo/">
+        <row>
+            <ico>
+                <n class="gg-search"></n>
+            </ico>
+            <text class="font-weight-bolder">Demo</text>
+        </row>
+    </box>
+</template>

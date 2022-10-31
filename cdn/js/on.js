@@ -394,6 +394,7 @@ window.on.touch = {
     var elem = target.closest("[data-evt]");
     var evt = elem ? elem.dataset.evt : null;
     if (evt === "steps") {
+        const form = target.closest('form');
         const button = target.closest('[data-goto]');
         if (button) {
             var dataset = button.dataset;
@@ -415,7 +416,7 @@ window.on.touch = {
                 if (dataset.complete === "false") {
                     notify.alert(dataset.require, 3);
                 } else {
-                    modal.page(byId(dataset.complete).content.firstElementChild.outerHTML,null,'backdrop-filter-blur-10px position-fixed width-100pct');
+                    form.find('input[type="submit"]').click();
                 }
             } else {
                 step(dataset);
@@ -426,8 +427,8 @@ window.on.touch = {
                 dataset
             });
             if (dataset.goto) {
-                $(event.target.closest('blocks').all('block[data-step]')).addClass('display-none');
-                $(event.target.closest('blocks').all('block[data-step="' + dataset.goto + '"]')).removeClass('display-none');
+                $(event.target.closest('form').all('block[data-step]')).addClass('display-none');
+                $(event.target.closest('form').all('block[data-step="' + dataset.goto + '"]')).removeClass('display-none');
                 var link = "";
                 if (dataset.goto === "two") {
                     const color = 1 > 0 ? "fff" : "000";
@@ -529,6 +530,15 @@ window.on.key.down.card = {
         text.dataset.transform = "translate3d(0,-50%,0)";
     }
 };
+window.on.key.down.setup = {
+    app: (event)=>{
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    }
+}
+
 window.on.key.up = {};
 window.on.key.up.card = {
     holder: event=>{
@@ -596,7 +606,10 @@ window.on["submit"] = {
                     dataType
                 };
                 console.log(settings);
-                github.user.repos(settings)
+                github.user.repos(settings).then(()=>{
+                    modal.page(byId(dataset.complete).content.firstElementChild.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                }
+                )
             }
         }
     },
@@ -630,5 +643,30 @@ window.on["submit"] = {
             }
             );
         }
-    }
+    },
+    setup: {
+        form: event=>{
+            event.preventDefault();
+            const form = event.target;
+            const name = form.all('input')[0].value;
+            if (name) {
+                const data = JSON.stringify({
+                    name
+                });
+                const dataType = "POST";
+                const settings = {
+                    data,
+                    dataType
+                };
+                console.log(settings);
+                github.user.repos(settings).then((data)=>{
+                    alert("Project created" + data.name);
+                    const html = byId('template-setup-complete').content.firstElementChild;
+                    html.all('box')[3].dataset.href = "/dashboard/" + data.name;
+                    modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                }
+                )
+            }
+        }
+    },
 };

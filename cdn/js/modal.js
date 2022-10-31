@@ -113,7 +113,7 @@
   },
   confirm: (h, opt, callBack, ppp = document.createElement('aside')) => {
     ppp.setAttribute('class', 'aside body-aside card');
-    ppp.innerHTML = `<section class="card-confirm"><card class="card"><section>`+h+`</section><footer><div class="confirm">`+opt[0]+`</div><div class="cancel">`+opt[1]+`</div></footer></card></section>`;
+    ppp.innerHTML = `<section><card><section>`+h+`</section><footer><div class="confirm">`+opt[0]+`</div><div class="cancel">`+opt[1]+`</div></footer></card></section>`;
     ppp.onclick = event => {
       if(event.target.classList.contains('aside')) {
         event.target.remove();

@@ -1,4 +1,4 @@
-<blocks class="display-block overflow-x-hidden" data-evt="steps">
+<form class="display-block overflow-x-hidden width-100pct" data-evt="steps" onsubmit="on.submit.setup.form(event)">
     <header class="position-fixed top-0 width-100pct z-index-5">
         <section>
             <card class="margin-auto max-width-480px width-100pct">
@@ -40,7 +40,7 @@
                     <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
                         <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Domain Name</text>
                         <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <input class="flex-grow-1 padding-x-20px" onkeyup="on.key.up.setup.app(event)" type="text">
+                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
                         </row>
                     </box>
                 </column>
@@ -206,31 +206,33 @@
                         <text>Back</text>
                     </row>
                 </box>
-                <box class="padding-x-10px" data-complete="template-setup-complete" data-goto data-message="Are you sure you want to continue without providing a logo?">
+                <box class="padding-x-10px" data-complete="template-setup-complete" data-goto="complete" data-message="Are you sure you want to continue without providing a logo?">
                     <row>
                         <text>Done</text>
                         <ico data-width="25px">
                             <n class="gg-chevron-right"></n>
                         </ico>
+                        <input type="submit">
                     </row>
                 </box>
             </row>
         </footer>
     </block>
-</blocks>
+</form>
 <template id="template-setup-complete">
     <block class="align-center height-100pct justify-content-center min-height-100vh width-100pct" data-background-color="rgba(0,0,0,0.5)">
-        <section>
+        <form onsubmit="on.submit.create(event)">
             <card class="background-color-fff border-radius-10px margin-auto overflow-hidden text-align-center width-300px" data-max-width="calc(100% - 40px)">
                 <column>
                     <box>
                         <section>
                             <picture class="background-color-000 border-radius-50pct height-50px margin-25px-auto width-50px"></picture>
+                            <input class="display-none" type="submit">
                         </section>
                     </box>
                     <box class="padding-20px">
                         <column>
-                            <text>All Done!</text>
+                            <text class="font-size-24px font-weight-bolder">All Done!</text>
                             <text>Your app has been created.</text>
                         </column>
                     </box>
@@ -242,10 +244,11 @@
                     <box class="background-color-bbb color-fff margin-top-20px padding-20px">
                         <column>
                             <text>Open Dashboard</text>
+                            <input type="submit">
                         </column>
                     </box>
                 </column>
             </card>
-        </section>
+        </form>
     </block>
 </template>

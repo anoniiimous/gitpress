@@ -25,31 +25,55 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         controller.nav.close();
 
+        $(dom.body.all('aside')).remove()
+
         if (root) {
 
             if (root === "dashboard") {
                 if (get.length > 1) {
                     const title = get[1];
                     dom.body.find('main > nav [placeholder]').textContent = title;
+                } else {
+                    if (auth.user()) {
+                        const settings = {};
+                        console.log(settings);
+                        github.user.repos(settings).then(data => {
+                            console.log({data});
+                            const feed = byId('feed-dashboard');
+                            if(data.length > 0) {
+                                const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
+                                var x = 0;
+                                do {
+                                    const row = data[x];
+                                    template.dataset.href = "/dashboard/" + row.name;
+                                    template.find('text').innerHTML = row.name;
+                                    feed.insertAdjacentHTML('beforeend', template.outerHTML);
+                                    x++;
+                                } while(x < data.length);
+                            }
+                        });
+                    } else {
+                        alert(321);
+                    }
                 }
                 resolve(route);
             } else if (root === "setup") {
                 var vp = dom.body.find('[data-pages="/setup/"]');
                 if (get.length > 1) {
-                    $(vp.all('blocks > header box flex')).attr("data-height", "30px");
-                    $(vp.all('blocks > header box flex')).attr("data-width", "30px");
+                    $(vp.all('form > header box flex')).attr("data-height", "30px");
+                    $(vp.all('form > header box flex')).attr("data-width", "30px");
                     vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
                     vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.remove('opacity-50pct');
                     vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
                     if (get.length > 2) {
                         if (get.length > 3) {
-                            $(vp.all('blocks > header box flex')[2]).attr("data-height", "50px");
-                            $(vp.all('blocks > header box flex')[2]).attr("data-width", "50px");
+                            $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
+                            $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
                             $(vp.all('block[data-step]')).addClass('display-none');
                             $(vp.all('block[data-step]')[2]).removeClass('display-none');
                         } else {
-                            $(vp.all('blocks > header box flex')[1]).attr("data-height", "50px");
-                            $(vp.all('blocks > header box flex')[1]).attr("data-width", "50px");
+                            $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
+                            $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
                             $(vp.all('block[data-step]')).addClass('display-none');
                             $(vp.all('block[data-step]')[1]).removeClass('display-none');
 
@@ -96,8 +120,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                         }
                     } else {
-                        $(vp.all('blocks > header box flex')[0]).attr("data-height", "50px");
-                        $(vp.all('blocks > header box flex')[0]).attr("data-width", "50px");
+                        $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
+                        $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
                         $(vp.all('block[data-step]')).addClass('display-none');
                         $(vp.all('block[data-step]')[0]).removeClass('display-none');
                     }
@@ -106,8 +130,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
                     vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "true";
                     vp.all('block[data-step]')[0].find('input[type="text"]').value = "";
-                    $(vp.all('blocks > header box flex')[0]).attr("data-height", "50px");
-                    $(vp.all('blocks > header box flex')[0]).attr("data-width", "50px");
+                    $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
+                    $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
                     $(vp.all('block[data-step]')).addClass('display-none');
                     $(vp.all('block[data-step]')[0]).removeClass('display-none');
                 }
