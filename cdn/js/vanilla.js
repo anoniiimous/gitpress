@@ -295,7 +295,7 @@ function ajax(url, settings) {
     return new Promise((resolve,reject)=>{
         var req;
         var data = {};
-        console.log(url, settings);
+        //console.log(url, settings);
         if (settings) {
             if (settings.dataType) {
                 data = {
@@ -311,7 +311,6 @@ function ajax(url, settings) {
         } else {
             req = url;
         }
-        console.log(url, data);
         fetch(url, data).then(async(response)=>{
             if (!response.ok) {
                 return response.text().then(text=>{

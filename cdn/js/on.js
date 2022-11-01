@@ -648,7 +648,8 @@ window.on["submit"] = {
         form: event=>{
             event.preventDefault();
             const form = event.target;
-            const name = 'blog.anoniiimous.' + form.all('input')[0].value;
+            const shortname = form.all('input')[0].value;
+            const name = 'blog.anoniiimous.' + shortname;
             const template = 'default';
             if (name) {
                 var data = JSON.stringify({
@@ -664,27 +665,29 @@ window.on["submit"] = {
                     console.log('repos.generate', {data});
                     var owner = "anoniiimous";
                     var repo = name;
-                    var path = "/site.webmanifest";
+                    var path = "site.webmanifest";
                     var params = {
                         owner,
                         repo,
                         path
                     }
                     const message = "Create webmanifest";
-                    const content = "";
+                    const content = btoa("This is a test.");
                     var data = JSON.stringify({message, content});
-                    var dataType = 'POST';
+                    var dataType = 'PUT';
                     const settings = {
                         data,
                         dataType
                     };
-                    github.repos.contents(params,settings).then(async(data)=>{
-                        alert("Project created" + data.name);
+                    
                         const html = byId('template-setup-complete').content.firstElementChild;
-                        html.all('box')[3].dataset.href = "/dashboard/" + data.name;
+                        html.all('box')[3].dataset.href = "/dashboard/" + shortname;
                         modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                    
+                    1<0 ? github.repos.contents(params,settings).then(async(data)=>{
+                        console.log({data});
                     }
-                    );
+                    ) : null;
                 }
                 )
             }

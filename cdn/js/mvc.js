@@ -50,7 +50,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     const row = data[x];
                                     template.find('text').dataset.href = "/dashboard/" + row.name;
                                     template.find('text').dataset.owner = row.owner.login;
-                                    template.find('text').innerHTML = row.name;
+                                    template.find('text').innerHTML = row.name.split('.')[2];
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                     x++;
                                 } while(x < data.length);
