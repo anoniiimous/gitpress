@@ -51,6 +51,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     const shortname = row.name.split('.')[2];;
                                     template.find('text').dataset.href = "/dashboard/" + shortname;
                                     template.find('text').dataset.owner = row.owner.login;
+                                    template.find('text').dataset.repo = row.name;
                                     template.find('text').innerHTML = shortname
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                     x++;

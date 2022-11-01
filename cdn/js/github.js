@@ -26,7 +26,8 @@ window.github = {
                             Authorization: "token " + accessToken
                         } : null;
                         console.log({
-                            url, settings
+                            url,
+                            settings
                         });
                         ajax(url, settings).then(a).catch(b);
                     }
@@ -62,7 +63,7 @@ window.github = {
             }
         }
         ,
-        create: (params, settings)=>{
+        create: (params,settings)=>{
             if (settings.dataType) {
                 if (settings.dataType === "POST") {
                     return new Promise((resolve,reject)=>{
@@ -92,13 +93,15 @@ window.github = {
                     );
                 }
             }
-        },
+        }
+        ,
         delete: (target)=>{
             console.log(target);
             const box = target.closest('box');
             const owner = box.find('text').dataset.owner;
-            const repo = box.find('text').textContent;
-            if (confirm("Are you sure you wnat to delete the project entitled " + repo + "?")) {
+            const repo = box.find('text').dataset.repo;
+            const name = box.find('text').textContent;
+            if (confirm("Are you sure you wnat to delete the project entitled " + name + "?")) {
                 return new Promise((resolve,reject)=>{
                     const url = github.endpoint + "/repos/" + owner + "/" + repo;
                     const dataType = "DELETE";
