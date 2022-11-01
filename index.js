@@ -105,8 +105,10 @@ function init() {
         const onAuthStateChanged = function(user) {
             auth.change(user).then(authChange);
             if (user) {
-                //byId("avi").innerHTML = "<img onerror='model.error.image(this)' src='" + (cdn.endpoint + "/" + user.uid + "/avi.jpg") + "'>";
+                uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
             } else {
+                uri = "/dashboard/";
+                localStorage.removeItem('githubAccessToken');
                 //byId("avi").innerHTML = "";
             }
             go ? null : uri.router().then(go = true);

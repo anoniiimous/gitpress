@@ -90,6 +90,10 @@
 
 /*BORDER RADIUS*/
 @media screen {
+    .border-radius-15pct {
+        border-radius: 15%;    
+    }
+    
     .border-radius-50pct {
         border-radius: 50%;
     }

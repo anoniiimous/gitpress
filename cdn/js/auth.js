@@ -208,6 +208,8 @@ window.auth = {
                     provider = new firebase.auth.FacebookAuthProvider();
                 } else if (net === "github") {
                     provider = new firebase.auth.GithubAuthProvider();
+                    provider.addScope("repo");
+                    provider.addScope("delete_repo");
                 } else if (net === "google") {
                     provider = new firebase.auth.GoogleAuthProvider();
                     provider.addScope("https://www.googleapis.com/auth/drive");

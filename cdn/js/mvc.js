@@ -37,7 +37,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (auth.user()) {
                         const settings = {};
                         console.log(settings);
-                        github.user.repos(settings).then(data => {
+                        const user = await github.user.get(); console.log({user},user.login);
+                        github.search.repositories("q=blog.anoniiimous+user%3A"+user.login).then(data => {
+                            data = data.filter(item => item.name.includes('blog.anoniiimous'));
                             console.log({data});
                             const feed = byId('feed-dashboard');
                             feed.innerHTML = "";
@@ -46,15 +48,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var x = 0;
                                 do {
                                     const row = data[x];
-                                    template.dataset.href = "/dashboard/" + row.name;
+                                    template.find('text').dataset.href = "/dashboard/" + row.name;
+                                    template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').innerHTML = row.name;
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                     x++;
                                 } while(x < data.length);
                             }
                         });
-                    } else {
-                        alert(321);
                     }
                 }
                 resolve(route);
@@ -209,14 +210,46 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     sign: {
 
-        in: (event,f)=>{
+        in: async(event,f)=>{
+
             event.preventDefault();
-            auth.account.login(event).then(e=>(f ? f : '/').router()).catch(e=>{
-                var code = e.code;
-                var message = e.message;
-                alert(message);
+            if (localStorage.githubAccessToken) {
+                var href = (auth.user() ? '/users/' + auth.user().uid + "/" : '/my/');
+                var popup = await modal.popup(nav.outerHTML);
+                popup.className = "absolute-full bg-black-1-2 fixed";
+                popup.dataset.tap = "event.target.tagName === 'ASIDE' ? modal.exit(event.target) : null";
+                popup.dataset.zIndex = 7;
+                console.log({
+                    nav
+                });
+            } else {
+                var provider = new firebase.auth.GithubAuthProvider();
+                provider.addScope('repo');
+                provider.addScope('delete_repo');
+                provider.setCustomParameters({
+                    'redirect_uri': 'https://codepen.io/anoniiimous/pen/WNMvNoY'
+                });
+
+                firebase.auth().signInWithPopup(provider).then((result)=>{
+                    var credential = result.credential;
+                    var token = credential.accessToken;
+                    var user = result.user;
+                    console.log({
+                        result
+                    });
+                    localStorage.setItem('githubAccessToken', token);
+                }
+                ).catch((error)=>{
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    var email = error.email;
+                    var credential = error.credential;
+                    console.log({
+                        error
+                    });
+                }
+                );
             }
-            );
         }
 
     }

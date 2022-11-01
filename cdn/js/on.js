@@ -663,16 +663,20 @@ window.on["submit"] = {
                 github.repos.generate(settings).then(async(data)=>{
                     console.log('repos.generate', {data});
                     var owner = "anoniiimous";
-                    var repo = template;
-                    var path = "/index.html";
+                    var repo = name;
+                    var path = "/site.webmanifest";
                     var params = {
                         owner,
                         repo,
                         path
                     }
-                    var data = JSON.stringify({});
+                    const message = "Create webmanifest";
+                    const content = "";
+                    var data = JSON.stringify({message, content});
+                    var dataType = 'POST';
                     const settings = {
-                        data
+                        data,
+                        dataType
                     };
                     github.repos.contents(params,settings).then(async(data)=>{
                         alert("Project created" + data.name);

@@ -1,8 +1,15 @@
 <blocks class="flex-grow-1">
     <header class="line-height-50px padding-20px">
         <row class="justify-content-space-between">
-            <card class="margin-left-auto">
+            <card class="margin-left-auto width-100pct">
                 <row>
+                    <box class="box-sizing-border-box line-height-50px margin-right-auto padding-x-20px" data-tap="auth.account.close()">
+                        <section>
+                            <ico>
+                                <n class="gg-log-off"></n>
+                            </ico>
+                        </section>
+                    </box>
                     <box class="box-sizing-border-box line-height-50px padding-x-20px" data-href="/">
                         <section>
                             <text>Go back</text>
@@ -41,12 +48,16 @@
     </block>
 </blocks>
 <template id="template-feed-dashboard">
-    <box class="background-color-fff margin-bottom-1px" data-href="/dashboard/demo/">
+    <box class="background-color-fff margin-bottom-1px">
         <row>
-            <ico>
-                <n class="gg-search"></n>
+            <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
+                <n></n>
+                <n class="empty-state"></n>
             </ico>
             <text class="font-weight-bolder">Demo</text>
+            <ico class="margin-left-auto" data-tap="github.repos.delete(event.target)">
+                <n class="gg-trash"></n>
+            </ico>
         </row>
     </box>
 </template>
