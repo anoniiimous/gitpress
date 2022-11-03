@@ -662,9 +662,12 @@ window.on["submit"] = {
         project: event=>{
             event.preventDefault();
             const form = event.target;
-            const name = form.all('input')[1].value;
+            const shortname = form.all('input[type="text"]')[0].value;
+            const name = 'blog.anoniiimous.' + shortname;
+            const template = 'default';
+            console.log({form,input:form.all('input[type="text"]')});
             if (name) {
-                const data = JSON.stringify({
+                var data = JSON.stringify({
                     name
                 });
                 const dataType = "POST";
@@ -672,9 +675,12 @@ window.on["submit"] = {
                     data,
                     dataType
                 };
-                console.log(settings);
-                github.user.repos(settings).then(()=>{
-                    modal.page(byId(dataset.complete).content.firstElementChild.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                console.log(settings,shortname);
+                github.repos.generate(settings).then(async(data)=>{
+                    console.log('repos.generate', {
+                        data, shortname
+                    });
+                    ('/dashboard/' + shortname + '/').router();
                 }
                 )
             }
@@ -705,7 +711,7 @@ window.on["submit"] = {
             const user = await github.user.get();
 
             var owner = user.login;
-            var repo = "blog.anoniiimous."+GET[1];
+            var repo = "blog.anoniiimous." + GET[1];
             var path = "site.webmanifest";
             var params = {
                 owner,
@@ -716,10 +722,12 @@ window.on["submit"] = {
                 name,
                 "theme_color": color
             });
-            raw = "Hello world."
             var content = btoa(raw);
             var message = "Create Webmanifest";
-            const data = JSON.stringify({content, message});
+            const data = JSON.stringify({
+                content,
+                message
+            });
             const dataType = "PUT";
             const settings = {
                 data,
@@ -730,7 +738,7 @@ window.on["submit"] = {
                 settings
             });
             github.repos.contents(params, settings).then(async(data)=>{
-                ( window.location.pathname + window.location.hash ).router();
+                (window.location.pathname + window.location.hash).router();
             }
             )
         }
@@ -774,26 +782,6 @@ window.on["submit"] = {
                     console.log('repos.generate', {
                         data
                     });
-                    var owner = "anoniiimous";
-                    var repo = name;
-                    var path = "site.webmanifest";
-                    var params = {
-                        owner,
-                        repo,
-                        path
-                    }
-                    const message = "Create webmanifest";
-                    const content = btoa("This is a test.");
-                    var data = JSON.stringify({
-                        message,
-                        content
-                    });
-                    var dataType = 'PUT';
-                    const settings = {
-                        data,
-                        dataType
-                    };
-
                     const html = byId('template-setup-complete').content.firstElementChild;
                     html.all('box')[3].dataset.href = "/dashboard/" + shortname;
                     modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
