@@ -5,7 +5,7 @@ String.prototype.router = async function(params) {
     var tabs = await rout.ed.vars(rout.ed.dir(url.hash ? url.hash.split('#')[1] : uri));
     var goto = rout.ed.url(tabs);
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-    //console.log(url, route, getRoot());
+    console.log(8, url, route, getRoot());
 
     var pages = dom.body.find('pages[data-root="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
