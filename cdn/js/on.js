@@ -663,7 +663,7 @@ window.on["submit"] = {
             event.preventDefault();
             const form = event.target;
             const shortname = form.all('input[type="text"]')[0].value;
-            const name = 'blog.anoniiimous.' + shortname;
+            const name = 'blog.cms.' + shortname;
             const template = 'default';
             console.log({form,input:form.all('input[type="text"]')});
             if (name) {
@@ -711,7 +711,7 @@ window.on["submit"] = {
             const user = await github.user.get();
 
             var owner = user.login;
-            var repo = "blog.anoniiimous." + GET[1];
+            var repo = "blog.cms." + GET[1];
             var path = "site.webmanifest";
             var params = {
                 owner,
@@ -766,7 +766,7 @@ window.on["submit"] = {
             event.preventDefault();
             const form = event.target;
             const shortname = form.all('input')[0].value;
-            const name = 'blog.anoniiimous.' + shortname;
+            const name = 'blog.cms.' + shortname;
             const template = 'default';
             if (name) {
                 var data = JSON.stringify({

@@ -59,7 +59,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         var params = {
                             owner: user.login,
                             path: "/site.webmanifest",
-                            repo: "blog.anoniiimous." + get[1]
+                            repo: "blog.cms." + get[1]
                         };
                         var settings = {};
                         github.repos.contents(params, settings).then(data=>{
@@ -88,8 +88,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         console.log({
                             user
                         }, user.login);
-                        github.search.repositories("q=blog.anoniiimous+user%3A" + user.login).then(data=>{
-                            data = data.filter(item=>item.name.includes('blog.anoniiimous'));
+                        github.search.repositories("q=blog.cms+user%3A" + user.login).then(data=>{
+                            data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log({
                                 data
                             });
