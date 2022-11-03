@@ -51,9 +51,9 @@ String.prototype.router = async function(params) {
             if (!pop && !["blob:"].includes(window.location.protocol)) {
 
                 const hash = global.domains.domain === "github" ? "/#" : "";
-                var goto = window.global.domains.subdomain === "anon" ? '/' + document.head.querySelector('[name="application-shortname"]').content : '';
-                const link = hash.length > 0 ? goto + hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search : goto + route.path + route.search + route.hash;
-                //alert(link);
+                var goto = window.global.domains.domain === "github" ? '/' + document.head.querySelector('[name="application-shortname"]').content : '';
+                const link =  goto + hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
+                console.log({goto, hash, link, route});
                 if (window.self !== window.top) {
                     if (window.globals.domains.domain === "github") {
                         const got = window.parent.GET.slice(0, 3);
@@ -81,6 +81,7 @@ String.prototype.router = async function(params) {
 window.rout = {};
 
 window.rout.e = state=>{
+    console.log({state})
     var arr1 = [];
     var arr2 = rout.ed.dir(state.split('#')[0].split('?')[0]);
     var page = '/';
