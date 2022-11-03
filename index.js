@@ -100,24 +100,25 @@ function init() {
     var uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
 
     var go = false;
-    if (window.firebase) {
-        firebase.initializeApp(auth.config);
-        const onAuthStateChanged = function(user) {
-            auth.change(user).then(authChange);
-            if (user) {
-                uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
-            } else {
-                uri = "/dashboard/";
-                localStorage.removeItem('githubAccessToken');
-                //byId("avi").innerHTML = "";
-            }
-            console.log(114,{go,uri,user});
-            1<0 && go ? console.log("no route") : uri.router().then(go = true);
+
+    firebase.initializeApp(auth.config);
+    const onAuthStateChanged = function(user) {
+        auth.change(user).then(authChange);
+        if (user) {
+            uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
+        } else {
+            uri = "/dashboard/";
+            localStorage.removeItem('githubAccessToken');
+            //byId("avi").innerHTML = "";
         }
-        firebase.auth().onAuthStateChanged(onAuthStateChanged);
-    } else {
-        uri.router().then(authChange);
+        console.log(114, {
+            go,
+            uri,
+            user
+        });
+        1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
     }
+    firebase.auth().onAuthStateChanged(onAuthStateChanged);
 
     console.log("Initialized");
 }

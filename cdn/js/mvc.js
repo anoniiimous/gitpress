@@ -33,111 +33,85 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 if (get.length > 1) {
                     const title = get[1];
                     dom.body.find('main > nav [placeholder]').textContent = title;
+                    if (get.length > 2) {
+                        if (get[2] === "setup") {
+                            var vp = dom.body.find('[data-pages="/setup/"]');
+                            if (get.length > 1) {
+
+                            } else {
+                                //alert(vp.outerHTML);
+                                vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
+                                vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "true";
+                                vp.all('block[data-step]')[0].find('input[type="text"]').value = "";
+                                $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
+                                $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
+                                $(vp.all('block[data-step]')).addClass('display-none');
+                                $(vp.all('block[data-step]')[0]).removeClass('display-none');
+                            }
+                            resolve(route);
+                        }
+                    } else {
+                        //alert("Dashboard");
+                        const user = await github.user.get();
+                        console.log({
+                            user
+                        }, user.login);
+                        var params = {
+                            owner: user.login,
+                            path: "/site.webmanifest",
+                            repo: "blog.anoniiimous." + get[1]
+                        };
+                        var settings = {};
+                        github.repos.contents(params, settings).then(data=>{
+                            console.log(43, {
+                                data
+                            });
+                        }
+                        ).catch(async(error)=>{
+                            console.log("43.error", {
+                                error
+                            });
+                            if (error.code === 404) {
+                                //alert("Setup Project");
+                                const html = await ajax('/cdn/html/page/page.setup.html');
+                                modal.page(html);
+                                resolve(route);
+                            }
+                        }
+                        );
+                    }
                 } else {
                     if (auth.user()) {
                         const settings = {};
                         console.log(settings);
-                        const user = await github.user.get(); console.log({user},user.login);
-                        github.search.repositories("q=blog.anoniiimous+user%3A"+user.login).then(data => {
-                            data = data.filter(item => item.name.includes('blog.anoniiimous'));
-                            console.log({data});
+                        const user = await github.user.get();
+                        console.log({
+                            user
+                        }, user.login);
+                        github.search.repositories("q=blog.anoniiimous+user%3A" + user.login).then(data=>{
+                            data = data.filter(item=>item.name.includes('blog.anoniiimous'));
+                            console.log({
+                                data
+                            });
                             const feed = byId('feed-dashboard');
                             feed.innerHTML = "";
-                            if(data.length > 0) {
+                            if (data.length > 0) {
                                 const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
                                 var x = 0;
                                 do {
                                     const row = data[x];
-                                    const shortname = row.name.split('.')[2];;
-                                    template.find('text').dataset.href = "/dashboard/" + shortname;
+                                    const shortname = row.name.split('.')[2];
+                                    ;template.find('text').dataset.href = "/dashboard/" + shortname;
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
                                     template.find('text').innerHTML = shortname
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                     x++;
-                                } while(x < data.length);
+                                } while (x < data.length);
                             }
-                        });
-                    }
-                }
-                resolve(route);
-            } else if (root === "setup") {
-                var vp = dom.body.find('[data-pages="/setup/"]');
-                if (get.length > 1) {
-                    $(vp.all('form > header box flex')).attr("data-height", "30px");
-                    $(vp.all('form > header box flex')).attr("data-width", "30px");
-                    vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
-                    vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.remove('opacity-50pct');
-                    vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
-                    if (get.length > 2) {
-                        if (get.length > 3) {
-                            $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
-                            $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
-                            $(vp.all('block[data-step]')).addClass('display-none');
-                            $(vp.all('block[data-step]')[2]).removeClass('display-none');
-                        } else {
-                            $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
-                            $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
-                            $(vp.all('block[data-step]')).addClass('display-none');
-                            $(vp.all('block[data-step]')[1]).removeClass('display-none');
-
-                            var sel = "iro-setup-about-brand";
-                            if (byId(sel).innerHTML === "") {
-                                var width = byId(sel).clientWidth - 51;
-                                var picker = new iro.ColorPicker("#" + sel,{
-                                    width,
-                                    color: "#f00",
-                                    layout: [{
-                                        component: iro.ui.Box
-                                    }, {
-                                        component: iro.ui.Slider,
-                                        options: {
-                                            sliderType: "hue"
-                                        }
-                                    }],
-                                    layoutDirection: "horizontal",
-                                    margin: 20,
-                                    sliderSize: 30
-                                });
-                                picker.on("color:change", function(color) {
-                                    var icon = byId("build-app-icon");
-                                    var hexString = color.hexString;
-                                    var rgb = color.rgb;
-                                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
-                                    var hsl = color.hsl;
-                                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                                    byId("color-data-hex").all('text')[1].textContent = hexString;
-                                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                                    byId("color-data-hsl").all('text')[1].textContent = hslString;
-                                    //icon.style.backgroundColor = hexString;
-                                    //icon.style.color = colors.contrast(hexString);
-                                    //icon.dataset.contrast = icon.style.color;
-                                });
-                                picker.on("mount", function(e) {
-                                    console.log(e);
-                                    const base = e.base;
-                                    base.classList = "height-100pct IroColorPicker position-absolute top-0 width-100pct";
-                                    picker.resize(dom.body.clientWidth > 480 ? 390 : dom.body.clientWidth - 90);
-                                });
-                                window.addEventListener("resize", ()=>byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null);
-                            }
-
                         }
-                    } else {
-                        $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
-                        $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
-                        $(vp.all('block[data-step]')).addClass('display-none');
-                        $(vp.all('block[data-step]')[0]).removeClass('display-none');
+                        );
                     }
-                } else {
-                    //alert(vp.outerHTML);
-                    vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
-                    vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "true";
-                    vp.all('block[data-step]')[0].find('input[type="text"]').value = "";
-                    $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
-                    $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
-                    $(vp.all('block[data-step]')).addClass('display-none');
-                    $(vp.all('block[data-step]')[0]).removeClass('display-none');
                 }
                 resolve(route);
             } else {
@@ -208,6 +182,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+    },
+
+    setup: {
+
+        category: (target) => {
+            const box = target.closest('box');
+            if(box) {
+                $(box.parentNode.all('box')).removeClass('color-ff3b30');
+                box.classList.add('color-ff3b30');
+                box.closest('block').find('footer [data-complete]').dataset.complete = true;
+            }
+        }
+        
     },
 
     sign: {

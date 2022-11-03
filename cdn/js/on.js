@@ -430,15 +430,82 @@ window.on.touch = {
                 $(event.target.closest('form').all('block[data-step]')).addClass('display-none');
                 $(event.target.closest('form').all('block[data-step="' + dataset.goto + '"]')).removeClass('display-none');
                 var link = "";
+
+                var vp = dom.body.find('aside');
+                $(vp.all('form > header box flex')).attr("data-height", "30px");
+                $(vp.all('form > header box flex')).attr("data-width", "30px");
+                //vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
+                vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.remove('opacity-50pct');
+                vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
+
+                if (dataset.goto === "one") {
+                    $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
+                    $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
+                    $(vp.all('block[data-step]')).addClass('display-none');
+                    $(vp.all('block[data-step]')[0]).removeClass('display-none');
+                }
                 if (dataset.goto === "two") {
                     const color = 1 > 0 ? "fff" : "000";
                     const domain = event.target.closest('block').find('input').value;
-                    link = "/setup/" + domain + '/' + color + "/";
-                    link.router();
+                    link = '/dashboard/:get/setup/' + domain + '/' + color + "/";
+                    //link.router();
+
+                    $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
+                    $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
+                    $(vp.all('block[data-step]')).addClass('display-none');
+                    $(vp.all('block[data-step]')[1]).removeClass('display-none');
+
+                    var sel = "iro-setup-about-brand";
+                    if (byId(sel).innerHTML === "") {
+                        var width = byId(sel).clientWidth - 51;
+                        window.picker = new iro.ColorPicker("#" + sel,{
+                            width,
+                            color: "#f00",
+                            layout: [{
+                                component: iro.ui.Box
+                            }, {
+                                component: iro.ui.Slider,
+                                options: {
+                                    sliderType: "hue"
+                                }
+                            }],
+                            layoutDirection: "horizontal",
+                            margin: 20,
+                            sliderSize: 30
+                        });
+                        picker.on("color:change", function(color) {
+                            var icon = byId("build-app-icon");
+                            var hexString = color.hexString;
+                            var rgb = color.rgb;
+                            var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                            var hsl = color.hsl;
+                            var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                            byId("color-data-hex").all('text')[1].textContent = hexString;
+                            byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                            byId("color-data-hsl").all('text')[1].textContent = hslString;
+                            //icon.style.backgroundColor = hexString;
+                            //icon.style.color = colors.contrast(hexString);
+                            //icon.dataset.contrast = icon.style.color;
+                        });
+                        picker.on("mount", function(e) {
+                            console.log(e);
+                            const base = e.base;
+                            base.classList = "height-100pct IroColorPicker position-absolute top-0 width-100pct";
+                            picker.resize(dom.body.clientWidth > 480 ? 390 : dom.body.clientWidth - 90);
+                        });
+                        window.addEventListener("resize", ()=>byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null);
+                    }
+
                 }
                 if (dataset.goto === "three") {
-                    link = "/setup/:get/:get/_/";
-                    link.router();
+
+                    $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
+                    $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
+                    $(vp.all('block[data-step]')).addClass('display-none');
+                    $(vp.all('block[data-step]')[2]).removeClass('display-none');
+
+                    link = "/dashboard/:get/setup/:get/:get/_/";
+                    //link.router();
                 }
             }
         }
@@ -625,6 +692,48 @@ window.on["submit"] = {
         project: (event)=>{
             event.preventDefault();
         }
+        ,
+        webmanifest: async(event)=>{
+            event.preventDefault();
+            const form = event.target;
+            const steps = form.all('block');
+            const name = steps[0].find('[type="text"]').value;
+            const color = window.picker.color.hexString;
+            //const logo = steps[1].find('type="text"');
+            const category = steps[2].find('box.color-ff3b30 text').textContent;
+            alert("webmanifest: " + name + " : " + color + " : " + category);
+            const user = await github.user.get();
+
+            var owner = user.login;
+            var repo = "blog.anoniiimous."+GET[1];
+            var path = "site.webmanifest";
+            var params = {
+                owner,
+                repo,
+                path
+            }
+            var raw = JSON.stringify({
+                name,
+                "theme_color": color
+            });
+            raw = "Hello world."
+            var content = btoa(raw);
+            var message = "Create Webmanifest";
+            const data = JSON.stringify({content, message});
+            const dataType = "PUT";
+            const settings = {
+                data,
+                dataType
+            };
+            console.log({
+                params,
+                settings
+            });
+            github.repos.contents(params, settings).then(async(data)=>{
+                ( window.location.pathname + window.location.hash ).router();
+            }
+            )
+        }
     },
     my: {
         login: async(event)=>{
@@ -662,7 +771,9 @@ window.on["submit"] = {
                 };
                 console.log(settings);
                 github.repos.generate(settings).then(async(data)=>{
-                    console.log('repos.generate', {data});
+                    console.log('repos.generate', {
+                        data
+                    });
                     var owner = "anoniiimous";
                     var repo = name;
                     var path = "site.webmanifest";
@@ -673,21 +784,19 @@ window.on["submit"] = {
                     }
                     const message = "Create webmanifest";
                     const content = btoa("This is a test.");
-                    var data = JSON.stringify({message, content});
+                    var data = JSON.stringify({
+                        message,
+                        content
+                    });
                     var dataType = 'PUT';
                     const settings = {
                         data,
                         dataType
                     };
-                    
-                        const html = byId('template-setup-complete').content.firstElementChild;
-                        html.all('box')[3].dataset.href = "/dashboard/" + shortname;
-                        modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
-                    
-                    1<0 ? github.repos.contents(params,settings).then(async(data)=>{
-                        console.log({data});
-                    }
-                    ) : null;
+
+                    const html = byId('template-setup-complete').content.firstElementChild;
+                    html.all('box')[3].dataset.href = "/dashboard/" + shortname;
+                    modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
                 }
                 )
             }

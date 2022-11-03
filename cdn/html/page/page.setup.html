@@ -1,4 +1,4 @@
-<form class="display-block overflow-x-hidden width-100pct" data-evt="steps" onsubmit="on.submit.setup.form(event)">
+<form class="display-block overflow-x-hidden width-100pct" data-evt="steps" onsubmit="on.submit.dashboard.webmanifest(event)">
     <header class="position-fixed top-0 width-100pct z-index-5">
         <section>
             <card class="margin-auto max-width-480px width-100pct">
@@ -38,7 +38,7 @@
                         <img class="width-100pct" src="cdn/svg/setup-name.svg">
                     </picture>
                     <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Domain Name</text>
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
                         <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
                             <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
                         </row>
@@ -136,7 +136,7 @@
         </header>
         <!--data-after="Sync your application across multiple workspaces. Keep your data both offline or in the cloud."-->
         <section class="section-step-two logo-maker">
-            <card class="line-height-50px text-align-center">
+            <card class="line-height-50px text-align-center" data-tap="controller.setup.category(event.target)">
                 <section>
                     <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
                         <section>
@@ -206,7 +206,7 @@
                         <text>Back</text>
                     </row>
                 </box>
-                <box class="padding-x-10px" data-complete="template-setup-complete" data-goto="complete" data-message="Are you sure you want to continue without providing a logo?">
+                <box class="padding-x-10px" data-complete="false" data-goto="complete" data-require="Please select a cetegory to continue.">
                     <row>
                         <text>Done</text>
                         <ico data-width="25px">
