@@ -443,9 +443,11 @@ function getRoot(els) {
             arr.push(els[r].dataset.root);
             r++;
         } while (r < els.length);
+        arr.sort();
+        arr.reverse();
         window.paths.arr = arr;
         root = paths.page.stringExists(arr);
-        root = arr.includes(paths.page) ? paths.page : null;
+        //root = arr.includes(paths.page) ? paths.page : null;
         console.log({page:paths.page,arr,root});
     }
     return root;

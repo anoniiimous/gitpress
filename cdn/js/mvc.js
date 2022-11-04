@@ -63,10 +63,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             const template = byId('template-dashboard-posts');
                                             const card = template.content.firstElementChild.cloneNode(true);
                                             const title = row.name.split('.')[0].split('-');
+                                            title.splice(0,3);
                                             console.log(64, {
                                                 title
                                             });
-                                            card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title;
+                                            card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title.join("-");
                                             card.firstElementChild.find('text').textContent = row.name;
                                             feed.insertAdjacentHTML('beforeend', card.outerHTML)
                                             x++;
