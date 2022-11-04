@@ -168,4 +168,8 @@
     [data-hide]:not([data-active="true"]), [data-page]:not([data-active="true"]):not(.-active), [data-pages]:not([data-active="true"]):not(.-active) {
         display: none;
     }
+
+    :not(:empty) + .empty-state {
+        display: none;
+    }
 }

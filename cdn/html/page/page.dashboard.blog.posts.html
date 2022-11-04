@@ -1,5 +1,5 @@
 <blocks>
-    <header>
+    <header class="margin-bottom-20px">
         <row class="justify-content-space-between">
             <card>
                 <row>
@@ -19,7 +19,7 @@
             </card>
             <card>
                 <row>
-                    <box class="background-color-333 color-fff display-none line-height-50px padding-x-20px">
+                    <box class="background-color-333 color-fff display-none line-height-50px padding-x-20px" data-href="/dashboard/:get/posts/post/">
                         <section>
                             <text class="font-size-14px font-weight-bolder">Create Post</text>
                         </section>
@@ -28,9 +28,27 @@
             </card>
         </row>
     </header>
-    <block></block>
-    <block class="align-items-center empty-state flex-grow-1 justify-content-center">
-        <column class="align-items-center justify-content-center">
+    <block class="flex-grow-1">
+        <template id="template-dashboard-posts">
+            <card class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0">
+                <row class="justify-content-space-between">
+                    <box>
+                        <section>
+                            <text class="font-weight-bolder line-height-50px padding-x-10px">Title</text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <ico>
+                                <n class="gg-trash"></n>
+                            </ico>
+                        </section>
+                    </box>
+                </row>
+            </card>
+        </template>
+        <column class="grid-gap-10px" data-columns="1" id="feed-dashboard-posts"></column>
+        <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
                 <img class="width-100pct" src="cdn/png/astronaut-pencil.png">
             </picture>

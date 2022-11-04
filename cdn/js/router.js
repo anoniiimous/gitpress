@@ -110,6 +110,7 @@ window.rout.e = state=>{
         root,
         search
     };
+    console.log(114,{data});
     return data;
 }
 

@@ -180,6 +180,10 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
+    [data-columns="1"] {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
     @media (max-width: 960px) {
         [data-960px-columns="2"] {
             grid-template-columns: repeat(2, 1fr);

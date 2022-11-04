@@ -34,11 +34,63 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     const title = get[1];
                     dom.body.find('main > nav [placeholder]').textContent = title;
                     if (get.length > 2) {
-                        if (get[2] === "setup") {
-                            var vp = dom.body.find('[data-pages="/setup/"]');
-                            if (get.length > 1) {
-
+                        if (get[2] == "posts") {
+                            if (get.length > 3) {
+                                resolve(route);
                             } else {
+                                const user = await github.user.get();
+                                console.log({
+                                    user
+                                }, user.login);
+                                var params = {
+                                    owner: user.login,
+                                    path: "/cdn/html/posts",
+                                    repo: "blog.cms." + get[1]
+                                };
+                                var settings = {};
+                                github.repos.contents(params, settings).then(data=>{
+                                    console.log(50, {
+                                        data
+                                    });
+                                    var vp = dom.body.find('page[data-page="/dashboard/*/posts/"]');
+                                    if (data.length > 0) {
+                                        const feed = byId('feed-dashboard-posts');
+                                        feed.innerHTML = "";
+                                        vp.all('card')[1].find('box').classList.remove('display-none');
+                                        var x = 0;
+                                        do {
+                                            const row = data[x];
+                                            const template = byId('template-dashboard-posts');
+                                            const card = template.content.firstElementChild.cloneNode(true);
+                                            const title = row.name.split('.')[0].split('-');
+                                            console.log(64, {
+                                                title
+                                            });
+                                            card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title;
+                                            card.firstElementChild.find('text').textContent = row.name;
+                                            feed.insertAdjacentHTML('beforeend', card.outerHTML)
+                                            x++;
+                                        } while (x < data.length);
+                                    } else {
+                                        vp.all('card')[1].find('box').classList.add('display-none');
+                                    }
+                                }
+                                ).catch(async(error)=>{
+                                    console.log("43.error", {
+                                        error
+                                    });
+                                    if (error.code === 404) {
+                                        //alert("Setup Project");
+                                        const html = await ajax('/cdn/html/page/page.setup.html');
+                                        modal.page(html);
+                                        resolve(route);
+                                    }
+                                }
+                                );
+                            }
+                        } else if (get[2] === "setup") {
+                            var vp = dom.body.find('[data-pages="/setup/"]');
+                            if (get.length > 1) {} else {
                                 //alert(vp.outerHTML);
                                 vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
                                 vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "true";
@@ -186,15 +238,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     setup: {
 
-        category: (target) => {
+        category: (target)=>{
             const box = target.closest('box');
-            if(box) {
+            if (box) {
                 $(box.parentNode.all('box')).removeClass('color-ff3b30');
                 box.classList.add('color-ff3b30');
                 box.closest('block').find('footer [data-complete]').dataset.complete = true;
             }
         }
-        
+
     },
 
     sign: {

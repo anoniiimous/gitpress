@@ -695,6 +695,49 @@ window.on["submit"] = {
             event.preventDefault();
         }
         ,
+        post: async(event) => {
+            event.preventDefault();
+            const form = event.target;
+            const title = form.find('[type="text"]').value.toLowerCase().replace(' ', '-');
+            const body = form.find('textarea').value;
+            console.log({title,body});
+            
+            const user = await github.user.get();
+
+            var owner = user.login;
+            var repo = "blog.cms." + GET[1];
+            const d = new Date();
+            const yr = d.getFullYear();
+            const mo = d.getMonth();
+            const day = d.getDay();
+            var path = "cdn/html/posts/"+yr+'-'+mo+'-'+day+'-'+title+'.html';
+            var params = {
+                owner,
+                repo,
+                path
+            }
+            var raw = body;
+            var content = btoa(raw);
+            var message = "Create Webmanifest";
+            const data = JSON.stringify({
+                content,
+                message
+            });
+            const dataType = "PUT";
+            const settings = {
+                data,
+                dataType
+            };
+            console.log({
+                params,
+                settings
+            });
+            
+            1>0 ? github.repos.contents(params, settings).then(async(data)=>{
+                (window.location.pathname + window.location.hash).router();
+            }
+            ) : null;
+        },
         project: (event)=>{
             event.preventDefault();
         }

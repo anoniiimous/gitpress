@@ -445,6 +445,8 @@ function getRoot(els) {
         } while (r < els.length);
         window.paths.arr = arr;
         root = paths.page.stringExists(arr);
+        root = arr.includes(paths.page) ? paths.page : null;
+        console.log({page:paths.page,arr,root});
     }
     return root;
 }
