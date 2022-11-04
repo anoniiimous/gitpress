@@ -36,6 +36,42 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (get.length > 2) {
                         if (get[2] == "posts") {
                             if (get.length > 3) {
+                                if (get.length > 4) {
+                                    const user = await github.user.get();
+                                    const name = get[4] + '.html';
+                                    console.log({
+                                        user
+                                    }, user.login);
+                                    var params = {
+                                        owner: user.login,
+                                        path: "/cdn/html/posts/" + name,
+                                        repo: "blog.cms." + get[1]
+                                    };
+                                    var settings = {};
+                                    github.repos.contents(params, settings).then(data=>{
+                                        console.log(50, {
+                                            data
+                                        });
+                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
+                                        if (data) {
+                                            vp.find('input[type="text"]').value = data.name;
+                                            vp.find('textarea').value = atob(data.content);
+                                        }
+                                    }
+                                    ).catch(async(error)=>{
+                                        console.log("43.error", {
+                                            error
+                                        });
+                                        if (error.code === 404) {
+                                            //alert("Setup Project");
+                                            const html = await ajax('/cdn/html/page/page.setup.html');
+                                            modal.page(html);
+                                            resolve(route);
+                                        }
+                                    }
+                                    );
+
+                                } else {}
                                 resolve(route);
                             } else {
                                 const user = await github.user.get();
@@ -62,13 +98,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             const row = data[x];
                                             const template = byId('template-dashboard-posts');
                                             const card = template.content.firstElementChild.cloneNode(true);
-                                            const title = row.name.split('.')[0].split('-');
-                                            title.splice(0,3);
-                                            console.log(64, {
+                                            const title = row.name.split('.')[0];
+                                            console.log(row.name, {
                                                 title
                                             });
-                                            card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title.join("-");
-                                            card.firstElementChild.find('text').textContent = row.name;
+                                            //title.splice(0, 3);
+                                            card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title + '/';
+                                            card.firstElementChild.find('text').textContent = title;
                                             feed.insertAdjacentHTML('beforeend', card.outerHTML)
                                             x++;
                                         } while (x < data.length);
