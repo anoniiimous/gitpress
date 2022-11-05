@@ -333,30 +333,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var provider = new firebase.auth.GithubAuthProvider();
                 provider.addScope('repo');
                 provider.addScope('delete_repo');
-                provider.setCustomParameters({
-                    'redirect_uri': rout.ed.url(GET)
-                });
-                alert(true)
 
-                firebase.auth().signInWithPopup(provider).then((result)=>{
-                    var credential = result.credential;
-                    var token = credential.accessToken;
-                    var user = result.user;
-                    console.log({
-                        result
-                    });
-                    localStorage.setItem('githubAccessToken', token);
-                }
-                ).catch((error)=>{
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    var email = error.email;
-                    var credential = error.credential;
-                    console.log({
-                        error
-                    });
-                }
-                );
+                firebase.auth().signInWithRedirect(provider);
             }
         }
 

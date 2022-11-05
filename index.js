@@ -45,11 +45,7 @@ function init() {
     console.log("Initializing...");
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
-        return m.includes("#") || 
-            (root === 'dashboard' && n === 1) || 
-            (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") ||
-            (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") ||
-            (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4);
+        return m.includes("#") || (root === 'dashboard' && n === 1) || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4);
     }
 
     touch.events = {
@@ -127,4 +123,26 @@ function init() {
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
     auth.user() ? null : uri.router();
     console.log("Initialized");
+    firebase.auth().getRedirectResult().then((result)=>{
+        //firebase.auth().signInWithPopup(provider).then((result)=>{
+        var credential = result.credential;
+        if (credential) {
+            var token = credential.accessToken;
+            var user = result.user;
+            localStorage.setItem('githubAccessToken', token);
+        }
+        console.log(345, {
+            result
+        });
+    }
+    ).catch((error)=>{
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        console.log({
+            error
+        });
+    }
+    );
 }
