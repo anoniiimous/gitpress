@@ -3,7 +3,37 @@ window.github = {
     repos: {
         contents: (params,settings)=>{
             if (settings && settings.dataType) {
-                if (settings.dataType === "PUT") {
+                if (settings.dataType === "DELETE") {
+                    console.log(7,{params,settings});
+                    return new Promise((resolve,reject)=>{
+                        const owner = params.owner;
+                        const repo = params.repo;
+                        const path = params.path;
+                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents/" + path;
+                        const data = settings.data;
+                        const dataType = settings.dataType;
+                        const a = (d)=>{
+                            const data = JSON.parse(d);
+                            resolve(data);
+                        }
+                        const b = (error)=>{
+                            console.log(error);
+                            reject(error);
+                        }
+                        const accessToken = localStorage.githubAccessToken;
+                        accessToken ? settings.headers = {
+                            Accept: "application/vnd.github+json",
+                            Authorization: "token " + accessToken
+                        } : null;
+                        console.log({
+                            url,
+                            settings
+                        });
+                        ajax(url, settings).then(a).catch(b);
+                    }
+                    );
+                }
+                else if (settings.dataType === "PUT") {
                     console.log(params);
                     return new Promise((resolve,reject)=>{
                         const owner = params.owner;

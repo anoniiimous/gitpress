@@ -698,7 +698,7 @@ window.on["submit"] = {
         post: async(event) => {
             event.preventDefault();
             const form = event.target;
-            const title = form.find('[type="text"]').value.toLowerCase().replace(' ', '-');
+            const title = form.find('[type="text"]').value.toLowerCase().replaceAll(' ', '-');
             const body = form.find('textarea').value;
             console.log({title,body});
             

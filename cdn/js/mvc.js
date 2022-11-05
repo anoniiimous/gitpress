@@ -103,6 +103,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 title
                                             });
                                             //title.splice(0, 3);
+                                            card.dataset.sha = row.sha;
                                             card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title + '/';
                                             card.firstElementChild.find('text').textContent = title;
                                             feed.insertAdjacentHTML('beforeend', card.outerHTML)
@@ -119,7 +120,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     if (error.code === 404) {
                                         //alert("Setup Project");
                                         const html = await ajax('/cdn/html/page/page.setup.html');
-                                        modal.page(html);
+                                        //modal.page(html);
                                         resolve(route);
                                     }
                                 }
@@ -139,36 +140,35 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                             resolve(route);
                         }
-                    } else {
-                        //alert("Dashboard");
-                        const user = await github.user.get();
-                        console.log({
-                            user
-                        }, user.login);
-                        var params = {
-                            owner: user.login,
-                            path: "/site.webmanifest",
-                            repo: "blog.cms." + get[1]
-                        };
-                        var settings = {};
-                        github.repos.contents(params, settings).then(data=>{
-                            console.log(43, {
-                                data
-                            });
-                        }
-                        ).catch(async(error)=>{
-                            console.log("43.error", {
-                                error
-                            });
-                            if (error.code === 404) {
-                                //alert("Setup Project");
-                                const html = await ajax('/cdn/html/page/page.setup.html');
-                                modal.page(html);
-                                resolve(route);
-                            }
-                        }
-                        );
                     }
+
+                    const user = await github.user.get();
+                    console.log({
+                        user
+                    }, user.login);
+                    var params = {
+                        owner: user.login,
+                        path: "/site.webmanifest",
+                        repo: "blog.cms." + get[1]
+                    };
+                    var settings = {};
+                    github.repos.contents(params, settings).then(data=>{
+                        console.log(43, {
+                            data
+                        });
+                    }
+                    ).catch(async(error)=>{
+                        console.log("43.error", {
+                            error
+                        });
+                        if (error.code === 404) {
+                            //alert("Setup Project");
+                            const html = await ajax('/cdn/html/page/page.setup.html');
+                            modal.page(html);
+                            resolve(route);
+                        }
+                    }
+                    );
                 } else {
                     if (auth.user()) {
                         const settings = {};
@@ -270,6 +270,35 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         }
         ,
+
+    },
+
+    posts: {
+
+        delete: async(target)=>{
+            console.log(target);
+            const user = await github.user.get();
+            const params = {
+                repo: 'blog.cms.' + GET[1],
+                owner: user.login,
+                path: 'cdn/html/posts/' + target.closest('box').previousElementSibling.find('text').textContent + '.html',
+                sha: target.closest('card').dataset.sha
+            }
+            const settings = {
+                data: JSON.stringify({
+                    message: 'Delete ' + params.path,
+                    sha: params.sha
+                }),
+                dataType: "DELETE"
+            }
+            const a = ()=>{
+                target.closest('card').remove();
+            }
+            const b = (error)=>{
+                alert(error.message);
+            }
+            github.repos.contents(params, settings).then(a).catch(b);
+        }
 
     },
 

@@ -109,9 +109,11 @@ function init() {
     const onAuthStateChanged = function(user) {
         auth.change(user).then(authChange);
         if (user) {
+            alert(false);
             uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
         } else {
-            uri = "/dashboard/";
+            alert(true);
+            //uri = "/dashboard/";
             localStorage.removeItem('githubAccessToken');
             //byId("avi").innerHTML = "";
         }
@@ -123,6 +125,6 @@ function init() {
         1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
     }
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
-
+    auth.user() ? null : uri.router();
     console.log("Initialized");
 }
