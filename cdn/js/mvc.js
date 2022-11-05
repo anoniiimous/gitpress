@@ -153,9 +153,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     };
                     var settings = {};
                     github.repos.contents(params, settings).then(data=>{
+                        const content = data.content;
+                        const raw = atob(content);
+                        const json = JSON.parse(raw);
                         console.log(43, {
-                            data
+                            data,
+                            json
                         });
+                        dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = json.name;
                     }
                     ).catch(async(error)=>{
                         console.log("43.error", {

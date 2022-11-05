@@ -121,8 +121,8 @@ function init() {
         1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
     }
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
-    auth.user() ? null : uri.router();
-    console.log("Initialized");
+    //firebase.auth().currentUser ? alert(null) : uri.router();
+    console.log("Initialized",firebase.auth(),firebase.auth().currentUser);
     firebase.auth().getRedirectResult().then((result)=>{
         //firebase.auth().signInWithPopup(provider).then((result)=>{
         var credential = result.credential;
