@@ -336,6 +336,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 provider.setCustomParameters({
                     'redirect_uri': rout.ed.url(GET)
                 });
+                alert(true)
 
                 firebase.auth().signInWithPopup(provider).then((result)=>{
                     var credential = result.credential;
