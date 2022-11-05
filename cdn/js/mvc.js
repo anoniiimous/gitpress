@@ -334,7 +334,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 provider.addScope('repo');
                 provider.addScope('delete_repo');
                 provider.setCustomParameters({
-                    'redirect_uri': 'https://codepen.io/anoniiimous/pen/WNMvNoY'
+                    'redirect_uri': rout.ed.url(GET)
                 });
 
                 firebase.auth().signInWithPopup(provider).then((result)=>{
