@@ -45,7 +45,13 @@ function init() {
     console.log("Initializing...");
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
-        return m.includes("#") || (root === 'dashboard' && n === 1) || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4);
+        var roots = ["/dashboard/"];
+        return m.includes("#") || 
+            (roots.indexOf(root) === -1) ||
+            (root === 'dashboard' && n === 1) || 
+            (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || 
+            (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || 
+            (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4)
     }
 
     touch.events = {

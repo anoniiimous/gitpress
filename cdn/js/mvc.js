@@ -29,6 +29,37 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         if (root) {
 
+            const roots = ["dashboard"];
+            if (roots.indexOf(root) === -1) {
+                const owner = root;
+                const repo = "blog.cms." + get[1];
+                const path = "/site.webmanifest";
+                const params = {
+                    owner,
+                    repo,
+                    path
+                }
+                const settings = {
+                }
+                github.repos.contents(params, settings).then(data=>{
+                    const content = data.content;
+                    const raw = atob(content);
+                    const json = JSON.parse(raw);
+                    console.log(49, {
+                        data,
+                        json
+                    });
+                    const vp = dom.body.find('[data-page="/*/*/"]');
+                    vp.find('[placeholder="Site"]').textContent = json.name;
+                    controller.blog.render(byId('iframe-user-blog'), json);
+                }
+                ).catch(async(error)=>{
+                    console.log("43.error", {
+                        error
+                    });
+                }
+                );
+            }
             if (root === "dashboard") {
                 if (get.length > 1) {
                     const title = get[1];
@@ -223,6 +254,53 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 );
 
 window.mvc.c ? null : (window.mvc.c = controller = {
+
+    blog: {
+
+        render: (iframe,json)=>{
+
+            const theme = json["theme_color"];
+
+            const doc = iframe.contentWindow.document;
+            doc.body.style.backgroundColor = theme;
+            
+            const owner = GET[0];
+            const repo = "blog.cms." + GET[1];
+            const path = "/index.html";
+            const params = {
+                owner,
+                repo,
+                path
+            }
+            const settings = {
+            }
+
+            github.repos.contents(params, settings).then(data=>{
+                const content = data.content;
+                const raw = atob(content);
+                console.log(282, {
+                    data,
+                    json
+                });
+                
+                const doc = new DOMParser().parseFromString(raw, 'text/html');
+                const body = doc.body;
+                console.log({doc,body,raw});
+                
+                const vp = dom.body.find('[data-page="/*/*/"]');
+                vp.find('[placeholder="Site"]').textContent = json.name;
+                iframe.contentWindow.document.body.innerHTML = body.innerHTML;
+            }
+            ).catch(async(error)=>{
+                console.log("43.error", {
+                    error
+                });
+            }
+            );
+
+        }
+
+    },
 
     menu: {
 
