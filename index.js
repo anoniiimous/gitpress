@@ -45,7 +45,7 @@ function init() {
     console.log("Initializing...");
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
-        var roots = ["/dashboard/"];
+        var roots = ["dashboard"];
         return m.includes("#") || 
             (roots.indexOf(root) === -1) ||
             (root === 'dashboard' && n === 1) || 
