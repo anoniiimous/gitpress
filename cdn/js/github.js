@@ -1,10 +1,68 @@
 window.github = {
     endpoint: "https://api.github.com",
+    gists: {
+        create: (settings)=>{
+            if (settings && settings.dataType) {
+                if (settings.dataType === "POST") {
+                    return new Promise((resolve,reject)=>{
+                        const url = github.endpoint + "/gists";
+                        const data = settings.data;
+                        const dataType = settings.dataType;
+                        const a = (d)=>{
+                            const data = JSON.parse(d);
+                            resolve(data);
+                        }
+                        const b = (error)=>{
+                            console.log(error);
+                            reject(error);
+                        }
+                        const accessToken = localStorage.githubAccessToken;
+                        accessToken ? settings.headers = {
+                            Accept: "application/vnd.github+json",
+                            Authorization: "token " + accessToken
+                        } : null;
+                        console.log({
+                            url,
+                            settings
+                        });
+                        ajax(url, settings).then(a).catch(b);
+                    }
+                    );
+                }
+            }
+        }
+        ,
+        get: (params,settings)=>{
+            return new Promise((resolve,reject)=>{
+                const url = github.endpoint + "/gists";
+                const data = settings.data;
+                const dataType = settings.dataType;
+                const a = (d)=>{
+                    const data = JSON.parse(d);
+                    resolve(data);
+                }
+                const b = (error)=>{
+                    console.log(error);
+                    reject(error);
+                }
+                const accessToken = localStorage.githubAccessToken;
+                accessToken ? settings.headers = {
+                    Accept: "application/vnd.github+json",
+                    Authorization: "token " + accessToken
+                } : null;
+                ajax(url, settings).then(a).catch(b);
+            }
+            );
+        }
+    },
     repos: {
         contents: (params,settings)=>{
             if (settings && settings.dataType) {
                 if (settings.dataType === "DELETE") {
-                    console.log(7,{params,settings});
+                    console.log(7, {
+                        params,
+                        settings
+                    });
                     return new Promise((resolve,reject)=>{
                         const owner = params.owner;
                         const repo = params.repo;
@@ -32,8 +90,7 @@ window.github = {
                         ajax(url, settings).then(a).catch(b);
                     }
                     );
-                }
-                else if (settings.dataType === "PUT") {
+                } else if (settings.dataType === "PUT") {
                     console.log(params);
                     return new Promise((resolve,reject)=>{
                         const owner = params.owner;

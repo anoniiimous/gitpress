@@ -114,8 +114,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     path: "/cdn/html/posts",
                                     repo: "blog.cms." + get[1]
                                 };
-                                var settings = {};
-                                github.repos.contents(params, settings).then(data=>{
+                                var settings = {}; 
+                                github.gists.get(params, settings).then(data=>{
                                     console.log(50, {
                                         data
                                     });
@@ -126,10 +126,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         vp.all('card')[1].find('box').classList.remove('display-none');
                                         var x = 0;
                                         do {
-                                            const row = data[x];
+                                            const row = data[x]; 
+                                            const files = row.files; console.log(130, {row,files}, Object.keys(files)[0]);
                                             const template = byId('template-dashboard-posts');
                                             const card = template.content.firstElementChild.cloneNode(true);
-                                            const title = row.name.split('.')[0];
+                                            const title = Object.keys(files)[0];
                                             console.log(row.name, {
                                                 title
                                             });
@@ -139,7 +140,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             card.firstElementChild.find('text').textContent = title;
                                             feed.insertAdjacentHTML('beforeend', card.outerHTML)
                                             x++;
-                                        } while (x < data.length);
+                                        } while (x < files.length);
                                     } else {
                                         vp.all('card')[1].find('box').classList.add('display-none');
                                     }
@@ -414,6 +415,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
             } else {
                 var provider = new firebase.auth.GithubAuthProvider();
+                provider.addScope('gist');
                 provider.addScope('repo');
                 provider.addScope('delete_repo');
 

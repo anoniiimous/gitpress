@@ -665,7 +665,10 @@ window.on["submit"] = {
             const shortname = form.all('input[type="text"]')[0].value;
             const name = 'blog.cms.' + shortname;
             const template = 'default';
-            console.log({form,input:form.all('input[type="text"]')});
+            console.log({
+                form,
+                input: form.all('input[type="text"]')
+            });
             if (name) {
                 var data = JSON.stringify({
                     name
@@ -675,10 +678,11 @@ window.on["submit"] = {
                     data,
                     dataType
                 };
-                console.log(settings,shortname);
+                console.log(settings, shortname);
                 github.repos.generate(settings).then(async(data)=>{
                     console.log('repos.generate', {
-                        data, shortname
+                        data,
+                        shortname
                     });
                     ('/dashboard/' + shortname + '/').router();
                 }
@@ -695,13 +699,16 @@ window.on["submit"] = {
             event.preventDefault();
         }
         ,
-        post: async(event) => {
+        post: async(event)=>{
             event.preventDefault();
             const form = event.target;
             const title = form.find('[type="text"]').value.toLowerCase().replaceAll(' ', '-');
             const body = form.find('textarea').value;
-            console.log({title,body});
-            
+            console.log({
+                title,
+                body
+            });
+
             const user = await github.user.get();
 
             var owner = user.login;
@@ -710,7 +717,8 @@ window.on["submit"] = {
             const yr = d.getFullYear();
             const mo = d.getMonth();
             const day = d.getDay();
-            var path = "cdn/html/posts/"+yr+'-'+mo+'-'+day+'-'+title+'.html';
+            var filename = yr + '-' + mo + '-' + day + '-' + title + '.html';
+            var path = "cdn/html/posts/" + filename;
             var params = {
                 owner,
                 repo,
@@ -719,11 +727,17 @@ window.on["submit"] = {
             var raw = body;
             var content = btoa(raw);
             var message = "Create Webmanifest";
-            const data = JSON.stringify({
-                content,
-                message
-            });
-            const dataType = "PUT";
+            var description = "Example of a gist";
+            var filename = yr + '-' + mo + '-' + day + '-' + title + '.blog.cms.' + GET[1] + '.html';
+            var files = {};
+            files[filename] = {content};
+            const json = {
+                "description": description,
+                "public": false,
+                files
+            };
+            var data = JSON.stringify(json);
+            const dataType = "POST";
             const settings = {
                 data,
                 dataType
@@ -732,12 +746,16 @@ window.on["submit"] = {
                 params,
                 settings
             });
-            
-            1>0 ? github.repos.contents(params, settings).then(async(data)=>{
+
+            1 < 0 ? github.repos.contents(params, settings).then(async(data)=>{
                 (window.location.pathname + window.location.hash).router();
             }
-            ) : null;
-        },
+            ) : github.gists.create(settings).then(async(data)=>{
+                ("/dashboard/:get/posts/").router();
+            }
+            );
+        }
+        ,
         project: (event)=>{
             event.preventDefault();
         }

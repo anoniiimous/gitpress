@@ -147,7 +147,7 @@
                     </card>
                     <card class="margin-bottom-20px margin-top-auto">
                         <column>
-                            <box class="border-2px-solid box-sizing-border-box">
+                            <box class="border-2px-solid box-sizing-border-box" data-tap="controller.dashboard.preview(event.target)">
                                 <row class="justify-content-center">
                                     <text>Preview your changes</text>
                                 </row>
@@ -162,7 +162,7 @@
                 </column>
             </nav>
             <page class="-isauth background-color-bbb flex-grow-1 height-100pct min-height-100pct overflow-x-hidden position-fixed width-100pct" data-fetch="/cdn/html/page/page.dashboard.html" data-page="/dashboard/"></page>
-            <page class="-noauth background-color-bbb flex-grow-1 min-height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.login.html" data-root="/dashboard/"></page>
+            <pages class="-noauth background-color-bbb flex-grow-1 min-height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.login.html" data-pages="/dashboard/" data-root="/dashboard/"></pages>
         </main>
     </body>
 </html>
