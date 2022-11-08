@@ -140,7 +140,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             card.firstElementChild.find('text').textContent = title;
                                             feed.insertAdjacentHTML('beforeend', card.outerHTML)
                                             x++;
-                                        } while (x < files.length);
+                                        } while (x < data.length);
                                     } else {
                                         vp.all('card')[1].find('box').classList.add('display-none');
                                     }
