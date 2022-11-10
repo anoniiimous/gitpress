@@ -728,7 +728,7 @@ window.on["submit"] = {
             var content = raw;
             var message = "Create Webmanifest";
             var description = "Example of a gist";
-            var filename = yr + '-' + mo + '-' + day + '-' + title + '.blog.cms.' + GET[1] + '.html';
+            var filename = title + '.html';
             var files = {};
             files[filename] = {
                 content
@@ -755,6 +755,10 @@ window.on["submit"] = {
             ) : github.gists.create(settings).then(async(d)=>{
 
                 console.log(755, d);
+                const created = d.created_at;
+                const description = d.description;
+                const filename = Object.values(d.files)[0].filename;
+                const gist = d.id;
 
                 var params = {
                     owner,
@@ -779,11 +783,15 @@ window.on["submit"] = {
                     var id = latest.id + 1;
                     console.log({length,latest,id,rows});
                 } else {
-                    var latest = rows[length - 1];
+                    var latest = rows[0];
                     var id = 1;
                 }
 
                 const row = {
+                    created,
+                    description,
+                    filename,
+                    gist,
                     id
                 }
                 rows.unshift(row);
