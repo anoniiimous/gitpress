@@ -725,12 +725,14 @@ window.on["submit"] = {
                 path
             }
             var raw = body;
-            var content = btoa(raw);
+            var content = raw;
             var message = "Create Webmanifest";
             var description = "Example of a gist";
             var filename = yr + '-' + mo + '-' + day + '-' + title + '.blog.cms.' + GET[1] + '.html';
             var files = {};
-            files[filename] = {content};
+            files[filename] = {
+                content
+            };
             const json = {
                 "description": description,
                 "public": false,
@@ -750,8 +752,62 @@ window.on["submit"] = {
             1 < 0 ? github.repos.contents(params, settings).then(async(data)=>{
                 (window.location.pathname + window.location.hash).router();
             }
-            ) : github.gists.create(settings).then(async(data)=>{
-                ("/dashboard/:get/posts/").router();
+            ) : github.gists.create(settings).then(async(d)=>{
+
+                console.log(755, d);
+
+                var params = {
+                    owner,
+                    repo,
+                    path: "/cdn/json/posts.json"
+                };
+
+                const posts = await github.repos.contents(params, {});
+                const content = atob(posts.content);
+                const sha = posts.sha;
+                const rows = JSON.parse(content);
+                console.log(759, {
+                    rows,
+                    params,
+                    posts,
+                    json
+                });
+
+                const length = rows.length;
+                if(length > 0) {
+                    var latest = rows[0];
+                    var id = latest.id + 1;
+                    console.log({length,latest,id,rows});
+                } else {
+                    var latest = rows[length - 1];
+                    var id = 1;
+                }
+
+                const row = {
+                    id
+                }
+                rows.unshift(row);
+                console.log(778, {
+                    length, params, row, rows
+                });
+
+                params.sha = sha;
+                const settings = {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(rows,null,4)),
+                        message: "Update Posts Table",
+                        sha: posts.sha
+                    }),
+                    dataType: "PUT"
+                }
+                console.log(801,{params,settings});
+                github.repos.contents(params, settings).then(()=>{
+                    //("/dashboard/:get/posts/").router();
+                }
+                ).catch(()=>{
+                    alert(false);
+                }
+                )
             }
             );
         }
@@ -773,7 +829,7 @@ window.on["submit"] = {
 
             var owner = user.login;
             var repo = "blog.cms." + GET[1];
-            var path = "site.webmanifest";
+            var path = "/site.webmanifest";
             var params = {
                 owner,
                 repo,

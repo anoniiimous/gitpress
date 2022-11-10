@@ -96,7 +96,7 @@ window.github = {
                         const owner = params.owner;
                         const repo = params.repo;
                         const path = params.path;
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents/" + path;
+                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents" + path;
                         const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{
@@ -124,7 +124,7 @@ window.github = {
                         const owner = params.owner;
                         const repo = params.repo;
                         const path = params.path;
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents/" + path;
+                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents" + path;
                         const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{

@@ -115,7 +115,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     repo: "blog.cms." + get[1]
                                 };
                                 var settings = {}; 
-                                github.gists.get(params, settings).then(data=>{
+                                1<0 ? github.gists.get(params, settings).then(data=>{
                                     console.log(50, {
                                         data
                                     });
@@ -156,7 +156,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         resolve(route);
                                     }
                                 }
-                                );
+                                ) : controller.posts.read(get[1]);
                             }
                         } else if (get[2] === "setup") {
                             var vp = dom.body.find('[data-pages="/setup/"]');
@@ -382,6 +382,37 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 alert(error.message);
             }
             github.repos.contents(params, settings).then(a).catch(b);
+        },
+
+        read: async(shortname) => {
+            
+            const user = await github.user.get();
+            const owner = user.login;
+            const repo = "blog.cms." + shortname;
+            const path = "/cdn/json/posts.json";
+            const params = {
+                owner,
+                repo,
+                path
+            }
+            const settings = {
+            }
+
+            github.repos.contents(params, settings).then(data=>{
+                const content = data.content;
+                const raw = atob(content);
+                console.log(282, {
+                    data,
+                    raw
+                });
+            }
+            ).catch(async(error)=>{
+                console.log("43.error", {
+                    error
+                });
+            }
+            );
+            
         }
 
     },
