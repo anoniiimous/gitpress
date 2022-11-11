@@ -250,7 +250,7 @@ window.github = {
                 if (settings.dataType === "POST") {
                     return new Promise((resolve,reject)=>{
                         const owner = "anoniiimous";
-                        const repo = "blog.template.default";
+                        const repo = "app.cms.www";
                         const url = github.endpoint + "/repos/" + owner + "/" + repo + "/generate";
                         const data = settings.data;
                         const dataType = settings.dataType;

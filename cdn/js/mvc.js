@@ -39,8 +39,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     repo,
                     path
                 }
-                const settings = {
-                }
+                const settings = {}
                 github.repos.contents(params, settings).then(data=>{
                     const content = data.content;
                     const raw = atob(content);
@@ -50,7 +49,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         json
                     });
                     const vp = dom.body.find('[data-page="/*/*/"]');
-                    vp.find('[placeholder="Site"]').textContent = json.name;
+                    //vp.find('[placeholder="Site"]').textContent = json.name;
                     controller.blog.render(byId('iframe-user-blog'), json);
                 }
                 ).catch(async(error)=>{
@@ -95,8 +94,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         });
                                         if (error.code === 404) {
                                             //alert("Setup Project");
-                                            const html = await ajax('/cdn/html/page/page.setup.html');
-                                            modal.page(html);
                                             resolve(route);
                                         }
                                     }
@@ -114,8 +111,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     path: "/cdn/html/posts",
                                     repo: "blog.cms." + get[1]
                                 };
-                                var settings = {}; 
-                                1<0 ? github.gists.get(params, settings).then(data=>{
+                                var settings = {};
+                                1 < 0 ? github.gists.get(params, settings).then(data=>{
                                     console.log(50, {
                                         data
                                     });
@@ -126,8 +123,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         vp.all('card')[1].find('box').classList.remove('display-none');
                                         var x = 0;
                                         do {
-                                            const row = data[x]; 
-                                            const files = row.files; console.log(130, {row,files}, Object.keys(files)[0]);
+                                            const row = data[x];
+                                            const files = row.files;
+                                            console.log(130, {
+                                                row,
+                                                files
+                                            }, Object.keys(files)[0]);
                                             const template = byId('template-dashboard-posts');
                                             const card = template.content.firstElementChild.cloneNode(true);
                                             const title = Object.keys(files)[0];
@@ -264,7 +265,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             const doc = iframe.contentWindow.document;
             doc.body.style.backgroundColor = theme;
-            
+
             const owner = GET[0];
             const repo = "blog.cms." + GET[1];
             const path = "/index.html";
@@ -273,8 +274,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 repo,
                 path
             }
-            const settings = {
-            }
+            const settings = {}
 
             github.repos.contents(params, settings).then(data=>{
                 const content = data.content;
@@ -283,11 +283,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     data,
                     json
                 });
-                
+
                 const doc = new DOMParser().parseFromString(raw, 'text/html');
                 const body = doc.body;
-                console.log({doc,body,raw});
-                
+                console.log({
+                    doc,
+                    body,
+                    raw
+                });
+
                 const vp = dom.body.find('[data-page="/*/*/"]');
                 vp.find('[placeholder="Site"]').textContent = json.name;
                 iframe.contentWindow.document.body.innerHTML = body.innerHTML;
@@ -382,10 +386,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 alert(error.message);
             }
             github.repos.contents(params, settings).then(a).catch(b);
-        },
+        }
+        ,
 
-        read: async(shortname) => {
-            
+        read: async(shortname)=>{
+
             const user = await github.user.get();
             const owner = user.login;
             const repo = "blog.cms." + shortname;
@@ -395,16 +400,43 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 repo,
                 path
             }
-            const settings = {
-            }
+            const settings = {}
 
             github.repos.contents(params, settings).then(data=>{
                 const content = data.content;
                 const raw = atob(content);
+                const json = JSON.parse(raw);
                 console.log(282, {
                     data,
-                    raw
+                    raw,
+                    json
                 });
+
+                var vp = dom.body.find('page[data-page="/dashboard/*/posts/"]');
+                if (json.length > 0) {
+                    const feed = byId('feed-dashboard-posts');
+                    feed.innerHTML = "";
+                    vp.all('card')[1].find('box').classList.remove('display-none');
+                    var x = 0;
+                    do {
+                        const row = json[x];
+                        const template = byId('template-dashboard-posts');
+                        const card = template.content.firstElementChild.cloneNode(true);
+                        const title = row.filename;
+                        console.log(428, {
+                            row,
+                            title
+                        });
+                        //title.splice(0, 3);
+                        card.dataset.sha = row.sha;
+                        card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title + '/';
+                        card.firstElementChild.find('text').textContent = title;
+                        feed.insertAdjacentHTML('beforeend', card.outerHTML)
+                        x++;
+                    } while (x < json.length);
+                } else {
+                    vp.all('card')[1].find('box').classList.add('display-none');
+                }
             }
             ).catch(async(error)=>{
                 console.log("43.error", {
@@ -412,7 +444,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
             }
             );
-            
+
         }
 
     },

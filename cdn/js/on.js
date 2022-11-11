@@ -702,7 +702,9 @@ window.on["submit"] = {
         post: async(event)=>{
             event.preventDefault();
             const form = event.target;
-            const title = form.find('[type="text"]').value.toLowerCase().replaceAll(' ', '-');
+            const ext = 'html';
+            const title = form.find('[type="text"]').value;
+            const filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and')+'.'+ext;
             const body = form.find('textarea').value;
             console.log({
                 title,
@@ -717,7 +719,7 @@ window.on["submit"] = {
             const yr = d.getFullYear();
             const mo = d.getMonth();
             const day = d.getDay();
-            var filename = yr + '-' + mo + '-' + day + '-' + title + '.html';
+            //var filename = yr + '-' + mo + '-' + day + '-' + fn + '.html';
             var path = "cdn/html/posts/" + filename;
             var params = {
                 owner,
@@ -728,7 +730,7 @@ window.on["submit"] = {
             var content = raw;
             var message = "Create Webmanifest";
             var description = "Example of a gist";
-            var filename = title + '.html';
+            //var filename = title + '.html';
             var files = {};
             files[filename] = {
                 content
@@ -749,8 +751,86 @@ window.on["submit"] = {
                 settings
             });
 
-            1 < 0 ? github.repos.contents(params, settings).then(async(data)=>{
-                (window.location.pathname + window.location.hash).router();
+            1 > 0 ? github.repos.contents({
+                owner,
+                repo,
+                path: "/cdn/html/posts/" + filename
+            }, {
+                data: JSON.stringify({
+                    content: btoa(raw),
+                    message: "Update Post"
+                }),
+                dataType: "PUT"
+            }).then(async(data)=>{
+                //(window.location.pathname + window.location.hash).router();
+
+                console.log(755, data);
+                const filename = data.content.name;          
+
+                var params = {
+                    owner,
+                    repo,
+                    path: "/cdn/json/posts.json"
+                };
+
+                const posts = await github.repos.contents(params, {});
+                const content = atob(posts.content);
+                const sha = posts.sha;
+                const rows = JSON.parse(content);
+                console.log(759, {
+                    rows,
+                    params,
+                    posts,
+                    json
+                });
+
+                const length = rows.length;
+                if (length > 0) {
+                    var latest = rows[0];
+                    var id = latest.id + 1;
+                    console.log({
+                        length,
+                        latest,
+                        id,
+                        rows
+                    });
+                } else {
+                    var latest = rows[0];
+                    var id = 1;
+                }
+
+                const row = {
+                    filename,
+                    id,
+                    title
+                }
+                rows.unshift(row);
+                console.log(778, {
+                    length,
+                    params,
+                    row,
+                    rows
+                });
+
+                params.sha = sha;
+                const settings = {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(rows, null, 4)),
+                        message: "Update Posts Table",
+                        sha: posts.sha
+                    }),
+                    dataType: "PUT"
+                }
+                console.log(801, {
+                    params,
+                    settings
+                });
+                github.repos.contents(params, settings).then(()=>{//("/dashboard/:get/posts/").router();
+                }
+                ).catch(()=>{
+                    alert(false);
+                }
+                )
             }
             ) : github.gists.create(settings).then(async(d)=>{
 
@@ -778,10 +858,15 @@ window.on["submit"] = {
                 });
 
                 const length = rows.length;
-                if(length > 0) {
+                if (length > 0) {
                     var latest = rows[0];
                     var id = latest.id + 1;
-                    console.log({length,latest,id,rows});
+                    console.log({
+                        length,
+                        latest,
+                        id,
+                        rows
+                    });
                 } else {
                     var latest = rows[0];
                     var id = 1;
@@ -796,21 +881,26 @@ window.on["submit"] = {
                 }
                 rows.unshift(row);
                 console.log(778, {
-                    length, params, row, rows
+                    length,
+                    params,
+                    row,
+                    rows
                 });
 
                 params.sha = sha;
                 const settings = {
                     data: JSON.stringify({
-                        content: btoa(JSON.stringify(rows,null,4)),
+                        content: btoa(JSON.stringify(rows, null, 4)),
                         message: "Update Posts Table",
                         sha: posts.sha
                     }),
                     dataType: "PUT"
                 }
-                console.log(801,{params,settings});
-                github.repos.contents(params, settings).then(()=>{
-                    //("/dashboard/:get/posts/").router();
+                console.log(801, {
+                    params,
+                    settings
+                });
+                github.repos.contents(params, settings).then(()=>{//("/dashboard/:get/posts/").router();
                 }
                 ).catch(()=>{
                     alert(false);
