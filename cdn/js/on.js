@@ -701,213 +701,95 @@ window.on["submit"] = {
         ,
         post: async(event)=>{
             event.preventDefault();
+
+            /*VARS*/
             const form = event.target;
             const ext = 'html';
             const title = form.find('[type="text"]').value;
-            const filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and')+'.'+ext;
+            var filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and') + '.' + ext;
             const body = form.find('textarea').value;
-            console.log({
-                title,
-                body
-            });
+            const user = await github.user.get();            
 
-            const user = await github.user.get();
-
-            var owner = user.login;
-            var repo = "blog.cms." + GET[1];
-            const d = new Date();
-            const yr = d.getFullYear();
-            const mo = d.getMonth();
-            const day = d.getDay();
-            //var filename = yr + '-' + mo + '-' + day + '-' + fn + '.html';
-            var path = "cdn/html/posts/" + filename;
-            var params = {
-                owner,
-                repo,
-                path
-            }
-            var raw = body;
-            var content = raw;
-            var message = "Create Webmanifest";
-            var description = "Example of a gist";
-            //var filename = title + '.html';
-            var files = {};
-            files[filename] = {
-                content
-            };
-            const json = {
-                "description": description,
-                "public": false,
-                files
-            };
-            var data = JSON.stringify(json);
-            const dataType = "POST";
-            const settings = {
-                data,
-                dataType
-            };
-            console.log({
-                params,
-                settings
-            });
-
-            1 > 0 ? github.repos.contents({
-                owner,
-                repo,
+            /*FILE*/
+            var data = await github.repos.contents({
+                owner: user.login,
+                repo: "blog.cms." + GET[1],
                 path: "/cdn/html/posts/" + filename
             }, {
                 data: JSON.stringify({
-                    content: btoa(raw),
+                    content: btoa(body),
                     message: "Update Post"
                 }),
                 dataType: "PUT"
-            }).then(async(data)=>{
-                //(window.location.pathname + window.location.hash).router();
+            });
+            filename = data.content.name;
 
-                console.log(755, data);
-                const filename = data.content.name;          
+            /*GIST*/
+            var files = {};
+            files[filename] = {
+                content: body
+            };
+            d = await github.gists.create({
+                data: JSON.stringify({
+                    "description": "Example of a gist",
+                    "public": false,
+                    files
+                }),
+                dataType: "POST"
+            });
+            const created = d.created_at;
+            description = d.description;
+            gist = d.id;
+            console.log(755, {d, data});
 
-                var params = {
-                    owner,
-                    repo,
-                    path: "/cdn/json/posts.json"
-                };
+            /*CACHE*/          
+            const params = {
+                owner: user.login,
+                repo: "blog.cms." + GET[1],
+                path: "/cdn/json/posts.json"
+            };
+            const posts = await github.repos.contents(params, {});
+            content = atob(posts.content);
+            const sha = posts.sha;
+            const rows = JSON.parse(content);
 
-                const posts = await github.repos.contents(params, {});
-                const content = atob(posts.content);
-                const sha = posts.sha;
-                const rows = JSON.parse(content);
-                console.log(759, {
-                    rows,
-                    params,
-                    posts,
-                    json
-                });
-
-                const length = rows.length;
-                if (length > 0) {
-                    var latest = rows[0];
-                    var id = latest.id + 1;
-                    console.log({
-                        length,
-                        latest,
-                        id,
-                        rows
-                    });
-                } else {
-                    var latest = rows[0];
-                    var id = 1;
-                }
-
-                const row = {
-                    filename,
-                    id,
-                    title
-                }
-                rows.unshift(row);
-                console.log(778, {
-                    length,
-                    params,
-                    row,
-                    rows
-                });
-
-                params.sha = sha;
-                const settings = {
-                    data: JSON.stringify({
-                        content: btoa(JSON.stringify(rows, null, 4)),
-                        message: "Update Posts Table",
-                        sha: posts.sha
-                    }),
-                    dataType: "PUT"
-                }
-                console.log(801, {
-                    params,
-                    settings
-                });
-                github.repos.contents(params, settings).then(()=>{//("/dashboard/:get/posts/").router();
-                }
-                ).catch(()=>{
-                    alert(false);
-                }
-                )
+            const length = rows.length;
+            if (length > 0) {
+                var latest = rows[0];
+                var id = latest.id + 1;
+            } else {
+                var latest = rows[0];
+                var id = 1;
             }
-            ) : github.gists.create(settings).then(async(d)=>{
 
-                console.log(755, d);
-                const created = d.created_at;
-                const description = d.description;
-                const filename = Object.values(d.files)[0].filename;
-                const gist = d.id;
-
-                var params = {
-                    owner,
-                    repo,
-                    path: "/cdn/json/posts.json"
-                };
-
-                const posts = await github.repos.contents(params, {});
-                const content = atob(posts.content);
-                const sha = posts.sha;
-                const rows = JSON.parse(content);
-                console.log(759, {
-                    rows,
-                    params,
-                    posts,
-                    json
-                });
-
-                const length = rows.length;
-                if (length > 0) {
-                    var latest = rows[0];
-                    var id = latest.id + 1;
-                    console.log({
-                        length,
-                        latest,
-                        id,
-                        rows
-                    });
-                } else {
-                    var latest = rows[0];
-                    var id = 1;
-                }
-
-                const row = {
-                    created,
-                    description,
-                    filename,
-                    gist,
-                    id
-                }
-                rows.unshift(row);
-                console.log(778, {
-                    length,
-                    params,
-                    row,
-                    rows
-                });
-
-                params.sha = sha;
-                const settings = {
-                    data: JSON.stringify({
-                        content: btoa(JSON.stringify(rows, null, 4)),
-                        message: "Update Posts Table",
-                        sha: posts.sha
-                    }),
-                    dataType: "PUT"
-                }
-                console.log(801, {
-                    params,
-                    settings
-                });
-                github.repos.contents(params, settings).then(()=>{//("/dashboard/:get/posts/").router();
-                }
-                ).catch(()=>{
-                    alert(false);
-                }
-                )
+            const row = {
+                filename,
+                gist,
+                id,
+                sha,
+                title
             }
-            );
+            rows.unshift(row);
+
+            params.sha = data.content.sha;
+
+            settings = {
+                data: JSON.stringify({
+                    content: btoa(JSON.stringify(rows, null, 4)),
+                    message: "Update Posts Table",
+                    sha: posts.sha
+                }),
+                dataType: "PUT"
+            }
+            console.log(801, {
+                params,
+                settings
+            });
+            
+            github.repos.contents(params, settings).then(put => {
+                console.log(791,{put});
+                ("/dashboard/:get/posts/").router();
+            });
         }
         ,
         project: (event)=>{

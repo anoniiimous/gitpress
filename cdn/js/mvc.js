@@ -84,8 +84,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         });
                                         var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
                                         if (data) {
+                                            const content = atob(data.content);
                                             vp.find('input[type="text"]').value = data.name;
-                                            vp.find('textarea').value = atob(data.content);
+                                            vp.find('textarea').value = content;
                                         }
                                     }
                                     ).catch(async(error)=>{
@@ -422,14 +423,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         const row = json[x];
                         const template = byId('template-dashboard-posts');
                         const card = template.content.firstElementChild.cloneNode(true);
-                        const title = row.filename;
+                        const title = row.title;
                         console.log(428, {
                             row,
                             title
                         });
                         //title.splice(0, 3);
                         card.dataset.sha = row.sha;
-                        card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title + '/';
+                        card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + row.filename.split('.')[0] + '/';
                         card.firstElementChild.find('text').textContent = title;
                         feed.insertAdjacentHTML('beforeend', card.outerHTML)
                         x++;

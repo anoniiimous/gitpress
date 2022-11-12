@@ -17,21 +17,6 @@
                     </box>
                 </row>
             </card>
-            <card>
-                <row>
-                    <box class="border-1px-solid color-000 line-height-50px margin-right-20px padding-x-20px" data-href="/dashboard/:get/posts/">
-                        <section>
-                            <text class="font-size-14px font-weight-bolder">Cancel</text>
-                        </section>
-                    </box>
-                    <box class="background-color-333 color-fff line-height-50px padding-x-20px" data-submit="form-dashboard-post">
-                        <section>
-                            <text class="font-size-14px font-weight-bolder">Save Post</text>
-                            <input type="submit">
-                        </section>
-                    </box>
-                </row>
-            </card>
         </row>
     </header>
     <block class="margin-y-20px wdth-100pct">
@@ -99,4 +84,24 @@
             </card>
         </column>
     </block>
+    <footer>
+        <row class="justify-content-space-between">
+            <card></card>
+            <card class="magrin-left-auto">
+                <row>
+                    <box class="border-1px-solid color-000 line-height-50px margin-right-20px padding-x-20px">
+                        <section>
+                            <text class="font-size-14px font-weight-bolder">Save Draft</text>
+                        </section>
+                    </box>
+                    <box class="background-color-333 color-fff line-height-50px padding-x-20px" data-submit="form-dashboard-post">
+                        <section>
+                            <text class="font-size-14px font-weight-bolder">Publish</text>
+                            <input type="submit">
+                        </section>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </footer>
 </form>
