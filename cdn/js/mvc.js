@@ -370,7 +370,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const params = {
                 repo: 'blog.cms.' + GET[1],
                 owner: user.login,
-                path: 'cdn/html/posts/' + target.closest('box').previousElementSibling.find('text').textContent + '.html',
+                path: 'cdn/html/posts/' + target.closest('card').dataset.filename + '.html',
                 sha: target.closest('card').dataset.sha
             }
             const settings = {
@@ -384,7 +384,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 target.closest('card').remove();
             }
             const b = (error)=>{
-                alert(error.message);
+                console.log({
+                    error
+                });
             }
             github.repos.contents(params, settings).then(a).catch(b);
         }
@@ -430,6 +432,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         });
                         //title.splice(0, 3);
                         card.dataset.sha = row.sha;
+                        card.dataset.filename = row.filename.split('.')[0];
                         card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + row.filename.split('.')[0] + '/';
                         card.firstElementChild.find('text').textContent = title;
                         feed.insertAdjacentHTML('beforeend', card.outerHTML)

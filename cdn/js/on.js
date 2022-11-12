@@ -723,6 +723,7 @@ window.on["submit"] = {
                 dataType: "PUT"
             });
             filename = data.content.name;
+            const sha = data.content.sha;
 
             /*GIST*/
             var files = {};
@@ -750,7 +751,6 @@ window.on["submit"] = {
             };
             const posts = await github.repos.contents(params, {});
             content = atob(posts.content);
-            const sha = posts.sha;
             const rows = JSON.parse(content);
 
             const length = rows.length;
@@ -771,7 +771,7 @@ window.on["submit"] = {
             }
             rows.unshift(row);
 
-            params.sha = data.content.sha;
+            params.sha = posts.sha;
 
             settings = {
                 data: JSON.stringify({
