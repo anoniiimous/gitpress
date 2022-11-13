@@ -113,52 +113,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     repo: "blog.cms." + get[1]
                                 };
                                 var settings = {};
-                                1 < 0 ? github.gists.get(params, settings).then(data=>{
-                                    console.log(50, {
-                                        data
-                                    });
-                                    var vp = dom.body.find('page[data-page="/dashboard/*/posts/"]');
-                                    if (data.length > 0) {
-                                        const feed = byId('feed-dashboard-posts');
-                                        feed.innerHTML = "";
-                                        vp.all('card')[1].find('box').classList.remove('display-none');
-                                        var x = 0;
-                                        do {
-                                            const row = data[x];
-                                            const files = row.files;
-                                            console.log(130, {
-                                                row,
-                                                files
-                                            }, Object.keys(files)[0]);
-                                            const template = byId('template-dashboard-posts');
-                                            const card = template.content.firstElementChild.cloneNode(true);
-                                            const title = Object.keys(files)[0];
-                                            console.log(row.name, {
-                                                title
-                                            });
-                                            //title.splice(0, 3);
-                                            card.dataset.sha = row.sha;
-                                            card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + title + '/';
-                                            card.firstElementChild.find('text').textContent = title;
-                                            feed.insertAdjacentHTML('beforeend', card.outerHTML)
-                                            x++;
-                                        } while (x < data.length);
-                                    } else {
-                                        vp.all('card')[1].find('box').classList.add('display-none');
-                                    }
-                                }
-                                ).catch(async(error)=>{
-                                    console.log("43.error", {
-                                        error
-                                    });
-                                    if (error.code === 404) {
-                                        //alert("Setup Project");
-                                        const html = await ajax('/cdn/html/page/page.setup.html');
-                                        //modal.page(html);
-                                        resolve(route);
-                                    }
-                                }
-                                ) : controller.posts.read(get[1]);
+                                controller.posts.read(get[1]);
                             }
                         } else if (get[2] === "setup") {
                             var vp = dom.body.find('[data-pages="/setup/"]');
@@ -366,20 +321,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         delete: async(target)=>{
             console.log(target);
+
             const user = await github.user.get();
-            const params = {
-                repo: 'blog.cms.' + GET[1],
-                owner: user.login,
-                path: 'cdn/html/posts/' + target.closest('card').dataset.filename + '.html',
-                sha: target.closest('card').dataset.sha
-            }
-            const settings = {
-                data: JSON.stringify({
-                    message: 'Delete ' + params.path,
-                    sha: params.sha
-                }),
-                dataType: "DELETE"
-            }
             const a = ()=>{
                 target.closest('card').remove();
             }
@@ -388,7 +331,61 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     error
                 });
             }
+
+            params = {
+                repo: 'blog.cms.' + GET[1],
+                owner: user.login,
+                path: '/cdn/json/posts.json'
+            }
+            settings = {}
+            const get = await github.repos.contents(params, settings);
+            var content = JSON.parse(atob(get.content));
+            var filter = content.filter(row=>row.id !== parseInt(target.closest('card').dataset.id))
+            console.log(364, {
+                content,
+                filter,
+                get
+            });
+
+            params = {
+                repo: 'blog.cms.' + GET[1],
+                owner: user.login,
+                path: '/cdn/json/posts.json',
+                sha: get.sha
+            }
+            settings = {
+                data: JSON.stringify({
+                    content: btoa(JSON.stringify(filter,null,4)),
+                    message: "Update Posts Table",
+                    sha: get.sha
+                }),
+                dataType: "PUT"
+            }
             github.repos.contents(params, settings).then(a).catch(b);
+
+            var params = {
+                gist: target.closest('card').dataset.gist,
+                repo: 'blog.cms.' + GET[1],
+                owner: user.login,
+                path: 'cdn/html/posts/' + target.closest('card').dataset.filename + '.html',
+                sha: target.closest('card').dataset.sha
+            }
+            var settings = {
+                data: JSON.stringify({
+                    message: 'Delete ' + params.path,
+                    sha: params.sha
+                }),
+                dataType: "DELETE"
+            }
+            github.repos.contents(params, settings).catch(b);
+
+            params = {
+                gist: params.gist
+            }
+            settings = {
+                dataType: "DELETE"
+            }
+            github.gists.delete(params, settings).catch(b);
         }
         ,
 
@@ -426,13 +423,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         const template = byId('template-dashboard-posts');
                         const card = template.content.firstElementChild.cloneNode(true);
                         const title = row.title;
-                        console.log(428, {
-                            row,
-                            title
-                        });
-                        //title.splice(0, 3);
-                        card.dataset.sha = row.sha;
+                        row.gist ? card.dataset.gist = row.gist : null;
+                        row.sha ? card.dataset.sha = row.sha : null;
                         card.dataset.filename = row.filename.split('.')[0];
+                        card.dataset.id = row.id;
                         card.firstElementChild.find('text').dataset.href = "/dashboard/:get/posts/post/" + row.filename.split('.')[0] + '/';
                         card.firstElementChild.find('text').textContent = title;
                         feed.insertAdjacentHTML('beforeend', card.outerHTML)
