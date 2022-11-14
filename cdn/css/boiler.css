@@ -493,6 +493,10 @@
         margin-top: 120px;
     }
 
+    .min-height-120px {
+        min-height: 120px;
+    }
+
     @media (max-width: 1024px) {
         [data-1024px-margin-right="0"] {
             margin-right: 0;
