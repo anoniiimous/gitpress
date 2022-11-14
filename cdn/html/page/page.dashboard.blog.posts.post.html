@@ -24,6 +24,7 @@
             <header>
                 <column>
                     <input class="background-color-fff font-size-18px line-height-50px margin-bottom-20px padding-x-20px" placeholder="Enter Title Here" type="text">
+                    <textarea class="background-color-fff font-size-13px margin-bottom-20px padding-20px" placeholder="Description"></textarea>
                 </column>
             </header>
             <card class="background-color-fff">
@@ -91,13 +92,12 @@
                 <row>
                     <box class="border-1px-solid color-000 line-height-50px margin-right-20px padding-x-20px">
                         <section>
-                            <text class="font-size-14px font-weight-bolder">Save Draft</text>
+                            <button class="font-size-14px font-weight-bolder" name="draft" type="submit">Save Draft</button>
                         </section>
                     </box>
-                    <box class="background-color-333 color-fff line-height-50px padding-x-20px" data-submit="form-dashboard-post">
+                    <box class="background-color-333 color-fff line-height-50px padding-x-20px" data-submit="form-dashboard-post" data-tap="event.target.closest('box').find('button').click()">
                         <section>
-                            <text class="font-size-14px font-weight-bolder">Publish</text>
-                            <input type="submit">
+                            <button class="color-fff font-size-14px font-weight-bolder" name="publish" type="submit">Publish</button>
                         </section>
                     </box>
                 </row>

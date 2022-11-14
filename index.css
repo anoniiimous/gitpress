@@ -60,6 +60,13 @@
         display: -webkit-flex;
     }
 
+    button {
+        appearance: none;
+        background: transparent;
+        border: none;
+        line-height: 50px;
+    }
+
     flex, column, row {
         display: flex;
         display: webkit-flex;
@@ -143,6 +150,7 @@
         -webkit-appearance: none;
         border: unset;
         resize: none;
+        font-family: Arial;
     }
 
     textarea:focus {

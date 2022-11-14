@@ -78,15 +78,31 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         repo: "blog.cms." + get[1]
                                     };
                                     var settings = {};
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
+                                    vp.find('header input[type="text"]').value = "";
+                                    vp.find('header textarea').value = "";
+                                    vp.find('card textarea').value = "";
                                     github.repos.contents(params, settings).then(data=>{
                                         console.log(50, {
                                             data
                                         });
-                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
                                         if (data) {
+                                            const filename = data.name;
                                             const content = atob(data.content);
-                                            vp.find('input[type="text"]').value = data.name;
-                                            vp.find('textarea').value = content;
+                                            const doc = new DOMParser().parseFromString(content, "text/html");
+                                            console.log(89, {
+                                                content,
+                                                doc
+                                            });
+                                            vp.find('form').dataset.filename = filename;
+                                            vp.find('header input[type="text"]').value = doc.head.find("title").textContent;
+                                            vp.find('header textarea').value = doc.head.find("meta[name='description']").content;
+                                            vp.find('card textarea').value = doc.body.find('article').textContent;
+
+                                            const gist = doc.head.find('meta[name="gist"]').content;
+                                            if (gist) {
+                                                vp.find('form > footer').all('button')[0].dataset.gist = gist;
+                                            }
                                         }
                                     }
                                     ).catch(async(error)=>{
@@ -355,7 +371,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             settings = {
                 data: JSON.stringify({
-                    content: btoa(JSON.stringify(filter,null,4)),
+                    content: btoa(JSON.stringify(filter, null, 4)),
                     message: "Update Posts Table",
                     sha: get.sha
                 }),

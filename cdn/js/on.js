@@ -701,95 +701,194 @@ window.on["submit"] = {
         ,
         post: async(event)=>{
             event.preventDefault();
+            console.log(704, {
+                event
+            });
 
             /*VARS*/
             const form = event.target;
             const ext = 'html';
-            const title = form.find('[type="text"]').value;
+            const title = form.find('header [type="text"]').value;
+            var description = form.find('header textarea').value;
             var filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and') + '.' + ext;
-            const body = form.find('textarea').value;
-            const user = await github.user.get();            
+            const body = form.find('card textarea').value;
+            const user = await github.user.get();
 
-            /*FILE*/
-            var data = await github.repos.contents({
-                owner: user.login,
-                repo: "blog.cms." + GET[1],
-                path: "/cdn/html/posts/" + filename
-            }, {
-                data: JSON.stringify({
-                    content: btoa(body),
-                    message: "Update Post"
-                }),
-                dataType: "PUT"
-            });
-            filename = data.content.name;
-            const sha = data.content.sha;
+            if (event.submitter.innerText === "Save Draft") {
 
-            /*GIST*/
-            var files = {};
-            files[filename] = {
-                content: body
-            };
-            d = await github.gists.create({
-                data: JSON.stringify({
-                    "description": "Example of a gist",
-                    "public": false,
-                    files
-                }),
-                dataType: "POST"
-            });
-            const created = d.created_at;
-            description = d.description;
-            gist = d.id;
-            console.log(755, {d, data});
+                /*GIST*/
+                var files = {};
+                files[filename] = {
+                    content: body
+                };
+                var gist = form.all("button")[0].dataset.gist;
+                if (gist) {
+                    alert("Updating Gist");
+                    d = await github.gists.update({
+                        gist
+                    }, {
+                        data: JSON.stringify({
+                            "description": description,
+                            "public": false,
+                            files
+                        }),
+                        dataType: "PATCH"
+                    });
+                    const created = d.created_at;
+                    description = d.description;
+                    gist = d.id;
+                    console.log(735, {
+                        d,
+                        data
+                    });
+                } else {
+                    d = await github.gists.create({
+                        data: JSON.stringify({
+                            "description": description,
+                            "public": false,
+                            files
+                        }),
+                        dataType: "POST"
+                    });
+                    const created = d.created_at;
+                    description = d.description;
+                    gist = d.id;
+                    console.log(735, {
+                        d,
+                        data
+                    });                    
+                }
 
-            /*CACHE*/          
-            const params = {
-                owner: user.login,
-                repo: "blog.cms." + GET[1],
-                path: "/cdn/json/posts.json"
-            };
-            const posts = await github.repos.contents(params, {});
-            content = atob(posts.content);
-            const rows = JSON.parse(content);
+                /*CACHE*/
+                const params = {
+                    owner: user.login,
+                    repo: "blog.cms." + GET[1],
+                    path: "/cdn/json/posts.json"
+                };
+                const posts = await github.repos.contents(params, {});
+                content = atob(posts.content);
+                const rows = JSON.parse(content);
+                const row = rows.filter(row=>row.filename === filename);
+                const index = rows.indexOf(row);
+                row[0].gist = gist;
+                const update = rows;
+                update[index] = row;
+                console.log(773,{gist,rows,row,update});
 
-            const length = rows.length;
-            if (length > 0) {
-                var latest = rows[0];
-                var id = latest.id + 1;
-            } else {
-                var latest = rows[0];
-                var id = 1;
+                params.sha = posts.sha;
+                settings = {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(rows, null, 4)),
+                        message: "Update Posts Table",
+                        sha: posts.sha
+                    }),
+                    dataType: "PUT"
+                }
+                console.log(801, {
+                    params,
+                    settings
+                });
+
+                github.repos.contents(params, settings).then(put=>{
+                    console.log(791, {
+                        put
+                    });
+                    //("/dashboard/:get/posts/").router();
+                }
+                );
+
             }
 
-            const row = {
-                filename,
-                gist,
-                id,
-                sha,
-                title
-            }
-            rows.unshift(row);
+            if (event.submitter.innerText === "Publish") {
 
-            params.sha = posts.sha;
+                /*FILE*/
+                var data = await github.repos.contents({
+                    owner: user.login,
+                    repo: "blog.cms." + GET[1],
+                    path: "/cdn/html/posts/" + filename
+                }, {
+                    data: JSON.stringify({
+                        content: btoa(body),
+                        message: "Create Post"
+                    }),
+                    dataType: "PUT"
+                });
+                filename = data.content.name;
+                const sha = data.content.sha;
 
-            settings = {
-                data: JSON.stringify({
-                    content: btoa(JSON.stringify(rows, null, 4)),
-                    message: "Update Posts Table",
-                    sha: posts.sha
-                }),
-                dataType: "PUT"
+                /*GIST*/
+                var files = {};
+                files[filename] = {
+                    content: body
+                };
+                d = await github.gists.create({
+                    data: JSON.stringify({
+                        "description": "Example of a gist",
+                        "public": false,
+                        files
+                    }),
+                    dataType: "POST"
+                });
+                const created = d.created_at;
+                description = d.description;
+                gist = d.id;
+                console.log(755, {
+                    d,
+                    data
+                });
+
+                /*CACHE*/
+                const params = {
+                    owner: user.login,
+                    repo: "blog.cms." + GET[1],
+                    path: "/cdn/json/posts.json"
+                };
+                const posts = await github.repos.contents(params, {});
+                content = atob(posts.content);
+                const rows = JSON.parse(content);
+
+                const length = rows.length;
+                if (length > 0) {
+                    var latest = rows[0];
+                    var id = latest.id + 1;
+                } else {
+                    var latest = rows[0];
+                    var id = 1;
+                }
+
+                const row = {
+                    filename,
+                    gist,
+                    id,
+                    sha,
+                    title
+                }
+                rows.unshift(row);
+
+                params.sha = posts.sha;
+
+                settings = {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(rows, null, 4)),
+                        message: "Update Posts Table",
+                        sha: posts.sha
+                    }),
+                    dataType: "PUT"
+                }
+                console.log(801, {
+                    params,
+                    settings
+                });
+
+                github.repos.contents(params, settings).then(put=>{
+                    console.log(791, {
+                        put
+                    });
+                    ("/dashboard/:get/posts/").router();
+                }
+                );
+
             }
-            console.log(801, {
-                params,
-                settings
-            });
-            
-            github.repos.contents(params, settings).then(put => {
-                console.log(791,{put});
-                ("/dashboard/:get/posts/").router();
-            });
         }
         ,
         project: (event)=>{
