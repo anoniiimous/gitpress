@@ -713,13 +713,21 @@ window.on["submit"] = {
             var filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and') + '.' + ext;
             const body = form.find('card textarea').value;
             const user = await github.user.get();
+            const html = await ajax("/cdn/html/template/template.post.html");
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            doc.body.find('article').innerHTML = body;
+            console.log(719, {
+                doc
+            });
+            var content = doc.head.outerHTML + doc.body.outerHTML;
 
             if (event.submitter.innerText === "Save Draft") {
 
                 /*GIST*/
+
                 var files = {};
                 files[filename] = {
-                    content: body
+                    content
                 };
                 var gist = form.all("button")[0].dataset.gist;
                 if (gist) {
@@ -756,7 +764,7 @@ window.on["submit"] = {
                     console.log(735, {
                         d,
                         data
-                    });                    
+                    });
                 }
 
                 /*CACHE*/
@@ -767,13 +775,39 @@ window.on["submit"] = {
                 };
                 const posts = await github.repos.contents(params, {});
                 content = atob(posts.content);
-                const rows = JSON.parse(content);
+                var rows = JSON.parse(content);
                 const row = rows.filter(row=>row.filename === filename);
-                const index = rows.indexOf(row);
-                row[0].gist = gist;
-                const update = rows;
-                update[index] = row;
-                console.log(773,{gist,rows,row,update});
+                console.log(777, {
+                    row
+                });
+                if (row.length > 0) {
+                    const index = rows.indexOf(row);
+                    row[0].gist = gist;
+                    const update = rows;
+                    update[index] = row;
+                } else {
+                    length = rows.length;
+                    if (length > 0) {
+                        var latest = rows[0];
+                        var id = latest.id + 1;
+                    } else {
+                        var latest = rows[0];
+                        var id = 1;
+                    }
+                    update = {
+                        filename,
+                        gist,
+                        "id": id,
+                        title
+                    }
+                    rows.unshift(update);
+                }
+                console.log(773, {
+                    gist,
+                    rows,
+                    row,
+                    update
+                });
 
                 params.sha = posts.sha;
                 settings = {
@@ -808,7 +842,7 @@ window.on["submit"] = {
                     path: "/cdn/html/posts/" + filename
                 }, {
                     data: JSON.stringify({
-                        content: btoa(body),
+                        content: btoa(content),
                         message: "Create Post"
                     }),
                     dataType: "PUT"
@@ -819,7 +853,7 @@ window.on["submit"] = {
                 /*GIST*/
                 var files = {};
                 files[filename] = {
-                    content: body
+                    content
                 };
                 d = await github.gists.create({
                     data: JSON.stringify({
