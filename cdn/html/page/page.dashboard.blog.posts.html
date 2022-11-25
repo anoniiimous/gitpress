@@ -30,11 +30,11 @@
     </header>
     <block class="flex-grow-1">
         <template id="template-dashboard-posts">
-            <card class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0">
+            <card class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0" data-max-width="calc(100vw - 40px)">
                 <row class="justify-content-space-between">
-                    <box>
+                    <box data-width="calc(100% - 50px)">
                         <section>
-                            <text class="font-weight-bolder line-height-50px padding-x-10px">Title</text>
+                            <text class="display-block font-weight-bolder line-height-50px overflow-hidden padding-x-10px text-overflow-ellipsis white-space-nowrap">Title</text>
                         </section>
                     </box>
                     <box data-tap="controller.posts.delete(event.target)">
@@ -47,7 +47,7 @@
                 </row>
             </card>
         </template>
-        <column class="grid-gap-10px" data-columns="1" id="feed-dashboard-posts"></column>
+        <column class="grid-gap-10px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-posts"></column>
         <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
                 <img class="width-100pct" src="cdn/png/astronaut-pencil.png">
