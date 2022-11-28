@@ -162,7 +162,26 @@
                 </column>
             </nav>
             <page class="-isauth background-color-bbb flex-grow-1 height-100pct min-height-100pct overflow-x-hidden position-fixed width-100pct" data-fetch="/cdn/html/page/page.dashboard.html" data-page="/dashboard/"></page>
-            <pages class="-noauth background-color-bbb flex-grow-1 min-height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.login.html" data-pages="/dashboard/" data-root="/dashboard/"></pages>
+            <pages class="-noauth background-color-bbb flex-grow-1 min-height-100pct position-fixed width-100pct" data-fetch="/cdn/html/page/page.login.html" data-pages="/dashboard/" data-root="/dashboard/">
+                <blocks class="min-height-100vh">
+                    <block class="justify-content-center height-100pct">
+                        <section class="padding-y-50px max-height-100pct-minus-120px">
+                            <card>
+                                <column class="border-radius-20px flex-direction-column flex-unset font-size-13px margin-x-auto padding-y-10px width-300px">
+                                    <box class="background-color-000 border-radius-5px color-fff margin-auto padding-x-20px width-100pc" data-tap="controller.sign.in(event)">
+                                        <row class="align-items-center justify-content-center">
+                                            <picture class="background-color-fff border-radius-50pct display-flex height-30px margin-right-10px position-relative width-30px">
+                                                <img class="position-absolute bottom-0 height-75pct left-0 fit-contain margin-auto right-0 width-75pct" src="cdn/svg/github.svg">
+                                            </picture>
+                                            <text class="display-flex justify-content-center line-height-50px text-align-center">Login with GitHub</text>
+                                        </row>
+                                    </box>
+                                </column>
+                            </card>
+                        </section>
+                    </block>
+                </blocks>
+            </pages>
         </main>
     </body>
 </html>

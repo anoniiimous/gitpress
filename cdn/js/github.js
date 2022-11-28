@@ -379,7 +379,7 @@ window.github = {
                 }
                 const b = (error)=>{
                     console.log(error);
-                    alert(error.message.message);
+                    //alert(error.message.message);
                     reject(error);
                 }
                 const settings = {};
