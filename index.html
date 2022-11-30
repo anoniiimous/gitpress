@@ -20,7 +20,8 @@
                 }
             }
             const base = document.createElement("base");
-            base.href = (globals.domains.domain === "github" ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+            const hub = (globals.domains.domain === "github" || globals.domain.domain === "anoniiimo")
+            base.href = (hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
         <link href="index.css" rel="stylesheet">
