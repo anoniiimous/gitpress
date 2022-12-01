@@ -17,6 +17,15 @@
                     </box>
                 </row>
             </card>
+            <card>
+                <row>
+                    <box class="background-color-333 color-fff display-none line-height-50px padding-x-20px" data-href="/dashboard/:get/posts/post/">
+                        <section>
+                            <text class="font-size-14px font-weight-bolder">Upload File</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
         </column>
     </header>
     <block class="flex-grow-1 padding-top-100px">
@@ -24,10 +33,11 @@
             <box>
                 <section>
                     <picture class="background-color-333 padding-top-100pct width-100pct"></picture>
+                    <text class="display-block overflow-hidden text-overflow-ellipsis"></text>
                 </section>
             </box>
         </template>
-        <column class="grid-gap-10px padding-x-20px" data-1024px-columns="5" data-1440px-columns="8" data-columns="12" data-max-width="calc(100vw - 40px)" id="feed-dashboard-files"></column>
+        <column class="grid-gap-10px padding-x-20px" data-375px-columns="2" data-550px-columns="3" data-700px-columns="4" data-1024px-columns="5" data-1440px-columns="8" data-columns="12" data-max-width="calc(100vw - 40px)" id="feed-dashboard-files"></column>
         <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
                 <img class="width-100pct" src="cdn/png/astronaut-cloud.png">

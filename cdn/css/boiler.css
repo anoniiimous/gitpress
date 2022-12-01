@@ -172,66 +172,94 @@
     }
 
     [data-columns="31"] {
-        grid-template-columns: repeat(31, 1fr);
+        grid-template-columns: repeat(31, minmax(0, 1fr));
     }
     
     [data-columns="12"] {
-        grid-template-columns: repeat(12, 1fr);
+        grid-template-columns: repeat(12, minmax(0, 1fr));
     }
 
     [data-columns="4"] {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     [data-columns="3"] {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     [data-columns="2"] {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     [data-columns="1"] {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, minmax(0, 1fr));
     }
 
     @media (max-width: 1440px) {
         [data-1440px-columns="8"] {
-            grid-template-columns: repeat(8, 1fr);
+            grid-template-columns: repeat(8, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 1280px) {
         [data-1280px-columns="2"] {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 1024px) {
         [data-1024px-columns="1"] {
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(1, minmax(0, 1fr));
         }
         
         [data-1024px-columns="5"] {
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(5, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 960px) {
         [data-960px-columns="2"] {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 768px) {
         [data-tablet-columns="1"] {
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 700px) {
+        [data-700px-columns="4"] {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 640px) {
+        [data-640px-columns="4"] {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        
         [data-vga-columns="1"] {
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 550px) {
+        [data-550px-columns="3"] {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 400px) {
+        [data-400px-columns="2"] {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 375px) {
+        [data-375px-columns="2"] {
+            grid-template-columns: rrepeat(2, minmax(0, 1fr));
         }
     }
 }

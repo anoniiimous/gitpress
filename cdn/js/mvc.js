@@ -80,12 +80,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         console.log(84, {
                                             data
                                         });
+                                        var feed = byId('feed-dashboard-files');
+                                        feed.innerHTML = "";
                                         if (data.length > 0) {
-                                            var feed = vp.find('template').nextElementSibling
                                             var d = 0;
                                             do {
-                                                const template = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
-                                                var html = template.outerHTML;
+                                                var row = data[d];
+                                                var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
+                                                box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
+                                                box.find('text').textContent = row.name;
+                                                var html = box.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
                                             } while (d < data.length)
