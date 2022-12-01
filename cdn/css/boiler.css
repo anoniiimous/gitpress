@@ -259,7 +259,7 @@
 
     @media (max-width: 375px) {
         [data-375px-columns="2"] {
-            grid-template-columns: rrepeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 }
@@ -335,6 +335,10 @@
 
 /*FONT SIZE*/
 @media screen {
+    .font-size-12px {
+        font-size: 12px;
+    }
+    
     .font-size-14px {
         font-size: 14px;
     }
@@ -417,6 +421,10 @@
     .justify-content-space-between {
         justify-content: space-between;
     }
+}
+
+.line-height-30px {
+    line-height: 30px;
 }
 
 /*MARGIN*/
@@ -879,6 +887,12 @@
         }
 
         [data-1024px-width="100%"] {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 960px) {
+        [data-960px-width="100%"] {
             width: 100%;
         }
     }

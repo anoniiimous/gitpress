@@ -64,49 +64,53 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             if (get.length > 3) {
                                 if (get[3] === "file") {//alert(false);
                                 }
-                            } else {
-                                //alert(true);
-                                const user = await github.user.get();
-                                const name = get[4] + '.html';
-                                var params = {
-                                    owner: user.login,
-                                    path: "/cdn/files",
-                                    repo: "blog.cms." + get[1]
-                                };
-                                var settings = {};
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
-                                github.repos.contents(params, settings).then(data=>{
-                                    if (data) {
-                                        console.log(84, {
-                                            data
-                                        });
-                                        var feed = byId('feed-dashboard-files');
-                                        feed.innerHTML = "";
-                                        if (data.length > 0) {
-                                            var d = 0;
-                                            do {
-                                                var row = data[d];
-                                                var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
-                                                box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
-                                                box.find('text').textContent = row.name;
-                                                var html = box.outerHTML;
-                                                feed.insertAdjacentHTML('beforeend', html);
-                                                d++;
-                                            } while (d < data.length)
-                                        }
-                                    }
-                                }
-                                ).catch(async(error)=>{
-                                    console.log("43.error", {
-                                        error
-                                    });
-                                    if (error.code === 404) {
-                                        //alert("Setup Project");
-                                        resolve(route);
-                                    }
-                                }
-                                );
                             }
+
+                            //alert(true);
+                            const user = await github.user.get();
+                            const name = get[4] + '.html';
+                            var params = {
+                                owner: user.login,
+                                path: "/cdn/files",
+                                repo: "blog.cms." + get[1]
+                            };
+                            var settings = {};
+                            var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
+                            github.repos.contents(params, settings).then(data=>{
+                                if (data) {
+                                    console.log(84, {
+                                        data
+                                    });
+                                    var feed = byId('feed-dashboard-files');
+                                    feed.innerHTML = "";
+                                    if (data.length > 0) {
+                                        vp.all('card')[1].find('box').classList.remove('display-none');
+                                        var d = 0;
+                                        do {
+                                            var row = data[d];
+                                            var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
+                                            box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
+                                            box.find('text').textContent = row.name;
+                                            var html = box.outerHTML;
+                                            feed.insertAdjacentHTML('beforeend', html);
+                                            d++;
+                                        } while (d < data.length)
+                                    } else {
+                                        vp.all('card')[1].find('box').classList.add('display-none');
+                                    }
+                                }
+                            }
+                            ).catch(async(error)=>{
+                                console.log("43.error", {
+                                    error
+                                });
+                                if (error.code === 404) {
+                                    //alert("Setup Project");
+                                    resolve(route);
+                                }
+                            }
+                            );
+
                         }
                         if (get[2] == "posts") {
                             if (get.length > 3) {
