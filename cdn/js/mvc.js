@@ -340,9 +340,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const metadata = target.closest('box');
             const select = metadata.previousElementSibling;
             const actions = metadata.nextElementSibling;
+            const label = select.find('[data-file]');
             metadata.classList.add('display-none');
             select.classList.remove('display-none');
             actions.classList.add('display-none');
+            label.insertAdjacentHTML('beforebegin', label.outerHTML);
+            label.remove();
         }
         ,
 

@@ -355,6 +355,10 @@
 
 /*FLEX*/
 @media screen {
+    .flex-1 {
+        flex: 1;
+    }
+    
     .flex-36px-1-1 {
         flex: 1;
     }
@@ -646,6 +650,10 @@
 
     [data-max-width="calc(100% - 40px)"] {
         max-width: calc(100% - 40px);
+    }
+
+    [data-max-width="calc(100% - 100px)"] {
+        max-width: calc(100% - 100px);
     }
 
     [data-max-width="calc(100vw - 40px)"] {
