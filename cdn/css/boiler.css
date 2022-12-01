@@ -324,6 +324,12 @@
         }
     }
 
+    @media (max-width: 640px) {
+        [data-640px-display="none"] {
+            display: none;
+        }
+    }
+
     @media (max-width: 480px) {
         .-mobile-display-flex, [data-480px-display="flex"] {
             display: flex;
