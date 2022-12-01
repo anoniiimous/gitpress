@@ -124,6 +124,12 @@
     .border-radius-50px {
         border-radius: 50px;
     }
+
+    @media (max-width: 640px) {
+        [data-640px-border-radius="0"] {
+            border-radius: 0;
+        }
+    }
 }
 
 /*BOX SHADOW*/
