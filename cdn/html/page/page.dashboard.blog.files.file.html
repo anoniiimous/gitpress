@@ -14,8 +14,11 @@
                                     <n class="gg-software-upload"></n>
                                 </ico>
                                 <span>Select Files</span>
-                                <input onchange="mvc.c.files.select(event)" type="file">
+                                <input onchange="mvc.c.files.select(event)" data-onprogress="mvc.c.files.selecting" type="file">
                             </text>
+                            <load class="border-1px-solid border-radius-50px display-none height-20px margin-top-36px overflow-hidden width-100pct">
+                                <er class="background-color-777 display-block height-20px width-0"></er>
+                            </load>
                         </column>
                     </box>
                     <box class="background-color-fff border-color-ccc border-top-1px-solid display-none padding-y-20px text-align-center width-100pct">
@@ -27,6 +30,11 @@
                             <ico class="color-ff3b30" data-tap="mvc.c.files.deselect(event.target)">
                                 <n class="gg-close"></n>
                             </ico>
+                        </row>
+                        <row>
+                            <load class="border-1px-solid border-radius-50px display-none height-20px margin-x-20px overflow-hidden width-100pct">
+                                <er class="background-color-777 display-block height-20px width-0"></er>
+                            </load>
                         </row>
                     </box>
                     <box class="border-color-bbb border-top-1px-solid display-none line-height-50px padding-top-50pct width-100pct">

@@ -24,11 +24,38 @@ window.on.change = {
                     var reader = FR;
                     var file = files[0];
                     var s = {};
-                    if (dataset.onload) {//var x = eval(dataset.onload);
-                    //if(typeof x === 'function') { s.onload = x(); }
+                    var x = null;
+                    if (dataset.onload) {
+                        x = eval(dataset.onload);
+                        if (typeof x === 'function') {
+                            s.onload = x();
+                        }
+                    }
+                    if (dataset.onprogress) {
+                        //x = eval(dataset.onprogress);
+                        reader.onprogress = e=>onProgress(e, dataset.onprogress);
+                        console.log(35, {
+                            dataset,
+                            x
+                        }, typeof x === 'function');
+                        if (typeof x === 'function') {
+                            s.onprogress = x();
+                            console.log(39, {
+                                s
+                            });
+                        } else {
+                            s.onprogress = x;
+                            console.log(42, {
+                                x,
+                                s
+                            });
+                        }
                     }
                     reader.readAsDataURL(file);
                     if (s) {
+                        console.log(47, {
+                            s
+                        });
                         reader.onload = onLoad;
                         s.onloadstart ? reader.onloadstart = s.onloadstart : null;
                         s.onprogress ? reader.onprogress = s.onprogress : null;
@@ -43,12 +70,10 @@ window.on.change = {
                         target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
                         target.remove();
                     }
-                    function onProgress(e) {
+                    function onProgress(e, f) {
                         if (e.lengthComputable) {
-                            var percentLoaded = Math.round((e.loaded / e.total) * 100);
-                            if (percentLoaded < 100) {
-                                console.log(percentLoaded);
-                            }
+                            e.nodeElement = target;
+                            f ? eval(f)(e) : null;
                         }
                     }
                 }
@@ -354,7 +379,6 @@ window.on.touch = {
     }
 
     var elem = target.closest("[data-tap]");
-
     if (elem) {
         var x = eval(elem.dataset.tap);
         typeof x === "function" ? x() : null;

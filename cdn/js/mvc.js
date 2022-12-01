@@ -353,6 +353,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const input = event.target;
             const label = input.closest('[data-file]');
             const select = input.closest('box');
+            const load = select.find('load');
             const metadata = input.closest('box').nextElementSibling;
             const actions = metadata.nextElementSibling;
             const file = input.files[0];
@@ -364,13 +365,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             ext === "jpeg" ? format = "jpg" : null;
             console.log(format);
             const a = async(result)=>{
-                console.log(input, metadata);
                 select.classList.add('display-none');
                 metadata.classList.remove('display-none');
                 metadata.find('text').textContent = name;
                 actions.classList.remove('display-none');
+                load.classList.add('display-none');
+                load.find('er').removeAttribute('style');
             }
             on.change.file(event).then(a);
+        }
+        ,
+
+        selecting: e=>{
+            const input = e.nodeElement;
+            const load = input.closest('box').find('load');
+            const loader = load.find('er');
+            var percentLoaded = Math.round((e.loaded / e.total) * 100);
+            load.classList.remove('display-none');
+            loader.style.width = percentLoaded + "%";
         }
         ,
 

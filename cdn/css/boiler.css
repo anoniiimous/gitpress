@@ -33,6 +33,10 @@
         background-color: #333;
     }
 
+    .background-color-777 {
+        background-color: #777;
+    }
+
     .background-color-bbb {
         background-color: #bbb;
     }
@@ -878,6 +882,10 @@
 
     [data-width="calc(50% - 80px)"] {
         width: calc(50% - 80px);
+    }
+
+    .width-0 {
+        width: 0;
     }
 
     .width-25pct, [data-width="25%"] {
