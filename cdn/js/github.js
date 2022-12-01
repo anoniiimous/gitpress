@@ -374,7 +374,6 @@ window.github = {
                 const url = github.endpoint + "/user";
                 const a = (d)=>{
                     const data = JSON.parse(d);
-                    console.log(data);
                     resolve(data);
                 }
                 const b = (error)=>{
@@ -388,9 +387,6 @@ window.github = {
                     Accept: "application/vnd.github+json",
                     Authorization: "token " + accessToken
                 } : null;
-                console.log({
-                    settings
-                });
                 ajax(url, settings).then(a).catch(b);
             }
             );

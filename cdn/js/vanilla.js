@@ -448,7 +448,7 @@ function getRoot(els) {
         window.paths.arr = arr;
         root = paths.page.stringExists(arr);
         //root = arr.includes(paths.page) ? paths.page : null;
-        console.log({page:paths.page,arr,root});
+        //console.log({page:paths.page,arr,root});
     }
     return root;
 }

@@ -119,11 +119,6 @@ function init() {
             localStorage.removeItem('githubAccessToken');
             //byId("avi").innerHTML = "";
         }
-        console.log(114, {
-            go,
-            uri,
-            user
-        });
         1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
     }
     firebase.auth().onAuthStateChanged(onAuthStateChanged);

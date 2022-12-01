@@ -1,5 +1,67 @@
 window.on = {};
 
+window.on.change = {
+
+    file: (event,s)=>{
+
+        return new Promise((resolve,reject)=>{
+
+            var target = event.target;
+            var dataset = target.dataset;
+            var FR = new FileReader();
+
+            var files = target.files;
+            console.log({
+                files
+            }, {
+                s,
+                event,
+                target,
+                dataset
+            });
+            if (files && files.length > 0) {
+                if (files.length === 1) {
+                    var reader = FR;
+                    var file = files[0];
+                    var s = {};
+                    if (dataset.onload) {//var x = eval(dataset.onload);
+                    //if(typeof x === 'function') { s.onload = x(); }
+                    }
+                    reader.readAsDataURL(file);
+                    if (s) {
+                        reader.onload = onLoad;
+                        s.onloadstart ? reader.onloadstart = s.onloadstart : null;
+                        s.onprogress ? reader.onprogress = s.onprogress : null;
+                        s.onabort ? reader.onabort = s.onabort : null;
+                        s.onerror ? reader.onerror = s.onerror : null;
+                    } else {
+                        reader.onload = onLoad;
+                    }
+                    function onLoad() {
+                        s.onload ? s.onload : null;
+                        resolve(reader.result);
+                        target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
+                        target.remove();
+                    }
+                    function onProgress(e) {
+                        if (e.lengthComputable) {
+                            var percentLoaded = Math.round((e.loaded / e.total) * 100);
+                            if (percentLoaded < 100) {
+                                console.log(percentLoaded);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        );
+
+    }
+    ,
+
+};
+
 window.on.contextmenu = ()=>{}
 ;
 
@@ -319,7 +381,6 @@ window.on.touch = {
 
     var elem = target.closest("[data-file]");
     if (elem) {
-        console.log("data-file", elem, elem.find("input"));
         var file = elem.find("input");
         //console.log(file,elem.dataset.input);
         if (file) {
@@ -776,7 +837,7 @@ window.on["submit"] = {
                     const params = {
                         owner: user.login,
                         repo: "blog.cms." + GET[1],
-                        path: "/cdn/json/posts.json"
+                        path: "/cdn/cache/posts.json"
                     };
                     const posts = await github.repos.contents(params, {});
                     content = atob(posts.content);
@@ -847,7 +908,7 @@ window.on["submit"] = {
                     var data = await github.repos.contents({
                         owner: user.login,
                         repo: "blog.cms." + GET[1],
-                        path: "/cdn/html/posts/" + filename
+                        path: "/cdn/posts/" + filename
                     }, {
                         data: JSON.stringify({
                             content: btoa(content),
@@ -883,7 +944,7 @@ window.on["submit"] = {
                     const params = {
                         owner: user.login,
                         repo: "blog.cms." + GET[1],
-                        path: "/cdn/json/posts.json"
+                        path: "/cdn/cache/posts.json"
                     };
                     const posts = await github.repos.contents(params, {});
                     content = atob(posts.content);

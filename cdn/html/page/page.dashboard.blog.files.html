@@ -1,5 +1,5 @@
 <blocks>
-    <header class="background-color-bbb padding-20px z-index-5">
+    <header class="background-color-bbb padding-20px position-fixed top-0 z-index-5" data-width="calc(100% - 320px)">
         <column>
             <card>
                 <row>
@@ -19,9 +19,16 @@
             </card>
         </column>
     </header>
-    <block></block>
-    <block class="align-items-center empty-state flex-grow-1 justify-content-center">
-        <column class="align-items-center justify-content-center">
+    <block class="flex-grow-1 padding-top-100px">
+        <template id="template-dashboard-files">
+            <box>
+                <section>
+                    <picture class="background-color-333 padding-top-100pct width-100pct"></picture>
+                </section>
+            </box>
+        </template>
+        <column class="grid-gap-10px padding-x-20px" data-1024px-columns="5" data-1440px-columns="8" data-columns="12" data-max-width="calc(100vw - 40px)" id="feed-dashboard-files"></column>
+        <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
                 <img class="width-100pct" src="cdn/png/astronaut-cloud.png">
             </picture>

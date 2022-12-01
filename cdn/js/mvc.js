@@ -10,10 +10,6 @@ window.mvc.m ? null : (window.mvc.m = model = {
 });
 
 window.mvc.v ? null : (window.mvc.v = view = function(route) {
-    console.log(108, {
-        route
-    });
-
     return new Promise(async function(resolve, reject) {
         var page = route.page;
         var path = route.path;
@@ -64,17 +60,58 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     const title = get[1];
                     dom.body.find('main > nav [placeholder]').textContent = title;
                     if (get.length > 2) {
+                        if (get[2] === "files") {
+                            if (get.length > 3) {
+                                if (get[3] === "file") {//alert(false);
+                                }
+                            } else {
+                                //alert(true);
+                                const user = await github.user.get();
+                                const name = get[4] + '.html';
+                                var params = {
+                                    owner: user.login,
+                                    path: "/cdn/files",
+                                    repo: "blog.cms." + get[1]
+                                };
+                                var settings = {};
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
+                                github.repos.contents(params, settings).then(data=>{
+                                    if (data) {
+                                        console.log(84, {
+                                            data
+                                        });
+                                        if (data.length > 0) {
+                                            var feed = vp.find('template').nextElementSibling
+                                            var d = 0;
+                                            do {
+                                                const template = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
+                                                var html = template.outerHTML;
+                                                feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < data.length)
+                                        }
+                                    }
+                                }
+                                ).catch(async(error)=>{
+                                    console.log("43.error", {
+                                        error
+                                    });
+                                    if (error.code === 404) {
+                                        //alert("Setup Project");
+                                        resolve(route);
+                                    }
+                                }
+                                );
+                            }
+                        }
                         if (get[2] == "posts") {
                             if (get.length > 3) {
                                 if (get.length > 4) {
                                     const user = await github.user.get();
                                     const name = get[4] + '.html';
-                                    console.log({
-                                        user
-                                    }, user.login);
                                     var params = {
                                         owner: user.login,
-                                        path: "/cdn/html/posts/" + name,
+                                        path: "/cdn/posts/" + name,
                                         repo: "blog.cms." + get[1]
                                     };
                                     var settings = {};
@@ -125,7 +162,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }, user.login);
                                 var params = {
                                     owner: user.login,
-                                    path: "/cdn/html/posts",
+                                    path: "/cdn/posts",
                                     repo: "blog.cms." + get[1]
                                 };
                                 var settings = {};
@@ -148,9 +185,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
 
                     const user = await github.user.get();
-                    console.log({
-                        user
-                    }, user.login);
                     var params = {
                         owner: user.login,
                         path: "/site.webmanifest",
@@ -279,6 +313,48 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    files: {
+
+        select: (event)=>{
+            const file = event.target.files[0];
+            const arr = file.name.split(".");
+            const ext = arr[arr.length - 1];
+            var format = ext;
+            ext === "htm" ? format = "html" : null;
+            ext === "jpeg" ? format = "jpg" : null;
+            console.log(format);
+            const a = async(result)=>{
+
+                const user = await github.user.get();
+
+                var params = {};
+                params.owner = user.login;
+                params.path = "/cdn/files/" + file.name;
+                params.repo = 'blog.cms.' + GET[1]
+
+                var settings = {};
+                settings.data = JSON.stringify({
+                    content: btoa(result),
+                    message: "Create " + file.name
+                }),
+                settings.dataType = "PUT";
+
+                console.log({
+                    params,
+                    settings
+                });
+
+                const aa = (e)=>{
+                    ('/dashboard/' + GET[1] + '/files/').router();
+                }
+
+                github.repos.contents(params, settings).then(aa);
+            }
+            on.change.file(event).then(a);
+        }
+
+    },
+
     menu: {
 
         close: ()=>{
@@ -351,7 +427,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             params = {
                 repo: 'blog.cms.' + GET[1],
                 owner: user.login,
-                path: '/cdn/json/posts.json'
+                path: '/cdn/cache/posts.json'
             }
             settings = {}
             const get = await github.repos.contents(params, settings);
@@ -366,7 +442,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             params = {
                 repo: 'blog.cms.' + GET[1],
                 owner: user.login,
-                path: '/cdn/json/posts.json',
+                path: '/cdn/cache/posts.json',
                 sha: get.sha
             }
             settings = {
@@ -383,7 +459,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 gist: target.closest('card').dataset.gist,
                 repo: 'blog.cms.' + GET[1],
                 owner: user.login,
-                path: 'cdn/html/posts/' + target.closest('card').dataset.filename + '.html',
+                path: 'cdn/posts/' + target.closest('card').dataset.filename + '.html',
                 sha: target.closest('card').dataset.sha
             }
             var settings = {
@@ -410,7 +486,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const user = await github.user.get();
             const owner = user.login;
             const repo = "blog.cms." + shortname;
-            const path = "/cdn/json/posts.json";
+            const path = "/cdn/cache/posts.json";
             const params = {
                 owner,
                 repo,
