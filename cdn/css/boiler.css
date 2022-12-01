@@ -52,6 +52,12 @@
     [data-background-color="rgba(0,0,0,0.5)"] {
         background-color: rgba(0,0,0,0.5);
     }
+
+    @media (max-width: 640px) {
+        [data-640px-background-color="unset"] {
+            background-color: unset;
+        }
+    }
 }
 
 /*BACKDROP FILTER*/
