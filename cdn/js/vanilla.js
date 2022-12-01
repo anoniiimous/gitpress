@@ -341,8 +341,14 @@ function ajax(url, settings) {
     }
     );
 }
-function getFilename(str) {
-    return str.trim('/').split('/')[0].split('-').join('.').toLowerCase();
+
+function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 function lazyLoad(images, vp) {
     if (images.length > 0) {
@@ -369,63 +375,8 @@ function lazyLoad(images, vp) {
         }
     }
 }
-function pad(str, len) {
-    len = len || 2;
-    var zeros = new Array(len).join('0');
-    return (zeros + str).slice(-len);
-}
-function count(array) {
-    return array.length;
-}
-function parse_str($str) {
-    return JSON.parse('{"' + $str.substring(1).replace(/&/g, '","').replace(/=/g, '":"') + '"}', function(key, value) {
-        return key === "" ? value : decodeURIComponent(value)
-    })
-}
-function ucfirst(string) {
-    return string.charAt(0).toUpperCase();
-}
-function replaceTag(el) {
-    el.outerHTML = el.outerHTML.replace(/wns/g, "lmn");
-}
-function offset(el) {
-    var win = el.ownerDocument.defaultView;
-    var rect = el.getBoundingClientRect()
-      , scrollLeft = win.pageXOffset || el.closest('body').scrollLeft
-      , scrollTop = win.pageYOffset || el.closest('body').scrollTop;
-    data = {
-        top: rect.top + scrollTop,
-        left: rect.left + scrollLeft
-    };
-    return data
-}
 function isFunction(functionToCheck) {
     return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
-}
-function jsonURL(obj) {
-    console.log(obj);
-    var str = "";
-    for (var key in obj) {
-        if (str != "") {
-            str += "&";
-        }
-        str += key + "=" + encodeURIComponent(obj[key]);
-    }
-    return str;
-}
-function URLjson(url) {
-    if (!url)
-        url = location.search;
-    var query = url.contains('?') ? url.split("?")[1] : url;
-    var result = {};
-    query.split("&").forEach(function(part) {
-        var item = part.split("=");
-        result[item[0]] = decodeURIComponent(item[1]);
-    });
-    return result;
-}
-function getPageURL(body, css, js) {
-    return getBlobURL(`<html><head>` + css + js + `</head>` + body + `</html>`, 'text/html');
 }
 function getPath(links) {
     var link = ``;

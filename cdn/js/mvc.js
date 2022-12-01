@@ -101,6 +101,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 box.find('ico n').className = "gg-" + icon;
                                                 box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
                                                 box.find('text').textContent = row.name;
+                                                box.all('text')[1].textContent = formatBytes(row.size);
                                                 var html = box.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
