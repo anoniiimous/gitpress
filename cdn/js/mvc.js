@@ -65,51 +65,54 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "file") {//alert(false);
                                 }
                             }
-
-                            //alert(true);
-                            const user = await github.user.get();
-                            const name = get[4] + '.html';
-                            var params = {
-                                owner: user.login,
-                                path: "/cdn/files",
-                                repo: "blog.cms." + get[1]
-                            };
-                            var settings = {};
-                            var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
-                            github.repos.contents(params, settings).then(data=>{
-                                if (data) {
-                                    console.log(84, {
-                                        data
-                                    });
-                                    var feed = byId('feed-dashboard-files');
-                                    feed.innerHTML = "";
-                                    if (data.length > 0) {
-                                        vp.all('card')[1].find('box').classList.remove('display-none');
-                                        var d = 0;
-                                        do {
-                                            var row = data[d];
-                                            var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
-                                            box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
-                                            box.find('text').textContent = row.name;
-                                            var html = box.outerHTML;
-                                            feed.insertAdjacentHTML('beforeend', html);
-                                            d++;
-                                        } while (d < data.length)
-                                    } else {
-                                        vp.all('card')[1].find('box').classList.add('display-none');
+                            var feed = byId('feed-dashboard-files');
+                            if (feed.innerHTML === "" || get.length < 4) {
+                                const user = await github.user.get();
+                                const name = get[4] + '.html';
+                                var params = {
+                                    owner: user.login,
+                                    path: "/cdn/files",
+                                    repo: "blog.cms." + get[1]
+                                };
+                                var settings = {};
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
+                                //alert("Attempting to fetch files");
+                                github.repos.contents(params, settings).then(data=>{
+                                    //alert("Files fetched successfully");
+                                    if (data) {
+                                        console.log(84, {
+                                            data
+                                        });
+                                        feed.innerHTML = "";
+                                        if (data.length > 0) {
+                                            vp.all('card')[1].find('box').classList.remove('display-none');
+                                            var d = 0;
+                                            do {
+                                                var row = data[d];
+                                                var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
+                                                box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
+                                                box.find('text').textContent = row.name;
+                                                var html = box.outerHTML;
+                                                feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < data.length)
+                                        } else {
+                                            vp.all('card')[1].find('box').classList.add('display-none');
+                                        }
                                     }
                                 }
-                            }
-                            ).catch(async(error)=>{
-                                console.log("43.error", {
-                                    error
-                                });
-                                if (error.code === 404) {
-                                    //alert("Setup Project");
-                                    resolve(route);
+                                ).catch(async(error)=>{
+                                    //alert("Failed to fetch files");
+                                    console.log("43.error", {
+                                        error
+                                    });
+                                    if (error.code === 404) {
+                                        //alert("Setup Project");
+                                        resolve(route);
+                                    }
                                 }
+                                );
                             }
-                            );
 
                         }
                         if (get[2] == "posts") {
@@ -242,7 +245,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 do {
                                     const row = data[x];
                                     const shortname = row.name.split('.')[2];
-                                    ;template.find('text').dataset.href = "/dashboard/" + shortname;
+                                    template.find('text').dataset.href = "/dashboard/" + shortname;
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
                                     template.find('text').innerHTML = shortname
