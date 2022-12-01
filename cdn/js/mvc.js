@@ -336,42 +336,68 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     files: {
 
+        deselect: target=>{
+            const metadata = target.closest('box');
+            const select = metadata.previousElementSibling;
+            const actions = metadata.nextElementSibling;
+            metadata.classList.add('display-none');
+            select.classList.remove('display-none');
+            actions.classList.add('display-none');
+        }
+        ,
+
         select: (event)=>{
-            const file = event.target.files[0];
-            const arr = file.name.split(".");
+            const input = event.target;
+            const label = input.closest('[data-file]');
+            const select = input.closest('box');
+            const metadata = input.closest('box').nextElementSibling;
+            const actions = metadata.nextElementSibling;
+            const file = input.files[0];
+            const name = file.name;
+            const arr = name.split(".");
             const ext = arr[arr.length - 1];
             var format = ext;
             ext === "htm" ? format = "html" : null;
             ext === "jpeg" ? format = "jpg" : null;
             console.log(format);
             const a = async(result)=>{
-
-                const user = await github.user.get();
-
-                var params = {};
-                params.owner = user.login;
-                params.path = "/cdn/files/" + file.name;
-                params.repo = 'blog.cms.' + GET[1]
-
-                var settings = {};
-                settings.data = JSON.stringify({
-                    content: btoa(result),
-                    message: "Create " + file.name
-                }),
-                settings.dataType = "PUT";
-
-                console.log({
-                    params,
-                    settings
-                });
-
-                const aa = (e)=>{
-                    ('/dashboard/' + GET[1] + '/files/').router();
-                }
-
-                github.repos.contents(params, settings).then(aa);
+                console.log(input, metadata);
+                select.classList.add('display-none');
+                metadata.classList.remove('display-none');
+                metadata.find('text').textContent = name;
+                actions.classList.remove('display-none');
             }
             on.change.file(event).then(a);
+        }
+        ,
+
+        upload: async(event)=>{
+
+            const user = await github.user.get();
+
+            var params = {};
+            params.owner = user.login;
+            params.path = "/cdn/files/" + file.name;
+            params.repo = 'blog.cms.' + GET[1]
+
+            var settings = {};
+            settings.data = JSON.stringify({
+                content: btoa(result),
+                message: "Create " + file.name
+            }),
+            settings.dataType = "PUT";
+
+            console.log({
+                params,
+                settings
+            });
+
+            const aa = (e)=>{
+                ('/dashboard/' + GET[1] + '/files/').router();
+            }
+
+            github.repos.contents(params, settings).then(aa);
+
         }
 
     },

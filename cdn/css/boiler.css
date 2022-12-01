@@ -724,6 +724,11 @@
         padding-left: 20px;
         padding-right: 20px;
     }
+
+    .padding-y-20px {
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
 }
 
 /*POSITION*/
