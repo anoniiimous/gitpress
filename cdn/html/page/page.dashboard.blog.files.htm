@@ -30,33 +30,14 @@
     </header>
     <block class="flex-grow-1 padding-top-100p">
         <template id="template-dashboard-files">
-            <box class="line-height-50px">
-                <row>
-                    <ico data-width="20px">
-                        <n></n>
-                    </ico>
-                    <text class="display-block flex-grow-1 font-size-12px margin-x-20px overflow-hidden text-overflow-ellipsis white-space-nowrap"></text>
-                    <text class="display-block font-size-12px font-weight-bolder overflow-hidden padding-x-20px text-overflow-ellipsis white-space-nowrap width-50px">0kb</text>                    
-                </row>
+            <box>
+                <section>
+                    <picture class="background-color-333 padding-top-100pct width-100pct"></picture>
+                    <text class="display-block font-size-12px line-height-30px overflow-hidden text-align-center text-overflow-ellipsis white-space-nowrap"></text>
+                </section>
             </box>
         </template>
-        <header>
-            <card class="color-777 font-size-12px font-weight-bolder line-height-50px margin-x-20px">
-                <row>
-                    <box class="flex-grow-1">
-                        <section>
-                            <text>Name</text>
-                        </section>
-                    </box>
-                    <box class="width-50px padding-x-20px">
-                        <section>
-                            <text>Size</text>
-                        </section>
-                    </box>
-                </row>
-            </card>
-        </header>
-        <column class="grid-gap-10px padding-x-20px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-files"></column>
+        <column class="grid-gap-10px padding-x-20px" data-375px-columns="2" data-550px-columns="3" data-700px-columns="4" data-1024px-columns="5" data-1440px-columns="8" data-columns="12" data-max-width="calc(100vw - 40px)" id="feed-dashboard-files"></column>
         <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
                 <img class="width-100pct" src="cdn/png/astronaut-cloud.png">

@@ -90,6 +90,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             do {
                                                 var row = data[d];
                                                 var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
+                                                var name = row.name;
+                                                var arr = name.split('.');
+                                                var ext = arr[arr.length - 1];
+                                                var icon = "file";
+                                                ["jpg", "jpeg", "png", "svg", "webp"].includes(ext) ? icon = "image" : null;
+                                                ["mp3"].includes(ext) ? icon = "music" : null;
+                                                ["mp4", "wav"].includes(ext) ? icon = "video" : null;
+                                                ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
+                                                box.find('ico n').className = "gg-" + icon;
                                                 box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
                                                 box.find('text').textContent = row.name;
                                                 var html = box.outerHTML;
