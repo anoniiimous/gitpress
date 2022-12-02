@@ -1,6 +1,6 @@
 <blocks class="min-height-100vh" data-backdrop-filter="blur(10px)">
     <block class="height-100pct justify-content-center margin-20px">
-        <picture data-background-color="rgba(255,255,255,0.5)" data-href="/dashboard/:get/files/"></picture>
+        <picture data-background-color="rgba(255,255,255,0.5)" data-tap="mvc.c.files.cancel"></picture>
         <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
             <form class="border-radius-10px margin-auto overflow-hidden max-width-480px width-100pct" id="form-dashboard-blog-files-file" onsubmit="on.submit.dashboard.file(event)">
                 <picture></picture>
@@ -40,7 +40,7 @@
                     <box class="border-color-bbb border-top-1px-solid display-none line-height-50px padding-top-50pct width-100pct">
                         <row data-columns="2">
                             <text class="background-color-333 color-fff text-align-center" data-submit="form-dashboard-blog-files-file">Upload</text>
-                            <text class="background-color-fff text-align-center" data-href="/dashboard/:get/files/">Cancel</text>
+                            <text class="background-color-fff text-align-center" data-tap="mvc.c.files.cancel">Cancel</text>
                             <input type="submit">
                         </row>
                     </box>

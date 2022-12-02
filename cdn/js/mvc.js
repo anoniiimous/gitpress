@@ -62,8 +62,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (get.length > 2) {
                         if (get[2] === "files") {
                             if (get.length > 3) {
-                                if (get[3] === "file") {//alert(false);
-                                }
+                                if (get[3] === "file") {}
                             }
                             var feed = byId('feed-dashboard-files');
                             if (feed.innerHTML === "" || get.length < 4) {
@@ -335,6 +334,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     files: {
+
+        cancel: ()=>{
+            dom.body.find('[data-page="/dashboard/*/files/file/"]').innerHTML = "";
+            ("/dashboard/:get/files/").router();
+        }
+        ,
 
         deselect: target=>{
             const metadata = target.closest('box');
