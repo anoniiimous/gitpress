@@ -776,8 +776,34 @@ window.on["submit"] = {
         }
     },
     dashboard: {
-        files: (event)=>{
+        file: async(event)=>{
             event.preventDefault();
+
+            const form = event.target;
+            const user = await github.user.get();
+
+            var params = {};
+            params.owner = user.login;
+            params.path = "/cdn/files/" + form.all('box')[1].find('text').textContent;
+            params.repo = 'blog.cms.' + GET[1]
+
+            var settings = {};
+            settings.data = JSON.stringify({
+                content: btoa(result),
+                message: "Create " + file.name
+            }),
+            settings.dataType = "PUT";
+
+            console.log({
+                params,
+                settings
+            });
+
+            const a = (e)=>{
+                ('/dashboard/' + GET[1] + '/files/').router();
+            }
+
+            //github.repos.contents(params, settings).then(a);
         }
         ,
         page: (event)=>{

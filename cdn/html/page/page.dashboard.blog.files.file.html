@@ -22,7 +22,7 @@
                         </column>
                     </box>
                     <box class="background-color-fff border-color-ccc border-top-1px-solid display-none padding-y-20px text-align-center width-100pct">
-                        <row class="align-items-center justify-content-center">
+                        <row class="align-items-center display-none justify-content-center">
                             <ico>
                                 <n class="gg-file"></n>
                             </ico>
@@ -31,16 +31,17 @@
                                 <n class="gg-close"></n>
                             </ico>
                         </row>
-                        <row>
+                        <column>
+                            <text>Would you like to upload another file?</text>
                             <load class="border-1px-solid border-radius-50px display-none height-20px margin-x-20px overflow-hidden width-100pct">
                                 <er class="background-color-777 display-block height-20px width-0"></er>
                             </load>
-                        </row>
+                        </column>
                     </box>
                     <box class="border-color-bbb border-top-1px-solid display-none line-height-50px padding-top-50pct width-100pct">
                         <row data-columns="2">
-                            <text class="background-color-333 color-fff text-align-center" data-submit="form-dashboard-blog-files-file">Upload</text>
-                            <text class="background-color-fff text-align-center" data-tap="mvc.c.files.cancel">Cancel</text>
+                            <text class="background-color-333 color-fff text-align-center" data-tap="mvc.c.files.file">Yes</text>
+                            <text class="background-color-fff text-align-center" data-tap="mvc.c.files.cancel">No</text>
                             <input type="submit">
                         </row>
                     </box>

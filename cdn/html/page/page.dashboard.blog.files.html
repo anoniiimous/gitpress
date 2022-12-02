@@ -28,7 +28,7 @@
             </card>
         </row>
     </header>
-    <block class="background-color-fff border-radius-10px margin-x-20px padding-top-100p" data-640px-background-color="unset" data-640px-margin="0">
+    <block class="background-color-fff border-radius-10px margin-bottom-20px margin-x-20px padding-top-100p" data-640px-background-color="unset" data-640px-margin="0">
         <template id="template-dashboard-files">
             <box class="line-height-50px">
                 <row>
@@ -37,20 +37,33 @@
                     </ico>
                     <text class="display-block flex-grow-1 font-size-12px margin-x-20px overflow-hidden text-overflow-ellipsis white-space-nowrap"></text>
                     <text class="display-block font-size-12px font-weight-bolder overflow-hidden padding-x-20px text-overflow-ellipsis white-space-nowrap width-100px" data-640px-display="none">0kb</text>
+                    <ico>
+                        <n class="gg-trash"></n>
+                    </ico>
                 </row>
             </box>
         </template>
         <header class="border-bottom-1px-solid border-color-777 margin-x-20px">
             <card class="color-777 font-size-12px font-weight-bolder line-height-50px">
                 <row>
+                    <box>
+                        <section>
+                            <ico data-width="20px"></ico>
+                        </section>
+                    </box>
                     <box class="flex-grow-1">
                         <section>
-                            <text>Name</text>
+                            <text class="padding-x-20px">Name</text>
                         </section>
                     </box>
                     <box class="width-100px padding-x-20px" data-640px-display="none">
                         <section>
                             <text>Size</text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <ico></ico>
                         </section>
                     </box>
                 </row>

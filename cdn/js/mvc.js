@@ -354,6 +354,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        file: ()=>{
+            dom.body.find('[data-page="/dashboard/*/files/file/"]').innerHTML = "";
+            ("/dashboard/:get/files/file/").router();
+        }
+        ,
+
         select: (event)=>{
             const input = event.target;
             const label = input.closest('[data-file]');
@@ -370,12 +376,48 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             ext === "jpeg" ? format = "jpg" : null;
             console.log(format);
             const a = async(result)=>{
-                select.classList.add('display-none');
-                metadata.classList.remove('display-none');
-                metadata.find('text').textContent = name;
-                actions.classList.remove('display-none');
-                load.classList.add('display-none');
-                load.find('er').removeAttribute('style');
+
+                const user = await github.user.get();
+
+                var params = {};
+                params.owner = user.login;
+                params.path = "/cdn/files/" + file.name;
+                params.repo = 'blog.cms.' + GET[1]
+
+                var settings = {};
+                settings.data = JSON.stringify({
+                    content: btoa(result),
+                    message: "Create " + file.name
+                }),
+                settings.dataType = "PUT";
+
+                console.log({
+                    params,
+                    settings
+                });
+
+                const aa = (e)=>{
+                    //('/dashboard/' + GET[1] + '/files/').router();
+                    select.classList.add('display-none');
+                    metadata.classList.remove('display-none');
+                    metadata.find('text').textContent = name;
+                    actions.classList.remove('display-none');
+                    load.classList.add('display-none');
+                    load.find('er').removeAttribute('style');
+                }
+
+                const bb = (e)=>{
+                    //('/dashboard/' + GET[1] + '/files/').router();
+                    //select.classList.add('display-none');
+                    //metadata.classList.remove('display-none');
+                    //metadata.find('text').textContent = name;
+                    //actions.classList.remove('display-none');
+                    load.classList.add('display-none');
+                    load.find('er').removeAttribute('style');
+                }
+
+                github.repos.contents(params, settings).then(aa).catch(bb);
+
             }
             on.change.file(event).then(a);
         }
