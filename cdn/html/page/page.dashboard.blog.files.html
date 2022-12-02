@@ -32,12 +32,14 @@
         <template id="template-dashboard-files">
             <box class="line-height-50px">
                 <row>
-                    <ico data-width="20px">
-                        <n></n>
-                    </ico>
-                    <text class="display-block flex-grow-1 font-size-12px margin-x-20px overflow-hidden text-overflow-ellipsis white-space-nowrap"></text>
+                    <text class="display-flex flex-grow-1 font-size-12px">
+                        <ico data-width="20px">
+                            <n></n>
+                        </ico>
+                        <span class="padding-x-10px overflow-hidden text-overflow-ellipsis white-space-nowrap"></span>
+                    </text>
                     <text class="display-block font-size-12px font-weight-bolder overflow-hidden padding-x-20px text-overflow-ellipsis white-space-nowrap width-100px" data-640px-display="none">0kb</text>
-                    <ico>
+                    <ico data-tap="mvc.c.files.delete(event.target)">
                         <n class="gg-trash"></n>
                     </ico>
                 </row>
@@ -53,7 +55,7 @@
                     </box>
                     <box class="flex-grow-1">
                         <section>
-                            <text class="padding-x-20px">Name</text>
+                            <text class="padding-x-10px">Name</text>
                         </section>
                     </box>
                     <box class="width-100px padding-x-20px" data-640px-display="none">

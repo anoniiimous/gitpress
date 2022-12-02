@@ -97,9 +97,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 ["mp3"].includes(ext) ? icon = "music" : null;
                                                 ["mp4", "wav"].includes(ext) ? icon = "video" : null;
                                                 ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
+                                                box.dataset.sha = row.sha;
                                                 box.find('ico n').className = "gg-" + icon;
-                                                box.dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
-                                                box.find('text').textContent = row.name;
+                                                box.find('text').dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
+                                                box.find('text span').textContent = row.name;
                                                 box.all('text')[1].textContent = formatBytes(row.size);
                                                 var html = box.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
@@ -338,6 +339,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         cancel: ()=>{
             dom.body.find('[data-page="/dashboard/*/files/file/"]').innerHTML = "";
             ("/dashboard/:get/files/").router();
+        }
+        ,
+
+        delete: (target)=>{
+            const box = target.closest('box');
+            const sha = box.dataset.sha;
+            alert(sha);
         }
         ,
 
