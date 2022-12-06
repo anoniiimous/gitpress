@@ -291,10 +291,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             do {
                                 const row = data[x];
                                 const shortname = row.name;
+                                template.find('picture').dataset.href = "/" + row.owner.login + "/" + shortname + "/";
                                 template.find('text').dataset.href = "/dashboard/" + shortname;
                                 template.find('text').dataset.owner = row.owner.login;
                                 template.find('text').dataset.repo = row.name;
-                                template.find('text').innerHTML = shortname;//.split('.')[2];
+                                template.find('text').innerHTML = shortname;
+                                //.split('.')[2];
                                 feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                 x++;
                             } while (x < data.length);
