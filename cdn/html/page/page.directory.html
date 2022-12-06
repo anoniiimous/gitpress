@@ -75,5 +75,21 @@
             </card>
         </section>
     </block>
-    <block class="align-baseline flex-direction-row margin-x-4vw padding-y-20px width-100pc--8vw tablet-margin-0 tablet-width-100pct"></block>
+    <block class="align-baseline flex-direction-row margin-x-4vw padding-y-20px width-100pc--8vw tablet-margin-0 tablet-width-100pct">
+        <section>
+            <card class="grid-gap-20px" id="feed-directory" data-columns="4" data-768px-columns="3" data-640px-columns="2"></card>
+        </section>
+    </block>
 </blocks>
+<template id="template-feed-directory">
+    <box class="border-bottom-1px-soli margin-bottom-1px">
+        <column>
+            <picture class="background-color-f5 border-radius-15pct padding-top-100pct width-100pct">
+                <n></n>
+                <n class="empty-state"></n>
+            </picture>
+            <text class="font-size-18px line-height-36px overflow-hidden text-align-center text-overflow-ellipsis" placeholder="App Name"></text>
+            <text class="color-0096c7 font-size-13px font-weight-bolder line-height-16px overflow-hidden text-align-center text-overflow-ellipsis" placeholder="*.github.io"></text>
+        </column>
+    </box>
+</template>

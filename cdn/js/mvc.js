@@ -270,11 +270,42 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                 }
                 resolve(route);
-            } 
-            else if(root === "templates") {
+            } else if (root === "directory") {
+                if (auth.user()) {
+                    const settings = {};
+                    console.log(settings);
+                    const user = await github.user.get();
+                    console.log({
+                        user
+                    }, user.login);
+                    github.search.repositories("q=blog").then(data=>{
+                        //data = data.filter(item=>item.name.includes('blog.cms'));
+                        console.log(282, {
+                            data
+                        });
+                        const feed = byId('feed-directory');
+                        feed.innerHTML = "";
+                        if (data.length > 0) {
+                            const template = byId('template-feed-directory').content.firstElementChild.cloneNode(true);
+                            var x = 0;
+                            do {
+                                const row = data[x];
+                                const shortname = row.name;
+                                template.find('text').dataset.href = "/dashboard/" + shortname;
+                                template.find('text').dataset.owner = row.owner.login;
+                                template.find('text').dataset.repo = row.name;
+                                template.find('text').innerHTML = shortname;//.split('.')[2];
+                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
+                                x++;
+                            } while (x < data.length);
+                        }
+                    }
+                    );
+                }
                 resolve(route)
-            }
-            else {
+            } else if (root === "templates") {
+                resolve(route)
+            } else {
                 resolve(route);
             }
 

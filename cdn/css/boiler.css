@@ -209,6 +209,10 @@
 
 /*COLOR*/
 @media screen {
+    .color-0096c7 {
+        color: #0096c7;
+    }
+    
     .color-333 {
         color: #333;
     }
@@ -303,6 +307,10 @@
     @media (max-width: 640px) {
         [data-640px-columns="4"] {
             grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        [data-640px-columns="2"], [data-vga-columns="2"] {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         [data-640px-columns="1"], [data-vga-columns="1"] {
@@ -412,6 +420,10 @@
 @media screen {
     .font-size-12px {
         font-size: 12px;
+    }
+    
+    .font-size-13px {
+        font-size: 13px;
     }
 
     .font-size-14px {
