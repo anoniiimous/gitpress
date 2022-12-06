@@ -74,6 +74,7 @@
         border-bottom: 2px solid;
         border-left: 2px solid;
         margin-left: 7px;
+        margin-bottom: 7px;
     }
 
     .gg-chart::after, .gg-chart::before {
@@ -276,6 +277,46 @@
         box-shadow: 0 4px 0 0;
         left: 4px;
         top: 4px
+    }
+}
+
+@media {
+    .gg-dollar {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 2px;
+        height: 20px;
+        background: currentColor
+    }
+
+    .gg-dollar::after, .gg-dollar::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 10px;
+        height: 8px;
+        border: 2px solid
+    }
+
+    .gg-dollar::before {
+        border-right: 0;
+        border-top-left-radius: 100px;
+        border-bottom-left-radius: 100px;
+        top: 3px;
+        left: -6px;
+        box-shadow: 4px -2px 0 -2px
+    }
+
+    .gg-dollar::after {
+        border-left: 0;
+        border-top-right-radius: 100px;
+        border-bottom-right-radius: 100px;
+        bottom: 3px;
+        right: -6px;
+        box-shadow: -4px 2px 0 -2px
     }
 }
 
@@ -563,6 +604,40 @@
 }
 
 @media {
+    .gg-globe-alt, .gg-globe-alt::after, .gg-globe-alt::before {
+        display: block;
+        box-sizing: border-box;
+        height: 18px;
+        border: 2px solid
+    }
+
+    .gg-globe-alt {
+        position: relative;
+        transform: scale(var(--ggs,1));
+        width: 18px;
+        border-radius: 22px
+    }
+
+    .gg-globe-alt::after, .gg-globe-alt::before {
+        content: "";
+        position: absolute;
+        width: 8px;
+        border-radius: 100%;
+        top: -2px;
+        left: 3px
+    }
+
+    .gg-globe-alt::after {
+        width: 24px;
+        height: 20px;
+        border: 2px solid transparent;
+        border-bottom: 2px solid;
+        top: -11px;
+        left: -5px
+    }
+}
+
+@media {
     .gg-home {
         background: linear-gradient(to left, currentColor 5px,transparent 0) no-repeat 0 bottom/4px 2px, linear-gradient(to left, currentColor 5px,transparent 0) no-repeat right bottom/4px 2px;
         box-sizing: border-box;
@@ -744,6 +819,28 @@
 
     .gg-menu::after {
         top: 6px
+    }
+}
+
+@media {
+    .gg-menu-grid-r {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 16px;
+        height: 16px;
+    }
+
+    .gg-menu-grid-r::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+        box-shadow: 0 6px 0, 6px 6px 0, 12px 6px 0, 6px 12px 0, 12px 12px 0, 6px 0 0, 12px 0 0, 0 12px 0 ;
     }
 }
 

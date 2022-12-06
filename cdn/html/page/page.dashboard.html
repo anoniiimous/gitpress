@@ -1,5 +1,62 @@
 <blocks class="-isauth flex-grow-1">
-    <header class="line-height-50px padding-20px">
+    <header class="line-height-50px padding-y-10px position-fixed top-0 width-100pct z-index-5">
+        <row class="align-items-center justify-content-space-between">
+            <card>
+                <section>
+                    <box data-href="/">
+                        <row>
+                            <ico>
+                                <n class="gg-home"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </section>
+            </card>
+            <card>
+                <row>
+                    <box data-href="/dashboard/">
+                        <row>
+                            <ico data-width="20px">
+                                <n class="gg-chart"></n>
+                            </ico>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Dashboard</text>
+                        </row>
+                    </box>
+                    <box class="margin-x-20px" data-href="/directory/">
+                        <row>
+                            <ico data-width="20px">
+                                <n class="gg-globe-alt"></n>
+                            </ico>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Directory</text>
+                        </row>
+                    </box>
+                    <box data-href="/templates/">
+                        <row>
+                            <ico data-width="20px">
+                                <n class="gg-template"></n>
+                            </ico>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Templates</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <section>
+                    <box>
+                        <row>
+                            <ico class="-noauth">
+                                <n class="gg-user"></n>
+                            </ico>
+                            <ico class="-isauth">
+                                <n class="gg-log-off"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </section>
+            </card>
+        </row>
+    </header>
+    <header class="display-none line-height-50px padding-20px">
         <row class="justify-content-space-between">
             <card class="margin-left-auto width-100pct">
                 <row>
@@ -27,9 +84,28 @@
             </card>
         </row>
     </header>
+    <block>
+        <picture class="background-color-ddd"></picture>
+        <section>
+            <card class="-mobile-margin-x-10px margin-x-4vw padding-top-160px padding-bottom-20px padding-top-160px">
+                <column>
+                    <box>
+                        <section>
+                            <text class="font-size-48px">Dashboard</text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-18px">Create new projects or edit existing web apps.</text>
+                        </section>
+                    </box>
+                </column>
+            </card>
+        </section>
+    </block>
     <block class="padding-20px">
         <column>
-            <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px margin-x-auto margin-y-20px max-width-768px width-100pct">
+            <form class="background-color-f5 border-radius-50px flex-grow-1 line-height-30px margin-x-auto margin-y-20px max-width-768px width-100pct">
                 <row>
                     <box>
                         <section>
@@ -41,14 +117,14 @@
                     <input class="flex-grow-1" placeholder="Search..." type="text">
                 </row>
             </form>
-            <card class="line-height-50px margin-auto max-width-768px width-100pct">
+            <card class="background-color-f5 border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
                 <column id="feed-dashboard"></column>
             </card>
         </column>
     </block>
 </blocks>
 <template id="template-feed-dashboard">
-    <box class="background-color-fff margin-bottom-1px">
+    <box class="border-bottom-1px-soli margin-bottom-1px">
         <row>
             <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
                 <n></n>

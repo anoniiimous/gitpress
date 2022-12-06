@@ -1,4 +1,4 @@
-<blocks>
+<blocks class="flex-grow-1">
     <header class="line-height-50px padding-y-10px position-fixed top-0 width-100pct z-index-5">
         <row class="align-items-center justify-content-space-between">
             <card>
@@ -19,7 +19,7 @@
                             <ico data-width="20px">
                                 <n class="gg-chart"></n>
                             </ico>
-                            <text class="font-weight-bolder margin-left-10px">Dashboard</text>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Dashboard</text>
                         </row>
                     </box>
                     <box class="margin-x-20px" data-href="/directory/">
@@ -27,7 +27,7 @@
                             <ico data-width="20px">
                                 <n class="gg-globe-alt"></n>
                             </ico>
-                            <text class="font-weight-bolder margin-left-10px">Directory</text>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Directory</text>
                         </row>
                     </box>
                     <box data-href="/templates/">
@@ -35,7 +35,7 @@
                             <ico data-width="20px">
                                 <n class="gg-template"></n>
                             </ico>
-                            <text class="font-weight-bolder margin-left-10px">Templates</text>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Templates</text>
                         </row>
                     </box>
                 </row>
@@ -56,5 +56,24 @@
             </card>
         </row>
     </header>
-    <block></block>
+    <block>
+        <picture class="background-color-ddd"></picture>
+        <section>
+            <card class="-mobile-margin-x-10px margin-x-4vw padding-top-160px padding-bottom-20px padding-top-160px">
+                <column>
+                    <box>
+                        <section>
+                            <text class="font-size-48px">Directory</text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-18px">Discover projects created by users hosted on GitHub</text>
+                        </section>
+                    </box>
+                </column>
+            </card>
+        </section>
+    </block>
+    <block class="align-baseline flex-direction-row margin-x-4vw padding-y-20px width-100pc--8vw tablet-margin-0 tablet-width-100pct"></block>
 </blocks>

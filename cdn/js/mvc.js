@@ -25,35 +25,37 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         if (root) {
 
-            const roots = ["dashboard"];
+            const roots = ["dashboard", "templates"];
             if (roots.indexOf(root) === -1) {
-                const owner = root;
-                const repo = "blog.cms." + get[1];
-                const path = "/site.webmanifest";
-                const params = {
-                    owner,
-                    repo,
-                    path
+                if (get.length > 1) {
+                    const owner = root;
+                    const repo = "blog.cms." + get[1];
+                    const path = "/site.webmanifest";
+                    const params = {
+                        owner,
+                        repo,
+                        path
+                    }
+                    const settings = {}
+                    github.repos.contents(params, settings).then(data=>{
+                        const content = data.content;
+                        const raw = atob(content);
+                        const json = JSON.parse(raw);
+                        console.log(49, {
+                            data,
+                            json
+                        });
+                        const vp = dom.body.find('[data-page="/*/*/"]');
+                        //vp.find('[placeholder="Site"]').textContent = json.name;
+                        controller.blog.render(byId('iframe-user-blog'), json);
+                    }
+                    ).catch(async(error)=>{
+                        console.log("43.error", {
+                            error
+                        });
+                    }
+                    );
                 }
-                const settings = {}
-                github.repos.contents(params, settings).then(data=>{
-                    const content = data.content;
-                    const raw = atob(content);
-                    const json = JSON.parse(raw);
-                    console.log(49, {
-                        data,
-                        json
-                    });
-                    const vp = dom.body.find('[data-page="/*/*/"]');
-                    //vp.find('[placeholder="Site"]').textContent = json.name;
-                    controller.blog.render(byId('iframe-user-blog'), json);
-                }
-                ).catch(async(error)=>{
-                    console.log("43.error", {
-                        error
-                    });
-                }
-                );
             }
             if (root === "dashboard") {
                 if (get.length > 1) {
@@ -268,7 +270,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                 }
                 resolve(route);
-            } else {
+            } 
+            else if(root === "templates") {
+                resolve(route)
+            }
+            else {
                 resolve(route);
             }
 
