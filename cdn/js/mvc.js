@@ -278,7 +278,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     console.log({
                         user
                     }, user.login);
-                    github.search.repositories("q=blog").then(data=>{
+                    github.search.code('q="key": "32616927"').then(data=>{
                         //data = data.filter(item=>item.name.includes('blog.cms'));
                         console.log(282, {
                             data
@@ -289,7 +289,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             const template = byId('template-feed-directory').content.firstElementChild.cloneNode(true);
                             var x = 0;
                             do {
-                                const row = data[x];
+                                const row = data[x].repository;
                                 const shortname = row.name;
                                 template.find('picture').dataset.href = "/" + row.owner.login + "/" + shortname + "/";
                                 template.find('text').dataset.href = "/dashboard/" + shortname;

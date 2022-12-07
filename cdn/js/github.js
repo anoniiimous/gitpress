@@ -340,6 +340,33 @@ window.github = {
         }
     },
     search: {
+        code: (query)=>{
+            return new Promise((resolve,reject)=>{
+                const url = github.endpoint + "/search/code?" + query;
+                const a = (d)=>{
+                    const data = JSON.parse(d);
+                    console.log({
+                        data
+                    });
+                    resolve(data.items);
+                }
+                const b = (error)=>{
+                    console.log(error);
+                    reject(error);
+                }
+                const settings = {};
+                const accessToken = localStorage.githubAccessToken;
+                accessToken ? settings.headers = {
+                    Accept: "application/vnd.github+json",
+                    Authorization: "token " + accessToken
+                } : null;
+                console.log({
+                    settings
+                });
+                ajax(url, settings).then(a).catch(b);
+            }
+            );
+        },
         repositories: (query)=>{
             return new Promise((resolve,reject)=>{
                 const url = github.endpoint + "/search/repositories?" + query;
