@@ -20,7 +20,7 @@
                 }
             }
             const base = document.createElement("base");
-            window.hub = (globals.domains.subdomain === "anoniiimous" || window.location.host === "anoniiimo.us")
+            window.hub = (globals.domains.subdomain.includes("anon", "anoniiimous") || window.location.host === "anoniiimo.us")
             base.href = (window.hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
