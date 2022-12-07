@@ -41,8 +41,11 @@ window.onpopstate = (event)=>{
     //console.log(event, "location: " + document.location + ", state: " + JSON.stringify(state));
 }
 
-function init() {
+async function init() {
     console.log("Initializing...");
+    
+    const html = await ajax('/cdn/html/shell.html');
+    dom.body.find('boot').insertAdjacentHTML('afterend', html);
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
         window.roots = ["create", "dashboard", "directory", "templates"];
@@ -52,7 +55,8 @@ function init() {
             (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) ||
             (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || 
             (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || 
-            (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4)
+            (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) ||
+            (root === 'templates' && n === 1)
     }
 
     touch.events = {

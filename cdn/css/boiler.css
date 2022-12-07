@@ -491,6 +491,10 @@
         height: 50px;
     }
 
+    [data-height="768px"] {
+        height: 768px;
+    }
+
     .height-100pct, [data-height="100%"] {
         height: 100%;
     }
@@ -857,6 +861,10 @@
     }
 }
 
+.text-transform-capitalize {
+    text-transform: capitalize;
+}
+
 @media screen {
     .top-0 {
         top: 0;
@@ -866,6 +874,12 @@
         .-tablet-top-0 {
             top: 0;
         }
+    }
+}
+
+@media screen {
+    [data-transform="scale(0.67)"] {
+        transform: scale(0.67);
     }
 }
 
@@ -1042,6 +1056,10 @@
 
     .width-768px {
         width: 768px;
+    }
+
+    [data-width="1366px"] {
+        width: 1366px;
     }
 
     @media (max-width: 1024px) {

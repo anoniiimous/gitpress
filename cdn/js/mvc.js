@@ -214,7 +214,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         repo: "blog.cms." + get[1]
                     };
                     var settings = {};
-                    github.repos.contents(params, settings).then(data=>{
+                    github.repos.contents(params, settings).then(async(data)=>{
                         const content = data.content;
                         const raw = atob(content);
                         const json = JSON.parse(raw);
@@ -256,7 +256,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var x = 0;
                                 do {
                                     const row = data[x].repository;
-                                    const shortname = row.name//.split('.')[2];
+                                    const shortname = row.name
+                                    //.split('.')[2];
                                     template.find('text').dataset.href = "/dashboard/" + shortname;
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
@@ -306,6 +307,42 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
                 resolve(route)
             } else if (root === "templates") {
+
+                if (get.length > 1) {
+                } else {
+
+                    const user = await github.user.get();
+                    var params = {
+                        owner: "dompad",
+                        path: "/",
+                        repo: "demo"
+                    };
+                    var settings = {};
+                    github.repos.contents(params, settings).then(data=>{
+                        data = data.filter(row=>row.type === "dir")
+                        console.log(319, {
+                            data
+                        });
+                        const feed = byId('feed-templates');
+                        if (data.length > 0) {
+                            feed.innerHTML = "";
+                            const template = byId('template-template').content.firstElementChild.cloneNode(true);
+                            var x = 0;
+                            do {
+                                const row = data[x];
+                                const name = row.name;
+                                template.find('ico').dataset.href = "/templates/" + name + "/editor/";
+                                template.find('text').dataset.href = "/templates/" + name + "/";
+                                template.find('text').textContent = name;
+                                template.find('picture').dataset.href = "/templates/" + name + "/preview/";
+                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
+                                x++;
+                            } while (x < data.length);
+                        }
+                    }
+                    )
+
+                }
                 resolve(route)
             } else {
                 resolve(route);

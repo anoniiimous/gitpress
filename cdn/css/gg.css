@@ -725,6 +725,41 @@
 }
 
 @media {
+    .gg-home-screen {
+        display: block;
+        position: relative;
+        box-sizing: border-box;
+        transform: scale(var(--ggs,1));
+        width: 14px;
+        height: 20px;
+        border-radius: 3px;
+        border: 2px solid
+    }
+
+    .gg-home-screen::after, .gg-home-screen::before {
+        content: "";
+        display: block;
+        position: absolute;
+        box-sizing: border-box;
+        border-radius: 2px;
+        width: 2px;
+        height: 2px;
+        left: 1px;
+        background: currentColor
+    }
+
+    .gg-home-screen::after {
+        top: 1px;
+        box-shadow: 3px 0,6px 0,0 3px, 3px 3px,6px 3px,0 6px
+    }
+
+    .gg-home-screen::before {
+        bottom: 1px;
+        box-shadow: 3px 0 0,6px 0 0
+    }
+}
+
+@media {
     .gg-image {
         box-sizing: border-box;
         position: relative;
@@ -760,6 +795,32 @@
         border-radius: 100%;
         top: 2px;
         left: 2px
+    }
+}
+
+@media {
+    .gg-laptop {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 18px;
+        height: 12px;
+        border: 2px solid;
+        border-radius: 2px
+    }
+
+    .gg-laptop::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 22px;
+        height: 2px;
+        background: currentColor;
+        left: -4px;
+        bottom: -5px;
+        border-radius: 100px
     }
 }
 
@@ -1205,6 +1266,20 @@
         transform: rotate(-45deg);
         top: 10px;
         left: 12px
+    }
+}
+
+@media {
+    .gg-smartphone {
+        background: linear-gradient(to left, currentColor 5px,transparent 0) no-repeat 4px 12px/2px 2px;
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,0.8));
+        width: 14px;
+        height: 20px;
+        border: 2px solid;
+        border-radius: 2px;
     }
 }
 
