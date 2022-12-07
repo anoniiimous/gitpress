@@ -98,7 +98,7 @@ function init() {
     };
 
     var url = window.location.pathname;
-    if (window.globals.domains.domain === "github") {
+    if (hub) {
         var dir = rout.ed.dir(window.location.pathname);
         dir.splice(0, 1)
         var url = rout.ed.url(dir);
