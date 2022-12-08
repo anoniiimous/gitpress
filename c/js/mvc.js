@@ -793,16 +793,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var template = iframe.name.split('-').pop();
             console.log(792, template);
 
-            const owner = "dompad";
-            const repo = "demo";
-            const path = "/" + template + "/site.webmanifest";
-            const params = {
-                owner,
-                repo,
-                path
+            var params = {
+                owner: "dompad",
+                repo: "demo",
+                path: "/" + template + "/site.webmanifest"
             }
-            const settings = {}
+            var settings = {}
+
             const webmanifest = github.repos.contents(params, settings).then(data=>{
+                console.log(807, {
+                    data
+                });
+            }
+            );
+
+            params.path = "/" + template + "/shell.html";
+            const shell = github.repos.contents(params, settings).then(data=>{
                 console.log(807, {
                     data
                 });
