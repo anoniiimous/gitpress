@@ -789,9 +789,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        preview: (iframe)=>{
+        preview: async(iframe)=>{
             var template = iframe.name.split('-').pop();
             console.log(792, template);
+
+            const owner = "dompad";
+            const repo = "demo";
+            const path = "/" + template + "/site.webmanifest";
+            const params = {
+                owner,
+                repo,
+                path
+            }
+            const settings = {}
+            const webmanifest = github.repos.contents(params, settings).then(data=>{
+                console.log(807, {
+                    data
+                });
+            }
+            );
         }
 
     }
