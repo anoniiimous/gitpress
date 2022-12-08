@@ -407,7 +407,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
 
                 const vp = dom.body.find('[data-page="/*/*/"]');
-                vp.find('[placeholder="Site"]').textContent = json.name;
                 iframe.contentWindow.document.body.innerHTML = body.innerHTML;
             }
             ).catch(async(error)=>{
@@ -793,7 +792,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var template = iframe.name.split('-').pop();
             console.log(792, template);
 
-            iframe.src = window.location.host + "/templates/" + template + "/demo/";
+            iframe.src = "/templates/" + template + "/";
 
             var params = {
                 owner: "dompad",

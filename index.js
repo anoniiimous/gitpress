@@ -50,7 +50,7 @@ async function init() {
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
         window.roots = ["create", "dashboard", "directory", "templates"];
         return m.includes("#") || 
-            (roots.indexOf(root) === -1) ||
+            (GOT.length > 1 && roots.indexOf(root) === -1) ||
             (root === 'dashboard' && n === 1) || 
             (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) ||
             (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || 
