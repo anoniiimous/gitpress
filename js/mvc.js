@@ -307,7 +307,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 resolve(route)
             } else if (root === "templates") {
 
-                if (get.length > 1) {} else {
+                if (get.length > 1) {
+
+                    if (get.length > 2) {
+
+                        if (get[2] === "preview") {
+                            var vp = dom.body.find('[data-page="' + route.page + '"]');
+                            var iframe = vp.find('iframe');
+                            iframe.name = "iframe-" + get[1];
+                            controller.templates.preview(iframe);
+                        }
+
+                    }
+
+                } else {
 
                     const user = await github.user.get();
                     var params = {
@@ -765,6 +778,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 firebase.auth().signInWithRedirect(provider);
             }
+        }
+
+    },
+
+    templates: {
+
+        install: (template)=>{
+            console.log(template);
+        }
+        ,
+
+        preview: (iframe)=>{
+            var template = iframe.name.split('-').pop();
+            console.log(792, template);
         }
 
     }
