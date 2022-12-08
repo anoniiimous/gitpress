@@ -793,6 +793,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var template = iframe.name.split('-').pop();
             console.log(792, template);
 
+            iframe.src = window.location.host + "/templates/" + template + "/demo/";
+
             var params = {
                 owner: "dompad",
                 repo: "demo",

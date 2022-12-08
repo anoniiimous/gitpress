@@ -54,15 +54,6 @@ String.prototype.router = async function(params) {
                 var goto = window.hub ? '/' + document.head.querySelector('[name="application-shortname"]').content : '';
                 const link =  goto + hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
                 console.log({goto, hash, link, route});
-                if (window.self !== window.top) {
-                    if (window.globals.domains.domain === "github") {
-                        const got = window.parent.GET.slice(0, 3);
-                        const gut = route.GOT;
-                        const bash = got.concat(gut);
-                        const goin = (window.globals.domains.domain === "github" ? '/#' : '') + rout.ed.url(bash);
-                        window.parent.history.pushState(goin, '', goin);
-                    }
-                }
                 document.body.dataset.path = route.path;
                 history.pushState(link, '', link);
             }
