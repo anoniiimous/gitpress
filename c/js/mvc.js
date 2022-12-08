@@ -789,10 +789,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         preview: async(iframe)=>{
+            var path = "/";
             var template = iframe.name.split('-').pop();
-            console.log(792, template);
+            console.log(792, path, template);
 
-            iframe.src = "/templates/" + template + "/";
+            iframe.src = "/templates/" + template + "/#" + path;
 
             var params = {
                 owner: "dompad",
