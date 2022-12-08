@@ -19,8 +19,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         window.GET = window.GET ? GET : rout.ed.dir(dom.body.dataset.path);
 
-        controller.nav.close();
-
         $(dom.body.all('aside')).remove()
 
         if (root) {
@@ -58,6 +56,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
             if (root === "dashboard") {
+                controller.nav.close();
                 if (get.length > 1) {
                     const title = get[1];
                     dom.body.find('main > nav [placeholder]').textContent = title;
@@ -308,8 +307,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 resolve(route)
             } else if (root === "templates") {
 
-                if (get.length > 1) {
-                } else {
+                if (get.length > 1) {} else {
 
                     const user = await github.user.get();
                     var params = {

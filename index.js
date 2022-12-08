@@ -44,7 +44,7 @@ window.onpopstate = (event)=>{
 async function init() {
     console.log("Initializing...");
     
-    const html = await ajax('/cdn/html/shell.html');
+    const html = await ajax('/html/shell.html');
     dom.body.find('boot').insertAdjacentHTML('afterend', html);
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
