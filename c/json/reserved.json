@@ -1,6 +1,9 @@
 [
     "c",
     "dashboard",
+    "organizations",
+    "margketplace",
     "pages",
-    "pricing"
+    "pricing",
+    "users"
 ]
