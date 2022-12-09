@@ -343,7 +343,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 const row = data[x];
                                 const name = row.name;
                                 template.find('ico').dataset.href = "/templates/" + name + "/editor/";
-                                //template.find('text').dataset.href = "/templates/" + name + "/";
+                                //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                 template.find('text').textContent = name;
                                 template.find('picture').dataset.href = "/templates/" + name + "/preview/";
                                 feed.insertAdjacentHTML('beforeend', template.outerHTML);
