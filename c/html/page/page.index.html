@@ -1,4 +1,4 @@
-<blocks>
+<blocks class="flex-grow-1">
     <header class="line-height-50px padding-y-10px position-fixed top-0 width-100pct z-index-5">
         <row class="align-items-center justify-content-space-between">
             <card>
@@ -27,7 +27,7 @@
                             <ico data-width="20px">
                                 <n class="gg-globe-alt"></n>
                             </ico>
-                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Directory</text>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Marketplace</text>
                         </row>
                     </box>
                     <box data-href="/templates/">
@@ -35,7 +35,7 @@
                             <ico data-width="20px">
                                 <n class="gg-template"></n>
                             </ico>
-                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Templates</text>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Design</text>
                         </row>
                     </box>
                 </row>
@@ -56,5 +56,48 @@
             </card>
         </row>
     </header>
-    <block></block>
+    <block>
+        <picture class="background-color-ddd"></picture>
+        <section>
+            <card class="-mobile-margin-x-10px margin-x-4vw padding-top-160px padding-bottom-20px padding-top-160px">
+                <column>
+                    <box>
+                        <section>
+                            <text class="-mobile-font-size-24px font-size-48px font-weight-bolder">
+                                Build web apps<br>from any device.                            
+                            
+                            
+                            </text>
+                        </section>
+                    </box>
+                    <box class="font-weight-bolder padding-y-20px">
+                        <section>
+                            <text class="-mobile-font-size-14px font-size-18px">
+                                <span>Create</span>
+                                <span class="display-none">manage</span>
+                                <span class="display-none">deploy</span>
+                                your projects on GitHub.<br>
+                                <span>No coding required.</span>
+                            </text>
+                        </section>
+                    </box>
+                    <box class="margin-y-20px">
+                        <flex class="-mobile-flex-direction-column flex-direction-row">
+                            <text class="background-color-000 color-fff display-block font-weight-bolder padding-y-20px text-align-center width-120px">Get Started</text>
+                            <text class="-mobile-font-size-13px -mobile-margin-left-0 -mobile-margin-top-10px margin-left-10px">
+                                <span>Start your free &#x221e; week trial today.</span>
+                                <br>
+                                <span>Cancel at anytime. &#x1F60F;</span>
+                            </text>
+                        </flex>
+                    </box>
+                </column>
+            </card>
+        </section>
+    </block>
+    <block class="align-baseline flex-direction-row margin-x-4vw padding-y-20px width-100pc--8vw tablet-margin-0 tablet-width-100pct">
+        <section>
+            <card class="grid-gap-20px" id="feed-directory" data-columns="4" data-768px-columns="3" data-640px-columns="2"></card>
+        </section>
+    </block>
 </blocks>

@@ -305,7 +305,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     );
                 }
                 resolve(route)
-            } else if (root === "templates") {
+            } else if (root === "design" || root === "templates") {
 
                 if (get.length > 1) {
 
