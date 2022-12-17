@@ -784,7 +784,7 @@ window.on["submit"] = {
 
             var params = {};
             params.owner = user.login;
-            params.path = "/cdn/files/" + form.all('box')[1].find('text').textContent;
+            params.path = "/c/files/" + form.all('box')[1].find('text').textContent;
             params.repo = 'blog.cms.' + GET[1]
 
             var settings = {};
@@ -824,7 +824,7 @@ window.on["submit"] = {
             var filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and') + '.' + ext;
             const body = form.find('card textarea').value;
             const user = await github.user.get();
-            const html = await ajax("/cdn/html/template/template.post.html");
+            const html = await ajax("/c/html/template/template.post.html");
             const doc = new DOMParser().parseFromString(html, "text/html");
             doc.head.find('title').textContent = title;
             doc.head.find('meta[name="description"]').content = description;
