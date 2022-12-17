@@ -96,7 +96,7 @@
                 <column>
                     <box>
                         <section>
-                            <text class="font-size-48px">Dashboard</text>
+                            <text class="font-size-48px">Builder</text>
                         </section>
                     </box>
                     <box>
@@ -111,53 +111,37 @@
     <block>
         <picture></picture>
         <section>
-            <card class="-mobile-margin-x-10px font-size-13px margin-x-4vw padding-bottom-20px">
-                <row>
-                    <box class="border-1px-solid line-height-50px margin-left-auto margin-right-10px margin-y-20px" data-href="/settings/apps/">
-                        <section>
-                            <text class="padding-x-20px">Manage my apps</text>
-                        </section>
+            <card class="-dw960px-margin-x-auto -dw960px-width-320px -mobile-margin-x-10px font-size-13px margin-x-4vw padding-bottom-20px">
+                <flex class="grid-gap-20px" data-960px-columns="1" data-columns="3">
+                    <box class="box-shadow-0-0-0-1px">
+                        <column class="align-items-center justify-content-center width-100pct">
+                            <picture class="position-relative width-100pct padding-top-100pct">
+                                <img class="height-100pct object-fit-contain position-absolute top-0 width-100pct" src="/c/png/astronaut-laptop.png">
+                            </picture>
+                            <text>Choose a design</text>
+                            <text>Find a template and modify pages with custom blocks.</text>
+                        </column>
                     </box>
-                    <box class="background-color-0096c7 line-height-50px margin-y-20px" data-href="/new/">
-                        <section>
-                            <text class="color-fff padding-x-20px">Create new app</text>
-                        </section>
+                    <box class="box-shadow-0-0-0-1px">
+                        <column class="align-items-center justify-content-center">
+                            <picture class="position-relative width-100pct padding-top-100pct">
+                                <img class="height-100pct object-fit-contain position-absolute top-0 width-100pct" src="/c/png/astronaut-pencil.png">
+                            </picture>
+                            <text>Start from scratch</text>
+                            <text>Create an app using simple and modern tools for the web.</text>
+                        </column>
                     </box>
-                </row>
+                    <box class="box-shadow-0-0-0-1px">
+                        <column class="align-items-center justify-content-center">
+                            <picture class="position-relative width-100pct padding-top-100pct">
+                                <img class="height-100pct object-fit-contain position-absolute top-0 width-100pct" src="/c/png/astronaut-pages.png">
+                            </picture>
+                            <text>Create an idea</text>
+                            <text>Automate design and development with an AI powered design.</text>
+                        </column>
+                    </box>
+                </flex>
             </card>
         </section>
     </block>
-    <block class="padding-20px">
-        <column>
-            <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px margin-x-auto margin-y-20px max-width-768px width-100pct">
-                <row>
-                    <box>
-                        <section>
-                            <ico>
-                                <n class="gg-search"></n>
-                            </ico>
-                        </section>
-                    </box>
-                    <input class="flex-grow-1" placeholder="Search..." type="text">
-                </row>
-            </form>
-            <card class="background-color-f5 border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
-                <column id="feed-dashboard"></column>
-            </card>
-        </column>
-    </block>
 </blocks>
-<template id="template-feed-dashboard">
-    <box class="background-color-fff border-bottom-1px-soli margin-bottom-1px">
-        <row>
-            <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
-                <n></n>
-                <n class="empty-state"></n>
-            </ico>
-            <text class="font-weight-bolder">Demo</text>
-            <ico class="margin-left-auto" data-tap="github.repos.delete(event.target)">
-                <n class="gg-trash"></n>
-            </ico>
-        </row>
-    </box>
-</template>
