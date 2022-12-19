@@ -793,7 +793,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var template = iframe.name.split('-').pop();
             console.log(792, path, template);
 
-            iframe.src = "/templates/" + template + "/#" + path;
+            iframe.src = "/preview/" + template + "/#" + path;
 
             var params = {
                 owner: "dompad",
