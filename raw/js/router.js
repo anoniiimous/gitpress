@@ -21,6 +21,16 @@ String.prototype.router = async function(params) {
         var goto = window.global.domains.subdomain === "uios" ? '/' + document.head.querySelector('[name="application-shortname"]').content : '';
         if (vp.innerHTML === "" && vp.dataset.fetch) {
             vp.innerHTML = await ajax(vp.dataset.fetch);
+            const fetching2 = vp.all('[data-fetch]');
+            if (fetching2.length > 0) {
+                var ff = 0;
+                do {
+                    if (fetching2[ff].innerHTML === "") {
+                        fetching2[ff].innerHTML = await ajax(fetching2[ff].dataset.fetch);
+                    }
+                    f++;
+                } while (fetching2.length < 0);
+            }
         }
     }
 
@@ -52,8 +62,13 @@ String.prototype.router = async function(params) {
 
                 const hash = window.hub ? "/#" : "";
                 var goto = window.hub ? '/' + document.head.querySelector('[name="application-shortname"]').content : '';
-                const link =  goto + hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
-                console.log({goto, hash, link, route});
+                const link = goto + hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
+                console.log({
+                    goto,
+                    hash,
+                    link,
+                    route
+                });
                 document.body.dataset.path = route.path;
                 history.pushState(link, '', link);
             }
@@ -72,7 +87,9 @@ String.prototype.router = async function(params) {
 window.rout = {};
 
 window.rout.e = state=>{
-    console.log({state})
+    console.log({
+        state
+    })
     var arr1 = [];
     var arr2 = rout.ed.dir(state.split('#')[0].split('?')[0]);
     var page = '/';
@@ -101,7 +118,9 @@ window.rout.e = state=>{
         root,
         search
     };
-    console.log(114,{data});
+    console.log(114, {
+        data
+    });
     return data;
 }
 
