@@ -61,11 +61,9 @@ String.prototype.router = async function(params) {
             if (!pop && !["blob:"].includes(window.location.protocol)) {
 
                 const hash = window.hub ? "/#" : "";
-                var goto = window.hub ?'' : '/' + document.head.querySelector('[name="application-shortname"]').content;
-                const link = goto + hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
+                const link = hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
                 console.log(66, {
                     hub,
-                    goto,
                     hash,
                     link,
                     route

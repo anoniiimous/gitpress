@@ -21,7 +21,7 @@
             }
             const base = document.createElement("base");
             window.isIp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]);
-            window.hub = (isIp || globals.domains.subdomain.includes("anon", "anoniiimous") || window.location.host === "anoniiimo.us")
+            window.hub = (isIp)
             base.href = (1<0 && window.hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
