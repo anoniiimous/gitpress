@@ -1,0 +1,8 @@
+DirectoryIndex index.html index.php index.json
+RewriteEngine On
+RewriteCond %{HTTPS} on
+RewriteCond %{REQUEST_URI} /+[^\.]+$
+RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ / [L]

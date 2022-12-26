@@ -1,0 +1,55 @@
+<header class="position-fixed top-0 z-index-5 width-100pct">
+    <picture style="background-color:rgb(255,229,206)"></picture>
+    <section class="align-items-center display-flex justify-content-center">
+        <card class="line-height-50px margin-y-10px max-width-1280px width-100pct">
+            <row class="align-items-center justify-content-space-between">
+                <box class="padding-x-20px" data-href="/">
+                    <section>
+                        <text>Home</text>
+                    </section>
+                </box>
+                <box class="padding-x-20px" data-href="/blog/">
+                    <section>
+                        <text>Blog</text>
+                    </section>
+                </box>
+                <box class="padding-x-20px" data-href="/about/">
+                    <section>
+                        <text>About</text>
+                    </section>
+                </box>
+                <box class="padding-x-20px" data-href="/contact/">
+                    <section>
+                        <text>Contact</text>
+                    </section>
+                </box>
+                <box class="margin-left-auto">
+                    <section>
+                        <ico>
+                            <n class="gg-facebook"></n>
+                        </ico>
+                    </section>
+                </box>
+                <box>
+                    <section>
+                        <ico>
+                            <n class="gg-youtube"></n>
+                        </ico>
+                    </section>
+                </box>
+                <box>
+                    <section>
+                        <ico>
+                            <n class="gg-twitter"></n>
+                        </ico>
+                    </section>
+                </box>
+            </row>
+        </card>
+    </section>
+</header>
+<main>
+    <page class="width-100pct" data-fetch="/cdn/pages/page.index.html" data-page="/"></page>
+    <page class="width-100pct" data-fetch="/cdn/pages/page.blog.html" data-page="/blog/"></page>
+    <page class="width-100pct" data-fetch="/cdn/pages/page.posts.post.html" data-page="/posts/*/"></page>
+</main>

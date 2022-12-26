@@ -20,8 +20,9 @@
                 }
             }
             const base = document.createElement("base");
-            window.hub = (globals.domains.subdomain.includes("anon", "anoniiimous") || window.location.host === "anoniiimo.us")
-            base.href = (window.hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+            window.isIp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]);
+            window.hub = (isIp || globals.domains.subdomain.includes("anon", "anoniiimous") || window.location.host === "anoniiimo.us")
+            base.href = (1<0 && window.hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
         <link href="index.css" rel="stylesheet">

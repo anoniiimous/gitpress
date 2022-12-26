@@ -1,0 +1,43 @@
+<head>
+    <title>Home &#8226;&#160;Spryce</title>
+    <meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0'>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='#021025'>
+    <meta name="apple-mobile-web-app-title" content="Spryce">
+    <meta name="application-name" content="Spryce">
+    <meta name="application-shortname" content="spryce">
+    <meta name="msapplication-TileColor" content="#f26c4f">
+    <meta name='theme-color' content='#f26c4f'>
+    <script>
+        var domains = window.location.host.split('.');
+        window.globals = {
+            domains: {
+                domain: domains.length > 1 ? domains[domains.length - 2] : null,
+                subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
+                tld: domains[domains.length - 1]
+            }
+        }
+        const base = document.createElement("base");
+        window.hub = globals.domains.domain.includes("github")
+        base.href = (window.hub ? "/preview/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+        document.head.appendChild(base);
+    </script>
+    <link href="index.css" rel="stylesheet">
+    <link href="raw/asset/boiler.css" rel="stylesheet">
+    <link href="raw/asset/gg.css" rel="stylesheet">
+    <script id="firebase-app" src="raw/asset/firebase-app.js"></script>
+    <script id="firebase-auth" src="raw/asset/firebase-auth.js"></script>
+    <script src="raw/asset/auth.js"></script>
+    <script src="raw/asset/mvc.js"></script>
+    <script src="raw/asset/github.js"></script>
+    <script src="raw/asset/modal.js"></script>
+    <script src="raw/asset/on.js"></script>
+    <script src="raw/asset/router.js"></script>
+    <script src="raw/asset/touch.js"></script>
+    <script src="raw/asset/vanilla.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <boot id="boot"></boot>
+</body>
