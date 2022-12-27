@@ -270,7 +270,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                 }
                 resolve(route);
-            } else if (root === "design" || root === "templates") {
+            } else if (root === "design") {
 
                 if (get.length > 1) {
 
@@ -286,8 +286,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
 
                 } else {
-
-                    const user = await github.user.get();
+                        
                     var params = {
                         owner: "dompad",
                         path: "/",
@@ -320,7 +319,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                 }
                 resolve(route)
-            } else if (root === "directory" || root === "marketplace") {
+            } else if (root === "marketplace") {
                 if (auth.user()) {
                     const settings = {};
                     console.log(settings);
