@@ -71,7 +71,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 const name = get[4] + '.html';
                                 var params = {
                                     owner: user.login,
-                                    path: "/cdn/files",
+                                    path: "/raw/files",
                                     repo: "blog.cms." + get[1]
                                 };
                                 var settings = {};
@@ -133,7 +133,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     const name = get[4] + '.html';
                                     var params = {
                                         owner: user.login,
-                                        path: "/cdn/posts/" + name,
+                                        path: "/raw/posts/" + name,
                                         repo: "blog.cms." + get[1]
                                     };
                                     var settings = {};
@@ -184,7 +184,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }, user.login);
                                 var params = {
                                     owner: user.login,
-                                    path: "/cdn/posts",
+                                    path: "/raw/posts",
                                     repo: "blog.cms." + get[1]
                                 };
                                 var settings = {};
@@ -210,7 +210,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var params = {
                         owner: user.login,
                         path: "/site.webmanifest",
-                        repo: "blog.cms." + get[1]
+                        repo: get[1]
                     };
                     var settings = {};
                     github.repos.contents(params, settings).then(async(data)=>{
@@ -229,7 +229,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         });
                         if (error.code === 404) {
                             //alert("Setup Project");
-                            const html = await ajax('/cdn/html/page/page.setup.html');
+                            const html = await ajax('/raw/html/page/page.setup.html');
                             modal.page(html);
                             resolve(route);
                         }
@@ -240,7 +240,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         const settings = {};
                         console.log(settings);
                         const user = await github.user.get();
-                        console.log({
+                        console.log(243, {
                             user
                         }, user.login);
                         github.search.code('q="key": "32616927" filename:site.webmanifest').then(data=>{
@@ -286,7 +286,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
 
                 } else {
-                        
+
                     var params = {
                         owner: "dompad",
                         path: "/",
@@ -474,7 +474,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 var params = {};
                 params.owner = user.login;
-                params.path = "/cdn/files/" + file.name;
+                params.path = "/raw/files/" + file.name;
                 params.repo = 'blog.cms.' + GET[1]
 
                 var settings = {};
@@ -532,7 +532,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var params = {};
             params.owner = user.login;
-            params.path = "/cdn/files/" + file.name;
+            params.path = "/raw/files/" + file.name;
             params.repo = 'blog.cms.' + GET[1]
 
             var settings = {};
@@ -629,7 +629,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             params = {
                 repo: 'blog.cms.' + GET[1],
                 owner: user.login,
-                path: '/cdn/cache/posts.json'
+                path: '/raw/cache/posts.json'
             }
             settings = {}
             const get = await github.repos.contents(params, settings);
@@ -644,7 +644,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             params = {
                 repo: 'blog.cms.' + GET[1],
                 owner: user.login,
-                path: '/cdn/cache/posts.json',
+                path: '/raw/cache/posts.json',
                 sha: get.sha
             }
             settings = {
@@ -688,7 +688,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const user = await github.user.get();
             const owner = user.login;
             const repo = "blog.cms." + shortname;
-            const path = "/cdn/cache/posts.json";
+            const path = "/raw/cache/posts.json";
             const params = {
                 owner,
                 repo,
@@ -757,7 +757,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     sign: {
 
         in: async(event,f)=>{
-
             event.preventDefault();
             if (localStorage.githubAccessToken) {
                 var href = (auth.user() ? '/users/' + auth.user().uid + "/" : '/my/');
@@ -776,6 +775,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 firebase.auth().signInWithRedirect(provider);
             }
+        }
+        ,
+
+        out: async(event)=>{
+            event.preventDefault();
+            firebase.auth().signOut();
         }
 
     },

@@ -47,7 +47,7 @@ String.prototype.router = async function(params) {
     }
 
     var go = async function(resolve, reject) {
-        //console.log('String.prototype.router', route);
+        console.log('String.prototype.router', route);
         if (route) {
             var pop = params ? params.pop : null;
 

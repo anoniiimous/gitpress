@@ -43,17 +43,17 @@
     </card>
     <card>
         <section>
-            <box data-href="/dashboard/">
+            <box>
                 <row class="display-none">
                     <ico>
                         <n class="gg-more-vertical-alt"></n>
                     </ico>
                 </row>
                 <row class="display-block">
-                    <ico class="-noauth">
+                    <ico class="-noauth" data-tap="controller.sign.in(event)">
                         <n class="gg-user"></n>
                     </ico>
-                    <ico class="-isauth">
+                    <ico class="-isauth" data-tap="controller.sign.out(event)">
                         <n class="gg-log-off"></n>
                     </ico>
                 </row>
