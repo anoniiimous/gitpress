@@ -23,7 +23,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         if (root) {
 
-            const roots = ["dashboard", "templates"];
+            const roots = ["dashboard", "design"];
             if (roots.indexOf(root) === -1) {
                 if (get.length > 1) {
                     const owner = root;
@@ -243,10 +243,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         console.log(243, {
                             user
                         }, user.login);
-                        github.search.code('q="key": "32616927" filename:site.webmanifest').then(data=>{
+                        const query = 'q="key": "32616927" filename:site.webmanifest user:' + user.login;
+                        github.search.code(query).then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log({
-                                data
+                                data,
+                                query
                             });
                             const feed = byId('feed-dashboard');
                             feed.innerHTML = "";
@@ -306,10 +308,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             do {
                                 const row = data[x];
                                 const name = row.name;
-                                template.find('ico').dataset.href = "/templates/" + name + "/editor/";
+                                template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                 //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                 template.find('text').textContent = name;
-                                template.find('picture').dataset.href = "/templates/" + name + "/preview/";
+                                template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
                                 feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                 x++;
                             } while (x < data.length);

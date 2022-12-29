@@ -48,7 +48,7 @@ async function init() {
     dom.body.find('boot').insertAdjacentHTML('afterend', html);
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
-        window.roots = ["create", "dashboard", "directory", "preview", "templates"];
+        window.roots = ["create", "dashboard", "design", "directory", "preview"];
         return m.includes("#") || 
             (GOT.length > 1 && roots.indexOf(root) === -1) ||
             (root === 'dashboard' && n === 1) || 
@@ -56,8 +56,8 @@ async function init() {
             (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || 
             (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || 
             (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) ||
-            (root === 'preview' && n === 1) ||
-            (root === 'templates' && n === 1)
+            (root === 'design' && n === 1) ||
+            (root === 'preview' && n === 1)
     }
 
     touch.events = {
