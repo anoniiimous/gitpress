@@ -217,7 +217,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     data
                                 });
                                 const feed = byId('feed-dashboard-blog-theme');
-                                if (feed.innerHTML === "" && data.length > 0) {
+                                if (feed.all('card').length === 2 && data.length > 0) {
                                     const template = byId('template-dashboard-blog-theme').content.firstElementChild.cloneNode(true);
                                     var x = 0;
                                     do {
