@@ -1425,7 +1425,7 @@
         border-top: 0;
         border-bottom-left-radius: 2px;
         border-bottom-right-radius: 2px;
-        margin-top: 8px
+        margin-top: 20px;
     }
 
     .gg-software-upload::after {

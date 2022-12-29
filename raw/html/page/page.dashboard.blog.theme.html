@@ -1,6 +1,6 @@
 <blocks>
-    <header class="background-color-bbb padding-20px z-index-5">
-        <column>
+    <header class="background-color-bbb position-fixe top-0 z-index-5" data-960px-width="100%" data-widt="calc(100% - 320px)">
+        <row class="justify-content-space-between padding-20px">
             <card>
                 <row>
                     <box class="display-none" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
@@ -17,7 +17,16 @@
                     </box>
                 </row>
             </card>
-        </column>
+            <card>
+                <row>
+                    <box class="background-color-333 color-fff line-height-50px padding-x-20px" data-href="/dashboard/:get/posts/post/">
+                        <section>
+                            <text class="font-size-14px font-weight-bolder">Open Designer</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+        </row>
     </header>
     <block class="margin-y-20px padding-x-20px">
         <section class="grid-gap-20px" data-columns="3" data-1280px-columns="2" data-1024px-columns="1" data-960px-columns="2" data-vga-columns="1" id="feed-dashboard-blog-theme">
@@ -44,15 +53,15 @@
                     <box class="line-height-50px">
                         <row>
                             <ico>
-                                <n class></n>
+                                <n class="gg-eye"></n>
                             </ico>
                             <text class="font-weight-bolder margin-x-auto">Blank</text>
-                            <ico>
+                            <ico data-tap="mvc.c.design.install(event.target)">
                                 <n class="gg-check"></n>
                             </ico>
                         </row>
                     </box>
-                    <box class="border-radius-5px box-shadow-0-0-0-1px margin-bottom-10px margin-x-10px">
+                    <box class="box-shadow-0-1px-6px-0 margin-bottom-10px margin-x-10px">
                         <section>
                             <picture class="border-radius-10px height-0 padding-top-56pt25pct width-100pct"></picture>
                         </section>
@@ -66,15 +75,15 @@
                     <box class="line-height-50px">
                         <row>
                             <ico>
-                                <n class></n>
+                                <n class="gg-eye"></n>
                             </ico>
-                            <text class="font-weight-bolder margin-x-auto text-transform-capitalize">Theme 2</text>
+                            <text class="font-weight-bolder margin-x-auto text-transform-capitalize" placeholder="Theme Name"></text>
                             <ico data-tap="mvc.c.design.install(event.target)">
                                 <n class="gg-check"></n>
                             </ico>
                         </row>
                     </box>
-                    <box class="box-shadow-0-0-0-1px margin-bottom-10px margin-x-10px">
+                    <box class="box-shadow-0-1px-6px-0 margin-bottom-10px margin-x-10px">
                         <section>
                             <picture class="border-radius-10px height-0 padding-top-56pt25pct width-100pct"></picture>
                         </section>
