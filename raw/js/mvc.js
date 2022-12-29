@@ -128,6 +128,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         if (get[2] == "posts") {
                             if (get.length > 3) {
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
+                                vp.find('header input[type="text"]').value = "";
+                                vp.find('header textarea').value = "";
+                                vp.find('card textarea').value = "";
                                 if (get.length > 4) {
                                     const user = await github.user.get();
                                     const name = get[4] + '.html';
@@ -137,10 +141,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         repo: "blog.cms." + get[1]
                                     };
                                     var settings = {};
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
-                                    vp.find('header input[type="text"]').value = "";
-                                    vp.find('header textarea').value = "";
-                                    vp.find('card textarea').value = "";
                                     github.repos.contents(params, settings).then(data=>{
                                         console.log(50, {
                                             data
@@ -217,8 +217,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     data
                                 });
                                 const feed = byId('feed-dashboard-blog-theme');
-                                if (data.length > 0) {
-                                    feed.innerHTML = "";
+                                if (feed.innerHTML === "" && data.length > 0) {
                                     const template = byId('template-dashboard-blog-theme').content.firstElementChild.cloneNode(true);
                                     var x = 0;
                                     do {
