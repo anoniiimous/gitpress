@@ -1,5 +1,13 @@
 window.github = {
     endpoint: "https://api.github.com",
+    database: {
+        blob: (settings)=>{
+            if (settings && settings.dataType) {
+                if (settings.dataType === "POST") {
+                }
+            }
+        }
+    },
     gists: {
         create: (settings)=>{
             if (settings && settings.dataType) {
@@ -32,7 +40,7 @@ window.github = {
             }
         }
         ,
-        update: (params, settings)=>{
+        update: (params,settings)=>{
             if (settings && settings.dataType) {
                 if (settings.dataType === "PATCH") {
                     return new Promise((resolve,reject)=>{
@@ -67,7 +75,7 @@ window.github = {
             if (settings && settings.dataType) {
                 if (settings.dataType === "DELETE") {
                     return new Promise((resolve,reject)=>{
-                        const url = github.endpoint + "/gists/"+params.gist;
+                        const url = github.endpoint + "/gists/" + params.gist;
                         const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{
@@ -366,7 +374,8 @@ window.github = {
                 ajax(url, settings).then(a).catch(b);
             }
             );
-        },
+        }
+        ,
         repositories: (query)=>{
             return new Promise((resolve,reject)=>{
                 const url = github.endpoint + "/search/repositories?" + query;

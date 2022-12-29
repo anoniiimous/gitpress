@@ -23,7 +23,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         if (root) {
 
-            const roots = ["dashboard", "design"];
+            const roots = ["dashboard", "design", "developer"];
             if (roots.indexOf(root) === -1) {
                 if (get.length > 1) {
                     const owner = root;
@@ -203,6 +203,40 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 $(vp.all('block[data-step]')[0]).removeClass('display-none');
                             }
                             resolve(route);
+                        } else if (get[2] === "theme") {
+
+                            var params = {
+                                owner: "dompad",
+                                path: "/",
+                                repo: "preview"
+                            };
+                            var settings = {};
+                            github.repos.contents(params, settings).then(data=>{
+                                data = data.filter(row=>row.type === "dir")
+                                console.log(319, {
+                                    data
+                                });
+                                const feed = byId('feed-dashboard-blog-theme');
+                                if (data.length > 0) {
+                                    feed.innerHTML = "";
+                                    const template = byId('template-dashboard-blog-theme').content.firstElementChild.cloneNode(true);
+                                    var x = 0;
+                                    do {
+                                        const row = data[x];
+                                        const name = row.name;
+                                        template.dataset.owner = params.owner;
+                                        template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
+                                        //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
+                                        template.find('text').textContent = name;
+                                        //template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
+                                        template.find('picture').dataset.src = "/preview/" + name + "/index.jpg";
+                                        feed.insertAdjacentHTML('beforeend', template.outerHTML);
+                                        x++;
+                                    } while (x < data.length);
+                                }
+                            }
+                            )
+
                         }
                     }
 
@@ -417,6 +451,30 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             );
 
+        }
+
+    },
+
+    design: {
+
+        install: (target)=>{
+            var card = target.closest('card');
+            var owner = card.dataset.owner;
+            var repo = card.dataset.repo;
+            const callBack = ()=>{
+                var data = {
+                    content,
+                    owner,
+                    repo
+                };
+                var settings = {
+                    data,
+                    dataType: "POST"
+                };
+                github.database.blob(settings);
+                alert("Template installed!");
+            }
+            modal.confirm("Are you sure you want to install this design?", ["Yes", "No"], callBack)
         }
 
     },

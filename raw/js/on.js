@@ -824,7 +824,7 @@ window.on["submit"] = {
             var filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and') + '.' + ext;
             const body = form.find('card textarea').value;
             const user = await github.user.get();
-            const html = await ajax("/c/html/template/template.post.html");
+            const html = await ajax("/raw/html/template/template.post.html");
             const doc = new DOMParser().parseFromString(html, "text/html");
             doc.head.find('title').textContent = title;
             doc.head.find('meta[name="description"]').content = description;
@@ -887,7 +887,7 @@ window.on["submit"] = {
                     const params = {
                         owner: user.login,
                         repo: "blog.cms." + GET[1],
-                        path: "/cdn/cache/posts.json"
+                        path: "/raw/cache/posts.json"
                     };
                     const posts = await github.repos.contents(params, {});
                     content = atob(posts.content);
@@ -958,7 +958,7 @@ window.on["submit"] = {
                     var data = await github.repos.contents({
                         owner: user.login,
                         repo: "blog.cms." + GET[1],
-                        path: "/cdn/posts/" + filename
+                        path: "/raw/posts/" + filename
                     }, {
                         data: JSON.stringify({
                             content: btoa(content),
@@ -994,7 +994,7 @@ window.on["submit"] = {
                     const params = {
                         owner: user.login,
                         repo: "blog.cms." + GET[1],
-                        path: "/cdn/cache/posts.json"
+                        path: "/raw/cache/posts.json"
                     };
                     const posts = await github.repos.contents(params, {});
                     content = atob(posts.content);
