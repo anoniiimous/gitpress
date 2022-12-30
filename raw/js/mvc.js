@@ -457,23 +457,26 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     design: {
 
         install: (target)=>{
-            var card = target.closest('card');
-            var owner = card.dataset.owner;
-            var repo = card.dataset.repo;
-            const callBack = ()=>{
-                var data = {
-                    content,
-                    owner,
-                    repo
-                };
-                var settings = {
-                    data,
-                    dataType: "POST"
-                };
-                github.database.blob(settings);
-                alert("Template installed!");
+            if (target) {
+                var card = target.closest('card');
+                var owner = card.dataset.owner;
+                var repo = card.dataset.repo;
+                var theme = card.find('box text').textContent;
+                const callBack = ()=>{
+                    var data = {
+                        content,
+                        owner,
+                        repo
+                    };
+                    var settings = {
+                        data,
+                        dataType: "POST"
+                    };
+                    github.database.blob(settings);
+                    alert("Template installed!");
+                }
+                modal.confirm("Are you sure you want to install this design?", ["Yes", "No"], callBack)
             }
-            modal.confirm("Are you sure you want to install this design?", ["Yes", "No"], callBack)
         }
 
     },

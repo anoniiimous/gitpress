@@ -111,8 +111,8 @@
     dom.body.insertBefore(ppp,byId('boot').nextElementSibling);
     modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
   },
-  confirm: (h, opt, callBack, ppp = document.createElement('aside')) => {
-    ppp.setAttribute('class', 'aside body-aside card');
+  confirm: (h, opt, callBack, className, ppp = document.createElement('aside')) => {
+    ppp.setAttribute('class', className);
     ppp.innerHTML = `<section><card><section>`+h+`</section><footer><div class="confirm">`+opt[0]+`</div><div class="cancel">`+opt[1]+`</div></footer></card></section>`;
     ppp.onclick = event => {
       if(event.target.classList.contains('aside')) {
