@@ -211,7 +211,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 repo: "preview"
                             };
                             var settings = {};
-                            github.repos.contents(params, settings).then(data=>{
+                            github.repos.contents(params, settings).then(async(data)=>{
                                 data = data.filter(row=>row.type === "dir")
                                 console.log(319, {
                                     data
@@ -223,11 +223,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     do {
                                         const row = data[x];
                                         const name = row.name;
-                                        var url = new URL(row.html_url);
-                                        var pathname = url.pathname;
-                                        var dir = rout.ed.dir(pathname);
-                                        var owner = dir[0];
-                                        var repo = dir[1];
+                                        var user = await github.user.get();
+                                        var owner = user.login;
+                                        var repo = get[1];
                                         template.dataset.owner = owner;
                                         template.dataset.repo = repo;
                                         template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
@@ -479,11 +477,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             repo
                         };
                         var settings = {
-                            data,
                             dataType: "POST"
                         };
-                        github.database.blob(params, settings).then(()=>{
+                        settings.data = JSON.stringify({
+                            content: btoa(content)
+                        }),
+                        github.database.blob(params, settings).then((data)=>{
                             alert("Blob created!");
+                            console.log(487, {
+                                data
+                            });
                         }
                         ).catch(()=>{
                             alert("Blob failed!");
