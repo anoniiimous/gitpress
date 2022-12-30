@@ -135,13 +135,8 @@ window.modal = {
     confirm: async(h,opt,callBack,ppp=document.createElement('aside'))=>{
         var innerHTML = await ajax('raw/html/template/template.modal.confirm.html');
         var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
-        var message = html.find('[placeholder="Are you sure you want to do this?"]')
-        console.log({
-            message,
-            h,
-            opt
-        });
-        message.textContent = h;
+        html.find('[placeholder="Title"]').textContent = h.title;
+        html.find('[placeholder="Body"]').textContent = h.body;
         ppp.innerHTML = html.outerHTML;
         ppp.onclick = event=>{
             if (event.target.classList.contains('aside')) {
@@ -150,7 +145,6 @@ window.modal = {
                 var target = event.target;
                 var confirm = target.closest("[placeholder='Yes']");
                 var cancel = target.closest("[placeholder='No']");
-                console.log(confirm, cancel);
                 if (confirm || cancel) {
                     confirm ? callBack(confirm) : false;
                     modal.exit(target);

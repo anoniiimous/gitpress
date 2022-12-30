@@ -223,7 +223,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     do {
                                         const row = data[x];
                                         const name = row.name;
-                                        template.dataset.owner = params.owner;
+                                        var url = new URL(row.html_url);
+                                        var pathname = url.pathname;
+                                        var dir = rout.ed.dir(pathname);
+                                        var owner = dir[0];
+                                        var repo = dir[1];
+                                        template.dataset.owner = owner;
+                                        template.dataset.repo = repo;
                                         template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
@@ -464,17 +470,30 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var theme = card.find('box text').textContent;
                 if (theme) {
                     const callBack = ()=>{
-                        var data = "test";
+                        var content = "Hello world.";
+                        var data = {
+                            content
+                        };
+                        var params = {
+                            owner,
+                            repo
+                        };
                         var settings = {
                             data,
                             dataType: "POST"
                         };
-                        github.database.blob(settings).then(()=>{
-                            alert("Template installed!");
+                        github.database.blob(params, settings).then(()=>{
+                            alert("Blob created!");
+                        }
+                        ).catch(()=>{
+                            alert("Blob failed!");
                         }
                         );
                     }
-                    modal.confirm("Are you sure you want to install this design?", ["Yes", "No"], callBack)
+                    modal.confirm({
+                        title: theme,
+                        body: "Are you sure you want to install this template?"
+                    }, ["Yes", "No"], callBack)
                 }
             }
         }
