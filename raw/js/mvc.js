@@ -23,7 +23,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
         if (root) {
 
-            const roots = ["dashboard", "design", "developer"];
+            const roots = ["dashboard", "design", "developer", "marketplace", "new"];
             if (roots.indexOf(root) === -1) {
                 if (get.length > 1) {
                     const owner = root;

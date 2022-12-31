@@ -48,7 +48,7 @@ async function init() {
     dom.body.find('boot').insertAdjacentHTML('afterend', html);
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
-        window.roots = ["create", "dashboard", "design", "directory", "preview"];
+        window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
         return m.includes("#") || 
             (GOT.length > 1 && roots.indexOf(root) === -1) ||
             (root === 'dashboard' && n === 1) || 
