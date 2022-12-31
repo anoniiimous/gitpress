@@ -226,8 +226,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var user = await github.user.get();
                                         var owner = user.login;
                                         var repo = get[1];
-                                        template.dataset.owner = owner;
-                                        template.dataset.repo = repo;
                                         template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
@@ -460,14 +458,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     design: {
 
-        install: (target)=>{
+        install: async(target)=>{
             if (target) {
+                var user = await github.user.get();
                 var card = target.closest('card');
-                var owner = card.dataset.owner;
-                var repo = card.dataset.repo;
+                var owner = user.login;
+                var repo = GET[1];
                 var theme = card.find('box text').textContent;
                 if (theme) {
                     const callBack = ()=>{
+                        var source = {
+                            copy: [],
+                            paste: []
+                        };
                         var content = "Hello world.";
                         var data = {
                             content
