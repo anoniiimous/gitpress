@@ -416,6 +416,10 @@
 }
 
 @media screen {
+    .flex-direction-column {
+        flex-direction: column;
+    }
+    
     .flex-direction-row {
         flex-direction: row;
     }
@@ -618,6 +622,10 @@
 
     .margin-bottom-20px {
         margin-bottom: 20px;
+    }
+
+    .margin-bottom-auto {
+        margin-bottom: auto;
     }
 
     .margin-left-5px {
@@ -874,6 +882,10 @@
 
     .padding-top-56pt25pct {
         padding-top: 56.25%;
+    }
+
+    .padding-top-50pct {
+        padding-top: 50%;
     }
 
     .padding-top-100pct {
