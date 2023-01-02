@@ -204,15 +204,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                             resolve(route);
                         } else if (get[2] === "theme") {
-
-                            var params = {
-                                owner: "dompad",
-                                path: "/",
-                                repo: "preview"
-                            };
-                            var settings = {};
-                            github.repos.contents(params, settings).then(async(data)=>{
-                                data = data.filter(row=>row.type === "dir")
+                            var a = async(data)=>{
+                                //data = data.filter(row=>row.type === "dir")
                                 console.log(319, {
                                     data
                                 });
@@ -222,10 +215,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var x = 0;
                                     do {
                                         const row = data[x];
-                                        const name = row.name;
-                                        var user = await github.user.get();
-                                        var owner = user.login;
-                                        var repo = get[1];
+                                        const name = rout.ed.dir(row.path)[0];
+                                        var repository = row.repository['full_name'].split('/');
+                                        var user = repository[0];
+                                        var repo = repository[1];
+                                        template.dataset["full_name"] = row.repository["full_name"];
                                         template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
@@ -236,7 +230,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     } while (x < data.length);
                                 }
                             }
-                            )
+                            const query = 'q="key": "design-28894391" filename:site.webmanifest user:dompad';
+                            github.search.code(query).then(a);
 
                         }
                     }
@@ -466,7 +461,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var repo = GET[1];
                 var theme = card.find('box text').textContent;
                 if (theme) {
-                    const callBack = ()=>{
+                    const callBack = async()=>{
+
+                        //SHELL
+                        //await github.repos.contents(params, settings);
+
+                        //PAGES
+
                         var source = {
                             copy: [],
                             paste: []
