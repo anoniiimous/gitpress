@@ -204,8 +204,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                             resolve(route);
                         } else if (get[2] === "theme") {
+                            var params = {
+                                owner: "dompad",
+                                path: "/",
+                                repo: "preview"
+                            };
+                            var settings = {};
                             var a = async(data)=>{
-                                //data = data.filter(row=>row.type === "dir")
+                                data = data.filter(row=>row.type === "dir")
                                 console.log(319, {
                                     data
                                 });
@@ -215,11 +221,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var x = 0;
                                     do {
                                         const row = data[x];
-                                        const name = rout.ed.dir(row.path)[0];
-                                        var repository = row.repository['full_name'].split('/');
-                                        var user = repository[0];
-                                        var repo = repository[1];
-                                        template.dataset["full_name"] = row.repository["full_name"];
+                                        //const name = rout.ed.dir(row.path)[0];
+                                        const name = row.name;
+                                        var repository = row['_links'].html.split('/');
+                                        //var user = repository[0];
+                                        //var repo = repository[1];
+                                        //template.dataset["full_name"] = row.repository["full_name"];
                                         template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
@@ -231,8 +238,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }
                             }
                             const query = 'q="key": "design-28894391" filename:site.webmanifest user:dompad';
-                            github.search.code(query).then(a);
-
+                            //github.search.code(query).then(a);
+                            github.repos.contents(params, settings).then(a);
                         }
                     }
 
