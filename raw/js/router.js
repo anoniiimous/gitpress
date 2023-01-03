@@ -47,7 +47,7 @@ String.prototype.router = async function(params) {
     }
 
     var go = async function(resolve, reject) {
-        console.log('String.prototype.router', route);
+        //console.log('String.prototype.router', route);
         if (route) {
             var pop = params ? params.pop : null;
 
@@ -86,9 +86,6 @@ String.prototype.router = async function(params) {
 window.rout = {};
 
 window.rout.e = state=>{
-    console.log({
-        state
-    })
     var arr1 = [];
     var arr2 = rout.ed.dir(state.split('#')[0].split('?')[0]);
     var page = '/';
@@ -117,9 +114,6 @@ window.rout.e = state=>{
         root,
         search
     };
-    console.log(114, {
-        data
-    });
     return data;
 }
 

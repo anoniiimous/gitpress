@@ -254,10 +254,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         const content = data.content;
                         const raw = atob(content);
                         const json = JSON.parse(raw);
-                        console.log(43, {
-                            data,
-                            json
-                        });
                         dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = json.name;
                     }
                     ).catch(async(error)=>{
@@ -470,15 +466,58 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 if (theme) {
                     const callBack = async()=>{
 
+                        //DATA
+                        var source = {
+                            copy: {},
+                            paste: {}
+                        };
+
                         //SHELL
-                        //await github.repos.contents(params, settings);
+                        var params = {
+                            owner: "dompad",
+                            repo: "preview",
+                            path: "/" + theme + "/raw/theme/shell.html"
+                        }
+                        var s = (data)=>{
+                            const content = atob(data.content);
+                            return content;
+                        }
+                        var shell = await github.repos.contents(params, {}).then(s);
+
+                        source.copy.shell = shell;
 
                         //PAGES
+                        var params = {
+                            owner: "dompad",
+                            repo: "preview",
+                            path: "/" + theme + "/raw/pages"
+                        }
+                        var p = (data)=>{
+                            var content = [];
+                            if (data.length > 0) {
+                                var d = 0;
+                                do {
+                                    var row = data[d];
+                                    if (row.type === "file") {
+                                        content[d] = {
+                                            content: "",
+                                            name: row.name,
+                                            path: row.path
+                                        };
+                                        console.log("pages", {
+                                            d,
+                                            row
+                                        });
+                                    }
+                                    d++;
+                                } while (d < data.length);
+                            }
+                            return content;
+                        }
+                        var pages = await github.repos.contents(params, {}).then(p);
+                        source.copy.pages = pages;
 
-                        var source = {
-                            copy: [],
-                            paste: []
-                        };
+                        //INSTALL
                         var content = "Hello world.";
                         var data = {
                             content
@@ -492,17 +531,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         };
                         settings.data = JSON.stringify({
                             content: btoa(content)
-                        }),
-                        github.database.blob(params, settings).then((data)=>{
-                            alert("Blob created!");
-                            console.log(487, {
+                        });
+                        console.log("source", {
+                            source
+                        });
+
+                        var b = (data)=>{
+                            //alert("Blob created!");
+                            console.log(504, {
                                 data
                             });
                         }
-                        ).catch(()=>{
-                            alert("Blob failed!");
-                        }
-                        );
+                        ;
+                        //github.database.blob(params, settings).then(b).catch(alert("Blob failed!"));
                     }
                     modal.confirm({
                         title: theme,

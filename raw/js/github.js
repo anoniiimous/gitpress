@@ -263,9 +263,6 @@ window.github = {
                         Accept: "application/vnd.github+json",
                         Authorization: "token " + accessToken
                     } : null;
-                    console.log({
-                        settings
-                    });
                     ajax(url, settings).then(a).catch(b);
                 }
                 );
