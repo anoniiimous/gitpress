@@ -492,19 +492,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             repo: "preview",
                             path: "/" + theme + "/raw/pages"
                         }
-                        var p = (data)=>{
+                        var p = async(data)=>{
                             var content = [];
                             if (data.length > 0) {
                                 var d = 0;
                                 do {
                                     var row = data[d];
                                     if (row.type === "file") {
+                                        var name = row.name;
+                                        var path = row.path;
+                                        var html = await github.repos.contents({
+                                            owner: "dompad",
+                                            repo: "preview",
+                                            path
+                                        }, {});
                                         content[d] = {
-                                            content: "",
-                                            name: row.name,
-                                            path: row.path
+                                            content: atob(html.content),
+                                            name,
+                                            path
                                         };
                                         console.log("pages", {
+                                            html,
                                             d,
                                             row
                                         });
