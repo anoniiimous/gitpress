@@ -472,19 +472,70 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             paste: {}
                         };
 
+                        var params = {
+                            branch: "main",
+                            owner,
+                            repo
+                        }
+                        var s = (data)=>{
+                            return data;
+                        }
+                        var settings = {
+                            dataType: "GET"
+                        };
+                        var refs = await github.database.references(params, settings).then(s);
+                        var sha = refs.object.sha;
+                        console.log("references", {
+                            refs
+                        });
+
                         //SHELL
                         var params = {
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/raw/theme/shell.html"
+                            path: "/" + theme + "/raw/theme/template.html"
                         }
                         var s = (data)=>{
                             const content = atob(data.content);
                             return content;
                         }
-                        var shell = await github.repos.contents(params, {}).then(s);
+                        //var shell = await github.repos.contents(params, {}).then(s);
+                        //source.copy.shell = shell;
 
-                        source.copy.shell = shell;
+                        //ASSET
+                        var params = {
+                            owner: "dompad",
+                            repo: "preview",
+                            path: "/" + theme + "/raw/asset"
+                        }
+                        var a = async(data)=>{
+                            var content = [];
+                            if (data.length > 0) {
+                                var d = 0;
+                                do {
+                                    var row = data[d];
+                                    if (row.type === "file") {
+                                        var name = row.name;
+                                        var path = row.path;
+                                        var html = await github.repos.contents({
+                                            owner: "dompad",
+                                            repo: "preview",
+                                            path
+                                        }, {});
+                                        content[d] = {
+                                            content: atob(html.content),
+                                            name,
+                                            path
+                                        };
+                                        //console.log("pages", { html, d, row });
+                                    }
+                                    d++;
+                                } while (d < data.length);
+                            }
+                            return content;
+                        }
+                        var asset = await github.repos.contents(params, {}).then(a);
+                        source.copy.asset = asset;
 
                         //PAGES
                         var params = {
@@ -511,11 +562,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                             name,
                                             path
                                         };
-                                        console.log("pages", {
-                                            html,
-                                            d,
-                                            row
-                                        });
+                                        //console.log("pages", { html, d, row });
                                     }
                                     d++;
                                 } while (d < data.length);
@@ -525,33 +572,119 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var pages = await github.repos.contents(params, {}).then(p);
                         source.copy.pages = pages;
 
-                        //INSTALL
-                        var content = "Hello world.";
-                        var data = {
-                            content
-                        };
+                        //THEME
+                        var t = async(data)=>{
+                            var content = [];
+                            if (data.length > 0) {
+                                var d = 0;
+                                do {
+                                    var row = data[d];
+                                    if (row.type === "file") {
+                                        var name = row.name;
+                                        var path = row.path;
+                                        var html = await github.repos.contents({
+                                            owner: "dompad",
+                                            repo: "preview",
+                                            path
+                                        }, {});
+                                        content[d] = {
+                                            content: atob(html.content),
+                                            name,
+                                            path
+                                        };
+                                    }
+                                    d++;
+                                } while (d < data.length);
+                            }
+                            return content;
+                        }
+                        var css = await github.repos.contents({
+                            owner: "dompad",
+                            repo: "preview",
+                            path: "/" + theme + "/raw/theme/"
+                        }, {}).then(t);
+                        source.copy.theme = css;
+
+                        //BLOBBING
+                        var copy = source.copy;
+                        var keys = Object.keys(copy);
+                        var resources = {};
+                        if (keys.length > 0) {
+                            var c = 0;
+                            var values = Object.values(copy);
+                            do {
+                                var key = keys[c];
+                                var value = values[c];
+
+                                if (value.length > 0) {
+                                    var v = 0;
+                                    do {
+                                        var val = value[v];
+                                        var content = btoa(val.content);
+                                        var data = {
+                                            content
+                                        };
+                                        var params = {
+                                            owner,
+                                            repo
+                                        };
+                                        var settings = {
+                                            data: JSON.stringify({
+                                                content: btoa(content)
+                                            }),
+                                            dataType: "POST"
+                                        };
+
+                                        var b = (data)=>{
+                                            return data;
+                                        }
+                                        var bb = (error)=>{
+                                            alert("Blob failed!");
+                                        }
+                                        var blob = await github.database.blobs(params, settings).then(b).catch(bb);
+
+                                        var filepath = key + "/" + val.name;
+                                        resources[filepath] = blob;
+
+                                        var rs = [{
+                                            blob
+                                        }, {
+                                            key,
+                                            val
+                                        }, {
+                                            params,
+                                            settings
+                                        }];
+
+                                        console.log("resource: " + key + "/" + val.name, rs);
+                                        v++;
+                                    } while (v < value.length)
+                                }
+
+                                c++;
+                            } while (c < keys.length);
+                            console.log("resources", resources);
+                        }
+
+                        //TREE                            
                         var params = {
                             owner,
-                            repo
+                            repo,
+                            sha
                         };
                         var settings = {
-                            dataType: "POST"
+                            dataType: "GET"
                         };
-                        settings.data = JSON.stringify({
-                            content: btoa(content)
-                        });
-                        console.log("source", {
-                            source
-                        });
-
-                        var b = (data)=>{
-                            //alert("Blob created!");
-                            console.log(504, {
-                                data
-                            });
+                        var t = (data)=>{
+                            return data;
                         }
-                        ;
-                        //github.database.blob(params, settings).then(b).catch(alert("Blob failed!"));
+                        var tt = (error)=>{}
+                        var trees = await github.database.trees(params, settings).then(t).catch(tt);
+                        var raw = trees.tree.filter(row=>row.path === "raw")[0];
+                        console.log("trees", {
+                            trees,
+                            raw
+                        });
                     }
                     modal.confirm({
                         title: theme,

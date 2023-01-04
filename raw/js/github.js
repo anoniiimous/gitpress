@@ -1,7 +1,7 @@
 window.github = {
     endpoint: "https://api.github.com",
     database: {
-        blob: (params, settings)=>{
+        blobs: (params,settings)=>{
             if (settings && settings.dataType) {
                 if (settings.dataType === "POST") {
                     return new Promise((resolve,reject)=>{
@@ -9,6 +9,91 @@ window.github = {
                         const owner = params.owner;
                         const repo = params.repo;
                         const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/blobs";
+                        const dataType = settings.dataType;
+                        const a = (d)=>{
+                            const data = JSON.parse(d);
+                            resolve(data);
+                        }
+                        const b = (error)=>{
+                            console.log(error);
+                            reject(error);
+                        }
+                        const accessToken = localStorage.githubAccessToken;
+                        accessToken ? settings.headers = {
+                            Accept: "application/vnd.github+json",
+                            Authorization: "token " + accessToken
+                        } : null;
+                        //console.log({ url, settings });
+                        ajax(url, settings).then(a).catch(b);
+                    }
+                    );
+                }
+            }
+        }
+        ,
+        references: (params,settings)=>{
+            if (settings && settings.dataType) {
+                if (settings.dataType === "GET") {
+                    return new Promise((resolve,reject)=>{
+                        var owner = params.owner;
+                        var repo = params.repo;
+                        var branch = params.branch;
+                        var ref = branch ? "/heads/" + branch : "";
+                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
+                        const dataType = settings.dataType;
+                        const a = (d)=>{
+                            const data = JSON.parse(d);
+                            resolve(data);
+                        }
+                        const b = (error)=>{
+                            console.log(error);
+                            reject(error);
+                        }
+                        const accessToken = localStorage.githubAccessToken;
+                        accessToken ? settings.headers = {
+                            Accept: "application/vnd.github+json",
+                            Authorization: "token " + accessToken
+                        } : null;
+                        ajax(url, settings).then(a).catch(b);
+                    }
+                    );
+                }
+            }
+
+        }
+        ,
+        trees: (params,settings)=>{
+            if (settings && settings.dataType) {
+                if (settings.dataType === "GET") {
+                    return new Promise((resolve,reject)=>{
+                        var owner = params.owner;
+                        var repo = params.repo;
+                        var branch = params.branch;
+                        var sha = params.sha;
+                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/trees/" + sha;
+                        const data = settings.data;
+                        const dataType = settings.dataType;
+                        const a = (d)=>{
+                            const data = JSON.parse(d);
+                            resolve(data);
+                        }
+                        const b = (error)=>{
+                            console.log(error);
+                            reject(error);
+                        }
+                        const accessToken = localStorage.githubAccessToken;
+                        accessToken ? settings.headers = {
+                            Accept: "application/vnd.github+json",
+                            Authorization: "token " + accessToken
+                        } : null;
+                        ajax(url, settings).then(a).catch(b);
+                    }
+                    );
+                }
+                if (settings.dataType === "POST") {
+                    return new Promise((resolve,reject)=>{
+                        const url = github.endpoint + "/gists";
+                        const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{
                             const data = JSON.parse(d);
