@@ -516,7 +516,7 @@ window.on.touch = {
                 $(event.target.closest('form').all('block[data-step="' + dataset.goto + '"]')).removeClass('display-none');
                 var link = "";
 
-                var vp = dom.body.find('aside');
+                var vp = dom.body.find('[data-pages="/new/app/"]');
                 $(vp.all('form > header box flex')).attr("data-height", "30px");
                 $(vp.all('form > header box flex')).attr("data-width", "30px");
                 //vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
@@ -724,17 +724,19 @@ window.on.key.up.setup = {
         var target = event.target;
         var keyCode = event.keyCode;
         var logo = byId("preview-logo");
-        const button = target.closest('block').find('[data-goto="two"]');
+        const button = target.closest('block').find('[data-goto="two"]'); 
+        console.log
         if (target.value === "") {
-            logo.firstElementChild.dataset.char = "A";
-            logo.dataset.after = "App Title";
+            //logo.firstElementChild.dataset.char = "A";
+            //logo.dataset.after = "App Title";
             button.dataset.disabled = "true";
             button.classList.add('opacity-50pct');
         } else {
-            logo.firstElementChild.dataset.char = target.value.charAt(0);
-            logo.dataset.after = target.value;
+            //logo.firstElementChild.dataset.char = target.value.charAt(0);
+            //logo.dataset.after = target.value;
             button.dataset.disabled = "false";
             button.classList.remove('opacity-50pct');
+            console.log({button});
         }
         if (keyCode === 13) {
             button.click();

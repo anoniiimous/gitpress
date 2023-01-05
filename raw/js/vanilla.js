@@ -385,13 +385,13 @@ function getPath(links) {
     return link;
 }
 function getRoot(els) {
-    var els = $('[data-root]');
+    var els = $('[data-pages]');
     var root = null;
     if (els.length > 0) {
         var arr = [];
         var r = 0;
         do {
-            arr.push(els[r].dataset.root);
+            arr.push(els[r].dataset.pages);
             r++;
         } while (r < els.length);
         arr.sort();
@@ -399,7 +399,7 @@ function getRoot(els) {
         window.paths.arr = arr;
         root = paths.page.stringExists(arr);
         //root = arr.includes(paths.page) ? paths.page : null;
-        //console.log({page:paths.page,arr,root});
+        console.log({page:paths.page,arr,root});
     }
     return root;
 }

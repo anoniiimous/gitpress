@@ -7,7 +7,7 @@
                         <column class="align-items-center justify-content-center" data-height="50px" data-width="50px">
                             <flex class="align-items-center background-color-ff3b30 border-radius-50pct color-fff justify-content-center" data-height="50px" data-width="50px">1</flex>
                         </column>
-                        <text class="margin-top-5px">About</text>
+                        <text class="margin-top-5px">Style</text>
                     </box>
                     <box class="margin-20px">
                         <column class="align-items-center justify-content-center" data-height="50px" data-width="50px">
@@ -19,7 +19,7 @@
                         <column class="align-items-center justify-content-center" data-height="50px" data-width="50px">
                             <flex class="align-items-center background-color-0096c7 border-radius-50pct color-fff justify-content-center" data-height="30px" data-width="30px">3</flex>
                         </column>
-                        <text class="margin-top-5px">Topic</text>
+                        <text class="margin-top-5px">About</text>
                     </box>
                 </row>
             </card>
@@ -29,7 +29,59 @@
         <column>
             <header class="padding-20px text-align-center">
                 <section>
-                    <text class="font-weight-bolder">Build a name for your brand.</text>
+                    <text class="font-weight-bolder">Choose a template for your app.</text>
+                </section>
+            </header>
+            <section class="section-step-one">
+                <column class="app-name" data-before="Brand Name">
+                    <picture class="margin-20px width-240px">
+                        <img class="width-100pct" src="raw/svg/setup-name.svg">
+                    </picture>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                            <text class="flex-grow-1 padding-x-20px">No template</text>
+                            <ico>
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px display-none height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
+                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                        </row>
+                    </box>
+                </column>
+            </section>
+            <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
+                <row class="justify-content-space-between">
+                    <box class="padding-x-10px" data-href="/new/">
+                        <row>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-left"></n>
+                            </ico>
+                            <text>Exit</text>
+                        </row>
+                    </box>
+                    <box class="opacity-50pct padding-x-10px" data-disabled="true" data-require="Supply a name for your brand." data-goto="two">
+                        <row>
+                            <text>Next</text>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+            </footer>
+        </column>
+    </block>
+    <!--
+    -->
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-20px margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="two">
+        <column>
+            <header class="padding-20px text-align-center">
+                <section>
+                    <text class="font-weight-bolder">Choose a template for your app.</text>
                 </section>
             </header>
             <section class="section-step-one">
@@ -67,14 +119,47 @@
             </footer>
         </column>
     </block>
+    <!--
     <block class="align-items-center display-none justify-content-center margin-x-auto overflow-x-hidden margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="two">
         <header class="padding-20px text-align-center">
             <section>
-                <text class="font-weight-bolder">Create an image for your platform.</text>
+                <text class="font-weight-bolder">Build a name for your brand.</text>
             </section>
         </header>
-        <!--data-after="Sync your application across multiple workspaces. Keep your data both offline or in the cloud."-->
-        <section class="section-step-two logo-maker max-width-480px width-100pct">
+        <section class="section-step-two">
+            <column class="app-name" data-before="Brand Name">
+                <picture class="margin-20px width-240px">
+                    <img class="width-100pct" src="raw/svg/setup-name.svg">
+                </picture>
+                <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                    <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
+                    <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                        <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                    </row>
+                </box>
+            </column>
+        </section>
+        <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
+            <row class="justify-content-space-between">
+                <box class="padding-x-10px" data-href="/new/">
+                    <row>
+                        <ico data-width="25px">
+                            <n class="gg-chevron-left"></n>
+                        </ico>
+                        <text>Exit</text>
+                    </row>
+                </box>
+                <box class="opacity-50pct padding-x-10px" data-disabled="true" data-require="Supply a name for your brand." data-goto="two">
+                    <row>
+                        <text>Next</text>
+                        <ico data-width="25px">
+                            <n class="gg-chevron-right"></n>
+                        </ico>
+                    </row>
+                </box>
+            </row>
+        </footer><!--
+        <section class="display-none section-step-two logo-maker max-width-480px width-100pct">
             <card class="preview-logo" id="preview-logo" data-after="App Title">
                 <row class="color-selected" data-evt="null" data-file="build-app-logo" data-html="build-app-icon">
                     <ico data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
@@ -109,9 +194,9 @@
                 </row>
             </card>
         </section>
-        <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
+        <footer class="bottom-0 display-none left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
             <row class="justify-content-space-between">
-                <box class="padding-x-10px" data-href="/setup/:get/">
+                <box class="padding-x-10px" data-href="/new/:get/">
                     <row>
                         <ico data-width="25px">
                             <n class="gg-chevron-left"></n>
@@ -130,6 +215,7 @@
             </row>
         </footer>
     </block>
+    -->
     <block class="align-items-center display-none justify-content-center margin-x-auto overflow-x-hidden margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="three">
         <header class="header-step header-step-two">
             <div data-before="Create an image for your platform."></div>

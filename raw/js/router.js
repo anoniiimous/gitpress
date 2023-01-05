@@ -7,7 +7,7 @@ String.prototype.router = async function(params) {
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
     //console.log(8, uri, url, route, getRoot());
 
-    var pages = dom.body.find('pages[data-root="' + getRoot() + '"]');
+    var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
 
@@ -34,7 +34,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching = dom.body.all('[data-fetch][data-root="' + getRoot() + '"]');
+    const fetching = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]');
     if (fetching.length > 0) {
         var f = 0;
         do {
