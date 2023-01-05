@@ -7,15 +7,19 @@
 <main>
     <page class="flex-1" data-fetch="raw/html/page/page.index.html" data-page="/"></page>
     <page class="flex-1 width-100pct" data-fetch="raw/html/page/page.user.blog.html" data-page="/*/*/"></page>
-    <pages class="-isauth background-color-bbb flex-grow-1 margin-left-280px" data-width="calc(100% - 40px)" data-pages="/dashboard/" data-root="/dashboard/" data-960px-margin-left="0" data-transition="0.3s">
+    <pages class="-isauth background-color-f0 flex-grow-1 margin-left-280px" data-width="calc(100% - 40px)" data-pages="/dashboard/" data-root="/dashboard/" data-960px-margin-left="0" data-transition="0.3s">
         <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.html" data-page="/dashboard/*/"></page>
+        <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.build.html" data-pages="/dashboard/*/build/" data-root="/dashboard/*/build/"></pages>
         <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.files.html" data-pages="/dashboard/*/files/" data-root="/dashboard/*/files/"></pages>
         <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.files.file.html" data-page="/dashboard/*/files/file/"></page>-->
+        <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.html" data-page="/dashboard/*/media/"></page>
+        <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.merch.html" data-page="/dashboard/*/merch/"></page>
         <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.pages.html" data-page="/dashboard/*/pages/"></page>
         <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.pages.page.html" data-page="/dashboard/*/pages/page/"></page>-->
         <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.posts.html" data-page="/dashboard/*/posts/"></page>
         <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.posts.post.html" data-pages="/dashboard/*/posts/post/" data-root="/dashboard/*/posts/post/"></pages>
         <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.settings.html" data-page="/dashboard/*/settings/"></page>
+        <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.theme.html" data-page="/dashboard/*/style/"></page>
         <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.theme.html" data-page="/dashboard/*/theme/"></page>
         <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.users.html" data-page="/dashboard/*/users/"></page>
     </pages>
@@ -45,46 +49,213 @@
         <page class="flex-grow-1" data-fetch="raw/html/page/page.templates.template.html" data-page="/templates/*/"></page>
         <page class="flex-grow-1" data-fetch="raw/html/page/page.templates.template.preview.html" data-page="/templates/*/preview/"></page>
     </pages>
-    <nav class="-isauth background-color-1d2327 color-fff font-size-14px height-100pct line-height-50px overflow-x-hidden padding-x-20px position-fixed width-240px" data-960px-transform="translateX(-100%)" data-pages="/dashboard/*/" data-transition="0.3s">
+    <nav class="-isauth background-color-e2dcd8 color-000 font-size-14px height-100pct line-height-50px overflow-x-hidden padding-x-20px position-fixed width-240px" data-960px-transform="translateX(-100%)" data-pages="/dashboard/*/" data-transition="0.3s">
         <column class="min-height-100pct">
             <card class="margin-bottom-20px margin-top-20px">
-                <column>
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/">
+                        <row>
+                            <ico class="background-color-000 border-radius-5px margin-10px" data-height="30px" data-width="30px">
+                                <n placeholder="?"></n>
+                            </ico>
+                            <text class="font-weight-bolder" placeholder="Project Name"></text>
+                        </row>
+                    </box>
                     <box data-href="/dashboard/">
+                        <row>
+                            <ico class="margin-left-auto">
+                                <n class="gg-menu-grid-r"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+            </card>
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/build/">
                         <row>
                             <ico>
                                 <n class="gg-browser"></n>
                             </ico>
-                            <text class="font-weight-bolder" placeholder="Project Name"></text>
-                            <ico class="margin-left-auto">
+                            <text>Build</text>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
                                 <n class="gg-chevron-down"></n>
                             </ico>
                         </row>
                     </box>
-                </column>
-            </card>
-            <card>
+                </row>
                 <column>
-                    <box data-href="/dashboard/:get/">
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-options"></n>
+                            </ico>
+                            <text>Config</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
                         <row>
                             <ico>
                                 <n class="gg-chart"></n>
                             </ico>
-                            <text>Dashboard</text>
+                            <text>Overview</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-eye"></n>
+                            </ico>
+                            <text>Preview</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
                         </row>
                     </box>
                 </column>
             </card>
-            <card>
-                <column>
-                    <box data-href="/dashboard/:get/files/">
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/files/">
                         <row>
                             <ico>
-                                <n class="gg-software-upload"></n>
+                                <n class="gg-folder"></n>
                             </ico>
                             <text>Files</text>
                         </row>
                     </box>
-                    <box data-href="/dashboard/:get/pages/">
+                    <box data-href="/dashboard/:get/">
+                        <row>
+                            <ico>
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+                <column>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <text>Upload</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-drive"></n>
+                            </ico>
+                            <text>Quota</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/media/">
+                        <row>
+                            <ico>
+                                <n class="gg-cloud"></n>
+                            </ico>
+                            <text>Media</text>
+                        </row>
+                    </box>
+                    <box data-href="/dashboard/:get/media/">
+                        <row>
+                            <ico>
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+                <column>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-music"></n>
+                            </ico>
+                            <text>Audio</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-image"></n>
+                            </ico>
+                            <text>Photo</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-film"></n>
+                            </ico>
+                            <text>Video</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/merch/">
+                        <row>
+                            <ico>
+                                <n class="gg-shopping-bag"></n>
+                            </ico>
+                            <text>Merch</text>
+                        </row>
+                    </box>
+                    <box data-href="/dashboard/:get/merch/create/">
+                        <row>
+                            <ico>
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+                <column>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-tag"></n>
+                            </ico>
+                            <text>Inventory</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/pages/">
                         <row>
                             <ico>
                                 <n class="gg-file-document"></n>
@@ -92,45 +263,93 @@
                             <text>Pages</text>
                         </row>
                     </box>
-                    <box data-href="/dashboard/:get/posts/">
+                    <box data-href="/dashboard/:get/">
                         <row>
                             <ico>
-                                <n class="gg-file-add"></n>
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+                <column>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-pen"></n>
+                            </ico>
+                            <text>Create</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/posts/">
+                        <row>
+                            <ico>
+                                <n class="gg-file"></n>
                             </ico>
                             <text>Posts</text>
                         </row>
                     </box>
-                </column>
-            </card>
-            <card>
-                <column>
-                    <box data-href="/dashboard/:get/settings/">
+                    <box data-href="/dashboard/:get/">
                         <row>
                             <ico>
-                                <n class="gg-options"></n>
+                                <n class="gg-chevron-down"></n>
                             </ico>
-                            <text>Settings</text>
                         </row>
                     </box>
-                    <box data-href="/dashboard/:get/theme/">
+                </row>
+                <column>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-file-add"></n>
+                            </ico>
+                            <text>Post</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box class="flex-1" data-href="/dashboard/:get/style/">
                         <row>
                             <ico>
                                 <n class="gg-template"></n>
                             </ico>
-                            <text>Theme</text>
+                            <text>Style</text>
                         </row>
                     </box>
-                    <box data-href="/dashboard/:get/users/">
+                    <box data-href="/dashboard/:get/">
                         <row>
                             <ico>
-                                <n class="gg-user"></n>
+                                <n class="gg-chevron-down"></n>
                             </ico>
-                            <text>Users</text>
+                        </row>
+                    </box>
+                </row>
+                <column>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-search"></n>
+                            </ico>
+                            <text>Designs</text>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
                         </row>
                     </box>
                 </column>
             </card>
-            <card class="margin-bottom-20px margin-top-auto">
+            <card class="display-none margin-bottom-20px margin-top-auto">
                 <column>
                     <box class="border-2px-solid box-sizing-border-box" data-tap="controller.dashboard.preview(event.target)">
                         <row class="justify-content-center">
@@ -144,6 +363,25 @@
                     </box>
                 </column>
             </card>
+            <card class="margin-bottom-20px margin-top-auto margin-y-20px">
+                <row class="justify-content-space-between">
+                    <box data-href="/dashboard/">
+                        <row>
+                            <ico class="background-color-000 border-radius-50pct margin-10px" data-height="30px" data-width="30px">
+                                <n placeholder="?"></n>
+                            </ico>
+                            <text class="font-weight-bolder" placeholder="username"></text>
+                        </row>
+                    </box>
+                    <box data-href="/dashboard/">
+                        <row>
+                            <ico class="margin-left-auto">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+            </card>
         </column>
     </nav>
     <page class="-isauth background-color-f5 flex-grow-1 height-100pct min-height-100pct overflow-x-hidden position-fixed width-100pct" data-fetch="raw/html/page/page.dashboard.html" data-page="/dashboard/"></page>
@@ -155,7 +393,12 @@
                         <column class="border-radius-20px flex-direction-column flex-unset font-size-13px margin-x-auto padding-y-10px">
                             <box class="font-size-36px font-weight-bolder margin-y-20px padding-20px text-align-center">
                                 <section>
-                                    <text><rgb class="-color-ff3b30">D</rgb><rgb class="-color-32cd32">O</rgb><rgb class="-color-0096c7">M</rgb>Pad</text>
+                                    <text>
+                                        <rgb class="-color-ff3b30">D</rgb>
+                                        <rgb class="-color-32cd32">O</rgb>
+                                        <rgb class="-color-0096c7">M</rgb>
+                                        Pad
+                                    </text>
                                 </section>
                             </box>
                             <box class="background-color-000 border-radius-5px color-fff margin-auto padding-x-20px width-200px" data-tap="controller.sign.in(event)">

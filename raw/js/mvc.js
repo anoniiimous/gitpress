@@ -59,8 +59,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 controller.nav.close();
                 if (get.length > 1) {
                     const title = get[1];
-                    dom.body.find('main > nav [placeholder]').textContent = title;
+                    dom.body.find('main > nav [placeholder="Project Name"]').textContent = title;
                     if (get.length > 2) {
+                        if (get[2] === "build") {
+                            resolve(route);
+                        }
                         if (get[2] === "files") {
                             if (get.length > 3) {
                                 if (get[3] === "file") {}
@@ -203,7 +206,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 $(vp.all('block[data-step]')[0]).removeClass('display-none');
                             }
                             resolve(route);
-                        } else if (get[2] === "theme") {
+                        } else if (get[2] === "style" || get[2] === "theme") {
                             var params = {
                                 owner: "dompad",
                                 path: "/",
@@ -216,7 +219,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     data
                                 });
                                 const feed = byId('feed-dashboard-blog-theme');
-                                if (feed.all('card').length === 2 && data.length > 0) {
+                                if (feed.all('card').length === 0 && data.length > 0) {
                                     const template = byId('template-dashboard-blog-theme').content.firstElementChild.cloneNode(true);
                                     var x = 0;
                                     do {
@@ -276,7 +279,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         console.log(243, {
                             user
                         }, user.login);
-                        const query = 'q="key": "32616927" filename:site.webmanifest user:' + user.login;
+                        const query = 'q="key": 32616927 filename:index.json user:' + user.login;
                         github.search.code(query).then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log({
@@ -415,7 +418,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             doc.body.style.backgroundColor = theme;
 
             const owner = GET[0];
-            const repo = "blog.cms." + GET[1];
+            const repo = GET[1];
             const path = "/index.html";
             const params = {
                 owner,
@@ -467,10 +470,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     const callBack = async()=>{
 
                         //DATA
-                        var source = {
+                        window.source = {
                             copy: {},
                             paste: {}
                         };
+                        window.tree = [];
 
                         var params = {
                             branch: "main",
@@ -489,24 +493,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             refs
                         });
 
-                        //SHELL
-                        var params = {
-                            owner: "dompad",
-                            repo: "preview",
-                            path: "/" + theme + "/raw/theme/template.html"
-                        }
-                        var s = (data)=>{
-                            const content = atob(data.content);
-                            return content;
-                        }
-                        //var shell = await github.repos.contents(params, {}).then(s);
-                        //source.copy.shell = shell;
-
                         //ASSET
                         var params = {
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/raw/asset"
+                            path: "/" + theme + "/style/asset"
                         }
                         var a = async(data)=>{
                             var content = [];
@@ -535,13 +526,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             return content;
                         }
                         var asset = await github.repos.contents(params, {}).then(a);
-                        source.copy.asset = asset;
+                        window.source.copy.asset = asset;
 
                         //PAGES
                         var params = {
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/raw/pages"
+                            path: "/" + theme + "/style/pages"
                         }
                         var p = async(data)=>{
                             var content = [];
@@ -570,7 +561,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             return content;
                         }
                         var pages = await github.repos.contents(params, {}).then(p);
-                        source.copy.pages = pages;
+                        window.source.copy.pages = pages;
 
                         //THEME
                         var t = async(data)=>{
@@ -601,21 +592,21 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var css = await github.repos.contents({
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/raw/theme/"
+                            path: "/" + theme + "/style/shell/"
                         }, {}).then(t);
-                        source.copy.theme = css;
+                        window.source.copy.theme = css;
 
-                        //BLOBBING
+                        //BLOBS
                         var copy = source.copy;
                         var keys = Object.keys(copy);
                         var resources = {};
                         if (keys.length > 0) {
                             var c = 0;
+                            var t = 0;
                             var values = Object.values(copy);
                             do {
                                 var key = keys[c];
                                 var value = values[c];
-
                                 if (value.length > 0) {
                                     var v = 0;
                                     do {
@@ -643,10 +634,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         }
                                         var blob = await github.database.blobs(params, settings).then(b).catch(bb);
 
-                                        var filepath = key + "/" + val.name;
-                                        resources[filepath] = blob;
+                                        var path = "style/" + key + "/" + val.name;
+
+                                        resources[path] = blob;
+                                        var mode = "100644";
+                                        var type = "blob";
+                                        tree[t] = {
+                                            path,
+                                            mode: "100644",
+                                            type: "blob",
+                                            sha: blob.sha
+                                        };
 
                                         var rs = [{
+                                            path,
                                             blob
                                         }, {
                                             key,
@@ -656,19 +657,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                             settings
                                         }];
 
-                                        console.log("resource: " + key + "/" + val.name, rs);
+                                        console.log(t + " resource: " + path, rs);
+                                        t++;
                                         v++;
                                     } while (v < value.length)
                                 }
 
                                 c++;
                             } while (c < keys.length);
-                            console.log("resources", resources);
+                            console.log("resources", {
+                                resources,
+                                tree
+                            });
                         }
 
-                        //TREE                            
+                        //TREE
                         var params = {
                             owner,
+                            path: "/style",
                             repo,
                             sha
                         };
@@ -680,10 +686,81 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         }
                         var tt = (error)=>{}
                         var trees = await github.database.trees(params, settings).then(t).catch(tt);
-                        var raw = trees.tree.filter(row=>row.path === "raw")[0];
-                        console.log("trees", {
+                        var raw = trees.tree.filter(row=>row.path === "style")[0];
+                        tree = raw ? tree : trees.tree.concat(tree);
+                        var base_tree = raw ? raw.sha : null;
+                        console.log("trees: " + settings.dataType, {
+                            raw,
                             trees,
-                            raw
+                            tree
+                        });
+
+                        var params = {
+                            owner,
+                            repo
+                        };
+                        var settings = {
+                            data: JSON.stringify({
+                                "base_tree": base_tree,
+                                "tree": tree
+                            }),
+                            dataType: "POST"
+                        };
+                        var t = (data)=>{
+                            return data;
+                        }
+                        var tt = (error)=>{}
+                        var trees = await github.database.trees(params, settings).then(t).catch(tt);
+                        console.log("trees: " + settings.dataType, {
+                            sha: trees.sha,
+                            tree,
+                            trees
+                        });
+
+                        //COMMIT
+                        var params = {
+                            owner,
+                            repo
+                        };
+                        var data = JSON.stringify({
+                            "message": "Install Template",
+                            "parents": [refs.object.sha],
+                            "tree": trees.sha
+                        });
+                        var settings = {
+                            data,
+                            dataType: "POST"
+                        };
+                        var c = (data)=>{
+                            return data;
+                        }
+                        var cc = (error)=>{}
+                        var commits = await github.database.commits(params, settings).then(t).catch(tt);
+                        console.log("commits: " + settings.dataType, {
+                            commits,
+                            sha: commits.sha
+                        });
+
+                        //REFERENCES
+                        var params = {
+                            branch: "main",
+                            owner,
+                            repo
+                        }
+                        var s = (data)=>{
+                            return data;
+                        }
+                        var settings = {
+                            data: JSON.stringify({
+                                force: true,
+                                sha: commits.sha
+                            }),
+                            dataType: "PATCH"
+                        };
+                        var refs = await github.database.references(params, settings).then(s);
+                        var sha = refs.object.sha;
+                        console.log("references", {
+                            refs
                         });
                     }
                     modal.confirm({

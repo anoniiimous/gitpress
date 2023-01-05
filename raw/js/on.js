@@ -1061,7 +1061,7 @@ window.on["submit"] = {
             const user = await github.user.get();
 
             var owner = user.login;
-            var repo = "blog.cms." + GET[1];
+            var repo = GET[1];
             var path = "/site.webmanifest";
             var params = {
                 owner,
@@ -1071,7 +1071,7 @@ window.on["submit"] = {
             var raw = JSON.stringify({
                 name,
                 "theme_color": color
-            });
+            }, null, 2);
             var content = btoa(raw);
             var message = "Create Webmanifest";
             const data = JSON.stringify({

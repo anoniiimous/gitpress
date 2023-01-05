@@ -1,13 +1,18 @@
 [
+    "admin",
     "c",
+    "cache",
     "dashboard",
     "design",
     "developer",
+    "files",
     "organizations",
     "margketplace",
     "pages",
+    "posts",
     "preview",
     "pricing",
     "raw",
+    "style",
     "users"
 ]
