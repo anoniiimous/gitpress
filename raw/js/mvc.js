@@ -392,6 +392,52 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     );
                 }
                 resolve(route)
+            } else if (root === "new") {
+                if (get[1] === "app") {
+
+                    var vp = dom.body.find('[data-pages="/new/app/"]');
+                    var form = vp.find('form');
+
+                    $(form.all('block[data-step]')).addClass('display-none');
+
+                    $(vp.all('form > header box flex')).attr("data-height", "30px");
+                    $(vp.all('form > header box flex')).attr("data-width", "30px");
+                    //vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
+                    vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.remove('opacity-50pct');
+                    vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
+
+                    if (get.length > 2) {
+                        if (get.length > 3) {
+                            $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
+                            $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
+                            $(vp.all('block[data-step]')).addClass('display-none');
+                            $(vp.all('block[data-step]')[2]).removeClass('display-none');
+                            if (get.length > 4) {
+                                if (get.length === 5) {
+                                    alert("Confirm Setup")
+                                    var html = await ajax('raw/html/template/template.confirm.new.app.html');
+                                    modal.page(html);
+                                }
+                            } else {
+                                alert("Step Three");
+                            }
+                        } else {
+                            alert("Step Two");
+                            //vp.find('[data-step="one"] [data-goto="two"]').click();
+                            $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
+                            $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
+                            $(vp.all('block[data-step]')).addClass('display-none');
+                            $(vp.all('block[data-step]')[1]).removeClass('display-none');
+                        }
+                    } else {
+                        alert("Step One");
+                        $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
+                        $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
+                        $(vp.all('block[data-step]')).addClass('display-none');
+                        $(vp.all('block[data-step]')[0]).removeClass('display-none');
+                    }
+                }
+                resolve(route)
             } else {
                 resolve(route);
             }

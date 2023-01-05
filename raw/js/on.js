@@ -511,7 +511,7 @@ window.on.touch = {
                 step(dataset);
             }
         }
-        function step(dataset) {
+        async function step(dataset) {
             console.log({
                 dataset
             });
@@ -528,19 +528,18 @@ window.on.touch = {
                 vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
 
                 if (dataset.goto === "one") {
+                    //route.path
                     $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
                     $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
                     $(vp.all('block[data-step]')).addClass('display-none');
                     $(vp.all('block[data-step]')[0]).removeClass('display-none');
                 }
                 if (dataset.goto === "two") {
-                    ("/new/app/_/").router().then(()=>{
-                        $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
-                        $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
-                        $(vp.all('block[data-step]')).addClass('display-none');
-                        $(vp.all('block[data-step]')[1]).removeClass('display-none');
-                    }
-                    );
+                    //await ("/new/app/_/").router();
+                    $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
+                    $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
+                    $(vp.all('block[data-step]')).addClass('display-none');
+                    $(vp.all('block[data-step]')[1]).removeClass('display-none');
                 }
                 if (dataset.goto === "twos") {
                     const color = 1 > 0 ? "fff" : "000";
@@ -596,14 +595,10 @@ window.on.touch = {
 
                 }
                 if (dataset.goto === "three") {
-
                     $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
                     $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
                     $(vp.all('block[data-step]')).addClass('display-none');
                     $(vp.all('block[data-step]')[2]).removeClass('display-none');
-
-                    link = "/dashboard/:get/setup/:get/:get/_/";
-                    //link.router();
                 }
             }
         }
@@ -749,9 +744,6 @@ window.on.key.up.setup = {
             //logo.dataset.after = target.value;
             button.dataset.disabled = "false";
             button.classList.remove('opacity-50pct');
-            console.log({
-                button
-            });
         }
         if (keyCode === 13) {
             button.click();
