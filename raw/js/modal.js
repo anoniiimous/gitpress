@@ -133,28 +133,32 @@ window.modal = {
     }
     ,
     confirm: async(h,opt,callBack,ppp=document.createElement('aside'))=>{
-        var innerHTML = await ajax('raw/html/template/template.modal.confirm.html');
-        var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
-        html.find('[placeholder="Title"]').textContent = h.title;
-        html.find('[placeholder="Body"]').textContent = h.body;
-        ppp.innerHTML = html.outerHTML;
-        ppp.onclick = event=>{
-            if (event.target.classList.contains('aside')) {
-                event.target.remove();
-            } else {
-                var target = event.target;
-                var confirm = target.closest("[placeholder='Yes']");
-                var cancel = target.closest("[placeholder='No']");
-                if (confirm || cancel) {
-                    confirm ? callBack(confirm) : false;
-                    modal.exit(target);
+        return new Promise(async(resolve,reject)=>{
+            var innerHTML = await ajax('raw/html/template/template.modal.confirm.html');
+            var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
+            html.find('[placeholder="Title"]').textContent = h.title;
+            html.find('[placeholder="Body"]').textContent = h.body;
+            ppp.innerHTML = html.outerHTML;
+            ppp.onclick = event=>{
+                var io = false;
+                if (event.target.classList.contains('aside')) {
+                    event.target.remove();
+                } else {
+                    var target = event.target;
+                    var confirm = target.closest("[placeholder='Yes']");
+                    var cancel = target.closest("[placeholder='No']");
+                    if (confirm || cancel) {
+                        io = confirm ? true : false;
+                        modal.exit(target);
+                    }
                 }
+                resolve(io);
             }
-            return confirm;
+            ;
+            dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
+            modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
         }
-        ;
-        dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
-        modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
+        );
     }
     ,
     counter: 0,

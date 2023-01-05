@@ -491,7 +491,11 @@ window.on.touch = {
                 }
             } else if (dataset.confirm) {
                 if (dataset.confirm === "true") {
-                    if (confirm(dataset.message)) {
+                    var confirm = await modal.confirm({
+                        body: dataset.message,
+                        title: "Step One"
+                    }, JSON.parse(dataset.options));
+                    if (confirm) {
                         step(dataset);
                     }
                 } else {
@@ -530,6 +534,15 @@ window.on.touch = {
                     $(vp.all('block[data-step]')[0]).removeClass('display-none');
                 }
                 if (dataset.goto === "two") {
+                    ("/new/app/_/").router().then(()=>{
+                        $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
+                        $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
+                        $(vp.all('block[data-step]')).addClass('display-none');
+                        $(vp.all('block[data-step]')[1]).removeClass('display-none');
+                    }
+                    );
+                }
+                if (dataset.goto === "twos") {
                     const color = 1 > 0 ? "fff" : "000";
                     const domain = event.target.closest('block').find('input').value;
                     link = '/dashboard/:get/setup/' + domain + '/' + color + "/";
@@ -724,7 +737,7 @@ window.on.key.up.setup = {
         var target = event.target;
         var keyCode = event.keyCode;
         var logo = byId("preview-logo");
-        const button = target.closest('block').find('[data-goto="two"]'); 
+        const button = target.closest('block').find('[data-goto="two"]');
         console.log
         if (target.value === "") {
             //logo.firstElementChild.dataset.char = "A";
@@ -736,7 +749,9 @@ window.on.key.up.setup = {
             //logo.dataset.after = target.value;
             button.dataset.disabled = "false";
             button.classList.remove('opacity-50pct');
-            console.log({button});
+            console.log({
+                button
+            });
         }
         if (keyCode === 13) {
             button.click();
