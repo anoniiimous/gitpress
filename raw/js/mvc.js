@@ -448,7 +448,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     margin: 20,
                                     sliderSize: 30
                                 }) : new iro.ColorPicker("#" + sel,{
-                                    width,
                                     color: "#f00",
                                     layout: [{
                                         component: iro.ui.Slider,
@@ -492,10 +491,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 picker.on("mount", function(e) {
                                     console.log(e);
                                     const base = e.base;
-                                    //box ? base.classList = "height-100pct IroColorPicker position-absolute top-0 width-100pct" : null;
-                                    //box ? picker.resize(dom.body.clientWidth > 480 ? 430 : dom.body.clientWidth - 90) : null;
+                                    box ? base.classList = "height-100pct IroColorPicker position-absolute top-0 width-100pct" : null;
+                                    box ? picker.resize(dom.body.clientWidth > 480 ? 430 : dom.body.clientWidth - 90) : null;
                                 });
-                                //box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
+                                box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
                                 //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
                             }
                         }
