@@ -732,7 +732,7 @@ window.on.key.up.setup = {
         var target = event.target;
         var keyCode = event.keyCode;
         var logo = byId("preview-logo");
-        const button = target.closest('block').find('[data-goto="two"]');
+        const button = target.closest('block').all('footer box')[1];
         console.log
         if (target.value === "") {
             //logo.firstElementChild.dataset.char = "A";

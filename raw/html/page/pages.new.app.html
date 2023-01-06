@@ -6,7 +6,7 @@
                     <box class="margin-20px">
                         <column class="align-items-center justify-content-center" data-width="50px">
                             <flex class="align-items-center background-color-ff3b30 border-radius-50pct color-fff justify-content-center" data-height="50px" data-width="50px">1</flex>
-                            <text class="margin-top-5px">Style</text>
+                            <text class="margin-top-5px">Title</text>
                         </column>
                     </box>
                     <box class="margin-20px">
@@ -25,165 +25,82 @@
             </card>
         </section>
     </header>
-    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-20px margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="one">
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-120px margin-top-120px" data-min-height="calc(100vh - 240px)">
         <column>
-            <header class="padding-20px text-align-center">
-                <section>
-                    <text class="font-weight-bolder">Choose a template for your app.</text>
-                </section>
-            </header>
-            <section class="section-step-one">
-                <column class="app-name" data-before="Brand Name">
-                    <picture class="margin-20px width-240px">
-                        <img class="width-100pct" src="raw/svg/setup-name.svg">
-                    </picture>
-                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <!--<text class="flex-grow-1 padding-x-20px">No template</text>-->
-                            <row class="height-100pct width-100pct">
-                                <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" placeholder="No template" type="text">
+            <card>
+                <header class="padding-20px text-align-center">
+                    <section>
+                        <text class="font-weight-bolder">Give your app a unique title.</text>
+                    </section>
+                </header>
+                <section class="section-step-one">
+                    <column class="app-name" data-before="Brand Name">
+                        <picture class="margin-20px width-240px">
+                            <img class="width-100pct" src="raw/svg/setup-name.svg">
+                        </picture>
+                        <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                            <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
+                            <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                                <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
                             </row>
-                            <ico>
-                                <n class="gg-chevron-down"></n>
-                            </ico>
-                        </row>
-                    </box>
-                    <box class="padding-y-20px text-align-center">
-                        <section>
-                            <text>or</text>
-                        </section>
-                    </box>
-                    <box class="color-0096c7 padding-y-20px text-align-center" data-href="/design/">
-                        <section>
-                            <text>Browse Designs</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-color-bbb border-radius-10px display-none height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
-                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
-                        </row>
-                    </box>
-                </column>
-            </section>
-            <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
-                <row class="justify-content-space-between">
-                    <box class="padding-x-10px" data-href="/new/">
-                        <row>
-                            <ico data-width="25px">
-                                <n class="gg-chevron-left"></n>
-                            </ico>
-                            <text>Exit</text>
-                        </row>
-                    </box>
-                    <box class="opacity-50pc padding-x-10px" data-goto="two">
-                        <row>
-                            <text>Next</text>
-                            <ico data-width="25px">
-                                <n class="gg-chevron-right"></n>
-                            </ico>
-                        </row>
-                    </box>
-                </row>
-            </footer>
-        </column>
-    </block>
-    <block class="align-items-center display-none justify-content-center margin-x-auto overflow-x-hidden margin-bottom-20px margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="two">
-        <column>
-            <header class="padding-20px text-align-center">
-                <section>
-                    <text class="font-weight-bolder">Choose a template for your app.</text>
+                        </box>
+                    </column>
                 </section>
-            </header>
-            <section class="section-step-one">
-                <column class="app-name" data-before="Brand Name">
-                    <picture class="margin-20px width-240px">
-                        <img class="width-100pct" src="raw/svg/setup-name.svg">
-                    </picture>
-                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
-                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
-                        </row>
-                    </box>
-                </column>
-            </section>
-            <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
-                <row class="justify-content-space-between">
-                    <box class="padding-x-10px" data-href="/new/app/">
-                        <row>
-                            <ico data-width="25px">
-                                <n class="gg-chevron-left"></n>
-                            </ico>
-                            <text>Back</text>
-                        </row>
-                    </box>
-                    <box class="opacity-50pct padding-x-10px" data-disabled="true" data-require="Supply a name for your brand." data-goto="two">
-                        <row>
-                            <text>Next</text>
-                            <ico data-width="25px">
-                                <n class="gg-chevron-right"></n>
-                            </ico>
-                        </row>
-                    </box>
-                </row>
-            </footer>
+                <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
+                    <row class="justify-content-space-between">
+                        <box class="padding-x-10px" data-href="/new/app/">
+                            <row>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-left"></n>
+                                </ico>
+                                <text>Back</text>
+                            </row>
+                        </box>
+                        <box class="opacity-50pct padding-x-10px" data-tap="controller.setup.step(event.target)">
+                            <row>
+                                <text>Next</text>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-right"></n>
+                                </ico>
+                            </row>
+                        </box>
+                    </row>
+                </footer>
+            </card>
         </column>
-    </block>
-    <!--
-    <block class="align-items-center display-none justify-content-center margin-x-auto overflow-x-hidden margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="two">
-        <header class="padding-20px text-align-center">
-            <section>
-                <text class="font-weight-bolder">Build a name for your brand.</text>
-            </section>
-        </header>
-        <section class="section-step-two">
-            <column class="app-name" data-before="Brand Name">
-                <picture class="margin-20px width-240px">
-                    <img class="width-100pct" src="raw/svg/setup-name.svg">
-                </picture>
-                <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                    <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
-                    <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                        <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
-                    </row>
-                </box>
-            </column>
-        </section>
-        <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
-            <row class="justify-content-space-between">
-                <box class="padding-x-10px" data-href="/new/">
-                    <row>
-                        <ico data-width="25px">
-                            <n class="gg-chevron-left"></n>
-                        </ico>
-                        <text>Exit</text>
-                    </row>
-                </box>
-                <box class="opacity-50pct padding-x-10px" data-disabled="true" data-require="Supply a name for your brand." data-goto="two">
-                    <row>
-                        <text>Next</text>
-                        <ico data-width="25px">
-                            <n class="gg-chevron-right"></n>
-                        </ico>
-                    </row>
-                </box>
-            </row>
-        </footer><!--
-        <section class="display-none section-step-two logo-maker max-width-480px width-100pct">
-            <card class="preview-logo" id="preview-logo" data-after="App Title">
-                <row class="color-selected" data-evt="null" data-file="build-app-logo" data-html="build-app-icon">
-                    <ico data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+        <column class="display-none">
+            <card class="max-width-100pct width-480px" data-evt="color" id="color-picker">
+                <header class="padding-20px text-align-center">
+                    <section>
+                        <text class="font-weight-bolder">Build an image for your brand.</text>
+                    </section>
+                </header>
+                <section class="display-none margin-y-20px">
+                    <box class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <column>
+                            <picture></picture>
+                            <n placeholder="?"></n>
+                        </column>
+                    </box>
+                    <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
+                        <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
+                    </box>
+                </section>
+                <section class="margin-y-20px">
+                    <box class="border-radius-20px padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-width="100%">
+                        <n class="align-items-center display-flex font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>
+                    </box>
+                </section>
+                <section class="display-none">
+                    <ico class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
                         <n placeholder="?"></n>
                     </ico>
                     <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
                         <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
                     </box>
-                </row>
-            </card>
-            <card class="padding-20px" data-evt="color" id="color-picker">
-                <section class="position-relative width-100pct" data-padding-top="calc(100% - 50px)" id="iro-setup-about-brand"></section>
-                <row class="justify-content-space-between margin-top-10px">
+                </section>
+                <section class="position-relative width-100pct" id="iro-setup-about-brand"></section>
+                <section class="display-flex flex-direction-row justify-content-space-between margin-y-20px">
                     <box class="code" data-before="HEX" id="color-data-hex">
                         <column>
                             <text class="color-bbb font-weight-bolder">HEX</text>
@@ -202,98 +119,37 @@
                             <text>0, 0%, 0%</text>
                         </column>
                     </box>
-                </row>
-            </card>
-        </section>
-        <footer class="bottom-0 display-none left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
-            <row class="justify-content-space-between">
-                <box class="padding-x-10px" data-href="/new/:get/">
-                    <row>
-                        <ico data-width="25px">
-                            <n class="gg-chevron-left"></n>
-                        </ico>
-                        <text>Back</text>
-                    </row>
-                </box>
-                <box class="padding-x-10px" data-confirm="true" data-goto="three" data-message="Are you sure you want to continue without providing a logo?">
-                    <row>
-                        <text>Next</text>
-                        <ico data-width="25px">
-                            <n class="gg-chevron-right"></n>
-                        </ico>
-                    </row>
-                </box>
-            </row>
-        </footer>
-    </block>
-    -->
-    <block class="align-items-center display-none justify-content-center margin-x-auto overflow-x-hidden margin-top-120px" data-min-height="calc(100vh - 240px)" data-step="three">
-        <header class="header-step header-step-two">
-            <div data-before="Create an image for your platform."></div>
-        </header>
-        <!--<section class="section-step-two logo-maker">
-            <card class="line-height-50px text-align-center" data-tap="controller.setup.category(event.target)">
-                <section>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Fashion</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Finance</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Food</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Health</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Lifestyle</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Music</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Photography</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Sports</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Travel</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Tech</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-radius-50px display-inline-flex margin-10px padding-x-20px">
-                        <section>
-                            <text>Travel</text>
-                        </section>
-                    </box>
                 </section>
+                <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
+                    <row class="justify-content-space-between">
+                        <box class="padding-x-10px" data-href="/new/app/">
+                            <row>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-left"></n>
+                                </ico>
+                                <text>Back</text>
+                            </row>
+                        </box>
+                        <box class="opacity-50pct padding-x-10px" data-tap="controller.setup.step(event.target)">
+                            <row>
+                                <text>Next</text>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-right"></n>
+                                </ico>
+                            </row>
+                        </box>
+                    </row>
+                </footer>
             </card>
-        </section>-->
-            <section class="section-step-one">
-                <column class="app-name" data-before="Brand Name">
+        </column>
+        <column class="display-none">
+            <card>
+                <header class="padding-20px text-align-center">
+                    <section>
+                        <text class="font-weight-bolder">Let us know about your project.</text>
+                    </section>
+                </header>
+                <section class="app-name" data-before="Brand Name">
                     <picture class="margin-20px width-240px">
                         <img class="width-100pct" src="raw/svg/setup-name.svg">
                     </picture>
@@ -324,29 +180,30 @@
                             <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
                         </row>
                     </box>
-                </column>
-            </section>
-        <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
-            <row class="justify-content-space-between">
-                <box class="padding-x-10px" data-href="/setup/:get/:get/">
-                    <row>
-                        <ico data-width="25px">
-                            <n class="gg-chevron-left"></n>
-                        </ico>
-                        <text>Back</text>
+                </section>
+                <footer class="bottom-0 left-0 line-height-50px margin-auto max-width-480px position-fixed right-0 width-100pct">
+                    <row class="justify-content-space-between">
+                        <box class="padding-x-10px" data-href="/new/:get/:get/">
+                            <row>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-left"></n>
+                                </ico>
+                                <text>Back</text>
+                            </row>
+                        </box>
+                        <box class="padding-x-10px" data-complete="false" data-goto="complete" data-require="Please select a cetegory to continue.">
+                            <row>
+                                <text>Done</text>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-right"></n>
+                                </ico>
+                                <input type="submit">
+                            </row>
+                        </box>
                     </row>
-                </box>
-                <box class="padding-x-10px" data-complete="false" data-goto="complete" data-require="Please select a cetegory to continue.">
-                    <row>
-                        <text>Done</text>
-                        <ico data-width="25px">
-                            <n class="gg-chevron-right"></n>
-                        </ico>
-                        <input type="submit">
-                    </row>
-                </box>
-            </row>
-        </footer>
+                </footer>
+            </card>
+        </column>
     </block>
 </form>
 <template id="template-setup-complete">

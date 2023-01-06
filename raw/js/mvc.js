@@ -328,7 +328,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var params = {
                         owner: "dompad",
                         path: "/",
-                        repo: "demo"
+                        repo: "preview"
                     };
                     var settings = {};
                     github.repos.contents(params, settings).then(data=>{
@@ -398,43 +398,110 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var vp = dom.body.find('[data-pages="/new/app/"]');
                     var form = vp.find('form');
 
-                    $(form.all('block[data-step]')).addClass('display-none');
-
+                    $(form.all('block > *')).addClass('display-none');
                     $(vp.all('form > header box flex')).attr("data-height", "30px");
                     $(vp.all('form > header box flex')).attr("data-width", "30px");
                     //vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
-                    vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.remove('opacity-50pct');
-                    vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
+                    //vp.all('block[data-step]')[0].find('footer').classList.remove('opacity-50pct');
+                    //vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
 
                     if (get.length > 2) {
                         if (get.length > 3) {
                             $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
                             $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
-                            $(vp.all('block[data-step]')).addClass('display-none');
-                            $(vp.all('block[data-step]')[2]).removeClass('display-none');
+                            $(vp.all('block > *')[2]).removeClass('display-none');
                             if (get.length > 4) {
                                 if (get.length === 5) {
-                                    alert("Confirm Setup")
                                     var html = await ajax('raw/html/template/template.confirm.new.app.html');
-                                    modal.page(html);
+                                    modal.confirm({
+                                        body: "Are you sure you want to create this project?",
+                                        title: "Confirm Setup"
+                                    }, ["Cancel", "Create"]);
                                 }
-                            } else {
-                                alert("Step Three");
+                            } else {//alert("Step Three");
                             }
                         } else {
-                            alert("Step Two");
-                            //vp.find('[data-step="one"] [data-goto="two"]').click();
+                            //alert("Step Two");
                             $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
                             $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
-                            $(vp.all('block[data-step]')).addClass('display-none');
-                            $(vp.all('block[data-step]')[1]).removeClass('display-none');
+                            $(vp.all('block > *')[1]).removeClass('display-none');
+
+                            var sel = "iro-setup-about-brand";
+                            var el = byId(sel);
+                            if (el.innerHTML === "") {
+                                var width = el.clientWidth - 51;
+                                var box = 1 < 0;
+                                window.picker = box ? new iro.ColorPicker("#" + sel,{
+                                    width,
+                                    color: "#f00",
+                                    layout: [{
+                                        component: iro.ui.Box
+                                    }, {
+                                        component: iro.ui.Slider,
+                                        options: {
+                                            sliderType: "hue"
+                                        }
+                                    }],
+                                    layoutDirection: "horizontal",
+                                    margin: 20,
+                                    sliderSize: 30
+                                }) : new iro.ColorPicker("#" + sel,{
+                                    width,
+                                    color: "#f00",
+                                    layout: [{
+                                        component: iro.ui.Slider,
+                                        options: {
+                                            sliderType: 'hue'
+                                        }
+                                    }, {
+                                        component: iro.ui.Slider,
+                                        options: {
+                                            sliderType: 'saturation'
+                                        }
+                                    }, {
+                                        component: iro.ui.Slider,
+                                        options: {
+                                            sliderType: 'value'
+                                        }
+                                    }, {
+                                        component: iro.ui.Slider,
+                                        options: {
+                                            sliderType: 'alpha'
+                                        }
+                                    }],
+                                    layoutDirection: "vertical",
+                                    margin: 20,
+                                    sliderSize: 30
+                                });
+                                picker.on("color:change", function(color) {
+                                    var icon = byId("build-app-icon");
+                                    var hexString = color.hexString;
+                                    var rgb = color.rgb;
+                                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                                    var hsl = color.hsl;
+                                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                                    byId("color-data-hex").all('text')[1].textContent = hexString;
+                                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                                    byId("color-data-hsl").all('text')[1].textContent = hslString;
+                                    //icon.style.backgroundColor = hexString;
+                                    //icon.style.color = colors.contrast(hexString);
+                                    //icon.dataset.contrast = icon.style.color;
+                                });
+                                picker.on("mount", function(e) {
+                                    console.log(e);
+                                    const base = e.base;
+                                    //box ? base.classList = "height-100pct IroColorPicker position-absolute top-0 width-100pct" : null;
+                                    //box ? picker.resize(dom.body.clientWidth > 480 ? 430 : dom.body.clientWidth - 90) : null;
+                                });
+                                //box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
+                                //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
+                            }
                         }
                     } else {
-                        alert("Step One");
+                        //alert("Step One");
                         $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
                         $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
-                        $(vp.all('block[data-step]')).addClass('display-none');
-                        $(vp.all('block[data-step]')[0]).removeClass('display-none');
+                        $(vp.all('block > *')[0]).removeClass('display-none');
                     }
                 }
                 resolve(route)
@@ -1149,6 +1216,39 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 $(box.parentNode.all('box')).removeClass('color-ff3b30');
                 box.classList.add('color-ff3b30');
                 box.closest('block').find('footer [data-complete]').dataset.complete = true;
+            }
+        }
+        ,
+
+        step: async(target)=>{
+            var step = target.closest('block > *');
+            var index = step.index();
+            var button = target.closest('box').find('n');
+            if (button) {
+                var steps = target.closest('block').all('block > *');
+                if (button.className === "gg-chevron-left") {
+                    step = step.previousElementSibling;
+                    //step.classList.remove('display-none');
+                    if (index === 0) {}
+                    if (index === 1) {}
+                }
+                if (button.className === "gg-chevron-right") {
+                    if (index === 0) {
+                        var title = step.find('input').value;
+                        if (title.length > 0) {
+                            //$(steps).addClass('display-none');
+                            //step.nextElementSibling.classList.remove('display-none');
+                            ('/new/app/' + title + '/').router();
+                        } else {
+                            modal.alert({
+                                body: "You must supply a name.",
+                                submit: "Go back",
+                                title: "Step One"
+                            });
+                        }
+                    }
+                    if (index === 1) {}
+                }
             }
         }
 

@@ -118,18 +118,28 @@ window.modal = {
         return new Promise((resolve,reject)=>resolve(byId('boot').nextElementSibling));
     }
     ,
-    alert: (h,ppp=document.createElement('aside'))=>{
-        ppp.setAttribute('class', 'aside body-aside card');
-        ppp.innerHTML = `<section class="card-confirm"><card class="card"><section>` + h + `</section></card></section>`;
-        ppp.onclick = event=>{
-            if (event.target.classList.contains('aside')) {
-                event.target.remove();
+    alert: async(h,ppp=document.createElement('aside'))=>{
+            var innerHTML = await ajax('raw/html/template/template.modal.alert.html');
+            var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
+            h.title ? html.find('[placeholder="Title"]').textContent = h.title : null;
+            h.body ? html.find('[placeholder="Body"]').textContent = h.body : null;
+            h.submit ? html.find('[placeholder="OK').textContent = h.submit : null;
+            ppp.innerHTML = html.outerHTML;
+            ppp.onclick = event=>{
+                var io = false;
+                if (event.target.classList.contains('aside')) {
+                    event.target.remove();
+                } else {
+                    var target = event.target;
+                    var ok = target.closest("[placeholder='OK']");
+                    if (ok) {
+                        modal.exit(target);
+                    }
+                }
             }
-            return confirm;
-        }
-        ;
-        dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
-        modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
+            ;
+            dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
+            modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
     }
     ,
     confirm: async(h,opt,callBack,ppp=document.createElement('aside'))=>{

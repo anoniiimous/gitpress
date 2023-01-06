@@ -511,6 +511,10 @@
         font-size: 48px;
     }
 
+    .font-size-72px {
+        font-size: 72px;
+    }
+
     @media (max-width: 480px) {
         .-mobile-font-size-13px {
             font-size: 13px;
@@ -645,6 +649,10 @@
 
     .margin-bottom-20px {
         margin-bottom: 20px;
+    }
+
+    .margin-bottom-120px {
+        margin-bottom: 120px;
     }
 
     .margin-bottom-auto {
