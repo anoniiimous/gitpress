@@ -406,6 +406,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     //vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
 
                     if (get.length > 2) {
+                        form.all('block > *')[0].find('input').value = get[2];
+                        form.all('block > *')[0].all('footer box')[1].classList.remove('opacity-50pct');
                         if (get.length > 3) {
                             $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
                             $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
