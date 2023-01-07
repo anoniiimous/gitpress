@@ -408,10 +408,19 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (get.length > 2) {
                         form.all('block > *')[0].find('input').value = get[2];
                         form.all('block > *')[0].all('footer box')[1].classList.remove('opacity-50pct');
+                        var icon = byId('new-app-icon');
                         if (get.length > 3) {
                             $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
                             $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
                             $(vp.all('block > *')[2]).removeClass('display-none');
+
+                            var hexString = '#' + get[3];
+                            icon.style.backgroundColor = hexString;
+                            icon.style.color = colors.contrast(hexString);
+                            byId("color-data-hex").all('text')[1].textContent = hexString;
+                            //byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                            //byId("color-data-hsl").all('text')[1].textContent = hslString;
+
                             if (get.length > 4) {
                                 if (get.length === 5) {
                                     var html = await ajax('raw/html/template/template.confirm.new.app.html');
@@ -420,10 +429,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         title: "Confirm Setup"
                                     }, ["Cancel", "Create"]);
                                 }
-                            } else {//alert("Step Three");
                             }
                         } else {
                             //alert("Step Two");
+                            icon.find('n').textContent = get[2].charAt(0);
                             $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
                             $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
                             $(vp.all('block > *')[1]).removeClass('display-none');
@@ -433,22 +442,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             if (el.innerHTML === "") {
                                 var width = el.clientWidth - 51;
                                 var box = 1 < 0;
-                                window.picker = box ? new iro.ColorPicker("#" + sel,{
-                                    width,
-                                    color: "#f00",
-                                    layout: [{
-                                        component: iro.ui.Box
-                                    }, {
-                                        component: iro.ui.Slider,
-                                        options: {
-                                            sliderType: "hue"
-                                        }
-                                    }],
-                                    layoutDirection: "horizontal",
-                                    margin: 20,
-                                    sliderSize: 30
-                                }) : new iro.ColorPicker("#" + sel,{
-                                    color: "#f00",
+                                window.picker = new iro.ColorPicker("#" + sel,{
+                                    color: byId("color-data-hex").all('text')[1].textContent,
                                     layout: [{
                                         component: iro.ui.Slider,
                                         options: {
@@ -464,11 +459,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         options: {
                                             sliderType: 'value'
                                         }
-                                    }, {
-                                        component: iro.ui.Slider,
-                                        options: {
-                                            sliderType: 'alpha'
-                                        }
                                     }],
                                     layoutDirection: "vertical",
                                     margin: 20,
@@ -477,20 +467,31 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 picker.on("color:change", function(color) {
                                     var icon = byId('new-app-icon');
                                     var hexString = color.hexString;
-                                    var rgb = color.rgb;
+                                    var rgb = color.rgba;
                                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
-                                    var hsl = color.hsl;
+                                    var hsl = color.hsla;
                                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
                                     byId("color-data-hex").all('text')[1].textContent = hexString;
                                     byId("color-data-rgb").all('text')[1].textContent = rgbString;
                                     byId("color-data-hsl").all('text')[1].textContent = hslString;
                                     icon.style.backgroundColor = hexString;
-                                    //icon.style.color = colors.contrast(hexString);
+                                    icon.style.color = colors.contrast(hexString);
                                     //icon.dataset.contrast = icon.style.color;
                                 });
                                 picker.on("mount", function(e) {
                                     console.log(e);
-                                    const base = e.base;
+                                    var color = e.color;
+                                    var icon = byId('new-app-icon');
+                                    var hexString = color.hexString;
+                                    var rgb = color.rgba;
+                                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                                    var hsl = color.hsla;
+                                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                                    byId("color-data-hex").all('text')[1].textContent = hexString;
+                                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                                    byId("color-data-hsl").all('text')[1].textContent = hslString;
+                                    icon.style.backgroundColor = hexString;
+                                    icon.style.color = colors.contrast(hexString);
                                     picker.resize(dom.body.clientWidth > 480 ? 480 : dom.body.clientWidth - 90);
                                 });
                                 box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
@@ -1227,17 +1228,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             if (button) {
                 var steps = target.closest('block').all('block > *');
                 if (button.className === "gg-chevron-left") {
-                    step = step.previousElementSibling;
-                    //step.classList.remove('display-none');
-                    if (index === 0) {}
-                    if (index === 1) {}
+                    if (index === 1) {
+                        ('/new/app/').router();
+                    }
+                    if (index === 2) {
+                        ('/new/app/:get/').router();
+                    }
                 }
                 if (button.className === "gg-chevron-right") {
+                    var title = steps[0].find('input').value;
                     if (index === 0) {
-                        var title = step.find('input').value;
                         if (title.length > 0) {
-                            //$(steps).addClass('display-none');
-                            //step.nextElementSibling.classList.remove('display-none');
                             ('/new/app/' + title + '/').router();
                         } else {
                             modal.alert({
@@ -1247,7 +1248,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             });
                         }
                     }
-                    if (index === 1) {}
+                    if (index === 1) {
+                        var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
+                        var href = '/new/app/' + title + '/' + color + '/';
+                        href.router();
+                    }
                 }
             }
         }
