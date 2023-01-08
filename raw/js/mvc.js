@@ -1214,14 +1214,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         app: async(event)=>{
             event.preventDefault();
             const form = event.target;
-            const steps = form.all('block');
-            const name = steps[0].find('[type="text"]').value;
-            const color = window.picker.color.hexString;
-            //const logo = steps[1].find('type="text"');
-            const category = steps[2].find('box.color-ff3b30 text').textContent;
-            alert("webmanifest: " + name + " : " + color + " : " + category);
+            const steps = form.all('block > column');
+            const title = steps[0].find('[type="text"]').value;
+            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
+            const about = steps[2].find('textarea').value;
+            alert("webmanifest: " + title + " : " + color + " : " + about);
+            
             const user = await github.user.get();
-
             var owner = user.login;
             var repo = GET[1];
             var path = "/site.webmanifest";
