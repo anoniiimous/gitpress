@@ -422,12 +422,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             //byId("color-data-hsl").all('text')[1].textContent = hslString;
 
                             if (get.length > 4) {
+                                var textarea = vp.all('block > *')[2].find('textarea');
                                 if (get.length === 5) {
-                                    var html = await ajax('raw/html/template/template.confirm.new.app.html');
-                                    modal.confirm({
-                                        body: "Are you sure you want to create this project?",
-                                        title: "Confirm Setup"
-                                    }, ["Cancel", "Create"]);
+                                    textarea.value = atob(get[4]);
                                 }
                             }
                         } else {
@@ -1219,7 +1216,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
             const about = steps[2].find('textarea').value;
             alert("webmanifest: " + title + " : " + color + " : " + about);
-            
+
             const user = await github.user.get();
             var owner = user.login;
             var repo = GET[1];
@@ -1282,6 +1279,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     if (index === 1) {
                         var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
                         var href = '/new/app/' + title + '/' + color + '/';
+                        var about = steps[2].find('textarea').value;
+                        if (about) {
+                            href = href + btoa(about) + "/";
+                        }
                         href.router();
                     }
                     if (index === 2) {
@@ -1299,7 +1300,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 body: "A description is required in order to proceed.",
                                 submit: "Go back",
                                 title: "Step Three"
-                            });                                    
+                            });
                         }
                     }
                 }

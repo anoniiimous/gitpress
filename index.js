@@ -30,10 +30,9 @@ window.onload = ()=>{
 
 window.onpopstate = (event)=>{
     if (event.state) {
+        console.log(event.state);
         var state = is.local(window.location.protocol) ? event.state.replace(/^#+/, '') : event.state;
-        state.router({
-            pop: true
-        });
+        event.state.length > 0 ? event.state.router() : null;
     } else {
         if (document.location) {//console.log({place});
         }

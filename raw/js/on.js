@@ -541,6 +541,7 @@ window.on.key.up.auto = {
         target.style.height = (target.scrollHeight) + "px";
     }
 };
+
 window.on.key.up.card = {
     holder: event=>{
         const target = event.target;
@@ -569,6 +570,13 @@ window.on.key.up.card = {
     }
 };
 window.on.key.up.setup = {
+    about: (target) => {
+        on.key.up.auto.size(target);
+        var path = rout.ed.dir(location.pathname);
+        path[4] = btoa(target.value);
+        var href = rout.ed.url(path);
+        history.replaceState({}, 'Title', href);
+    },
     app: event=>{
         var target = event.target;
         var keyCode = event.keyCode;
