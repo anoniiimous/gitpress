@@ -1211,13 +1211,45 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     setup: {
 
-        category: (target)=>{
-            const box = target.closest('box');
-            if (box) {
-                $(box.parentNode.all('box')).removeClass('color-ff3b30');
-                box.classList.add('color-ff3b30');
-                box.closest('block').find('footer [data-complete]').dataset.complete = true;
+        app: async(event)=>{
+            event.preventDefault();
+            const form = event.target;
+            const steps = form.all('block');
+            const name = steps[0].find('[type="text"]').value;
+            const color = window.picker.color.hexString;
+            //const logo = steps[1].find('type="text"');
+            const category = steps[2].find('box.color-ff3b30 text').textContent;
+            alert("webmanifest: " + name + " : " + color + " : " + category);
+            const user = await github.user.get();
+
+            var owner = user.login;
+            var repo = GET[1];
+            var path = "/site.webmanifest";
+            var params = {
+                owner,
+                repo,
+                path
             }
+            var raw = JSON.stringify({
+                name,
+                "theme_color": color
+            }, null, 2);
+            var content = btoa(raw);
+            var message = "Create Webmanifest";
+            const data = JSON.stringify({
+                content,
+                message
+            });
+            const dataType = "PUT";
+            const settings = {
+                data,
+                dataType
+            };
+            console.log({
+                params,
+                settings
+            });
+            //github.repos.contents(params, settings).then((window.location.pathname + window.location.hash).router())
         }
         ,
 
@@ -1252,6 +1284,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
                         var href = '/new/app/' + title + '/' + color + '/';
                         href.router();
+                    }
+                    if (index === 2) {
+                        var about = steps[2].find('textarea').value;
+                        if (about.length > 0) {
+                            var confirm = await modal.confirm({
+                                body: "Are you sure you want to create this project?",
+                                title: "Confirm Setup"
+                            }, ["Cancel", "Continue"]);
+                            if (confirm) {
+                                target.closest('form').find('[type="submit"]').click();
+                            }
+                        } else {
+                            modal.alert({
+                                body: "A description is required in order to proceed.",
+                                submit: "Go back",
+                                title: "Step Three"
+                            });                                    
+                        }
                     }
                 }
             }

@@ -1,4 +1,4 @@
-<form class="background-color-fff display-block height-100pct overflow-x-hidden width-100pct" data-evt="steps" onsubmit="on.submit.dashboard.webmanifest(event)">
+<form class="background-color-fff display-block height-100pct overflow-x-hidden width-100pct" onsubmit="on.submit.dashboard.webmanifest(event)">
     <header class="position-fixed top-0 width-100pct z-index-5">
         <section>
             <card class="margin-auto max-width-480px width-100pct">
@@ -38,7 +38,7 @@
                         <picture class="margin-20px width-240px">
                             <img class="width-100pct" src="raw/svg/setup-name.svg">
                         </picture>
-                        <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <box class="border-1px-solid border-color-bbb border-radius-10px height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
                             <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
                             <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
                                 <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
@@ -145,39 +145,17 @@
         <column class="display-none">
             <card>
                 <header class="padding-20px text-align-center">
-                    <section>
-                        <text class="font-weight-bolder">Let us know about your project.</text>
-                    </section>
+                    <box>
+                        <section>
+                            <text class="font-weight-bolder">Let us know about your project.</text>
+                        </section>
+                    </box>
                 </header>
-                <section class="app-name" data-before="Brand Name">
-                    <picture class="margin-20px width-240px">
-                        <img class="width-100pct" src="raw/svg/setup-name.svg">
-                    </picture>
-                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <!--<text class="flex-grow-1 padding-x-20px">No template</text>-->
-                            <row class="height-100pct width-100pct">
-                                <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" placeholder="No template" type="text">
-                            </row>
-                            <ico>
-                                <n class="gg-chevron-down"></n>
-                            </ico>
-                        </row>
-                    </box>
-                    <box class="padding-y-20px text-align-center">
-                        <section>
-                            <text>or</text>
-                        </section>
-                    </box>
-                    <box class="color-0096c7 padding-y-20px text-align-center" data-href="/design/">
-                        <section>
-                            <text>Browse Designs</text>
-                        </section>
-                    </box>
-                    <box class="border-1px-solid border-color-bbb border-radius-10px display-none height-50px line-height-50px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
-                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                <section>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px margin-bottom-20px margin-top-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Description</text>
+                        <row class="width-100pct">
+                            <textarea class="line-height-20px min-height-85px padding-20px width-100pct" onkeyup="on.key.up.auto.size(event.target)" placeholder="Write a detailed description." type="text"></textarea>
                         </row>
                     </box>
                 </section>

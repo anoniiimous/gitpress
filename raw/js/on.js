@@ -535,6 +535,12 @@ window.on.key.down.setup = {
 }
 
 window.on.key.up = {};
+window.on.key.up.auto = {
+    size: (target)=>{
+        target.style.height = 0;
+        target.style.height = (target.scrollHeight) + "px";
+    }
+};
 window.on.key.up.card = {
     holder: event=>{
         const target = event.target;
@@ -896,14 +902,13 @@ window.on["submit"] = {
         webmanifest: async(event)=>{
             event.preventDefault();
             const form = event.target;
-            const steps = form.all('block');
-            const name = steps[0].find('[type="text"]').value;
-            const color = window.picker.color.hexString;
-            //const logo = steps[1].find('type="text"');
-            const category = steps[2].find('box.color-ff3b30 text').textContent;
-            alert("webmanifest: " + name + " : " + color + " : " + category);
+            const steps = form.all('block > column');
+            const title = steps[0].find('[type="text"]').value;
+            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
+            const about = steps[2].find('textarea').textContent;
+            alert("webmanifest: " + title + " : " + color + " : " + about);
+            
             const user = await github.user.get();
-
             var owner = user.login;
             var repo = GET[1];
             var path = "/site.webmanifest";
@@ -931,10 +936,7 @@ window.on["submit"] = {
                 params,
                 settings
             });
-            github.repos.contents(params, settings).then(async(data)=>{
-                (window.location.pathname + window.location.hash).router();
-            }
-            )
+            github.repos.contents(params, settings).then((window.location.pathname + window.location.hash).router())
         }
     },
     my: {
