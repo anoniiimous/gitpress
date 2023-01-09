@@ -253,7 +253,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         repo: get[1]
                     };
                     var settings = {};
-                    1<0 ? github.repos.contents(params, settings).then(async(data)=>{
+                    1 < 0 ? github.repos.contents(params, settings).then(async(data)=>{
                         const content = data.content;
                         const raw = atob(content);
                         const json = JSON.parse(raw);
@@ -1239,18 +1239,33 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     params,
                     settings
                 });
+                var html = await ajax("raw/html/template/template.box.loader.html");
+                steps[0].find('card').firstElementChild.innerHTML = html;
                 var s = async(data)=>{
-                    var name = data.name;
-                    console.log('repos.generate ' + name, {
-                        data
-                    });
-                    var href = "/dashboard/" + data.name + "/";
-                    href.router();
+                    steps[0].find('card').firstElementChild.innerHTML = "";
                     //const html = byId('template-setup-complete').content.firstElementChild;
                     //html.all('box')[3].dataset.href = "/dashboard/" + shortname;
                     //modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                    var confirm = await modal.confirm({
+                        body: "Do you want to create a logo or skip this wizard?",
+                        title: "App Created"
+                    }, ["Skip", "Continue"]);
+                    if (confirm) {
+                        var href = "/new/app/" + data.name + "/";
+                        href.router();
+                    } else {
+                        var name = data.name;
+                        console.log('repos.generate ' + name, {
+                            data
+                        });
+                        var href = "/dashboard/" + data.name + "/";
+                        href.router();
+                    }
                 }
-                1 > 0 ? github.repos.generate(params, settings).then(s) : null;
+                var ss = ()=>{
+                    steps[0].find('card').firstElementChild.innerHTML = "";
+                }
+                1 > 0 ? github.repos.generate(params, settings).then(s).catch(ss) : null;
             }
         }
         ,
@@ -1314,7 +1329,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var title = steps[0].find('input').value;
                     if (index === 0) {
                         if (title.length > 0) {
-                            ('/new/app/' + title + '/').router();
+                            //('/new/app/' + title + '/').router();
+                            var confirm = 1 < 0 ? await modal.confirm({
+                                body: "Are you sure you want to create this project?",
+                                title: "Confirm Setup"
+                            }, ["Cancel", "Continue"]) : null;
+                            if (1 > 0) {
+                                target.closest('form').find('[type="submit"]').click();
+                            }
                         } else {
                             modal.alert({
                                 body: "You must supply a name.",

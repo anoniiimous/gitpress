@@ -562,6 +562,10 @@
         height: 20px;
     }
 
+    .height-120px, [data-height="120px"] {
+        height: 120px;
+    }
+
     .height-250px, [data-height="250px"] {
         height: 250px;
     }
@@ -1183,6 +1187,10 @@
 
     .width-20px, [data-width="20px"] {
         width: 20px;
+    }
+
+    .width-120px, [data-width="120px"] {
+        width: 120px;
     }
 
     [data-width="calc(100% - 320px)"] {

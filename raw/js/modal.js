@@ -148,6 +148,8 @@ window.modal = {
             var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
             html.find('[placeholder="Title"]').textContent = h.title;
             html.find('[placeholder="Body"]').textContent = h.body;
+            html.find('[placeholder="No"]').textContent = opt[0];
+            html.find('[placeholder="Yes"]').textContent = opt[1];
             ppp.innerHTML = html.outerHTML;
             ppp.onclick = event=>{
                 var io = false;
