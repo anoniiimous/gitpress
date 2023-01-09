@@ -253,7 +253,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         repo: get[1]
                     };
                     var settings = {};
-                    github.repos.contents(params, settings).then(async(data)=>{
+                    1<0 ? github.repos.contents(params, settings).then(async(data)=>{
                         const content = data.content;
                         const raw = atob(content);
                         const json = JSON.parse(raw);
@@ -265,12 +265,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         });
                         if (error.code === 404) {
                             //alert("Setup Project");
-                            const html = await ajax('/raw/html/page/page.setup.html');
+                            const html = await ajax('/raw/html/template/template.webmanifest.html');
                             modal.page(html);
                             resolve(route);
                         }
                     }
-                    );
+                    ) : null;
                 } else {
                     if (auth.user()) {
                         const settings = {};
@@ -1209,6 +1209,53 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     setup: {
 
         app: async(event)=>{
+
+            event.preventDefault();
+            const form = event.target;
+            const steps = form.all('block > column');
+            const title = steps[0].find('[type="text"]').value;
+            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
+            const about = steps[2].find('textarea').value;
+            //alert("webmanifest: " + title + " : " + color + " : " + about);
+
+            if (title) {
+                const user = await github.user.get();
+                var data = JSON.stringify({
+                    description: about,
+                    name: title,
+                    owner: user.login,
+                    private: true
+                });
+                const dataType = "POST";
+                const params = {
+                    "template_owner": "dompad",
+                    "template_repo": "app.cms.www"
+                };
+                const settings = {
+                    data,
+                    dataType
+                };
+                console.log("controller.setup.app", {
+                    params,
+                    settings
+                });
+                var s = async(data)=>{
+                    var name = data.name;
+                    console.log('repos.generate ' + name, {
+                        data
+                    });
+                    var href = "/dashboard/" + data.name + "/";
+                    href.router();
+                    //const html = byId('template-setup-complete').content.firstElementChild;
+                    //html.all('box')[3].dataset.href = "/dashboard/" + shortname;
+                    //modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                }
+                1 > 0 ? github.repos.generate(params, settings).then(s) : null;
+            }
+        }
+        ,
+
+        webmanifest: async(event)=>{
             event.preventDefault();
             const form = event.target;
             const steps = form.all('block > column');
@@ -1219,7 +1266,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             const user = await github.user.get();
             var owner = user.login;
-            var repo = GET[1];
+            var repo = title;
             var path = "/site.webmanifest";
             var params = {
                 owner,

@@ -137,9 +137,9 @@ async function init() {
             var user = result.user;
             localStorage.setItem('githubAccessToken', token);
         }
-        console.log(345, {
+        1<0 ? console.log(345, {
             result
-        });
+        }) : null;
     }
     ).catch((error)=>{
         var errorCode = error.code;

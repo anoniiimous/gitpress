@@ -476,13 +476,13 @@ window.github = {
             }
         }
         ,
-        generate: (settings)=>{
+        generate: (params, settings)=>{
             if (settings.dataType) {
                 if (settings.dataType === "POST") {
                     return new Promise((resolve,reject)=>{
-                        const owner = "anoniiimous";
-                        const repo = "app.cms.www";
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/generate";
+                        const template_owner = params["template_owner"];
+                        const template_repo = params["template_repo"];
+                        const url = github.endpoint + "/repos/" + template_owner + "/" + template_repo + "/generate";
                         const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{

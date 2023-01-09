@@ -62,12 +62,12 @@ String.prototype.router = async function(params) {
 
                 const hash = window.hub ? "/#" : "";
                 const link = hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
-                console.log(66, {
+                1<0 ? console.log(66, {
                     hub,
                     hash,
                     link,
                     route
-                });
+                }): null;
                 document.body.dataset.path = route.path;
                 history.pushState(link, '', link);
             }

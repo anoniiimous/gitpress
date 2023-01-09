@@ -573,7 +573,9 @@ window.on.key.up.setup = {
     about: (target) => {
         on.key.up.auto.size(target);
         var path = rout.ed.dir(location.pathname);
-        path[4] = btoa(target.value);
+        if(target.value) {
+            path[4] = btoa(target.value);
+        }
         var href = rout.ed.url(path);
         history.replaceState({}, 'Title', href);
     },
