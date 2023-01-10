@@ -566,6 +566,10 @@
         height: 120px;
     }
 
+    .height-240px, [data-height="240px"] {
+        height: 240px;
+    }
+
     .height-250px, [data-height="250px"] {
         height: 250px;
     }
@@ -580,6 +584,10 @@
 
     .height-50px, [data-height="50px"] {
         height: 50px;
+    }
+
+    .height-70px, [data-height="70px"] {
+        height: 70px;
     }
 
     .height-120px {
@@ -1205,6 +1213,10 @@
         width: 120px;
     }
 
+    .width-240px, [data-width="240px"] {
+        width: 120px;
+    }
+
     [data-width="calc(100% - 320px)"] {
         width: calc(100% - 320px);
     }
@@ -1271,6 +1283,10 @@
 
     .width-50px, [data-width="50px"] {
         width: 50px;
+    }
+
+    .width-70px, [data-width="70px"] {
+        width: 70px;
     }
 
     .width-100px, [data-width="100px"] {
