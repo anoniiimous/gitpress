@@ -1082,6 +1082,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    new: {
+        app: async(target)=>{
+            var form = target.closest('form');
+            var title = form.find('input').value;
+            if (title.length > 0) {
+                form.find('[type="submit"]').click();
+            } else {
+                modal.alert({
+                    body: "A name is required to continue.",
+                    submit: "Go back",
+                    title: "Domain"
+                });
+            }
+        }
+    },
+
     posts: {
 
         delete: async(target)=>{
