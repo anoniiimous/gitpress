@@ -473,6 +473,13 @@
     }
 }
 
+/*FONT FAMiLY*/
+@media screen {
+    .font-family-courier {
+        font-family: Courier;
+    }
+}
+
 /*FONT SIZE*/
 @media screen {
     .font-size-12px {

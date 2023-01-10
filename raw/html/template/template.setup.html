@@ -76,16 +76,28 @@
         </column>
         <column class="display-none">
             <card class="max-width-100pctt width-480pxx" data-evt="color" id="color-picker">
-                <header class="padding-20px text-align-center">
-                    <section>
-                        <text class="font-weight-bolder">Build an image for your brand.</text>
-                    </section>
+                <header>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-24px font-weight-bolder">Step Two</text>
+                            <text class="font-size-16px">Build an image for your brand.</text>
+                        </column>
+                    </box>
                 </header>
+                <section class="display-none">
+                    <box class="padding-top-50px">
+                        <section>
+                            <picture class="margin-auto width-240px">
+                                <img class="width-100pct" src="raw/png/astronaut-drawing.png">
+                            </picture>
+                        </section>
+                    </box>
+                </section>
                 <section class="display-none margin-y-20px">
                     <box class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
                         <column>
                             <picture></picture>
-                            <n placeholder="?"></n>
+                            <n class="empty-state font-family-courier" placeholder="?"></n>
                         </column>
                     </box>
                     <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
@@ -94,7 +106,7 @@
                 </section>
                 <section class="margin-y-20px">
                     <box class="border-radius-20px padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-width="100%" id="new-app-icon">
-                        <n class="align-items-center display-flex font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>
+                        <n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>
                     </box>
                 </section>
                 <section class="display-none">
@@ -150,14 +162,22 @@
         </column>
         <column class="display-none">
             <card>
-                <header class="padding-20px text-align-center">
-                    <box>
-                        <section>
-                            <text class="font-weight-bolder">Let us know about your project.</text>
-                        </section>
+                <header>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-24px font-weight-bolder">Step Three</text>
+                            <text class="font-size-18px">Let us know about your project.</text>
+                        </column>
                     </box>
                 </header>
                 <section>
+                    <box class="padding-top-50px">
+                        <section>
+                            <picture class="margin-auto width-240px">
+                                <img class="width-100pct" src="raw/png/astronaut-writing.png">
+                            </picture>
+                        </section>
+                    </box>
                     <box class="border-1px-solid border-color-bbb border-radius-10px margin-bottom-20px margin-top-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
                         <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Description</text>
                         <row class="width-100pct">

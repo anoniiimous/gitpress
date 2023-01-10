@@ -1331,31 +1331,38 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         step: async(target)=>{
+            var form = target.closest('form');
             var step = target.closest('block > *');
             var index = step.index();
             var button = target.closest('box').find('n');
             if (button) {
                 var steps = target.closest('block').all('block > *');
+                $(form.all('block > *')).addClass('display-none');
+                $(form.all('form > header box flex')).attr("data-height", "30px");
+                $(form.all('form > header box flex')).attr("data-width", "30px");
                 if (button.className === "gg-chevron-left") {
                     if (index === 1) {
-                        ('/new/app/').router();
+                        $(form.all('form > header box flex')[0]).attr("data-height", "50px");
+                        $(form.all('form > header box flex')[0]).attr("data-width", "50px");
+                        $(form.all('block > *')[0]).removeClass('display-none');
                     }
                     if (index === 2) {
-                        ('/new/app/:get/').router();
+                        $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                        $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                        $(form.all('block > *')[1]).removeClass('display-none');
                     }
                 }
                 if (button.className === "gg-chevron-right") {
                     var title = steps[0].find('input').value;
                     if (index === 0) {
                         if (title.length > 0) {
-                            //('/new/app/' + title + '/').router();
-                            var confirm = 1 < 0 ? await modal.confirm({
-                                body: "Are you sure you want to create this project?",
-                                title: "Confirm Setup"
-                            }, ["Cancel", "Continue"]) : null;
-                            if (1 > 0) {
-                                target.closest('form').find('[type="submit"]').click();
-                            }
+                            $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                            $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                            $(form.all('block > *')[1]).removeClass('display-none');
+
+                            //alert("Step Two");
+                            var icon = byId('new-app-icon');
+                            icon.find('n').textContent = step.find('input').value.charAt(0);
                         } else {
                             modal.alert({
                                 body: "Provide a title for your app.",
@@ -1365,13 +1372,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         }
                     }
                     if (index === 1) {
+                        $(form.all('form > header box flex')[2]).attr("data-height", "50px");
+                        $(form.all('form > header box flex')[2]).attr("data-width", "50px");
+                        $(form.all('block > *')[2]).removeClass('display-none');
+                                
                         var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
-                        var href = '/new/app/' + title + '/' + color + '/';
-                        var about = steps[2].find('textarea').value;
-                        if (about) {
-                            href = href + btoa(about) + "/";
-                        }
-                        href.router();
                     }
                     if (index === 2) {
                         var about = steps[2].find('textarea').value;
