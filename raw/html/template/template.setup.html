@@ -94,25 +94,22 @@
                     </box>
                 </section>
                 <section class="display-none margin-y-20px">
-                    <box class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <column>
-                            <picture></picture>
-                            <n class="empty-state font-family-courier" placeholder="?"></n>
-                        </column>
+                    <box>
+                        <row class="align-items-center justify-content-center">
+                            <ico class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-favicon">
+                                <n placeholder="?"></n>
+                            </ico>
+                            <text class="margin-x-20px" placeholder="App Ttitle"></text>
+                        </row>
                     </box>
                     <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
                         <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
                     </box>
                 </section>
-                <section class="margin-y-20px">
+                <section class="display-noned margin-y-20px">
                     <box class="border-radius-20px padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-width="100%" id="new-app-icon">
                         <n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>
                     </box>
-                </section>
-                <section class="display-none">
-                    <ico class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <n placeholder="?"></n>
-                    </ico>
                     <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
                         <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
                     </box>
@@ -181,7 +178,7 @@
                     <box class="border-1px-solid border-color-bbb border-radius-10px margin-bottom-20px margin-top-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
                         <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Description</text>
                         <row class="width-100pct">
-                            <textarea class="line-height-20px min-height-85px padding-20px width-100pct" onkeyup="on.key.up.setup.about(event.target);" placeholder="Write a detailed description." type="text"></textarea>
+                            <textarea class="line-height-20px min-height-85px padding-20px width-100pct" placeholder="Write a detailed description." type="text"></textarea>
                         </row>
                     </box>
                 </section>

@@ -1363,6 +1363,72 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             //alert("Step Two");
                             var icon = byId('new-app-icon');
                             icon.find('n').textContent = step.find('input').value.charAt(0);
+
+                        var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
+
+                        var sel = "iro-setup-about-brand";
+                        var el = byId(sel);
+                        if (el.innerHTML === "") { 
+                            var width = el.clientWidth - 51;
+                            var box = 1 < 0;
+                            window.picker = new iro.ColorPicker("#" + sel,{
+                                color: byId("color-data-hex").all('text')[1].textContent,
+                                layout: [{
+                                    component: iro.ui.Slider,
+                                    options: {
+                                        sliderType: 'hue'
+                                    }
+                                }, {
+                                    component: iro.ui.Slider,
+                                    options: {
+                                        sliderType: 'saturation'
+                                    }
+                                }, {
+                                    component: iro.ui.Slider,
+                                    options: {
+                                        sliderType: 'value'
+                                    }
+                                }],
+                                layoutDirection: "vertical",
+                                margin: 20,
+                                sliderSize: 30
+                            });
+                            picker.on("color:change", function(color) {
+                                var icon = byId('new-app-icon');
+                                var favicon = byId('new-app-favicon');
+                                var hexString = color.hexString;
+                                var rgb = color.rgba;
+                                var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                                var hsl = color.hsla;
+                                var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                                byId("color-data-hex").all('text')[1].textContent = hexString;
+                                byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                                byId("color-data-hsl").all('text')[1].textContent = hslString;
+                                icon.style.backgroundColor = hexString;
+                                icon.style.color = colors.contrast(hexString);
+                                favicon.style.backgroundColor = hexString;
+                                favicon.style.color = colors.contrast(hexString);
+                                //icon.dataset.contrast = icon.style.color;
+                            });
+                            picker.on("mount", function(e) {
+                                console.log(e);
+                                var color = e.color;
+                                var icon = byId('new-app-icon');
+                                var hexString = color.hexString;
+                                var rgb = color.rgba;
+                                var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                                var hsl = color.hsla;
+                                var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                                byId("color-data-hex").all('text')[1].textContent = hexString;
+                                byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                                byId("color-data-hsl").all('text')[1].textContent = hslString;
+                                icon.style.backgroundColor = hexString;
+                                icon.style.color = colors.contrast(hexString);
+                                picker.resize(dom.body.clientWidth > 480 ? 480 : dom.body.clientWidth - 90);
+                            });
+                            box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
+                            //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
+                        }
                         } else {
                             modal.alert({
                                 body: "Provide a title for your app.",
@@ -1375,8 +1441,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         $(form.all('form > header box flex')[2]).attr("data-height", "50px");
                         $(form.all('form > header box flex')[2]).attr("data-width", "50px");
                         $(form.all('block > *')[2]).removeClass('display-none');
-                                
-                        var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
                     }
                     if (index === 2) {
                         var about = steps[2].find('textarea').value;
