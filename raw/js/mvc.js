@@ -1092,7 +1092,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 modal.alert({
                     body: "A name is required to continue.",
                     submit: "Go back",
-                    title: "Domain"
+                    title: "New App"
                 });
             }
         }
@@ -1358,9 +1358,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             }
                         } else {
                             modal.alert({
-                                body: "A name is required to continue.",
+                                body: "Provide a title for your app.",
                                 submit: "Go back",
-                                title: "Domain"
+                                title: "Step One"
                             });
                         }
                     }
