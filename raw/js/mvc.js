@@ -253,7 +253,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         repo: get[1]
                     };
                     var settings = {};
-                    1 < 0 ? github.repos.contents(params, settings).then(async(data)=>{
+                    github.repos.contents(params, settings).then(async(data)=>{
                         const content = data.content;
                         const raw = atob(content);
                         const json = JSON.parse(raw);
@@ -265,12 +265,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         });
                         if (error.code === 404) {
                             //alert("Setup Project");
-                            const html = await ajax('/raw/html/template/template.webmanifest.html');
+                            const html = await ajax('/raw/html/template/template.setup.html');
                             modal.page(html);
                             resolve(route);
                         }
                     }
-                    ) : null;
+                    );
                 } else {
                     if (auth.user()) {
                         const settings = {};
@@ -394,6 +394,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 resolve(route)
             } else if (root === "new") {
                 if (get[1] === "app") {
+                    var vp = dom.body.find('[data-pages="/new/app/"]');
+                    var form = vp.find('form');
+
+                    form.find('input').value = "";
+
+                    resolve(route)
+                }
+                if (1 === 0 && get[1] === "app") {
 
                     var vp = dom.body.find('[data-pages="/new/app/"]');
                     var form = vp.find('form');
@@ -501,8 +509,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
                         $(vp.all('block > *')[0]).removeClass('display-none');
                     }
+                    resolve(route)
                 }
-                resolve(route)
             } else {
                 resolve(route);
             }
@@ -1214,14 +1222,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const form = event.target;
             const steps = form.all('block > column');
             const title = steps[0].find('[type="text"]').value;
-            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
-            const about = steps[2].find('textarea').value;
+            //const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
+            //const about = steps[2].find('textarea').value;
             //alert("webmanifest: " + title + " : " + color + " : " + about);
 
             if (title) {
                 const user = await github.user.get();
                 var data = JSON.stringify({
-                    description: about,
+                    //description: about,
                     name: title,
                     owner: user.login,
                     private: true
@@ -1246,10 +1254,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //const html = byId('template-setup-complete').content.firstElementChild;
                     //html.all('box')[3].dataset.href = "/dashboard/" + shortname;
                     //modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
-                    var confirm = await modal.confirm({
+                    var confirm = 1 < 0 ? await modal.confirm({
                         body: "Do you want to create a logo or skip this wizard?",
                         title: "App Created"
-                    }, ["Skip", "Continue"]);
+                    }, ["Skip", "Continue"]) : null;
                     if (confirm) {
                         var href = "/new/app/" + data.name + "/";
                         href.router();

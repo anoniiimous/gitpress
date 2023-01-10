@@ -10,18 +10,18 @@ String.prototype.router = async function(params) {
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
+    console.log({pages,page,vp});
 
     if (pages) {
         if (pages.innerHTML === "" && pages.dataset.fetch) {
-            pages.innerHTML = await ajax(pages.dataset.fetch);
+            //pages.innerHTML = await ajax(pages.dataset.fetch);
         }
     }
 
     if (vp) {
-        var goto = window.global.domains.subdomain === "uios" ? '/' + document.head.querySelector('[name="application-shortname"]').content : '';
         if (vp.innerHTML === "" && vp.dataset.fetch) {
             vp.innerHTML = await ajax(vp.dataset.fetch);
-            const fetching2 = vp.all('[data-fetch]');
+            const fetching2 = vp.all('[data-fetch]'); console.log({fetching2});
             if (fetching2.length > 0) {
                 var ff = 0;
                 do {
