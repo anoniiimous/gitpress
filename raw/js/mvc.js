@@ -398,8 +398,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var form = vp.find('form');
 
                     form.find('input').value = "";
-
-                    resolve(route)
                 }
                 if (1 === 0 && get[1] === "app") {
 
@@ -509,8 +507,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
                         $(vp.all('block > *')[0]).removeClass('display-none');
                     }
-                    resolve(route)
                 }
+                resolve(route)
             } else {
                 resolve(route);
             }
@@ -1247,13 +1245,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     params,
                     settings
                 });
-                var html = await ajax("raw/html/template/template.box.loader.html");
-                steps[0].find('card').firstElementChild.innerHTML = html;
+                var html = await ajax("raw/html/template/template.loader.new.app.html");
+                steps[0].find('card').innerHTML = html;
                 var s = async(data)=>{
-                    steps[0].find('card').firstElementChild.innerHTML = "";
-                    //const html = byId('template-setup-complete').content.firstElementChild;
-                    //html.all('box')[3].dataset.href = "/dashboard/" + shortname;
-                    //modal.page(html.outerHTML, null, 'backdrop-filter-blur-10px position-fixed width-100pct');
+                    steps[0].find('card').innerHTML = "";
                     var confirm = 1 < 0 ? await modal.confirm({
                         body: "Do you want to create a logo or skip this wizard?",
                         title: "App Created"
@@ -1271,7 +1266,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
                 var ss = ()=>{
-                    steps[0].find('card').firstElementChild.innerHTML = "";
+                    steps[0].find('card').innerHTML = "";
                 }
                 1 > 0 ? github.repos.generate(params, settings).then(s).catch(ss) : null;
             }
@@ -1347,9 +1342,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             }
                         } else {
                             modal.alert({
-                                body: "You must supply a name.",
+                                body: "A name is required to continue.",
                                 submit: "Go back",
-                                title: "Step One"
+                                title: "Domain"
                             });
                         }
                     }
