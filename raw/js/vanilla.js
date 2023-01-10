@@ -444,6 +444,10 @@ window.colors = {
         if (hsp>127.5) { return 'black'; } 
         else { return 'white'; }
 
+    },
+
+    random: () => {
+        return Math.floor(Math.random()*16777215).toString(16);
     }
 
 }
