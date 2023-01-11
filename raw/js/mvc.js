@@ -1337,16 +1337,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var button = target.closest('box').find('n');
             if (button) {
                 var steps = target.closest('block').all('block > *');
-                $(form.all('block > *')).addClass('display-none');
-                $(form.all('form > header box flex')).attr("data-height", "30px");
-                $(form.all('form > header box flex')).attr("data-width", "30px");
                 if (button.className === "gg-chevron-left") {
                     if (index === 1) {
+                        $(form.all('block > *')).addClass('display-none');
+                        $(form.all('form > header box flex')).attr("data-height", "30px");
+                        $(form.all('form > header box flex')).attr("data-width", "30px");
                         $(form.all('form > header box flex')[0]).attr("data-height", "50px");
                         $(form.all('form > header box flex')[0]).attr("data-width", "50px");
                         $(form.all('block > *')[0]).removeClass('display-none');
                     }
                     if (index === 2) {
+                        $(form.all('block > *')).addClass('display-none');
+                        $(form.all('form > header box flex')).attr("data-height", "30px");
+                        $(form.all('form > header box flex')).attr("data-width", "30px");
                         $(form.all('form > header box flex')[1]).attr("data-height", "50px");
                         $(form.all('form > header box flex')[1]).attr("data-width", "50px");
                         $(form.all('block > *')[1]).removeClass('display-none');
@@ -1356,79 +1359,97 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var title = steps[0].find('input').value;
                     if (index === 0) {
                         if (title.length > 0) {
-                            $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                            $(form.all('form > header box flex')[1]).attr("data-width", "50px");
-                            $(form.all('block > *')[1]).removeClass('display-none');
-
                             //alert("Step Two");
-                            var icon = byId('new-app-icon');
-                            icon.find('n').textContent = step.find('input').value.charAt(0);
+                            var user = await github.user.get();
+                            const webmanifest = github.repos.contents({
+                                owner: user.login,
+                                repo: GET[1],
+                                path: "index.html"
+                            }, {}).then(data=>{
+                                var content = atob(data.content);
+                                console.log(807, {
+                                    content,
+                                    data
+                                });
+                            }
+                            );
+                            function next() {
+                                $(form.all('block > *')).addClass('display-none');
+                                $(form.all('form > header box flex')).attr("data-height", "30px");
+                                $(form.all('form > header box flex')).attr("data-width", "30px");
+                                $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                                $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                $(form.all('block > *')[1]).removeClass('display-none');
 
-                        var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
+                                var icon = byId('new-app-icon');
+                                icon.find('n').textContent = step.find('input').value.charAt(0);
 
-                        var sel = "iro-setup-about-brand";
-                        var el = byId(sel);
-                        if (el.innerHTML === "") { 
-                            var width = el.clientWidth - 51;
-                            var box = 1 < 0;
-                            window.picker = new iro.ColorPicker("#" + sel,{
-                                color: byId("color-data-hex").all('text')[1].textContent,
-                                layout: [{
-                                    component: iro.ui.Slider,
-                                    options: {
-                                        sliderType: 'hue'
-                                    }
-                                }, {
-                                    component: iro.ui.Slider,
-                                    options: {
-                                        sliderType: 'saturation'
-                                    }
-                                }, {
-                                    component: iro.ui.Slider,
-                                    options: {
-                                        sliderType: 'value'
-                                    }
-                                }],
-                                layoutDirection: "vertical",
-                                margin: 20,
-                                sliderSize: 30
-                            });
-                            picker.on("color:change", function(color) {
-                                var icon = byId('new-app-icon');
-                                var favicon = byId('new-app-favicon');
-                                var hexString = color.hexString;
-                                var rgb = color.rgba;
-                                var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
-                                var hsl = color.hsla;
-                                var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                                byId("color-data-hex").all('text')[1].textContent = hexString;
-                                byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                                byId("color-data-hsl").all('text')[1].textContent = hslString;
-                                icon.style.backgroundColor = hexString;
-                                icon.style.color = colors.contrast(hexString);
-                                favicon.style.backgroundColor = hexString;
-                                favicon.style.color = colors.contrast(hexString);
-                                //icon.dataset.contrast = icon.style.color;
-                            });
-                            picker.on("mount", function(e) {
-                                console.log(e);
-                                var color = e.color;
-                                var icon = byId('new-app-icon');
-                                var hexString = color.hexString;
-                                var rgb = color.rgba;
-                                var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
-                                var hsl = color.hsla;
-                                var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                                byId("color-data-hex").all('text')[1].textContent = hexString;
-                                byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                                byId("color-data-hsl").all('text')[1].textContent = hslString;
-                                icon.style.backgroundColor = hexString;
-                                icon.style.color = colors.contrast(hexString);
-                                picker.resize(dom.body.clientWidth > 480 ? 480 : dom.body.clientWidth - 90);
-                            });
-                            box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
-                            //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
-                        }
+                                var color = byId('color-data-hex').all('text')[1].textContent.split('#')[1];
+
+                                var sel = "iro-setup-about-brand";
+                                var el = byId(sel);
+                                if (el.innerHTML === "") {
+                                    var width = el.clientWidth - 51;
+                                    var box = 1 < 0;
+                                    window.picker = new iro.ColorPicker("#" + sel,{
+                                        color: byId("color-data-hex").all('text')[1].textContent,
+                                        layout: [{
+                                            component: iro.ui.Slider,
+                                            options: {
+                                                sliderType: 'hue'
+                                            }
+                                        }, {
+                                            component: iro.ui.Slider,
+                                            options: {
+                                                sliderType: 'saturation'
+                                            }
+                                        }, {
+                                            component: iro.ui.Slider,
+                                            options: {
+                                                sliderType: 'value'
+                                            }
+                                        }],
+                                        layoutDirection: "vertical",
+                                        margin: 20,
+                                        sliderSize: 30
+                                    });
+                                    picker.on("color:change", function(color) {
+                                        var icon = byId('new-app-icon');
+                                        var favicon = byId('new-app-favicon');
+                                        var hexString = color.hexString;
+                                        var rgb = color.rgba;
+                                        var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                                        var hsl = color.hsla;
+                                        var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                                        byId("color-data-hex").all('text')[1].textContent = hexString;
+                                        byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                                        byId("color-data-hsl").all('text')[1].textContent = hslString;
+                                        icon.style.backgroundColor = hexString;
+                                        icon.style.color = colors.contrast(hexString);
+                                        favicon.style.backgroundColor = hexString;
+                                        favicon.style.color = colors.contrast(hexString);
+                                        //icon.dataset.contrast = icon.style.color;
+                                    });
+                                    picker.on("mount", function(e) {
+                                        console.log(e);
+                                        var color = e.color;
+                                        var icon = byId('new-app-icon');
+                                        var hexString = color.hexString;
+                                        var rgb = color.rgba;
+                                        var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                                        var hsl = color.hsla;
+                                        var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                                        byId("color-data-hex").all('text')[1].textContent = hexString;
+                                        byId("color-data-rgb").all('text')[1].textContent = rgbString;
+                                        byId("color-data-hsl").all('text')[1].textContent = hslString;
+                                        icon.style.backgroundColor = hexString;
+                                        icon.style.color = colors.contrast(hexString);
+                                        picker.resize(dom.body.clientWidth > 480 ? 480 : dom.body.clientWidth - 90);
+                                    });
+                                    box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
+                                    //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
+                                }
+                            }
                         } else {
                             modal.alert({
                                 body: "Provide a title for your app.",
@@ -1450,7 +1471,40 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 title: "Confirm Setup"
                             }, ["Cancel", "Continue"]);
                             if (confirm) {
-                                target.closest('form').find('[type="submit"]').click();
+                                //target.closest('form').find('[type="submit"]').click();
+                                const user = await github.user.get();
+                                var owner = user.login;
+                                var repo = title;
+                                var path = "/index.html";
+                                var params = {
+                                    owner,
+                                    repo,
+                                    path
+                                }
+                                var raw = JSON.stringify({
+                                    name: title,
+                                }, null, 2);
+                                var content = btoa(raw);
+                                var message = "Create Webmanifest";
+                                const data = JSON.stringify({
+                                    content,
+                                    message
+                                });
+                                const dataType = "PUT";
+                                const settings = {
+                                    data,
+                                    dataType
+                                };
+                                console.log({
+                                    params,
+                                    settings
+                                });
+                                var s1 = (data)=>{
+                                    console.log("index.html", {
+                                        data
+                                    });
+                                }
+                                github.repos.contents(params, settings).then(u1)
                             }
                         } else {
                             modal.alert({

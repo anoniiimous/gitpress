@@ -1,0 +1,46 @@
+<card>
+    <header>
+        <box class="padding-20px text-align-center">
+            <column>
+                <text class="font-size-24px font-weight-bolder">Step One</text>
+                <text class="font-size-16px">Create a short and memorable title.</text>
+            </column>
+        </box>
+    </header>
+    <section>
+        <box class="padding-top-50px">
+            <section>
+                <picture class="margin-auto width-240px">
+                    <img class="width-100pct" src="raw/png/astronaut-typing.png">
+                </picture>
+            </section>
+        </box>
+        <box class="border-1px-solid border-color-bbb border-radius-10px height-50px margin-top-20px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+            <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
+            <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                <input type="submit">
+            </row>
+        </box>
+    </section>
+    <footer class="bottom-0 left-0 line-height-50px margin-auto position-fixed right-0 width-100pct">
+        <row class="justify-content-space-between">
+            <box class="padding-x-10px" data-href="/dashboard/">
+                <row>
+                    <ico data-width="25px">
+                        <n class="gg-chevron-left"></n>
+                    </ico>
+                    <text>Exit</text>
+                </row>
+            </box>
+            <box class="padding-x-10px opacity-50pct" data-tap="controller.setup.step(event.target)">
+                <row>
+                    <text>Next</text>
+                    <ico data-width="25px">
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
+        </row>
+    </footer>
+</card>
