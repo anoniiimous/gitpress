@@ -1,4 +1,4 @@
-<form class="background-color-fff display-block height-100pct overflow-x-hidden width-100pct" onsubmit="controller.setup.webmanifest(event)">
+<form class="background-color-fff display-block width-100pct" onsubmit="controller.setup.webmanifest(event)">
     <header class="position-fixed top-0 width-100pct z-index-5">
         <section>
             <card class="margin-auto max-width-480px width-100pct">
@@ -84,34 +84,19 @@
                         </column>
                     </box>
                 </header>
-                <section class="display-none">
-                    <box class="padding-top-50px">
-                        <section>
-                            <picture class="margin-auto width-240px">
-                                <img class="width-100pct" src="raw/png/astronaut-drawing.png">
-                            </picture>
-                        </section>
-                    </box>
-                </section>
-                <section class="display-none margin-y-20px">
-                    <box>
-                        <row class="align-items-center justify-content-center">
-                            <ico class="border-radius-5px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-favicon">
-                                <n placeholder="?"></n>
-                            </ico>
-                            <text class="margin-x-20px" placeholder="App Ttitle"></text>
-                        </row>
-                    </box>
-                    <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
-                        <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
-                    </box>
-                </section>
-                <section class="display-noned margin-y-20px">
-                    <box class="border-radius-20px padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-width="100%" id="new-app-icon">
+                <section class="margin-y-20px position-relative">
+                    <box class="border-radius-20px padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-icon">
+                        <picture class="align-items-center border-radius-20px display-flex justify-content-center">
+                            <img class="margin-auto object-fit-contain" src="raw/png/astronaut-drawing.png" style="width:69%;height:69%;">
+                        </picture>
                         <n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>
-                    </box>
-                    <box data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-evt="file" data-id="build-app-logo">
-                        <input type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
+                        <ico class="bottom-0 left-0 position-absolute">
+                            <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
+                            <n class="gg-software-upload"></n>
+                        </ico>
+                        <ico class="bottom-0 right-0 position-absolute">
+                            <n class="gg-software-download"></n>
+                        </ico>
                     </box>
                 </section>
                 <section class="position-relative width-100pct" id="iro-setup-about-brand"></section>

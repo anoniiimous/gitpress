@@ -10,18 +10,39 @@ String.prototype.router = async function(params) {
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
-    console.log({pages,page,vp});
+    console.log({
+        pages,
+        page,
+        vp
+    });
 
     if (pages) {
-        if (pages.innerHTML === "" && pages.dataset.fetch) {
-            //pages.innerHTML = await ajax(pages.dataset.fetch);
+        if (pages.innerHTML === "" && pages.dataset.fetch) {//pages.innerHTML = await ajax(pages.dataset.fetch);
         }
+    }
+
+    const fetching3 = dom.body.all(':not(pages)[data-fetch][data-pages="' + getRoot() + '"]');
+    console.log({
+        fetching3
+    });
+    if (fetching3.length > 0) {
+        var ff = 0;
+        do {
+                console.log(fetching3[ff].dataset.fetch);
+            if (fetching3[ff].innerHTML === "") {
+                fetching3[ff].innerHTML = await ajax(fetching3[ff].dataset.fetch);
+            }
+            ff++;
+        } while (ff< fetching3.length);
     }
 
     if (vp) {
         if (vp.innerHTML === "" && vp.dataset.fetch) {
             vp.innerHTML = await ajax(vp.dataset.fetch);
-            const fetching2 = vp.all('[data-fetch]'); console.log({fetching2});
+            const fetching2 = vp.all('[data-fetch]');
+            console.log({
+                fetching2
+            });
             if (fetching2.length > 0) {
                 var ff = 0;
                 do {
@@ -62,12 +83,12 @@ String.prototype.router = async function(params) {
 
                 const hash = window.hub ? "/#" : "";
                 const link = hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
-                1<0 ? console.log(66, {
+                1 < 0 ? console.log(66, {
                     hub,
                     hash,
                     link,
                     route
-                }): null;
+                }) : null;
                 document.body.dataset.path = route.path;
                 history.pushState(link, '', link);
             }

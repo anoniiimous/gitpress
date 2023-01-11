@@ -109,7 +109,9 @@ window.modal = {
         (className) ? ppp.setAttribute('class', className) : null;
         ppp.onclick = event=>{
             //console.log(event);
-            event.target.classList.contains('aside') ? event.target.remove() : null
+            if(event.target.classList.contains('aside')) {
+                event.target.remove()
+            }
         }
         ;
         byId('boot').insertAdjacentHTML('afterend', ppp.outerHTML);

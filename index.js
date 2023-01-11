@@ -1,7 +1,3 @@
-window.api = {
-    endpoint: "https://api-anon.herokuapp.com"
-};
-
 window.auth ? null : window.auth = {};
 auth.config = {
     apiKey: "AIzaSyBs3Q5b1yZpo1egGXfA_X9wmCNbPrFik_4",
