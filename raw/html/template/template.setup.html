@@ -85,18 +85,20 @@
                     </box>
                 </header>
                 <section class="margin-y-20px position-relative">
-                    <box class="border-radius-20px padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-icon">
-                        <picture class="align-items-center border-radius-20px display-flex justify-content-center">
-                            <img class="margin-auto object-fit-contain" src="raw/png/astronaut-drawing.png" style="width:69%;height:69%;">
+                    <box class="border-radius-15pct height-0 padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-icon">
+                        <picture class="align-items-center border-radius-15pct display-flex justify-content-center">
+                            <img class="margin-auto" src="raw/png/astronaut-drawing.png" style="width:240px;">
                         </picture>
-                        <n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>
-                        <ico class="bottom-0 left-0 position-absolute">
-                            <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
-                            <n class="gg-software-upload"></n>
-                        </ico>
-                        <ico class="bottom-0 right-0 position-absolute">
-                            <n class="gg-software-download"></n>
-                        </ico>
+                        <section>
+                            <!--<n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>-->
+                            <ico class="bottom-0 left-0 padding-20px position-absolute">
+                                <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <ico class="right-0 padding-20px position-absolute top-0" data-tap="controller.setup.ico(event.target.closest('box').firstElementChild)">
+                                <n class="gg-software-download"></n>
+                            </ico>
+                        </section>
                     </box>
                 </section>
                 <section class="position-relative width-100pct" id="iro-setup-about-brand"></section>

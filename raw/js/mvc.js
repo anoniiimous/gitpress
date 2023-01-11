@@ -1385,6 +1385,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        ico: (el)=>{
+            html2canvas(el, {
+                backgroundColor: null
+            }).then(canvas=>{
+                var link = document.createElement('a');
+                link.download = GET[1] + '.png';
+                link.href = canvas.toDataURL()
+                link.click();
+            }
+            );
+        }
+        ,
+
         iro: (color)=>{
             var icon = byId('new-app-icon');
             icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);
@@ -1394,6 +1407,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var sel = "iro-setup-about-brand";
             var el = byId(sel);
             if (el.innerHTML === "") {
+                var icon = byId('new-app-icon');
                 var width = el.clientWidth - 51;
                 var box = 1 < 0;
                 window.picker = new iro.ColorPicker("#" + sel,{
@@ -1433,12 +1447,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //icon.dataset.contrast = icon.style.color;
                 });
                 picker.on("mount", colorPicker);
-                box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
-                //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
+                window.addEventListener("resize", reSize)
                 function colorPicker(e) {
                     console.log(e);
+                    reSize();
                     var color = e.color;
-                    var icon = byId('new-app-icon');
                     var hexString = color.hexString;
                     var rgb = color.rgba;
                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
@@ -1449,7 +1462,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     byId("color-data-hsl").all('text')[1].textContent = hslString;
                     icon.find('picture').style.backgroundColor = hexString;
                     icon.style.color = colors.contrast(hexString);
-                    picker.resize(dom.body.clientWidth > 480 ? 480 : dom.body.clientWidth - 90);
+                }
+                function reSize() {
+                    var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
+                    picker.resize(size);
+                    icon.find('img').style.width = (size * 0.69) + 'px';
                 }
             }
         }
