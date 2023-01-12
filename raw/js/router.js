@@ -21,19 +21,19 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching3 = dom.body.all(':not(pages)[data-fetch][data-pages="' + getRoot() + '"]');
+    const fetching3 = dom.body.all(':not(page):not(pages) [data-fetch]:empty');
     console.log({
         fetching3
     });
     if (fetching3.length > 0) {
         var ff = 0;
         do {
-                console.log(fetching3[ff].dataset.fetch);
+            console.log(fetching3[ff].dataset.fetch);
             if (fetching3[ff].innerHTML === "") {
                 fetching3[ff].innerHTML = await ajax(fetching3[ff].dataset.fetch);
             }
             ff++;
-        } while (ff< fetching3.length);
+        } while (ff < fetching3.length);
     }
 
     if (vp) {

@@ -58,8 +58,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             if (root === "dashboard") {
                 controller.nav.close();
                 if (get.length > 1) {
-                    const title = get[1];
-                    dom.body.find('main > nav [placeholder="Project Name"]').textContent = title;
+                    dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = get[1];
                     if (get.length > 2) {
                         if (get[2] === "build") {
                             resolve(route);
