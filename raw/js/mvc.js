@@ -280,7 +280,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         owner: user.login,
                                         repo: GET[1],
                                         path: "/index.html"
-                                    }, {});
+                                    }, {
+                                        cache: "reload"
+                                    });
                                     var raw = data.content;
                                     var sha = data.sha;
                                     var content = atob(raw);
@@ -303,7 +305,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         owner: user.login,
                                         repo: GET[1],
                                         path: "/icon.png"
-                                    }, {});
+                                    }, {
+                                        cache: "reload"
+                                    });
                                     var raw = data.content;
                                     var sha = data.sha;
                                     var brand = raw ? "data:image/svg;base64," + raw : null;
@@ -323,7 +327,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         owner: user.login,
                                         repo: GET[1],
                                         path: "/site.webmanifest"
-                                    }, {});
+                                    }, {
+                                        cache: "reload"
+                                    });
                                     var raw = atob(data.content);
                                     var sha = data.sha;
                                     var json = JSON.parse(raw);
@@ -387,12 +393,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         console.log("43.error", {
                             error
                         });
-                        if (error.code === 404) {
-                            //alert("Setup Project");
-                            const html = await ajax('/raw/html/template/template.setup.html');
-                            modal.page(html);
-                            resolve(route);
-                        }
+                        //if (error.code === 404) {
+                        //alert("Setup Project");
+                        const html = await ajax('/raw/html/template/template.setup.html');
+                        var ppp = await modal.page(html);
+                        ppp.find('form').classList.remove("display-none");
+                        resolve(route);
+                        //}
                     }
                     );
                 } else {

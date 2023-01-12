@@ -526,6 +526,7 @@ window.github = {
                     reject(error);
                 }
                 const settings = {};
+                settings.cache = "reload";
                 const accessToken = localStorage.githubAccessToken;
                 accessToken ? settings.headers = {
                     Accept: "application/vnd.github+json",

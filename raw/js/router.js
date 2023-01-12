@@ -21,7 +21,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching3 = dom.body.all(':not(page):not(pages) [data-fetch]:empty');
+    const fetching3 = dom.body.all(':not(page):not(pages) [data-fetch][data-pages="'+getRoot()+'"]:empty');
     console.log({
         fetching3
     });
@@ -65,6 +65,18 @@ String.prototype.router = async function(params) {
             }
             f++;
         } while (fetching.length < 0);
+    }
+
+    const fetching4 = dom.body.all('[data-fetch]:not(page[data-page]):not(pages[data-pages])');
+    if (fetching4.length > 0) {
+        var f = 0;
+        do {
+            //console.log(fetching[f]);
+            if (fetching4[f].innerHTML === "") {
+                fetching4[f].innerHTML = await ajax(fetching4[f].dataset.fetch);
+            }
+            f++;
+        } while (fetching4.length < 0);
     }
 
     var go = async function(resolve, reject) {
