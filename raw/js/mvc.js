@@ -258,7 +258,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var content = data.content;
                             var raw = atob(content);
                             var json = JSON.parse(raw);
-                            console.log({
+                            console.log(261, {
                                 content,
                                 data,
                                 json,
@@ -266,10 +266,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             });
                             var description = json.description;
                             var icons = json.icons;
-                            var title = json.title
-                            if (description && icons && title) {
-                                alert("Setup Complete!");
-                                dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = title;
+                            var name = json.name;
+                            if (description && icons && name) {
+                                //alert("Setup Complete!");
+                                dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = name;
                             } else {
                                 const html = await ajax('/raw/html/template/template.setup.html');
                                 var ppp = await modal.page(html);
@@ -1653,48 +1653,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                     }) : null;
                                 }
                                 );
-
-                                //Update site.webmanifest
-                                1 < 0 ? github.repos.contents({
-                                    owner: user.login,
-                                    repo: GET[1],
-                                    path: "site.webmanifest"
-                                }, {}).then(async(data)=>{
-                                    var raw = data.content;
-                                    var sha = data.sha;
-                                    var content = atob(raw);
-                                    //var doc = new DOMParser().parseFromString(content, "text/html");
-                                    var json = JSON.parse(content);
-                                    console.log(807, {
-                                        content,
-                                        data,
-                                        json,
-                                        raw,
-                                        sha
-                                    });
-                                    var raw = JSON.stringify({
-                                        name: title,
-                                    }, null, 2);
-                                    console.log(1451, {
-                                        raw
-                                    });
-                                    var content = btoa(DOM.html.outerHTML);
-                                    var message = "Update index.html";
-
-                                    var upload = 1 > 0 ? await github.repos.contents({
-                                        owner: user.login,
-                                        repo: GET[1],
-                                        path: "/site.webmanifest"
-                                    }, {
-                                        data: JSON.stringify({
-                                            content,
-                                            message,
-                                            sha
-                                        }),
-                                        dataType: "PUT"
-                                    }) : null;
-                                }
-                                ) : null;
                             }
                         } else {
                             modal.alert({
@@ -1794,40 +1752,63 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 title: "Confirm Setup"
                             }, ["Cancel", "Continue"]);
                             if (confirm) {
-                                //target.closest('form').find('[type="submit"]').click();
-                                const user = await github.user.get();
-                                var owner = user.login;
-                                var repo = title;
-                                var path = "/index.html";
-                                var params = {
-                                    owner,
-                                    repo,
-                                    path
-                                }
-                                var raw = JSON.stringify({
-                                    name: title,
-                                }, null, 2);
-                                var content = btoa(raw);
-                                var message = "Create Webmanifest";
-                                const data = JSON.stringify({
-                                    content,
-                                    message
-                                });
-                                const dataType = "PUT";
-                                const settings = {
-                                    data,
-                                    dataType
-                                };
-                                console.log({
-                                    params,
-                                    settings
-                                });
-                                var s1 = (data)=>{
-                                    console.log("index.html", {
-                                        data
+                                //Update site.webmanifest
+                                var user = await github.user.get();
+                                github.repos.contents({
+                                    owner: user.login,
+                                    repo: GET[1],
+                                    path: "/site.webmanifest"
+                                }, {
+                                    cache: "reload"
+                                }).then(async(data)=>{
+                                    var raw = data.content;
+                                    var sha = data.sha;
+                                    var content = atob(raw);
+                                    var json = JSON.parse(content);
+                                    json.description = about;
+                                    json.icons = [{
+                                        src: "icon.png",
+                                        sizes: "570x570",
+                                        type: "image/png"
+                                    }];
+                                    json.name = steps[0].find('input').value;
+                                    json["short_name"] = GET[1];
+                                    var content = btoa(JSON.stringify(json, null, 2));
+                                    var message = "Create site.webmnifest";
+                                    var data = {
+                                        content,
+                                        message,
+                                        sha
+                                    };
+                                    sha ? data.sha = sha : null;
+                                    console.log(1708, {
+                                        content,
+                                        data,
+                                        json,
+                                        raw,
+                                        sha
                                     });
+
+                                    var upload = 1 > 0 ? await github.repos.contents({
+                                        owner: user.login,
+                                        repo: GET[1],
+                                        path: "/site.webmanifest"
+                                    }, {
+                                        data: JSON.stringify({
+                                            content,
+                                            message,
+                                            sha
+                                        }),
+                                        dataType: "PUT"
+                                    }).then(function(data) {
+                                        console.log(1805, {
+                                            data
+                                        });
+                                        //window.location.pathname.router();
+                                    }) : null;
                                 }
-                                github.repos.contents(params, settings).then(u1)
+                                );
+
                             }
                         } else {
                             modal.alert({
