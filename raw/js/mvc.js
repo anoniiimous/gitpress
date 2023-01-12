@@ -286,6 +286,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var sha = data.sha;
                                     var content = atob(raw);
                                     var doc = new DOMParser().parseFromString(content, "text/html");
+                                    var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
                                     console.log(807, {
                                         content,
                                         data,
@@ -297,15 +298,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     console.log(e);
                                 }
 
-                                //GET index.png
+                                //GET icon.png
                                 try {
                                     var data = await github.repos.contents({
                                         owner: user.login,
                                         repo: GET[1],
-                                        path: "/index.png"
+                                        path: "/icon.png"
                                     }, {});
                                     var raw = data.content;
                                     var sha = data.sha;
+                                    var brand = raw ? "data:image/svg;base64," + raw : null;
                                     console.log(307, {
                                         content,
                                         data,
@@ -326,6 +328,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var raw = atob(data.content);
                                     var sha = data.sha;
                                     var json = JSON.parse(raw);
+                                    var about = null;
                                     console.log(319, {
                                         data,
                                         json,
@@ -337,14 +340,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }
 
                                 //GET data
-                                var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
-                                var brand = "data:image/svg;base64," + raw;
-                                var about = null;
                                 console.log(316, {
                                     title,
                                     brand,
                                     about
                                 });
+
+                                form.classList.remove("display-none");
 
                                 if (title) {
                                     var s1 = ppp.find('block').children[0];
@@ -1725,7 +1727,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         github.repos.contents({
                             owner: user.login,
                             repo: GET[1],
-                            path: "/index.png"
+                            path: "/icon.png"
                         }, {
                             cache: "reload"
                         }).then(async(data)=>{
@@ -1743,17 +1745,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 step,
                                 steps
                             });
-                            doc.head.find('title').textContent = title.value;
-                            var DOM = {
-                                body: doc.body,
-                                doc: doc.head,
-                                head: doc.head,
-                                html: doc.all[0]
-                            }
-                            console.log(808, {
-                                DOM
-                            });
-
                             createIcon(file, sha);
                         }
                         ).catch(()=>{
@@ -1763,22 +1754,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                         async function createIcon(file, sha) {
                             var b64 = file.toDataURL();
-                            console.log({
-                                b64
-                            });
                             var content = b64.split(';base64,')[1];
-                            var message = "Create index.png";
-                            var data = JSON.stringify({
+                            var message = "Create icon.png";
+                            var data = {
                                 content,
-                                message
+                                message,
+                            };
+                            sha ? data.sha = sha : null;
+                            console.log({
+                                b64,
+                                data,
+                                sha
                             });
-                            sha ? data.sha : null;
                             var upload = 1 > 0 ? await github.repos.contents({
                                 owner: user.login,
                                 repo: GET[1],
-                                path: "/index.png"
+                                path: "/icon.png"
                             }, {
-                                data,
+                                data: JSON.stringify(data),
                                 dataType: "PUT"
                             }).then(function() {
                                 step.find('input').dataset.value = title.value;
