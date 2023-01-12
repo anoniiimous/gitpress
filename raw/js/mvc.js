@@ -313,9 +313,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 //GET data
                                 var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
                                 var brand = "data:image/svg;base64," + raw;
+                                var about = null;
                                 console.log(316, {
                                     title,
-                                    brand
+                                    brand,
+                                    about
                                 });
 
                                 if (title) {
@@ -325,16 +327,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     if (brand) {
                                         //alert("Step Three");
-                                                        
+
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
                                         $(form.all('form > header box flex')).attr("data-width", "30px");
                                         $(form.all('form > header box flex')[2]).attr("data-height", "50px");
                                         $(form.all('form > header box flex')[2]).attr("data-width", "50px");
                                         $(form.all('block > *')[2]).removeClass('display-none');
+
+                                        if (about) {
+                                            alert(about);
+                                        }
                                     } else {
                                         //alert("Step Two");
-                                                        
+
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
                                         $(form.all('form > header box flex')).attr("data-width", "30px");
@@ -344,8 +350,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         controller.setup.iro('#' + colors.random());
                                     }
-                                } else {
-                                    //alert("Step One");
+                                } else {//alert("Step One");
                                 }
                             }
                             resolve(route);
@@ -1543,6 +1548,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         $(form.all('form > header box flex')[1]).attr("data-height", "50px");
                         $(form.all('form > header box flex')[1]).attr("data-width", "50px");
                         $(form.all('block > *')[1]).removeClass('display-none');
+                        controller.setup.iro('#' + colors.random());
                     }
                 }
                 if (button.className === "gg-chevron-right") {
