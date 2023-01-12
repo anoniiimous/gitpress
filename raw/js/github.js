@@ -344,7 +344,8 @@ window.github = {
                         const accessToken = localStorage.githubAccessToken;
                         accessToken ? settings.headers = {
                             Accept: "application/vnd.github+json",
-                            Authorization: "token " + accessToken
+                            Authorization: "token " + accessToken,
+                            'If-None-Match': ''
                         } : null;
                         console.log({
                             url,
@@ -372,7 +373,8 @@ window.github = {
                         const accessToken = localStorage.githubAccessToken;
                         accessToken ? settings.headers = {
                             Accept: "application/vnd.github+json",
-                            Authorization: "token " + accessToken
+                            Authorization: "token " + accessToken,
+                            'If-None-Match': ''
                         } : null;
                         console.log({
                             url,
@@ -476,7 +478,7 @@ window.github = {
             }
         }
         ,
-        generate: (params, settings)=>{
+        generate: (params,settings)=>{
             if (settings.dataType) {
                 if (settings.dataType === "POST") {
                     return new Promise((resolve,reject)=>{

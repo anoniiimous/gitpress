@@ -1498,7 +1498,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
                 if (button.className === "gg-chevron-right") {
-                    var title = steps[0].find('input');
+                    var title = step.find('input');
                     if (index === 0) {
                         if (title.value.length > 0) {
                             if (title.dataset.value === title.value) {
@@ -1517,8 +1517,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 github.repos.contents({
                                     owner: user.login,
                                     repo: GET[1],
-                                    path: "index.html"
-                                }, {}).then(async(data)=>{
+                                    path: "/index.html"
+                                }, {
+                                    cache: "reload"
+                                }).then(async(data)=>{
                                     var raw = data.content;
                                     var sha = data.sha;
                                     var content = atob(raw);
@@ -1529,9 +1531,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         data,
                                         doc,
                                         raw,
-                                        sha
+                                        sha,
+                                        step,
+                                        steps
                                     });
-                                    doc.head.find('title').textContent = title;
+                                    doc.head.find('title').textContent = title.value;
                                     var DOM = {
                                         body: doc.body,
                                         doc: doc.head,
@@ -1555,7 +1559,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                             sha
                                         }),
                                         dataType: "PUT"
-                                    }).then(controller.setup.iro(form)) : null;
+                                    }).then(function() {
+                                        step.find('input').dataset.value = title.value;
+                                        $(form.all('block > *')).addClass('display-none');
+                                        $(form.all('form > header box flex')).attr("data-height", "30px");
+                                        $(form.all('form > header box flex')).attr("data-width", "30px");
+                                        $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                                        $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                        $(form.all('block > *')[1]).removeClass('display-none');
+                                        controller.setup.iro('#' + colors.random());
+                                    }) : null;
                                 }
                                 );
 

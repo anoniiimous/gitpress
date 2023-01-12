@@ -306,6 +306,7 @@ function ajax(url, settings) {
             } else {
                 req = url;
             }
+            settings.cache ? data.cache = settings.cache : null;
             settings.headers ? data.headers = settings.headers : null;
             settings.signal ? data.signal = signal : null;
         } else {
