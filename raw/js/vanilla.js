@@ -45,7 +45,7 @@ Array.prototype.attr = function(attr, name) {
             var it = this[i];
             it ? it.setAttribute(attr, name) : null;
             i++;
-        } while(i < that.length)
+        } while (i < that.length)
     } else {
         that[0] ? that[0].setAttribute(attr, name) : null;
     }
@@ -343,8 +343,15 @@ function ajax(url, settings) {
     );
 }
 
-function formatBytes(bytes, decimals = 2) {
-    if (!+bytes) return '0 Bytes'
+function download(download, href) {
+    var a = document.createElement("a");
+    a.href = href;
+    a.download = download;
+    a.click();
+}
+function formatBytes(bytes, decimals=2) {
+    if (!+bytes)
+        return '0 Bytes'
     const k = 1024
     const dm = decimals < 0 ? 0 : decimals
     const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -422,7 +429,7 @@ function getPages(win) {
 
 window.colors = {
 
-    contrast: color => {
+    contrast: color=>{
 
         var r, g, b, hsp;
 
@@ -431,24 +438,26 @@ window.colors = {
             r = color[1];
             g = color[2];
             b = color[3];
-        } 
-        else {            
-            color = +("0x" + color.slice(1).replace( 
-            color.length < 5 && /./g, '$&$&'));
+        } else {
+            color = +("0x" + color.slice(1).replace(color.length < 5 && /./g, '$&$&'));
             r = color >> 16;
             g = color >> 8 & 255;
             b = color & 255;
         }
-        
+
         hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
 
-        if (hsp>127.5) { return 'black'; } 
-        else { return 'white'; }
+        if (hsp > 127.5) {
+            return 'black';
+        } else {
+            return 'white';
+        }
 
-    },
+    }
+    ,
 
-    random: () => {
-        return Math.floor(Math.random()*16777215).toString(16).padStart(6, '0').toUpperCase();
+    random: ()=>{
+        return Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
     }
 
 }

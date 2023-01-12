@@ -25,9 +25,9 @@
             </card>
         </section>
     </header>
-    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden" data-min-height="calc(100vh - 240px)">
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden padding-bottom-120px padding-top-120px" data-min-height="calc(100vh - 240px)">
         <column>
-            <card class="margin-bottom-120px margin-top-120px">
+            <card class="">
                 <header>
                     <box class="padding-20px text-align-center">
                         <column>
@@ -75,7 +75,7 @@
             </card>
         </column>
         <column class="display-none">
-            <card class="margin-bottom-120px margin-top-120px" id="color-picker">
+            <card>
                 <header>
                     <box class="padding-20px text-align-center">
                         <column>
@@ -86,11 +86,10 @@
                 </header>
                 <section>
                     <box class="border-radius-15pct height-0 padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-icon">
-                        <picture class="align-items-center border-radius-15pct display-flex justify-content-center"></picture>
-                        <picture class="align-items-center border-radius-15pct display-flex justify-content-center">
-                            <img class="margin-auto" data-size="0.69" src="raw/png/astronaut-drawing.png" style="width:240px;">
+                        <picture class="align-items-center border-radius-15pct display-flex justify-content-center" id="new-app-icon-image">
+                            <img class="margin-auto" data-size="0.69" src="raw/png/astronaut-standing.png">
                         </picture>
-                        <section class="display-none">
+                        <footer class="display-none">
                             <!--<n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>-->
                             <ico class="bottom-0 left-0 padding-20px position-absolute">
                                 <n class="gg-software-upload"></n>
@@ -98,7 +97,7 @@
                             <ico class="right-0 padding-20px position-absolute top-0" data-tap="controller.setup.ico(event.target.closest('box').firstElementChild)">
                                 <n class="gg-software-download"></n>
                             </ico>
-                        </section>
+                        </footer>
                     </box>
                     <box class="display-flex flex-direction-row justify-content-space-between" data-columns="2">
                         <row class="align-items-center justify-content-center width-50pct">
@@ -164,7 +163,7 @@
             </card>
         </column>
         <column class="display-none">
-            <card class="margin-bottom-120px margin-top-120px">
+            <card>
                 <header>
                     <box class="padding-20px text-align-center">
                         <column>

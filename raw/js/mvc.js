@@ -255,8 +255,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var settings = {};
                     github.repos.contents(params, settings).then(async(data)=>{
                         if (data) {
-                            const content = data.content;
-                            const raw = atob(content);
+                            var content = data.content;
+                            var raw = atob(content);
                             const json = JSON.parse(raw);
                             console.log({
                                 content,
@@ -275,30 +275,66 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var ppp = await modal.page(html);
                                 var form = ppp.find('form');
 
-                                //Update index.html
-                                github.repos.contents({
+                                //GET index.html
+                                var data = await github.repos.contents({
                                     owner: user.login,
                                     repo: GET[1],
                                     path: "index.html"
-                                }, {}).then(async(data)=>{
-                                    var raw = data.content;
-                                    var sha = data.sha;
-                                    var content = atob(raw);
-                                    var doc = new DOMParser().parseFromString(content, "text/html");
-                                    //var json = JSON.parse(content);
-                                    console.log(807, {
-                                        content,
-                                        data,
-                                        doc,
-                                        raw,
-                                        sha
-                                    });
-                                    var title = doc.head.find('title');
-                                    if (title.textContent.length > 0) {
-                                        var s1 = ppp.find('block').children[0];
-                                        s1.find('input').value = s1.find('input').dataset.value = title.textContent;
-                                        s1.all('footer box')[1].classList.remove('opacity-50pct');
+                                }, {});
+                                var raw = data.content;
+                                var sha = data.sha;
+                                var content = atob(raw);
+                                var doc = new DOMParser().parseFromString(content, "text/html");
+                                //var json = JSON.parse(content);
+                                console.log(807, {
+                                    content,
+                                    data,
+                                    doc,
+                                    raw,
+                                    sha
+                                });
 
+                                //GET index.png
+                                var data = await github.repos.contents({
+                                    owner: user.login,
+                                    repo: GET[1],
+                                    path: "index.png"
+                                }, {});
+                                var raw = data.content;
+                                var sha = data.sha;
+                                //var json = JSON.parse(content);
+                                console.log(307, {
+                                    content,
+                                    data,
+                                    raw,
+                                    sha
+                                });
+
+                                //GET data
+                                var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
+                                var brand = "data:image/svg;base64," + raw;
+                                console.log(316, {
+                                    title,
+                                    brand
+                                });
+
+                                if (title) {
+                                    var s1 = ppp.find('block').children[0];
+                                    s1.find('input').value = s1.find('input').dataset.value = title;
+                                    s1.all('footer box')[1].classList.remove('opacity-50pct');
+
+                                    if (brand) {
+                                        //alert("Step Three");
+                                                        
+                                        $(form.all('block > *')).addClass('display-none');
+                                        $(form.all('form > header box flex')).attr("data-height", "30px");
+                                        $(form.all('form > header box flex')).attr("data-width", "30px");
+                                        $(form.all('form > header box flex')[2]).attr("data-height", "50px");
+                                        $(form.all('form > header box flex')[2]).attr("data-width", "50px");
+                                        $(form.all('block > *')[2]).removeClass('display-none');
+                                    } else {
+                                        //alert("Step Two");
+                                                        
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
                                         $(form.all('form > header box flex')).attr("data-width", "30px");
@@ -308,8 +344,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         controller.setup.iro('#' + colors.random());
                                     }
+                                } else {
+                                    //alert("Step One");
                                 }
-                                );
                             }
                             resolve(route);
                         }
@@ -1389,10 +1426,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             html2canvas(el, {
                 backgroundColor: null
             }).then(canvas=>{
-                var link = document.createElement('a');
-                link.download = GET[1] + '.png';
-                link.href = canvas.toDataURL()
-                link.click();
+                var base64 = canvas.toDataURL();
+                1 < 0 ? ImageTracer.imageToSVG(base64, async svgstr=>{
+                    var svg = new DOMParser().parseFromString(svgstr, "text/html")
+                    var xml = new XMLSerializer().serializeToString(svg);
+                    download(GET[1] + ".svg", "data:image/svg;base64," + btoa(xml));
+                }
+                , {
+                    viewbox: true
+                }) : 0;
+                console.log(canvas);
+                download(GET[1] + ".png", base64);
             }
             );
         }
@@ -1466,7 +1510,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
                     picker.resize(size);
-                    icon.find('img').style.width = (size * 0.69) + 'px';
+                    if (icon.find('img').clientWidth > icon.find('img').clientHeight) {
+                        icon.find('img').style.width = (size * 0.69) + 'px';
+                    } else {
+                        icon.find('img').style.height = (size * 0.69) + 'px';
+                    }
                 }
             }
         }
@@ -1623,9 +1671,95 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         }
                     }
                     if (index === 1) {
-                        $(form.all('form > header box flex')[2]).attr("data-height", "50px");
-                        $(form.all('form > header box flex')[2]).attr("data-width", "50px");
-                        $(form.all('block > *')[2]).removeClass('display-none');
+                        var icon = step.find('picture');
+                        if (icon.innerHTML === "") {
+                            var confirm = await modal.confirm({
+                                body: "Are you sure want to create an icon without a graphic?",
+                                title: "Step Two"
+                            }, ["Cancel", "Continue"]);
+                        } else {//$(form.all('block > *')).addClass('display-none');
+                        //$(form.all('form > header box flex')).attr("data-height", "30px");
+                        //$(form.all('form > header box flex')).attr("data-width", "30px");
+                        //$(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                        //$(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                        //$(form.all('block > *')[1]).removeClass('display-none');
+                        }
+
+                        //Import icon.png
+                        var file = await html2canvas(byId('new-app-icon-image'), {
+                            backgroundColor: null
+                        })
+                        var user = await github.user.get();
+                        github.repos.contents({
+                            owner: user.login,
+                            repo: GET[1],
+                            path: "/index.png"
+                        }, {
+                            cache: "reload"
+                        }).then(async(data)=>{
+                            var raw = data.content;
+                            var sha = data.sha;
+                            var content = atob(raw);
+                            var doc = new DOMParser().parseFromString(content, "text/html");
+                            //var json = JSON.parse(content);
+                            console.log(807, {
+                                content,
+                                data,
+                                doc,
+                                raw,
+                                sha,
+                                step,
+                                steps
+                            });
+                            doc.head.find('title').textContent = title.value;
+                            var DOM = {
+                                body: doc.body,
+                                doc: doc.head,
+                                head: doc.head,
+                                html: doc.all[0]
+                            }
+                            console.log(808, {
+                                DOM
+                            });
+
+                            createIcon(file, sha);
+                        }
+                        ).catch(()=>{
+                            createIcon(file);
+                        }
+                        )
+
+                        async function createIcon(file, sha) {
+                            var b64 = file.toDataURL();
+                            console.log({
+                                b64
+                            });
+                            var content = b64.split(';base64,')[1];
+                            var message = "Create index.png";
+                            var data = JSON.stringify({
+                                content,
+                                message
+                            });
+                            sha ? data.sha : null;
+                            var upload = 1 > 0 ? await github.repos.contents({
+                                owner: user.login,
+                                repo: GET[1],
+                                path: "/index.png"
+                            }, {
+                                data,
+                                dataType: "PUT"
+                            }).then(function() {
+                                step.find('input').dataset.value = title.value;
+                                $(form.all('block > *')).addClass('display-none');
+                                $(form.all('form > header box flex')).attr("data-height", "30px");
+                                $(form.all('form > header box flex')).attr("data-width", "30px");
+                                $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                                $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                $(form.all('block > *')[1]).removeClass('display-none');
+                                controller.setup.iro('#' + colors.random());
+                            }) : null;
+                        }
+
                     }
                     if (index === 2) {
                         var about = steps[2].find('textarea').value;
