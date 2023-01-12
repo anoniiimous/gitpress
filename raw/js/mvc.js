@@ -257,7 +257,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (data) {
                             var content = data.content;
                             var raw = atob(content);
-                            const json = JSON.parse(raw);
+                            var json = JSON.parse(raw);
                             console.log({
                                 content,
                                 data,
@@ -285,7 +285,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var sha = data.sha;
                                 var content = atob(raw);
                                 var doc = new DOMParser().parseFromString(content, "text/html");
-                                //var json = JSON.parse(content);
                                 console.log(807, {
                                     content,
                                     data,
@@ -302,10 +301,25 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }, {});
                                 var raw = data.content;
                                 var sha = data.sha;
-                                //var json = JSON.parse(content);
                                 console.log(307, {
                                     content,
                                     data,
+                                    raw,
+                                    sha
+                                });
+
+                                //GET site.webmanifest
+                                var data = await github.repos.contents({
+                                    owner: user.login,
+                                    repo: GET[1],
+                                    path: "site.webmanifest"
+                                }, {});
+                                var raw = atob(data.content);
+                                var sha = data.sha;
+                                var json = JSON.parse(raw);
+                                console.log(319, {
+                                    data,
+                                    json,
                                     raw,
                                     sha
                                 });
