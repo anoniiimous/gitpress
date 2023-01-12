@@ -276,53 +276,65 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var form = ppp.find('form');
 
                                 //GET index.html
-                                var data = await github.repos.contents({
-                                    owner: user.login,
-                                    repo: GET[1],
-                                    path: "/index.html"
-                                }, {});
-                                var raw = data.content;
-                                var sha = data.sha;
-                                var content = atob(raw);
-                                var doc = new DOMParser().parseFromString(content, "text/html");
-                                console.log(807, {
-                                    content,
-                                    data,
-                                    doc,
-                                    raw,
-                                    sha
-                                });
+                                try {
+                                    var data = await github.repos.contents({
+                                        owner: user.login,
+                                        repo: GET[1],
+                                        path: "/index.html"
+                                    }, {});
+                                    var raw = data.content;
+                                    var sha = data.sha;
+                                    var content = atob(raw);
+                                    var doc = new DOMParser().parseFromString(content, "text/html");
+                                    console.log(807, {
+                                        content,
+                                        data,
+                                        doc,
+                                        raw,
+                                        sha
+                                    });
+                                } catch (e) {
+                                    console.log(e);
+                                }
 
                                 //GET index.png
-                                var data = await github.repos.contents({
-                                    owner: user.login,
-                                    repo: GET[1],
-                                    path: "/index.png"
-                                }, {});
-                                var raw = data.content;
-                                var sha = data.sha;
-                                console.log(307, {
-                                    content,
-                                    data,
-                                    raw,
-                                    sha
-                                });
+                                try {
+                                    var data = await github.repos.contents({
+                                        owner: user.login,
+                                        repo: GET[1],
+                                        path: "/index.png"
+                                    }, {});
+                                    var raw = data.content;
+                                    var sha = data.sha;
+                                    console.log(307, {
+                                        content,
+                                        data,
+                                        raw,
+                                        sha
+                                    });
+                                } catch (e) {
+                                    console.log(e);
+                                }
 
                                 //GET site.webmanifest
-                                var data = await github.repos.contents({
-                                    owner: user.login,
-                                    repo: GET[1],
-                                    path: "/site.webmanifest"
-                                }, {});
-                                var raw = atob(data.content);
-                                var sha = data.sha;
-                                var json = JSON.parse(raw);
-                                console.log(319, {
-                                    data,
-                                    json,
-                                    raw,
-                                    sha
-                                });
+                                try {
+                                    var data = await github.repos.contents({
+                                        owner: user.login,
+                                        repo: GET[1],
+                                        path: "/site.webmanifest"
+                                    }, {});
+                                    var raw = atob(data.content);
+                                    var sha = data.sha;
+                                    var json = JSON.parse(raw);
+                                    console.log(319, {
+                                        data,
+                                        json,
+                                        raw,
+                                        sha
+                                    });
+                                } catch (e) {
+                                    console.log(e);
+                                }
 
                                 //GET data
                                 var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
