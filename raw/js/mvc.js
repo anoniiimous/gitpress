@@ -279,7 +279,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var data = await github.repos.contents({
                                     owner: user.login,
                                     repo: GET[1],
-                                    path: "index.html"
+                                    path: "/index.html"
                                 }, {});
                                 var raw = data.content;
                                 var sha = data.sha;
@@ -297,7 +297,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var data = await github.repos.contents({
                                     owner: user.login,
                                     repo: GET[1],
-                                    path: "index.png"
+                                    path: "/index.png"
                                 }, {});
                                 var raw = data.content;
                                 var sha = data.sha;
@@ -312,7 +312,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var data = await github.repos.contents({
                                     owner: user.login,
                                     repo: GET[1],
-                                    path: "site.webmanifest"
+                                    path: "/site.webmanifest"
                                 }, {});
                                 var raw = atob(data.content);
                                 var sha = data.sha;
