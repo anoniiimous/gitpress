@@ -25,9 +25,9 @@
             </card>
         </section>
     </header>
-    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-120px margin-top-120px" data-min-height="calc(100vh - 240px)">
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden" data-min-height="calc(100vh - 240px)">
         <column>
-            <card>
+            <card class="margin-bottom-120px margin-top-120px">
                 <header>
                     <box class="padding-20px text-align-center">
                         <column>
@@ -75,7 +75,7 @@
             </card>
         </column>
         <column class="display-none">
-            <card class="max-width-100pctt width-480pxx" data-evt="color" id="color-picker">
+            <card class="margin-bottom-120px margin-top-120px" id="color-picker">
                 <header>
                     <box class="padding-20px text-align-center">
                         <column>
@@ -84,15 +84,15 @@
                         </column>
                     </box>
                 </header>
-                <section class="margin-y-20px position-relative">
+                <section>
                     <box class="border-radius-15pct height-0 padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-icon">
+                        <picture class="align-items-center border-radius-15pct display-flex justify-content-center"></picture>
                         <picture class="align-items-center border-radius-15pct display-flex justify-content-center">
                             <img class="margin-auto" data-size="0.69" src="raw/png/astronaut-drawing.png" style="width:240px;">
                         </picture>
-                        <section>
+                        <section class="display-none">
                             <!--<n class="align-items-center display-flex empty-state font-family-courier font-size-72px height-100pct justify-content-center position-absolute top-0 width-100pct" placeholder="?"></n>-->
                             <ico class="bottom-0 left-0 padding-20px position-absolute">
-                                <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
                                 <n class="gg-software-upload"></n>
                             </ico>
                             <ico class="right-0 padding-20px position-absolute top-0" data-tap="controller.setup.ico(event.target.closest('box').firstElementChild)">
@@ -100,9 +100,32 @@
                             </ico>
                         </section>
                     </box>
-                </section>
-                <section class="position-relative width-100pct">
-                    <box>
+                    <box class="display-flex flex-direction-row justify-content-space-between" data-columns="2">
+                        <row class="align-items-center justify-content-center width-50pct">
+                            <ico data-width="20px">
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
+                            <text class="padding-x-10px">Import</text>
+                        </row>
+                        <row class="align-items-center justify-content-center width-50pct" data-tap="controller.setup.ico(event.target.closest('box').previousElementSibling)">
+                            <ico data-width="20px">
+                                <n class="gg-software-download"></n>
+                            </ico>
+                            <text class="padding-x-10px">Export</text>
+                        </row>
+                    </box>
+                    <box class="margin-y-20px">
+                        <column>
+                            <text class="display-flex color-777 font-weight-bolder justify-content-space-between line-height-50px">
+                                <span>Size</span>
+                                <span>69%</span>
+                            </text>
+                            <input class="-webkit-slider-thumb-border-2px-solid-000 -webkit-appearance-none border-radius-50px height-30px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" type="range" min="1" max="100" value="69">
+                        </column>
+                    </box>
+                    <box class="margin-y-20px">
+                        <text class="color-777 font-weight-bolder line-height-50px">Color</text>
                         <column id="iro-setup-about-brand"></column>
                     </box>
                     <box class="display-flex flex-direction-row justify-content-space-between margin-y-20px">
@@ -141,7 +164,7 @@
             </card>
         </column>
         <column class="display-none">
-            <card>
+            <card class="margin-bottom-120px margin-top-120px">
                 <header>
                     <box class="padding-20px text-align-center">
                         <column>

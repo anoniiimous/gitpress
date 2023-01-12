@@ -11,6 +11,7 @@
     }
 }
 
+/*ALIGN ITEMS*/
 @media screen {
     .align-items-center {
         align-items: center;
@@ -20,6 +21,14 @@
         .-mobile-align-items-self-start {
             align-items: self-start;        
         }
+    }
+}
+
+
+/*APPEARANCE*/
+@media {
+    .-webkit-appearance-none {
+        -webkit-appearance: none;
     }
 }
 
@@ -567,6 +576,10 @@
 
     .height-20px, [data-height="20px"] {
         height: 20px;
+    }
+
+    .height-30px, [data-height="30px"] {
+        height: 30px;
     }
 
     .height-120px, [data-height="120px"] {
@@ -1193,6 +1206,12 @@
         [data-tablet-transform="translateX(calc((-100%/3)*2))"] {
             transform: translateX(calc((-100%/3)*2));
         }
+    }
+}
+
+@media screen {
+    .-webkit-slider-thumb-border-2px-solid-000::webkit-slider-thumb  {
+        border: 2px solid #000;
     }
 }
 
