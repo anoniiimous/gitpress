@@ -359,11 +359,18 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     s1.find('input').value = s1.find('input').dataset.value = title;
                                     s1.all('footer box')[1].classList.remove('opacity-50pct');
 
+                                    var s2 = ppp.find('block').children[1];
+                                    var picture = s2.find('picture');
+                                    console.log(picture.firstElementChild)
+
                                     if (brand) {
                                         //alert("Step Three");
 
-                                        var s2 = ppp.find('block').children[1];
-                                        s2.find('picture').innerHTML = brand;
+                                        var svg = new DOMParser().parseFromString(brand, "image/svg+xml");
+                                        var rect = svg.documentElement.find('rect');
+                                        picture.style.backgroundColor = rect.style.backgroundColor;
+                                        picture.innerHTML = brand;
+
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
                                         $(form.all('form > header box flex')).attr("data-width", "30px");
@@ -384,7 +391,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         $(form.all('form > header box flex')[1]).attr("data-width", "50px");
                                         $(form.all('block > *')[1]).removeClass('display-none');
 
-                                        controller.setup.iro('#' + colors.random());
+                                        var color = picture.firstElementChild.tagName !== "SVG" ? '#' + colors.random() : rect.style.backgroundColor;
+                                        controller.setup.iro(color);
                                     }
                                 }
                             }
@@ -1614,7 +1622,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         $(form.all('form > header box flex')[1]).attr("data-height", "50px");
                         $(form.all('form > header box flex')[1]).attr("data-width", "50px");
                         $(form.all('block > *')[1]).removeClass('display-none');
-                        controller.setup.iro('#' + colors.random());
+
+                        var picture = steps[1].find('picture');
+                        console.log(picture.firstElementChild.tagName)
+                        var color = picture.firstElementChild.tagName === "svg" ? picture.find('rect').style.backgroundColor : "#" + colors.random();
+
+                        controller.setup.iro(color);
                     }
                 }
                 if (button.className === "gg-chevron-right") {
