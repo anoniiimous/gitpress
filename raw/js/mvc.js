@@ -1579,11 +1579,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
                     picker.resize(size);
-                    if (icon.find('picture').firstElementChild.clientWidth > icon.find('picture').firstElementChild.clientHeight) {//icon.find('picture').firstElementChild.style.width = (size * 0.69) + 'px';
-                    } else {//icon.find('picture').firstElementChild.style.height = (size * 0.69) + 'px';
+                    if (icon.find('picture').firstElementChild.clientWidth > icon.find('picture').firstElementChild.clientHeight) {
+                        icon.find('picture').firstElementChild.style.width = (size * 0.69) + 'px';
+                    } else {
+                        icon.find('picture').firstElementChild.style.height = (size * 0.69) + 'px';
                     }
-                    icon.find('picture').firstElementChild.style.height = (size * 1) + 'px';
-                    icon.find('picture').firstElementChild.style.width = (size * 1) + 'px';
+                    //icon.find('picture').firstElementChild.style.height = (size * 1) + 'px';
+                    //icon.find('picture').firstElementChild.style.width = (size * 1) + 'px';
                 }
             }
         }
@@ -1770,14 +1772,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 data: JSON.stringify(data),
                                 dataType: "PUT"
                             }).then(function() {
-                                step.find('input').dataset.value = title.value;
                                 $(form.all('block > *')).addClass('display-none');
                                 $(form.all('form > header box flex')).attr("data-height", "30px");
                                 $(form.all('form > header box flex')).attr("data-width", "30px");
-                                $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                                $(form.all('form > header box flex')[1]).attr("data-width", "50px");
-                                $(form.all('block > *')[1]).removeClass('display-none');
-                                controller.setup.iro('#' + colors.random());
+                                $(form.all('form > header box flex')[2]).attr("data-height", "50px");
+                                $(form.all('form > header box flex')[2]).attr("data-width", "50px");
+                                $(form.all('block > *')[2]).removeClass('display-none');
                             }) : null;
                         }
 
