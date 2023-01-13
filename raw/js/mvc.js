@@ -369,7 +369,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
                                         var rect = svg.find('rect');
                                         rect.style.display = "none";
-                                        picture.style.backgroundColor = rect.getAttribute('fill');
+                                        picture.parentNode.style.backgroundColor = rect.getAttribute('fill');;
                                         picture.innerHTML = svg.outerHTML;
 
                                         $(form.all('block > *')).addClass('display-none');
@@ -1626,7 +1626,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                         var picture = steps[1].find('picture');
                         console.log(picture.firstElementChild.tagName)
-                        var color = picture.firstElementChild.tagName === "svg" ? picture.find('rect').style.backgroundColor : "#" + colors.random();
+                        var color = picture.firstElementChild.tagName === "svg" ? picture.find('rect').getAttribute('fill') : "#" + colors.random();
 
                         controller.setup.iro(color);
                     }
