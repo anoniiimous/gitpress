@@ -21,7 +21,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching3 = dom.body.all(':not(page):not(pages) [data-fetch][data-pages="'+getRoot()+'"]:empty');
+    const fetching3 = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]:empty');
     console.log({
         fetching3
     });
@@ -39,20 +39,21 @@ String.prototype.router = async function(params) {
     if (vp) {
         if (vp.innerHTML === "" && vp.dataset.fetch) {
             vp.innerHTML = await ajax(vp.dataset.fetch);
-            const fetching2 = vp.all('[data-fetch]');
-            console.log({
-                fetching2
-            });
-            if (fetching2.length > 0) {
-                var ff = 0;
-                do {
-                    if (fetching2[ff].innerHTML === "") {
-                        fetching2[ff].innerHTML = await ajax(fetching2[ff].dataset.fetch);
-                    }
-                    f++;
-                } while (fetching2.length < 0);
-            }
         }
+        const fetching2 = vp.all('[data-fetch]');
+        console.log({
+            fetching2
+        });
+        if (fetching2.length > 0) {
+            var ff = 0;
+            do {
+                if (fetching2[ff].innerHTML === "") {
+                    fetching2[ff].innerHTML = await ajax(fetching2[ff].dataset.fetch);
+                }
+                f++;
+            } while (fetching2.length < 0);
+        }
+
     }
 
     const fetching = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]');

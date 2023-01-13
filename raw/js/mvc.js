@@ -299,20 +299,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     console.log(e);
                                 }
 
-                                //GET icon.png
+                                //GET icon.svg
                                 try {
                                     var data = await github.repos.contents({
                                         owner: user.login,
                                         repo: GET[1],
-                                        path: "/icon.png"
+                                        path: "/icon.svg"
                                     }, {
                                         cache: "reload"
                                     });
                                     var raw = data.content;
                                     var sha = data.sha;
-                                    var brand = raw ? "data:image/svg;base64," + raw : null;
+                                    //var brand = raw ? "data:image/svg;base64," + raw : null;
+                                    var brand = raw ? atob(raw) : null;
                                     console.log(307, {
-                                        content,
+                                        content: atob(raw),
                                         data,
                                         raw,
                                         sha
@@ -361,6 +362,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     if (brand) {
                                         //alert("Step Three");
 
+                                        var s2 = ppp.find('block').children[1];
+                                        s2.find('picture').innerHTML = brand;
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
                                         $(form.all('form > header box flex')).attr("data-width", "30px");
@@ -383,7 +386,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         controller.setup.iro('#' + colors.random());
                                     }
-                                } else {//alert("Step One");
                                 }
                             }
                             resolve(route);
@@ -1461,21 +1463,49 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        ico: (el)=>{
-            html2canvas(el, {
-                backgroundColor: null
-            }).then(canvas=>{
-                var base64 = canvas.toDataURL();
-                1 < 0 ? ImageTracer.imageToSVG(base64, async svgstr=>{
-                    var svg = new DOMParser().parseFromString(svgstr, "text/html")
-                    var xml = new XMLSerializer().serializeToString(svg);
-                    download(GET[1] + ".svg", "data:image/svg;base64," + btoa(xml));
+        ico: async(el)=>{
+            return new Promise((resolve,reject)=>{
+                var picture = el.find('picture');
+                html2canvas(picture, {
+                    backgroundColor: null
+                }).then(canvas=>{
+                    var base64 = canvas.toDataURL();
+                    1 > 0 ? ImageTracer.imageToSVG(base64, async svgstr=>{
+                        var svg = new DOMParser().parseFromString(svgstr, "image/svg+xml")
+                        var elem = svg.documentElement;
+                        var g = svg.createElement('g');
+                        g.innerHTML = elem.innerHTML;
+                        elem.innerHTML = g.outerHTML;
+                        var fill = el.style.backgroundColor;
+                        var rect = svg.createElement('rect');
+                        rect.setAttribute('fill', fill);
+                        rect.setAttribute('height', '100%');
+                        rect.setAttribute('rx', '15%');
+                        rect.setAttribute('width', '100%');
+                        elem.insertAdjacentHTML('afterbegin', rect.outerHTML);
+                        var xml = new XMLSerializer().serializeToString(elem);
+                        var obj = {
+                            name: GET[1] + ".svg",
+                            file: "data:image/svg;base64," + btoa(xml)
+                        };
+                        //download(obj.name, obj.file);
+                        console.log(1475, {
+                            elem,
+                            fill,
+                            obj,
+                            svg,
+                            svgstr,
+                            xml
+                        });
+                        resolve(obj);
+                    }
+                    , {
+                        viewbox: true
+                    }) : 0;
+                    console.log(canvas);
+                    //download(GET[1] + ".png", base64);
                 }
-                , {
-                    viewbox: true
-                }) : 0;
-                console.log(canvas);
-                download(GET[1] + ".png", base64);
+                );
             }
             );
         }
@@ -1483,7 +1513,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         iro: (color)=>{
             var icon = byId('new-app-icon');
-            icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);
+            //icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);
 
             byId('color-data-hex').all('text')[1].textContent = color;
 
@@ -1525,7 +1555,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     byId("color-data-hex").all('text')[1].textContent = hexString;
                     byId("color-data-rgb").all('text')[1].textContent = rgbString;
                     byId("color-data-hsl").all('text')[1].textContent = hslString;
-                    icon.find('picture').style.backgroundColor = hexString;
+                    icon.style.backgroundColor = hexString;
                     icon.style.color = colors.contrast(hexString);
                     //icon.dataset.contrast = icon.style.color;
                 });
@@ -1543,17 +1573,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     byId("color-data-hex").all('text')[1].textContent = hexString;
                     byId("color-data-rgb").all('text')[1].textContent = rgbString;
                     byId("color-data-hsl").all('text')[1].textContent = hslString;
-                    icon.find('picture').style.backgroundColor = hexString;
+                    icon.style.backgroundColor = hexString;
                     icon.style.color = colors.contrast(hexString);
                 }
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
                     picker.resize(size);
-                    if (icon.find('img').clientWidth > icon.find('img').clientHeight) {
-                        icon.find('img').style.width = (size * 0.69) + 'px';
-                    } else {
-                        icon.find('img').style.height = (size * 0.69) + 'px';
+                    if (icon.find('picture').firstElementChild.clientWidth > icon.find('picture').firstElementChild.clientHeight) {//icon.find('picture').firstElementChild.style.width = (size * 0.69) + 'px';
+                    } else {//icon.find('picture').firstElementChild.style.height = (size * 0.69) + 'px';
                     }
+                    icon.find('picture').firstElementChild.style.height = (size * 1) + 'px';
+                    icon.find('picture').firstElementChild.style.width = (size * 1) + 'px';
                 }
             }
         }
@@ -1683,15 +1713,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         //$(form.all('block > *')[1]).removeClass('display-none');
                         }
 
-                        //Import icon.png
-                        var file = await html2canvas(byId('new-app-icon-image'), {
-                            backgroundColor: null
-                        })
+                        //Import icon.svg
+                        var box = icon.parentNode;
+                        var file = await controller.setup.ico(box);
                         var user = await github.user.get();
                         github.repos.contents({
                             owner: user.login,
                             repo: GET[1],
-                            path: "/icon.png"
+                            path: "/icon.svg"
                         }, {
                             cache: "reload"
                         }).then(async(data)=>{
@@ -1716,10 +1745,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         }
                         )
 
-                        async function createIcon(file, sha) {
-                            var b64 = file.toDataURL();
+                        async function createIcon(icon, sha) {
+                            console.log(1749, {
+                                icon
+                            });
+                            var b64 = icon.file;
                             var content = b64.split(';base64,')[1];
-                            var message = "Create icon.png";
+                            var message = "Create icon.svg";
                             var data = {
                                 content,
                                 message,
@@ -1733,7 +1765,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             var upload = 1 > 0 ? await github.repos.contents({
                                 owner: user.login,
                                 repo: GET[1],
-                                path: "/icon.png"
+                                path: "/icon.svg"
                             }, {
                                 data: JSON.stringify(data),
                                 dataType: "PUT"
