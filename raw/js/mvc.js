@@ -366,10 +366,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     if (brand) {
                                         //alert("Step Three");
 
-                                        var svg = new DOMParser().parseFromString(brand, "image/svg+xml");
-                                        var rect = svg.documentElement.find('rect');
-                                        picture.style.backgroundColor = rect.style.backgroundColor;
-                                        picture.innerHTML = brand;
+                                        var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
+                                        var rect = svg.find('rect');
+                                        rect.style.display = "none";
+                                        picture.style.backgroundColor = rect.getAttribute('fill');
+                                        picture.innerHTML = svg.outerHTML;
 
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
@@ -1592,8 +1593,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     } else {
                         icon.find('picture').firstElementChild.style.height = (size * 0.69) + 'px';
                     }
-                    //icon.find('picture').firstElementChild.style.height = (size * 1) + 'px';
-                    //icon.find('picture').firstElementChild.style.width = (size * 1) + 'px';
+                    icon.find('picture').firstElementChild.style.height = (size * 1) + 'px';
+                    icon.find('picture').firstElementChild.style.width = (size * 1) + 'px';
                 }
             }
         }
