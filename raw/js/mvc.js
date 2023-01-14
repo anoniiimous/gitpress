@@ -369,7 +369,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
                                         var rect = svg.find('rect');
                                         rect.style.display = "none";
-                                        picture.parentNode.style.backgroundColor = rect.getAttribute('fill');;
+                                        picture.parentNode.style.backgroundColor = rect.getAttribute('fill');
+                                        var foreignObject = svg.find('foreignObject');
+                                        var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
+                                        if (foreignObject.firstElementChild.clientWidth > foreignObject.firstElementChild.clientHeight) {//foreignObject.firstElementChild.style.width = (size * 0.69) + 'px';
+                                        } else {//foreignObject.firstElementChild.style.height = (size * 0.69) + 'px';
+                                        }
                                         picture.innerHTML = svg.outerHTML;
 
                                         $(form.all('block > *')).addClass('display-none');
@@ -1473,48 +1478,82 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         ico: async(el)=>{
+
             return new Promise((resolve,reject)=>{
-                var picture = el.find('picture');
-                html2canvas(picture, {
+
+                var canvas = html2canvas(el.find('picture img'), {
                     backgroundColor: null
                 }).then(canvas=>{
-                    var base64 = canvas.toDataURL();
-                    1 > 0 ? ImageTracer.imageToSVG(base64, async svgstr=>{
-                        var svg = new DOMParser().parseFromString(svgstr, "image/svg+xml")
-                        var elem = svg.documentElement;
-                        var g = svg.createElement('g');
-                        g.innerHTML = elem.innerHTML;
-                        elem.innerHTML = g.outerHTML;
-                        var fill = el.style.backgroundColor;
-                        var rect = svg.createElement('rect');
-                        rect.setAttribute('fill', fill);
-                        rect.setAttribute('height', '100%');
-                        rect.setAttribute('rx', '15%');
-                        rect.setAttribute('width', '100%');
-                        elem.insertAdjacentHTML('afterbegin', rect.outerHTML);
-                        var xml = new XMLSerializer().serializeToString(elem);
-                        var obj = {
-                            name: GET[1] + ".svg",
-                            file: "data:image/svg;base64," + btoa(xml)
-                        };
-                        //download(obj.name, obj.file);
-                        console.log(1475, {
-                            elem,
-                            fill,
-                            obj,
-                            svg,
-                            svgstr,
-                            xml
-                        });
-                        resolve(obj);
+
+                    var ico = canvas.toDataURL();
+                    ImageTracer.imageToSVG(ico, async i=>{
+                        var icon = new DOMParser().parseFromString(i, "image/svg+xml");
+                        var xml = new XMLSerializer().serializeToString(icon);
+                        var image = "data:image/svg;base64," + btoa(xml);
+
+                        var picture = el.find('picture');
+
+                        html2canvas(picture, {
+                            backgroundColor: null
+                        }).then(canvas=>{
+                            var base64 = canvas.toDataURL();
+                            1 > 0 ? ImageTracer.imageToSVG(base64, async svgstr=>{
+                                var svg = new DOMParser().parseFromString(svgstr, "image/svg+xml")
+                                var elem = svg.documentElement;
+
+                                var g = svg.createElement('g');
+                                g.innerHTML = elem.innerHTML;
+                                //elem.innerHTML = g.outerHTML;
+
+                                var foreignObject = svg.createElement('foreignObject');
+                                foreignObject.setAttribute("style", "display:flex;transform-origin: center;transform: translate(calc((100% - 69%)/2), calc((100% - 69%)/2));");
+                                foreignObject.setAttribute('height', '69%');
+                                foreignObject.setAttribute('width', '69%');
+                                var img = svg.createElement('img');
+                                foreignObject.innerHTML = "<div style='align-items:center;display:flex;justify-content:center' xmlns='http://www.w3.org/1999/xhtml'>" + img.outerHTML + "</div>";
+                                foreignObject.find('img').src = ico;
+                                foreignObject.innerHTML = i;
+                                foreignObject.find('svg').style = "margin:auto";
+                                //elem.insertAdjacentHTML('afterbegin', foreignObject.outerHTML);
+                                elem.innerHTML = foreignObject.outerHTML;
+
+                                var fill = el.style.backgroundColor;
+                                var rect = svg.createElement('rect');
+                                rect.setAttribute('fill', fill);
+                                rect.setAttribute('height', '100%');
+                                rect.setAttribute('rx', '15%');
+                                rect.setAttribute('width', '100%');
+                                elem.insertAdjacentHTML('afterbegin', rect.outerHTML);
+
+                                var xml = new XMLSerializer().serializeToString(elem);
+                                var obj = {
+                                    name: GET[1] + ".svg",
+                                    file: "data:image/svg;base64," + btoa(xml)
+                                };
+                                download(obj.name, obj.file);
+                                console.log(1475, {
+                                    elem,
+                                    fill,
+                                    obj,
+                                    svg,
+                                    svgstr,
+                                    xml
+                                });
+                                resolve(obj);
+                            }
+                            , {
+                                viewbox: true
+                            }) : 0;
+                            console.log(canvas);
+                            //download(GET[1] + ".png", base64);
+                        }
+                        );
                     }
-                    , {
-                        viewbox: true
-                    }) : 0;
-                    console.log(canvas);
-                    //download(GET[1] + ".png", base64);
+                    );
+
                 }
                 );
+
             }
             );
         }
@@ -1588,13 +1627,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
                     picker.resize(size);
-                    if (icon.find('picture').firstElementChild.clientWidth > icon.find('picture').firstElementChild.clientHeight) {
-                        icon.find('picture').firstElementChild.style.width = (size * 0.69) + 'px';
+                    var img = icon.find('picture img');
+                    if (img) {
+                        if (img.clientWidth > img.clientHeight) {
+                            //icon.find('picture img').style.width = (size * 0.69) + 'px';
+                            img.style.width = "69%";
+                        } else {
+                            //icon.find('picture img').style.height = (size * 0.69) + 'px';
+                            img.style.height = "69%";
+                        }
+                        //icon.find('picture img').style.height = (size * 1) + 'px';
+                        //icon.find('picture img').style.width = (size * 1) + 'px';
                     } else {
-                        icon.find('picture').firstElementChild.style.height = (size * 0.69) + 'px';
+                        img = icon.find('picture foreignObject');
                     }
-                    icon.find('picture').firstElementChild.style.height = (size * 1) + 'px';
-                    icon.find('picture').firstElementChild.style.width = (size * 1) + 'px';
                 }
             }
         }
@@ -1721,12 +1767,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 body: "Are you sure want to create an icon without a graphic?",
                                 title: "Step Two"
                             }, ["Cancel", "Continue"]);
-                        } else {//$(form.all('block > *')).addClass('display-none');
-                        //$(form.all('form > header box flex')).attr("data-height", "30px");
-                        //$(form.all('form > header box flex')).attr("data-width", "30px");
-                        //$(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                        //$(form.all('form > header box flex')[1]).attr("data-width", "50px");
-                        //$(form.all('block > *')[1]).removeClass('display-none');
+                        } else {
+                            $(form.all('block > *')).addClass('display-none');
+                            $(form.all('form > header box flex')).attr("data-height", "30px");
+                            $(form.all('form > header box flex')).attr("data-width", "30px");
+                            $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                            $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                            $(form.all('block > *')[1]).removeClass('display-none');
                         }
 
                         //Import icon.svg
@@ -1757,6 +1804,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             createIcon(file, sha);
                         }
                         ).catch(()=>{
+                            console.log(1792, {
+                                file
+                            });
                             createIcon(file);
                         }
                         )
