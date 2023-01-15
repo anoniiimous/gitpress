@@ -375,11 +375,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         } else {
                                             var rect = svg.find('rect');
                                             picture.find('rect').setAttribute('fill', rect.getAttribute('fill'))
+
                                             var foreignObject = svg.find('foreignObject');
+                                            var scale = foreignObject.getAttribute('width').split("%")[0];
                                             picture.find('foreignObject').innerHTML = foreignObject.innerHTML;
-                                            picture.find('foreignObject').setAttribute('height', foreignObject.getAttribute('height'));
-                                            picture.find('foreignObject').setAttribute('width', foreignObject.getAttribute('width'));
-                                            picture.find('foreignObject').style.transform = foreignObject.style.transform;
+                                            picture.find('foreignObject').setAttribute('height', scale + "%");
+                                            picture.find('foreignObject').setAttribute('width', scale + "%");
+                                            picture.find('foreignObject').style.transform = "translate(calc((100% - " + scale + "%)/2), calc((100% - " + scale + "%)/2))";
+
+                                            s2.find('[data-before="size"]').closest('box').find('input').setAttribute('value', foreignObject.getAttribute('width').split("%")[0]);
                                         }
 
                                         $(form.all('block > *')).addClass('display-none');
