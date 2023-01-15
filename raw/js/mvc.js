@@ -251,7 +251,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         path: "/site.webmanifest",
                         repo: get[1]
                     };
-                    var settings = {};
+                    var settings = {
+                                cache: "reload"
+                    };
                     github.repos.contents(params, settings).then(async(data)=>{
                         if (data) {
                             var content = data.content;
@@ -410,11 +412,40 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         });
                         //if (error.code === 404) {
                         //alert("Setup Project");
-                        const html = await ajax('/raw/html/template/template.setup.html');
-                        var ppp = await modal.page(html);
-                        ppp.find('form').classList.remove("display-none");
-                        resolve(route);
                         //}
+
+                        const user = await github.user.get();
+                        var file = "site.webmanifest";
+                        var json = {};
+
+                        var params = {};
+                        params.owner = user.login;
+                        params.path = "/" + file;
+                        params.repo = GET[1]
+
+                        var settings = {};
+                        settings.data = JSON.stringify({
+                            content: btoa(JSON.stringify(json, null, 2)),
+                            message: "Create " + file
+                        }),
+                        settings.dataType = "PUT";
+
+                        console.log({
+                            params,
+                            settings
+                        });
+
+                        const aa = async(e)=>{
+                            const html = await ajax('/raw/html/template/template.setup.html');
+                            var ppp = await modal.page(html);
+                            ppp.find('form').classList.remove("display-none");
+                            resolve(route);
+                        }
+
+                        const bb = (e)=>{}
+
+                        github.repos.contents(params, settings).then(aa).catch(bb);
+
                     }
                     );
                 } else {
