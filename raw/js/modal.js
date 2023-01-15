@@ -107,7 +107,7 @@ window.modal = {
             }
         }
         (className) ? ppp.setAttribute('class', className) : null;
-        
+
         const fetching2 = ppp.all('[data-fetch]');
         console.log({
             ppp,
@@ -122,10 +122,10 @@ window.modal = {
                 ff++;
             } while (fetching2.length < 0);
         }
-        
+
         ppp.onclick = event=>{
             //console.log(event);
-            if(event.target.classList.contains('aside')) {
+            if (event.target.classList.contains('aside')) {
                 event.target.remove()
             }
         }
@@ -137,27 +137,27 @@ window.modal = {
     }
     ,
     alert: async(h,ppp=document.createElement('aside'))=>{
-            var innerHTML = await ajax('raw/html/template/template.modal.alert.html');
-            var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
-            h.title ? html.find('[placeholder="Title"]').textContent = h.title : null;
-            h.body ? html.find('[placeholder="Body"]').textContent = h.body : null;
-            h.submit ? html.find('[placeholder="OK').textContent = h.submit : null;
-            ppp.innerHTML = html.outerHTML;
-            ppp.onclick = event=>{
-                var io = false;
-                if (event.target.classList.contains('aside')) {
-                    event.target.remove();
-                } else {
-                    var target = event.target;
-                    var ok = target.closest("[placeholder='OK']");
-                    if (ok) {
-                        modal.exit(target);
-                    }
+        var innerHTML = await ajax('raw/html/template/template.modal.alert.html');
+        var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
+        h.title ? html.find('[placeholder="Title"]').textContent = h.title : null;
+        h.body ? html.find('[placeholder="Body"]').textContent = h.body : null;
+        h.submit ? html.find('[placeholder="OK').textContent = h.submit : null;
+        ppp.innerHTML = html.outerHTML;
+        ppp.onclick = event=>{
+            var io = false;
+            if (event.target.classList.contains('aside')) {
+                event.target.remove();
+            } else {
+                var target = event.target;
+                var ok = target.closest("[placeholder='OK']");
+                if (ok) {
+                    modal.exit(target);
                 }
             }
-            ;
-            dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
-            modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
+        }
+        ;
+        dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
+        modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
     }
     ,
     confirm: async(h,opt,callBack,ppp=document.createElement('aside'))=>{
@@ -197,6 +197,38 @@ window.modal = {
         byId('boot').insertAdjacentHTML('afterend', `<aside class="aside body-aside popup"">` + h + `</aside>`);
         modal.zIndex(document.querySelectorAll('aside'));
         return new Promise((resolve,reject)=>resolve(byId('boot').nextElementSibling));
+    }
+    ,
+    prompt: async(h,opt,value,ppp=document.createElement('aside'))=>{
+        return new Promise(async(resolve,reject)=>{
+            var innerHTML = await ajax('raw/html/template/template.modal.prompt.html');
+            var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
+            html.find('[placeholder="Title"]').textContent = h.title;
+            html.find('[placeholder="Body"]').textContent = h.body;
+            html.find('input').setAttribute('value', value);
+            html.find('[placeholder="No"]').textContent = opt[0];
+            html.find('[placeholder="Yes"]').textContent = opt[1];
+            ppp.innerHTML = html.outerHTML;
+            ppp.onclick = event=>{
+                var io = false;
+                if (event.target.classList.contains('aside')) {
+                    event.target.remove();
+                } else {
+                    var target = event.target;
+                    var confirm = target.closest("[placeholder='Yes']");
+                    var cancel = target.closest("[placeholder='No']");
+                    if (confirm || cancel) {
+                        io = confirm ? target.closest('card').find('input').value : false;
+                        modal.exit(target);
+                        resolve(io);
+                    }
+                }
+            }
+            ;
+            dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
+            modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
+        }
+        );
     }
     ,
     input: (html,callBack,ppp=document.createElement('aside'))=>{

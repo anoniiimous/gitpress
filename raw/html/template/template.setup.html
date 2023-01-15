@@ -123,9 +123,9 @@
                         <column id="iro-setup-about-brand"></column>
                     </box>
                     <box class="display-flex flex-direction-row justify-content-space-between margin-y-20px">
-                        <column id="color-data-hex">
+                        <column id="color-data-hex" data-tap="controller.setup.background(event.target)">
                             <text class="color-bbb font-weight-bolder">HEX</text>
-                            <text>#ffffff</text>
+                            <text data-before="">ffffff</text>
                         </column>
                         <column id="color-data-rgb">
                             <text class="color-bbb font-weight-bolder">RGB</text>

@@ -172,7 +172,7 @@
         /* background: white; */
     }
 
-    body > aside ~ main {
+    body > aside ~ * {
         position: fixed;
     }
 

@@ -369,13 +369,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //alert("Step Three");
 
                                         var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
-                                        if (1 < 0) {
+                                        var safety = 1 < 0;
+                                        if (safety) {
                                             picture.innerHTML = svg.outerHTML;
                                         } else {
                                             var rect = svg.find('rect');
                                             picture.find('rect').setAttribute('fill', rect.getAttribute('fill'))
                                             var foreignObject = svg.find('foreignObject');
                                             picture.find('foreignObject').innerHTML = foreignObject.innerHTML;
+                                            picture.find('foreignObject').setAttribute('height', foreignObject.getAttribute('height'));
+                                            picture.find('foreignObject').setAttribute('width', foreignObject.getAttribute('width'));
+                                            picture.find('foreignObject').style.transform = foreignObject.style.transform;
                                         }
 
                                         $(form.all('block > *')).addClass('display-none');
@@ -1356,6 +1360,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        background: async(target)=>{
+            var button = target.closest('column').lastElementChild;
+            var prompt = await modal.prompt({
+                body: 'Enter a background color value.',
+                title: 'Hex Color Code'
+            }, ['Cancel', 'Update'], button.textContent);
+            console.log(1368, {
+                prompt
+            });
+            if (prompt) {
+                console.log({
+                    target,
+                    column: target.closest('column'),
+                    button: target.closest('column').lastElementChild
+                });
+                button.textContent = prompt;
+                controller.setup.iro(prompt)
+            }
+        }
+        ,
+
         icon: data=>{
 
             //var files = event.target.files
@@ -1388,10 +1413,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var sel = "iro-setup-about-brand";
             var el = byId(sel);
+            el.innerHTML = "";
             if (el.innerHTML === "") {
                 var icon = byId('new-app-icon');
                 var width = el.clientWidth - 51;
                 var box = 1 < 0;
+                console.log("controller.setup.iro");
                 window.picker = new iro.ColorPicker("#" + sel,{
                     color,
                     layout: [{
@@ -1531,7 +1558,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         $(form.all('block > *')[1]).removeClass('display-none');
 
                         var picture = steps[1].find('picture');
-                        console.log(picture.firstElementChild.tagName)
                         var color = picture.firstElementChild.tagName === "svg" ? picture.find('rect').getAttribute('fill') : "#" + colors.random();
 
                         controller.setup.iro(color);
