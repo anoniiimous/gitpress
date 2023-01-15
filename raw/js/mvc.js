@@ -1361,7 +1361,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         background: async(target)=>{
-            var button = target.closest('column').lastElementChild;
+            var button = target.closest('column').find('span');
             var prompt = await modal.prompt({
                 body: 'Enter a background color value.',
                 title: 'Hex Color Code'
@@ -1373,7 +1373,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 console.log({
                     target,
                     column: target.closest('column'),
-                    button: target.closest('column').lastElementChild
+                    button: target.closest('column').find('span')
                 });
                 button.textContent = prompt;
                 controller.setup.iro(prompt)
@@ -1409,7 +1409,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var icon = byId('new-app-icon');
             //icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);
 
-            byId('color-data-hex').all('text')[1].textContent = color;
+            byId('color-data-hex').all('text')[1].find('span').textContent = color;
 
             var sel = "iro-setup-about-brand";
             var el = byId(sel);
@@ -1448,9 +1448,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
                     var hsl = color.hsla;
                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                    byId("color-data-hex").all('text')[1].textContent = hexString;
-                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                    byId("color-data-hsl").all('text')[1].textContent = hslString;
+                    byId("color-data-hex").all('text')[1].find('span').textContent = hexString;
+                    byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString;
+                    byId("color-data-hsl").all('text')[1].find('span').textContent = hslString;
                     icon.find('rect').setAttribute('fill', hexString);
                     //icon.style.backgroundColor = hexString;
                     //icon.style.color = colors.contrast(hexString);
@@ -1467,9 +1467,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
                     var hsl = color.hsla;
                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                    byId("color-data-hex").all('text')[1].textContent = hexString;
-                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                    byId("color-data-hsl").all('text')[1].textContent = hslString;
+                    byId("color-data-hex").all('text')[1].find('span').textContent = hexString;
+                    byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString;
+                    byId("color-data-hsl").all('text')[1].find('span').textContent = hslString;
                     icon.find('rect').setAttribute('fill', hexString);
                     //icon.style.backgroundColor = hexString;
                     //icon.style.color = colors.contrast(hexString);
@@ -1816,7 +1816,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const form = event.target;
             const steps = form.all('block > column');
             const title = steps[0].find('[type="text"]').value;
-            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
+            const color = steps[1].find('#color-data-hex').all('text')[1].find('span').textContent.split('#')[1];
             const about = steps[2].find('textarea').value;
             alert("webmanifest: " + title + " : " + color + " : " + about);
 

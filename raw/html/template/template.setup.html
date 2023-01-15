@@ -125,15 +125,24 @@
                     <box class="display-flex flex-direction-row justify-content-space-between margin-y-20px">
                         <column id="color-data-hex" data-tap="controller.setup.background(event.target)">
                             <text class="color-bbb font-weight-bolder">HEX</text>
-                            <text data-before="" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">#ffffff</text>
+                            <text class="border-bottom-1px-solid border-color-bbb align-items-center display-flex flex-direction-row">
+                                <span data-before="">#ffffff</span>
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="--ggs-50pct gg-pen"></n>
+                                </ico>
+                            </text>
                         </column>
                         <column id="color-data-rgb">
                             <text class="color-bbb font-weight-bolder">RGB</text>
-                            <text>255, 255, 255</text>
+                            <text>
+                                <span>255, 255, 255</span>
+                            </text>
                         </column>
                         <column id="color-data-hsl">
                             <text class="color-bbb font-weight-bolder">HSL</text>
-                            <text>0, 0%, 100%</text>
+                            <text>
+                                <span>0, 0%, 100%</span>
+                            </text>
                         </column>
                     </box>
                 </section>

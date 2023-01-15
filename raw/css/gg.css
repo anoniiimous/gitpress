@@ -1836,6 +1836,10 @@
 }
 
 @media screen {
+    .--ggs-50pct {
+        --ggs: .5;
+    }
+    
     .--ggs-1pt5 {
         --ggs: 1.5;
     }
