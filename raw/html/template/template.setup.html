@@ -95,13 +95,13 @@
                         </picture>
                     </box>
                     <box class="display-flex flex-direction-row justify-content-space-between" data-columns="2" data-tap="controller.setup.load(event.target)">
-                        <row class="align-items-center justify-content-center width-50pct">
+                        <label class="align-items-center display-flex flex-direction-row justify-content-center width-50pct" for="dashboard-setup-brand">
                             <ico data-width="20px">
+                                <input id="dashboard-setup-brand" type="file" id="dashboard-setuo-brand" onchange="on.change.file(event).then(controller.setup.icon)">
                                 <n class="gg-software-upload"></n>
                             </ico>
-                            <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
                             <text class="padding-x-10px">Import</text>
-                        </row>
+                        </label>
                         <row class="align-items-center justify-content-center width-50pct">
                             <ico data-width="20px">
                                 <n class="gg-software-download"></n>

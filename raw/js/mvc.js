@@ -252,7 +252,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         repo: get[1]
                     };
                     var settings = {
-                                cache: "reload"
+                        cache: "reload"
                     };
                     github.repos.contents(params, settings).then(async(data)=>{
                         if (data) {
@@ -1356,6 +1356,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        icon: data=>{
+
+            //var files = event.target.files
+            ImageTracer.imageToSVG(data, (svgstr)=>{
+                byId('new-app-icon').find('foreignObject').innerHTML = svgstr;
+            }
+            , {
+                viewbox: true
+            })
+
+        }
+        ,
+
         webmanifest: async(event)=>{
             event.preventDefault();
             const form = event.target;
@@ -1460,7 +1473,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 picker.on("mount", colorPicker);
                 window.addEventListener("resize", reSize)
                 function colorPicker(e) {
-                    console.log(e);
+                    //console.log(e);
                     reSize();
                     var color = e.color;
                     var hexString = color.hexString;
@@ -1498,9 +1511,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         load: (target)=>{
-            var button = target.closest('row').find('ico n');
-            if (button.className === "gg-software-upload") {
-                alert('Import File');
+            var button = target.closest('box > *').find('ico n');
+            if (button.className === "gg-software-upload") {//alert('Import File');
             }
             if (button.className === "gg-software-download") {
                 (async function() {

@@ -377,7 +377,7 @@ window.on.touch = {
             elem.dataset.accept ? (file.accept = elem.dataset.accept) : null;
             elem.dataset.onload ? (file.dataset.onload = elem.dataset.onload) : null;
             console.log("file", file);
-            file.click();
+            //file.click();
         }
     }
 
