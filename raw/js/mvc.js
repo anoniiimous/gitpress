@@ -1369,47 +1369,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        webmanifest: async(event)=>{
-            event.preventDefault();
-            const form = event.target;
-            const steps = form.all('block > column');
-            const title = steps[0].find('[type="text"]').value;
-            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
-            const about = steps[2].find('textarea').value;
-            alert("webmanifest: " + title + " : " + color + " : " + about);
-
-            const user = await github.user.get();
-            var owner = user.login;
-            var repo = title;
-            var path = "/site.webmanifest";
-            var params = {
-                owner,
-                repo,
-                path
-            }
-            var raw = JSON.stringify({
-                name,
-                "theme_color": color
-            }, null, 2);
-            var content = btoa(raw);
-            var message = "Create Webmanifest";
-            const data = JSON.stringify({
-                content,
-                message
-            });
-            const dataType = "PUT";
-            const settings = {
-                data,
-                dataType
-            };
-            console.log({
-                params,
-                settings
-            });
-            //github.repos.contents(params, settings).then((window.location.pathname + window.location.hash).router())
-        }
-        ,
-
         ico: (el)=>{
             var elem = el.find('picture').firstElementChild;
             var xml = new XMLSerializer().serializeToString(elem);
@@ -1527,6 +1486,23 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 )()
             }
+        }
+        ,
+
+        scale: (event)=>{
+            var target = event.target;
+            var value = target.value;
+            var foreignObject = target.closest('box').parentNode.firstElementChild.find('foreignObject');
+            console.log("controller.setup.scale", {
+                event,
+                foreignObject,
+                target,
+                value
+            });
+            foreignObject.setAttribute('height', value + '%');
+            foreignObject.setAttribute('width', value + '%');
+            foreignObject.style.transform = "translate(calc((100% - " + value + "%)/2), calc((100% - " + value + "%)/2))";
+            target.previousElementSibling.lastElementChild.textContent = value;
         }
         ,
 
@@ -1806,6 +1782,47 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
             }
+        }
+        ,
+
+        webmanifest: async(event)=>{
+            event.preventDefault();
+            const form = event.target;
+            const steps = form.all('block > column');
+            const title = steps[0].find('[type="text"]').value;
+            const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
+            const about = steps[2].find('textarea').value;
+            alert("webmanifest: " + title + " : " + color + " : " + about);
+
+            const user = await github.user.get();
+            var owner = user.login;
+            var repo = title;
+            var path = "/site.webmanifest";
+            var params = {
+                owner,
+                repo,
+                path
+            }
+            var raw = JSON.stringify({
+                name,
+                "theme_color": color
+            }, null, 2);
+            var content = btoa(raw);
+            var message = "Create Webmanifest";
+            const data = JSON.stringify({
+                content,
+                message
+            });
+            const dataType = "PUT";
+            const settings = {
+                data,
+                dataType
+            };
+            console.log({
+                params,
+                settings
+            });
+            //github.repos.contents(params, settings).then((window.location.pathname + window.location.hash).router())
         }
 
     },

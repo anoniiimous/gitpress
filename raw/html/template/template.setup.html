@@ -113,9 +113,9 @@
                         <column>
                             <text class="display-flex color-777 font-weight-bolder justify-content-space-between line-height-50px">
                                 <span>Size</span>
-                                <span>69%</span>
+                                <span data-after="%">69</span>
                             </text>
-                            <input class="-webkit-slider-thumb-border-2px-solid-000 -webkit-appearance-none border-radius-50px height-30px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" type="range" min="1" max="100" value="69">
+                            <input class="-webkit-slider-thumb-border-2px-solid-000 -webkit-appearance-none border-radius-50px height-30px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" onchange="controller.setup.scale(event)" type="range" min="1" max="100" value="69">
                         </column>
                     </box>
                     <box class="margin-y-20px">

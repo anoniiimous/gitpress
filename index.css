@@ -1,5 +1,13 @@
 /*PSEUDO*/
 @media screen {   
+    [data-after]:after {
+        content: attr(data-after);
+    }
+    
+    [data-before]:before {
+        content: attr(data-before);
+    }
+    
     body:not([data-uid]) .-isauth, body[data-uid] .-noauth {
         display: none;
     }
