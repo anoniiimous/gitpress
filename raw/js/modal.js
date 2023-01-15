@@ -91,7 +91,7 @@ window.modal = {
         return new Promise((resolve,reject)=>resolve(byId('boot').nextElementSibling));
     }
     ,
-    page: (h,style,className)=>{
+    page: async(h,style,className)=>{
         //console.log(style);
         var ppp = document.createElement('aside');
         ppp.innerHTML = h;
@@ -107,6 +107,22 @@ window.modal = {
             }
         }
         (className) ? ppp.setAttribute('class', className) : null;
+        
+        const fetching2 = ppp.all('[data-fetch]');
+        console.log({
+            ppp,
+            fetching2,
+        });
+        if (fetching2.length > 0) {
+            var ff = 0;
+            do {
+                if (fetching2[ff].innerHTML === "") {
+                    fetching2[ff].innerHTML = await ajax(fetching2[ff].dataset.fetch);
+                }
+                ff++;
+            } while (fetching2.length < 0);
+        }
+        
         ppp.onclick = event=>{
             //console.log(event);
             if(event.target.classList.contains('aside')) {

@@ -22,7 +22,7 @@
             const base = document.createElement("base");
             window.isIp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]);
             window.hub = (isIp)
-            base.href = (1<0 && window.hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
+            base.href = (1 < 0 && window.hub ? "/" + document.head.querySelector('[name="application-shortname"]').content : "") + "/";
             document.head.appendChild(base);
         </script>
         <link href="index.css" rel="stylesheet">
@@ -42,6 +42,7 @@
         <script src="index.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.1/canvg.js" integrity="sha512-Qw1+j4vl/AjCqxrx/omDzobdEepDHathD3Z0bwulQSrLlaTtTWhiH3sMSDU4oK2TP2EfyzHgg33gh2zxUAI3EQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="raw/js/tracer.js"></script>
     </head>
     <body class="-dark-background-color-1f background-color-fff" data-theme="system">
