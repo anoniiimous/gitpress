@@ -343,7 +343,9 @@ function ajax(url, settings) {
     );
 }
 
-function download(download, href) {
+function download(file) {
+    var download = file.download;
+    var href = file.href;
     var a = document.createElement("a");
     a.href = href;
     a.download = download;

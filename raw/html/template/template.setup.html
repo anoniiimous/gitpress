@@ -94,7 +94,7 @@
                             </svg>
                         </picture>
                     </box>
-                    <box class="display-flex flex-direction-row justify-content-space-between" data-columns="2">
+                    <box class="display-flex flex-direction-row justify-content-space-between" data-columns="2" data-tap="controller.setup.load(event.target)">
                         <row class="align-items-center justify-content-center width-50pct">
                             <ico data-width="20px">
                                 <n class="gg-software-upload"></n>
@@ -102,7 +102,7 @@
                             <input data-evt="file" type="file" id="build-app-logo" onchange="on.change.setup.logo(event)">
                             <text class="padding-x-10px">Import</text>
                         </row>
-                        <row class="align-items-center justify-content-center width-50pct" data-tap="controller.setup.ico(event.target.closest('box').previousElementSibling)">
+                        <row class="align-items-center justify-content-center width-50pct">
                             <ico data-width="20px">
                                 <n class="gg-software-download"></n>
                             </ico>

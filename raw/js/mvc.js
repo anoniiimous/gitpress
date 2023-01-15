@@ -367,15 +367,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //alert("Step Three");
 
                                         var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
-                                        var rect = svg.find('rect');
-                                        rect.style.display = "none";
-                                        picture.parentNode.style.backgroundColor = rect.getAttribute('fill');
-                                        var foreignObject = svg.find('foreignObject');
-                                        var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
-                                        if (foreignObject.firstElementChild.clientWidth > foreignObject.firstElementChild.clientHeight) {//foreignObject.firstElementChild.style.width = (size * 0.69) + 'px';
-                                        } else {//foreignObject.firstElementChild.style.height = (size * 0.69) + 'px';
+                                        if (1 < 0) {
+                                            picture.innerHTML = svg.outerHTML;
+                                        } else {
+                                            var rect = svg.find('rect');
+                                            picture.find('rect').setAttribute('fill', rect.getAttribute('fill'))
+                                            var foreignObject = svg.find('foreignObject');
+                                            picture.find('foreignObject').innerHTML = foreignObject.innerHTML;
                                         }
-                                        picture.innerHTML = svg.outerHTML;
 
                                         $(form.all('block > *')).addClass('display-none');
                                         $(form.all('form > header box flex')).attr("data-height", "30px");
@@ -397,7 +396,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         $(form.all('form > header box flex')[1]).attr("data-width", "50px");
                                         $(form.all('block > *')[1]).removeClass('display-none');
 
-                                        var color = picture.firstElementChild.tagName !== "SVG" ? '#' + colors.random() : rect.style.backgroundColor;
+                                        var color = colors.random();
                                         controller.setup.iro(color);
                                     }
                                 }
@@ -543,117 +542,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 if (get[1] === "app") {
                     var vp = dom.body.find('[data-pages="/new/app/"]');
                     var form = vp.find('form');
-
                     form.find('input').value = "";
-                }
-                if (1 === 0 && get[1] === "app") {
-
-                    var vp = dom.body.find('[data-pages="/new/app/"]');
-                    var form = vp.find('form');
-
-                    $(form.all('block > *')).addClass('display-none');
-                    $(vp.all('form > header box flex')).attr("data-height", "30px");
-                    $(vp.all('form > header box flex')).attr("data-width", "30px");
-                    //vp.all('block[data-step]')[0].find('input[type="text"]').value = get[1];
-                    //vp.all('block[data-step]')[0].find('footer').classList.remove('opacity-50pct');
-                    //vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "false";
-
-                    if (get.length > 2) {
-                        form.all('block > *')[0].find('input').value = get[2];
-                        form.all('block > *')[0].all('footer box')[1].classList.remove('opacity-50pct');
-                        var icon = byId('new-app-icon');
-                        if (get.length > 3) {
-                            $(vp.all('form > header box flex')[2]).attr("data-height", "50px");
-                            $(vp.all('form > header box flex')[2]).attr("data-width", "50px");
-                            $(vp.all('block > *')[2]).removeClass('display-none');
-
-                            var hexString = '#' + get[3];
-                            icon.style.backgroundColor = hexString;
-                            icon.style.color = colors.contrast(hexString);
-                            byId("color-data-hex").all('text')[1].textContent = hexString;
-                            //byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                            //byId("color-data-hsl").all('text')[1].textContent = hslString;
-
-                            if (get.length > 4) {
-                                var textarea = vp.all('block > *')[2].find('textarea');
-                                if (get.length === 5) {
-                                    textarea.value = atob(get[4]);
-                                }
-                            }
-                        } else {
-                            //alert("Step Two");
-                            icon.find('n').textContent = get[2].charAt(0);
-                            $(vp.all('form > header box flex')[1]).attr("data-height", "50px");
-                            $(vp.all('form > header box flex')[1]).attr("data-width", "50px");
-                            $(vp.all('block > *')[1]).removeClass('display-none');
-
-                            var sel = "iro-setup-about-brand";
-                            var el = byId(sel);
-                            if (el.innerHTML === "") {
-                                var width = el.clientWidth - 51;
-                                var box = 1 < 0;
-                                window.picker = new iro.ColorPicker("#" + sel,{
-                                    color: byId("color-data-hex").all('text')[1].textContent,
-                                    layout: [{
-                                        component: iro.ui.Slider,
-                                        options: {
-                                            sliderType: 'hue'
-                                        }
-                                    }, {
-                                        component: iro.ui.Slider,
-                                        options: {
-                                            sliderType: 'saturation'
-                                        }
-                                    }, {
-                                        component: iro.ui.Slider,
-                                        options: {
-                                            sliderType: 'value'
-                                        }
-                                    }],
-                                    layoutDirection: "vertical",
-                                    margin: 20,
-                                    sliderSize: 30
-                                });
-                                picker.on("color:change", function(color) {
-                                    var icon = byId('new-app-icon');
-                                    var hexString = color.hexString;
-                                    var rgb = color.rgba;
-                                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
-                                    var hsl = color.hsla;
-                                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                                    byId("color-data-hex").all('text')[1].textContent = hexString;
-                                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                                    byId("color-data-hsl").all('text')[1].textContent = hslString;
-                                    icon.style.backgroundColor = hexString;
-                                    icon.style.color = colors.contrast(hexString);
-                                    //icon.dataset.contrast = icon.style.color;
-                                });
-                                picker.on("mount", function(e) {
-                                    console.log(e);
-                                    var color = e.color;
-                                    var icon = byId('new-app-icon');
-                                    var hexString = color.hexString;
-                                    var rgb = color.rgba;
-                                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
-                                    var hsl = color.hsla;
-                                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                                    byId("color-data-hex").all('text')[1].textContent = hexString;
-                                    byId("color-data-rgb").all('text')[1].textContent = rgbString;
-                                    byId("color-data-hsl").all('text')[1].textContent = hslString;
-                                    icon.style.backgroundColor = hexString;
-                                    icon.style.color = colors.contrast(hexString);
-                                    picker.resize(dom.body.clientWidth > 480 ? 480 : dom.body.clientWidth - 90);
-                                });
-                                box ? window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null) : null;
-                                //window.addEventListener("resize", byId("color-picker").clientWidth > 0 ? picker.resize(byId("color-picker").clientWidth - 90) : null)
-                            }
-                        }
-                    } else {
-                        //alert("Step One");
-                        $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
-                        $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
-                        $(vp.all('block > *')[0]).removeClass('display-none');
-                    }
                 }
                 resolve(route)
             } else {
@@ -1477,89 +1366,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        ico: async(el)=>{
-
-            return new Promise((resolve,reject)=>{
-
-                var canvas = html2canvas(el.find('picture img'), {
-                    backgroundColor: null
-                }).then(canvas=>{
-
-                    var ico = canvas.toDataURL();
-                    ImageTracer.imageToSVG(ico, async i=>{
-                        var icon = new DOMParser().parseFromString(i, "image/svg+xml");
-                        var xml = new XMLSerializer().serializeToString(icon);
-                        var image = "data:image/svg;base64," + btoa(xml);
-
-                        var picture = el.find('picture');
-
-                        html2canvas(picture, {
-                            backgroundColor: null
-                        }).then(canvas=>{
-                            var base64 = canvas.toDataURL();
-                            1 > 0 ? ImageTracer.imageToSVG(base64, async svgstr=>{
-                                var svg = new DOMParser().parseFromString(svgstr, "image/svg+xml")
-                                var elem = svg.documentElement;
-
-                                var g = svg.createElement('g');
-                                g.innerHTML = elem.innerHTML;
-                                //elem.innerHTML = g.outerHTML;
-
-                                var foreignObject = svg.createElement('foreignObject');
-                                foreignObject.setAttribute("style", "display:flex;transform-origin: center;transform: translate(calc((100% - 69%)/2), calc((100% - 69%)/2));");
-                                foreignObject.setAttribute('height', '69%');
-                                foreignObject.setAttribute('width', '69%');
-                                var img = svg.createElement('img');
-                                foreignObject.innerHTML = "<div style='align-items:center;display:flex;justify-content:center' xmlns='http://www.w3.org/1999/xhtml'>" + img.outerHTML + "</div>";
-                                foreignObject.find('img').src = ico;
-                                foreignObject.innerHTML = i;
-                                foreignObject.find('svg').style = "margin:auto";
-                                //elem.insertAdjacentHTML('afterbegin', foreignObject.outerHTML);
-                                elem.innerHTML = foreignObject.outerHTML;
-
-                                var fill = el.style.backgroundColor;
-                                var rect = svg.createElement('rect');
-                                rect.setAttribute('fill', fill);
-                                rect.setAttribute('height', '100%');
-                                rect.setAttribute('rx', '15%');
-                                rect.setAttribute('width', '100%');
-                                elem.insertAdjacentHTML('afterbegin', rect.outerHTML);
-
-                                var xml = new XMLSerializer().serializeToString(elem);
-                                var obj = {
-                                    name: GET[1] + ".svg",
-                                    file: "data:image/svg;base64," + btoa(xml)
-                                };
-                                download(obj.name, obj.file);
-                                console.log(1475, {
-                                    elem,
-                                    fill,
-                                    obj,
-                                    svg,
-                                    svgstr,
-                                    xml
-                                });
-                                resolve(obj);
-                            }
-                            , {
-                                viewbox: true
-                            }) : 0;
-                            console.log(canvas);
-                            //download(GET[1] + ".png", base64);
-                        }
-                        );
-                    }
-                    );
-
-                }
-                );
-
-            }
-            );
+        ico: (el)=>{
+            var elem = el.find('picture').firstElementChild;
+            var xml = new XMLSerializer().serializeToString(elem);
+            return obj = {
+                download: GET[1] + ".svg",
+                href: "data:image/svg;base64," + btoa(xml)
+            };
         }
         ,
 
         iro: (color)=>{
+            //picture.find('rect').fill = color; 
             var icon = byId('new-app-icon');
             //icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);
 
@@ -1603,8 +1421,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     byId("color-data-hex").all('text')[1].textContent = hexString;
                     byId("color-data-rgb").all('text')[1].textContent = rgbString;
                     byId("color-data-hsl").all('text')[1].textContent = hslString;
-                    icon.style.backgroundColor = hexString;
-                    icon.style.color = colors.contrast(hexString);
+                    icon.find('rect').setAttribute('fill', hexString);
+                    //icon.style.backgroundColor = hexString;
+                    //icon.style.color = colors.contrast(hexString);
                     //icon.dataset.contrast = icon.style.color;
                 });
                 picker.on("mount", colorPicker);
@@ -1621,8 +1440,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     byId("color-data-hex").all('text')[1].textContent = hexString;
                     byId("color-data-rgb").all('text')[1].textContent = rgbString;
                     byId("color-data-hsl").all('text')[1].textContent = hslString;
-                    icon.style.backgroundColor = hexString;
-                    icon.style.color = colors.contrast(hexString);
+                    icon.find('rect').setAttribute('fill', hexString);
+                    //icon.style.backgroundColor = hexString;
+                    //icon.style.color = colors.contrast(hexString);
                 }
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
@@ -1642,6 +1462,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         img = icon.find('picture foreignObject');
                     }
                 }
+            }
+        }
+        ,
+
+        load: (target)=>{
+            var button = target.closest('row').find('ico n');
+            if (button.className === "gg-software-upload") {
+                alert('Import File');
+            }
+            if (button.className === "gg-software-download") {
+                (async function() {
+                    var confirm = await modal.confirm({
+                        body: 'Are you sure you want to save this icon to your device?',
+                        title: 'Export'
+                    }, ["Cancel", "Download"]);
+                    if (confirm) {
+                        var icon = controller.setup.ico(target.closest('box').previousElementSibling);
+                        download(icon);
+                    }
+                }
+                )()
             }
         }
         ,
@@ -1778,7 +1619,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                         //Import icon.svg
                         var box = icon.parentNode;
-                        var file = await controller.setup.ico(box);
+                        var file = controller.setup.ico(box);
                         var user = await github.user.get();
                         github.repos.contents({
                             owner: user.login,
@@ -1815,7 +1656,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             console.log(1749, {
                                 icon
                             });
-                            var b64 = icon.file;
+                            var b64 = icon.href;
                             var content = b64.split(';base64,')[1];
                             var message = "Create icon.svg";
                             var data = {
