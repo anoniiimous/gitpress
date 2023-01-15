@@ -1747,7 +1747,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         console.log(1805, {
                                             data
                                         });
-                                        //window.location.pathname.router();
+                                        window.location.pathname.router();
                                     }) : null;
                                 }
                                 );
