@@ -34,6 +34,7 @@ window.onpopstate = (event)=>{
 
 async function init() {
     console.log("Initializing...");
+    eruda.init();
     
     const html = await ajax('raw/html/template/template.shell.html');
     dom.body.find('boot').insertAdjacentHTML('afterend', html);
