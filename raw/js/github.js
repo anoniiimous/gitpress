@@ -1,15 +1,24 @@
 window.github = {
     endpoint: "https://api.github.com",
     raw: {
-        file: async(token)=>{
-            return await ajax('https://raw.githubusercontent.com/anoniiimous/www/main/icon.svg', {
-                headers: {
-                    'Accept': 'application/vnd.github.v3.raw',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': token
-                },
-                mode: 'cors'
-            });
+        file:(resource)=>{
+            return new Promise((resolve,reject)=>{
+                var host = 'https://raw.dompad.workers.dev';
+                var url = host + resource + '?token=' + localStorage.githubAccessToken;
+                var settings = {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3.raw',
+                        'Access-Control-Allow-Origin': '*',
+                        'Authorization': 'token ' + localStorage.githubAccessToken
+                    },
+                    mode: 'cors'
+                };
+                const a = (data)=>{
+                    resolve(data);
+                }
+                ajax(url).then(a);
+            }
+            );
         }
         ,
         git: (url,settings)=>{

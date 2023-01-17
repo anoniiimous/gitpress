@@ -73,7 +73,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             project.previousElementSibling.find('img').src = "data:image/svg;base64," + icon.content;
                         } catch (e) {}
                     } else {
-                        project.previousElementSibling.find('img').src = "https://raw.githubusercontent.com/" + user.login + "/" + get[1] + "/main/icon.svg";
+                        var svg = await github.raw.file("/" + user.login + "/" + get[1] + "/main/icon.svg")
+                        var icon = "data:image/svg+xml;base64," + btoa(svg);
+                        project.previousElementSibling.find('img').src = icon;
                     }
 
                     if (get.length > 2) {
