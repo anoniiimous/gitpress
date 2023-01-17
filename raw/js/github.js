@@ -1,5 +1,43 @@
 window.github = {
     endpoint: "https://api.github.com",
+    raw: {
+        file: async(token)=>{
+            return await ajax('https://raw.githubusercontent.com/anoniiimous/www/main/icon.svg', {
+                headers: {
+                    'Accept': 'application/vnd.github.v3.raw',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': token
+                },
+                mode: 'cors'
+            });
+        }
+        ,
+        git: (url,settings)=>{
+            return new Promise((resolve,reject)=>{
+                !settings ? settings = {} : null;
+                console.log(6, settings);
+                const a = (data)=>{
+                    //const data = JSON.parse(d);
+                    resolve(data);
+                }
+                const b = (error)=>{
+                    console.log(error);
+                    reject(error);
+                }
+                const accessToken = localStorage.githubAccessToken;
+                //settings.cache = "reload";
+                //settings.mode = "cors";
+                1 > 0 && accessToken ? settings.headers = {
+                    //"Access-Control-Allow-Origin": "*",
+                    //Accept: "application/vnd.github.v3.raw",
+                    Authorization: "token " + accessToken
+                } : null;
+                //console.log({ url, settings });
+                ajax(url, settings).then(a).catch(b);
+            }
+            );
+        }
+    },
     database: {
         blobs: (params,settings)=>{
             if (settings && settings.dataType) {

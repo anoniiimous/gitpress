@@ -189,6 +189,10 @@
         display: none;
     }
 
+    .empty:empty {
+        display: none;
+    }
+
     :not(:empty) + .empty-state {
         display: none;
     }

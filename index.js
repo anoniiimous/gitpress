@@ -7,10 +7,6 @@ auth.config = {
     appId: "1:145843831249:web:f1be6e15d0b1372b5da0f0"
 };
 
-window.cdn = {
-    endpoint: "https://cdn.uios.computer/file/write-uios"
-}
-
 window.onload = ()=>{
     window.dom = {
         body: document.body,

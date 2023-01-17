@@ -58,7 +58,24 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             if (root === "dashboard") {
                 controller.nav.close();
                 if (get.length > 1) {
-                    dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = get[1];
+                    const user = await github.user.get();
+                    var project = dom.body.find('main > nav').find('[placeholder="Project Name"]');
+                    if (1 < 0) {
+                        try {
+                            var icon = await github.repos.contents({
+                                owner: user.login,
+                                path: "/icon.svg",
+                                repo: get[1]
+                            }, {});
+                            console.log({
+                                icon
+                            });
+                            project.previousElementSibling.find('img').src = "data:image/svg;base64," + icon.content;
+                        } catch (e) {}
+                    } else {
+                        project.previousElementSibling.find('img').src = "https://raw.githubusercontent.com/" + user.login + "/" + get[1] + "/main/icon.svg";
+                    }
+
                     if (get.length > 2) {
                         if (get[2] === "build") {
                             resolve(route);
@@ -69,7 +86,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                             var feed = byId('feed-dashboard-files');
                             if (feed.innerHTML === "" || get.length < 4) {
-                                const user = await github.user.get();
                                 const name = get[4] + '.html';
                                 var params = {
                                     owner: user.login,
@@ -245,7 +261,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                     }
 
-                    const user = await github.user.get();
+                    //const user = await github.user.get();
                     var params = {
                         owner: user.login,
                         path: "/site.webmanifest",
