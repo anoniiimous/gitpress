@@ -1,7 +1,7 @@
 window.github = {
     endpoint: "https://api.github.com",
     raw: {
-        file:(resource)=>{
+        file: (resource)=>{
             return new Promise((resolve,reject)=>{
                 var host = 'https://raw.dompad.workers.dev';
                 var url = host + resource + '?token=' + localStorage.githubAccessToken;
@@ -39,6 +39,21 @@ window.github = {
                 ajax(url, settings).then(a);
             }
             );
+        }
+        ,
+        path: async(resource)=>{
+            var r = rout.ed.dir(resource);
+            var repo = r[1];
+                r.splice(0, 3);
+            var path = rout.ed.url(r);
+            var user = await github.user.get();
+            var owner = user.login;
+                console.log({r,repo,path});
+            return await github.repos.contents({
+                owner,
+                path,
+                repo
+            }, {});
         }
     },
     database: {

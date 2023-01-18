@@ -1,4 +1,4 @@
-if ('serviceWorker' in navigator) {
+if (globals.domains.tld !== 'tld' && 'serviceWorker' in navigator) {
    navigator.serviceWorker.register("/sw.js");
 }
 if (window.Worker) {
