@@ -5,6 +5,6 @@ self.addEventListener('fetch', function(event) {
         mode: "cors"
     };
     const newRequest = new Request(event.request);
-    console.log(event.request, { settings });
+    console.log('sw.js', 8, {});
     return fetch(newRequest);
 })
