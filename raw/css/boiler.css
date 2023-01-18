@@ -80,6 +80,10 @@
         background-color: #bbb;
     }
 
+    .background-color-ccc {
+        background-color: #ccc;
+    }
+
     .background-color-ddd {
         background-color: #ddd;
     }
@@ -200,6 +204,14 @@
 
     .border-radius-50px {
         border-radius: 50px;
+    }
+
+    .border-top-left-radius-20px {
+        border-top-left-radius: 20px;
+    }
+
+    .border-top-right-radius-20px {
+        border-top-right-radius: 20px;
     }
 
     @media (max-width: 640px) {
