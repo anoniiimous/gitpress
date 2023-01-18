@@ -2,8 +2,8 @@ if ('serviceWorker' in navigator) {
    navigator.serviceWorker.register("/sw.js");
 }
 if (window.Worker) {
-    var worker = new Worker('/worker.js');
-    worker.postMessage(['worker', localStorage.githubAccessToken]);
+    //var worker = new Worker('/worker.js');
+    //worker.postMessage(['worker', localStorage.githubAccessToken]);
 }
 
 window.auth ? null : window.auth = {};
