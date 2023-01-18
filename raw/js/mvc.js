@@ -62,7 +62,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var project = dom.body.find('main > nav').find('[placeholder="Project Name"]');
                     if (1 > 0) {
                         try {
-                            var icon = await github.raw.path('/anoniiimous/www/main/icon.svg');
+                            var icon = await github.raw.path("/" + user.login + "/" + get[1] + "/main/icon.svg");
                             project.previousElementSibling.find('img').src = "data:image/svg+xml;base64," + icon.content;
                         } catch (e) {}
                     } else {
