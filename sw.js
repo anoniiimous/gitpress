@@ -35,7 +35,7 @@ self.addEventListener('fetch', event=>{
         headers: {
             'Accept': 'application/vnd.github.v3.raw',
             'Access-Control-Allow-Origin': '*',
-            'Authorization': 'token ' + localStorage.githubAccessToken
+            'Authorization': 'token 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'
         },
         mode: 'cors'
     }).then((d)=>{
