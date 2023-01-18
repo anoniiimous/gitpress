@@ -26,21 +26,7 @@ self.addEventListener('activate', event=>{
 }
 );
 
-// The fetch handler serves responses for same-origin resources from a cache.
-// If no response is found, it populates the runtime cache with the response
-// from the network before returning it to the page.
 self.addEventListener('fetch', event=>{
-    console.log("sw.js fetch");
-    fetch('https://raw.githubusercontent.com/anoniiimous/www/main/icon.svg', {
-        headers: {
-            'Accept': 'application/vnd.github.v3.raw',
-            'Access-Control-Allow-Origin': '*',
-            'Authorization': 'token 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'
-        },
-        mode: 'cors'
-    }).then((d)=>{
-        console.log(d);
-    }
-    );
+    console.log("sw.js fetch", event);
 }
 );
