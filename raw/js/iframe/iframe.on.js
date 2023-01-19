@@ -284,7 +284,7 @@ window.on.touch = {
     if (elem) {
         //elem.dataset.href.router({cookie:elem.dataset.cookie});
         var href = elem.dataset.href;
-        //alert(href);
+        alert(href);
         var body = target.closest("body");
         if (!body.classList.contains("editor")) {
             body.classList.contains("iframe") ? window.parent.api.message["state"](window.parent.rout.e(href)) : href.router({

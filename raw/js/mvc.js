@@ -745,6 +745,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
 
                     try {
+                        var css = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.css')).content);
+                        var link = document.createElement('link');
+                        link.href = blob(css, 'text/css');
+                        link.rel = "stylesheet";
+                        doc.head.appendChild(link);
+                    } catch (e) {
+                        console.log(e);
+                    }
+
+                    try {
                         //var js = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.js')).content);
                         var js = await ajax('raw/js/iframe/iframe.index.js');
                         var script = document.createElement('script');

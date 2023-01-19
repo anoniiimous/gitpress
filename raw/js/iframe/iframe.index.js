@@ -14,6 +14,34 @@ window.onload = ()=>{
 async function init() {
     console.log("Initializing", is.iframe, is);
 
+    //TOUCH
+    dom.body.dataset.theme = "meridiem";
+    dom.body.addEventListener("click", function(e) {
+        if (window.touch.ing === false) {
+            on.touch.tap(e);
+            //console.log(e.type,window.touch.ing);
+        } else {
+            window.touch.ing = false;
+            //console.log(e.type,window.touch.ing);
+        }
+    });
+    dom.body.addEventListener("touchstart", function(e) {
+        window.touch.ing = true;
+        touch.handler(event);
+        //console.log(e.type);
+    }, {
+        passive: true
+    });
+    dom.body.addEventListener("touchmove", touch.handler, {
+        passive: true
+    });
+    dom.body.addEventListener("touchcancel", touch.handler, false);
+    dom.body.addEventListener("touchend", function(e) {
+        //window.touch.ing = false;
+        touch.handler(event);
+        //console.log(e.type);
+    });
+    
     //SHELL
     var html = ``;
     if (is.iframe) {
