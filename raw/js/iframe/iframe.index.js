@@ -50,7 +50,7 @@ async function init() {
     var dir = rout.ed.dir(pathname);
     dir.splice(0,3);
     var uri = rout.ed.url(dir);
-    //uri.router();
+    uri.router();
 
     console.log("Initialized", {
         body: window.document.body,

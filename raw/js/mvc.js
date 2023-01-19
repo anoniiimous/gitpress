@@ -746,7 +746,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                     try {
                         //var js = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.js')).content);
-                        var js = await ajax('raw/js/template/template.iframe.index.js');
+                        var js = await ajax('raw/js/iframe/iframe.index.js');
                         var script = document.createElement('script');
                         script.src = blob(js, 'text/javascript');
                         doc.head.appendChild(script);
