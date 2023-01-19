@@ -44,7 +44,7 @@ window.github = {
         path: async(resource)=>{
             var r = rout.ed.dir(resource);
             var repo = r[1];
-                r.splice(0, 3);
+            r.splice(0, 3);
             var path = rout.ed.url(r);
             var user = await github.user.get();
             var owner = user.login;
@@ -52,7 +52,9 @@ window.github = {
                 owner,
                 path,
                 repo
-            }, {});
+            }, {
+                cache: "reload"
+            });
         }
     },
     database: {
@@ -454,6 +456,7 @@ window.github = {
                         reject(error);
                     }
                     const accessToken = localStorage.githubAccessToken;
+                    settings.cache = "reload";
                     accessToken ? settings.headers = {
                         Accept: "application/vnd.github+json",
                         Authorization: "token " + accessToken

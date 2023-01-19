@@ -852,7 +852,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var params = {
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/raw/html/pages"
+                            path: "/" + theme + "/raw/pages"
                         }
                         var p = async(data)=>{
                             var content = [];
@@ -873,14 +873,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                             name,
                                             path
                                         };
-                                        console.log("pages", { html, d, row }, content[d]);
+                                        console.log("pages", {
+                                            html,
+                                            d,
+                                            row
+                                        }, content[d]);
                                     }
                                     d++;
                                 } while (d < data.length);
                             }
                             return content;
                         }
-                        var pages = await github.repos.contents(params, {}).then(p);
+                        var pages = await github.repos.contents(params, {
+                            cache: "reload"
+                        }).then(p);
                         window.source.copy.pages = pages;
 
                         //STYLE
@@ -913,7 +919,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             owner: "dompad",
                             repo: "preview",
                             path: "/" + theme + "/raw/style/"
-                        }, {}).then(t);
+                        }, {
+                            cache: "reload"
+                        }).then(t);
                         window.source.copy.style = css;
 
                         //BLOBS
