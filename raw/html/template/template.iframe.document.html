@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>World Wide Web</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#021025">
+        <meta name="apple-mobile-web-app-title" content="Gitpress">
+        <meta name="application-name" content="Gitpress">
+        <meta name="application-shortname" content="gitpress">
+        <meta name="msapplication-TileColor" content="#f26c4f">
+        <meta name="theme-color" content="#f26c4f">
+        <script>
+            var domains = window.location.host.split('.');
+            window.globals = {
+                domains: {
+                    domain: domains.length > 1 ? domains[domains.length - 2] : null,
+                    subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
+                    tld: domains[domains.length - 1]
+                }
+            }
+            const base = document.createElement("base");
+            window.is = {
+                iframe: (window.self !== window.top)
+            }
+            window.hub = is.ip;
+            base.href = is.iframe ? (window.parent.location.protocol + "//" + window.parent.location.host) : ("/");
+            document.head.appendChild(base);
+        </script>
+        <link href="index.css" rel="stylesheet">
+        <link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
+        <script src="raw/js/github.js"></script>
+        <script src="raw/js/modal.js"></script>
+        <script src="raw/js/on.js"></script>
+        <script src="raw/js/router.js"></script>
+        <script src="raw/js/touch.js"></script>
+        <script src="raw/js/vanilla.js"></script>
+    </head>
+    <body>
+        <boot id="boot"></boot>
+    </body>
+</html>

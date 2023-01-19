@@ -48,7 +48,6 @@ window.github = {
             var path = rout.ed.url(r);
             var user = await github.user.get();
             var owner = user.login;
-                console.log({r,repo,path});
             return await github.repos.contents({
                 owner,
                 path,
@@ -124,7 +123,7 @@ window.github = {
                         var owner = params.owner;
                         var repo = params.repo;
                         var branch = params.branch;
-                        var ref = branch ? "/heads/" + branch : "";
+                        var ref = branch ? "/heads/" + branch : params.ref;
                         const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
                         const dataType = settings.dataType;
                         const a = (d)=>{

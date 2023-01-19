@@ -10,11 +10,6 @@ String.prototype.router = async function(params) {
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
-    console.log({
-        pages,
-        page,
-        vp
-    });
 
     if (pages) {
         if (pages.innerHTML === "" && pages.dataset.fetch) {//pages.innerHTML = await ajax(pages.dataset.fetch);
@@ -28,7 +23,6 @@ String.prototype.router = async function(params) {
     if (fetching3.length > 0) {
         var ff = 0;
         do {
-            console.log(fetching3[ff].dataset.fetch);
             if (fetching3[ff].innerHTML === "") {
                 fetching3[ff].innerHTML = await ajax(fetching3[ff].dataset.fetch);
             }
@@ -41,9 +35,6 @@ String.prototype.router = async function(params) {
             vp.innerHTML = await ajax(vp.dataset.fetch);
         }
         const fetching2 = vp.all('[data-fetch]');
-        console.log({
-            fetching2
-        });
         if (fetching2.length > 0) {
             var ff = 0;
             do {

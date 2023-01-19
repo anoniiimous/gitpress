@@ -169,6 +169,10 @@ function objectExists(obj, where) {
     }
     return bool;
 }
+String.prototype.capitalize = function() {
+    const str = this.valueOf();
+    return (str.charAt(0).toUpperCase() + str.slice(1));
+}
 String.prototype.contains = function(pattern) {
     var value = false
       , p = 0;
@@ -263,6 +267,8 @@ window.$ = e=>{
 window.tld = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 1];
 window.domain = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 2];
 window.is = {
+    iframe: (window.self !== window.top),
+    ip: /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]),
     json: str=>{
         try {
             JSON.parse(str);

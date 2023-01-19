@@ -73,6 +73,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                     if (get.length > 2) {
                         if (get[2] === "build") {
+                            var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
+                            var iframe = vp.find('iframe');
+                            mvc.c.build.er(iframe);
                             resolve(route);
                         }
                         if (get[2] === "files") {
@@ -660,6 +663,118 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    build: {
+        er: async(iframe)=>{
+            console.log(668, {
+                iframe
+            });
+
+            const user = await github.user.get();
+            const owner = user.login;
+            const repo = GET[1];
+
+            const error = {
+                document: (error)=>{
+                    console.log('error.build.document', {
+                        error
+                    });
+                }
+                ,
+                shell: (error)=>{
+                    console.log('error.build.shell', {
+                        error
+                    });
+                }
+            }
+
+            //DOCUMENT
+            var path = "index.html";
+            var params = {
+                owner,
+                repo,
+                path
+            }
+            github.repos.contents(params, {}).then(data=>{
+                const content = data.content;
+                const raw = atob(content);
+                console.log(695, {
+                    data,
+                    raw,
+                    iframe
+                });
+                controller.build.iframe(iframe, raw);
+            }
+            ).catch(error.document);
+
+            //SHELL
+            var path = "/raw/html/template/template.shell.html";
+            var params = {
+                owner,
+                repo,
+                path
+            }
+            1 < 0 ? github.repos.contents(params, {}).then(data=>{
+                const content = data.content;
+                const raw = atob(content);
+                console.log(723, {
+                    data
+                });
+            }
+            ).catch(error.shell) : null;
+        }
+        ,
+        iframe: (iframe)=>{
+            return new Promise(async(resolve,reject)=>{
+                const user = await github.user.get();
+                const owner = user.login;
+                const repo = GET[1];
+                const branch = 'main';
+                try {
+                    var raw = await ajax('raw/html/template/template.iframe.document.html');
+                    //var raw = atob((await github.raw.path('/anoniiimous/' + GET[1] + '/' + branch + '/index.html')).content);
+                    var doc = new DOMParser().parseFromString(raw, 'text/html')
+
+                    try {
+                        var css = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/raw/style/theme.css')).content);
+                        var link = document.createElement('link');
+                        link.href = blob(css, 'text/css');
+                        link.rel = "stylesheet";
+                        doc.head.appendChild(link);
+                    } catch (e) {
+                        console.log(e);
+                    }
+
+                    try {
+                        //var js = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.js')).content);
+                        var js = await ajax('raw/js/template/template.iframe.index.js');
+                        var script = document.createElement('script');
+                        script.src = blob(js, 'text/javascript');
+                        doc.head.appendChild(script);
+                    } catch (e) {
+                        console.log(e);
+                    }
+
+                    console.log('controller.build.iframe', {
+                        doc,
+                        raw: doc.documentElement.outerHTML,
+                        css,
+                        js,
+                        link,
+                        script
+                    });
+
+                    iframe.src = blob(doc.documentElement.outerHTML, "text/html");
+                    iframe.onload = ()=>{
+                        console.log("controller.build.iframe iframe.onload", {
+                            iframe
+                        });
+                    }
+                } catch (e) {}
+            }
+            )
+        }
+    },
+
     design: {
 
         install: async(target)=>{
@@ -671,6 +786,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var theme = card.find('box text').textContent;
                 if (theme) {
                     const callBack = async()=>{
+
+                        //alert("Installing theme");
 
                         //DATA
                         window.source = {
@@ -696,11 +813,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             refs
                         });
 
-                        //ASSET
+                        //FILES
                         var params = {
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/style/asset"
+                            path: "/" + theme + "/raw/files"
                         }
                         var a = async(data)=>{
                             var content = [];
@@ -728,14 +845,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             }
                             return content;
                         }
-                        var asset = await github.repos.contents(params, {}).then(a);
-                        window.source.copy.asset = asset;
+                        //var asset = await github.repos.contents(params, {}).then(a);
+                        //window.source.copy.files = asset;
 
                         //PAGES
                         var params = {
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/style/pages"
+                            path: "/" + theme + "/raw/html/pages"
                         }
                         var p = async(data)=>{
                             var content = [];
@@ -756,7 +873,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                             name,
                                             path
                                         };
-                                        //console.log("pages", { html, d, row });
+                                        console.log("pages", { html, d, row }, content[d]);
                                     }
                                     d++;
                                 } while (d < data.length);
@@ -766,7 +883,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var pages = await github.repos.contents(params, {}).then(p);
                         window.source.copy.pages = pages;
 
-                        //THEME
+                        //STYLE
                         var t = async(data)=>{
                             var content = [];
                             if (data.length > 0) {
@@ -795,9 +912,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var css = await github.repos.contents({
                             owner: "dompad",
                             repo: "preview",
-                            path: "/" + theme + "/style/shell/"
+                            path: "/" + theme + "/raw/style/"
                         }, {}).then(t);
-                        window.source.copy.theme = css;
+                        window.source.copy.style = css;
 
                         //BLOBS
                         var copy = source.copy;
@@ -824,7 +941,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         };
                                         var settings = {
                                             data: JSON.stringify({
-                                                content: btoa(content)
+                                                content: val.content
                                             }),
                                             dataType: "POST"
                                         };
@@ -837,7 +954,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         }
                                         var blob = await github.database.blobs(params, settings).then(b).catch(bb);
 
-                                        var path = "style/" + key + "/" + val.name;
+                                        var path = "raw/" + key + "/" + val.name;
 
                                         resources[path] = blob;
                                         var mode = "100644";
@@ -877,7 +994,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         //TREE
                         var params = {
                             owner,
-                            path: "/style",
+                            path: "/raw",
                             repo,
                             sha
                         };
@@ -966,10 +1083,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             refs
                         });
                     }
-                    modal.confirm({
-                        title: theme,
+                    var confirm = await modal.confirm({
+                        title: theme.capitalize(),
                         body: "Are you sure you want to install this template?"
-                    }, ["Yes", "No"], callBack)
+                    }, ["Cancel", "Install"], callBack);
+                    if (confirm) {
+                        callBack()
+                    }
                 }
             }
         }

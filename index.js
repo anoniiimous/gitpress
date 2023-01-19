@@ -41,7 +41,7 @@ window.onpopstate = (event)=>{
 }
 
 async function init() {
-    console.log("Initializing...");
+    console.log("Initializing...", window.document.head.find('title').textContent);
     //eruda.init();
     
     const html = await ajax('raw/html/template/template.shell.html');

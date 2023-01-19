@@ -180,9 +180,9 @@ window.modal = {
                     if (confirm || cancel) {
                         io = confirm ? true : false;
                         modal.exit(target);
+                        resolve(io);
                     }
                 }
-                resolve(io);
             }
             ;
             dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
