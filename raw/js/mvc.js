@@ -88,7 +88,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var params = {
                                     owner: user.login,
                                     path: "/raw/files",
-                                    repo: "blog.cms." + get[1]
+                                    repo: get[1]
                                 };
                                 var settings = {};
                                 var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
@@ -1148,10 +1148,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        select: (event)=>{
+        select: async(event)=>{
             const input = event.target;
             const label = input.closest('[data-file]');
-            const select = input.closest('box');
+            const select = input.closest('card');
             const load = select.find('load');
             const metadata = input.closest('box').nextElementSibling;
             const actions = metadata.nextElementSibling;
@@ -1162,19 +1162,23 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var format = ext;
             ext === "htm" ? format = "html" : null;
             ext === "jpeg" ? format = "jpg" : null;
-            console.log(format);
-            const a = async(result)=>{
+            console.log(1165, {
+                input,
+                label,
+                file
+            });
 
+            on.change.file(event).then(async(result)=>{
                 const user = await github.user.get();
 
                 var params = {};
                 params.owner = user.login;
                 params.path = "/raw/files/" + file.name;
-                params.repo = 'blog.cms.' + GET[1]
+                params.repo = GET[1]
 
                 var settings = {};
                 settings.data = JSON.stringify({
-                    content: btoa(result),
+                    content: result.split('base64,')[1],
                     message: "Create " + file.name
                 }),
                 settings.dataType = "PUT";
@@ -1205,15 +1209,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
 
                 github.repos.contents(params, settings).then(aa).catch(bb);
-
             }
-            on.change.file(event).then(a);
+            );
+
         }
         ,
 
         selecting: e=>{
-            const input = e.nodeElement;
-            const load = input.closest('box').find('load');
+            console.log({
+                e
+            });
+            const input = e.srcElement;
+            const load = input.closest('card').find('load');
             const loader = load.find('er');
             var percentLoaded = Math.round((e.loaded / e.total) * 100);
             load.classList.remove('display-none');

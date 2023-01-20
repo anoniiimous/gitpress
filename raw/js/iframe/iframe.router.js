@@ -50,7 +50,6 @@ String.prototype.router = async function(params) {
                 f++;
             } while (fetching2.length < 0);
         }
-
     }
 
     const fetching = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]');

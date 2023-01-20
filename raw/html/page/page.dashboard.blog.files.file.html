@@ -2,20 +2,26 @@
     <block class="height-100pct justify-content-center margin-20px">
         <picture data-background-color="rgba(255,255,255,0.5)" data-tap="mvc.c.files.cancel"></picture>
         <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
-            <form class="border-radius-10px margin-auto overflow-hidden max-width-480px width-100pct" id="form-dashboard-blog-files-file" onsubmit="on.submit.dashboard.file(event)">
+            <card class="background-color-fff border-radius-10px margin-auto overflow-hidden max-width-480px width-100pct">
                 <picture></picture>
-                <column id="my-login" onsubmit="controller.sign.in(event)">
-                    <box class="background-color-fff border-2px-dashedd border-color-bbb margin-20pxx padding-20px text-align-center">
+                <form id="form-dashboard-blog-files-file" onsubmit="on.submit.dashboard.file(event)">
+                    <box class="padding-20px text-align-center">
                         <column>
                             <text class="font-size-18px">Drop files to upload</text>
                             <text class="line-height-50px">or</text>
-                            <text class="border-1px-solid display-flex flex-direction-row line-height-50px margin-auto width-160px" data-file="form-dashboard-blog-files-file">
-                                <ico>
-                                    <n class="gg-software-upload"></n>
-                                </ico>
-                                <span>Select Files</span>
-                                <input onchange="mvc.c.files.select(event)" data-onprogress="mvc.c.files.selecting" type="file">
-                            </text>
+                        </column>
+                    </box>
+                    <box class="padding-20px text-align-center">
+                        <label class="border-1px-solid display-flex flex-direction-row line-height-50px margin-auto width-160px" data-file="form-dashboard-blog-files-file" for="form-dashboard-blog-files-file">
+                            <ico>
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <span>Select Files</span>
+                            <input id="form-dashboard-blog-files-file" name="form-dashboard-blog-files-file" onchange="controller.files.select(event)" data-onprogressing="mvc.c.files.selecting(event)" type="file"><!---->
+                        </label>
+                    </box>
+                    <box class="padding-20px text-align-center">
+                        <column>
                             <load class="border-1px-solid border-radius-50px display-none height-20px margin-top-36px overflow-hidden width-100pct">
                                 <er class="background-color-777 display-block height-20px width-0"></er>
                             </load>
@@ -45,8 +51,8 @@
                             <input type="submit">
                         </row>
                     </box>
-                </column>
-            </form>
+                </form>
+            </card>
         </column>
     </block>
 </blocks>
