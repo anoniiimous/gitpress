@@ -514,7 +514,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                     );
                 } else {
-                            
+
                     if (github.oauth.verify()) {
                         const settings = {};
                         console.log(settings);
@@ -523,7 +523,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             user
                         }, user.login);
                         const query = 'q="key": 32616927 filename:index.json user:' + user.login;
-                        github.user.repos(query).then(data=>{
+                        console.log(localStorage.githubAccessToken);
+                        //github.search.code(query).then(data=>{
+                        github.user.repos().then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log({
                                 data,
@@ -535,7 +537,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
                                 var x = 0;
                                 do {
-                                    const row = data[x].repository;
+                                    const row = data[x].repository ? data[x].repository : data[x];
+                                    console.log(x, {
+                                        row
+                                    });
                                     const shortname = row.name
                                     //.split('.')[2];
                                     template.find('text').dataset.href = "/dashboard/" + shortname;

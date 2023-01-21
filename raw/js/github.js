@@ -717,6 +717,7 @@ window.github = {
         }
         ,
         repos: (settings)=>{
+            var settings = settings ? settings : {};
             if (settings.dataType) {
                 if (settings.dataType === "POST") {
                     return new Promise((resolve,reject)=>{
@@ -745,7 +746,7 @@ window.github = {
                 }
             } else {
                 return new Promise((resolve,reject)=>{
-                    const url = github.endpoint + "/user/repos";
+                    const url = github.endpoint + "/user/repos?per_page=100&sort=updated";
                     const a = (d)=>{
                         const data = JSON.parse(d);
                         resolve(data);
@@ -759,6 +760,7 @@ window.github = {
                         Accept: "application/vnd.github+json",
                         Authorization: "token " + accessToken
                     } : null;
+                    console.log(url, settings);
                     ajax(url, settings).then(a).catch(b);
                 }
                 );
