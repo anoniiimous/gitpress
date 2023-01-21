@@ -1,5 +1,5 @@
 if (globals.domains.tld !== 'tld' && 'serviceWorker' in navigator) {
-   navigator.serviceWorker.register("/sw.js");
+   //navigator.serviceWorker.register("/sw.js");
 }
 if (window.Worker) {
     //var worker = new Worker('/worker.js');
