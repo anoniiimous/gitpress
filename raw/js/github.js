@@ -1,6 +1,31 @@
 window.github = {
     endpoint: "https://api.github.com",
     oauth: {
+        authorize: (target)=>{
+            var client_id = github.oauth.config.client_id;
+            var redirect_uri = github.oauth.config.redirect_uri;
+            var search = route.search;
+
+            var scope = github.oauth.config.scope;
+            var state = Crypto.uid.create(1);
+            var obj = {
+                client_id,
+                scope,
+                state,
+                redirect_uri
+            }
+            var query = new URLSearchParams(obj).toString();
+            console.log(534, "mvc.js", {
+                obj,
+                query
+            });
+
+            var a = document.createElement('a');
+            var href = "https://github.com/login/oauth/authorize?" + query;
+            a.href = href;
+            a.click();
+        }
+        ,
         config: {
             client_id: "Iv1.cbe275c17b8db02d",
             redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
@@ -34,6 +59,42 @@ window.github = {
         logout: ()=>{
             localStorage.removeItem('githubAccessToken');
             dom.body.removeAttribute('data-uid');
+        }
+        ,
+        signin: async(params,sl)=>{
+
+            var code = params.code;
+            var state = params.state;
+            var client_id = github.oauth.config.client_id;
+            var redirect_uri = github.oauth.config.redirect_uri;
+            var settings = {
+                data: JSON.stringify({
+                    client_id,
+                    code,
+                    redirect_uri
+                }),
+                dataType: "POST"
+            };
+            var endpoint = "https://oauth.dompad.workers.dev/";
+            if (sl) {
+                endpoint = "https://github.com/login/oauth/authorize";
+                settings.mode = "cors";
+            }
+            console.log(509, "mvc.js", {
+                settings
+            });
+            try {
+                var result = JSON.parse(await ajax(endpoint, settings));
+                console.log(526, "mvc.js", {
+                    result
+                });
+                var token = result.token;
+                if (token) {
+                    localStorage.setItem('githubAccessToken', token);
+                }
+            } catch (e) {
+                console.log(e);
+            }
         }
         ,
         verify: ()=>{

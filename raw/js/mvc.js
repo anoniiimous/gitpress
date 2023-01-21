@@ -25,33 +25,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             var keys = Object.keys(params);
             if (keys.length > 0) {
                 if (keys.includes("code")) {
-                    var code = params.code;
-                    var state = params.state;
-                    var client_id = github.oauth.config.client_id;
-                    var redirect_uri = github.oauth.config.redirect_uri;
-                    var settings = {
-                        data: JSON.stringify({
-                            client_id,
-                            code,
-                            redirect_uri
-                        }),
-                        dataType: "POST"
-                    };
-                    console.log(509, "mvc.js", {
-                        settings
-                    });
-                    try {
-                        var result = JSON.parse(await ajax("https://oauth.dompad.workers.dev/", settings));
-                        console.log(526, "mvc.js", {
-                            result
-                        });
-                        var token = result.token;
-                        if (token) {
-                            localStorage.setItem('githubAccessToken', token);
-                        }
-                    } catch (e) {
-                        console.log(e);
-                    }
+                    await github.oauth.signin(params);
                     route.search = "";
                 }
             }
