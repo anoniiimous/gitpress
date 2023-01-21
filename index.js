@@ -1,9 +1,7 @@
-if (globals.domains.tld !== 'tld' && 'serviceWorker' in navigator) {
-   //navigator.serviceWorker.register("/sw.js");
+if (globals.domains.tld !== 'tld' && 'serviceWorker'in navigator) {//navigator.serviceWorker.register("/sw.js");
 }
-if (window.Worker) {
-    //var worker = new Worker('/worker.js');
-    //worker.postMessage(['worker', localStorage.githubAccessToken]);
+if (window.Worker) {//var worker = new Worker('/worker.js');
+//worker.postMessage(['worker', localStorage.githubAccessToken]);
 }
 
 window.auth ? null : window.auth = {};
@@ -42,22 +40,14 @@ window.onpopstate = (event)=>{
 
 async function init() {
     console.log("Initializing...", window.document.head.find('title').textContent);
-    eruda.init();
-    
+    //eruda.init();
+
     const html = await ajax('raw/html/template/template.shell.html');
     dom.body.find('boot').insertAdjacentHTML('afterend', html);
 
     window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
         window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
-        return m.includes("#") || 
-            (GOT.length > 1 && roots.indexOf(root) === -1) ||
-            (root === 'dashboard' && n === 1) || 
-            (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) ||
-            (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || 
-            (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || 
-            (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) ||
-            (root === 'design' && n === 1) ||
-            (root === 'preview' && n === 1)
+        return m.includes("#") || (GOT.length > 1 && roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
     }
 
     touch.events = {
@@ -109,48 +99,55 @@ async function init() {
         var url = rout.ed.url(dir);
     }
 
+    console.log(window.location);
     var uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
 
     var go = false;
 
-    firebase.initializeApp(auth.config);
-    const onAuthStateChanged = function(user) {
-        auth.change(user).then(authChange);
-        if (user) {
-            //alert(false);
-            uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
-        } else {
-            //alert(true);
-            //uri = "/dashboard/";
-            localStorage.removeItem('githubAccessToken');
-            //byId("avi").innerHTML = "";
+    if (1 < 0) {
+        firebase.initializeApp(auth.config);
+        const onAuthStateChanged = function(user) {
+            auth.change(user).then(authChange);
+            if (user) {
+                //alert(false);
+                uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
+            } else {
+                //alert(true);
+                //uri = "/dashboard/";
+                localStorage.removeItem('githubAccessToken');
+                //byId("avi").innerHTML = "";
+            }
+            1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
+            console.log(129, {
+                user
+            });
         }
-        1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
-        console.log(129, {user});
-    }
-    firebase.auth().onAuthStateChanged(onAuthStateChanged);
-    //firebase.auth().currentUser ? alert(null) : uri.router();
-    console.log("Initialized",firebase.auth(),firebase.auth().currentUser);
-    firebase.auth().getRedirectResult().then((result)=>{
-        //firebase.auth().signInWithPopup(provider).then((result)=>{
-        var credential = result.credential;
-        if (credential) {
-            var token = credential.accessToken;
-            var user = result.user;
-            localStorage.setItem('githubAccessToken', token);
+        firebase.auth().onAuthStateChanged(onAuthStateChanged);
+        //firebase.auth().currentUser ? alert(null) : uri.router();
+        console.log("Initialized", firebase.auth(), firebase.auth().currentUser);
+        firebase.auth().getRedirectResult().then((result)=>{
+            //firebase.auth().signInWithPopup(provider).then((result)=>{
+            var credential = result.credential;
+            if (credential) {
+                var token = credential.accessToken;
+                var user = result.user;
+                localStorage.setItem('githubAccessToken', token);
+            }
+            1 < 0 ? console.log(345, {
+                result
+            }) : null;
         }
-        1<0 ? console.log(345, {
-            result
-        }) : null;
+        ).catch((error)=>{
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+            console.log({
+                error
+            });
+        }
+        );
+    } else {
+        uri.router().then(go = true);
     }
-    ).catch((error)=>{
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        var email = error.email;
-        var credential = error.credential;
-        console.log({
-            error
-        });
-    }
-    );
 }

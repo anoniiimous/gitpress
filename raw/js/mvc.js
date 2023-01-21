@@ -13,11 +13,54 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
     return new Promise(async function(resolve, reject) {
         var page = route.page;
         var path = route.path;
+        var search = route.search;
         var gut = route.hash ? rout.ed.dir(route.hash.split('#')[1]) : [];
         var get = (route ? route.GOT : rout.ed.dir(dom.body.dataset.path)).concat(gut);
         var root = get[0] || gut[0];
 
         window.GET = window.GET ? GET : rout.ed.dir(dom.body.dataset.path);
+
+        if (search) {
+            var params = Object.fromEntries(new URLSearchParams(search));
+            var keys = Object.keys(params);
+            if (keys.length > 0) {
+                if (keys.includes("code")) {
+                    var code = params.code;
+                    var state = params.state;
+                    var client_id = github.oauth.config.client_id;
+                    var redirect_uri = github.oauth.config.redirect_uri;
+                    var settings = {
+                        data: JSON.stringify({
+                            client_id,
+                            code,
+                            redirect_uri
+                        }),
+                        dataType: "POST"
+                    };
+                    console.log(509, "mvc.js", {
+                        settings
+                    });
+                    try {
+                        var result = JSON.parse(await ajax("https://oauth.dompad.workers.dev/", settings));
+                        console.log(526, "mvc.js", {
+                            result
+                        });
+                        var token = result.token;
+                        if (token) {
+                            localStorage.setItem('githubAccessToken', token);
+                        }
+                    } catch (e) {
+                        console.log(e);
+                    }
+                    route.search = "";
+                }
+            }
+        }
+
+        var token = localStorage.githubAccessToken;
+        if (token) {
+            dom.body.dataset.uid = token;
+        }
 
         $(dom.body.all('aside')).remove()
 
@@ -471,7 +514,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                     );
                 } else {
-                    if (auth.user()) {
+                            
+                    if (github.oauth.verify()) {
                         const settings = {};
                         console.log(settings);
                         const user = await github.user.get();
@@ -557,7 +601,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
                 resolve(route)
             } else if (root === "marketplace") {
-                if (auth.user()) {
+                if (github.oauth.verify()) {
                     const settings = {};
                     console.log(settings);
                     const user = await github.user.get();
@@ -2009,37 +2053,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 settings
             });
             //github.repos.contents(params, settings).then((window.location.pathname + window.location.hash).router())
-        }
-
-    },
-
-    sign: {
-
-        in: async(event,f)=>{
-            event.preventDefault();
-            if (localStorage.githubAccessToken) {
-                var href = (auth.user() ? '/users/' + auth.user().uid + "/" : '/my/');
-                var popup = await modal.popup(nav.outerHTML);
-                popup.className = "absolute-full bg-black-1-2 fixed";
-                popup.dataset.tap = "event.target.tagName === 'ASIDE' ? modal.exit(event.target) : null";
-                popup.dataset.zIndex = 7;
-                console.log({
-                    nav
-                });
-            } else {
-                var provider = new firebase.auth.GithubAuthProvider();
-                provider.addScope('gist');
-                provider.addScope('repo');
-                provider.addScope('delete_repo');
-
-                firebase.auth().signInWithRedirect(provider);
-            }
-        }
-        ,
-
-        out: async(event)=>{
-            event.preventDefault();
-            firebase.auth().signOut();
         }
 
     },

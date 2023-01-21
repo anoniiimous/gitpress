@@ -42,14 +42,33 @@
         </row>
     </card>
     <card>
-        <section>
+        <row>
+            <box class="border-1px-solid display-none line-height-50px margin-right-10px padding-x-20px">
+                <row class="-isauth align-items-center" data-tap="github.oauth.logout()">
+                    <ico class="margin-right-5px" data-width="30px">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <text class="padding-x-0px">Logout</text>
+                </row>
+                <row class="-noauth align-items-center">
+                    <ico class="margin-right-5px" data-width="30px">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <text class="padding-x-0px">Login</text>
+                </row>
+            </box>
             <box>
-                <row class="display-none">
-                    <ico>
-                        <n class="gg-more-vertical-alt"></n>
+                <row>
+                    <ico class="-noauth" data-tap="github.oauth.login()">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <ico class="-isauth" data-tap="github.oauth.logout()">
+                        <n class="gg-log-off"></n>
                     </ico>
                 </row>
-                <row class="display-block">
+            </box>
+            <box class="display-none">
+                <row>
                     <ico class="-noauth" data-tap="controller.sign.in(event)">
                         <n class="gg-user"></n>
                     </ico>
@@ -58,6 +77,6 @@
                     </ico>
                 </row>
             </box>
-        </section>
+        </row>
     </card>
 </row>

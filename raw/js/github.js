@@ -1,5 +1,45 @@
 window.github = {
     endpoint: "https://api.github.com",
+    oauth: {
+        config: {
+            client_id: "fdeadaa98b35c6df688c",
+            redirect_uri: window.location.protocol + "//" + window.location.host + '/dashboard/',
+            scope: "user,public_repo"
+        },
+        login: (target)=>{
+            var client_id = github.oauth.config.client_id;
+            var redirect_uri = github.oauth.config.redirect_uri;
+            var search = route.search;
+
+            var scope = github.oauth.config.scope;
+            var state = Crypto.uid.create(1);
+            var obj = {
+                client_id,
+                scope,
+                state,
+                redirect_uri
+            }
+            var query = new URLSearchParams(obj).toString();
+            console.log(534, "mvc.js", {
+                obj,
+                query
+            });
+
+            var a = document.createElement('a');
+            var href = "https://github.com/login/oauth/authorize?" + query;
+            a.href = href;
+            a.click();
+        }
+        ,
+        logout: ()=>{
+            localStorage.removeItem('githubAccessToken');
+            dom.body.removeAttribute('data-uid');
+        }
+        ,
+        verify: ()=>{
+            return localStorage.githubAccessToken;
+        }
+    },
     raw: {
         file: (resource)=>{
             return new Promise((resolve,reject)=>{

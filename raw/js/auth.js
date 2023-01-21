@@ -75,18 +75,22 @@ window.auth = {
     ,
     account: {
         close: (network)=>{
-            return new Promise((resolve,reject)=>{
-                firebase.auth().signOut().then((d)=>{
-                    dom.body.removeAttribute("data-uid");
-                    '/'.router();
-                    resolve(d);
-                }
-                ).catch((error)=>{
-                    reject(error);
+            if (1 > 0) {
+                return new Promise((resolve,reject)=>{
+                    firebase.auth().signOut().then((d)=>{
+                        dom.body.removeAttribute("data-uid");
+                        '/'.router();
+                        resolve(d);
+                    }
+                    ).catch((error)=>{
+                        reject(error);
+                    }
+                    );
                 }
                 );
+            } else {
+                localStorage.removeItem('githubAccessToken');
             }
-            );
         }
         ,
         login: (event)=>{
@@ -260,6 +264,7 @@ window.auth = {
     }
     ,
     user: ()=>{
-        return firebase.auth().currentUser;
+        //return firebase.auth().currentUser;
+        return localStorage.githubAccessToken;
     }
 };
