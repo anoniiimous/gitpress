@@ -523,7 +523,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             user
                         }, user.login);
                         const query = 'q="key": 32616927 filename:index.json user:' + user.login;
-                        github.search.code(query).then(data=>{
+                        github.user.repos(query).then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log({
                                 data,
