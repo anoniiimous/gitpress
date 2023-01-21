@@ -126,6 +126,7 @@ async function init() {
             //byId("avi").innerHTML = "";
         }
         1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
+        console.log(129, {user});
     }
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
     //firebase.auth().currentUser ? alert(null) : uri.router();
