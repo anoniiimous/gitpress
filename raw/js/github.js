@@ -3,7 +3,7 @@ window.github = {
     oauth: {
         config: {
             client_id: "Iv1.cbe275c17b8db02d",
-            redirect_uri: window.location.protocol + "//" + window.location.host + '/dashboard/',
+            redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
             scope: "user,public_repo"
         },
         login: (target)=>{
