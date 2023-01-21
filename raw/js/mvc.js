@@ -538,9 +538,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var x = 0;
                                 do {
                                     const row = data[x].repository ? data[x].repository : data[x];
-                                    console.log(x, {
-                                        row
-                                    });
                                     const shortname = row.name
                                     //.split('.')[2];
                                     template.find('text').dataset.href = "/dashboard/" + shortname;
