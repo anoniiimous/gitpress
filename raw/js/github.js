@@ -2,7 +2,7 @@ window.github = {
     endpoint: "https://api.github.com",
     oauth: {
         config: {
-            client_id: "fdeadaa98b35c6df688c",
+            client_id: "Iv1.cbe275c17b8db02d",
             redirect_uri: window.location.protocol + "//" + window.location.host + '/dashboard/',
             scope: "user,public_repo"
         },
