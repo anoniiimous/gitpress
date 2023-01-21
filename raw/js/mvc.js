@@ -25,7 +25,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             var keys = Object.keys(params);
             if (keys.length > 0) {
                 if (keys.includes("code")) {
-                    await github.oauth.signin(params);
+                    await github.oauth.authorize(params);
                     route.search = "";
                 }
             }
