@@ -38,7 +38,7 @@ window.github = {
         config: {
             client_id: "Iv1.cbe275c17b8db02d",
             redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
-            scope: "user,public_repo"
+            scope: "user,public_repo,repo"
         },
         login: (target)=>{
             var client_id = github.oauth.config.client_id;
@@ -780,7 +780,7 @@ window.github = {
                 }
             } else {
                 return new Promise((resolve,reject)=>{
-                    const url = github.endpoint + "/user/repos?direction=desc&per_page=100&sort=updated";
+                    const url = github.endpoint + "/user/repos?direction=desc&per_page=100&sort=updated&visibility=private";
                     const a = (d)=>{
                         const data = JSON.parse(d);
                         resolve(data);
