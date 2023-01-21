@@ -746,7 +746,7 @@ window.github = {
                 }
             } else {
                 return new Promise((resolve,reject)=>{
-                    const url = github.endpoint + "/user/repos?per_page=100&sort=updated";
+                    const url = github.endpoint + "/user/repos?direction=desc&per_page=100&sort=updated";
                     const a = (d)=>{
                         const data = JSON.parse(d);
                         resolve(data);
@@ -755,6 +755,7 @@ window.github = {
                         console.log(error);
                         reject(error);
                     }
+                    settings.cache = "reload";
                     const accessToken = localStorage.githubAccessToken;
                     accessToken ? settings.headers = {
                         Accept: "application/vnd.github+json",
