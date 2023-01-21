@@ -366,6 +366,21 @@ function formatBytes(bytes, decimals=2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
+
+function getMime(ext) {
+    var extToMimes = {
+        'htm': 'text/html',
+        'html': 'text/html',
+        'jpg': 'image/jpg',
+        'jpeg': 'image/jpeg',
+        'png': 'image/png',
+        'svg': 'image/svg+xml'
+    }
+    if (extToMimes.hasOwnProperty(ext)) {
+        return extToMimes[ext];
+    }
+    return false;
+}
 function lazyLoad(images, vp) {
     if (images.length > 0) {
         var doc = images[0].ownerDocument;
@@ -380,16 +395,35 @@ function lazyLoad(images, vp) {
                         let lazyImage = entry.target;
                         var img = lazyImage.find('[data-src]');
                         var src = img.dataset.src;
-                        if(src.includes("http:")) {
+                        if (src.includes("http:")) {
                             var path = "/" + user.login + "/" + win.parent.GET[1] + "/main/" + src;
                             var b64 = (await github.raw.path(path)).content;
                             var href = src;
                         } else {
-                            var path = "/" + user.login + "/" + win.parent.GET[1] + "/main/" + src;
-                            var req = await github.raw.path(path);
-                            var b64 = req.content;
-                            var href = "data:image/jpeg;base64," + b64;
-                            console.log(391, {href, req});
+                            var c = await github.repos.contents({
+                                owner: user.login,
+                                path: "/" + src,
+                                repo: win.parent.GET[1]
+                            }, {});
+                            var b = await github.database.blobs({
+                                owner: user.login,
+                                repo: win.parent.GET[1],
+                                sha: c.sha
+                            });
+                            console.log(390, {
+                                b,
+                                c
+                            });
+                            var b64 = b.content;
+
+                            var arr = c.name.split('.');
+                            const ext = arr[arr.length - 1];
+                            var mime = getMime(ext);
+
+                            var href = "data:"+mime+";base64," + b64;
+                            console.log(391, {
+                                href
+                            });
                         }
                         img.src = href;
                         lazyImage.removeAttribute('[data-src]');

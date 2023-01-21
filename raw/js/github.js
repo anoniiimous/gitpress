@@ -59,32 +59,58 @@ window.github = {
     },
     database: {
         blobs: (params,settings)=>{
-            if (settings && settings.dataType) {
-                if (settings.dataType === "POST") {
-                    return new Promise((resolve,reject)=>{
-                        const data = settings.data;
-                        const owner = params.owner;
-                        const repo = params.repo;
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/blobs";
-                        const dataType = settings.dataType;
-                        const a = (d)=>{
-                            const data = JSON.parse(d);
-                            resolve(data);
+            if (settings) {
+                if (settings.dataType) {
+                    if (settings.dataType === "POST") {
+                        return new Promise((resolve,reject)=>{
+                            const data = settings.data;
+                            const owner = params.owner;
+                            const repo = params.repo;
+                            const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/blobs";
+                            const dataType = settings.dataType;
+                            const a = (d)=>{
+                                const data = JSON.parse(d);
+                                resolve(data);
+                            }
+                            const b = (error)=>{
+                                console.log(error);
+                                reject(error);
+                            }
+                            const accessToken = localStorage.githubAccessToken;
+                            accessToken ? settings.headers = {
+                                Accept: "application/vnd.github+json",
+                                Authorization: "token " + accessToken
+                            } : null;
+                            //console.log({ url, settings });
+                            ajax(url, settings).then(a).catch(b);
                         }
-                        const b = (error)=>{
-                            console.log(error);
-                            reject(error);
-                        }
-                        const accessToken = localStorage.githubAccessToken;
-                        accessToken ? settings.headers = {
-                            Accept: "application/vnd.github+json",
-                            Authorization: "token " + accessToken
-                        } : null;
-                        //console.log({ url, settings });
-                        ajax(url, settings).then(a).catch(b);
+                        );
                     }
-                    );
                 }
+            } else {
+                return new Promise((resolve,reject)=>{
+                    const owner = params.owner;
+                    const repo = params.repo;
+                    const sha = params.sha;
+                    const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/blobs/" + sha;
+                    const a = (d)=>{
+                        const data = JSON.parse(d);
+                        resolve(data);
+                    }
+                    const b = (error)=>{
+                        console.log(error);
+                        reject(error);
+                    }
+                    const accessToken = localStorage.githubAccessToken;
+                    var settings = {};
+                    accessToken ? settings.headers = {
+                        Accept: "application/vnd.github+json",
+                        Authorization: "token " + accessToken
+                    } : null;
+                    //console.log({ url, settings });
+                    ajax(url, settings).then(a).catch(b);
+                }
+                );
             }
         }
         ,
