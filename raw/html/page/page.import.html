@@ -1,4 +1,4 @@
-<blocks class="-isauth flex-grow-1">
+<blocks class="background-color-f5 flex-grow-1">
     <header class="line-height-50px position-fixed top-0 width-100pct z-index-5" data-fetch="raw/html/template/template.header.html"></header>
     <block>
         <picture class="background-color-ddd"></picture>
@@ -7,12 +7,12 @@
                 <column>
                     <box>
                         <section>
-                            <text class="font-size-48px">Dashboard</text>
+                            <text class="font-size-48px">Import</text>
                         </section>
                     </box>
                     <box>
                         <section>
-                            <text class="font-size-18px">Create new projects or edit existing web apps.</text>
+                            <text class="font-size-18px">Import an existing project from a Git repository</text>
                         </section>
                     </box>
                 </column>
@@ -22,19 +22,19 @@
     <block>
         <picture></picture>
         <section>
-            <card class="-mobile-margin-x-10px font-size-13px margin-x-4vw padding-bottom-20px">
-                <row>
-                    <box class="border-1px-solid line-height-50px margin-left-auto margin-right-10px margin-y-20px" data-href="/import/">
+            <card class="-mobile-margin-x-10px margin-x-4vw padding-bottom-20px padding-top-50px">
+                <column>
+                    <box>
                         <section>
-                            <text class="padding-x-20px">Import Project</text>
+                            <text class="font-size-24px">Pick a repository from GitHub</text>
                         </section>
                     </box>
-                    <box class="background-color-0096c7 line-height-50px margin-y-20px" data-href="/new/">
+                    <box>
                         <section>
-                            <text class="color-fff padding-x-20px">Create new app</text>
+                            <text class="font-size-16px">Choose the repository you want to start editing. When you save your project, we push your changes to GitHub. No build tools or servers are involved.</text>
                         </section>
                     </box>
-                </row>
+                </column>
             </card>
         </section>
     </block>
@@ -52,22 +52,22 @@
                     <input class="flex-grow-1" placeholder="Search..." type="text">
                 </row>
             </form>
-            <card class="background-color-f5 border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
-                <column id="feed-dashboard"></column>
+            <card class="border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
+                <column id="feed-import"></column>
             </card>
         </column>
     </block>
 </blocks>
-<template id="template-feed-dashboard">
-    <box class="background-color-fff border-bottom-1px-soli margin-bottom-1px">
+<template id="template-feed-import">
+    <box class="margin-bottom-1px" data-tap="controller.import.repository(event.target)">
         <row>
             <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
                 <n></n>
                 <n class="empty-state"></n>
             </ico>
             <text class="font-weight-bolder">Demo</text>
-            <ico class="margin-left-auto" data-tap="github.repos.delete(event.target)">
-                <n class="gg-trash"></n>
+            <ico class="margin-left-auto">
+                <n class="gg-chevron-right"></n>
             </ico>
         </row>
     </box>

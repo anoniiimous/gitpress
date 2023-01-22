@@ -576,6 +576,50 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                 }
                 resolve(route)
+            } else if (root === "import") {
+                if (github.oauth.verify()) {
+                    const settings = {};
+                    console.log(settings);
+                    const user = await github.user.get();
+                    console.log(243, {
+                        user
+                    }, user.login);
+                    const query = 'q="key": 32616927 filename:index.json user:' + user.login;
+                    console.log(localStorage.githubAccessToken);
+                    //github.search.code(query).then(data=>{
+                    github.user.repos({
+                        query: {
+                            per_page: 25
+                        }
+                    }).then(data=>{
+                        //data = data.filter(item=>item.name.includes('blog.cms'));
+                        console.log(596, {
+                            data,
+                            query
+                        });
+                        const feed = byId('feed-import');
+                        feed.innerHTML = "";
+                        if (data.length > 0) {
+                            var x = 0;
+                            do {
+                                const row = data[x].repository ? data[x].repository : data[x];
+                                const shortname = row.name
+                                //.split('.')[2];
+                                const template = byId('template-feed-import').content.firstElementChild.cloneNode(true);
+                                if (Math.abs(x % 2) == 1) {
+                                    template.classList.add('background-color-ccc');
+                                }
+                                template.find('text').dataset.owner = row.owner.login;
+                                template.find('text').dataset.repo = row.name;
+                                template.find('text').innerHTML = shortname
+                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
+                                x++;
+                            } while (x < data.length);
+                        }
+                    }
+                    );
+                }
+                resolve(route);
             } else if (root === "marketplace") {
                 if (github.oauth.verify()) {
                     const settings = {};
@@ -1475,6 +1519,49 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             );
 
+        }
+
+    },
+
+    import: {
+
+        repository: async(target)=>{
+            const user = await github.user.get();
+            const params = {
+                owner: user.login,
+                path: "/",
+                repo: "db.dompad.io"
+            }
+            const settings = {};
+            var html = await ajax("raw/html/template/template.loader.new.app.html");
+            var s = async(data)=>{
+                console.log(1539, data);
+                var confirm = 1 < 0 ? await modal.confirm({
+                    body: "Do you want to create a logo or skip this wizard?",
+                    title: repo
+                }, ["Skip", "Continue"]) : null;
+                if (confirm) {
+                    var href = "/new/app/" + data.name + "/";
+                    href.router();
+                }
+            }
+            var ss = ()=>{
+                alert('create repository');
+                github.user.repos({}, {
+                    data: {
+                        name: params.repo
+                    },
+                    dataType: "POST"
+                }).then((data)=>{
+                    console.log(data);
+                    alert(1);
+                }
+                ).catch(()=>{
+                    alert(2);
+                }
+                )
+            }
+            1 > 0 ? github.repos.contents(params, settings).then(s).catch(ss) : null;
         }
 
     },
