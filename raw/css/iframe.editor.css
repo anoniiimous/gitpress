@@ -1,0 +1,91 @@
+/*FOCUS*/
+body > footer, body > header, body > nav {
+    position: relative;
+}
+body page block, body page card, body page card box {
+    position: relative;
+}
+
+body > header > *, body > header card > *, body > header box > * {
+    z-index: 12;
+}
+body > header > picture, body > header > card > picture, body > header > card > box > picture {
+    z-index: 0;
+}
+body > header > video, body > header > card > picture, body > header > card > box > picture  {
+    z-index: 0;
+}
+body > header > * ~ *, body > header card > * ~ *, body > header card box > * ~ * {
+    z-index: 12;
+}
+
+body > footer > *, body > footer card > *, body > footer box > * {
+    z-index: 12;
+}
+body > footer > picture, body > footer > card > picture, body > footer > card > box > picture {
+    z-index: 0;
+}
+body > footer > video, body > footer > card > picture, body > footer > card > box > picture  {
+    z-index: 0;
+}
+body > footer > * ~ *, body > footer card > * ~ *, body > footer card box > * ~ * {
+    z-index: 12;
+}
+
+body page block > *, body page card > *, body page card box > * {
+    z-index: 12;
+}
+body page block > picture, body page card > picture, body page card box > picture {
+    z-index: 0;
+}
+body page block > video, body page card > video, body page card box > video {
+    z-index: 0;
+}
+body page block > * ~ *, body page card > * ~ *, body page card box > * ~ * {
+    z-index: 12;
+}
+
+body > header:hover:after, body page block:hover:after, body > footer:hover:after {
+    content: '';
+    display: block;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    position: absolute;
+    border: 4px solid #ff3b30;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    margin: 0px;
+}
+
+body > footer card:hover:after, body > header card:hover:after,body page card:hover:after {
+    content: '';
+    display: block;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    position: absolute;
+    border: 4px solid #32cd32;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    margin: 0px;
+}
+
+body > footer card box:hover:after, body > header card box:hover:after, body page card box:hover:after {
+    content: '';
+    display: block;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    position: absolute;
+    border: 4px solid #52b9d6;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    margin: 0px;
+}

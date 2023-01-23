@@ -733,6 +733,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 iframe
             });
 
+            const nav = document.body.find('body > main > nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = dom.body.find('main > pages');
+            nav.classList.add('display-none');
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            blocks.classList.remove('margin-left-280px');
+            blocks.dataset["960pxTransform"] = "0";
+
             const user = await github.user.get();
             const owner = user.login;
             const repo = GET[1];
@@ -1352,6 +1360,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main > pages');
 
+            nav.classList.remove('display-none');
+            blocks.classList.add('margin-left-280px');
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
@@ -1363,11 +1373,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const nav = document.body.find('body > main > nav');
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main > pages');
+            const toggle = transform === "translateX(-100%)";
 
-            if (transform === "translateX(-100%)") {
+            if (toggle) {
+                nav.classList.add('display-none');
+                blocks.classList.remove('margin-left-280px');
                 nav.dataset["960pxTransform"] = "translateX(0)";
                 blocks.dataset["960pxTransform"] = "translateX(280px)";
             } else {
+                nav.classList.remove('display-none');
+                blocks.classList.add('margin-left-280px');
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
                 blocks.dataset["960pxTransform"] = "0";
             }

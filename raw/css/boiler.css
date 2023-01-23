@@ -1342,6 +1342,10 @@
         width: 240px;
     }
 
+    .width-280px, [data-width="280px"] {
+        width: 280px;
+    }
+
     .width-300px, [data-width="300px"] {
         width: 300px;
     }
