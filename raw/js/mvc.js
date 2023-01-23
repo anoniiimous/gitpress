@@ -490,22 +490,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 } else {
 
                     if (github.oauth.verify()) {
-                        const settings = {};
-                        console.log(settings);
+                        var params = {};
                         const user = await github.user.get();
-                        console.log(243, {
-                            user
-                        }, user.login);
-                        //const query = 'q="key": 32616927 filename:index.json user:' + user.login;
-                        var query = {
+                        params.query = {
                             per_page: 25,
                             sort: "created"
                         };
                         //github.search.code(query).then(data=>{
                         //github.user.repos().then(data=>{
-                        github.user.repos({
-                            query
-                        }).then(data=>{
+                        //github.repos.contents(params).then(data=>{
+                        github.user.repos(params).then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log(596, {
                                 data
@@ -527,7 +521,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     template.find('text').dataset.repo = row.name;
                                     template.find('text').innerHTML = shortname
                                     template.dataset.href = "/dashboard/" + row.name + "/";
-                                            
+
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                     x++;
                                 } while (x < data.length);
