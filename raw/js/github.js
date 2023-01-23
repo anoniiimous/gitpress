@@ -10,7 +10,8 @@ window.github = {
                 data: JSON.stringify({
                     client_id,
                     code,
-                    redirect_uri
+                    redirect_uri,
+                    state
                 }),
                 dataType: "POST"
             };
@@ -43,9 +44,9 @@ window.github = {
         }
         ,
         client_id: {
-            "dompad.github.tld": 0 > 1 ? "d100ccbc44112f0d5a92" : "Iv1.cbe275c17b8db02d",
             "dompad.io": "1a41e41b2b371e7a1a5b",
-            "dompad.pages.dev": "fdeadaa98b35c6df688c"
+            "dompad.pages.dev": "fdeadaa98b35c6df688c",
+            "dompad.github.tld": 0 < 1 ? "d100ccbc44112f0d5a92" : "Iv1.cbe275c17b8db02d"
         },
         config: {
             client_id: 0 > 1 ? "Iv1.cbe275c17b8db02d" : "d100ccbc44112f0d5a92",
@@ -58,7 +59,7 @@ window.github = {
             var search = route.search;
 
             var scope = github.oauth.config.scope;
-            var state = location.host + "-" + Crypto.uid.create(1);
+            var state = Crypto.uid.create(1);
             var obj = {
                 client_id,
                 scope,
