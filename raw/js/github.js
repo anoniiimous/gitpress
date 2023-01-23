@@ -4,7 +4,7 @@ window.github = {
         authorize: async(params,sl)=>{
             var code = params.code;
             var state = params.state;
-            var client_id = github.oauth.config.client_id;
+            var client_id = github.oauth.client_id[location.host];
             var redirect_uri = github.oauth.config.redirect_uri;
             var settings = {
                 data: JSON.stringify({
@@ -14,12 +14,18 @@ window.github = {
                 }),
                 dataType: "POST"
             };
-            var endpoint = "https://oauth.dompad.workers.dev/";
+            var endpoint = "https://oauth.dompad.workers.dev";
             if (sl) {
                 endpoint = "https://github.com/login/oauth/authorize";
                 settings.mode = "cors";
             }
+            var obj = {
+                state
+            }
+            //var query = new URLSearchParams(obj).toString();
+            //endpoint + "?" + query;
             console.log(509, "mvc.js", {
+                endpoint,
                 settings
             });
             try {
@@ -36,21 +42,26 @@ window.github = {
             }
         }
         ,
+        client_id: {
+            "dompad.github.tld": 0 > 1 ? "d100ccbc44112f0d5a92" : "Iv1.cbe275c17b8db02d",
+            "dompad.io": "1a41e41b2b371e7a1a5b",
+            "dompad.pages.dev": "fdeadaa98b35c6df688c"
+        },
         config: {
-            client_id: "Iv1.cbe275c17b8db02d", //"d100ccbc44112f0d5a92",
+            client_id: 0 > 1 ? "Iv1.cbe275c17b8db02d" : "d100ccbc44112f0d5a92",
             redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
             scope: "user,public_repo,repo"
         },
         login: (target)=>{
-            var client_id = github.oauth.config.client_id;
+            var client_id = github.oauth.client_id[location.host];
             var redirect_uri = github.oauth.config.redirect_uri;
             var search = route.search;
 
             var scope = github.oauth.config.scope;
-            var state = Crypto.uid.create(1);
+            var state = location.host + "-" + Crypto.uid.create(1);
             var obj = {
                 client_id,
-                //scope,
+                scope,
                 state,
                 redirect_uri
             }
