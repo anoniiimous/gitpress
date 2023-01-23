@@ -496,28 +496,38 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         console.log(243, {
                             user
                         }, user.login);
-                        const query = 'q="key": 32616927 filename:index.json user:' + user.login;
-                        console.log(localStorage.githubAccessToken);
+                        //const query = 'q="key": 32616927 filename:index.json user:' + user.login;
+                        var query = {
+                            per_page: 25,
+                            sort: "created"
+                        };
                         //github.search.code(query).then(data=>{
-                        github.user.repos().then(data=>{
+                        //github.user.repos().then(data=>{
+                        github.user.repos({
+                            query
+                        }).then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
-                            console.log({
-                                data,
-                                query
+                            console.log(596, {
+                                data
                             });
                             const feed = byId('feed-dashboard');
                             feed.innerHTML = "";
                             if (data.length > 0) {
-                                const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
                                 var x = 0;
                                 do {
                                     const row = data[x].repository ? data[x].repository : data[x];
-                                    const shortname = row.name
-                                    //.split('.')[2];
-                                    template.find('text').dataset.href = "/dashboard/" + shortname;
+                                    var private = row.private;
+                                    const shortname = row.name;
+                                    const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
+
+                                    (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
+                                    private === true ? template.find('.gg-lock').closest('box').removeAttribute('class') : null;
+
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
                                     template.find('text').innerHTML = shortname
+                                    template.dataset.href = "/dashboard/" + row.name + "/";
+                                            
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                     x++;
                                 } while (x < data.length);
@@ -581,21 +591,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     const settings = {};
                     console.log(settings);
                     const user = await github.user.get();
-                    console.log(243, {
-                        user
-                    }, user.login);
-                    const query = 'q="key": 32616927 filename:index.json user:' + user.login;
-                    console.log(localStorage.githubAccessToken);
                     //github.search.code(query).then(data=>{
                     github.user.repos({
                         query: {
-                            per_page: 25
+                            per_page: 25,
+                            sort: "created"
                         }
                     }).then(data=>{
                         //data = data.filter(item=>item.name.includes('blog.cms'));
                         console.log(596, {
-                            data,
-                            query
+                            data
                         });
                         const feed = byId('feed-import');
                         feed.innerHTML = "";
@@ -603,12 +608,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var x = 0;
                             do {
                                 const row = data[x].repository ? data[x].repository : data[x];
-                                const shortname = row.name
-                                //.split('.')[2];
+                                var private = row.private;
+                                const shortname = row.name;
                                 const template = byId('template-feed-import').content.firstElementChild.cloneNode(true);
-                                if (Math.abs(x % 2) == 1) {
-                                    template.classList.add('background-color-ccc');
-                                }
+
+                                (Math.abs(x % 2) == 1) ? template.classList.add('background-color-ccc') : null;
+                                private === true ? template.find('.gg-lock').closest('box').removeAttribute('class') : null;
+
                                 template.find('text').dataset.owner = row.owner.login;
                                 template.find('text').dataset.repo = row.name;
                                 template.find('text').innerHTML = shortname
@@ -1527,41 +1533,110 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         repository: async(target)=>{
             const user = await github.user.get();
-            const params = {
+            var repository = target.closest('card').all('box')[0].find('text').textContent;
+            var params = {
                 owner: user.login,
-                path: "/",
+                path: "/v1/apps/index.json",
                 repo: "db.dompad.io"
             }
-            const settings = {};
-            var html = await ajax("raw/html/template/template.loader.new.app.html");
-            var s = async(data)=>{
-                console.log(1539, data);
-                var confirm = 1 < 0 ? await modal.confirm({
-                    body: "Do you want to create a logo or skip this wizard?",
-                    title: repo
-                }, ["Skip", "Continue"]) : null;
+            var settings = {};
+
+            var n = async(data)=>{
+                var href = "/dashboard/" + repository + "/";
+                var confirm = await modal.confirm({
+                    body: "Would you like to start editing this project?",
+                    title: params.repo
+                }, ["Dashboard", "Builder"]);
+                console.log(1540, {
+                    href,
+                    confirm
+                });
                 if (confirm) {
-                    var href = "/new/app/" + data.name + "/";
-                    href.router();
+                    href = "/dashboard/";
                 }
+                console.log(1544, {
+                    href,
+                    confirm
+                });
+                href.router();
+            }
+
+            var s = async(d)=>{
+                var data = JSON.parse(d);
+                console.log(1534, data);
+                settings = {
+                    data: JSON.stringify({}),
+                    dataType: "PUT"
+                }
+                github.repos.contents(params, settings).then(n).catch(()=>{
+                    console.log(1560, e);
+                    modal.alert({
+                        body: e.message.message,
+                        submit: "OK",
+                        title: "Import Error"
+                    });
+                }
+                );
             }
             var ss = ()=>{
-                alert('create repository');
+                console.log("Creating database repository for " + user.login + "...", {
+                    params
+                });
                 github.user.repos({}, {
-                    data: {
+                    data: JSON.stringify({
                         name: params.repo
-                    },
+                    }),
                     dataType: "POST"
-                }).then((data)=>{
-                    console.log(data);
-                    alert(1);
+                }).then(()=>{
+                    settings = {
+                        data: JSON.stringify({
+                            content: "",
+                            message: ""
+                        }),
+                        dataType: "PUT"
+                    }
+                    github.repos.contents(params, settings).then(n).catch((e)=>{
+                        console.log(1560, e);
+                        modal.alert({
+                            body: e.message.message,
+                            submit: "OK",
+                            title: "Import Error"
+                        });
+                    }
+                    );
                 }
-                ).catch(()=>{
-                    alert(2);
+                ).catch((e)=>{
+                    console.log(1560, e);
+                    modal.alert({
+                        body: e.message.message,
+                        submit: "OK",
+                        title: "Database Error"
+                    });
                 }
                 )
             }
-            1 > 0 ? github.repos.contents(params, settings).then(s).catch(ss) : null;
+
+            var p = {
+                "template_owner": "dompad",
+                "template_repo": "database"
+            };
+            var c = {
+                data: JSON.stringify({
+                    name: "db.dompad.io",
+                    private: true
+                }),
+                dataType: "POST"
+            };
+            var i = (e)=>{
+                console.log(1560, e);
+                modal.alert({
+                    body: e.message.message,
+                    submit: "OK",
+                    title: "Cache Error"
+                });
+            }
+            github.repos.contents(params, settings).then(s).catch(ss);
+            //github.repos.generate(p, c).then(s).catch(i)
         }
 
     },

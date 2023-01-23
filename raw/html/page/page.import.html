@@ -52,23 +52,39 @@
                     <input class="flex-grow-1" placeholder="Search..." type="text">
                 </row>
             </form>
-            <card class="border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
-                <column id="feed-import"></column>
-            </card>
         </column>
+    </block>
+    <block class="border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
+        <column id="feed-import"></column>
     </block>
 </blocks>
 <template id="template-feed-import">
-    <box class="margin-bottom-1px" data-tap="controller.import.repository(event.target)">
+    <card class="margin-bottom-1px width-100pct" data-tap="controller.import.repository(event.target)">
         <row>
-            <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
-                <n></n>
-                <n class="empty-state"></n>
-            </ico>
-            <text class="font-weight-bolder">Demo</text>
-            <ico class="margin-left-auto">
-                <n class="gg-chevron-right"></n>
-            </ico>
+            <box class="margin-right-auto">
+                <row>
+                    <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
+                        <n></n>
+                        <n class="empty-state"></n>
+                    </ico>
+                    <text class="font-weight-bolder">Demo</text>
+                </row>
+            </box>
+            <box class="display-none">
+                <row>
+                    <ico class="color-777 margin-left-auto" data-width="30px">
+                        <n class="--ggs-75pct gg-lock"></n>
+                    </ico>
+                    <text class="color-777 font-size-13px font-weight-bolder">Private</text>
+                </row>
+            </box>
+            <box>
+                <row>
+                    <ico>
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
         </row>
-    </box>
+    </card>
 </template>

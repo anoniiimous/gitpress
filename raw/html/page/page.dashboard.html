@@ -19,6 +19,25 @@
             </card>
         </section>
     </block>
+    <block class="display-none">
+        <picture></picture>
+        <section>
+            <card class="-mobile-margin-x-10px margin-x-4vw padding-bottom-20px padding-top-50px">
+                <column>
+                    <box>
+                        <section>
+                            <text class="font-size-24px">Pick a repository from GitHub</text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-16px">Choose the repository you want to start editing. When you save your project, we push your changes to GitHub. No build tools or servers are involved.</text>
+                        </section>
+                    </box>
+                </column>
+            </card>
+        </section>
+    </block>
     <block>
         <picture></picture>
         <section>
@@ -59,16 +78,32 @@
     </block>
 </blocks>
 <template id="template-feed-dashboard">
-    <box class="background-color-fff border-bottom-1px-soli margin-bottom-1px">
+    <card class="margin-bottom-1px width-100pct">
         <row>
-            <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
-                <n></n>
-                <n class="empty-state"></n>
-            </ico>
-            <text class="font-weight-bolder">Demo</text>
-            <ico class="margin-left-auto" data-tap="github.repos.delete(event.target)">
-                <n class="gg-trash"></n>
-            </ico>
+            <box class="margin-right-auto">
+                <row>
+                    <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
+                        <n></n>
+                        <n class="empty-state"></n>
+                    </ico>
+                    <text class="font-weight-bolder">Demo</text>
+                </row>
+            </box>
+            <box class="display-none">
+                <row>
+                    <ico class="color-777 margin-left-auto" data-width="30px">
+                        <n class="--ggs-75pct gg-lock"></n>
+                    </ico>
+                    <text class="color-777 font-size-13px font-weight-bolder">Private</text>
+                </row>
+            </box>
+            <box>
+                <row>
+                    <ico>
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
         </row>
-    </box>
+    </card>
 </template>

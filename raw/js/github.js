@@ -37,9 +37,9 @@ window.github = {
         }
         ,
         config: {
-            client_id: "Iv1.cbe275c17b8db02d",
+            client_id: "Iv1.cbe275c17b8db02d", //"d100ccbc44112f0d5a92",
             redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
-            scope: "user,repo"
+            scope: "user,public_repo,repo"
         },
         login: (target)=>{
             var client_id = github.oauth.config.client_id;
@@ -50,20 +50,21 @@ window.github = {
             var state = Crypto.uid.create(1);
             var obj = {
                 client_id,
-                scope,
+                //scope,
                 state,
                 redirect_uri
             }
             var query = new URLSearchParams(obj).toString();
-            console.log(534, "mvc.js", {
-                obj,
-                query
-            });
 
             var a = document.createElement('a');
             var href = "https://github.com/login/oauth/authorize?" + query;
             a.href = href;
             a.click();
+            console.log(534, "mvc.js", {
+                href,
+                obj,
+                query
+            });
         }
         ,
         logout: ()=>{
@@ -762,10 +763,15 @@ window.github = {
                         const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{
-                            const data = JSON.parse(d);
-                            resolve(data);
+                            console.log(766, {
+                                d
+                            });
+                            resolve(d);
                         }
                         const b = (error)=>{
+                            console.log(770, {
+                                error
+                            });
                             console.log(error);
                             reject(error);
                         }
@@ -775,6 +781,7 @@ window.github = {
                             Authorization: "token " + accessToken
                         } : null;
                         console.log(777, {
+                            url,
                             settings
                         });
                         ajax(url, settings).then(a).catch(b);
