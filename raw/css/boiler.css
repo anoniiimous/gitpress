@@ -628,6 +628,10 @@
     .height-100pct, [data-height="100%"] {
         height: 100%;
     }
+
+    [data-height="calc(100% - 10px)"] {
+        height: calc(100% - 10px);
+    }
 }
 
 /*HEIGHT*/
@@ -1199,6 +1203,10 @@
         transform: translateX(100%);
     }
 
+    [data-transform="translateY(calc(100% - 50px))"] {
+        transform: translateY(calc(100% - 50px));
+    }
+
     [data-transform="translate3d(0,-50%,0)"] {
         transform: translate3d(0,-50%,0)
     }
@@ -1258,6 +1266,10 @@
         width: 120px;
     }
 
+    [data-width="calc(100% - 300px)"] {
+        width: calc(100% - 300px);
+    }
+
     [data-width="calc(100% - 320px)"] {
         width: calc(100% - 320px);
     }
@@ -1294,8 +1306,20 @@
         width: 75%;
     }
 
-    .width-100pct {
+    .width-100pct, [data-width="100%"] {
         width: 100%;
+    }
+
+    [data-width="calc(100% - 20px)"] {
+        width: calc(100% - 20px);
+    }
+
+    [data-width="calc(100% - 40px)"] {
+        width: calc(100% - 40px);
+    }
+
+    [data-width="calc(100% - 280px)"] {
+        width: calc(100% - 280px);
     }
 
     [data-width="calc(100% - 320px)"] {

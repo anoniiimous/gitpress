@@ -99,7 +99,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             if (get[3]) {
                                 if (get[3] === "er") {
-                                    controller.build.screen(iframe);
+                                    controller.build.editor(iframe);
                                 } else if (get[3] === "preview") {
                                     controller.build.preview(iframe);
                                 }
@@ -794,22 +794,35 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             await controller.build.iframe(iframe, raw);
         }
         ,
-        editor: (iframe)=>{
+        editor: ()=>{
             const nav = document.body.find('body > main > nav');
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main > pages');
-            const toggle = nav.classList.contains('display-none');
+            nav.classList.add('display-none');
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            blocks.classList.remove('margin-left-280px');
+            blocks.dataset["960pxTransform"] = "0";
 
-            if (toggle) {
-                nav.classList.remove('display-none');
-                blocks.classList.add('margin-left-280px');
-                nav.dataset["960pxTransform"] = "translateX(-100%)";
-                blocks.dataset["960pxTransform"] = "0";
-            } else {
-                nav.classList.add('display-none');
-                blocks.classList.remove('margin-left-280px');
-                nav.dataset["960pxTransform"] = "translateX(0)";
-                blocks.dataset["960pxTransform"] = "translateX(280px)";
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('block');
+            const header = block.find('header');
+
+            block.removeAttribute('data-transform');
+            block.dataset.width = "calc(100% - 20px)";
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+                header.classList.remove('display-none');
+                block.classList.add('border-top-left-radius-10px');
+                block.classList.add('border-top-right-radius-10px');
+                block.classList.add('margin-top-10px');
+                block.classList.add('margin-x-10px');
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                css.setAttribute('href', 'raw/css/editor.css')
             }
         }
         ,
@@ -892,6 +905,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const block = iframe.closest('block');
             const header = block.find('header');
 
+            block.dataset.transform = "translateY(calc(100% - 50px))";
+            block.dataset.height = "calc(100% - 10px)";
+            block.dataset.width = "calc(100% - 300px)";
+
             const win = iframe.contentWindow;
             const head = win.document.head;
             const body = win.document.body;
@@ -904,7 +921,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 block.classList.add('margin-top-10px');
                 block.classList.add('margin-x-10px');
                 //block.find('builder-toolbar-preview').classList.add('display-none');
-                css.setAttribute('href', 'raw/files/editor.css')
+                css.removeAttribute('href')
             }
         }
         ,
@@ -924,6 +941,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const block = iframe.closest('block');
             const header = block.find('header');
 
+            block.removeAttribute('data-transform');
+            block.dataset.height = "100%";
+            block.dataset.width = "100%";
+
             const win = iframe.contentWindow;
             const head = win.document.head;
             const body = win.document.body;
@@ -940,7 +961,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     block.classList.add('margin-top-10px');
                     block.classList.add('margin-x-10px');
                     //block.find('builder-toolbar-preview').classList.add('display-none');
-                    css.setAttribute('href', 'raw/files/editor.css')
+                    css.setAttribute('href', 'raw/css/editor.css')
                 } else {
                     header.classList.add('display-none');
                     block.classList.remove('border-top-left-radius-10px');
@@ -950,35 +971,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //block.find('builder-toolbar-preview').classList.remove('display-none');
                     css.removeAttribute('href');
                 }
-            }
-        }
-        ,
-        screen: ()=>{
-            const nav = document.body.find('body > main > nav');
-            const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
-            nav.classList.add('display-none');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
-            blocks.classList.remove('margin-left-280px');
-            blocks.dataset["960pxTransform"] = "0";
-
-            const iframe = byId('iframe-editor');
-            const block = iframe.closest('block');
-            const header = block.find('header');
-
-            const win = iframe.contentWindow;
-            const head = win.document.head;
-            const body = win.document.body;
-
-            if (head.find) {
-                const css = head.find("#style-editor");
-                header.classList.remove('display-none');
-                block.classList.add('border-top-left-radius-10px');
-                block.classList.add('border-top-right-radius-10px');
-                block.classList.add('margin-top-10px');
-                block.classList.add('margin-x-10px');
-                //block.find('builder-toolbar-preview').classList.add('display-none');
-                css.setAttribute('href', 'raw/files/editor.css')
             }
         }
         ,
