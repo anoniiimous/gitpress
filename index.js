@@ -104,50 +104,5 @@ async function init() {
 
     var go = false;
 
-    if (1 < 0) {
-        firebase.initializeApp(auth.config);
-        const onAuthStateChanged = function(user) {
-            auth.change(user).then(authChange);
-            if (user) {
-                //alert(false);
-                uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
-            } else {
-                //alert(true);
-                //uri = "/dashboard/";
-                localStorage.removeItem('githubAccessToken');
-                //byId("avi").innerHTML = "";
-            }
-            1 < 0 && go ? console.log("no route") : uri.router().then(go = true);
-            console.log(129, {
-                user
-            });
-        }
-        firebase.auth().onAuthStateChanged(onAuthStateChanged);
-        //firebase.auth().currentUser ? alert(null) : uri.router();
-        console.log("Initialized", firebase.auth(), firebase.auth().currentUser);
-        firebase.auth().getRedirectResult().then((result)=>{
-            //firebase.auth().signInWithPopup(provider).then((result)=>{
-            var credential = result.credential;
-            if (credential) {
-                var token = credential.accessToken;
-                var user = result.user;
-                localStorage.setItem('githubAccessToken', token);
-            }
-            1 < 0 ? console.log(345, {
-                result
-            }) : null;
-        }
-        ).catch((error)=>{
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            var email = error.email;
-            var credential = error.credential;
-            console.log({
-                error
-            });
-        }
-        );
-    } else {
-        uri.router().then(go = true);
-    }
+    uri.router().then(go = true);
 }

@@ -395,9 +395,7 @@ function lazyLoad(images, vp) {
                         let lazyImage = entry.target;
                         var img = lazyImage.find('[data-src]');
                         var src = img.dataset.src;
-                        if (src.includes("http:")) {
-                            var path = "/" + user.login + "/" + win.parent.GET[1] + "/main/" + src;
-                            var b64 = (await github.raw.path(path)).content;
+                        if (src.includes("://")) {
                             var href = src;
                         } else {
                             var c = await github.repos.contents({
@@ -420,14 +418,14 @@ function lazyLoad(images, vp) {
                             const ext = arr[arr.length - 1];
                             var mime = getMime(ext);
 
-                            var href = "data:"+mime+";base64," + b64;
+                            var href = "data:" + mime + ";base64," + b64;
                             console.log(391, {
                                 href
                             });
                         }
-                        img.src = href;
                         lazyImage.removeAttribute('[data-src]');
                         lazyImageObserver.unobserve(lazyImage);
+                        img.src = href;
                     }
                 });
             }

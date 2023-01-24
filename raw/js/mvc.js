@@ -729,8 +729,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     build: {
         er: async(iframe)=>{
+            var vp = iframe.closest('pages');
+            var header = vp.find('header');
             console.log(668, {
-                iframe
+                iframe,
+                vp,
+                header
             });
 
             const nav = document.body.find('body > main > nav');
@@ -927,8 +931,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             }
                             return content;
                         }
-                        //var asset = await github.repos.contents(params, {}).then(a);
-                        //window.source.copy.files = asset;
+                        var asset = await github.repos.contents(params, {}).then(a);
+                        window.source.copy.files = asset;
 
                         //PAGES
                         var params = {
@@ -1172,6 +1176,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log("references", {
                             refs
                         });
+
+                        "/dashboard/:get/build/".router();
                     }
                     var confirm = await modal.confirm({
                         title: theme.capitalize(),
@@ -2203,44 +2209,5 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
 
     },
-
-    templates: {
-
-        install: (template)=>{
-            console.log(template);
-        }
-        ,
-
-        preview: async(iframe)=>{
-            var path = "/";
-            var template = iframe.name.split('-').pop();
-            console.log(792, path, template);
-
-            iframe.src = "/preview/" + template + "/#" + path;
-
-            var params = {
-                owner: "dompad",
-                repo: "demo",
-                path: "/" + template + "/site.webmanifest"
-            }
-            var settings = {}
-
-            const webmanifest = github.repos.contents(params, settings).then(data=>{
-                console.log(807, {
-                    data
-                });
-            }
-            );
-
-            params.path = "/" + template + "/shell.html";
-            const shell = github.repos.contents(params, settings).then(data=>{
-                console.log(807, {
-                    data
-                });
-            }
-            );
-        }
-
-    }
 
 });
