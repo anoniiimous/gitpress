@@ -92,9 +92,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "build") {
                             var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
                             var iframe = vp.find('iframe');
-                                    
-                            var boot = iframe.contentWindow.document.body.querySelector('boot');
-                            await boot ? null : mvc.c.build.boot(iframe);
+
+                            if (!iframe.contentWindow.document.body.querySelector('boot')) {
+                                await mvc.c.build.boot(iframe);
+                            }
 
                             if (get[3]) {
                                 if (get[3] === "er") {
@@ -106,6 +107,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 controller.build.index(iframe);
                             }
 
+                            //alert(iframe.contentWindow.document.body.outerHTML);
                             resolve(route);
                         }
                         if (get[2] === "files") {
@@ -758,7 +760,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             const user = await github.user.get();
             const owner = user.login;
-            const repo = GET[1];
+            const repo = route.GOT[1];
 
             const error = {
                 document: (error)=>{
@@ -781,33 +783,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 repo,
                 path
             }
-            github.repos.contents(params, {}).then(data=>{
-                const content = data.content;
-                const raw = atob(content);
-                console.log(695, {
-                    data,
-                    raw,
-                    iframe
-                });
-                controller.build.iframe(iframe, raw);
-            }
-            ).catch(error.document);
-
-            //SHELL
-            var path = "/raw/html/template/template.shell.html";
-            var params = {
-                owner,
-                repo,
-                path
-            }
-            1 < 0 ? github.repos.contents(params, {}).then(data=>{
-                const content = data.content;
-                const raw = atob(content);
-                console.log(723, {
-                    data
-                });
-            }
-            ).catch(error.shell) : null;
+            var data = await github.repos.contents(params, {})
+            const content = data.content;
+            const raw = atob(content);
+            console.log(695, {
+                data,
+                raw,
+                iframe
+            });
+            await controller.build.iframe(iframe, raw);
         }
         ,
         editor: (iframe)=>{
@@ -833,7 +817,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             return new Promise(async(resolve,reject)=>{
                 const user = await github.user.get();
                 const owner = user.login;
-                const repo = GET[1];
+                const repo = route.GOT[1];
                 const branch = 'main';
                 try {
                     var raw = await ajax('raw/html/template/template.iframe.document.html');
@@ -864,8 +848,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         //var js = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.js')).content);
                         var js = await ajax('raw/js/iframe/iframe.index.js');
                         var script = document.createElement('script');
+                        script.id = "script-index";
                         script.src = blob(js, 'text/javascript');
-                        doc.head.appendChild(script);
+                        //doc.head.appendChild(script);
                     } catch (e) {
                         console.log(e);
                     }
@@ -882,8 +867,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     iframe.src = blob(doc.documentElement.outerHTML, "text/html");
                     iframe.onload = ()=>{
                         console.log("controller.build.iframe iframe.onload", {
-                            iframe
+                            iframe,
+                            body: iframe.contentWindow.document.body.outerHTML
                         });
+                        resolve(iframe);
                     }
                 } catch (e) {}
             }
@@ -928,17 +915,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const blocks = dom.body.find('main > pages');
             const toggle = nav.classList.contains('display-none');
 
-            if (0 > 1) {
-                nav.classList.remove('display-none');
-                blocks.classList.add('margin-left-280px');
-                nav.dataset["960pxTransform"] = "translateX(-100%)";
-                blocks.dataset["960pxTransform"] = "0";
-            } else {
-                nav.classList.add('display-none');
-                blocks.classList.remove('margin-left-280px');
-                nav.dataset["960pxTransform"] = "translateX(0)";
-                blocks.dataset["960pxTransform"] = "translateX(280px)";
-            }
+            nav.classList.add('display-none');
+            blocks.classList.remove('margin-left-280px');
+            nav.dataset["960pxTransform"] = "translateX(0)";
+            blocks.dataset["960pxTransform"] = "translateX(280px)";
 
             const iframe = byId('iframe-editor');
             const block = iframe.closest('block');
@@ -952,6 +932,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 const css = head.find("#style-editor");
 
                 const toggle = header.classList.contains('display-none');
+                //alert(toggle)
                 if (toggle) {
                     header.classList.remove('display-none');
                     block.classList.add('border-top-left-radius-10px');

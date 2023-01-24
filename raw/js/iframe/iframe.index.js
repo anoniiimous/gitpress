@@ -47,7 +47,7 @@ async function init() {
     if (is.iframe) {
         const user = await github.user.get();
         const owner = user.login;
-        const repo = window.parent.GET[1];
+        const repo = window.parent.route.GOT[1];
         const branch = 'main';
         const file = 'raw/style/template.html';
         const path = '/' + owner + '/' + repo + '/' + branch + '/' + file;
@@ -76,11 +76,11 @@ async function init() {
     //ROUTE
     var pathname = window.parent.location.pathname;
     var dir = rout.ed.dir(pathname);
-    dir.splice(0,3);
+    dir.splice(0,4);
     var uri = rout.ed.url(dir);
     uri.router();
 
-    console.log("Initialized", {
+    console.log("iframe.index.js Initialized", {
         body: window.document.body,
         dir,
         html,
