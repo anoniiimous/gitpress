@@ -14,6 +14,11 @@ auth.config = {
 };
 
 window.onload = ()=>{
+    window.database = {
+        dashboard: {},
+        user: {}
+    };
+
     window.dom = {
         body: document.body,
         boot: document.getElementById("boot"),
@@ -83,6 +88,14 @@ async function init() {
         //window.touch.ing = false;
         touch.handler(event);
         //console.log(e.type);
+    });
+
+    document.addEventListener("keyup", function(e) {
+        if (e.key === "Escape") {
+            if (route.page === "/dashboard/*/build/preview/") {
+                '/dashboard/*/build'.router();
+            }
+        }
     });
 
     const authChange = function(e) {

@@ -92,7 +92,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "build") {
                             var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
                             var iframe = vp.find('iframe');
-                            mvc.c.build.er(iframe);
+                                    
+                            var boot = iframe.contentWindow.document.body.querySelector('boot');
+                            await boot ? null : mvc.c.build.boot(iframe);
+
+                            if (get[3]) {
+                                if (get[3] === "er") {
+                                    controller.build.screen(iframe);
+                                } else if (get[3] === "preview") {
+                                    controller.build.preview(iframe);
+                                }
+                            } else {
+                                controller.build.index(iframe);
+                            }
+
                             resolve(route);
                         }
                         if (get[2] === "files") {
@@ -276,217 +289,223 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                     }
 
-                    //const user = await github.user.get();
-                    var params = {
-                        owner: user.login,
-                        path: "/site.webmanifest",
-                        repo: get[1]
-                    };
-                    var settings = {
-                        cache: "reload"
-                    };
-                    github.repos.contents(params, settings).then(async(data)=>{
-                        if (data) {
-                            var content = data.content;
-                            var raw = atob(content);
-                            var json = JSON.parse(raw);
-                            console.log(261, {
-                                content,
-                                data,
-                                json,
-                                raw
-                            });
-                            var description = json.description;
-                            var icons = json.icons;
-                            var name = json.name;
-                            if (description && icons && name) {
-                                //alert("Setup Complete!");
-                                dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = name;
-                            } else {
-                                const html = await ajax('/raw/html/template/template.setup.html');
-                                var ppp = await modal.page(html);
-                                var form = ppp.find('form');
-
-                                //GET index.html
-                                try {
-                                    var data = await github.repos.contents({
-                                        owner: user.login,
-                                        repo: GET[1],
-                                        path: "/index.html"
-                                    }, {
-                                        cache: "reload"
-                                    });
-                                    var raw = data.content;
-                                    var sha = data.sha;
-                                    var content = atob(raw);
-                                    var doc = new DOMParser().parseFromString(content, "text/html");
-                                    var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
-                                    console.log(807, {
-                                        content,
-                                        data,
-                                        doc,
-                                        raw,
-                                        sha
-                                    });
-                                } catch (e) {
-                                    console.log(e);
-                                }
-
-                                //GET icon.svg
-                                try {
-                                    var data = await github.repos.contents({
-                                        owner: user.login,
-                                        repo: GET[1],
-                                        path: "/icon.svg"
-                                    }, {
-                                        cache: "reload"
-                                    });
-                                    var raw = data.content;
-                                    var sha = data.sha;
-                                    //var brand = raw ? "data:image/svg;base64," + raw : null;
-                                    var brand = raw ? atob(raw) : null;
-                                    console.log(307, {
-                                        content: atob(raw),
-                                        data,
-                                        raw,
-                                        sha
-                                    });
-                                } catch (e) {
-                                    console.log(e);
-                                }
-
-                                //GET site.webmanifest
-                                try {
-                                    var data = await github.repos.contents({
-                                        owner: user.login,
-                                        repo: GET[1],
-                                        path: "/site.webmanifest"
-                                    }, {
-                                        cache: "reload"
-                                    });
-                                    var raw = atob(data.content);
-                                    var sha = data.sha;
-                                    var json = JSON.parse(raw);
-                                    var about = null;
-                                    console.log(319, {
-                                        data,
-                                        json,
-                                        raw,
-                                        sha
-                                    });
-                                } catch (e) {
-                                    console.log(e);
-                                }
-
-                                //GET data
-                                console.log(316, {
-                                    title,
-                                    brand,
-                                    about
+                    //alert(window.database.dashboard.hasOwnProperty(get[1]));
+                    if (window.database.dashboard.hasOwnProperty(get[1]) === false) {
+                        //const user = await github.user.get();
+                        var params = {
+                            owner: user.login,
+                            path: "/site.webmanifest",
+                            repo: get[1]
+                        };
+                        var settings = {
+                            cache: "reload"
+                        };
+                        github.repos.contents(params, settings).then(async(data)=>{
+                            if (data) {
+                                var content = data.content;
+                                var raw = atob(content);
+                                var json = JSON.parse(raw);
+                                console.log(261, {
+                                    content,
+                                    data,
+                                    json,
+                                    raw
                                 });
+                                var description = json.description;
+                                var icons = json.icons;
+                                var name = json.name;
+                                var short_name = json.short_name;
 
-                                form.classList.remove("display-none");
+                                window.database.dashboard[short_name] = json;
+                                if (description && icons && name) {
+                                    //alert("Setup Complete!");
+                                    dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = name;
+                                } else {
+                                    const html = await ajax('/raw/html/template/template.setup.html');
+                                    var ppp = await modal.page(html);
+                                    var form = ppp.find('form');
 
-                                if (title) {
-                                    var s1 = ppp.find('block').children[0];
-                                    s1.find('input').value = s1.find('input').dataset.value = title;
-                                    s1.all('footer box')[1].classList.remove('opacity-50pct');
+                                    //GET index.html
+                                    try {
+                                        var data = await github.repos.contents({
+                                            owner: user.login,
+                                            repo: GET[1],
+                                            path: "/index.html"
+                                        }, {
+                                            cache: "reload"
+                                        });
+                                        var raw = data.content;
+                                        var sha = data.sha;
+                                        var content = atob(raw);
+                                        var doc = new DOMParser().parseFromString(content, "text/html");
+                                        var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
+                                        console.log(807, {
+                                            content,
+                                            data,
+                                            doc,
+                                            raw,
+                                            sha
+                                        });
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
 
-                                    var s2 = ppp.find('block').children[1];
-                                    var picture = s2.find('picture');
-                                    console.log(picture.firstElementChild)
+                                    //GET icon.svg
+                                    try {
+                                        var data = await github.repos.contents({
+                                            owner: user.login,
+                                            repo: GET[1],
+                                            path: "/icon.svg"
+                                        }, {
+                                            cache: "reload"
+                                        });
+                                        var raw = data.content;
+                                        var sha = data.sha;
+                                        //var brand = raw ? "data:image/svg;base64," + raw : null;
+                                        var brand = raw ? atob(raw) : null;
+                                        console.log(307, {
+                                            content: atob(raw),
+                                            data,
+                                            raw,
+                                            sha
+                                        });
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
 
-                                    if (brand) {
-                                        //alert("Step Three");
+                                    //GET site.webmanifest
+                                    try {
+                                        var data = await github.repos.contents({
+                                            owner: user.login,
+                                            repo: GET[1],
+                                            path: "/site.webmanifest"
+                                        }, {
+                                            cache: "reload"
+                                        });
+                                        var raw = atob(data.content);
+                                        var sha = data.sha;
+                                        var json = JSON.parse(raw);
+                                        var about = null;
+                                        console.log(319, {
+                                            data,
+                                            json,
+                                            raw,
+                                            sha
+                                        });
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
 
-                                        var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
-                                        var safety = 1 < 0;
-                                        if (safety) {
-                                            picture.innerHTML = svg.outerHTML;
+                                    //GET data
+                                    console.log(316, {
+                                        title,
+                                        brand,
+                                        about
+                                    });
+
+                                    form.classList.remove("display-none");
+
+                                    if (title) {
+                                        var s1 = ppp.find('block').children[0];
+                                        s1.find('input').value = s1.find('input').dataset.value = title;
+                                        s1.all('footer box')[1].classList.remove('opacity-50pct');
+
+                                        var s2 = ppp.find('block').children[1];
+                                        var picture = s2.find('picture');
+                                        console.log(picture.firstElementChild)
+
+                                        if (brand) {
+                                            //alert("Step Three");
+
+                                            var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
+                                            var safety = 1 < 0;
+                                            if (safety) {
+                                                picture.innerHTML = svg.outerHTML;
+                                            } else {
+                                                var rect = svg.find('rect');
+                                                picture.find('rect').setAttribute('fill', rect.getAttribute('fill'))
+
+                                                var foreignObject = svg.find('foreignObject');
+                                                var scale = foreignObject.getAttribute('width').split("%")[0];
+                                                picture.find('foreignObject').innerHTML = foreignObject.innerHTML;
+                                                picture.find('foreignObject').setAttribute('height', scale + "%");
+                                                picture.find('foreignObject').setAttribute('width', scale + "%");
+                                                picture.find('foreignObject').style.transform = "translate(calc((100% - " + scale + "%)/2), calc((100% - " + scale + "%)/2))";
+
+                                                s2.find('[data-before="size"]').closest('box').find('input').setAttribute('value', foreignObject.getAttribute('width').split("%")[0]);
+                                            }
+
+                                            $(form.all('block > *')).addClass('display-none');
+                                            $(form.all('form > header box flex')).attr("data-height", "30px");
+                                            $(form.all('form > header box flex')).attr("data-width", "30px");
+                                            $(form.all('form > header box flex')[2]).attr("data-height", "50px");
+                                            $(form.all('form > header box flex')[2]).attr("data-width", "50px");
+                                            $(form.all('block > *')[2]).removeClass('display-none');
+
+                                            if (about) {
+                                                alert(about);
+                                            }
                                         } else {
-                                            var rect = svg.find('rect');
-                                            picture.find('rect').setAttribute('fill', rect.getAttribute('fill'))
+                                            //alert("Step Two");
 
-                                            var foreignObject = svg.find('foreignObject');
-                                            var scale = foreignObject.getAttribute('width').split("%")[0];
-                                            picture.find('foreignObject').innerHTML = foreignObject.innerHTML;
-                                            picture.find('foreignObject').setAttribute('height', scale + "%");
-                                            picture.find('foreignObject').setAttribute('width', scale + "%");
-                                            picture.find('foreignObject').style.transform = "translate(calc((100% - " + scale + "%)/2), calc((100% - " + scale + "%)/2))";
+                                            $(form.all('block > *')).addClass('display-none');
+                                            $(form.all('form > header box flex')).attr("data-height", "30px");
+                                            $(form.all('form > header box flex')).attr("data-width", "30px");
+                                            $(form.all('form > header box flex')[1]).attr("data-height", "50px");
+                                            $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                            $(form.all('block > *')[1]).removeClass('display-none');
 
-                                            s2.find('[data-before="size"]').closest('box').find('input').setAttribute('value', foreignObject.getAttribute('width').split("%")[0]);
+                                            var color = colors.random();
+                                            controller.setup.iro(color);
                                         }
-
-                                        $(form.all('block > *')).addClass('display-none');
-                                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                                        $(form.all('form > header box flex')[2]).attr("data-height", "50px");
-                                        $(form.all('form > header box flex')[2]).attr("data-width", "50px");
-                                        $(form.all('block > *')[2]).removeClass('display-none');
-
-                                        if (about) {
-                                            alert(about);
-                                        }
-                                    } else {
-                                        //alert("Step Two");
-
-                                        $(form.all('block > *')).addClass('display-none');
-                                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                                        $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                                        $(form.all('form > header box flex')[1]).attr("data-width", "50px");
-                                        $(form.all('block > *')[1]).removeClass('display-none');
-
-                                        var color = colors.random();
-                                        controller.setup.iro(color);
                                     }
                                 }
+                                resolve(route);
                             }
-                            resolve(route);
                         }
-                    }
-                    ).catch(async(error)=>{
-                        console.log("43.error", {
-                            error
-                        });
-                        //if (error.code === 404) {
-                        //alert("Setup Project");
-                        //}
+                        ).catch(async(error)=>{
+                            console.log("43.error", {
+                                error
+                            });
+                            //if (error.code === 404) {
+                            //alert("Setup Project");
+                            //}
 
-                        const user = await github.user.get();
-                        var file = "site.webmanifest";
-                        var json = {};
+                            const user = await github.user.get();
+                            var file = "site.webmanifest";
+                            var json = {};
 
-                        var params = {};
-                        params.owner = user.login;
-                        params.path = "/" + file;
-                        params.repo = GET[1]
+                            var params = {};
+                            params.owner = user.login;
+                            params.path = "/" + file;
+                            params.repo = GET[1]
 
-                        var settings = {};
-                        settings.data = JSON.stringify({
-                            content: btoa(JSON.stringify(json, null, 2)),
-                            message: "Create " + file
-                        }),
-                        settings.dataType = "PUT";
+                            var settings = {};
+                            settings.data = JSON.stringify({
+                                content: btoa(JSON.stringify(json, null, 2)),
+                                message: "Create " + file
+                            }),
+                            settings.dataType = "PUT";
 
-                        console.log({
-                            params,
-                            settings
-                        });
+                            console.log({
+                                params,
+                                settings
+                            });
 
-                        const aa = async(e)=>{
-                            const html = await ajax('/raw/html/template/template.setup.html');
-                            var ppp = await modal.page(html);
-                            ppp.find('form').classList.remove("display-none");
-                            resolve(route);
+                            const aa = async(e)=>{
+                                const html = await ajax('/raw/html/template/template.setup.html');
+                                var ppp = await modal.page(html);
+                                ppp.find('form').classList.remove("display-none");
+                                resolve(route);
+                            }
+
+                            const bb = (e)=>{}
+
+                            github.repos.contents(params, settings).then(aa).catch(bb);
+
                         }
-
-                        const bb = (e)=>{}
-
-                        github.repos.contents(params, settings).then(aa).catch(bb);
-
+                        );
                     }
-                    );
                 } else {
 
                     if (github.oauth.verify()) {
@@ -728,7 +747,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     build: {
-        er: async(iframe)=>{
+        boot: async(iframe)=>{
             var vp = iframe.closest('pages');
             var header = vp.find('header');
             console.log(668, {
@@ -736,14 +755,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 vp,
                 header
             });
-
-            const nav = document.body.find('body > main > nav');
-            const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
-            nav.classList.add('display-none');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
-            blocks.classList.remove('margin-left-280px');
-            blocks.dataset["960pxTransform"] = "0";
 
             const user = await github.user.get();
             const owner = user.login;
@@ -797,6 +808,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
             }
             ).catch(error.shell) : null;
+        }
+        ,
+        editor: (iframe)=>{
+            const nav = document.body.find('body > main > nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = dom.body.find('main > pages');
+            const toggle = nav.classList.contains('display-none');
+
+            if (toggle) {
+                nav.classList.remove('display-none');
+                blocks.classList.add('margin-left-280px');
+                nav.dataset["960pxTransform"] = "translateX(-100%)";
+                blocks.dataset["960pxTransform"] = "0";
+            } else {
+                nav.classList.add('display-none');
+                blocks.classList.remove('margin-left-280px');
+                nav.dataset["960pxTransform"] = "translateX(0)";
+                blocks.dataset["960pxTransform"] = "translateX(280px)";
+            }
         }
         ,
         iframe: (iframe)=>{
@@ -858,6 +888,129 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } catch (e) {}
             }
             )
+        }
+        ,
+        index: async()=>{
+            const nav = document.body.find('body > main > nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = dom.body.find('main > pages');
+            const toggle = 0 < 1;
+
+            nav.classList.remove('display-none');
+            blocks.classList.add('margin-left-280px');
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            blocks.dataset["960pxTransform"] = "0";
+
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('block');
+            const header = block.find('header');
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+                header.classList.remove('display-none');
+                block.classList.add('border-top-left-radius-10px');
+                block.classList.add('border-top-right-radius-10px');
+                block.classList.add('margin-top-10px');
+                block.classList.add('margin-x-10px');
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                css.setAttribute('href', 'raw/files/editor.css')
+            }
+        }
+        ,
+        preview: ()=>{
+
+            const nav = document.body.find('body > main > nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = dom.body.find('main > pages');
+            const toggle = nav.classList.contains('display-none');
+
+            if (0 > 1) {
+                nav.classList.remove('display-none');
+                blocks.classList.add('margin-left-280px');
+                nav.dataset["960pxTransform"] = "translateX(-100%)";
+                blocks.dataset["960pxTransform"] = "0";
+            } else {
+                nav.classList.add('display-none');
+                blocks.classList.remove('margin-left-280px');
+                nav.dataset["960pxTransform"] = "translateX(0)";
+                blocks.dataset["960pxTransform"] = "translateX(280px)";
+            }
+
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('block');
+            const header = block.find('header');
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+
+                const toggle = header.classList.contains('display-none');
+                if (toggle) {
+                    header.classList.remove('display-none');
+                    block.classList.add('border-top-left-radius-10px');
+                    block.classList.add('border-top-right-radius-10px');
+                    block.classList.add('margin-top-10px');
+                    block.classList.add('margin-x-10px');
+                    //block.find('builder-toolbar-preview').classList.add('display-none');
+                    css.setAttribute('href', 'raw/files/editor.css')
+                } else {
+                    header.classList.add('display-none');
+                    block.classList.remove('border-top-left-radius-10px');
+                    block.classList.remove('border-top-right-radius-10px');
+                    block.classList.remove('margin-top-10px');
+                    block.classList.remove('margin-x-10px');
+                    //block.find('builder-toolbar-preview').classList.remove('display-none');
+                    css.removeAttribute('href');
+                }
+            }
+        }
+        ,
+        screen: ()=>{
+            const nav = document.body.find('body > main > nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = dom.body.find('main > pages');
+            nav.classList.add('display-none');
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            blocks.classList.remove('margin-left-280px');
+            blocks.dataset["960pxTransform"] = "0";
+
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('block');
+            const header = block.find('header');
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+                header.classList.remove('display-none');
+                block.classList.add('border-top-left-radius-10px');
+                block.classList.add('border-top-right-radius-10px');
+                block.classList.add('margin-top-10px');
+                block.classList.add('margin-x-10px');
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                css.setAttribute('href', 'raw/files/editor.css')
+            }
+        }
+        ,
+        route: (iframe)=>{
+            if (0 > 1) {
+                const nav = document.body.find('body > main > nav');
+                const transform = nav.dataset["960pxTransform"];
+                const blocks = dom.body.find('main > pages');
+                nav.classList.add('display-none');
+                nav.dataset["960pxTransform"] = "translateX(-100%)";
+                blocks.classList.remove('margin-left-280px');
+                blocks.dataset["960pxTransform"] = "0";
+            }
         }
     },
 
@@ -1379,7 +1532,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const nav = document.body.find('body > main > nav');
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main > pages');
-            const toggle = transform === "translateX(-100%)";
+            const toggle = transform === "translateX(0)";
 
             if (toggle) {
                 nav.classList.add('display-none');

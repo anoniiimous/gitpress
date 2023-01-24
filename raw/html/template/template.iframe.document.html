@@ -27,13 +27,13 @@
             base.href = is.iframe ? (window.parent.location.protocol + "//" + window.parent.location.host) : ("/");
             document.head.appendChild(base);
         </script>
-        <link href='raw/css/iframe.editor.css' rel='stylesheet'>
-        <link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
+        <link id="style-editor" href='raw/css/editor.css' rel='stylesheet'>
+        <link id="style-gg" href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
         <script src="raw/js/github.js"></script>
         <script src="raw/js/modal.js"></script>
+        <script src="raw/js/touch.js"></script>
         <script src="raw/js/iframe/iframe.on.js"></script>
         <script src="raw/js/iframe/iframe.router.js"></script>
-        <script src="raw/js/touch.js"></script>
         <script src="raw/js/iframe/iframe.vanilla.js"></script>
     </head>
     <body>

@@ -17,9 +17,6 @@ String.prototype.router = async function(params) {
     }
 
     const fetching3 = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]:empty');
-    console.log({
-        fetching3
-    });
     if (fetching3.length > 0) {
         var ff = 0;
         do {
