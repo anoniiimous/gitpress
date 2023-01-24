@@ -93,7 +93,7 @@ async function init() {
     document.addEventListener("keyup", function(e) {
         if (e.key === "Escape") {
             if (route.page === "/dashboard/*/build/preview/") {
-                '/dashboard/*/build'.router();
+                '/dashboard/:get/build/'.router();
             }
         }
     });
