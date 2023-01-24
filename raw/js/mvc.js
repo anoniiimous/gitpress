@@ -73,7 +73,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
             if (root === "dashboard") {
-                controller.nav.close();
+                //controller.nav.close();
                 if (get.length > 1) {
                     const user = await github.user.get();
                     var project = dom.body.find('main > nav').find('[placeholder="Project Name"]');
