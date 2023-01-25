@@ -538,6 +538,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     const row = data[x].repository ? data[x].repository : data[x];
                                     var private = row.private;
                                     const shortname = row.name;
+                                    var pushed_at = new Date(row.pushed_at);
+                                    var date = pushed_at.toLocaleString('en-US', { month: 'short' }) + " " + (pushed_at.getDay() + 1) + ", " + pushed_at.getFullYear();
+
                                     const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
 
                                     (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
@@ -546,7 +549,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
-                                    template.find('text').innerHTML = shortname
+                                    template.find('text').textContent = shortname;
+                                    template.find('[placeholder="Date"]').textContent = date;
                                     template.dataset.href = "/dashboard/" + row.name + "/";
 
                                     feed.insertAdjacentHTML('beforeend', template.outerHTML);
@@ -674,7 +678,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 const template = byId('template-feed-new-import').content.firstElementChild.cloneNode(true);
 
                                 (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
-                                        
+
                                 private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
 
                                 template.find('text').dataset.owner = row.owner.login;

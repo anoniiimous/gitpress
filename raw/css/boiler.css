@@ -58,7 +58,7 @@
     .background-color-09721d {
         background-color: #09721d;
     }
-    
+
     .background-color-bbb {
         background-color: #bbb;
     }
@@ -249,7 +249,7 @@
     .color-000 {
         color: #000;
     }
-    
+
     .color-0096c7 {
         color: #0096c7;
     }
@@ -1505,6 +1505,14 @@
         width: 100vw;
     }
 
+    [data-width="calc(100% - 84px)"] {
+        width: calc(100% - 84px);
+    }
+
+    [data-width="calc(100% - 8vw)"] {
+        width: calc(100% - 8vw);
+    }
+
     @media (max-width: 1024px) {
         [data-1024px-width="calc((100% - 20px)/2)"] {
             width: calc((100% - 20px)/2);
@@ -1547,6 +1555,14 @@
         [data-720px-width="100%"], .-hd-width-100pct {
             width: 100%;
         }
+
+        [data-720px-width="calc(100% - 20px)"], [data-hd-width="calc(100% - 20px)"] {
+            width: calc(100% - 20px);
+        }
+
+        [data-720px-width="calc(100% - 40px)"], [data-hd-width="calc(100% - 40px)"] {
+            width: calc(100% - 40px);
+        }
     }
 
     @media (max-width: 640px) {
@@ -1567,35 +1583,35 @@
     .z-index-1 {
         z-index: 1;
     }
-    
+
     .z-index-2 {
         z-index: 12;
     }
-    
+
     .z-index-3 {
         z-index: 123;
     }
-    
+
     .z-index-4 {
         z-index: 1234;
     }
-    
+
     .z-index-5 {
         z-index: 12345;
     }
-    
+
     .z-index-6 {
         z-index: 123456;
     }
-    
+
     .z-index-7 {
         z-index: 1234567;
     }
-    
+
     .z-index-8 {
         z-index: 12345678;
     }
-    
+
     .z-index-9 {
         z-index: 123456789;
     }

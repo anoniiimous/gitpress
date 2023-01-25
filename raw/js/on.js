@@ -255,8 +255,8 @@ window.on.touch = {
     var target = event.target;
     //console.log('tap',{event,target});
 
-    target.closest('[data-tap]') ? null : $("[data-hidden='tap']").attr('data-display', 'none');
- 
+    target.closest('[data-ignore]') ? null : $("[data-hidden='tap']").attr('data-display', 'none');
+
     //EVENTS
     var el = target.closest(".block");
     if (el) {
@@ -280,6 +280,15 @@ window.on.touch = {
     var el = target.closest("[data-window]");
     if (el) {
         window.open(el.dataset.window, "_blank").focus();
+    }
+
+    var elem = target.closest('[data-dropdown]');
+    if (elem) {
+        if(elem.nextElementSibling.dataset.display === 'none') {
+            elem.nextElementSibling['removeAttribute']('data-display', 'none');
+        } else {
+            elem.nextElementSibling['setAttribute']('data-display', 'none');
+        }
     }
 
     var elem = target.closest("[data-href]");
