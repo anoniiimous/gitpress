@@ -73,7 +73,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
             if (root === "dashboard") {
-                //controller.nav.close();
+                controller.nav.close();
                 if (get.length > 1) {
                     const user = await github.user.get();
                     var project = dom.body.find('main nav').find('[placeholder="Project Name"]');
@@ -541,7 +541,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
 
                                     (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
-                                    private === true ? template.find('.gg-lock').closest('box').removeAttribute('class') : null;
+
+                                    //private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
 
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
@@ -606,46 +607,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                 }
                 resolve(route)
-            } else if (root === "import") {
-                if (github.oauth.verify()) {
-                    const settings = {};
-                    console.log(settings);
-                    const user = await github.user.get();
-                    //github.search.code(query).then(data=>{
-                    github.user.repos({
-                        query: {
-                            per_page: 25,
-                            sort: "created"
-                        }
-                    }).then(data=>{
-                        //data = data.filter(item=>item.name.includes('blog.cms'));
-                        console.log(596, {
-                            data
-                        });
-                        const feed = byId('feed-import');
-                        feed.innerHTML = "";
-                        if (data.length > 0) {
-                            var x = 0;
-                            do {
-                                const row = data[x].repository ? data[x].repository : data[x];
-                                var private = row.private;
-                                const shortname = row.name;
-                                const template = byId('template-feed-import').content.firstElementChild.cloneNode(true);
-
-                                (Math.abs(x % 2) == 1) ? template.classList.add('background-color-ccc') : null;
-                                private === true ? template.find('.gg-lock').closest('box').removeAttribute('class') : null;
-
-                                template.find('text').dataset.owner = row.owner.login;
-                                template.find('text').dataset.repo = row.name;
-                                template.find('text').innerHTML = shortname
-                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
-                                x++;
-                            } while (x < data.length);
-                        }
-                    }
-                    );
-                }
-                resolve(route);
             } else if (root === "marketplace") {
                 if (github.oauth.verify()) {
                     const settings = {};
@@ -686,6 +647,46 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var vp = dom.body.find('[data-pages="/new/app/"]');
                     var form = vp.find('form');
                     form.find('input').value = "";
+                }
+                if (get[1] === "import") {
+                    const settings = {};
+                    console.log(settings);
+                    const user = await github.user.get();
+                    //github.search.code(query).then(data=>{
+                    github.user.repos({
+                        query: {
+                            per_page: 25,
+                            sort: "created"
+                        }
+                    }).then(data=>{
+                        //data = data.filter(item=>item.name.includes('blog.cms'));
+                        console.log(596, {
+                            data
+                        });
+                        const feed = byId('feed-new-import');
+                        feed.innerHTML = "";
+                        if (data.length > 0) {
+                            var x = 0;
+                            do {
+                                const row = data[x].repository ? data[x].repository : data[x];
+                                var private = row.private;
+                                const shortname = row.name;
+                                const template = byId('template-feed-new-import').content.firstElementChild.cloneNode(true);
+
+                                (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
+                                        
+                                private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
+
+                                template.find('text').dataset.owner = row.owner.login;
+                                template.find('text').dataset.repo = row.name;
+                                template.find('text').innerHTML = shortname;
+
+                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
+                                x++;
+                            } while (x < data.length);
+                        }
+                    }
+                    );
                 }
                 resolve(route)
             } else {
@@ -1505,9 +1506,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         close: ()=>{
 
-            const nav = dom.body.find('body > nav');
-            //nav.dataset["960pxTransform"] = "translateX(0%)";
-            nav.firstElementChild.classList.add('display-none');
+            const nav = dom.body.find('body > main nav');
+            nav.dataset["960pxTransform"] = "translateX(0%)";
+            nav.firstElementChild.classList.remove('display-none');
 
         }
         ,
@@ -1532,7 +1533,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             nav.classList.remove('display-none');
             blocks.classList.add('margin-left-240px');
-            //nav.dataset["960pxTransform"] = "translateX(0%)";
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
         }

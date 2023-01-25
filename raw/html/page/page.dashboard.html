@@ -19,47 +19,9 @@
             </card>
         </section>
     </block>
-    <block class="display-none">
-        <picture></picture>
-        <section>
-            <card class="-mobile-margin-x-10px margin-x-4vw padding-bottom-20px padding-top-50px">
-                <column>
-                    <box>
-                        <section>
-                            <text class="font-size-24px">Pick a repository from GitHub</text>
-                        </section>
-                    </box>
-                    <box>
-                        <section>
-                            <text class="font-size-16px">Choose the repository you want to start editing. When you save your project, we push your changes to GitHub. No build tools or servers are involved.</text>
-                        </section>
-                    </box>
-                </column>
-            </card>
-        </section>
-    </block>
-    <block>
-        <picture></picture>
-        <section>
-            <card class="-mobile-margin-x-10px font-size-13px margin-x-4vw padding-bottom-20px">
-                <row>
-                    <box class="border-1px-solid line-height-50px margin-left-auto margin-right-10px margin-y-20px" data-href="/import/">
-                        <section>
-                            <text class="padding-x-20px">Import Project</text>
-                        </section>
-                    </box>
-                    <box class="background-color-0096c7 line-height-50px margin-y-20px" data-href="/new/">
-                        <section>
-                            <text class="color-fff padding-x-20px">Create new app</text>
-                        </section>
-                    </box>
-                </row>
-            </card>
-        </section>
-    </block>
-    <block class="padding-20px">
-        <column>
-            <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px margin-x-auto margin-y-20px max-width-768px width-100pct">
+    <block class="-hd-margin-x-20px align-items-center justify-content-space-between margin-x-4vw margin-y-20px z-index-1">
+        <flex class="-dw720px-flex-direction-column align-items-center flex-direction-row justify-content-space-between max-width-768px width-100pct">
+            <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px max-width-480px width-100pct">
                 <row>
                     <box>
                         <section>
@@ -71,35 +33,77 @@
                     <input class="flex-grow-1" placeholder="Search..." type="text">
                 </row>
             </form>
-            <card class="background-color-f5 border-radius-10px line-height-50px margin-auto max-width-768px width-100pct">
+            <card class="-hd-max-width-480px -hd-width-100pct margin-top-20px">
+                <row class="align-center justify-content-center">
+                    <box class="display-none">
+                        <row class="align-items-center justify-content-space-between">
+                            <ico>
+                                <n class="gg-import"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box class="background-color-09721d border-radius-50px color-fff flex-1 line-height-50px padding-x-10px position-relative">
+                        <row class="margin-auto" data-tap="
+                            //alert(event.target.closest('[data-tap]').nextElementSibling.dataset.display); 
+                            event.target.closest('[data-tap]').nextElementSibling.dataset.display === 'none' ? 
+                                event.target.closest('[data-tap]').nextElementSibling['removeAttribute']('data-display', 'none') : 
+                                event.target.closest('[data-tap]').nextElementSibling['setAttribute']('data-display', 'none')
+                            ">
+                            <ico data-width="30px">
+                                <n class="gg-add"></n>
+                            </ico>
+                            <text class="padding-x-10px">New App</text>
+                            <ico class="display-none" data-width="20px">
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                        <column class="background-color-ccc border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder padding-x-20px position-absolute right-0 top-50px width-160px" data-display="none" data-hidden="tap">
+                            <text data-href="/new/">Create a project</text>
+                            <text data-href="/new/import/">Import a repository</text>
+                            <text data-href="/new/upload/">Upload a backup</text>
+                        </column>
+                    </box>
+                </row>
+            </card>
+        </flex>
+    </block>
+    <block>
+        <column>
+            <card class="border-radius-10px margin-auto width-100pct">
                 <column id="feed-dashboard"></column>
             </card>
         </column>
     </block>
 </blocks>
 <template id="template-feed-dashboard">
-    <card class="margin-bottom-1px width-100pct">
-        <row>
-            <box class="margin-right-auto">
+    <card class="margin-bottom-1px margin-auto padding-y-10px width-100pct">
+        <row class="-hd-max-width-480px -hd-padding-x-20px align-items-center flex-grow-1 margin-auto max-width-768px padding-x-4vw width-100pct">
+            <box>
                 <row>
-                    <ico class="background-color-000 border-radius-15pct margin-10px" data-height="30px" data-width="30px">
+                    <ico class="background-color-000 border-radius-15pct" data-height="64px" data-width="64px">
                         <n></n>
                         <n class="empty-state"></n>
                     </ico>
-                    <text class="font-weight-bolder">Demo</text>
                 </row>
             </box>
-            <box class="display-none">
-                <row>
-                    <ico class="color-777 margin-left-auto" data-width="30px">
-                        <n class="--ggs-75pct gg-lock"></n>
-                    </ico>
-                    <text class="color-777 font-size-13px font-weight-bolder">Private</text>
-                </row>
+            <box class="flex-1 justify-content-space-between">
+                <flex class="align-items-flex-start flex-1 flex-direction-column">
+                    <text class="font-weight-bolder margin-right-auto padding-x-10px" placeholder="Project Name"></text>
+                    <text class="align-items-center color-777 font-size-13px line-height-20px padding-x-10px">
+                        <span>Last pushed on</span>
+                        <span>Jan 1, 2023 (a month ago)</span>
+                    </text>
+                    <text class="align-items-center color-777 font-size-13px font-weight-bolder line-height-20px padding-x-10px" data-display="none">
+                        <ico data-height="20px" data-width="20px">
+                            <n class="--ggs-75pct gg-lock"></n>
+                        </ico>
+                        <span>Private</span>
+                    </text>
+                </flex>
             </box>
-            <box>
+            <box class="color-777 margin-left-auto">
                 <row>
-                    <ico>
+                    <ico data-height="20px" data-width="20px">
                         <n class="gg-chevron-right"></n>
                     </ico>
                 </row>

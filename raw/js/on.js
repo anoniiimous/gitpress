@@ -255,6 +255,8 @@ window.on.touch = {
     var target = event.target;
     //console.log('tap',{event,target});
 
+    target.closest('[data-tap]') ? null : $("[data-hidden='tap']").attr('data-display', 'none');
+ 
     //EVENTS
     var el = target.closest(".block");
     if (el) {
