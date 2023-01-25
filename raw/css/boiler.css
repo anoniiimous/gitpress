@@ -1278,6 +1278,18 @@
         width: 120px;
     }
 
+    [data-width="calc(100% - 240px)"] {
+        width: calc(100% - 240px);
+    }
+
+    [data-width="calc(100% - 260px)"] {
+        width: calc(100% - 260px);
+    }
+
+    [data-width="calc(100% - 280px)"] {
+        width: calc(100% - 280px);
+    }
+
     [data-width="calc(100% - 300px)"] {
         width: calc(100% - 300px);
     }
@@ -1439,6 +1451,10 @@
         
         [data-960px-width="100%"] {
             width: 100%;
+        }
+        
+        [data-960px-width="calc(100% - 20px)"] {
+            width: calc(100% - 20px);
         }
     }
 

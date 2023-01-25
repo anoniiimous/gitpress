@@ -857,7 +857,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             block.dataset.transform = "translateY(100%)";
             block.dataset.height = "calc(100% - 10px)";
-            block.dataset.width = "calc(100% - 300px)";
+            block.dataset.width = "calc(100% - 260px)";
 
             const win = iframe.contentWindow;
             const head = win.document.head;
@@ -942,7 +942,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             block.dataset.transform = "translateY(calc(100% - 50px))";
             block.dataset.height = "calc(100% - 10px)";
-            block.dataset.width = "calc(100% - 300px)";
+            block.dataset.width = "calc(100% - 260px)";
 
             const win = iframe.contentWindow;
             const head = win.document.head;
