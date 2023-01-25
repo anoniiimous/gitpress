@@ -287,7 +287,7 @@ window.on.touch = {
 
         var body = target.closest("body");
         if (is.iframe) {
-            window.parent.postMessage(['router', href]);
+            href.router().then(window.parent.postMessage(['router', href]))
         } else {
             href.router();
         }
@@ -570,15 +570,16 @@ window.on.key.up.card = {
     }
 };
 window.on.key.up.setup = {
-    about: (target) => {
+    about: (target)=>{
         on.key.up.auto.size(target);
         var path = rout.ed.dir(location.pathname);
-        if(target.value) {
+        if (target.value) {
             path[4] = btoa(target.value);
         }
         var href = rout.ed.url(path);
         history.replaceState({}, 'Title', href);
-    },
+    }
+    ,
     app: event=>{
         var target = event.target;
         var keyCode = event.keyCode;
@@ -917,7 +918,7 @@ window.on["submit"] = {
             const color = steps[1].find('#color-data-hex').all('text')[1].textContent.split('#')[1];
             const about = steps[2].find('textarea').textContent;
             alert("webmanifest: " + title + " : " + color + " : " + about);
-            
+
             const user = await github.user.get();
             var owner = user.login;
             var repo = GET[1];

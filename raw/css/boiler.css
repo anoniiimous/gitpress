@@ -738,6 +738,10 @@
         margin-left: auto;
     }
 
+    .margin-left-240px {
+        margin-left: 240px;
+    }
+
     .margin-left-260px {
         margin-left: 260px;
     }
@@ -1180,6 +1184,10 @@
     @media (max-width: 960px) {
         [data-960px-transform="translateX(-100%)"] {
             transform: translateX(-100%);
+        }
+
+        [data-960px-transform="translateX(240px)"] {
+            transform: translateX(240px);
         }
 
         [data-960px-transform="translateX(280px)"] {
