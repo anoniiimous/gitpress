@@ -76,7 +76,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 //controller.nav.close();
                 if (get.length > 1) {
                     const user = await github.user.get();
-                    var project = dom.body.find('main > nav').find('[placeholder="Project Name"]');
+                    var project = dom.body.find('main nav').find('[placeholder="Project Name"]');
                     if (1 > 0) {
                         try {
                             var icon = await github.raw.path("/" + user.login + "/" + get[1] + "/main/icon.svg");
@@ -304,6 +304,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         var settings = {
                             cache: "reload"
                         };
+                        console.log("database", {
+                            params,
+                            settings
+                        });
                         github.repos.contents(params, settings).then(async(data)=>{
                             if (data) {
                                 var content = data.content;
@@ -322,8 +326,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                 window.database.dashboard[short_name] = json;
                                 if (description && icons && name) {
-                                    //alert("Setup Complete!");
-                                    dom.body.find('main > nav').find('[placeholder="Project Name"]').textContent = name;
+                                    dom.body.find('main nav').find('[placeholder="Project Name"]').textContent = name;
                                 } else {
                                     const html = await ajax('/raw/html/template/template.setup.html');
                                     var ppp = await modal.page(html);
@@ -491,7 +494,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }),
                             settings.dataType = "PUT";
 
-                            console.log({
+                            console.log(498, {
                                 params,
                                 settings
                             });
@@ -803,12 +806,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const block = iframe.closest('pages');
             const header = block.find('header');
 
-            const nav = document.body.find('body > main > nav');
+            const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main > pages > pages');
+            const blocks = iframe.closest('main nav + pages');
 
             nav.classList.add('display-none');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            //nav.dataset["960pxTransform"] = "translateX(0%)";
 
             blocks.classList.remove('margin-left-240px');
             blocks.dataset["960pxTransform"] = "0";
@@ -844,13 +847,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const block = iframe.closest('pages');
             const header = block.find('header');
 
-            const nav = document.body.find('body > main > nav');
+            const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main > pages > pages');
+            const blocks = iframe.closest('main nav + pages');
             const toggle = 0 < 1;
 
             nav.classList.remove('display-none');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            //nav.dataset["960pxTransform"] = "translateX(0%)";
 
             blocks.classList.add('margin-left-240px');
             blocks.dataset["960pxTransform"] = "0";
@@ -929,13 +932,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const block = iframe.closest('pages');
             const header = block.find('header');
 
-            const nav = document.body.find('body > main > nav');
+            const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main > pages > pages');
+            const blocks = iframe.closest('main nav + pages');
             const toggle = 0 < 1;
 
             nav.classList.remove('display-none');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            //nav.dataset["960pxTransform"] = "translateX(0%)";
 
             blocks.classList.add('margin-left-240px');
             blocks.dataset["960pxTransform"] = "0";
@@ -966,15 +969,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const block = iframe.closest('pages');
             const header = block.find('header');
 
-            const nav = document.body.find('body > main > nav');
+            const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main > pages > pages');
+            const blocks = iframe.closest('main nav + pages');
             const toggle = nav.classList.contains('display-none');
 
             nav.classList.add('display-none');
+            //nav.dataset["960pxTransform"] = "translateX(0)";
             blocks.classList.remove('margin-left-240px');
-            nav.dataset["960pxTransform"] = "translateX(0)";
-            blocks.dataset["960pxTransform"] = "translateX(240px)";
+            //blocks.dataset["960pxTransform"] = "translateX(240px)";
 
             block.removeAttribute('data-transform');
             block.dataset.height = "100%";
@@ -1011,11 +1014,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         route: (iframe)=>{
             if (0 > 1) {
-                const nav = document.body.find('body > main > nav');
+                const nav = document.body.find('body > main nav');
                 const transform = nav.dataset["960pxTransform"];
                 const blocks = dom.body.find('main > pages');
                 nav.classList.add('display-none');
-                nav.dataset["960pxTransform"] = "translateX(-100%)";
+                //nav.dataset["960pxTransform"] = "translateX(0%)";
                 blocks.classList.remove('margin-left-240px');
                 blocks.dataset["960pxTransform"] = "0";
             }
@@ -1503,7 +1506,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         close: ()=>{
 
             const nav = dom.body.find('body > nav');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            //nav.dataset["960pxTransform"] = "translateX(0%)";
             nav.firstElementChild.classList.add('display-none');
 
         }
@@ -1523,13 +1526,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         close: ()=>{
 
-            const nav = document.body.find('body > main > nav');
+            const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
+            const blocks = dom.body.find('main nav + pages');
 
             nav.classList.remove('display-none');
             blocks.classList.add('margin-left-240px');
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            //nav.dataset["960pxTransform"] = "translateX(0%)";
             blocks.dataset["960pxTransform"] = "0";
 
         }
@@ -1537,19 +1540,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         toggle: (target)=>{
 
-            const nav = document.body.find('body > main > nav');
+            const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages > pages');
+            const blocks = dom.body.find('main nav + pages');
             const toggle = transform === "translateX(0)";
 
             nav.classList.remove('display-none');
             if (toggle) {
-                //blocks.classList.add('margin-left-240px');
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
+                blocks.classList.add('margin-left-240px');
                 blocks.dataset["960pxTransform"] = "0";
             } else {
-                //blocks.classList.remove('margin-left-240px');
                 nav.dataset["960pxTransform"] = "translateX(0)";
+                blocks.classList.remove('margin-left-240px');
                 blocks.dataset["960pxTransform"] = "translateX(240px)";
             }
 

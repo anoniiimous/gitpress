@@ -8,39 +8,43 @@
     <page class="flex-1" data-fetch="raw/html/page/page.index.html" data-page="/"></page>
     <page class="flex-1 width-100pct" data-fetch="raw/html/page/page.user.blog.html" data-page="/*/*/"></page>
     <pages class="background-color-e2dcd8 flex-grow-1 overflow-hidden" data-pages="/dashboard/">
-        <pages class="-isauth flex-grow-1 margin-left-240px" data-width="calc(100% - 40px)" data-pages="/dashboard/*/" data-root="/dashboard/" data-960px-margin-left="0" data-transition="0.3s">
-            <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.html" data-page="/dashboard/*/"></page>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/build/">
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.build.html" data-page="/dashboard/*/build/"></page>
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.config.html" data-page="/dashboard/*/build/config/"></page>
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.domain.html" data-page="/dashboard/*/build/domain/"></page>
-                <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 flex-1 margin-x-10px margin-top-10px overflow-hidden position-fixed right-0 transition-1s" data-960px-width="calc(100% - 20px)" data-fetch="raw/html/page/pages.dashboard.blog.build.html" data-height="calc(100% - 10px)" data-pages="/dashboard/*/build/" data-transform="translateY(100%)" data-width="calc(100% - 260px)"></pages>
-            </pages>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/files/">
-                <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.files.html" data-pages="/dashboard/*/files/" data-root="/dashboard/*/files/"></pages>
-                <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.files.file.html" data-page="/dashboard/*/files/file/"></page>-->
-            </pages>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/media/">
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.html" data-page="/dashboard/*/media/"></page>
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.audio.html" data-page="/dashboard/*/media/audio/"></page>
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.photo.html" data-page="/dashboard/*/media/photo/"></page>
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.video.html" data-page="/dashboard/*/media/video/"></page>
-            </pages>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/merch/">
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.merch.html" data-page="/dashboard/*/merch/"></page>
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.merch.inventory.html" data-page="/dashboard/*/merch/inventory/"></page>
-            </pages>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/pages/">
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.pages.html" data-page="/dashboard/*/pages/"></page>
-                <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.pages.page.html" data-page="/dashboard/*/pages/page/"></page>-->
-            </pages>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/posts/">
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.posts.html" data-page="/dashboard/*/posts/"></page>
-                <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.posts.post.html" data-pages="/dashboard/*/posts/post/" data-root="/dashboard/*/posts/post/"></pages>
-            </pages>
-            <pages class="flex-grow-1" data-pages="/dashboard/*/style/">
-                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.theme.html" data-page="/dashboard/*/style/"></page>
-                <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.style.import.html" data-page="/dashboard/*/style/import/"></page>-->
+        <page class="-isauth background-color-f5 flex-grow-1 height-100pct min-height-100pct overflow-x-hidden position-fixed width-100pct" data-fetch="raw/html/page/page.dashboard.html" data-page="/dashboard/"></page>
+        <pages class="-isauth flex-grow-1 height-100pct overflow-hidden" data-width="calc(100% - 40px)" data-pages="/dashboard/*/" data-transition="0.3s">
+            <nav class="-isauth background-color-e2dcd8 color-000 font-size-14px height-100pct line-height-50px overflow-x-hidden position-fixed scrollbar-1 width-240px z-index-5" data-960px-transform="translateX(-100%)" data-fetch="/raw/html/template/template.dashboard.nav.html" data-pages="/dashboard/*/" data-transition="0.3s"></nav>
+            <pages class="flex-grow-1 margin-left-240px" data-960px-margin-left="0" data-pages="/dashboard/*/" data-transition="0.3s">
+                <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.html" data-page="/dashboard/*/"></page>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/build/">
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.build.html" data-page="/dashboard/*/build/"></page>
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.config.html" data-page="/dashboard/*/build/config/"></page>
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.domain.html" data-page="/dashboard/*/build/domain/"></page>
+                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 flex-1 margin-x-10px margin-top-10px overflow-hidden position-fixed right-0" data-960px-width="calc(100% - 20px)" data-fetch="raw/html/page/pages.dashboard.blog.build.html" data-height="calc(100% - 10px)" data-pages="/dashboard/*/build/" data-transform="translateY(100%)" data-transition="0.3s" data-width="calc(100% - 260px)"></pages>
+                </pages>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/files/">
+                    <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.files.html" data-pages="/dashboard/*/files/" data-root="/dashboard/*/files/"></pages>
+                    <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.files.file.html" data-page="/dashboard/*/files/file/"></page>-->
+                </pages>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/media/">
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.html" data-page="/dashboard/*/media/"></page>
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.audio.html" data-page="/dashboard/*/media/audio/"></page>
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.photo.html" data-page="/dashboard/*/media/photo/"></page>
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.media.video.html" data-page="/dashboard/*/media/video/"></page>
+                </pages>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/merch/">
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.merch.html" data-page="/dashboard/*/merch/"></page>
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.merch.inventory.html" data-page="/dashboard/*/merch/inventory/"></page>
+                </pages>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/pages/">
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.pages.html" data-page="/dashboard/*/pages/"></page>
+                    <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.pages.page.html" data-page="/dashboard/*/pages/page/"></page>-->
+                </pages>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/posts/">
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.posts.html" data-page="/dashboard/*/posts/"></page>
+                    <pages class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.posts.post.html" data-pages="/dashboard/*/posts/post/" data-root="/dashboard/*/posts/post/"></pages>
+                </pages>
+                <pages class="flex-grow-1" data-pages="/dashboard/*/style/">
+                    <page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.theme.html" data-page="/dashboard/*/style/"></page>
+                    <!--<page class="flex-grow-1" data-fetch="raw/html/page/page.dashboard.blog.style.import.html" data-page="/dashboard/*/style/import/"></page>-->
+                </pages>
             </pages>
         </pages>
     </pages>
@@ -64,8 +68,6 @@
         <pages class="flex-grow-1" data-fetch="raw/html/page/pages.new.idea.html" data-pages="/new/idea/"></pages>
         <pages class="flex-grow-1" data-fetch="raw/html/page/pages.new.import.html" data-pages="/new/import/"></pages>
     </pages>
-    <nav class="-isauth background-color-e2dcd8 color-000 font-size-14px height-100pct line-height-50px overflow-x-hidden position-fixed scrollbar-1 width-240px" data-960px-transform="translateX(-100%)" data-fetch="/raw/html/template/template.dashboard.nav.html" data-pages="/dashboard/*/" data-transition="0.3s"></nav>
-    <page class="-isauth background-color-f5 flex-grow-1 height-100pct min-height-100pct overflow-x-hidden position-fixed width-100pct" data-fetch="raw/html/page/page.dashboard.html" data-page="/dashboard/"></page>
     <pages class="-noauth flex-grow-1 min-height-100pct position-fixed width-100pct" data-fetch="raw/html/page/page.login.html" data-pages="/dashboard/" data-root="/dashboard/">
         <blocks class="min-height-100vh">
             <header class="left-0 line-height-50px margin-auto position-fixed right-0 top-0 width-100pct z-index-5">

@@ -1480,6 +1480,6 @@
 /*Z-INDEX*/
 @media {
     .z-index-5 {
-        z-index: 5;
+        z-index: 12345;
     }
 }
