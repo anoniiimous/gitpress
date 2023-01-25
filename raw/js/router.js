@@ -18,6 +18,7 @@ String.prototype.router = async function(params) {
 
     const fetching3 = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]:empty');
     if (fetching3.length > 0) {
+        console.log({fetching3});
         var ff = 0;
         do {
             if (fetching3[ff].innerHTML === "") {

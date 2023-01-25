@@ -1203,6 +1203,10 @@
         transform: translateX(100%);
     }
 
+    [data-transform="translateY(100%)"] {
+        transform: translateY(calc(100%));
+    }
+
     [data-transform="translateY(calc(100% - 50px))"] {
         transform: translateY(calc(100% - 50px));
     }

@@ -102,6 +102,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     controller.build.editor(iframe);
                                 } else if (get[3] === "preview") {
                                     controller.build.preview(iframe);
+                                } else {
+                                    controller.build.else(iframe);
                                 }
                             } else {
                                 controller.build.index(iframe);
@@ -795,17 +797,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
         editor: ()=>{
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('pages');
+            const header = block.find('header');
+
             const nav = document.body.find('body > main > nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
+            const blocks = iframe.closest('main > pages > pages');
+
             nav.classList.add('display-none');
             nav.dataset["960pxTransform"] = "translateX(-100%)";
+
             blocks.classList.remove('margin-left-280px');
             blocks.dataset["960pxTransform"] = "0";
-
-            const iframe = byId('iframe-editor');
-            const block = iframe.closest('block');
-            const header = block.find('header');
 
             block.removeAttribute('data-transform');
             block.dataset.width = "calc(100% - 20px)";
@@ -823,6 +827,42 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 block.classList.add('margin-x-10px');
                 //block.find('builder-toolbar-preview').classList.add('display-none');
                 css.setAttribute('href', 'raw/css/editor.css')
+            }
+        }
+        ,
+        else: async()=>{
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('pages');
+            const header = block.find('header');
+
+            const nav = document.body.find('body > main > nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = iframe.closest('main > pages > pages');
+            const toggle = 0 < 1;
+
+            nav.classList.remove('display-none');
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
+
+            blocks.classList.add('margin-left-280px');
+            blocks.dataset["960pxTransform"] = "0";
+
+            block.dataset.transform = "translateY(100%)";
+            block.dataset.height = "calc(100% - 10px)";
+            block.dataset.width = "calc(100% - 300px)";
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+                header.classList.remove('display-none');
+                block.classList.add('border-top-left-radius-10px');
+                block.classList.add('border-top-right-radius-10px');
+                block.classList.add('margin-top-10px');
+                block.classList.add('margin-x-10px');
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                css.removeAttribute('href')
             }
         }
         ,
@@ -891,19 +931,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
         index: async()=>{
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('pages');
+            const header = block.find('header');
+
             const nav = document.body.find('body > main > nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
+            const blocks = iframe.closest('main > pages > pages');
             const toggle = 0 < 1;
 
             nav.classList.remove('display-none');
-            blocks.classList.add('margin-left-280px');
             nav.dataset["960pxTransform"] = "translateX(-100%)";
-            blocks.dataset["960pxTransform"] = "0";
 
-            const iframe = byId('iframe-editor');
-            const block = iframe.closest('block');
-            const header = block.find('header');
+            blocks.classList.add('margin-left-280px');
+            blocks.dataset["960pxTransform"] = "0";
 
             block.dataset.transform = "translateY(calc(100% - 50px))";
             block.dataset.height = "calc(100% - 10px)";
@@ -927,19 +968,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         preview: ()=>{
 
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('pages');
+            const header = block.find('header');
+
             const nav = document.body.find('body > main > nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
+            const blocks = iframe.closest('main > pages > pages');
             const toggle = nav.classList.contains('display-none');
 
             nav.classList.add('display-none');
             blocks.classList.remove('margin-left-280px');
             nav.dataset["960pxTransform"] = "translateX(0)";
             blocks.dataset["960pxTransform"] = "translateX(280px)";
-
-            const iframe = byId('iframe-editor');
-            const block = iframe.closest('block');
-            const header = block.find('header');
 
             block.removeAttribute('data-transform');
             block.dataset.height = "100%";
@@ -1498,29 +1539,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             blocks.dataset["960pxTransform"] = "0";
 
         }
-        ,
-
-        toggle: (target)=>{
-
-            const nav = document.body.find('body > main > nav');
-            const transform = nav.dataset["960pxTransform"];
-            const blocks = dom.body.find('main > pages');
-            const toggle = transform === "translateX(0)";
-
-            if (toggle) {
-                nav.classList.add('display-none');
-                blocks.classList.remove('margin-left-280px');
-                nav.dataset["960pxTransform"] = "translateX(0)";
-                blocks.dataset["960pxTransform"] = "translateX(280px)";
-            } else {
-                nav.classList.remove('display-none');
-                blocks.classList.add('margin-left-280px');
-                nav.dataset["960pxTransform"] = "translateX(-100%)";
-                blocks.dataset["960pxTransform"] = "0";
-            }
-
-        }
-        ,
 
     },
 
