@@ -18,7 +18,9 @@ String.prototype.router = async function(params) {
 
     const fetching3 = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]:empty');
     if (fetching3.length > 0) {
-        console.log({fetching3});
+        console.log({
+            fetching3
+        });
         var ff = 0;
         do {
             if (fetching3[ff].innerHTML === "") {
@@ -30,7 +32,15 @@ String.prototype.router = async function(params) {
 
     if (vp) {
         if (vp.innerHTML === "" && vp.dataset.fetch) {
-            vp.innerHTML = await ajax(vp.dataset.fetch);
+            if (is.iframe) {
+                var path = "/anoniiimous/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
+                var pg = atob((await github.raw.path(path)).content);
+            } else {
+                var path = vp.dataset.fetch;
+                var pg = await ajax(path)
+            }
+            vp.innerHTML = pg;
+            console.log("router.js 33", path, vp, vp.dataset.fetch);
         }
         const fetching2 = vp.all('[data-fetch]');
         if (fetching2.length > 0) {
@@ -42,7 +52,6 @@ String.prototype.router = async function(params) {
                 f++;
             } while (fetching2.length < 0);
         }
-
     }
 
     const fetching = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]');
@@ -268,4 +277,8 @@ window.rout.ed.vars = async function(tabs) {
 
 window.rout.ing = (href,GOT,n)=>{
     return false;
+}
+window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
+    window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
+    return m.includes("#") || (GOT.length > 1 && roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
 }

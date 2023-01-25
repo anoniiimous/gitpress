@@ -794,6 +794,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 iframe
             });
             await controller.build.iframe(iframe, raw);
+            console.log(796, "iframe built");
         }
         ,
         editor: ()=>{
@@ -897,24 +898,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log(e);
                     }
 
-                    try {
-                        //var js = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.js')).content);
-                        var js = await ajax('raw/js/iframe/iframe.index.js');
-                        var script = document.createElement('script');
-                        script.id = "script-index";
-                        script.src = blob(js, 'text/javascript');
-                        //doc.head.appendChild(script);
-                    } catch (e) {
-                        console.log(e);
-                    }
-
                     console.log('controller.build.iframe', {
                         doc,
-                        raw: doc.documentElement.outerHTML,
-                        css,
-                        js,
-                        link,
-                        script
+                        raw: doc.documentElement.outerHTML
                     });
 
                     iframe.src = blob(doc.documentElement.outerHTML, "text/html");

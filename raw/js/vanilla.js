@@ -366,6 +366,21 @@ function formatBytes(bytes, decimals=2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
+
+function getMime(ext) {
+    var extToMimes = {
+        'htm': 'text/html',
+        'html': 'text/html',
+        'jpg': 'image/jpg',
+        'jpeg': 'image/jpeg',
+        'png': 'image/png',
+        'svg': 'image/svg+xml'
+    }
+    if (extToMimes.hasOwnProperty(ext)) {
+        return extToMimes[ext];
+    }
+    return false;
+}
 function lazyLoad(images, vp) {
     if (images.length > 0) {
         var doc = images[0].ownerDocument;
@@ -373,14 +388,45 @@ function lazyLoad(images, vp) {
         var lazyImages = [].slice.call(images);
         var intObs = "IntersectionObserver"in win && "IntersectionObserverEntry"in win && "intersectionRatio"in win.IntersectionObserverEntry.prototype;
         if (intObs) {
-            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-                entries.forEach(function(entry) {
+            let lazyImageObserver = new IntersectionObserver(async function(entries, observer) {
+                var user = await github.user.get();
+                entries.forEach(async function(entry) {
                     if (entry.isIntersecting) {
                         let lazyImage = entry.target;
-                        var src = lazyImage.find('[data-src]');
-                        src.src = src.dataset.src.replace(':origin', window.location.origin);
+                        var img = lazyImage.find('[data-src]');
+                        var src = img.dataset.src;
+                        var href = src;
+                        if (is.iframe) {
+                            if (!src.includes("://")) {
+                                var c = await github.repos.contents({
+                                    owner: user.login,
+                                    path: "/" + src,
+                                    repo: win.parent.GET[1]
+                                }, {});
+                                var b = await github.database.blobs({
+                                    owner: user.login,
+                                    repo: win.parent.GET[1],
+                                    sha: c.sha
+                                });
+                                console.log(390, {
+                                    b,
+                                    c
+                                });
+                                var b64 = b.content;
+
+                                var arr = c.name.split('.');
+                                const ext = arr[arr.length - 1];
+                                var mime = getMime(ext);
+
+                                var href = "data:" + mime + ";base64," + b64;
+                                console.log(391, {
+                                    href
+                                });
+                            }
+                        }
                         lazyImage.removeAttribute('[data-src]');
                         lazyImageObserver.unobserve(lazyImage);
+                        img.src = href;
                     }
                 });
             }

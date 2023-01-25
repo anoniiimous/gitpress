@@ -1,28 +1,7 @@
-if (globals.domains.tld !== 'tld' && 'serviceWorker'in navigator) {//navigator.serviceWorker.register("/sw.js");
-}
-if (window.Worker) {//var worker = new Worker('/worker.js');
-//worker.postMessage(['worker', localStorage.githubAccessToken]);
-}
-
-window.auth ? null : window.auth = {};
-auth.config = {
-    apiKey: "AIzaSyBs3Q5b1yZpo1egGXfA_X9wmCNbPrFik_4",
-    authDomain: "jamstack-cms.firebaseapp.com",
-    projectId: "jamstack-cms",
-    messagingSenderId: "145843831249",
-    appId: "1:145843831249:web:f1be6e15d0b1372b5da0f0"
-};
-
 window.onload = ()=>{
-    window.database = {
-        dashboard: {},
-        user: {}
-    };
-
     window.dom = {
         body: document.body,
-        boot: document.getElementById("boot"),
-        nav: document.body.find('nav')
+        boot: document.getElementById("boot")
     };
 
     window.global = window.globals;
@@ -31,7 +10,7 @@ window.onload = ()=>{
     init();
 }
 
-window.onpopstate = (event)=>{
+is.iframe ? null : window.onpopstate = (event)=>{
     if (event.state) {
         console.log(event.state);
         var state = is.local(window.location.protocol) ? event.state.replace(/^#+/, '') : event.state;
@@ -44,25 +23,47 @@ window.onpopstate = (event)=>{
 }
 
 async function init() {
-    console.log("Initializing...", window.document.head.find('title').textContent);
-    //eruda.init();
+    console.log("Initializing...");
 
-    const html = await ajax('raw/html/template/template.shell.html');
-    dom.body.find('boot').insertAdjacentHTML('afterend', html);
-
-    window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
-        window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
-        return m.includes("#") || (GOT.length > 1 && roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
+    //SHELL
+    var html = ``;
+    if (is.iframe) {
+        const user = await github.user.get();
+        const owner = user.login;
+        const repo = window.parent.route.GOT[1];
+        const branch = 'main';
+        const file = 'raw/style/template.html';
+        const path = '/' + owner + '/' + repo + '/' + branch + '/' + file;
+        console.log("index.js init", {
+            branch,
+            file,
+            html,
+            owner,
+            path,
+            repo
+        });
+        try {
+            html = atob((await github.raw.path(path)).content);
+        } catch (e) {
+            if (e.code === 404) {
+                html = await ajax('/raw/html/template/template.iframe.shell.html');
+            } else {
+                modal.alert(e.code + ": " + e.message);
+            }
+        }
+    } else {
+        html = await ajax('/raw/html/template/template.shell.html');
     }
+    html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
 
+    //EVENTS
+    touch.ing = false;
     touch.events = {
         dbltap: on.touch.dbltap,
         drag: on.touch.drag,
         press: on.touch.press,
         tap: on.touch.tap
     };
-    touch.ing = false;
-
     dom.body.dataset.theme = "meridiem";
     dom.body.addEventListener("click", function(e) {
         if (window.touch.ing === false) {
@@ -90,7 +91,13 @@ async function init() {
         //console.log(e.type);
     });
 
-    document.addEventListener("keyup", function(e) {
+    is.iframe ? document.addEventListener("keyup", function(e) {
+        if (e.key === "Escape") {
+            if (window.parent.route.page === "/dashboard/*/build/preview/") {
+                window.parent.dom.body.find('[data-href="/dashboard/:get/build/"]').click()
+            }
+        }
+    }) : document.addEventListener("keyup", function(e) {
         if (e.key === "Escape") {
             if (route.page === "/dashboard/*/build/preview/") {
                 '/dashboard/:get/build/'.router();
@@ -98,24 +105,32 @@ async function init() {
         }
     });
 
-    const authChange = function(e) {
-        const load = function(e) {
-            dom.body.dataset.load = "ed";
-        };
-        dom.body.dataset.load = "ed";
-    };
+    window.addEventListener("message", (e)=>{
+        var event = e.data[0]
+        var data = e.data[1];
+        if (is.iframe === false) {
+            if (event === "router") {
+                var page = route.page;
+                var path = route.path;
+                var slug = data;
 
-    var url = window.location.pathname;
-    if (hub) {
-        var dir = rout.ed.dir(window.location.pathname);
-        dir.splice(0, 1)
-        var url = rout.ed.url(dir);
+                if (getRoot() === "/dashboard/*/build/er/") {
+                    var rte1 = rout.ed.dir(path).splice(0, 4);
+                    var rte2 = rout.ed.dir(slug);
+                    var rte0 = rte1.concat(rte2);
+                    var href = rout.ed.url(rte0);
+                }
+
+                //console.log({path, slug, href}, {rte0, rte1, rte2});
+                href.router();
+            }
+        }
     }
+    )
 
-    console.log(window.location);
-    var uri = ((dom.boot.dataset.path ? dom.boot.dataset.path : url) + (window.location.search + window.location.hash));
-
+    //ROUTE
     var go = false;
+    window.boot.router().then(go = true);
 
-    uri.router().then(go = true);
+    console.log(123, "...Initialized");
 }

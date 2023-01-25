@@ -10,38 +10,24 @@
         <meta name="application-shortname" content="gitpress">
         <meta name="msapplication-TileColor" content="#f26c4f">
         <meta name='theme-color' content='#f26c4f'>
-        <script>
-            var domains = window.location.host.split('.');
-            window.globals = {
-                domains: {
-                    domain: domains.length > 1 ? domains[domains.length - 2] : null,
-                    subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
-                    tld: domains[domains.length - 1]
-                }
-            }
-            window.isIp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]);
-            window.hub = (isIp)
-        </script>
         <base href="/">
         <link href="index.css" rel="stylesheet">
         <link href="raw/css/boiler.css" rel="stylesheet">
         <link href="raw/css/gg.css" rel="stylesheet">
-        <!--<script id="firebase-app" src="raw/js/firebase-app.js"></script>
-        <script id="firebase-auth" src="raw/js/firebase-auth.js"></script>-->
-        <script src="raw/js/auth.js"></script>
+        <script>window.boot = window.location.pathname + window.location.search + window.location.hash;</script>
         <script src="raw/js/crypto.js"></script>
-        <script src="raw/js/mvc.js"></script>
         <script src="raw/js/github.js"></script>
+        <script src="raw/js/global.js"></script>
+        <script src="raw/js/mvc.js"></script>
         <script src="raw/js/modal.js"></script>
         <script src="raw/js/on.js"></script>
         <script src="raw/js/router.js"></script>
         <script src="raw/js/touch.js"></script>
+        <script src="raw/js/tracer.js"></script>
         <script src="raw/js/vanilla.js"></script>
         <script src="index.js"></script>
-        <!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
         <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>-->
-        <script src="raw/js/tracer.js"></script>
+        <!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
     </head>
     <body class="-dark-background-color-1f background-color-fff" data-theme="system">
         <boot id="boot"></boot>
