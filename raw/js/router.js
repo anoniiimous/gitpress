@@ -10,6 +10,7 @@ String.prototype.router = async function(params) {
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
+    console.log({route},{pages,page,vp});
 
     if (pages) {
         if (pages.innerHTML === "" && pages.dataset.fetch) {//pages.innerHTML = await ajax(pages.dataset.fetch);
@@ -42,7 +43,7 @@ String.prototype.router = async function(params) {
             vp.innerHTML = pg;
             console.log("router.js 33", path, vp, vp.dataset.fetch);
         }
-        const fetching2 = vp.all('[data-fetch]');
+        const fetching2 = vp.all('[data-fetch]');;
         if (fetching2.length > 0) {
             var ff = 0;
             do {
