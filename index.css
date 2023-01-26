@@ -172,6 +172,7 @@
     page, pages {
         display: flex;
         position: relative;
+        flex-direction: column;
     }
 
     textarea {
@@ -213,7 +214,19 @@
         display: none;
     }
 
-    :not(:empty) + .empty-state {
+    :not(:empty) + .empty-state, :not(:empty) + .empty-state-adjacent {
+        display: none;
+    }
+
+    :not(:empty):first-child ~ .empty-state-subsequent {
+        display: none;
+    }
+
+    :empty + .full-state, :empty + .full-state-adjacent {
+        display: none;
+    }
+
+    :empty:first ~ .full-state-subsequent {
         display: none;
     }
 }

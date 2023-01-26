@@ -556,6 +556,7 @@ window.github = {
                     );
                 }
             } else {
+                settings ? null : settings = {};
                 return new Promise((resolve,reject)=>{
                     const owner = params.owner;
                     const repo = params.repo;
@@ -570,6 +571,7 @@ window.github = {
                         reject(error);
                     }
                     const accessToken = localStorage.githubAccessToken;
+                        console.log(settings);
                     settings.cache = "reload";
                     accessToken ? settings.headers = {
                         Accept: "application/vnd.github+json",

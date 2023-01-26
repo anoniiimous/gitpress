@@ -518,14 +518,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (github.oauth.verify()) {
                         var params = {};
                         const user = await github.user.get();
-                        params.query = {
-                            per_page: 25,
-                            sort: "created"
-                        };
+                        0 > 1 ? params = {
+                            query: {
+                                per_page: 25,
+                                sort: "created"
+                            }
+                        } : null;
+                        0 < 1 ? params = {
+                            owner: user.login,
+                            repo: "database",
+                            path: "/v1/apps/index.json"
+                        } : null;
                         //github.search.code(query).then(data=>{
-                        //github.user.repos().then(data=>{
-                        //github.repos.contents(params).then(data=>{
-                        github.user.repos(params).then(data=>{
+                        //github.user.repos(params).then(data=>{
+                        github.repos.contents(params).then(data=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
                             console.log(596, {
                                 data
@@ -539,7 +545,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var private = row.private;
                                     const shortname = row.name;
                                     var pushed_at = new Date(row.pushed_at);
-                                    var date = pushed_at.toLocaleString('en-US', { month: 'short' }) + " " + (pushed_at.getDay() + 1) + ", " + pushed_at.getFullYear();
+                                    var date = pushed_at.toLocaleString('en-US', {
+                                        month: 'short'
+                                    }) + " " + (pushed_at.getDay() + 1) + ", " + pushed_at.getFullYear();
 
                                     const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
 
