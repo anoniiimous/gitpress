@@ -530,9 +530,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                         } : null;
                         //github.repos.contents(params).then(d=>{
-                        github.user.repos(params).then(data=>{
+                        github.user.repos(params).then(d=>{
                             //data = data.filter(item=>item.name.includes('blog.cms'));
-                            var data = JSON.parse(atob(d.content))
+                            //var data = JSON.parse(atob(d.content))
+                            var data = 0 < 1 ? d : JSON.parse(atob(d.content));
                             console.log(596, {
                                 d,
                                 data
