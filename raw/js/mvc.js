@@ -1539,6 +1539,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     nav: {
 
+        card: target=>{
+            var button = target.closest('ico');
+            if (button && button.find('.gg-chevron-down')) {
+                $(target.closest('card').parentNode.all('card > row + column')).attr('data-display', 'none');
+                $(target.closest('nav > column').all('ico.transition-1s')).removeAttr('data-transform');
+
+                var elem = target.closest('card > row');
+                if (elem.nextElementSibling.dataset.display === 'none') {
+                    elem.nextElementSibling['removeAttribute']('data-display', 'none');
+                    button.find('.gg-chevron-down').parentNode['setAttribute']('data-transform', 'rotate(180deg)');
+                } else {
+                    elem.nextElementSibling['setAttribute']('data-display', 'none');
+                    button.find('.gg-chevron-down').parentNode['removeAttribute']('data-transform', 'none');
+                }
+            }
+        }
+        ,
+
         close: ()=>{
 
             const nav = document.body.find('body > main nav');
@@ -1594,7 +1612,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         import: async(target)=>{
             const user = await github.user.get();
             if (target.closest('card')) {
-                var repository = target.closest('card').all('box')[1].find('text').textContent;
+                var el = target.closest('card').all('box')[1].find('text');
+                var owner = el.dataset.owner;
+                var repository = el.textContent;
+                var private = el.nextElementSibling.dataset.display === "flex";
                 var params = {
                     owner: user.login,
                     path: "/v1/apps/index.json",
@@ -1623,17 +1644,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
 
                 var s = async(d)=>{
+                    alert(1);
+                    var dd = JSON.parse(atob(d.content));
+                    console.log(d, dd, d.content.length);
                     d.content = d.content.length > 0 ? d.content : [];
+                    console.log(d);
+                    aleret(2);
                     var data = JSON.parse(atob(d.content))
+                    alert(3);
                     var row = {
                         "name": repository,
                         "owner": {
-                            "login": "anoniiimous"
+                            "login": owner
                         },
-                        "private": true,
+                        "private": private,
                         "pushed_at": "2023-01-20T12:30:44Z"
                     };
-                    data.push(row);
+                    alert(2);
+                    var data = nodb.check.value(data, {
+                        name: "name",
+                        value: row.name
+                    }, row);
                     var obj = JSON.stringify({
                         content: btoa(JSON.stringify(data, null, 4)),
                         message: "Updated Apps Cache",
@@ -1643,7 +1674,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         data: obj,
                         dataType: "PUT"
                     }
+                    alert(3);
                     console.log(1703, {
+                        a,
                         d,
                         data,
                         settings

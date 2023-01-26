@@ -383,7 +383,7 @@
         transform: rotate(15deg) scale(var(--ggs,1));
         width: 2px;
         height: 16px;
-        background: currentColor
+        background: currentColor;
     }
 
     .gg-code-slash::after, .gg-code-slash::before {

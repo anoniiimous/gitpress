@@ -19,38 +19,44 @@
         </row>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/build/">
-                <row>
-                    <ico>
-                        <n class="gg-code-slash"></n>
-                    </ico>
-                    <text>Build</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/build/">
+                        <ico>
+                            <n class="gg-code-slash"></n>
+                        </ico>
+                        <span>Build</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
-            <box data-href="/dashboard/:get/build/config/">
-                <row>
+        <column data-display="none">
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/config/">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1">
+                        <ico>
+                            <n class="gg-options"></n>
+                        </ico>
+                        <span>Config</span>
+                    </text>
                     <ico>
-                        <n class="gg-options"></n>
-                    </ico>
-                    <text>Config</text>
-                    <ico class="margin-left-auto">
                         <n class="gg-chevron-right"></n>
                     </ico>
                 </row>
             </box>
-            <box data-href="/dashboard/:get/build/domain/">
-                <row>
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/domain/">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1">
+                        <ico>
+                            <n class="gg-globe-alt"></n>
+                        </ico>
+                        <span>Domain</span>
+                    </text>
                     <ico>
-                        <n class="gg-globe-alt"></n>
-                    </ico>
-                    <text>Domain</text>
-                    <ico class="margin-left-auto">
                         <n class="gg-chevron-right"></n>
                     </ico>
                 </row>
@@ -80,20 +86,22 @@
         </column>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/files/">
-                <row>
-                    <ico>
-                        <n class="gg-folder"></n>
-                    </ico>
-                    <text>Files</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/files/">
+                        <ico>
+                            <n class="gg-folder"></n>
+                        </ico>
+                        <span>Files</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
+        <column data-display="none">
             <box>
                 <row>
                     <ico>
@@ -119,20 +127,22 @@
         </column>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/media/">
-                <row>
-                    <ico>
-                        <n class="gg-cloud"></n>
-                    </ico>
-                    <text>Media</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/media/">
+                        <ico>
+                            <n class="gg-cloud"></n>
+                        </ico>
+                        <span>Media</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
+        <column data-display="none">
             <box>
                 <row>
                     <ico>
@@ -169,20 +179,22 @@
         </column>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/merch/">
-                <row>
-                    <ico>
-                        <n class="gg-shopping-bag"></n>
-                    </ico>
-                    <text>Merch</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/merch/">
+                        <ico>
+                            <n class="gg-shopping-bag"></n>
+                        </ico>
+                        <span>Merch</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
+        <column data-display="none">
             <box>
                 <row>
                     <ico>
@@ -197,20 +209,22 @@
         </column>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/pages/">
-                <row>
-                    <ico>
-                        <n class="gg-file-document"></n>
-                    </ico>
-                    <text>Pages</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/pages/">
+                        <ico>
+                            <n class="gg-file-document"></n>
+                        </ico>
+                        <span>Pages</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
+        <column data-display="none">
             <box>
                 <row>
                     <ico>
@@ -225,20 +239,22 @@
         </column>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/posts/">
-                <row>
-                    <ico>
-                        <n class="gg-file"></n>
-                    </ico>
-                    <text>Posts</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/posts/">
+                        <ico>
+                            <n class="gg-file"></n>
+                        </ico>
+                        <span>Posts</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
+        <column data-display="none">
             <box>
                 <row>
                     <ico>
@@ -253,20 +269,22 @@
         </column>
     </card>
     <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
-        <row>
-            <box class="flex-1 font-weight-bolder" data-href="/dashboard/:get/style/">
-                <row>
-                    <ico>
-                        <n class="gg-template"></n>
-                    </ico>
-                    <text>Style</text>
-                    <ico class="margin-left-auto">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="flex-1" data-href="/dashboard/:get/style/">
+                        <ico>
+                            <n class="gg-file"></n>
+                        </ico>
+                        <span>Style</span>
+                    </text>
+                    <ico class="transition-1s">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </row>
             </box>
         </row>
-        <column class="display-none">
+        <column data-display="none">
             <box data-href="/dashboard/:get/style/import/">
                 <row>
                     <ico>
@@ -280,7 +298,7 @@
             </box>
         </column>
     </card>
-    <card class="bottom-0 left-0 padding-20px position-fixed">
+    <card class="bottom-0 left-0 padding-20px position-fixed width-200px">
         <row class="justify-content-space-between">
             <box data-href="/dashboard/">
                 <row>

@@ -515,3 +515,32 @@ window.colors = {
     }
 
 }
+
+window.nodb = {
+    check: {
+        value: (json, obj, row)=>{
+            var hasMatch = false;
+            var name = obj.name;
+            var value = obj.value;
+
+            for (var index = 0; index < json.length; ++index) {
+
+                var a = json[index];
+
+                if (a[name] == value) {
+                    hasMatch = index;
+                    break;
+                }
+            }
+
+            if(hasMatch) {
+                json[index] = row;
+            } else {
+                json.push(row);
+            }
+            console.log(541, json);
+
+            return json
+        }
+    }
+}

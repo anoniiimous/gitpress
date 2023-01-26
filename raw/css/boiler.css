@@ -1259,6 +1259,10 @@
     [data-transform="scale(0.75)"] {
         transform: scale(0.75);
     }
+    
+    [data-transform="rotate(180deg)"] {
+        transform: rotate(180deg);
+    }
 
     @media (max-width: 1280px) {
         [data-1280px-transform="scale(0.67)"] {
