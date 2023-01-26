@@ -44,7 +44,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             if (roots.indexOf(root) === -1) {
                 if (get.length > 1) {
                     const owner = root;
-                    const repo = "blog.cms." + get[1];
+                    const repo = get[1];
                     const path = "/site.webmanifest";
                     const params = {
                         owner,
@@ -77,18 +77,24 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 if (get.length > 1) {
                     const user = await github.user.get();
                     var project = dom.body.find('main nav').find('[placeholder="Project Name"]');
-                    if (1 > 0) {
-                        try {
-                            var icon = await github.raw.path("/" + user.login + "/" + get[1] + "/main/icon.svg");
-                            project.previousElementSibling.find('img').src = "data:image/svg+xml;base64," + icon.content;
-                        } catch (e) {}
-                    } else {
-                        var svg = await github.raw.file("/" + user.login + "/" + get[1] + "/main/icon.svg")
-                        var icon = "data:image/svg+xml;base64," + btoa(svg);
-                        project.previousElementSibling.find('img').src = icon;
+                    var link = dom.body.find('main nav').find('[placeholder="Link"]');
+
+                    link.dataset.href = get[1] + "." + "dompad.io";
+                    link.textContent = get[1];
+
+                    try {
+                        var icon = await github.raw.path("/" + user.login + "/" + get[1] + "/main/icon.svg");
+                        project.closest('box').previousElementSibling.find('img').src = "data:image/svg+xml;base64," + icon.content;
+                    } catch (e) {
+                        console.log(e);
                     }
 
                     if (get.length > 2) {
+                        var arr = ["build", "files", "media", "merch", "pages", "posts", "style"];
+                        if (arr.includes(get[2])) {
+                            var index = arr.indexOf(get[2]);
+                            dom.body.find('main nav').children[1].children[index].find('.gg-chevron-down').click();
+                        }
                         if (get[2] === "build") {
                             var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
                             var iframe = vp.find('iframe');
@@ -188,7 +194,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var params = {
                                         owner: user.login,
                                         path: "/raw/posts/" + name,
-                                        repo: "blog.cms." + get[1]
+                                        repo: get[1]
                                     };
                                     var settings = {};
                                     github.repos.contents(params, settings).then(data=>{
@@ -235,7 +241,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var params = {
                                     owner: user.login,
                                     path: "/raw/posts",
-                                    repo: "blog.cms." + get[1]
+                                    repo: get[1]
                                 };
                                 var settings = {};
                                 controller.posts.read(get[1]);
@@ -531,7 +537,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         } : null;
                         //github.repos.contents(params).then(d=>{
                         github.user.repos(params).then(d=>{
-                            //data = data.filter(item=>item.name.includes('blog.cms'));
                             //var data = JSON.parse(atob(d.content))
                             var data = 0 < 1 ? d : JSON.parse(atob(d.content));
                             console.log(596, {
@@ -630,7 +635,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         user
                     }, user.login);
                     github.search.code('q="key": "32616927" filename:site.webmanifest').then(data=>{
-                        //data = data.filter(item=>item.name.includes('blog.cms'));
                         console.log(282, {
                             data
                         });
@@ -673,7 +677,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             sort: "created"
                         }
                     }).then(data=>{
-                        //data = data.filter(item=>item.name.includes('blog.cms'));
                         console.log(596, {
                             data
                         });
@@ -828,7 +831,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.add('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
-            blocks.classList.remove('margin-left-240px');
+            blocks.classList.remove('left-240px');
             blocks.dataset["960pxTransform"] = "0";
 
             block.removeAttribute('data-transform');
@@ -870,7 +873,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
-            blocks.classList.add('margin-left-240px');
+            blocks.classList.add('left-240px');
             blocks.dataset["960pxTransform"] = "0";
 
             block.dataset.transform = "translateY(100%)";
@@ -955,7 +958,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
-            blocks.classList.add('margin-left-240px');
+            blocks.classList.add('left-240px');
             blocks.dataset["960pxTransform"] = "0";
 
             block.dataset.transform = "translateY(calc(100% - 50px))";
@@ -991,7 +994,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             nav.classList.add('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0)";
-            blocks.classList.remove('margin-left-240px');
+            blocks.classList.remove('left-240px');
             //blocks.dataset["960pxTransform"] = "translateX(240px)";
 
             block.removeAttribute('data-transform');
@@ -1034,7 +1037,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 const blocks = dom.body.find('main > pages');
                 nav.classList.add('display-none');
                 //nav.dataset["960pxTransform"] = "translateX(0%)";
-                blocks.classList.remove('margin-left-240px');
+                blocks.classList.remove('left-240px');
                 blocks.dataset["960pxTransform"] = "0";
             }
         }
@@ -1492,7 +1495,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var params = {};
             params.owner = user.login;
             params.path = "/raw/files/" + file.name;
-            params.repo = 'blog.cms.' + GET[1]
+            params.repo = GET[1]
 
             var settings = {};
             settings.data = JSON.stringify({
@@ -1564,7 +1567,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const blocks = dom.body.find('main nav + pages');
 
             nav.classList.remove('display-none');
-            blocks.classList.add('margin-left-240px');
+            blocks.classList.add('left-240px');
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
@@ -1581,11 +1584,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
             if (toggle) {
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
-                blocks.classList.add('margin-left-240px');
+                blocks.classList.add('left-240px');
                 blocks.dataset["960pxTransform"] = "0";
             } else {
                 nav.dataset["960pxTransform"] = "translateX(0)";
-                blocks.classList.remove('margin-left-240px');
+                blocks.classList.remove('left-240px');
                 blocks.dataset["960pxTransform"] = "translateX(240px)";
             }
 
@@ -1770,7 +1773,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
 
             params = {
-                repo: 'blog.cms.' + GET[1],
+                repo: GET[1],
                 owner: user.login,
                 path: '/raw/cache/posts.json'
             }
@@ -1785,7 +1788,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             });
 
             params = {
-                repo: 'blog.cms.' + GET[1],
+                repo: GET[1],
                 owner: user.login,
                 path: '/raw/cache/posts.json',
                 sha: get.sha
@@ -1802,7 +1805,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var params = {
                 gist: target.closest('card').dataset.gist,
-                repo: 'blog.cms.' + GET[1],
+                repo: GET[1],
                 owner: user.login,
                 path: 'cdn/posts/' + target.closest('card').dataset.filename + '.html',
                 sha: target.closest('card').dataset.sha
@@ -1830,8 +1833,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             const user = await github.user.get();
             const owner = user.login;
-            const repo = "blog.cms." + shortname;
-            const path = "/raw/cache/posts.json";
+            const repo = shortname;
+            const path = "/raw/posts/posts.json";
             const params = {
                 owner,
                 repo,

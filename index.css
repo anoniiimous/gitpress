@@ -127,6 +127,12 @@
         /* overflow-x: hidden; */
     }
 
+    nav {
+        display: flex;
+        display: webkit-flex;
+        flex-direction: column;
+    }
+
     ico {
         align-items: center;
         display: inline-flex;
@@ -254,9 +260,11 @@ peel:hover {
     width: 12px;
     background-color: transparent;
 }
+
 .scrollbar-1::-webkit-scrollbar-thumb {
     display: none;
 }
+
 .scrollbar-1:hover::-webkit-scrollbar-thumb {
     display: block;
     border-radius: 10px;

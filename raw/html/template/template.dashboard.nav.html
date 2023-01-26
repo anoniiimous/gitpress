@@ -1,28 +1,28 @@
-<column class="min-height-100pct">
+<header>
     <card class="-dw480px-padding-0 padding-20px">
-        <row class="justify-content-space-between">
-            <box class="flex-1" data-href="/dashboard/:get/">
-                <row>
-                    <ico class="border-radius-15pct margin-10px" data-height="30px" data-width="30px">
+        <row class="align-items-center justify-content-space-between">
+            <box data-href="/dashboard/:get/">
+                <row class="align-items-center">
+                    <ico class="border-radius-15pct" data-height="30px" data-width="30px">
                         <img data-height="30px" data-width="30px">
                     </ico>
-                    <text class="font-weight-bolder overflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Project Name"></text>
                 </row>
             </box>
-            <box data-href="/dashboard/" data-tap="">
-                <row>
-                    <ico class="margin-left-auto">
-                        <n class="gg-menu-grid-r"></n>
-                    </ico>
-                </row>
+            <box class="flex-1 padding-x-10px overflow-hidden" data-href="/dashboard/:get/">
+                <column class="align-items-flex-start">
+                    <text class="font-size-16px font-weight-bolder overflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Project Name"></text>
+                    <text class="empty font-size-13px white-space-nowrap overflow-hidden text-overflow-ellipsis text-decoration-underline" data-href="/user/hello-world" placeholder="Link"></text>
+                </column>
             </box>
         </row>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+</header>
+<column class="line-height-50px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/build/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/build/">
                         <ico>
                             <n class="gg-code-slash"></n>
                         </ico>
@@ -37,7 +37,7 @@
         <column data-display="none">
             <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/config/">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1">
+                    <text class="display-flex flex-1 height-50px">
                         <ico>
                             <n class="gg-options"></n>
                         </ico>
@@ -50,7 +50,7 @@
             </box>
             <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/domain/">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1">
+                    <text class="display-flex flex-1 height-50px">
                         <ico>
                             <n class="gg-globe-alt"></n>
                         </ico>
@@ -85,11 +85,11 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/files/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/files/">
                         <ico>
                             <n class="gg-folder"></n>
                         </ico>
@@ -126,11 +126,11 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/media/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/media/">
                         <ico>
                             <n class="gg-cloud"></n>
                         </ico>
@@ -178,11 +178,11 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/merch/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/merch/">
                         <ico>
                             <n class="gg-shopping-bag"></n>
                         </ico>
@@ -208,7 +208,7 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
@@ -238,7 +238,7 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
@@ -268,13 +268,13 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
                     <text class="flex-1" data-href="/dashboard/:get/style/">
                         <ico>
-                            <n class="gg-file"></n>
+                            <n class="gg-template"></n>
                         </ico>
                         <span>Style</span>
                     </text>
@@ -298,7 +298,9 @@
             </box>
         </column>
     </card>
-    <card class="bottom-0 left-0 padding-20px margin-top-auto position-relative width-200px">
+</column>
+<footer class="margin-top-auto">
+    <card class="-dw480px-margin-10px bottom-0 left-0 margin-20px-20px margin-top-auto position-relative">
         <row class="justify-content-space-between">
             <box data-href="/dashboard/">
                 <row>
@@ -317,4 +319,4 @@
             </box>
         </row>
     </card>
-</column>
+</footer>

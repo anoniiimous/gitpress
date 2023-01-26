@@ -284,7 +284,7 @@ window.on.touch = {
 
     var elem = target.closest('[data-dropdown]');
     if (elem) {
-        if(elem.nextElementSibling.dataset.display === 'none') {
+        if (elem.nextElementSibling.dataset.display === 'none') {
             elem.nextElementSibling['removeAttribute']('data-display', 'none');
         } else {
             elem.nextElementSibling['setAttribute']('data-display', 'none');
@@ -829,7 +829,7 @@ window.on["submit"] = {
                 if (confirm("Are you sure you want to publish this post?")) {
                     var data = await github.repos.contents({
                         owner: user.login,
-                        repo: "blog.cms." + GET[1],
+                        repo: GET[1],
                         path: "/raw/posts/" + filename
                     }, {
                         data: JSON.stringify({
@@ -841,62 +841,53 @@ window.on["submit"] = {
                     filename = data.content.name;
                     const sha = data.content.sha;
 
-                    /*GIST*/
-                    var files = {};
-                    files[filename] = {
-                        content
-                    };
-                    d = await github.gists.create({
-                        data: JSON.stringify({
-                            "description": "Example of a gist",
-                            "public": false,
-                            files
-                        }),
-                        dataType: "POST"
-                    });
-                    const created = d.created_at;
-                    description = d.description;
-                    gist = d.id;
-                    console.log(755, {
-                        d,
-                        data
-                    });
-
                     /*CACHE*/
-                    const params = {
+                    var params = {
                         owner: user.login,
-                        repo: "blog.cms." + GET[1],
-                        path: "/raw/cache/posts.json"
+                        repo: GET[1],
+                        path: "/raw/posts/posts.json"
                     };
-                    const posts = await github.repos.contents(params, {});
-                    content = atob(posts.content);
-                    const rows = JSON.parse(content);
+                    try {
+                        var posts = await github.repos.contents(params, {});
+                        content = atob(posts.content);
+                        const rows = JSON.parse(content);
 
-                    const length = rows.length;
-                    if (length > 0) {
-                        var latest = rows[0];
-                        var id = latest.id + 1;
-                    } else {
-                        var latest = rows[0];
-                        var id = 1;
+                        const length = rows.length;
+                        if (length > 0) {
+                            var latest = rows[0];
+                            var id = latest.id + 1;
+                        } else {
+                            var latest = rows[0];
+                            var id = 1;
+                        }
+
+                        var row = {
+                            filename,
+                            gist,
+                            sha,
+                            title
+                        }
+                        rows.unshift(row);
+
+                        params.sha = posts.sha;
+                    } catch (e) {
+                        console.log(e);
+                        var posts = null;
+                        var row = {
+                            filename,
+                            gist,
+                            id,
+                            sha,
+                            title
+                        }
+                        var rows = [row]
                     }
-
-                    const row = {
-                        filename,
-                        gist,
-                        id,
-                        sha,
-                        title
-                    }
-                    rows.unshift(row);
-
-                    params.sha = posts.sha;
 
                     settings = {
                         data: JSON.stringify({
                             content: btoa(JSON.stringify(rows, null, 4)),
                             message: "Update Posts Table",
-                            sha: posts.sha
+                            sha: posts && posts.sha ? posts.sha : null
                         }),
                         dataType: "PUT"
                     }

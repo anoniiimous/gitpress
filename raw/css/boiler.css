@@ -1216,6 +1216,13 @@
     }
 }
 
+/*TEXT DECORATION*/
+@media screen {
+    .text-decoration-underline {
+        text-decoration: underline;
+    }
+}
+
 /*TEXT OVERFLOW*/
 @media screen {
     .text-overflow-ellipsis {
