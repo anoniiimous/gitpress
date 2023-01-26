@@ -518,16 +518,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (github.oauth.verify()) {
                         var params = {};
                         const user = await github.user.get();
+                        0 < 1 ? params = {
+                            owner: user.login,
+                            repo: "database",
+                            path: "/v1/apps/index.json"
+                        } : null;
                         0 > 1 ? params = {
                             query: {
                                 per_page: 25,
                                 sort: "created"
                             }
-                        } : null;
-                        0 < 1 ? params = {
-                            owner: user.login,
-                            repo: "database",
-                            path: "/v1/apps/index.json"
                         } : null;
                         //github.search.code(query).then(data=>{
                         //github.user.repos(params).then(data=>{

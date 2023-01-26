@@ -632,6 +632,16 @@
     .grid-gap-20px {
         grid-gap: 20px;
     }
+
+    .grid-gap-4vw {
+        grid-gap: 4vw;
+    }
+
+    @media (max-width: 720px) {
+        .-hd-grid-gap-20px {
+            grid-gap: 20px;
+        }
+    }
 }
 
 /*HEIGHT*/
@@ -707,7 +717,7 @@
     }
 }
 
-/*HEIGHT*/
+/*LINE HEIGHT*/
 @media screen {
     .line-height-24px {
         line-height: 24px;
@@ -1591,8 +1601,16 @@
             width: 100%;
         }
 
+        [data-960px-width="640px"] {
+            width: 640px
+        }
+
         [data-960px-width="calc(100% - 20px)"] {
             width: calc(100% - 20px);
+        }
+        
+        .-dw960px-height-auto {
+            height: auto;
         }
     }
 

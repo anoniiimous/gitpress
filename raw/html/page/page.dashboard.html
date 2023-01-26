@@ -21,9 +21,9 @@
     </block>
 </blocks>
 <blocks class="-isauth flex-grow-1">
-    <block class="-hd-margin-x-20px align-items-center flex-flow-column-reverse justify-content-space-between margin-x-4vw margin-y-20px z-index-1">
-        <column id="feed-dashboard"></column>
-        <flex class="-dw720px-flex-direction-column align-items-center full-state-adjacent flex-direction-row gap-10px justify-content-space-between max-width-768px width-100pct">
+    <block class="-hd-margin-x-20px align-items-center flex-flow-column-reverse justify-content-space-between z-index-1">
+        <column class="width-100pct" id="feed-dashboard"></column>
+        <flex class="-dw720px-flex-direction-column align-items-center full-state-adjacent flex-direction-row gap-10px justify-content-space-between margin-y-20px max-width-768px" data-width="calc(100% - 8vw)">
             <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px max-width-480px width-100pct">
                 <row>
                     <box>
@@ -65,7 +65,7 @@
             </card>
         </flex>
         <column class="align-items-center empty-state-subsequent gap-50px justify-content-center margin-y-50px">
-            <card>
+            <card class="-hd-margin-x-20px margin-x-4vw">
                 <column>
                     <box>
                         <column class="align-items-center justifiy-content-center">
@@ -77,14 +77,14 @@
                     <box>
                         <column>
                             <text class="font-size-24px font-weight-bolder line-height-50px text-align-center">No apps yet</text>
-                            <text class="font-size-18px text-align-center">Get started by selecting an option below.</text>
+                            <text class="font-size-18px text-align-center">Get started by building a new app, modifying your source code, or working on a copy from your device.</text>
                         </column>
                     </box>
                 </column>
             </card>
-            <card class="grid-gap-20px" data-960px-columns="1" data-columns="3">
+            <card class="-hd-grid-gap-20px -hd-margin-x-20px grid-gap-4vw margin-x-4vw" data-960px-columns="1" data-columns="3">
                 <section>
-                    <box class="padding-y-20px width-auto">
+                    <box class="padding-bottom-20px width-auto">
                         <column>
                             <text class="font-size-24px font-weight-bolder line-height-50px">Build New App</text>
                             <text class="-dw960px-height-auto font-size-18px height-64px">Start from scratch, pick a premade template, or generate a design for your app.</text>
@@ -103,7 +103,7 @@
                     </box>
                 </section>
                 <section>
-                    <box class="padding-y-20px width-auto">
+                    <box class="padding-bottom-20px width-auto">
                         <column>
                             <text class="font-size-24px font-weight-bolder line-height-50px">Modify Your Source</text>
                             <text class="-dw960px-height-auto font-size-18px height-64px">Work with your already existing code privately stored or publicly hosted online.</text>
@@ -122,7 +122,7 @@
                     </box>
                 </section>
                 <section>
-                    <box class="padding-y-20px width-auto">
+                    <box class="padding-bottom-20px width-auto">
                         <column>
                             <text class="font-size-24px font-weight-bolder line-height-50px">Copy From Device</text>
                             <text class="-dw960px-height-auto font-size-18px height-64px">Transfer a locally saved archive to the cloud and edit directly with the Builder.</text>
