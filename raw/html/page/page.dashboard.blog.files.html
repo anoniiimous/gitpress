@@ -1,11 +1,11 @@
 <blocks>
-    <header data-960px-width="100%" data-widt="calc(100% - 320px)">
-        <row class="justify-content-space-between padding-20px">
+    <header class="-dw480px-padding-0 padding-20px">
+        <row class="justify-content-space-between">
             <card>
-                <row>
+                <row class="gap-10px">
                     <box class="display-none" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
                         <section>
-                            <ico>
+                            <ico data-height="30px" data-width="30px">
                                 <n class="gg-menu"></n>
                             </ico>
                         </section>
@@ -19,16 +19,19 @@
             </card>
             <card>
                 <row>
-                    <box class="background-color-333 color-fff display-none line-height-50px padding-x-20px" data-href="/dashboard/:get/files/file/">
-                        <section>
+                    <box class="line-height-30px" data-href="/dashboard/:get/files/file/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-software-upload"></n>
+                            </ico>
                             <text class="font-size-14px font-weight-bolder">Upload File</text>
-                        </section>
+                        </row>
                     </box>
                 </row>
             </card>
         </row>
     </header>
-    <block class="background-color-fff border-radius-10px margin-bottom-20px margin-x-20px padding-top-100p" data-640px-background-color="unset" data-640px-margin="0">
+    <block class="background-color-ccc border-radius-10px margin-20px" data-640px-background-color="unset" data-640px-margin="0">
         <template id="template-dashboard-files">
             <box class="line-height-50px">
                 <row>
