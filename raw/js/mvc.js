@@ -70,17 +70,24 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         });
                     }
                     );
+                } else {
+                    resolve(route);
                 }
             }
             if (root === "dashboard") {
                 controller.nav.close();
                 if (get.length > 1) {
                     const user = await github.user.get();
+
                     var project = dom.body.find('main nav').find('[placeholder="Project Name"]');
                     var link = dom.body.find('main nav').find('[placeholder="Link"]');
+                    var username = dom.body.find('main nav').find('[placeholder="username"]');
 
                     link.dataset.href = get[1] + "." + "dompad.io";
                     link.textContent = get[1];
+
+                    username.textContent = user.login;
+                    username.closest('card').dataset.href = "/" + user.login + "/";
 
                     try {
                         var icon = await github.raw.path("/" + user.login + "/" + get[1] + "/main/icon.svg");

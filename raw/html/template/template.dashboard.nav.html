@@ -17,7 +17,7 @@
         </row>
     </card>
 </header>
-<column class="line-height-50px">
+<column>
     <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
@@ -61,7 +61,7 @@
                     </ico>
                 </row>
             </box>
-            <box data-href="/dashboard/:get/build/er/">
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/er/">
                 <row>
                     <ico>
                         <n class="gg-browser"></n>
@@ -72,7 +72,7 @@
                     </ico>
                 </row>
             </box>
-            <box class="flex-1" data-href="/dashboard/:get/build/preview/">
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/preview/">
                 <row>
                     <ico>
                         <n class="gg-eye"></n>
@@ -102,7 +102,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-software-upload"></n>
@@ -113,7 +113,7 @@
                     </ico>
                 </row>
             </box>
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-drive"></n>
@@ -143,7 +143,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-music"></n>
@@ -154,7 +154,7 @@
                     </ico>
                 </row>
             </box>
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-image"></n>
@@ -165,7 +165,7 @@
                     </ico>
                 </row>
             </box>
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-film"></n>
@@ -195,7 +195,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-tag"></n>
@@ -212,7 +212,7 @@
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/pages/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/pages/">
                         <ico>
                             <n class="gg-file-document"></n>
                         </ico>
@@ -225,7 +225,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-pen"></n>
@@ -242,7 +242,7 @@
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/posts/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/posts/">
                         <ico>
                             <n class="gg-file"></n>
                         </ico>
@@ -255,7 +255,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box>
+            <box class="flex-1 line-height-50px">
                 <row>
                     <ico>
                         <n class="gg-file-add"></n>
@@ -272,7 +272,7 @@
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">
-                    <text class="flex-1" data-href="/dashboard/:get/style/">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/style/">
                         <ico>
                             <n class="gg-template"></n>
                         </ico>
@@ -285,7 +285,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box data-href="/dashboard/:get/style/import/">
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/style/import/">
                 <row>
                     <ico>
                         <n class="gg-import"></n>
@@ -300,19 +300,23 @@
     </card>
 </column>
 <footer class="margin-top-auto">
-    <card class="-dw480px-margin-10px bottom-0 left-0 margin-20px-20px margin-top-auto position-relative">
-        <row class="justify-content-space-between">
-            <box data-href="/dashboard/">
+    <card class="-dw480px-margin-10px bottom-0 left-0 margin-top-auto padding-20px position-relative">
+        <row class="align-items-center">
+            <box>
                 <row>
-                    <ico class="background-color-000 border-radius-50pct margin-10px" data-height="30px" data-width="30px">
+                    <ico class="background-color-000 border-radius-50pct" data-height="30px" data-width="30px">
                         <n placeholder="?"></n>
                     </ico>
+                </row>
+            </box>
+            <box class="flex-1 padding-x-10px">
+                <row>
                     <text class="font-weight-bolder" placeholder="username"></text>
                 </row>
             </box>
-            <box data-href="/dashboard/">
+            <box>
                 <row>
-                    <ico class="margin-left-auto">
+                    <ico data-height="30px" data-width="30px">
                         <n class="gg-chevron-right"></n>
                     </ico>
                 </row>

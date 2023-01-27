@@ -827,6 +827,7 @@ window.on["submit"] = {
 
                 /*FILE*/
                 if (confirm("Are you sure you want to publish this post?")) {
+                    var sha = {};
                     var data = await github.repos.contents({
                         owner: user.login,
                         repo: GET[1],
@@ -839,7 +840,7 @@ window.on["submit"] = {
                         dataType: "PUT"
                     });
                     filename = data.content.name;
-                    const sha = data.content.sha;
+                    sha.file = data.content.sha;
 
                     /*CACHE*/
                     var params = {
@@ -850,7 +851,7 @@ window.on["submit"] = {
                     try {
                         var posts = await github.repos.contents(params, {});
                         content = atob(posts.content);
-                        const rows = JSON.parse(content);
+                        var rows = JSON.parse(content);
 
                         const length = rows.length;
                         if (length > 0) {
@@ -863,13 +864,13 @@ window.on["submit"] = {
 
                         var row = {
                             filename,
-                            gist,
-                            sha,
+                            sha: posts.sha,
                             title
                         }
-                        rows.unshift(row);
+                        rows.push(row);
 
-                        params.sha = posts.sha;
+                        sha.posts = posts.sha;
+                        console.log(873, rows);
                     } catch (e) {
                         console.log(e);
                         var posts = null;
@@ -881,28 +882,31 @@ window.on["submit"] = {
                             title
                         }
                         var rows = [row]
+                        console.log(885, rows);
                     }
 
                     settings = {
                         data: JSON.stringify({
                             content: btoa(JSON.stringify(rows, null, 4)),
                             message: "Update Posts Table",
-                            sha: posts && posts.sha ? posts.sha : null
+                            sha: sha.posts ? sha.posts : null
                         }),
                         dataType: "PUT"
                     }
                     console.log(801, {
+                        sha: sha.posts,
+                        rows,
                         params,
                         settings
                     });
 
-                    github.repos.contents(params, settings).then(put=>{
+                    0 < 1 ? github.repos.contents(params, settings).then(put=>{
                         console.log(791, {
                             put
                         });
                         ("/dashboard/:get/posts/").router();
                     }
-                    );
+                    ) : null;
                 }
 
             }
