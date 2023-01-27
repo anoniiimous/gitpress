@@ -4,7 +4,7 @@
         align-items: center;
     }
 
-    .-align-items-flex-start {
+    .align-items-flex-start {
         align-items: flex-start;
     }
 
@@ -1176,7 +1176,7 @@
         }
 
         .-dw480px-padding-top-100pct {
-            padding-top: 100%;
+            padding-ftop: 100%;
         }
     }
 }
@@ -1206,6 +1206,14 @@
 @media screen {
     .right-0 {
         right: 0;
+    }
+
+    .right-5px {
+        right: 5px;
+    }
+
+    [data-right="calc(100% - 5px)"] {
+        right: calc(100% - 5px);
     }
 }
 

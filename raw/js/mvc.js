@@ -210,19 +210,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         feed.innerHTML = "";
                                         if (data.length > 0) {
                                             //vp.all('card')[1].find('box').classList.remove('display-none');
+                                            var html = '';
                                             var d = 0;
                                             do {
                                                 var row = data[d];
-                                                var card = feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                                                var card = byId('template-feed-dashboard-pages').content.firstElementChild.cloneNode(true);
                                                 var name = row.name.split('.');
                                                 name.pop();
                                                 name.shift();
                                                 card.find('[placeholder="Page URL"]').textContent = "/" + name.join('/');
                                                 card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
-                                                var html = card.outerHTML;
+                                                html = card.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
-                                            } while (d < data.length)
+                                            } while (d < data.length);
+                                            //feed.innerHTML = html;
                                         } else {//vp.all('card')[1].find('box').classList.add('display-none');
                                         }
                                     }
