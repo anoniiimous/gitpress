@@ -14,10 +14,10 @@
                     <text class="empty font-size-13px white-space-nowrap overflow-hidden text-overflow-ellipsis text-decoration-underline" data-href="/user/hello-world" placeholder="Link"></text>
                 </column>
             </box>
-            <box data-href="/dashboard">
+            <box data-href="/dashboard/:get/build/preview/">
                 <row>
                     <ico data-height="30px" data-width="30px">
-                        <n class="gg-menu-grid-r"></n>
+                        <n class="gg-eye"></n>
                     </ico>
                 </row>
             </box>
@@ -309,22 +309,18 @@
 <footer class="margin-top-auto">
     <card class="-dw480px-margin-10px bottom-0 left-0 margin-top-auto padding-20px position-relative">
         <row class="align-items-center">
-            <box>
-                <row>
+            <box class="flex-1">
+                <row class="align-items-center gap-10px">
                     <ico class="background-color-000 border-radius-50pct" data-height="30px" data-width="30px">
                         <n placeholder="?"></n>
                     </ico>
-                </row>
-            </box>
-            <box class="flex-1 padding-x-10px">
-                <row>
                     <text class="font-weight-bolder" placeholder="username"></text>
                 </row>
             </box>
-            <box>
+            <box data-href="/dashboard/">
                 <row>
                     <ico data-height="30px" data-width="30px">
-                        <n class="gg-chevron-right"></n>
+                        <n class="gg-menu-grid-r"></n>
                     </ico>
                 </row>
             </box>
