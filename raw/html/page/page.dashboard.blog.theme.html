@@ -10,7 +10,7 @@
                             </ico>
                         </section>
                     </box>
-                    <box class="line-height-50px">
+                    <box>
                         <section>
                             <text class="font-size-24px font-weight-bolder">Style</text>
                         </section>
@@ -19,17 +19,21 @@
             </card>
             <card>
                 <row>
-                    <box class="background-color-333 color-fff line-height-50px padding-x-20px" data-href="/dashboard/:get/posts/post/">
-                        <section>
+                    <box class="line-height-30px" data-href="/dashboard/:get/posts/post/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-import"></n>
+                            </ico>
                             <text class="font-size-14px font-weight-bolder">Import</text>
-                        </section>
+                        </row>
                     </box>
                 </row>
             </card>
         </row>
     </header>
-    <block class="margin-y-20px padding-x-20px">
-        <section class="grid-gap-20px" data-columns="3" data-1280px-columns="2" data-1024px-columns="1" data-960px-columns="2" data-vga-columns="1" id="feed-dashboard-blog-theme"><!--
+    <block class="padding-20px">
+        <section class="grid-gap-20px" data-columns="3" data-1280px-columns="2" data-960px-columns="2" data-vga-columns="1" id="feed-dashboard-blog-theme">
+        <!--
             <card class="background-color-fff border-radius-5px box-shadow-0-1px-6px-0">
                 <column>
                     <box class="line-height-50px">
@@ -67,29 +71,28 @@
                         </section>
                     </box>
                 </column>
-            --></card>
-        </section>
-        <template id="template-dashboard-blog-theme">
-            <card class="background-color-fff border-radius-5px box-shadow-0-1px-6px-0">
-                <column>
-                    <box class="line-height-50px">
-                        <row>
-                            <ico>
-                                <n class="gg-eye"></n>
-                            </ico>
-                            <text class="font-weight-bolder margin-x-auto text-transform-capitalize" placeholder="Theme Name"></text>
-                            <ico data-tap="mvc.c.design.install(event.target)">
-                                <n class="gg-check"></n>
-                            </ico>
-                        </row>
-                    </box>
-                    <box class="box-shadow-0-1px-6px-0 margin-bottom-10px margin-x-10px">
-                        <section>
-                            <picture class="border-radius-10px height-0 padding-top-56pt25pct width-100pct"></picture>
-                        </section>
-                    </box>
-                </column>
-            </card>
-        </template>
-    </block>
-</blocks>
+            -->
+</card></section>
+<template id="template-dashboard-blog-theme">
+    <card class="background-color-fff border-radius-5px box-shadow-0-1px-6px-0">
+        <column>
+            <box class="line-height-50px">
+                <row>
+                    <ico>
+                        <n class="gg-eye"></n>
+                    </ico>
+                    <text class="font-weight-bolder margin-x-auto text-transform-capitalize" placeholder="Theme Name"></text>
+                    <ico data-tap="mvc.c.design.install(event.target)">
+                        <n class="gg-check"></n>
+                    </ico>
+                </row>
+            </box>
+            <box class="box-shadow-0-1px-6px-0 margin-bottom-10px margin-x-10px">
+                <section>
+                    <picture class="border-radius-10px height-0 padding-top-56pt25pct width-100pct"></picture>
+                </section>
+            </box>
+        </column>
+    </card>
+</template>
+</block></blocks>

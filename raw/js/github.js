@@ -571,7 +571,6 @@ window.github = {
                         reject(error);
                     }
                     const accessToken = localStorage.githubAccessToken;
-                        console.log(settings);
                     settings.cache = "reload";
                     accessToken ? settings.headers = {
                         Accept: "application/vnd.github+json",

@@ -242,9 +242,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 resolve(route);
                             } else {
                                 const user = await github.user.get();
-                                console.log({
-                                    user
-                                }, user.login);
                                 var params = {
                                     owner: user.login,
                                     path: "/raw/posts",
@@ -317,21 +314,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         var settings = {
                             cache: "reload"
                         };
-                        console.log("database", {
-                            params,
-                            settings
-                        });
                         github.repos.contents(params, settings).then(async(data)=>{
                             if (data) {
                                 var content = data.content;
                                 var raw = atob(content);
                                 var json = JSON.parse(raw);
-                                console.log(261, {
+                                0 > 1 ? console.log(261, {
                                     content,
                                     data,
                                     json,
                                     raw
-                                });
+                                }) : null;
                                 var description = json.description;
                                 var icons = json.icons;
                                 var name = json.name;

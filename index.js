@@ -132,5 +132,5 @@ async function init() {
     var go = false;
     window.boot.router().then(go = true);
 
-    console.log(123, "...Initialized");
+    console.log("...Initialized");
 }
