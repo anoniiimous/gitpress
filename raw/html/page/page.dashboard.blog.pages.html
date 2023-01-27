@@ -32,7 +32,7 @@
         </row>
     </header>
     <block class="margin-top-20px">
-        <column id="feed-dashboard-pages"></column>
+        <column class="gap-20px" id="feed-dashboard-pages"></column>
         <template>
             <card>
                 <row class="align-items-center justify-content-center">
@@ -45,19 +45,24 @@
                     </box>
                     <box class="flex-1">
                         <section>
-                            <text class="font-size-16px" placeholder="Page URL"></text>
+                            <text class="font-size-16px oveflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Page URL"></text>
                         </section>
                     </box>
                     <box>
                         <row>
                             <ico>
+                                <n class="gg-options"></n>
+                            </ico>
+                        </row>
+                        <row data-display="none">
+                            <ico>
                                 <n class="gg-code-slash"></n>
                             </ico>
                             <ico>
-                                <n class="gg-options"></n>
+                                <n class="gg-eye"></n>
                             </ico>
                             <ico>
-                                <n class="gg-eye"></n>
+                                <n class="gg-chevron-down"></n>
                             </ico>
                         </row>
                     </box>
