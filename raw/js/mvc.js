@@ -217,7 +217,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var name = row.name.split('.');
                                                 name.pop();
                                                 name.shift();
-                                                card.find('[placeholder="Page URL"]').textContent = 0 > 1 ? row.name : "/" + name.join('/');
+                                                card.find('[placeholder="Page URL"]').textContent = "/" + name.join('/');
+                                                card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
                                                 var html = card.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
