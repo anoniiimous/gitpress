@@ -152,6 +152,7 @@ window.rout.ed.bang = async(route)=>{
     var vp = page ? page : pages;
 
     $('[data-hide]').attr("data-active", true);
+    $('[data-pages]').removeAttr("data-active");
     $(':not(pages)[data-pages]').removeAttr("data-active");
     $(':not(page)[data-page]').removeAttr("data-active");
     $('[data-path]').removeAttr("data-active");
