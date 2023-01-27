@@ -189,6 +189,56 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
 
                         }
+                        if (get[2] === "pages") {
+
+                            var feed = byId('feed-dashboard-pages');
+                            if (feed.innerHTML === "") {
+                                var params = {
+                                    owner: user.login,
+                                    path: "/raw/pages",
+                                    repo: get[1]
+                                };
+                                var settings = {};
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
+                                //alert("Attempting to fetch files");
+                                github.repos.contents(params, settings).then(data=>{
+                                    //alert("Files fetched successfully");
+                                    if (data) {
+                                        console.log(84, {
+                                            data
+                                        });
+                                        feed.innerHTML = "";
+                                        if (data.length > 0) {
+                                            //vp.all('card')[1].find('box').classList.remove('display-none');
+                                            var d = 0;
+                                            do {
+                                                var row = data[d];
+                                                var card = feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                                                var name = row.name.split('.');
+                                                name.pop();
+                                                name.shift();
+                                                card.find('[placeholder="Page URL"]').textContent = 0 > 1 ? row.name : "/" + name.join('/');
+                                                var html = card.outerHTML;
+                                                feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < data.length)
+                                        } else {//vp.all('card')[1].find('box').classList.add('display-none');
+                                        }
+                                    }
+                                }
+                                ).catch(async(error)=>{
+                                    //alert("Failed to fetch files");
+                                    console.log("43.error", {
+                                        error
+                                    });
+                                    if (error.code === 404) {
+                                        //alert("Setup Project");
+                                        resolve(route);
+                                    }
+                                }
+                                );
+                            }
+                        }
                         if (get[2] == "posts") {
                             if (get.length > 3) {
                                 var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
@@ -1755,6 +1805,58 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 //github.repos.generate(p, c).then(s).catch(i)
             }
         }
+    },
+
+    pages: {
+
+        create: async(event)=>{
+            event.preventDefault();
+
+            const form = event.target;
+            const value = form.find('[type="text"]').value;
+
+            if (value.length > 0) {
+                const user = await github.user.get();
+                const fix = value.toLowerCase();
+                const filename = "page." + fix.split(' ').join('.') + ".html";
+
+                const message = "Create " + value + " Page";
+                const content = "";
+
+                var data = JSON.stringify({
+                    content,
+                    message
+                })
+
+                event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
+                event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
+
+                github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/pages/" + filename
+                }, {
+                    data,
+                    dataType: "PUT"
+                }).then(()=>{
+                    "/dashboard/:get/pages/".router()
+                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                }
+                ).catch(e=>{
+                    console.log(e);
+                    "/dashboard/:get/pages/".router().then(modal.alert({
+                        body: "There was an error creating this page.",
+                        submit: "OK",
+                        title: "Error"
+                    }))
+                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                }
+                )
+            }
+        }
+
     },
 
     posts: {

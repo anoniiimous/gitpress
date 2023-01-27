@@ -90,7 +90,6 @@ window.on.change = {
 window.on.contextmenu = ()=>{}
 ;
 
-window.on.key = {};
 window.on.touch = {};
 
 window.on.touch = {
@@ -420,7 +419,7 @@ window.on.touch = {
     var elem = target.closest("[data-submit]");
     if (elem) {
         var id = elem.dataset.submit;
-        var form = byId(id);
+        var form = byId(id) || elem.closest('form');
         var submit = form.find('[type="submit"]');
         submit.click();
     }
@@ -552,6 +551,17 @@ window.on.key.up.auto = {
         target.style.height = (target.scrollHeight) + "px";
     }
 };
+window.on.key.up.dashboard = {}
+window.on.key.up.dashboard.pages = (event)=>{
+    var target = event.target;
+    if (event.target.value.length > 0) {
+        event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
+        event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
+    } else {
+        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+    }
+}
 
 window.on.key.up.card = {
     holder: event=>{
@@ -657,7 +667,7 @@ window.on["submit"] = {
             var params = {};
             params.owner = user.login;
             params.path = "/c/files/" + form.all('box')[1].find('text').textContent;
-            params.repo = 'blog.cms.' + GET[1]
+            params.repo = GET[1]
 
             var settings = {};
             settings.data = JSON.stringify({

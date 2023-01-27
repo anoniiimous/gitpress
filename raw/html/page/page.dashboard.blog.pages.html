@@ -1,6 +1,6 @@
 <blocks>
-    <header class="padding-20px z-index-5">
-        <column>
+    <header class="-dw480px-padding-10px padding-20px">
+        <row class="justify-content-space-between">
             <card>
                 <row class="gap-10px">
                     <box class="display-none" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
@@ -17,9 +17,54 @@
                     </box>
                 </row>
             </card>
-        </column>
+            <card>
+                <row>
+                    <box class="line-height-30px" data-href="/dashboard/:get/pages/page/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-file-add"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">Add Page</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </row>
     </header>
-    <block></block>
+    <block class="margin-top-20px">
+        <column id="feed-dashboard-pages"></column>
+        <template>
+            <card>
+                <row class="align-items-center justify-content-center">
+                    <box>
+                        <section>
+                            <ico>
+                                <n class="gg-trash"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box class="flex-1">
+                        <section>
+                            <text class="font-size-16px" placeholder="Page URL"></text>
+                        </section>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-code-slash"></n>
+                            </ico>
+                            <ico>
+                                <n class="gg-options"></n>
+                            </ico>
+                            <ico>
+                                <n class="gg-eye"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </template>
+    </block>
     <block class="align-items-center empty-state flex-grow-1 justify-content-center">
         <column class="align-items-center justify-content-center">
             <picture class="position-relative width-240px">

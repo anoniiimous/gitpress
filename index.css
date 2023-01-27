@@ -100,6 +100,11 @@
         display: webkit-flex;
     }
 
+    block > footer, card > footer, box > footer {
+        display: flex;
+        display: webkit-flex;
+    }
+
     column {
         flex-direction: column;
     }
