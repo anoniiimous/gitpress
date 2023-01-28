@@ -192,7 +192,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "pages") {
 
                             var feed = byId('feed-dashboard-pages');
-                            if (0 < 1 || feed.innerHTML === "") {
+                            if (0 < 1) {
                                 var params = {
                                     owner: user.login,
                                     path: "/raw/pages",
