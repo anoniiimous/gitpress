@@ -192,7 +192,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "pages") {
 
                             var feed = byId('feed-dashboard-pages');
-                            if (feed.innerHTML === "") {
+                            if (0 < 1 || feed.innerHTML === "") {
                                 var params = {
                                     owner: user.login,
                                     path: "/raw/pages",
@@ -218,8 +218,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var name = row.name.split('.');
                                                 name.pop();
                                                 name.shift();
-                                                card.find('[placeholder="Page URL"]').textContent = "/" + name.join('/');
+                                                var href = "/" + name.join('/');
+                                                card.find('[placeholder="Page URL"]').textContent = href;
                                                 card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
+                                                card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page/";
+                                                card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
+                                                card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
                                                 html = card.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
@@ -1821,7 +1825,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             if (value.length > 0) {
                 const user = await github.user.get();
                 const fix = value.toLowerCase();
-                const filename = "page." + fix.split(' ').join('.') + ".html";
+                const filename = "page." + fix.split(' ').join('-') + ".html";
 
                 const message = "Create " + value + " Page";
                 const content = "";
