@@ -389,7 +389,6 @@ function lazyLoad(images, vp) {
         var intObs = "IntersectionObserver"in win && "IntersectionObserverEntry"in win && "intersectionRatio"in win.IntersectionObserverEntry.prototype;
         if (intObs) {
             let lazyImageObserver = new IntersectionObserver(async function(entries, observer) {
-                var user = await github.user.get();
                 entries.forEach(async function(entry) {
                     if (entry.isIntersecting) {
                         let lazyImage = entry.target;
@@ -398,6 +397,7 @@ function lazyLoad(images, vp) {
                         var href = src;
                         if (is.iframe) {
                             if (!src.includes("://")) {
+                                var user = await github.user.get();
                                 var c = await github.repos.contents({
                                     owner: user.login,
                                     path: "/" + src,
@@ -518,7 +518,7 @@ window.colors = {
 
 window.nodb = {
     check: {
-        value: (json, obj, row)=>{
+        value: (json,obj,row)=>{
             var hasMatch = false;
             var name = obj.name;
             var value = obj.value;
@@ -533,7 +533,7 @@ window.nodb = {
                 }
             }
 
-            if(hasMatch) {
+            if (hasMatch) {
                 json[index] = row;
             } else {
                 json.push(row);

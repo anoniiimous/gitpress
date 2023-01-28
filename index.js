@@ -46,13 +46,11 @@ async function init() {
             html = atob((await github.raw.path(path)).content);
         } catch (e) {
             if (e.code === 404) {
-                html = await ajax('/raw/html/template/template.iframe.shell.html');
-            } else {
                 modal.alert(e.code + ": " + e.message);
             }
         }
     } else {
-        html = await ajax('/raw/html/template/template.shell.html');
+        html = await ajax('/raw/style/template.html');
     }
     html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
 
