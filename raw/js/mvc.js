@@ -221,7 +221,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var href = "/" + name.join('/');
                                                 card.find('[placeholder="Page URL"]').textContent = href;
                                                 card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
-                                                card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page/";
+                                                card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
                                                 card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
                                                 card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
                                                 html = card.outerHTML;
