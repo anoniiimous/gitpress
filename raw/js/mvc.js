@@ -1835,13 +1835,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     message
                 })
 
+                var rte = rout.ed.dir(route.path);
+                rte.splice(0, 4);
+                var path = "/raw/pages/page." + rte.join('.') + "." + fix.split(' ').join('-') + ".html";
+
                 event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
                 event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
 
-                github.repos.contents({
+                0 < 1 ? github.repos.contents({
                     owner: user.login,
                     repo: GET[1],
-                    path: "/raw/pages/" + filename
+                    path: path
                 }, {
                     data,
                     dataType: "PUT"
@@ -1860,7 +1864,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
                     event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
                 }
-                )
+                ) : null;
             }
         }
 
