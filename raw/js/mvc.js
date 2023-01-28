@@ -199,7 +199,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     repo: get[1]
                                 };
                                 var settings = {};
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/"]');
                                 //alert("Attempting to fetch files");
                                 github.repos.contents(params, settings).then(data=>{
                                     //alert("Files fetched successfully");
@@ -212,23 +212,41 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             //vp.all('card')[1].find('box').classList.remove('display-none');
                                             var html = '';
                                             var d = 0;
+                                            var names = [];
+                                            data.sort();
+                                            var html = "";
+                                            var hrefs = [];
                                             do {
                                                 var row = data[d];
                                                 var card = byId('template-feed-dashboard-pages').content.firstElementChild.cloneNode(true);
                                                 var name = row.name.split('.');
                                                 name.pop();
                                                 name.shift();
+                                                names[d] = name;
                                                 var href = "/" + name.join('/');
+                                                hrefs[d] = href;
+                                                d++;
+                                            } while (d < data.length);
+                                            hrefs.sort();
+                                            d = 0;
+                                            do {
+                                                var href = hrefs[d];
+                                                if ((d > 0 && names[d][0] !== names[d - 1][0])) {
+                                                    html += "</card>";
+                                                }
+                                                if (d === 0 || (d > 0 && names[d][0] !== names[d - 1][0])) {
+                                                    html += "<card class='"+card.className+"'>";
+                                                }
                                                 card.find('[placeholder="Page URL"]').textContent = href;
                                                 card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
                                                 card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
                                                 card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
                                                 card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
-                                                html = card.outerHTML;
-                                                feed.insertAdjacentHTML('beforeend', html);
+                                                html += card.innerHTML;
+                                                //feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
-                                            } while (d < data.length);
-                                            //feed.innerHTML = html;
+                                            } while (d < hrefs.length);
+                                            feed.innerHTML = html;
                                         } else {//vp.all('card')[1].find('box').classList.add('display-none');
                                         }
                                     }
