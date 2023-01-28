@@ -284,6 +284,7 @@ window.on.touch = {
     var elem = target.closest('[data-dropdown]');
     if (elem) {
         if (elem.nextElementSibling.dataset.display === 'none') {
+            $("[data-hidden='tap']").attr('data-display', 'none');
             elem.nextElementSibling['removeAttribute']('data-display', 'none');
         } else {
             elem.nextElementSibling['setAttribute']('data-display', 'none');
