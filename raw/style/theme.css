@@ -83,6 +83,8 @@
         background-color: #fff;
     }
 
+body.-dark-background-color-1f.background-color-fff {}
+
     .background-color-ff3b30 {
         background-color: #ff3b30;
     }

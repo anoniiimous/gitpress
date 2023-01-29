@@ -153,6 +153,10 @@
         width: 50px;
     }
 
+    img:not([src]) {
+        display: none;
+    }
+
     iframe {
         border: 0;
     }
