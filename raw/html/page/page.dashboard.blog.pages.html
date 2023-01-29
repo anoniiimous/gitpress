@@ -50,7 +50,7 @@
 <template id="template-feed-dashboard-pages">
     <card class="background-color-fff border-radius-10px margin-10px">
         <row class="align-items-center justify-content-center">
-            <box>
+            <box data-tap="controller.pages.delete(event.target)">
                 <section>
                     <ico>
                         <n class="gg-trash"></n>
@@ -59,7 +59,7 @@
             </box>
             <box class="flex-1">
                 <section>
-                    <text class="font-size-16px oveflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Page URL"></text>
+                    <text class="flex-1 font-size-16px oveflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Page URL"></text>
                 </section>
             </box>
             <box>

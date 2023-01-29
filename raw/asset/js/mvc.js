@@ -246,7 +246,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     html += "<card class='" + card.className + "'>";
                                                 }
                                                 card.find('[placeholder="Page URL"]').textContent = href;
-                                                card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
+                                                card.firstElementChild.dataset.sha = row.sha;
+                                                //card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
                                                 card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
                                                 card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
                                                 card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
@@ -1892,6 +1893,43 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 ) : null;
             }
+        }
+        ,
+
+        delete: async(target)=>{
+            var user = await github.user.get();
+
+            var row = target.closest('row');
+            var sha = row.dataset.sha;
+            var page = row.find('[placeholder="Page URL"]').textContent;
+            var filename = rout.ed.dir(page).join('.') + ".html";
+
+            const a = ()=>{
+                row.remove();
+            }
+
+            const b = (event)=>{
+                console.log(1912, event);
+            }
+
+            params = {
+                repo: GET[1],
+                owner: user.login,
+                path: 'raw/pages/page.' + filename
+            }
+            settings = {
+                data: JSON.stringify({
+                    message: "Delete Page",
+                    sha: sha
+                }),
+                dataType: "DELETE"
+            }
+
+            var confirm = await modal.confirm({
+                body: "Are you sure you want to delete this page?",
+                title: "Delete Page"
+            }, ["No", "Yes"]);
+            confirm ? github.repos.contents(params, settings).then(a).catch(b) : null;
         }
 
     },
