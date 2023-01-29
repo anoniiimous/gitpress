@@ -485,7 +485,7 @@ window.github = {
                         }
                         const accessToken = localStorage.githubAccessToken;
                         accessToken ? settings.headers = {
-                            Accept: "application/vnd.github+json",
+                            Accept: settings.accept ? settings.accept : "application/vnd.github+json",
                             Authorization: "token " + accessToken
                         } : null;
                         console.log({
