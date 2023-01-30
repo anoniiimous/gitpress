@@ -12,6 +12,9 @@
         display: none;
     }
 
+    :focus {
+        outline: none;
+    }
 }
 
 /*SHELL*/
