@@ -1927,86 +1927,57 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
                 event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
 
-                if (0 > 1) {
-                    github.repos.contents({
-                        owner: user.login,
-                        repo: GET[1],
-                        path: "/raw/pages/page." + rte.join('.') + "." + fix.split(' ').join('-') + ".html"
-                    }, {
-                        data: JSON.stringify({
-                            content,
-                            message
-                        }),
-                        dataType: "PUT"
-                    }).then(()=>{
-                        "/dashboard/:get/pages/".router()
-                        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
-                    }
-                    ).catch(e=>{
-                        console.log(e);
-                        "/dashboard/:get/pages/".router().then(modal.alert({
-                            body: "There was an error creating this page.",
-                            submit: "OK",
-                            title: "Error"
-                        }))
-                        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
-                    }
-                    )
-                } else {
+                var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                var row = {
+                    "page": page,
+                    "path": path
+                }
+                var sha = null;
 
-                    var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
-                    var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
-                    var row = {
-                        "page": page,
-                        "path": path
-                    }
-                    var sha = null;
-
-                    try {
-                        var data = await github.repos.contents({
-                            owner: user.login,
-                            repo: GET[1],
-                            path: "/raw/pages/pages.json"
-                        });
-                        var sha = data.sha;
-                        var j = JSON.parse(atob(data.content));
-                        var json = JSON.parse(atob(data.content));
-                        json.push(row);
-                    } catch (e) {
-                        var j = [];
-                        var json = [row];
-                    }
-                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
-
-                    inc ? alert("This page already exists.") : github.repos.contents({
+                try {
+                    var data = await github.repos.contents({
                         owner: user.login,
                         repo: GET[1],
                         path: "/raw/pages/pages.json"
-                    }, {
-                        data: JSON.stringify({
-                            content: btoa(JSON.stringify(rows, null, 4)),
-                            message,
-                            sha
-                        }),
-                        dataType: "PUT"
-                    }).then(()=>{
-                        "/dashboard/:get/pages/".router()
-                        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
-                    }
-                    ).catch(e=>{
-                        console.log(e);
-                        0 > 1 ? "/dashboard/:get/pages/".router().then(modal.alert({
-                            body: "There was an error creating this page.",
-                            submit: "OK",
-                            title: "Error"
-                        })) : null;
-                    }
-                    );
+                    });
+                    var sha = data.sha;
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
                 }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+
+                inc ? alert("This page already exists.") : github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/pages/pages.json"
+                }, {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(rows, null, 4)),
+                        message,
+                        sha
+                    }),
+                    dataType: "PUT"
+                }).then(()=>{
+                    "/dashboard/:get/pages/".router()
+                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                }
+                ).catch(e=>{
+                    console.log(e);
+                    0 > 1 ? "/dashboard/:get/pages/".router().then(modal.alert({
+                        body: "There was an error creating this page.",
+                        submit: "OK",
+                        title: "Error"
+                    })) : null;
+                }
+                );
+
             }
         }
         ,

@@ -43,6 +43,10 @@
         background-color: #1d2327;
     }
 
+    .background-color-1f1f1f {
+        background-color: #1f1f1f;
+    }
+
     .background-color-32cd32 {
         background-color: #32cd32;
     }
@@ -83,7 +87,8 @@
         background-color: #fff;
     }
 
-body.-dark-background-color-1f.background-color-fff {}
+    body.-dark-background-color-1f.background-color-fff {
+    }
 
     .background-color-ff3b30 {
         background-color: #ff3b30;
@@ -1284,7 +1289,7 @@ body.-dark-background-color-1f.background-color-fff {}
     [data-transform="scale(0.75)"] {
         transform: scale(0.75);
     }
-    
+
     [data-transform="rotate(180deg)"] {
         transform: rotate(180deg);
     }
