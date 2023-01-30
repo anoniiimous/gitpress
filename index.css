@@ -11,6 +11,7 @@
     body:not([data-uid]) .-isauth, body[data-uid] .-noauth {
         display: none;
     }
+
 }
 
 /*SHELL*/
