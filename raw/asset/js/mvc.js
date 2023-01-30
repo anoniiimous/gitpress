@@ -1983,39 +1983,56 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         delete: async(target)=>{
-            var user = await github.user.get();
+
+            const user = await github.user.get();
 
             var row = target.closest('row');
             var sha = row.dataset.sha;
             var page = row.find('[placeholder="Page URL"]').textContent;
-            var filename = rout.ed.dir(page).join('.') + ".html";
 
-            const a = ()=>{
-                row.remove();
+            try {
+                var data = await github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/pages/pages.json"
+                });
+                var sha = data.sha;
+                var json = JSON.parse(atob(data.content)).filter(function(obj) {
+                    return obj.page !== page;
+                });
+                var j = JSON.parse(atob(data.content));
+                console.log(2040, {
+                    j,
+                    json
+                });
+
+                0 < 1 ? github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/pages/pages.json"
+                }, {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(json, null, 4)),
+                        message: "Delete Page",
+                        sha
+                    }),
+                    dataType: "PUT"
+                }).then(()=>{
+                    "/dashboard/:get/pages/".router()
+                }
+                ).catch(e=>{
+                    console.log(e);
+                    0 > 1 ? "/dashboard/:get/pages/".router().then(modal.alert({
+                        body: "There was an error creating this page.",
+                        submit: "OK",
+                        title: "Error"
+                    })) : null;
+                }
+                ) : null;
+            } catch (e) {
+                alert("There are no pages.");
             }
 
-            const b = (event)=>{
-                console.log(1912, event);
-            }
-
-            params = {
-                repo: GET[1],
-                owner: user.login,
-                path: 'raw/pages/page.' + filename
-            }
-            settings = {
-                data: JSON.stringify({
-                    message: "Delete Page",
-                    sha: sha
-                }),
-                dataType: "DELETE"
-            }
-
-            var confirm = await modal.confirm({
-                body: "Are you sure you want to delete this page?",
-                title: "Delete Page"
-            }, ["No", "Yes"]);
-            confirm ? github.repos.contents(params, settings).then(a).catch(b) : null;
         }
 
     },
