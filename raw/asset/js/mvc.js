@@ -193,15 +193,77 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             var feed = byId('feed-dashboard-pages');
                             if (0 < 1) {
-                                var params = {
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/"]');
+                                //alert("Attempting to fetch files");
+                                0 < 1 ? github.repos.contents({
+                                    owner: user.login,
+                                    path: "/raw/pages/pages.json",
+                                    repo: get[1]
+                                }, {}).then(d=>{
+                                    var data = JSON.parse(atob(d.content));
+                                    if (data) {
+                                        data.unshift({
+                                            page: "/",
+                                            path: "/"
+                                        });
+                                        console.log(84, {
+                                            data
+                                        });
+                                        feed.innerHTML = "";
+                                        if (data.length > 0) {
+                                            //vp.all('card')[1].find('box').classList.remove('display-none');
+                                            var html = "";
+                                            var d = 0;
+                                            var names = [];
+                                            var html = "";
+                                            var hrefs = [];
+
+                                            do {
+                                                var row = data[d];
+                                                hrefs[d] = row.path;
+                                                d++;
+                                            } while (d < data.length);
+                                            hrefs.sort();
+
+                                            d = 0;
+                                            var names = [];
+                                            do {
+                                                var href = hrefs[d];
+                                                names[d] = rout.ed.dir(href);
+                                                d++;
+                                            } while (d < hrefs.length);
+
+                                            d = 0;
+                                            do {
+                                                var href = hrefs[d];
+                                                var card = byId('template-feed-dashboard-pages').content.firstElementChild.cloneNode(true);
+                                                if ((d > 0 && names[d][0] !== names[d - 1][0])) {
+                                                    html += "</card>";
+                                                }
+                                                if (d === 0 || (d > 0 && names[d][0] !== names[d - 1][0])) {
+                                                    html += "<card class='" + card.className + "'>";
+                                                }
+                                                card.find('[placeholder="Page URL"]').textContent = href;
+                                                card.firstElementChild.dataset.sha = row.sha;
+                                                //card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
+                                                card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
+                                                card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
+                                                card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
+                                                html += card.innerHTML;
+                                                //feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < names.length);
+
+                                            feed.innerHTML = html;
+                                        }
+                                    }
+
+                                }
+                                ) : github.repos.contents({
                                     owner: user.login,
                                     path: "/raw/pages",
                                     repo: get[1]
-                                };
-                                var settings = {};
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/"]');
-                                //alert("Attempting to fetch files");
-                                github.repos.contents(params, settings).then(data=>{
+                                }, {}).then(data=>{
                                     //alert("Files fetched successfully");
                                     if (data) {
                                         console.log(84, {
@@ -219,10 +281,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             do {
                                                 var row = data[d];
                                                 var name = row.name.split('.');
-                                                name.pop();
-                                                name.shift();
-                                                var href = "/" + name.join('/');
-                                                hrefs[d] = href;
+                                                if (name[name.length - 1] === "html") {
+                                                    name.pop();
+                                                    name.shift();
+                                                    var href = "/" + name.join('/');
+                                                    hrefs[d] = href;
+                                                }
                                                 d++;
                                             } while (d < data.length);
                                             hrefs.sort();
@@ -1857,41 +1921,92 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 const message = "Create " + value + " Page";
                 const content = "";
 
-                var data = JSON.stringify({
-                    content,
-                    message
-                })
-
                 var rte = rout.ed.dir(route.path);
                 rte.splice(0, 4);
-                var path = "/raw/pages/page." + rte.join('.') + "." + fix.split(' ').join('-') + ".html";
 
                 event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
                 event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
 
-                0 < 1 ? github.repos.contents({
-                    owner: user.login,
-                    repo: GET[1],
-                    path: path
-                }, {
-                    data,
-                    dataType: "PUT"
-                }).then(()=>{
-                    "/dashboard/:get/pages/".router()
-                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                if (0 > 1) {
+                    github.repos.contents({
+                        owner: user.login,
+                        repo: GET[1],
+                        path: "/raw/pages/page." + rte.join('.') + "." + fix.split(' ').join('-') + ".html"
+                    }, {
+                        data: JSON.stringify({
+                            content,
+                            message
+                        }),
+                        dataType: "PUT"
+                    }).then(()=>{
+                        "/dashboard/:get/pages/".router()
+                        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                    }
+                    ).catch(e=>{
+                        console.log(e);
+                        "/dashboard/:get/pages/".router().then(modal.alert({
+                            body: "There was an error creating this page.",
+                            submit: "OK",
+                            title: "Error"
+                        }))
+                        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                    }
+                    )
+                } else {
+
+                    var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                    var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                    var row = {
+                        "page": page,
+                        "path": path
+                    }
+                    var sha = null;
+
+                    try {
+                        var data = await github.repos.contents({
+                            owner: user.login,
+                            repo: GET[1],
+                            path: "/raw/pages/pages.json"
+                        });
+                        var sha = data.sha;
+                        var j = JSON.parse(atob(data.content));
+                        var json = JSON.parse(atob(data.content));
+                        json.push(row);
+                    } catch (e) {
+                        var j = [];
+                        var json = [row];
+                    }
+                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+
+                    inc ? alert("This page already exists.") : github.repos.contents({
+                        owner: user.login,
+                        repo: GET[1],
+                        path: "/raw/pages/pages.json"
+                    }, {
+                        data: JSON.stringify({
+                            content: btoa(JSON.stringify(rows, null, 4)),
+                            message,
+                            sha
+                        }),
+                        dataType: "PUT"
+                    }).then(()=>{
+                        "/dashboard/:get/pages/".router()
+                        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                    }
+                    ).catch(e=>{
+                        console.log(e);
+                        0 > 1 ? "/dashboard/:get/pages/".router().then(modal.alert({
+                            body: "There was an error creating this page.",
+                            submit: "OK",
+                            title: "Error"
+                        })) : null;
+                    }
+                    );
                 }
-                ).catch(e=>{
-                    console.log(e);
-                    "/dashboard/:get/pages/".router().then(modal.alert({
-                        body: "There was an error creating this page.",
-                        submit: "OK",
-                        title: "Error"
-                    }))
-                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
-                }
-                ) : null;
             }
         }
         ,
