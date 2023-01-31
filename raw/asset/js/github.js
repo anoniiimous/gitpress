@@ -141,6 +141,7 @@ window.github = {
                 path,
                 repo
             }, {
+                //accept: "application/vnd.github.raw",
                 cache: "reload"
             });
         }
@@ -573,7 +574,7 @@ window.github = {
                     const accessToken = localStorage.githubAccessToken;
                     settings.cache = "reload";
                     accessToken ? settings.headers = {
-                        Accept: "application/vnd.github+json",
+                        Accept: settings.accept ? settings.accept : "application/vnd.github+json",
                         Authorization: "token " + accessToken
                     } : null;
                     ajax(url, settings).then(a).catch(b);
