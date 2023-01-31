@@ -1319,6 +1319,32 @@
 }
 
 @media {
+    .gg-math-plus, .gg-math-plus::after {
+        display: block;
+        box-sizing: border-box;
+        background: currentColor;
+        border-radius: 10px
+    }
+
+    .gg-math-plus {
+        margin-top: -2px;
+        position: relative;
+        transform: scale(var(--ggs,1));
+        width: 16px;
+        height: 2px
+    }
+
+    .gg-math-plus::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 16px;
+        top: -7px;
+        left: 7px
+    }
+}
+
+@media {
     .gg-menu {
         transform: scale(var(--ggs,1))
     }
@@ -2034,6 +2060,39 @@
         top: -3px;
         left: -1px;
         transform: rotate(-68deg)
+    }
+}
+
+@media screen {
+    .gg-view-list {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        border: 2px solid;
+        border-radius: 3px;
+        width: 20px;
+        height: 14px
+    }
+
+    .gg-view-list::after, .gg-view-list::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 2px;
+        height: 14px;
+        top: -2px;
+        left: 3px;
+        background: currentColor
+    }
+
+    .gg-view-list::before {
+        width: 20px;
+        height: 2px;
+        left: -2px;
+        top: 2px;
+        box-shadow: 0 4px 0
     }
 }
 

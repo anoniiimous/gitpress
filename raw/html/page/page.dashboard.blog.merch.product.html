@@ -1,0 +1,144 @@
+<blocks>
+    <header class="-dw480px-padding-10px padding-20px">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-none" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Product</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row>
+                    <box class="line-height-30px" data-href="/dashboard/:get/files/file/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">Save Item</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
+    <block class="flex-direction-row grid-gap-20px padding-20px width-1280px">
+        <column class="grid-gap-20px">
+            <card class="width-320px">
+                <section>
+                    <box class="border-1px-solid border-radius-20px padding-top-100pct width-100pct"></box>
+                </section>
+            </card>
+            <card>
+                <row>
+                    <box class="border-1px-solid border-radius-20px" data-height="64px" data-width="64px"></box>
+                </row>
+            </card>
+        </column>
+        <column class="gap-50px width-600px">
+            <card class="gap-10px">
+                <header>
+                    <box class="font-weight-bolder text-transform-uppercase">
+                        <row>
+                            <text>Details</text>
+                        </row>
+                    </box>
+                </header>
+                <column class="grid-gap-10px">
+                    <box class="border-1px-solid border-radius-50px">
+                        <row>
+                            <input class="font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
+                        </row>
+                    </box>
+                    <box class="border-1px-solid border-radius-20px">
+                        <row>
+                            <textarea class="flex-1 font-size-18px min-height-60px padding-10px" type="text" placeholder="Provide a detailed description."></textarea>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <span class="font-weight-bolder" contenteditable="true" placeholder="Add Tag"></span>
+                            </text>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="gap-10px">
+                <header>
+                    <box class="font-weight-bolder text-transform-uppercase">
+                        <row>
+                            <text>Traits</text>
+                        </row>
+                    </box>
+                </header>
+                <column>
+                    <box>
+                        <row class="grid-gap-10px" data-columns="2">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px">
+                                <span class="flex-1 padding-x-10px" placeholder="Attribute"></span>
+                                <ico>
+                                    <n class="gg-chevron-down"></n>
+                                </ico>
+                            </text>
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px">
+                                <span class="flex-1 padding-x-10px" placeholder="Value"></span>
+                                <ico>
+                                    <n class="gg-chevron-down"></n>
+                                </ico>
+                            </text>
+                        </row>
+                    </box>
+                </column>
+                <footer>
+                    <box class="border-1px-solid border-radius-50px height-36px line-height-36px text-align-center width-100pct">
+                        <row>
+                            <text class="align-items-center display-flex flex-1 font-size-18px font-weight-bolder gap-5px justify-content-center">
+                                <ico data-height="20px" data-width="30px">
+                                    <n class="gg-add"></n>
+                                </ico>
+                                <span>Add Variation</span>
+                            </text>
+                        </row>
+                    </box>
+                </footer>
+            </card>
+            <card class="gap-10px">
+                <header>
+                    <box class="font-weight-bolder text-transform-uppercase">
+                        <row>
+                            <text>Pricing</text>
+                        </row>
+                    </box>
+                </header>
+                <column>
+                    <box class="border-1px-solid border-radius-50px overflow-hidden width-160px">
+                        <row>
+                            <text class="align-items-center display-flex height-36px justify-content-center line-height-36px">
+                                <span class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">$</span>
+                                <span class="flex-1 padding-x-10px"></span>
+                            </text>
+                        </row>
+                    </box>
+                </column>
+            </card>
+        </column>
+        <column>
+            <card></card>
+            <card></card>
+            <card></card>
+        </column>
+    </block>
+</blocks>
