@@ -566,7 +566,7 @@
     }
 
     .font-size-16px {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .font-size-18px {
@@ -994,6 +994,14 @@
 
     .max-width-768px {
         max-width: 768px;
+    }
+
+    .max-width-320px {
+        max-width: 320px;
+    }
+
+    .max-width-240px {
+        max-width: 240px;
     }
 
     [data-max-width="calc(100% - 40px)"] {
