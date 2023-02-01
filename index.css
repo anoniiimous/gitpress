@@ -192,12 +192,8 @@
     }
 
     page, pages {
-        /* display: flex; */
-        /* display: -webkit-flex; */
         display: inherit;
         position: relative;
-        /* flex-direction: column; */
-        /* height: 100%; */
     }
 
     textarea {

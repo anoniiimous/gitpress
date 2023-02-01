@@ -1056,7 +1056,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 block.classList.add('margin-top-10px');
                 block.classList.add('margin-x-10px');
                 //block.find('builder-toolbar-preview').classList.add('display-none');
-                css.setAttribute('href', 'raw/css/editor.css')
+                //css.setAttribute('href', 'raw/css/editor.css')
             }
 
             var path = route.path;
@@ -1110,7 +1110,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 const repo = route.GOT[1];
                 const branch = 'main';
                 try {
-                    var raw = await ajax('raw/html/template/template.iframe.document.html');
+                    var raw = await ajax('raw/asset/html/template/template.iframe.document.html');
                     //var raw = atob((await github.raw.path('/anoniiimous/' + GET[1] + '/' + branch + '/index.html')).content);
                     var doc = new DOMParser().parseFromString(raw, 'text/html')
 
@@ -1224,7 +1224,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     block.classList.add('margin-top-10px');
                     block.classList.add('margin-x-10px');
                     //block.find('builder-toolbar-preview').classList.add('display-none');
-                    css.setAttribute('href', 'raw/css/editor.css')
+                    //css.setAttribute('href', 'raw/css/editor.css')
                 } else {
                     header.classList.add('display-none');
                     block.classList.remove('border-top-left-radius-10px');

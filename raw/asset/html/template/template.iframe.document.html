@@ -10,36 +10,24 @@
         <meta name="application-shortname" content="gitpress">
         <meta name="msapplication-TileColor" content="#f26c4f">
         <meta name="theme-color" content="#f26c4f">
-        <link id="style-editor" rel='stylesheet'>
-        <link id="style-gg" href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
-        <script>
-            var domains = window.location.host.split('.');
-            window.globals = {
-                domains: {
-                    domain: domains.length > 1 ? domains[domains.length - 2] : null,
-                    subdomain: domains.length > 2 ? domains[domains.length - 3] : null,
-                    tld: domains[domains.length - 1]
-                }
-            }
+        <script>            
             const base = document.createElement("base");
-            window.is = {
-                iframe: (window.self !== window.top)
-            }
-            window.hub = is.ip;
             base.href = window.parent.location.protocol + "//" + window.parent.location.host;
             document.head.appendChild(base);
-
             var pathname = window.parent.location.pathname;
             var dir = window.parent.rout.ed.dir(pathname);
             dir.splice(0, 4);
             window.boot = window.parent.rout.ed.url(dir);
         </script>
-        <script src="raw/js/github.js"></script>
-        <script src="raw/js/modal.js"></script>
-        <script src="raw/js/touch.js"></script>
-        <script src="raw/js/on.js"></script>
-        <script src="raw/js/router.js"></script>
-        <script src="raw/js/vanilla.js"></script>
+        <link id="style-editor" href='raw/asset/css/editor.css' rel='stylesheet'>
+        <link id="style-index" href='index.css' rel='stylesheet'>
+        <link id="style-gg" href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
+        <script src="raw/asset/js/github.js"></script>
+        <script src="raw/asset/js/modal.js"></script>
+        <script src="raw/asset/js/touch.js"></script>
+        <script src="raw/asset/js/on.js"></script>
+        <script src="raw/asset/js/router.js"></script>
+        <script src="raw/asset/js/vanilla.js"></script>
         <script src="index.js"></script>
     </head>
     <body>
