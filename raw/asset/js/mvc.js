@@ -194,13 +194,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             if (get.length > 3) {
                                 if (get[3] === "catalog") {
                                     var feed = byId('feed-dashboard-catalog');
-                                    if (get[4] === "item") {
-                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/item/"]');
-                                        var name = rout.ed.dir(route.path);
-                                        name.splice(0, 4);
-                                        //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
-                                        vp.find('[placeholder="Product Name"]').value = "";
-                                    } else if (0 < 1) {
+                                    if (get[4]) {
+                                        if (get[4] === "item") {
+                                            var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/item/"]');
+                                            var name = rout.ed.dir(route.path);
+                                            name.splice(0, 4);
+                                            //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+                                            vp.find('[placeholder="Product Name"]').value = "";
+                                        }
+                                    } else {
                                         var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/"]');
                                         //alert("Attempting to fetch files");
                                         github.repos.contents({
@@ -235,6 +237,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         }
                                         )
+                                    }
+                                } else if (get[3] === "product") {
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/product/"]');
+                                    var slug = get[4];
+                                    if (slug) {
+                                        var owner = await github.user.get();
+                                        var json = await github.repos.contents({
+                                            owner: user.login,
+                                            repo: get[1],
+                                            path: "raw/merch/catalog.json"
+                                        }, {
+                                            accept: "application/vnd.github.raw"
+                                        });
+                                        var row = json.find(i=>i.slug === slug);
+                                        vp.find('[placeholder="Enter a title"]').value = row.title;
                                     }
                                 }
                             } else {}

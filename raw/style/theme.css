@@ -419,6 +419,10 @@
         display: -webkit-inline-flex;
     }
 
+    .display-grid {
+        display: grid;
+    }
+
     [data-display="none"], .display-none {
         display: none;
     }
