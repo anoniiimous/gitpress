@@ -1,0 +1,49 @@
+<blocks class="flex-1">
+    <block class="flex-grow-1">
+        <header class="align-items-center background-color-ccc display-flex flex-direction-row justify-content-space-between">
+            <card class="height-50px justify-content-center">
+                <row class="align-items-center">
+                    <box data-href="/dashboard/:get/build/er/" data-page="/dashboard/*/build/">
+                        <row class="align-items-center">
+                            <ico>
+                                <n class="gg-pen"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box data-href="/dashboard/:get/build/" data-pages="/dashboard/*/build/er/">
+                        <row class="align-items-center">
+                            <ico>
+                                <n class="gg-close"></n>
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
+                        <column class="align-items-center justify-content-center">
+                            <text class="font-weight-bolder" placeholder="Page Name"></text>
+                            <text class="color-0096c7" placeholder="/page-name/"></text>
+                        </column>
+                    </box>
+                </row>
+            </card>
+            <card class="font-weight-bolder padding-x-10px" data-page="/dashboard/*/build/">
+                <row>
+                    <box data-960px-display="flex" data-href="/dashboard/:get/build/preview/">
+                        <row>
+                            <ico>
+                                <n class="gg-eye"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </header>
+        <flex class="flex-1 position-relative">
+            <card class="background-color-fff" id="builder-toolbar">
+                <row class="display-none" id="builder-toolbar-preview">
+                    <box data-tap="controller.build.preview"></box>
+                </row>
+            </card>
+            <iframe class="background-color-fff height-100pct width-100pct" id="iframe-editor"></iframe>
+        </flex>
+    </block>
+</blocks>

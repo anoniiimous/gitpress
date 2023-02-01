@@ -1,0 +1,58 @@
+<blocks class="min-height-100vh" data-backdrop-filter="blur(10px)">
+    <block class="height-100pct justify-content-center margin-20px">
+        <picture data-background-color="rgba(255,255,255,0.5)" data-tap="mvc.c.files.cancel"></picture>
+        <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
+            <card class="background-color-fff border-radius-10px margin-auto overflow-hidden max-width-480px width-100pct">
+                <picture></picture>
+                <form id="form-dashboard-blog-files-file" onsubmit="on.submit.dashboard.file(event)">
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-18px">Drop files to upload</text>
+                            <text class="line-height-50px">or</text>
+                        </column>
+                    </box>
+                    <box class="padding-20px text-align-center">
+                        <label class="border-1px-solid display-flex flex-direction-row line-height-50px margin-auto width-160px" data-file="form-dashboard-blog-files-file" for="form-dashboard-blog-files-file">
+                            <ico>
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <span>Select Files</span>
+                            <input id="form-dashboard-blog-files-file" name="form-dashboard-blog-files-file" onchange="controller.files.select(event)" data-onprogressing="mvc.c.files.selecting(event)" type="file"><!---->
+                        </label>
+                    </box>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <load class="border-1px-solid border-radius-50px display-none height-20px margin-top-36px overflow-hidden width-100pct">
+                                <er class="background-color-777 display-block height-20px width-0"></er>
+                            </load>
+                        </column>
+                    </box>
+                    <box class="background-color-fff border-color-ccc border-top-1px-solid display-none padding-y-20px text-align-center width-100pct">
+                        <row class="align-items-center display-none justify-content-center">
+                            <ico>
+                                <n class="gg-file"></n>
+                            </ico>
+                            <text class="overflow-hidden text-overflow-ellipsis white-space-nowrap" data-max-width="calc(100% - 100px)">filename.ext</text>
+                            <ico class="color-ff3b30" data-tap="mvc.c.files.deselect(event.target)">
+                                <n class="gg-close"></n>
+                            </ico>
+                        </row>
+                        <column>
+                            <text>Would you like to upload another file?</text>
+                            <load class="border-1px-solid border-radius-50px display-none height-20px margin-x-20px overflow-hidden width-100pct">
+                                <er class="background-color-777 display-block height-20px width-0"></er>
+                            </load>
+                        </column>
+                    </box>
+                    <box class="border-color-bbb border-top-1px-solid display-none line-height-50px padding-top-50pct width-100pct">
+                        <row data-columns="2">
+                            <text class="background-color-333 color-fff text-align-center" data-tap="mvc.c.files.file">Yes</text>
+                            <text class="background-color-fff text-align-center" data-tap="mvc.c.files.cancel">No</text>
+                            <input type="submit">
+                        </row>
+                    </box>
+                </form>
+            </card>
+        </column>
+    </block>
+</blocks>

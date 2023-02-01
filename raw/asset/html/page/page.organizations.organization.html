@@ -1,0 +1,100 @@
+<blocks class="flex-grow-1">
+    <header class="line-height-50px padding-y-10px position-fixed top-0 width-100pct z-index-5">
+        <row class="align-items-center justify-content-space-between">
+            <card>
+                <section>
+                    <box data-href="/">
+                        <row>
+                            <ico>
+                                <n class="gg-home"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </section>
+            </card>
+            <card>
+                <row>
+                    <box data-href="/dashboard/">
+                        <row>
+                            <ico data-width="20px">
+                                <n class="gg-chart"></n>
+                            </ico>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Dashboard</text>
+                        </row>
+                    </box>
+                    <box class="margin-x-20px" data-href="/organizations/">
+                        <row>
+                            <ico data-width="20px">
+                                <n class="gg-globe-alt"></n>
+                            </ico>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Organizations</text>
+                        </row>
+                    </box>
+                    <box data-href="/marketplace/">
+                        <row>
+                            <ico data-width="20px">
+                                <n class="gg-shopping-cart"></n>
+                            </ico>
+                            <text class="-vga-display-none font-weight-bolder margin-left-10px">Marketplace</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <section>
+                    <box data-href="/dashboard/">
+                        <row>
+                            <ico>
+                                <n class="gg-more-vertical-alt"></n>
+                            </ico>
+                        </row>
+                        <row class="display-none">
+                            <ico class="-noauth">
+                                <n class="gg-user"></n>
+                            </ico>
+                            <ico class="-isauth">
+                                <n class="gg-log-off"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </section>
+            </card>
+        </row>
+    </header>
+    <block>
+        <picture class="background-color-ddd"></picture>
+        <section>
+            <card class="-mobile-margin-x-10px margin-x-4vw padding-top-160px padding-bottom-20px padding-top-160px">
+                <column>
+                    <box>
+                        <section>
+                            <text class="font-size-48px">Directory</text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-18px">Discover projects created by users hosted on GitHub</text>
+                        </section>
+                    </box>
+                </column>
+            </card>
+        </section>
+    </block>
+    <block class="align-baseline flex-direction-row margin-x-4vw padding-y-20px width-100pc--8vw tablet-margin-0 tablet-width-100pct">
+        <section>
+            <card class="grid-gap-20px" id="feed-directory" data-columns="4" data-768px-columns="3" data-640px-columns="2"></card>
+        </section>
+    </block>
+</blocks>
+<template id="template-feed-directory">
+    <box class="border-bottom-1px-soli margin-bottom-1px">
+        <column>
+            <picture class="background-color-f5 border-radius-15pct padding-top-100pct width-100pct">
+                <n></n>
+                <n class="empty-state"></n>
+            </picture>
+            <text class="font-size-18px line-height-36px overflow-hidden text-align-center text-overflow-ellipsis" placeholder="App Name"></text>
+            <text class="color-0096c7 font-size-13px font-weight-bolder line-height-16px overflow-hidden text-align-center text-overflow-ellipsis" placeholder="*.github.io"></text>
+        </column>
+    </box>
+</template>

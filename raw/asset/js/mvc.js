@@ -192,51 +192,52 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "merch") {
 
                             if (get.length > 3) {
-                                if (get[3] === "page") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/*/"]');
-                                    var name = rout.ed.dir(route.path);
-                                    name.splice(0, 4);
-                                    vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
-                                }
-                            } else {
-                                var feed = byId('feed-dashboard-catalog');
-                                if (0 < 1) {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/"]');
-                                    //alert("Attempting to fetch files");
-                                    github.repos.contents({
-                                        owner: user.login,
-                                        path: "/raw/merch/catalog.json",
-                                        repo: get[1]
-                                    }, {}).then(d=>{
-                                        var data = JSON.parse(atob(d.content));
-                                        if (data) {
-                                            console.log(84, {
-                                                data
-                                            });
-                                            feed.innerHTML = "";
-                                            if (data.length > 0) {
-                                                //vp.all('card')[1].find('box').classList.remove('display-none');
-                                                var html = "";
-                                                var d = 0;
-                                                do {
-                                                    var row = data[d];
-                                                    var title = row.title;
-                                                    var slug = row.slug;
-                                                    var card = byId('template-feed-dashboard-catalog').content.firstElementChild.cloneNode(true);
-                                                    card.find('[placeholder="Title"]').textContent = title;
-                                                    card.find('.gg-math-plus').closest('box').dataset.href = "/dashboard/:get/merch/product/" + slug + "/";
-                                                    html += card.outerHTML;
-                                                    //feed.insertAdjacentHTML('beforeend', html);
-                                                    d++;
-                                                } while (d < data.length);
-                                                feed.innerHTML = html;
+                                if (get[3] === "catalog") {
+                                    var feed = byId('feed-dashboard-catalog');
+                                    if (get[4] === "item") {
+                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/item/"]');
+                                        var name = rout.ed.dir(route.path);
+                                        name.splice(0, 4);
+                                        //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+                                        vp.find('[placeholder="Product Name"]').value = "";
+                                    } else if (0 < 1) {
+                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/"]');
+                                        //alert("Attempting to fetch files");
+                                        github.repos.contents({
+                                            owner: user.login,
+                                            path: "/raw/merch/catalog.json",
+                                            repo: get[1]
+                                        }, {}).then(d=>{
+                                            var data = JSON.parse(atob(d.content));
+                                            if (data) {
+                                                console.log(84, {
+                                                    data
+                                                });
+                                                feed.innerHTML = "";
+                                                if (data.length > 0) {
+                                                    //vp.all('card')[1].find('box').classList.remove('display-none');
+                                                    var html = "";
+                                                    var d = 0;
+                                                    do {
+                                                        var row = data[d];
+                                                        var title = row.title;
+                                                        var slug = row.slug;
+                                                        var card = byId('template-feed-dashboard-catalog').content.firstElementChild.cloneNode(true);
+                                                        card.find('[placeholder="Title"]').textContent = title;
+                                                        card.find('.gg-math-plus').closest('box').dataset.href = "/dashboard/:get/merch/product/" + slug + "/";
+                                                        html += card.outerHTML;
+                                                        //feed.insertAdjacentHTML('beforeend', html);
+                                                        d++;
+                                                    } while (d < data.length);
+                                                    feed.innerHTML = html;
+                                                }
                                             }
-                                        }
 
+                                        }
+                                        )
                                     }
-                                    )
                                 }
-                            }
+                            } else {}
                         }
                         if (get[2] === "pages") {
 
@@ -541,7 +542,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     dom.body.find('main nav').find('[placeholder="Project Name"]').textContent = name;
                                 } else {
                                     const html = await ajax('/raw/html/template/template.setup.html');
-                                    var ppp = await modal.page(html);
+                                    var ppp = 0 < 1 ? await modal.page(html) : dom.body.find('[data-fetch="raw/html/template/template.setup.html"]')
                                     var form = ppp.find('form');
 
                                     //GET index.html
@@ -2389,6 +2390,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //var files = event.target.files
             ImageTracer.imageToSVG(data, (svgstr)=>{
                 byId('new-app-icon').find('foreignObject').innerHTML = svgstr;
+                var svg = byId('new-app-icon').find('foreignObject').firstElementChild;
+                svg.classList.add('height-100pct');
+                svg.classList.add('width-100pct');
             }
             , {
                 viewbox: true

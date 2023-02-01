@@ -1,0 +1,213 @@
+<form class="background-color-fff display-none width-100pct" onsubmit="controller.setup.webmanifest(event)">
+    <header class="position-fixed top-0 width-100pct z-index-5">
+        <section>
+            <card class="margin-auto max-width-480px width-100pct">
+                <row class="align-items-center justify-content-space-between">
+                    <box class="margin-20px">
+                        <column class="align-items-center justify-content-center" data-width="50px">
+                            <flex class="align-items-center background-color-ff3b30 border-radius-50pct color-fff justify-content-center" data-height="50px" data-width="50px">1</flex>
+                            <text class="margin-top-5px">Title</text>
+                        </column>
+                    </box>
+                    <box class="margin-20px">
+                        <column class="align-items-center justify-content-center" data-width="50px">
+                            <flex class="align-items-center background-color-32cd32 border-radius-50pct color-fff justify-content-center" data-height="30px" data-width="30px">2</flex>
+                            <text class="margin-top-5px">Brand</text>
+                        </column>
+                    </box>
+                    <box class="margin-20px">
+                        <column class="align-items-center justify-content-center" data-width="50px">
+                            <flex class="align-items-center background-color-0096c7 border-radius-50pct color-fff justify-content-center" data-height="30px" data-width="30px">3</flex>
+                            <text class="margin-top-5px">About</text>
+                        </column>
+                    </box>
+                </row>
+            </card>
+        </section>
+    </header>
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden padding-bottom-120px padding-top-120px" data-min-height="calc(100vh - 240px)">
+        <column>
+            <card class="">
+                <header>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-24px font-weight-bolder">Step One</text>
+                            <text class="font-size-16px">Create a short and memorable title.</text>
+                        </column>
+                    </box>
+                </header>
+                <section>
+                    <box class="padding-top-50px">
+                        <section>
+                            <picture class="margin-auto width-240px">
+                                <img class="width-100pct" src="raw/png/astronaut-typing.png">
+                            </picture>
+                        </section>
+                    </box>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px margin-top-20px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Name</text>
+                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                            <input type="submit">
+                        </row>
+                    </box>
+                </section>
+                <footer class="bottom-0 display-flex flex-direction-row left-0 justify-content-space-between line-height-50px margin-auto position-fixed right-0 width-100pct">
+                    <box class="padding-x-10px" data-href="/dashboard/">
+                        <row>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-left"></n>
+                            </ico>
+                            <text>Exit</text>
+                        </row>
+                    </box>
+                    <box class="padding-x-10px opacity-50pct" data-tap="controller.setup.step(event.target)">
+                        <row>
+                            <text>Next</text>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </footer>
+            </card>
+        </column>
+        <column class="display-none">
+            <card>
+                <header>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-24px font-weight-bolder">Step Two</text>
+                            <text class="font-size-16px">Build an image for your brand.</text>
+                        </column>
+                    </box>
+                </header>
+                <section>
+                    <box class="border-radius-15pct height-0 padding-top-100pct position-relative width-100pct" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" id="new-app-icon">
+                        <picture id="new-app-icon-image">
+                            <!--<img class="margin-auto" data-size="0.69" src="raw/png/astronaut-standing.png">-->
+                            <svg version="1.1" viewBox="0 0 570 570" xmlns="http://www.w3.org/2000/svg">
+                                <rect height="100%" rx="15%" width="100%"></rect>
+                                <foreignObject data-fetch="/raw/svg/astronaut-standing.svg" height="69%" style="display:flex;transform-origin: center;transform: translate(calc((100% - 69%)/2), calc((100% - 69%)/2));" width="69%"></foreignObject>
+                            </svg>
+                        </picture>
+                    </box>
+                    <box class="display-flex flex-direction-row justify-content-space-between" data-columns="2" data-tap="controller.setup.load(event.target)">
+                        <label class="align-items-center display-flex flex-direction-row justify-content-center width-50pct" for="dashboard-setup-brand">
+                            <ico data-width="20px">
+                                <input id="dashboard-setup-brand" type="file" id="dashboard-setuo-brand" onchange="on.change.file(event).then(controller.setup.icon)">
+                                <n class="gg-software-upload"></n>
+                            </ico>
+                            <text class="padding-x-10px">Import</text>
+                        </label>
+                        <row class="align-items-center justify-content-center width-50pct">
+                            <ico data-width="20px">
+                                <n class="gg-software-download"></n>
+                            </ico>
+                            <text class="padding-x-10px">Export</text>
+                        </row>
+                    </box>
+                    <box class="margin-y-20px">
+                        <column>
+                            <text class="display-flex color-777 font-weight-bolder justify-content-space-between line-height-50px">
+                                <span class="text-transform-capitalize" data-before="size"></span>
+                                <span data-after="%">69</span>
+                            </text>
+                            <input class="-webkit-slider-thumb-border-2px-solid-000 -webkit-appearance-none border-radius-50px height-30px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" onchange="controller.setup.scale(event)" type="range" min="1" max="100" value="69">
+                        </column>
+                    </box>
+                    <box class="margin-y-20px">
+                        <text class="color-777 font-weight-bolder line-height-50px">Color</text>
+                        <column id="iro-setup-about-brand"></column>
+                    </box>
+                    <box class="display-flex flex-direction-row justify-content-space-between margin-y-20px">
+                        <column id="color-data-hex" data-tap="controller.setup.background(event.target)">
+                            <text class="color-bbb font-weight-bolder">HEX</text>
+                            <text class="border-bottom-1px-solid border-color-bbb align-items-center display-flex flex-direction-row">
+                                <span data-before="">#ffffff</span>
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="--ggs-50pct gg-pen"></n>
+                                </ico>
+                            </text>
+                        </column>
+                        <column id="color-data-rgb">
+                            <text class="color-bbb font-weight-bolder">RGB</text>
+                            <text>
+                                <span>255, 255, 255</span>
+                            </text>
+                        </column>
+                        <column id="color-data-hsl">
+                            <text class="color-bbb font-weight-bolder">HSL</text>
+                            <text>
+                                <span>0, 0%, 100%</span>
+                            </text>
+                        </column>
+                    </box>
+                </section>
+                <footer class="bottom-0 display-flex flex-direction-row left-0 justify-content-space-between line-height-50px margin-auto position-fixed right-0 width-100pct">
+                    <box class="padding-x-10px" data-tap="controller.setup.step(event.target)">
+                        <row>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-left"></n>
+                            </ico>
+                            <text>Back</text>
+                        </row>
+                    </box>
+                    <box class="padding-x-10px" data-tap="controller.setup.step(event.target)">
+                        <row>
+                            <text>Next</text>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </footer>
+            </card>
+        </column>
+        <column class="display-none">
+            <card>
+                <header>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-24px font-weight-bolder">Step Three</text>
+                            <text class="font-size-18px">Let us know about your project.</text>
+                        </column>
+                    </box>
+                </header>
+                <section>
+                    <box class="padding-top-50px">
+                        <section>
+                            <picture class="margin-auto width-240px">
+                                <img class="width-100pct" src="raw/png/astronaut-writing.png">
+                            </picture>
+                        </section>
+                    </box>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px margin-bottom-20px margin-top-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Description</text>
+                        <row class="width-100pct">
+                            <textarea class="line-height-20px min-height-85px padding-20px width-100pct" onkeyup="on.key.up.auto.size(event.target)" placeholder="Write a detailed description." type="text"></textarea>
+                        </row>
+                    </box>
+                </section>
+                <footer class="bottom-0 display-flex flex-direction-row left-0 justify-content-space-between line-height-50px margin-auto position-fixed right-0 width-100pct">
+                    <box class="padding-x-10px" data-tap="controller.setup.step(event.target)">
+                        <row>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-left"></n>
+                            </ico>
+                            <text>Back</text>
+                        </row>
+                    </box>
+                    <box class="padding-x-10px" data-tap="controller.setup.step(event.target)">
+                        <row>
+                            <text>Done</text>
+                            <ico data-width="25px">
+                                <n class="gg-chevron-right"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </footer>
+            </card>
+        </column>
+    </block>
+</form>

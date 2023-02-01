@@ -1,0 +1,54 @@
+<form class="background-color-fff display-block height-100pct overflow-x-hidden width-100pct" onsubmit="controller.setup.app(event)">
+    <header class="line-height-50px position-fixed top-0 width-100pct z-index-5" data-fetch="raw/asset/html/template/template.header.html"></header>
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-120px margin-top-120px" data-min-height="calc(100vh - 240px)">
+        <column>
+            <card></card>
+            <card class="empty-state">
+                <header>
+                    <box class="padding-20px text-align-center">
+                        <column>
+                            <text class="font-size-24px font-weight-bolder">Create a new app</text>
+                            <text class="font-size-16px">Give your project a unique name.</text>
+                        </column>
+                    </box>
+                </header>
+                <section class="padding-top-50px">
+                    <box>
+                        <section>
+                            <picture class="margin-auto width-240px">
+                                <img class="width-100pct" src="raw/png/astronaut-computer.png">
+                            </picture>
+                        </section>
+                    </box>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px margin-top-20px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Domain</text>
+                        <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                            <input type="submit">
+                        </row>
+                    </box>
+                </section>
+                <footer class="bottom-0 left-0 line-height-50px margin-auto position-fixed right-0 width-100pct">
+                    <row class="justify-content-space-between">
+                        <box class="padding-x-10px" data-href="/new/">
+                            <row>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-left"></n>
+                                </ico>
+                                <text>Exit</text>
+                            </row>
+                        </box>
+                        <box class="opacity-50pct padding-x-10px" data-tap="controller.new.app(event.target)">
+                            <row>
+                                <text>Done</text>
+                                <ico data-width="25px">
+                                    <n class="gg-chevron-right"></n>
+                                </ico>
+                            </row>
+                        </box>
+                    </row>
+                </footer>
+            </card>
+        </column>
+    </block>
+</form>

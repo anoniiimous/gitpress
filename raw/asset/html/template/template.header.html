@@ -1,0 +1,82 @@
+<row class="align-items-center justify-content-space-between">
+    <card>
+        <section>
+            <box data-href="/">
+                <row>
+                    <picture data-height="70px" data-width="70px">
+                        <img src="/raw/asset/png/dompad.png">
+                    </picture>
+                </row>
+            </box>
+        </section>
+    </card>
+    <card class="font-size-13px text-transform-uppercase">
+        <row>
+            <box data-href="/dashboard/">
+                <row>
+                    <ico data-width="20px">
+                        <n class="gg-chart"></n>
+                    </ico>
+                    <text class="-vga-display-none font-weight-bolder margin-left-10px">Dashboard</text>
+                </row>
+            </box>
+            <box class="margin-x-20px" data-href="/design/">
+                <row>
+                    <ico data-width="20px">
+                        <n class="gg-template"></n>
+                    </ico>
+                    <text class="-vga-display-none font-weight-bolder margin-left-10px">Design</text>
+                    <ico class="-vga-display-none margin-left-5px" data-width="20px">
+                        <n class="gg-chevron-down"></n>
+                    </ico>
+                </row>
+            </box>
+            <box data-href="/developer/">
+                <row>
+                    <ico data-width="20px">
+                        <n class="gg-info"></n>
+                    </ico>
+                    <text class="-vga-display-none font-weight-bolder margin-left-10px">Developer</text>
+                </row>
+            </box>
+        </row>
+    </card>
+    <card>
+        <row>
+            <box class="border-1px-solid display-none line-height-50px margin-right-10px padding-x-20px">
+                <row class="-isauth align-items-center" data-tap="github.oauth.logout()">
+                    <ico class="margin-right-5px" data-width="30px">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <text class="padding-x-0px">Logout</text>
+                </row>
+                <row class="-noauth align-items-center">
+                    <ico class="margin-right-5px" data-width="30px">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <text class="padding-x-0px">Login</text>
+                </row>
+            </box>
+            <box>
+                <row>
+                    <ico class="-noauth" data-tap="github.oauth.login()">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <ico class="-isauth" data-tap="github.oauth.logout()">
+                        <n class="gg-log-off"></n>
+                    </ico>
+                </row>
+            </box>
+            <box class="display-none">
+                <row>
+                    <ico class="-noauth" data-tap="controller.sign.in(event)">
+                        <n class="gg-user"></n>
+                    </ico>
+                    <ico class="-isauth" data-tap="controller.sign.out(event)">
+                        <n class="gg-log-off"></n>
+                    </ico>
+                </row>
+            </box>
+        </row>
+    </card>
+</row>

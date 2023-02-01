@@ -137,7 +137,7 @@ window.modal = {
     }
     ,
     alert: async(h,ppp=document.createElement('aside'))=>{
-        var innerHTML = await ajax('raw/html/template/template.modal.alert.html');
+        var innerHTML = await ajax('raw/asset/html/template/template.modal.alert.html');
         var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
         h.title ? html.find('[placeholder="Title"]').textContent = h.title : null;
         h.body ? html.find('[placeholder="Body"]').textContent = h.body : null;
@@ -162,7 +162,7 @@ window.modal = {
     ,
     confirm: async(h,opt,callBack,ppp=document.createElement('aside'))=>{
         return new Promise(async(resolve,reject)=>{
-            var innerHTML = await ajax('raw/html/template/template.modal.confirm.html');
+            var innerHTML = await ajax('raw/asset/html/template/template.modal.confirm.html');
             var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
             html.find('[placeholder="Title"]').textContent = h.title;
             html.find('[placeholder="Body"]').textContent = h.body;
@@ -201,7 +201,7 @@ window.modal = {
     ,
     prompt: async(h,opt,value,ppp=document.createElement('aside'))=>{
         return new Promise(async(resolve,reject)=>{
-            var innerHTML = await ajax('raw/html/template/template.modal.prompt.html');
+            var innerHTML = await ajax('raw/asset/html/template/template.modal.prompt.html');
             var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
             html.find('[placeholder="Title"]').textContent = h.title;
             html.find('[placeholder="Body"]').textContent = h.body;
