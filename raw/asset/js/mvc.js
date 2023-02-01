@@ -1080,7 +1080,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
-            blocks.classList.add('left-240px');
+            //blocks.classList.add('left-240px');
             blocks.dataset["960pxTransform"] = "0";
 
             block.dataset.transform = "translateY(100%)";
@@ -1165,7 +1165,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
-            blocks.classList.add('left-240px');
+            //blocks.classList.add('left-240px');
             blocks.dataset["960pxTransform"] = "0";
 
             block.dataset.transform = "translateY(calc(100% - 50px))";
@@ -1851,7 +1851,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const blocks = dom.body.find('main nav + pages');
 
             nav.classList.remove('display-none');
-            blocks.classList.add('left-240px');
+            //blocks.classList.add('left-240px');
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
@@ -1868,7 +1868,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
             if (toggle) {
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
-                blocks.classList.add('left-240px');
+                //blocks.classList.add('left-240px');
                 blocks.dataset["960pxTransform"] = "0";
             } else {
                 nav.dataset["960pxTransform"] = "translateX(0)";

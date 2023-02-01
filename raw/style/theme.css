@@ -732,6 +732,13 @@
     }
 }
 
+/*LEFT*/
+@media screen {
+    .left-240px {
+        left: 240px;
+    }
+}
+
 /*LINE HEIGHT*/
 @media screen {
     .line-height-24px {
