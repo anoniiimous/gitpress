@@ -189,6 +189,55 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
 
                         }
+                        if (get[2] === "merch") {
+
+                            if (get.length > 3) {
+                                if (get[3] === "page") {
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/*/"]');
+                                    var name = rout.ed.dir(route.path);
+                                    name.splice(0, 4);
+                                    vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+                                }
+                            } else {
+                                var feed = byId('feed-dashboard-catalog');
+                                if (0 < 1) {
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/"]');
+                                    //alert("Attempting to fetch files");
+                                    github.repos.contents({
+                                        owner: user.login,
+                                        path: "/raw/merch/catalog.json",
+                                        repo: get[1]
+                                    }, {}).then(d=>{
+                                        var data = JSON.parse(atob(d.content));
+                                        if (data) {
+                                            console.log(84, {
+                                                data
+                                            });
+                                            feed.innerHTML = "";
+                                            if (data.length > 0) {
+                                                //vp.all('card')[1].find('box').classList.remove('display-none');
+                                                var html = "";
+                                                var d = 0;
+                                                do {
+                                                    var row = data[d];
+                                                    var title = row.title;
+                                                    var slug = row.slug;
+                                                    var card = byId('template-feed-dashboard-catalog').content.firstElementChild.cloneNode(true);
+                                                    card.find('[placeholder="Title"]').textContent = title;
+                                                    card.find('.gg-math-plus').closest('box').dataset.href = "/dashboard/:get/merch/product/" + slug + "/";
+                                                    html += card.outerHTML;
+                                                    //feed.insertAdjacentHTML('beforeend', html);
+                                                    d++;
+                                                } while (d < data.length);
+                                                feed.innerHTML = html;
+                                            }
+                                        }
+
+                                    }
+                                    )
+                                }
+                            }
+                        }
                         if (get[2] === "pages") {
 
                             if (get.length > 3) {
@@ -1198,6 +1247,83 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 blocks.dataset["960pxTransform"] = "0";
             }
         }
+    },
+
+    catalog: {
+
+        parent: async(event)=>{
+            event.preventDefault();
+            var form = event.target;
+            var value = form.find('[type="text"]').value;
+
+            if (value.length > 0) {
+                const user = await github.user.get();
+                const fix = value.toLowerCase();
+                const filename = "page." + fix.split(' ').join('-') + ".html";
+
+                const message = "Add " + value + " to Catalog";
+                const content = "";
+
+                var rte = rout.ed.dir(route.path);
+                rte.splice(0, 4);
+
+                event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
+                event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
+
+                var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                var row = {
+                    slug: value.replace(' ', '-').toLowerCase(),
+                    title: value
+                };
+                var sha = null;
+
+                try {
+                    var data = await github.repos.contents({
+                        owner: user.login,
+                        repo: GET[1],
+                        path: "/raw/merch/catalog.json"
+                    });
+                    var sha = data.sha;
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+
+                inc ? alert("This item already exists.") : github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/merch/catalog.json"
+                }, {
+                    data: JSON.stringify({
+                        content: btoa(JSON.stringify(rows, null, 4)),
+                        message,
+                        sha
+                    }),
+                    dataType: "PUT"
+                }).then(()=>{
+                    "/dashboard/:get/merch/".router()
+                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                }
+                ).catch(e=>{
+                    console.log(e);
+                    0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
+                        body: "There was an error creating this page.",
+                        submit: "OK",
+                        title: "Error"
+                    })) : null;
+                }
+                );
+
+            }
+        }
+
     },
 
     design: {

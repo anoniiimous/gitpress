@@ -553,6 +553,16 @@ window.on.key.up.auto = {
     }
 };
 window.on.key.up.dashboard = {}
+window.on.key.up.dashboard.catalog = (event)=>{
+    var target = event.target;
+    if (event.target.value.length > 0) {
+        event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
+        event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
+    } else {
+        event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+        event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+    }
+}
 window.on.key.up.dashboard.pages = (event)=>{
     var target = event.target;
     if (event.target.value.length > 0) {
