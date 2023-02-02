@@ -684,6 +684,12 @@
         }
     }
 
+    @media (max-width: 960px) {
+        .-dw960px-grid-gap-50px {
+            grid-gap: 50px;
+        }
+    }
+
     @media (max-width: 720px) {
         .-hd-grid-gap-20px {
             grid-gap: 20px;
