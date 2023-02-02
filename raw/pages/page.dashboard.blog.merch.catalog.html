@@ -1,77 +1,26 @@
-<blocks>
-    <header class="-dw480px-padding-10px padding-20px">
-        <row class="justify-content-space-between">
-            <card>
-                <row class="gap-10px">
-                    <box class="display-none" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
-                        <section>
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-menu"></n>
-                            </ico>
-                        </section>
+<blocks class="display-flex flex-1">
+    <block class="align-items-center flex-1 justify-content-center">
+        <picture data-href="/dashboard/:get/merch/catalog/"></picture>
+        <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
+            <card class="background-color-fff border-radius-10px display-inline-flex margin-auto max-width-240px">
+                <form onsubmit="controller.catalog.parent(event)" id="form-dashboard-catalog-parent">
+                    <box class="padding-20px">
+                        <column>
+                            <text class="font-size-16px font-weight-bolder line-height-30px text-align-center" placeholder="Title">Add to Catalog</text>
+                            <text class="font-size-13px min-height-180px text-align-center" placeholder="Body">Provide a name for your item.</text>
+                            <input class="border-1px-solid border-color-bbb border-radius-5px font-size-16px line-height-30px margin-top-20px padding-x-10px" onkeyup="on.key.up.dashboard.catalog(event)" placeholder="Product Name" type="text">
+                            <input disabled="true" type="submit">
+                        </column>
                     </box>
-                    <box>
-                        <section>
-                            <text class="font-size-24px font-weight-bolder">Catalog</text>
-                        </section>
-                    </box>
-                </row>
-            </card>
-            <card>
-                <row>
-                    <box class="line-height-30px" data-href="/dashboard/:get/merch/catalog/item/">
-                        <row class="align-items-center justify-content-center">
-                            <ico data-height="30px" data-width="50px">
-                                <n class="gg-tag"></n>
-                            </ico>
-                            <text class="font-size-14px font-weight-bolder">Add Item</text>
+                    <box class="border-color-ddd border-top-1px-solid color-0096c7 line-height-50px">
+                        <row>
+                            <text class="flex-1 font-weight-bolder opacity-1 text-align-center" data-href="/dashboard/:get/merch/" placeholder="No">Cancel</text>
+                            <line class="background-color-ddd height-50px width-1px"></line>
+                            <text class="flex-1 opacity-50pct text-align-center" data-submit placeholder="Yes">Continue</text>
                         </row>
                     </box>
-                </row>
+                </form>
             </card>
-        </row>
-    </header>
-    <block class="flex-grow-1 margin-20px">
-        <template id="template-feed-dashboard-catalog">
-            <card class="background-color-ccc border-radius-10px" data-max-width="calc(100vw - 40px)">
-                <row class="justify-content-space-between">
-                    <box data-tap="controller.posts.delete(event.target)">
-                        <section>
-                            <ico>
-                                <n class="gg-trash"></n>
-                            </ico>
-                        </section>
-                    </box>
-                    <box data-width="calc(100% - 50px)">
-                        <section>
-                            <text class="display-block font-weight-bolder line-height-50px overflow-hidden Rtext-overflow-ellipsis white-space-nowrap" placeholder="Title"></text>
-                        </section>
-                    </box>
-                    <box data-tap="controller.catalog.child(event.target)">
-                        <section>
-                            <ico>
-                                <n class="gg-math-plus"></n>
-                            </ico>
-                        </section>
-                    </box>
-                </row>
-            </card>
-        </template>
-        <column class="grid-gap-10px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-catalog"></column>
-        <column class="align-items-center empty-state flex-grow-1 justify-content-center">
-            <picture class="position-relative width-240px">
-                <img class="width-100pct" src="raw/asset/png/astronaut-shopping.png">
-            </picture>
-            <box>
-                <section>
-                    <text class="font-size-13px"></text>
-                </section>
-            </box>
-            <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative" data-href="/dashboard/:get/merch/item/">
-                <section>
-                    <text class="font-size-14px font-weight-bolder">Add New Item</text>
-                </section>
-            </box>
         </column>
     </block>
 </blocks>

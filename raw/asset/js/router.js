@@ -279,7 +279,8 @@ window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
     window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
     return m.includes("#") || 
         (GOT.length > 1 && roots.indexOf(root) === -1) || 
-        (root === 'dashboard' && n === 1) || 
+        (root === 'dashboard' && n === 1) ||
+        (GOT.length > 4 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n === 4) ||
         (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) ||
         (root === 'dashboard' && n > 2 && GOT[2] === "pages") ||
         (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") ||

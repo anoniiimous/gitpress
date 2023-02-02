@@ -254,7 +254,43 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         vp.find('[placeholder="Enter a title"]').value = row.title;
                                     }
                                 }
-                            } else {}
+                            } else {
+                                var feed = byId('feed-dashboard-merch');
+                                var vp = dom.body.find('page[data-page="/dashboard/*/merch/"]');
+                                //alert("Attempting to fetch files");
+                                github.repos.contents({
+                                    owner: user.login,
+                                    path: "/raw/merch/catalog.json",
+                                    repo: get[1]
+                                }, {}).then(d=>{
+                                    var data = JSON.parse(atob(d.content));
+                                    if (data) {
+                                        console.log(84, {
+                                            data
+                                        });
+                                        feed.innerHTML = "";
+                                        if (data.length > 0) {
+                                            //vp.all('card')[1].find('box').classList.remove('display-none');
+                                            var html = "";
+                                            var d = 0;
+                                            do {
+                                                var row = data[d];
+                                                var title = row.title;
+                                                var slug = row.slug;
+                                                var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
+                                                card.find('[placeholder="Title"]').textContent = title;
+                                                card.find('.gg-math-plus').closest('box').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
+                                                html += card.outerHTML;
+                                                //feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < data.length);
+                                            feed.innerHTML = html;
+                                        }
+                                    }
+
+                                }
+                                )
+                            }
                         }
                         if (get[2] === "pages") {
 
