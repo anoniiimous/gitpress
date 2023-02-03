@@ -717,7 +717,7 @@ window.on["submit"] = {
             var filename = title.toLowerCase().replaceAll(' ', '-').replaceAll(',', '').replaceAll("'", '').replaceAll('&', 'and') + '.' + ext;
             const body = form.find('card textarea').value;
             const user = await github.user.get();
-            const html = await ajax("/raw/html/template/template.post.html");
+            const html = await ajax("/raw/asset/html/template/template.post.html");
             const doc = new DOMParser().parseFromString(html, "text/html");
             doc.head.find('title').textContent = title;
             doc.head.find('meta[name="description"]').content = description;
@@ -848,6 +848,7 @@ window.on["submit"] = {
 
                 /*FILE*/
                 if (confirm("Are you sure you want to publish this post?")) {
+                    console.log(851, {content});
                     var sha = {};
                     var data = await github.repos.contents({
                         owner: user.login,
@@ -855,7 +856,7 @@ window.on["submit"] = {
                         path: "/raw/posts/" + filename
                     }, {
                         data: JSON.stringify({
-                            content: btoa(content),
+                            content: btoa(unescape(encodeURIComponent(content))),
                             message: "Create Post"
                         }),
                         dataType: "PUT"

@@ -38,8 +38,8 @@ String.prototype.router = async function(params) {
             vp.innerHTML = pg;
             console.log("router.js 33", path, vp, vp.dataset.fetch);
         }
-        const fetching2 = vp.all('[data-fetch]');;
-        if (fetching2.length > 0) {
+        const fetching2 = vp.all('[data-fetch]');
+        ;if (fetching2.length > 0) {
             var ff = 0;
             do {
                 if (fetching2[ff].innerHTML === "") {
@@ -277,14 +277,5 @@ window.rout.ing = (href,GOT,n)=>{
 }
 window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
     window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
-    return m.includes("#") || 
-        (GOT.length > 1 && roots.indexOf(root) === -1) || 
-        (root === 'dashboard' && n === 1) ||
-        (GOT.length > 4 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n === 4) ||
-        (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) ||
-        (root === 'dashboard' && n > 2 && GOT[2] === "pages") ||
-        (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") ||
-        (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || 
-        (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || 
-        (root === 'design' && n === 1) || (root === 'preview' && n === 1)
+    return m.includes("#") || (GOT.length > 1 && roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length > 4 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n === 4) || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) || (root === 'dashboard' && n > 2 && GOT[2] === "pages") || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
 }

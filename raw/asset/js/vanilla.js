@@ -402,7 +402,9 @@ function lazyLoad(images, vp) {
                                     owner: user.login,
                                     path: "/" + src,
                                     repo: win.parent.GET[1]
-                                }, {});
+                                }, {
+                                    accept: "vnd.github.raw"
+                                });
                                 var b = await github.database.blobs({
                                     owner: user.login,
                                     repo: win.parent.GET[1],
@@ -412,7 +414,7 @@ function lazyLoad(images, vp) {
                                     b,
                                     c
                                 });
-                                var b64 = b.content;
+                                var b64 = b;
 
                                 var arr = c.name.split('.');
                                 const ext = arr[arr.length - 1];

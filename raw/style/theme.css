@@ -607,6 +607,10 @@
         font-size: 30px;
     }
 
+    .font-size-32px {
+        font-size: 32px;
+    }
+
     .font-size-36px {
         font-size: 36px;
     }
@@ -662,6 +666,10 @@
 
 /*GRID GAP*/
 @media screen {
+    .grid-gap-5px {
+        grid-gap: 5px;
+    }
+    
     .grid-gap-10px {
         grid-gap: 10px;
     }
@@ -1561,6 +1569,10 @@
 
     [data-width="calc(50% - 80px)"] {
         width: calc(50% - 80px);
+    }
+
+    [data-width="calc(100% - 100px)"] {
+        width: calc(100% - 100px);
     }
 
     .width-0 {

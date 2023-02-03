@@ -32,14 +32,9 @@
         </row>
     </header>
     <block class="flex-grow-1 margin-20px">
-        <template id="template-dashboard-posts">
+        <template id="template-feed-dashboard-posts">
             <card class="background-color-ccc border-radius-10px" data-max-width="calc(100vw - 40px)">
                 <row class="justify-content-space-between">
-                    <box data-width="calc(100% - 50px)">
-                        <section>
-                            <text class="display-block font-weight-bolder line-height-50px overflow-hidden padding-x-10px text-overflow-ellipsis white-space-nowrap">Title</text>
-                        </section>
-                    </box>
                     <box data-tap="controller.posts.delete(event.target)">
                         <section>
                             <ico>
@@ -47,13 +42,45 @@
                             </ico>
                         </section>
                     </box>
+                    <box class="flex-1" data-width="calc(100% - 100px)">
+                        <row>
+                            <text class="display-block flex-1 font-size-18px font-weight-bolder line-height-50px overflow-hidden text-overflow-ellipsis white-space-nowrap" disabled placeholder="Title" type="text"></text>
+                        </row>
+                    </box>
+                    <box>
+                        <row data-dropdown data-ignore>
+                            <ico>
+                                <n class="gg-more-vertical-alt"></n>
+                            </ico>
+                        </row>
+                        <column class="align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px z-index-3" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                            <text class="align-items-center display-flex grid-gap-5px justify-content-center">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-eye"></n>
+                                </ico>
+                                <span>Preview</span>
+                            </text>
+                            <text class="align-items-center display-flex grid-gap-5px justify-content-center">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-pen"></n>
+                                </ico>
+                                <span>Rename</span>
+                            </text>
+                            <text class="align-items-center display-flex grid-gap-5px justify-content-center">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-tag"></n>
+                                </ico>
+                                <span>Update</span>
+                            </text>
+                        </column>
+                    </box>
                 </row>
             </card>
         </template>
         <column class="grid-gap-10px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-posts"></column>
         <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
-                <img class="width-100pct" src="raw/png/astronaut-pencil.png">
+                <img class="width-100pct" src="raw/asset/png/astronaut-pencil.png">
             </picture>
             <box>
                 <section>

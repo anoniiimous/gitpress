@@ -66,6 +66,10 @@
         width: 100%;
     }
 
+    block > section, card > section, box > section {
+        position: relative;
+    }
+
     header > picture, nav > picture, footer > picture, block > picture, card > picture, box > picture {
         position: absolute;
         top: 0;
@@ -75,6 +79,11 @@
         z-index: 0;
         width: 100%;
         height: 100%;
+    }
+
+    block > picture ~ *, card > picture ~ *, box > picture ~ * {
+        position: relative;
+        z-index: 1;
     }
 
     block > figure, card > figure, box > figure {

@@ -83,7 +83,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var link = dom.body.find('main nav').find('[placeholder="Link"]');
                     var username = dom.body.find('main nav').find('[placeholder="username"]');
 
-                    link.dataset.href = "/" + user.login + "/" + get[1] + "." + "dompad.io";
+                    //link.dataset.href = "/" + user.login + "/" + get[1] + "." + "dompad.io";
                     link.textContent = get[1];
 
                     username.textContent = user.login;
@@ -278,8 +278,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var title = row.title;
                                                 var slug = row.slug;
                                                 var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
-                                                card.find('[placeholder="Title"]').textContent = title;
-                                                card.find('.gg-math-plus').closest('box').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
+                                                card.find('[placeholder="Title"]').setAttribute('value', title);
+                                                card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                                 html += card.outerHTML;
                                                 //feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
@@ -450,55 +450,75 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                         }
                         if (get[2] == "posts") {
-                            if (get.length > 3) {
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/"]');
-                                vp.find('header input[type="text"]').value = "";
-                                vp.find('header textarea').value = "";
+                            if (get.length > 4) {
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/*/"]');
+                                var title = vp.find('[placeholder="Title"]');
+                                                
+                                vp.find('[placeholder="Title"]').value = "";
+                                vp.find('[placeholder="Description"]').value = "";
                                 vp.find('card textarea').value = "";
                                 if (get.length > 4) {
                                     const user = await github.user.get();
-                                    const name = get[4] + '.html';
-                                    var params = {
-                                        owner: user.login,
-                                        path: "/raw/posts/" + name,
-                                        repo: get[1]
-                                    };
-                                    var settings = {};
-                                    github.repos.contents(params, settings).then(data=>{
-                                        console.log(50, {
-                                            data
-                                        });
-                                        if (data) {
-                                            const filename = data.name;
-                                            const content = atob(data.content);
-                                            const doc = new DOMParser().parseFromString(content, "text/html");
-                                            console.log(89, {
-                                                content,
-                                                doc
-                                            });
-                                            vp.find('form').dataset.filename = filename;
-                                            vp.find('header input[type="text"]').value = doc.head.find("title").textContent;
-                                            vp.find('header textarea').value = doc.head.find("meta[name='description']").content;
-                                            vp.find('card textarea').value = doc.body.find('article').textContent;
 
-                                            const gist = doc.head.find('meta[name="gist"]').content;
-                                            if (gist) {
-                                                vp.find('form > footer').all('button')[0].dataset.gist = gist;
+                                    var posts = await github.repos.contents({
+                                        owner: user.login,
+                                        path: "/raw/posts/posts.json",
+                                        repo: get[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    });
+                                    var row = posts && posts.length > 0 ? posts.find(p=>p.slug === get[4]) : null;
+                                    console.log(469, {
+                                        row
+                                    });
+
+                                    if (row) {
+
+                                        title.value = row.title;
+                                        on.key.up.auto.size(title)
+
+                                        const name = get[4] + '.html';
+                                        var params = {
+                                            owner: user.login,
+                                            path: "/raw/posts/" + name,
+                                            repo: get[1]
+                                        };
+                                        var settings = {};
+                                        github.repos.contents(params, settings).then(data=>{
+                                            console.log(50, {
+                                                data
+                                            });
+                                            if (data) {
+                                                const filename = data.name;
+                                                const content = atob(data.content);
+                                                const doc = new DOMParser().parseFromString(content, "text/html");
+                                                console.log(89, {
+                                                    content,
+                                                    doc
+                                                });
+                                                vp.find('form').dataset.filename = filename;
+                                                vp.find('header textarea').value = doc.head.find("meta[name='description']").content;
+                                                vp.find('card textarea').value = doc.body.find('article').textContent;
+
+                                                const gist = doc.head.find('meta[name="gist"]').content;
+                                                if (gist) {
+                                                    vp.find('form > footer').all('button')[0].dataset.gist = gist;
+                                                }
                                             }
                                         }
-                                    }
-                                    ).catch(async(error)=>{
-                                        console.log("43.error", {
-                                            error
-                                        });
-                                        if (error.code === 404) {
-                                            //alert("Setup Project");
-                                            resolve(route);
+                                        ).catch(async(error)=>{
+                                            console.log(507, "Post is empty", {
+                                                error
+                                            });
+                                            if (error.code === 404) {
+                                                //alert("Setup Project");
+                                                resolve(route);
+                                            }
                                         }
+                                        );
                                     }
-                                    );
 
-                                } else {}
+                                }
                                 resolve(route);
                             } else {
                                 const user = await github.user.get();
@@ -1327,7 +1347,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
                 var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
                 var row = {
-                    slug: value.replace(' ', '-').toLowerCase(),
+                    slug: value.replaceAll(' ', '-').toLowerCase(),
                     title: value
                 };
                 var sha = null;
@@ -2228,6 +2248,82 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     posts: {
 
+        create: async(event)=>{
+            event.preventDefault();
+            var form = event.target;
+            var value = form.find('[type="text"]').value;
+            //alert(value);
+
+            if (0 < 1 && value.length > 0) {
+                const user = await github.user.get();
+                const fix = value.toLowerCase();
+                const filename = "page." + fix.split(' ').join('-') + ".html";
+
+                const message = "Add " + value + " to Posts";
+                const content = "";
+
+                var rte = rout.ed.dir(route.path);
+                rte.splice(0, 4);
+
+                event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
+                event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
+
+                var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+                var row = {
+                    slug: value.replaceAll(' ', '-').replaceAll(/[\u0250-\ue007]/g, '').replaceAll(/\W/g, "").toLowerCase(),
+                    title: value
+                };
+                var sha = null;
+
+                try {
+                    var data = await github.repos.contents({
+                        owner: user.login,
+                        repo: GET[1],
+                        path: "/raw/posts/posts.json"
+                    });
+                    var sha = data.sha;
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str = JSON.stringify(rows, null, 4);
+
+                inc ? alert("This item already exists.") : github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/posts/posts.json"
+                }, {
+                    data: JSON.stringify({
+                        content: btoa(unescape(encodeURIComponent(str))),
+                        message,
+                        sha
+                    }),
+                    dataType: "PUT"
+                }).then(()=>{
+                    "/dashboard/:get/posts/".router()
+                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                }
+                ).catch(e=>{
+                    console.log(e);
+                    0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
+                        body: "There was an error creating this page.",
+                        submit: "OK",
+                        title: "Error"
+                    })) : null;
+                }
+                );
+
+            }
+        }
+        ,
+
         delete: async(target)=>{
             console.log(target);
 
@@ -2298,7 +2394,52 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        read: async(shortname)=>{
+        read: async()=>{
+
+            var user = await github.user.get();
+            var feed = byId('feed-dashboard-posts');
+            var vp = dom.body.find('page[data-page="/dashboard/*/merch/"]');
+            //alert("Attempting to fetch files");
+            github.repos.contents({
+                owner: user.login,
+                path: "/raw/posts/posts.json",
+                repo: GET[1]
+            }, {
+                accept: "application/vnd.github.raw"
+            }).then(data=>{
+                //var data = JSON.parse(atob(d.content));
+                if (data) {
+                    console.log(84, {
+                        data
+                    });
+                    feed.innerHTML = "";
+                    if (data.length > 0) {
+                        //vp.all('card')[1].find('box').classList.remove('display-none');
+                        var html = "";
+                        var d = 0;
+                        do {
+                            var row = data[d];
+                            var title = row.title;
+                            var slug = row.slug;
+                            var card = byId('template-feed-dashboard-posts').content.firstElementChild.cloneNode(true);
+                            //card.find('[placeholder="Title"]').setAttribute('value', title);
+                            card.find('[placeholder="Title"]').textContent = title;
+                            card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/posts/post/" + slug + "/";
+                            html += card.outerHTML;
+                            //feed.insertAdjacentHTML('beforeend', html);
+                            d++;
+                        } while (d < data.length);
+                        feed.innerHTML = html;
+                    }
+                }
+
+            }
+            )
+
+        }
+        ,
+
+        reader: async(shortname)=>{
 
             const user = await github.user.get();
             const owner = user.login;
