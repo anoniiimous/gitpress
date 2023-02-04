@@ -635,6 +635,18 @@ window.on.key.up.setup = {
     }
 }
 
+window.addEventListener("resize", event => {
+    var as = dom.body.all('[onkeyup="on.key.up.auto.size(event.target)"]');
+    if (as.length > 0) {
+        var i = 0;
+        do {
+            var el = as[i];
+            on.key.up.auto.size(el);
+            i++;
+        } while (i < as.length);
+    }
+})
+
 window.on["submit"] = {
     create: {
         project: event=>{
@@ -848,7 +860,9 @@ window.on["submit"] = {
 
                 /*FILE*/
                 if (confirm("Are you sure you want to publish this post?")) {
-                    console.log(851, {content});
+                    console.log(851, {
+                        content
+                    });
                     var sha = {};
                     var data = await github.repos.contents({
                         owner: user.login,

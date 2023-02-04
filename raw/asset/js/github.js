@@ -234,113 +234,168 @@ window.github = {
         }
         ,
         references: (params,settings)=>{
-            if (settings && settings.dataType) {
-                if (settings.dataType === "GET") {
-                    return new Promise((resolve,reject)=>{
-                        var owner = params.owner;
-                        var repo = params.repo;
-                        var branch = params.branch;
-                        var ref = branch ? "/heads/" + branch : params.ref;
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
-                        const dataType = settings.dataType;
-                        const a = (d)=>{
-                            const data = JSON.parse(d);
-                            resolve(data);
+            if (settings) {
+                if (settings.dataType) {
+                    if (settings.dataType === "GET") {
+                        return new Promise((resolve,reject)=>{
+                            var owner = params.owner;
+                            var repo = params.repo;
+                            var branch = params.branch;
+                            var ref = branch ? "/heads/" + branch : params.ref;
+                            const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
+                            const dataType = settings.dataType;
+                            const a = (d)=>{
+                                const data = JSON.parse(d);
+                                resolve(data);
+                            }
+                            const b = (error)=>{
+                                console.log(error);
+                                reject(error);
+                            }
+                            const accessToken = localStorage.githubAccessToken;
+                            accessToken ? settings.headers = {
+                                Accept: "application/vnd.github+json",
+                                Authorization: "token " + accessToken
+                            } : null;
+                            ajax(url, settings).then(a).catch(b);
                         }
-                        const b = (error)=>{
-                            console.log(error);
-                            reject(error);
+                        );
+                    }
+                    if (settings.dataType === "PATCH") {
+                        return new Promise((resolve,reject)=>{
+                            var owner = params.owner;
+                            var repo = params.repo;
+                            var branch = params.branch;
+                            var ref = branch ? "/heads/" + branch : "";
+                            const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
+                            const dataType = settings.dataType;
+                            const a = (d)=>{
+                                const data = JSON.parse(d);
+                                resolve(data);
+                            }
+                            const b = (error)=>{
+                                console.log(error);
+                                reject(error);
+                            }
+                            const accessToken = localStorage.githubAccessToken;
+                            accessToken ? settings.headers = {
+                                Accept: "application/vnd.github+json",
+                                Authorization: "token " + accessToken
+                            } : null;
+                            ajax(url, settings).then(a).catch(b);
                         }
-                        const accessToken = localStorage.githubAccessToken;
-                        accessToken ? settings.headers = {
+                        );
+                    }
+                }
+            } else {
+                return new Promise((resolve,reject)=>{
+                    var owner = params.owner;
+                    var repo = params.repo;
+                    var branch = params.branch;
+                    var ref = branch ? "/heads/" + branch : params.ref;
+                    const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
+                    const a = (d)=>{
+                        const data = JSON.parse(d);
+                        resolve(data);
+                    }
+                    const b = (error)=>{
+                        console.log(error);
+                        reject(error);
+                    }
+                    const accessToken = localStorage.githubAccessToken;
+                    accessToken ? settings = {
+                        headers: {
                             Accept: "application/vnd.github+json",
                             Authorization: "token " + accessToken
-                        } : null;
-                        ajax(url, settings).then(a).catch(b);
-                    }
-                    );
-                }
-                if (settings.dataType === "PATCH") {
-                    return new Promise((resolve,reject)=>{
-                        var owner = params.owner;
-                        var repo = params.repo;
-                        var branch = params.branch;
-                        var ref = branch ? "/heads/" + branch : "";
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/refs" + ref;
-                        const dataType = settings.dataType;
-                        const a = (d)=>{
-                            const data = JSON.parse(d);
-                            resolve(data);
                         }
-                        const b = (error)=>{
-                            console.log(error);
-                            reject(error);
-                        }
-                        const accessToken = localStorage.githubAccessToken;
-                        accessToken ? settings.headers = {
-                            Accept: "application/vnd.github+json",
-                            Authorization: "token " + accessToken
-                        } : null;
-                        ajax(url, settings).then(a).catch(b);
-                    }
-                    );
+                    } : null;
+                    ajax(url, settings).then(a).catch(b);
                 }
+                );
             }
 
         }
         ,
         trees: (params,settings)=>{
-            if (settings && settings.dataType) {
-                if (settings.dataType === "GET") {
-                    return new Promise((resolve,reject)=>{
-                        var owner = params.owner;
-                        var repo = params.repo;
-                        var branch = params.branch;
-                        var sha = params.sha;
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/trees/" + sha;
-                        const data = settings.data;
-                        const dataType = settings.dataType;
-                        const a = (d)=>{
-                            const data = JSON.parse(d);
-                            resolve(data);
+            if (settings) {
+                if (settings.dataType) {
+                    if (settings.dataType === "GET") {
+                        return new Promise((resolve,reject)=>{
+                            var owner = params.owner;
+                            var repo = params.repo;
+                            var branch = params.branch;
+                            var sha = params.sha;
+                            const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/trees/" + sha;
+                            const data = settings.data;
+                            const dataType = settings.dataType;
+                            const a = (d)=>{
+                                const data = JSON.parse(d);
+                                resolve(data);
+                            }
+                            const b = (error)=>{
+                                console.log(error);
+                                reject(error);
+                            }
+                            const accessToken = localStorage.githubAccessToken;
+                            accessToken ? settings.headers = {
+                                Accept: "application/vnd.github+json",
+                                Authorization: "token " + accessToken
+                            } : null;
+                            ajax(url, settings).then(a).catch(b);
                         }
-                        const b = (error)=>{
-                            console.log(error);
-                            reject(error);
+                        );
+                    }
+                    if (settings.dataType === "POST") {
+                        return new Promise((resolve,reject)=>{
+                            var owner = params.owner;
+                            var repo = params.repo;
+                            const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/trees";
+                            const data = settings.data;
+                            const dataType = settings.dataType;
+                            const a = (d)=>{
+                                const data = JSON.parse(d);
+                                resolve(data);
+                            }
+                            const b = (error)=>{
+                                console.log(error);
+                                reject(error);
+                            }
+                            const accessToken = localStorage.githubAccessToken;
+                            accessToken ? settings.headers = {
+                                Accept: "application/vnd.github+json",
+                                Authorization: "token " + accessToken
+                            } : null;
+                            ajax(url, settings).then(a).catch(b);
                         }
-                        const accessToken = localStorage.githubAccessToken;
-                        accessToken ? settings.headers = {
+                        );
+                    }
+                }
+            } else {
+                return new Promise((resolve,reject)=>{
+                    var owner = params.owner;
+                    var repo = params.repo;
+                    var branch = params.branch;
+                    var sha = params.sha;
+                    var recursive = params.recursive ? "?recursive=" + params.recursive : "";
+                    const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/trees/" + sha + recursive;
+                    const a = (d)=>{
+                        const data = JSON.parse(d);
+                        resolve(data);
+                    }
+                    const b = (error)=>{
+                        console.log(error);
+                        reject(error);
+                    }
+                    const accessToken = localStorage.githubAccessToken;
+                    accessToken ? settings = {
+                        headers: {
                             Accept: "application/vnd.github+json",
                             Authorization: "token " + accessToken
-                        } : null;
-                        ajax(url, settings).then(a).catch(b);
-                    }
-                    );
-                }
-                if (settings.dataType === "POST") {
-                    return new Promise((resolve,reject)=>{
-                        var owner = params.owner;
-                        var repo = params.repo;
-                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/trees";
-                        const data = settings.data;
-                        const dataType = settings.dataType;
-                        const a = (d)=>{
-                            const data = JSON.parse(d);
-                            resolve(data);
                         }
-                        const b = (error)=>{
-                            console.log(error);
-                            reject(error);
-                        }
-                        const accessToken = localStorage.githubAccessToken;
-                        accessToken ? settings.headers = {
-                            Accept: "application/vnd.github+json",
-                            Authorization: "token " + accessToken
-                        } : null;
-                        ajax(url, settings).then(a).catch(b);
-                    }
-                    );
+                    } : null;
+                    ajax(url, settings).then(a).catch(b);
                 }
+                );
             }
         }
     },
@@ -829,3 +884,327 @@ window.github = {
         }
     }
 }
+window.github.crud = {};
+window.github.crud.create = async(event)=>{
+    var row = [];
+    event.preventDefault();
+    var form = event.target;
+    var value = form.find('[type="text"]').value;
+    //alert(value);
+
+    if (0 < 1 && value.length > 0) {
+        const user = await github.user.get();
+        const fix = value.toLowerCase();
+        const filename = "page." + fix.split(' ').join('-') + ".html";
+
+        const message = "Add " + value + " to Posts";
+        const content = "";
+
+        var rte = rout.ed.dir(route.path);
+        rte.splice(0, 4);
+
+        event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
+        event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
+
+        var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+        var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
+        var row = {
+            slug: value.replaceAll(' ', '-').replaceAll(/[\u0250-\ue007]/g, '').replaceAll(/\W/g, "").toLowerCase(),
+            title: value
+        };
+        var sha = null;
+
+        try {
+            var data = await github.repos.contents({
+                owner: user.login,
+                repo: GET[1],
+                path: "/raw/posts/posts.json"
+            });
+            var sha = data.sha;
+            var j = JSON.parse(atob(data.content));
+            var json = JSON.parse(atob(data.content));
+            json.push(row);
+        } catch (e) {
+            var j = [];
+            var json = [row];
+        }
+        rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+        var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+        var str = JSON.stringify(rows, null, 4);
+
+        inc ? alert("This item already exists.") : github.repos.contents({
+            owner: user.login,
+            repo: GET[1],
+            path: "/raw/posts/posts.json"
+        }, {
+            data: JSON.stringify({
+                content: btoa(unescape(encodeURIComponent(str))),
+                message,
+                sha
+            }),
+            dataType: "PUT"
+        }).then(()=>{
+            "/dashboard/:get/posts/".router()
+            event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
+            event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+        }
+        ).catch(e=>{
+            console.log(e);
+            0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
+                body: "There was an error creating this page.",
+                submit: "OK",
+                title: "Error"
+            })) : null;
+        }
+        );
+
+    }
+}
+window.github.crud.read = ()=>{}
+window.github.crud.update = async(target)=>{
+    var user = await github.user.get();
+    var card = target.closest('card');
+    var owner = user.login;
+    var repo = GET[1];
+    var theme = card.find('box text').textContent;
+    if (theme) {
+        const callBack = async()=>{
+
+            //alert("Installing theme");
+
+            //DATA
+            window.source = {};
+            window.tree = [];
+
+            var params = {
+                branch: "main",
+                owner,
+                repo
+            }
+            var s = (data)=>{
+                return data;
+            }
+            var settings = {
+                dataType: "GET"
+            };
+            var refs = await github.database.references(params, settings).then(s);
+            var sha = refs.object.sha;
+            console.log("references", {
+                refs
+            });
+
+            //FILES
+            var params = {
+                owner: "dompad",
+                repo: "preview",
+                path: "/" + theme + "/raw/files"
+            }
+            var a = async(data)=>{
+                var content = [];
+                if (data.length > 0) {
+                    var d = 0;
+                    do {
+                        var row = data[d];
+                        if (row.type === "file") {
+                            var name = row.name;
+                            var path = row.path;
+                            var html = await github.repos.contents({
+                                owner: "dompad",
+                                repo: "preview",
+                                path
+                            }, {});
+                            content[d] = {
+                                content: atob(html.content),
+                                name,
+                                path
+                            };
+                            //console.log("pages", { html, d, row });
+                        }
+                        d++;
+                    } while (d < data.length);
+                }
+                return content;
+            }
+            var asset = await github.repos.contents(params, {}).then(a);
+            window.source = asset;
+
+            //BLOBS
+            var copy = source.copy;
+            var keys = Object.keys(copy);
+            var resources = {};
+            if (keys.length > 0) {
+                var c = 0;
+                var t = 0;
+                var values = Object.values(copy);
+                do {
+                    var key = keys[c];
+                    var value = values[c];
+                    if (value.length > 0) {
+                        var v = 0;
+                        do {
+                            var val = value[v];
+                            var content = btoa(val.content);
+                            var data = {
+                                content
+                            };
+                            var params = {
+                                owner,
+                                repo
+                            };
+                            var settings = {
+                                data: JSON.stringify({
+                                    content: val.content
+                                }),
+                                dataType: "POST"
+                            };
+
+                            var b = (data)=>{
+                                return data;
+                            }
+                            var bb = (error)=>{
+                                alert("Blob failed!");
+                            }
+                            var blob = await github.database.blobs(params, settings).then(b).catch(bb);
+
+                            var path = "raw/" + key + "/" + val.name;
+
+                            resources[path] = blob;
+                            var mode = "100644";
+                            var type = "blob";
+                            tree[t] = {
+                                path,
+                                mode: "100644",
+                                type: "blob",
+                                sha: blob.sha
+                            };
+
+                            var rs = [{
+                                path,
+                                blob
+                            }, {
+                                key,
+                                val
+                            }, {
+                                params,
+                                settings
+                            }];
+
+                            console.log(t + " resource: " + path, rs);
+                            t++;
+                            v++;
+                        } while (v < value.length)
+                    }
+
+                    c++;
+                } while (c < keys.length);
+                console.log("resources", {
+                    resources,
+                    tree
+                });
+            }
+
+            //TREE
+            var params = {
+                owner,
+                path: "/raw",
+                repo,
+                sha
+            };
+            var settings = {
+                dataType: "GET"
+            };
+            var t = (data)=>{
+                return data;
+            }
+            var tt = (error)=>{}
+            var trees = await github.database.trees(params, settings).then(t).catch(tt);
+            var raw = trees.tree.filter(row=>row.path === "style")[0];
+            tree = raw ? tree : trees.tree.concat(tree);
+            var base_tree = raw ? raw.sha : null;
+            console.log("trees: " + settings.dataType, {
+                raw,
+                trees,
+                tree
+            });
+
+            var params = {
+                owner,
+                repo
+            };
+            var settings = {
+                data: JSON.stringify({
+                    "base_tree": base_tree,
+                    "tree": tree
+                }),
+                dataType: "POST"
+            };
+            var t = (data)=>{
+                return data;
+            }
+            var tt = (error)=>{}
+            var trees = await github.database.trees(params, settings).then(t).catch(tt);
+            console.log("trees: " + settings.dataType, {
+                sha: trees.sha,
+                tree,
+                trees
+            });
+
+            //COMMIT
+            var params = {
+                owner,
+                repo
+            };
+            var data = JSON.stringify({
+                "message": "Install Template",
+                "parents": [refs.object.sha],
+                "tree": trees.sha
+            });
+            var settings = {
+                data,
+                dataType: "POST"
+            };
+            var c = (data)=>{
+                return data;
+            }
+            var cc = (error)=>{}
+            //var commits = await github.database.commits(params, settings).then(t).catch(tt);
+            console.log("commits: " + settings.dataType, {
+                commits,
+                sha: commits.sha
+            });
+
+            //REFERENCES
+            var params = {
+                branch: "main",
+                owner,
+                repo
+            }
+            var s = (data)=>{
+                return data;
+            }
+            var settings = {
+                data: JSON.stringify({
+                    force: true,
+                    sha: commits.sha
+                }),
+                dataType: "PATCH"
+            };
+            //var refs = await github.database.references(params, settings).then(s);
+            //var sha = refs.object.sha;
+            console.log("references", {
+                refs
+            });
+
+            //"/dashboard/:get/build/".router();
+        }
+        var confirm = await modal.confirm({
+            title: theme.capitalize(),
+            body: "Are you sure you want to install this template?"
+        }, ["Cancel", "Install"], callBack);
+        if (confirm) {
+            callBack()
+        }
+    }
+
+}
+window.github.crud.delete = ()=>{}
