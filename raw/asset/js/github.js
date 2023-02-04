@@ -962,8 +962,9 @@ window.github.crud.create = async(event)=>{
 }
 window.github.crud.read = ()=>{}
 window.github.crud.update = async(params,array)=>{
-        
+
     var user = await github.user.get();
+    var message = params.message;
     var owner = params.owner;
     var repo = params.repo;
 
