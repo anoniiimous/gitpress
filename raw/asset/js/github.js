@@ -1025,17 +1025,12 @@ window.github.crud.update = async(params,array)=>{
         console.log(2530, 'GET github.database.trees', error);
     }
     );
-    //var raw = trees.tree.filter(row=>row.path === "raw/posts")[0];
-    //tree = raw ? tree : trees.tree.concat(tree);
-    //var base_tree = raw ? raw.sha : null;
-    //var base_tree = references.object.sha;
-    //var tr = 
-    //var tr = trees.tree.filter(row=>row.path.includes("site.webmanifest"))
     var tr = trees.tree;
+    //Convert to a loop for filtering excludes
     tr = tr.filter(row=>(!row.path.includes("raw/posts") && row.path !== "raw"))
     tr = tr.filter(row=>(row.path !== tree[0].path && row.path !== tree[1].path));
+    //Convert to a loop for filtering excludes
     tree = tr.concat(tree);
-    //tree = tree.filter(row => row.path !== "raw/posts/posts.json");
     console.log(2533, 'controller.posts.update', "GET trees", {
         trees,
         tree,
@@ -1059,27 +1054,13 @@ window.github.crud.update = async(params,array)=>{
         trees
     });
 
-    //GET TREES POST
-    var trs = await github.database.trees({
-        owner,
-        recursive: true,
-        repo,
-        sha: trees.sha
-    }).catch(error=>{
-        console.log(2530, 'GET github.database.trees', error);
-    }
-    );
-    console.log(2533, 'controller.posts.update', "GET trees", {
-        trs,
-    });
-
     //COMMIT
     var commits = await github.database.commits({
         owner,
         repo
     }, {
         data: JSON.stringify({
-            "message": params.message,
+            "message": message,
             "parents": [references.object.sha],
             "tree": trees.sha
         }),
