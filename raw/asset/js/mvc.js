@@ -2443,10 +2443,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             event.preventDefault();
 
             var form = event.target;
-            var user = await github.user.get();
-            var owner = user.login;
-            var repo = GET[1]
-
             var content = form.find('card:last-child textarea').value;
             var description = form.find('card textarea:last-child').value;
             var title = form.find('card textarea').value;
@@ -2455,23 +2451,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 description,
                 title
             };
-
-            //REFERENCES
-            var references = await github.database.references({
-                branch: "main",
-                owner,
-                repo
-            }).then((data)=>{
-                return data;
-            }
-            );
-            var sha = references.object.sha;
-            console.log(2466, 'controller.posts.update', "references", {
-                references,
-                sha
-            });
+            var user = await github.user.get();
 
             //ARRAY
+            var params = {
+                message: "Add " + title + " to Posts",
+                repo: GET[1],
+                owner: user.login
+            };
             var array = [{
                 content: JSON.stringify([{
                     "description": description,
@@ -2487,131 +2474,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 array
             });
 
-            //TREE
-            var tree = [];
-            if (array.length > 0) {
-                var b = 0;
-                do {
-                    var row = array[b];
-                    var res = await github.database.blobs({
-                        owner,
-                        repo
-                    }, {
-                        data: JSON.stringify({
-                            content: row.content
-                        }),
-                        dataType: "POST"
-                    }).catch(error=>{
-                        console.log(2504, 'github.database.blobs', error);
-                    }
-                    );
-                    tree[b] = {
-                        path: row.path,
-                        mode: "100644",
-                        type: "blob",
-                        sha: res.sha
-                    };
-                    b++;
-                } while (b < array.length)
-            }
-            console.log(2517, 'controller.posts.update', "tree", {
-                tree
-            });
-
-            //TREES GET
-            var trees = await github.database.trees({
-                owner,
-                path: "/raw/posts",
-                recursive: true,
-                repo,
-                sha: references.object.sha
-            }).catch(error=>{
-                console.log(2530, 'GET github.database.trees', error);
-            }
-            );
-            //var raw = trees.tree.filter(row=>row.path === "raw/posts")[0];
-            //tree = raw ? tree : trees.tree.concat(tree);
-            //var base_tree = raw ? raw.sha : null;
-            //var base_tree = references.object.sha;
-            //var tr = 
-            //var tr = trees.tree.filter(row=>row.path.includes("site.webmanifest"))
-            var tr = trees.tree;
-            tr = tr.filter(row=>(!row.path.includes("raw/posts") && row.path !== "raw"))
-            tr = tr.filter(row=>(row.path !== tree[0].path && row.path !== tree[1].path));
-            tree = tr.concat(tree);
-            //tree = tree.filter(row => row.path !== "raw/posts/posts.json");
-            console.log(2533, 'controller.posts.update', "GET trees", {
-                trees,
-                tree,
-                tr
-            });
-
-            //TREES POST
-            var trees = await github.database.trees({
-                owner,
-                repo
-            }, {
-                data: JSON.stringify({
-                    "tree": tree
-                }),
-                dataType: "POST"
-            }).catch(error=>{
-                console.log(2530, 'POST github.database.trees', error);
-            }
-            );
-            console.log(2537, 'controller.posts.update', "POST trees", {
-                trees
-            });
-
-            //GET TREES POST
-            var trs = await github.database.trees({
-                owner,
-                recursive: true,
-                repo,
-                sha: trees.sha
-            }).catch(error=>{
-                console.log(2530, 'GET github.database.trees', error);
-            }
-            );
-            console.log(2533, 'controller.posts.update', "GET trees", {
-                trs,
-            });
-
-            //COMMIT
-            var commits = await github.database.commits({
-                owner,
-                repo
-            }, {
-                data: JSON.stringify({
-                    "message": "Add " + title + " to Posts",
-                    "parents": [references.object.sha],
-                    "tree": trees.sha
-                }),
-                dataType: "POST"
-            }).catch(error=>{
-                console.log(2530, 'POST github.database.commits', error);
-            }
-            );
-            console.log(2575, 'controller.posts.commits', {
-                commits
-            });
-
-            //REFERENCES
-            var refs = await github.database.references({
-                branch: "main",
-                owner,
-                repo
-            }, {
-                data: JSON.stringify({
-                    force: true,
-                    sha: commits.sha
-                }),
-                dataType: "PATCH"
-            });
-            //var sha = refs.object.sha;
-            console.log("references", {
-                refs
-            });
+            await github.crud.update(params, array);
         }
         ,
 

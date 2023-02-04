@@ -961,250 +961,152 @@ window.github.crud.create = async(event)=>{
     }
 }
 window.github.crud.read = ()=>{}
-window.github.crud.update = async(target)=>{
+window.github.crud.update = async(params,array)=>{
+        
     var user = await github.user.get();
-    var card = target.closest('card');
-    var owner = user.login;
-    var repo = GET[1];
-    var theme = card.find('box text').textContent;
-    if (theme) {
-        const callBack = async()=>{
+    var owner = params.owner;
+    var repo = params.repo;
 
-            //alert("Installing theme");
-
-            //DATA
-            window.source = {};
-            window.tree = [];
-
-            var params = {
-                branch: "main",
-                owner,
-                repo
-            }
-            var s = (data)=>{
-                return data;
-            }
-            var settings = {
-                dataType: "GET"
-            };
-            var refs = await github.database.references(params, settings).then(s);
-            var sha = refs.object.sha;
-            console.log("references", {
-                refs
-            });
-
-            //FILES
-            var params = {
-                owner: "dompad",
-                repo: "preview",
-                path: "/" + theme + "/raw/files"
-            }
-            var a = async(data)=>{
-                var content = [];
-                if (data.length > 0) {
-                    var d = 0;
-                    do {
-                        var row = data[d];
-                        if (row.type === "file") {
-                            var name = row.name;
-                            var path = row.path;
-                            var html = await github.repos.contents({
-                                owner: "dompad",
-                                repo: "preview",
-                                path
-                            }, {});
-                            content[d] = {
-                                content: atob(html.content),
-                                name,
-                                path
-                            };
-                            //console.log("pages", { html, d, row });
-                        }
-                        d++;
-                    } while (d < data.length);
-                }
-                return content;
-            }
-            var asset = await github.repos.contents(params, {}).then(a);
-            window.source = asset;
-
-            //BLOBS
-            var copy = source.copy;
-            var keys = Object.keys(copy);
-            var resources = {};
-            if (keys.length > 0) {
-                var c = 0;
-                var t = 0;
-                var values = Object.values(copy);
-                do {
-                    var key = keys[c];
-                    var value = values[c];
-                    if (value.length > 0) {
-                        var v = 0;
-                        do {
-                            var val = value[v];
-                            var content = btoa(val.content);
-                            var data = {
-                                content
-                            };
-                            var params = {
-                                owner,
-                                repo
-                            };
-                            var settings = {
-                                data: JSON.stringify({
-                                    content: val.content
-                                }),
-                                dataType: "POST"
-                            };
-
-                            var b = (data)=>{
-                                return data;
-                            }
-                            var bb = (error)=>{
-                                alert("Blob failed!");
-                            }
-                            var blob = await github.database.blobs(params, settings).then(b).catch(bb);
-
-                            var path = "raw/" + key + "/" + val.name;
-
-                            resources[path] = blob;
-                            var mode = "100644";
-                            var type = "blob";
-                            tree[t] = {
-                                path,
-                                mode: "100644",
-                                type: "blob",
-                                sha: blob.sha
-                            };
-
-                            var rs = [{
-                                path,
-                                blob
-                            }, {
-                                key,
-                                val
-                            }, {
-                                params,
-                                settings
-                            }];
-
-                            console.log(t + " resource: " + path, rs);
-                            t++;
-                            v++;
-                        } while (v < value.length)
-                    }
-
-                    c++;
-                } while (c < keys.length);
-                console.log("resources", {
-                    resources,
-                    tree
-                });
-            }
-
-            //TREE
-            var params = {
-                owner,
-                path: "/raw",
-                repo,
-                sha
-            };
-            var settings = {
-                dataType: "GET"
-            };
-            var t = (data)=>{
-                return data;
-            }
-            var tt = (error)=>{}
-            var trees = await github.database.trees(params, settings).then(t).catch(tt);
-            var raw = trees.tree.filter(row=>row.path === "style")[0];
-            tree = raw ? tree : trees.tree.concat(tree);
-            var base_tree = raw ? raw.sha : null;
-            console.log("trees: " + settings.dataType, {
-                raw,
-                trees,
-                tree
-            });
-
-            var params = {
-                owner,
-                repo
-            };
-            var settings = {
-                data: JSON.stringify({
-                    "base_tree": base_tree,
-                    "tree": tree
-                }),
-                dataType: "POST"
-            };
-            var t = (data)=>{
-                return data;
-            }
-            var tt = (error)=>{}
-            var trees = await github.database.trees(params, settings).then(t).catch(tt);
-            console.log("trees: " + settings.dataType, {
-                sha: trees.sha,
-                tree,
-                trees
-            });
-
-            //COMMIT
-            var params = {
-                owner,
-                repo
-            };
-            var data = JSON.stringify({
-                "message": "Install Template",
-                "parents": [refs.object.sha],
-                "tree": trees.sha
-            });
-            var settings = {
-                data,
-                dataType: "POST"
-            };
-            var c = (data)=>{
-                return data;
-            }
-            var cc = (error)=>{}
-            //var commits = await github.database.commits(params, settings).then(t).catch(tt);
-            console.log("commits: " + settings.dataType, {
-                commits,
-                sha: commits.sha
-            });
-
-            //REFERENCES
-            var params = {
-                branch: "main",
-                owner,
-                repo
-            }
-            var s = (data)=>{
-                return data;
-            }
-            var settings = {
-                data: JSON.stringify({
-                    force: true,
-                    sha: commits.sha
-                }),
-                dataType: "PATCH"
-            };
-            //var refs = await github.database.references(params, settings).then(s);
-            //var sha = refs.object.sha;
-            console.log("references", {
-                refs
-            });
-
-            //"/dashboard/:get/build/".router();
-        }
-        var confirm = await modal.confirm({
-            title: theme.capitalize(),
-            body: "Are you sure you want to install this template?"
-        }, ["Cancel", "Install"], callBack);
-        if (confirm) {
-            callBack()
-        }
+    //REFERENCES
+    var references = await github.database.references({
+        branch: "main",
+        owner,
+        repo
+    }).then((data)=>{
+        return data;
     }
+    );
+    var sha = references.object.sha;
+    console.log(2466, 'controller.posts.update', "references", {
+        references,
+        sha
+    });
+
+    //TREE
+    var tree = [];
+    if (array.length > 0) {
+        var b = 0;
+        do {
+            var row = array[b];
+            var res = await github.database.blobs({
+                owner,
+                repo
+            }, {
+                data: JSON.stringify({
+                    content: row.content
+                }),
+                dataType: "POST"
+            }).catch(error=>{
+                console.log(2504, 'github.database.blobs', error);
+            }
+            );
+            tree[b] = {
+                path: row.path,
+                mode: "100644",
+                type: "blob",
+                sha: res.sha
+            };
+            b++;
+        } while (b < array.length)
+    }
+    console.log(2517, 'controller.posts.update', "tree", {
+        tree
+    });
+
+    //TREES GET
+    var trees = await github.database.trees({
+        owner,
+        path: "/raw/posts",
+        recursive: true,
+        repo,
+        sha: references.object.sha
+    }).catch(error=>{
+        console.log(2530, 'GET github.database.trees', error);
+    }
+    );
+    //var raw = trees.tree.filter(row=>row.path === "raw/posts")[0];
+    //tree = raw ? tree : trees.tree.concat(tree);
+    //var base_tree = raw ? raw.sha : null;
+    //var base_tree = references.object.sha;
+    //var tr = 
+    //var tr = trees.tree.filter(row=>row.path.includes("site.webmanifest"))
+    var tr = trees.tree;
+    tr = tr.filter(row=>(!row.path.includes("raw/posts") && row.path !== "raw"))
+    tr = tr.filter(row=>(row.path !== tree[0].path && row.path !== tree[1].path));
+    tree = tr.concat(tree);
+    //tree = tree.filter(row => row.path !== "raw/posts/posts.json");
+    console.log(2533, 'controller.posts.update', "GET trees", {
+        trees,
+        tree,
+        tr
+    });
+
+    //TREES POST
+    var trees = await github.database.trees({
+        owner,
+        repo
+    }, {
+        data: JSON.stringify({
+            "tree": tree
+        }),
+        dataType: "POST"
+    }).catch(error=>{
+        console.log(2530, 'POST github.database.trees', error);
+    }
+    );
+    console.log(2537, 'controller.posts.update', "POST trees", {
+        trees
+    });
+
+    //GET TREES POST
+    var trs = await github.database.trees({
+        owner,
+        recursive: true,
+        repo,
+        sha: trees.sha
+    }).catch(error=>{
+        console.log(2530, 'GET github.database.trees', error);
+    }
+    );
+    console.log(2533, 'controller.posts.update', "GET trees", {
+        trs,
+    });
+
+    //COMMIT
+    var commits = await github.database.commits({
+        owner,
+        repo
+    }, {
+        data: JSON.stringify({
+            "message": params.message,
+            "parents": [references.object.sha],
+            "tree": trees.sha
+        }),
+        dataType: "POST"
+    }).catch(error=>{
+        console.log(2530, 'POST github.database.commits', error);
+    }
+    );
+    console.log(2575, 'controller.posts.commits', {
+        commits
+    });
+
+    //REFERENCES
+    var refs = await github.database.references({
+        branch: "main",
+        owner,
+        repo
+    }, {
+        data: JSON.stringify({
+            force: true,
+            sha: commits.sha
+        }),
+        dataType: "PATCH"
+    });
+    //var sha = refs.object.sha;
+    console.log("references", {
+        refs
+    });
 
 }
 window.github.crud.delete = ()=>{}
