@@ -1026,7 +1026,6 @@ window.github.crud.update = async(params,array)=>{
     }
     );
     var tr = trees.tree;
-    //Convert to a loop for filtering excludes
     if (tr.length > 0) {
         var t = 0;
         do {
@@ -1040,13 +1039,8 @@ window.github.crud.update = async(params,array)=>{
                     var d = rout.ed.dir(trx.path)[ttt];
                     var dd = rout.ed.dir(trx.path).splice(0, ttt + 1);
                     var ddu = rout.ed.url(dd).replace(/^\/|\/$/g, '');
-                    //tr = tr.filter(row=>(row.path !== "raw"))
                     tr = tr.filter(row=>(!ddu.startsWith(row.path)))
-                    tr = tr.filter(row=>(row.path !== trx.path));
                     console.log(t, tt, ttt, {
-                        //dir,
-                        //d,
-                        //dd,
                         ddu,
                         trt: trt.path,
                         trx: trx.path
@@ -1058,7 +1052,6 @@ window.github.crud.update = async(params,array)=>{
             t++;
         } while (t < tr.length)
     }
-    //Convert to a loop for filtering excludes
     tree = tr.concat(tree);
     console.log(2533, 'controller.posts.update', "GET trees", {
         trees: trees.tree,
