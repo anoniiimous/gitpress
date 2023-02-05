@@ -619,7 +619,7 @@ window.github = {
                     const path = params.path;
                     const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents" + path;
                     const a = (d)=>{
-                        const data = JSON.parse(d);
+                        const data = is.json(d) ? JSON.parse(d) : d;
                         resolve(data);
                     }
                     const b = (error)=>{

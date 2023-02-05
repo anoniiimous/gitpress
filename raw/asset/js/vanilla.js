@@ -148,27 +148,9 @@ Element.prototype.index = function() {
     return whl;
 }
 ;
-function objectExists(obj, where) {
-    var data = obj;
-    var keys = Object.keys(obj);
-    var bool = false;
-    if (keys.length > 0) {
-        var values = Object.values(obj);
-        var k = 0;
-        do {
-            var key = keys[k]
-            var value = values[k];
-            var hasKey = data.hasOwnProperty(obj);
-            var hasVal = data[key].includes(value);
-            bool = hasKey && hasVal;
-            if (bool === false) {
-                k = keys.length;
-            }
-            k++;
-        } while (k < keys.length);
-    }
-    return bool;
-}
+
+JSON.query = {};
+
 String.prototype.capitalize = function() {
     const str = this.valueOf();
     return (str.charAt(0).toUpperCase() + str.slice(1));
@@ -481,6 +463,27 @@ function getPages(win) {
         root = paths.page.stringExists(arr);
     }
     return root;
+}
+function objectExists(obj, where) {
+    var data = obj;
+    var keys = Object.keys(obj);
+    var bool = false;
+    if (keys.length > 0) {
+        var values = Object.values(obj);
+        var k = 0;
+        do {
+            var key = keys[k]
+            var value = values[k];
+            var hasKey = data.hasOwnProperty(obj);
+            var hasVal = data[key].includes(value);
+            bool = hasKey && hasVal;
+            if (bool === false) {
+                k = keys.length;
+            }
+            k++;
+        } while (k < keys.length);
+    }
+    return bool;
 }
 
 window.colors = {

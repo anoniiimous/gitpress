@@ -45,7 +45,7 @@
             </card>
             <card class="background-color-fff margin-x-20px">
                 <header class="background-color-f0 display-flex flex-direction-row justify-content-space-between">
-                    <row class="display-none">
+                    <box class="display-none">
                         <ico>
                             <n class="gg-format-bold"></n>
                         </ico>
@@ -70,32 +70,38 @@
                         <ico>
                             <n class="gg-link"></n>
                         </ico>
-                    </row>
-                    <row>
-                        <ico>
-                            <img class="width-18px" src="raw/asset/svg/more-text.svg">
-                        </ico>
-                        <ico>
-                            <img class="width-18px" src="raw/asset/svg/more-paragraph.svg">
-                        </ico>
-                        <ico>
-                            <img class="width-18px" src="raw/asset/svg/more-rich.svg">
-                        </ico>
-                    </row>
-                    <row>
-                        <ico>
-                            <n class="gg-undo"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-redo"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-more-vertical-alt"></n>
-                        </ico>
-                    </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <img class="width-18px" src="raw/asset/svg/more-text.svg">
+                            </ico>
+                            <ico>
+                                <img class="width-18px" src="raw/asset/svg/more-paragraph.svg">
+                            </ico>
+                            <ico>
+                                <img class="width-18px" src="raw/asset/svg/more-rich.svg">
+                            </ico>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico>
+                                <n class="gg-undo"></n>
+                            </ico>
+                            <ico>
+                                <n class="gg-redo"></n>
+                            </ico>
+                            <ico>
+                                <n class="gg-more-vertical-alt"></n>
+                            </ico>
+                        </row>
+                    </box>
                 </header>
                 <column>
-                    <textarea class="min-height-360px padding-20px width-100pct"></textarea>
+                    <box class="min-height-360px padding-20px">
+                        <section contenteditable="true"></section>
+                    </box>
                 </column>
                 <footer></footer>
             </card>

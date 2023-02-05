@@ -450,60 +450,48 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                         }
                         if (get[2] == "posts") {
-                            if (get.length > 4) {
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/post/*/"]');
+                            if (get[3] === "post") {
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*/"]');
                                 var title = vp.find('[placeholder="Title"]');
+                                var description = vp.find('[placeholder="Description"]');
+                                var article = vp.find('box [contenteditable]');
 
-                                vp.find('[placeholder="Title"]').value = "";
-                                vp.find('[placeholder="Description"]').value = "";
+                                title.value = "";
+                                description.value = "";
                                 vp.find('card textarea').value = "";
+
                                 if (get.length > 4) {
                                     const user = await github.user.get();
 
-                                    var posts = await github.repos.contents({
-                                        owner: user.login,
-                                        path: "/raw/posts/posts.json",
-                                        repo: get[1]
-                                    }, {
-                                        accept: "application/vnd.github.raw"
-                                    });
-                                    var row = posts && posts.length > 0 ? posts.find(p=>p.slug === get[4]) : null;
-                                    console.log(469, {
-                                        row
-                                    });
+                                    if (0 < 1) {
 
-                                    if (row) {
-
-                                        title.value = row.title;
-                                        on.key.up.auto.size(title)
-
-                                        const name = get[4] + '.html';
-                                        var params = {
+                                        github.repos.contents({
                                             owner: user.login,
-                                            path: "/raw/posts/" + name,
+                                            path: "/raw/posts/" + get[4] + "/index.html",
                                             repo: get[1]
-                                        };
-                                        var settings = {};
-                                        github.repos.contents(params, settings).then(data=>{
-                                            console.log(50, {
-                                                data
-                                            });
+                                        }, {
+                                            accept: "application/vnd.github.raw"
+                                        }).then(data=>{
+                                            //var data = atob(d.content);
                                             if (data) {
-                                                const filename = data.name;
-                                                const content = atob(data.content);
-                                                const doc = new DOMParser().parseFromString(content, "text/html");
+                                                const doc = new DOMParser().parseFromString(data, "text/html");
                                                 console.log(89, {
-                                                    content,
-                                                    doc
+                                                    data,
+                                                    doc,
+                                                    vp
                                                 });
-                                                vp.find('form').dataset.filename = filename;
-                                                vp.find('header textarea').value = doc.head.find("meta[name='description']").content;
-                                                vp.find('card textarea').value = doc.body.find('article').textContent;
 
-                                                const gist = doc.head.find('meta[name="gist"]').content;
-                                                if (gist) {
-                                                    vp.find('form > footer').all('button')[0].dataset.gist = gist;
-                                                }
+                                                title.value = doc.head.find("title").textContent;
+                                                on.key.up.auto.size(title);
+
+                                                description.value = doc.head.find("meta[name='description']").content;
+                                                on.key.up.auto.size(description);
+
+                                                article.innerHTML = doc.body.all('article')[doc.body.all('article').length - 1].innerHTML;
+
+                                                //vp.find('card textarea').value = doc.body.find('article').textContent;
+                                                //const gist = doc.head.find('meta[name="gist"]').content;
+                                                //gist ? vp.find('form > footer').all('button')[0].dataset.gist = gist : null;                                                
                                             }
                                         }
                                         ).catch(async(error)=>{
@@ -2443,37 +2431,75 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             event.preventDefault();
 
             var form = event.target;
-            var content = form.find('card:last-child textarea').value;
-            var description = form.find('card textarea:last-child').value;
-            var title = form.find('card textarea').value;
+            var article = form.find('box [contenteditable]').innerHTML;
+            var description = form.find('[placeholder="Description"]').value;
+            var title = form.find('[placeholder="Title"]').value;
+            var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+            //.replaceAll(/[\u0250-\ue007]/g, '') Remove non-alphanumeric chars except spaces
+            //.replaceAll(/[^\w ]/g, "") Remove non-alphanumeric chars except spaces
             var row = {
-                content,
                 description,
+                slug,
                 title
             };
             var user = await github.user.get();
 
-            //ARRAY
+            //JSON
+            var array = [];
+            var data = [];
+            try {
+                var json = await github.repos.contents({
+                    owner: user.login,
+                    repo: GET[1],
+                    path: "/raw/posts/posts.json"
+                }, {
+                    accept: "application/vnd.github.raw"
+                });
+                var j = json;
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                inc ? null : json.push(row);
+            } catch (e) {
+                var j = [];
+                var json = [row];
+            }
+            rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+            console.log(2452, 'controller.posts.update', "json", {
+                data,
+                inc,
+                json,
+                row,
+                rows
+            });
+
+            //ARTICLE 
+            var str = await ajax('raw/asset/html/template/template.post.html');
+            var doc = new DOMParser().parseFromString(str, 'text/html');
+            var html = doc.documentElement;
+            html.find('head title').textContent = title;
+            html.find('head meta[name="description"]').setAttribute("content", description);
+            html.find('body article').innerHTML = article;
+            console.log(2452, 'controller.posts.update', "article", {
+                article,
+                doc,
+                html
+            });
+
+            //PUSH
             var params = {
                 message: "Add " + title + " to Posts",
                 repo: GET[1],
                 owner: user.login
             };
             var array = [{
-                content: JSON.stringify([{
-                    "description": description,
-                    "slug": GET[4],
-                    "title": title
-                }], null, 4),
+                content: JSON.stringify(json, null, 4),
                 path: "raw/posts/posts.json"
             }, {
-                content: "" + Crypto.uid.create(1) + "",
-                path: "raw/posts/" + GET[4] + "/index.html"
+                content: html.outerHTML,
+                path: "raw/posts/" + slug + "/index.html"
             }];
             console.log(2452, 'controller.posts.update', "array", {
                 array
             });
-
             await github.crud.update(params, array);
         }
         ,
