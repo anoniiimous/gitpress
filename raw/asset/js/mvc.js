@@ -458,7 +458,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                 title.value = "";
                                 description.value = "";
-                                vp.find('card textarea').value = "";
+                                article.innerHTML = "";
 
                                 if (get.length > 4) {
                                     const user = await github.user.get();

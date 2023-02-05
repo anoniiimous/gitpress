@@ -1027,68 +1027,103 @@ window.github.crud.update = async(params,array)=>{
     );
     var tr = trees.tree;
     //Convert to a loop for filtering excludes
-    tr = tr.filter(row=>(!row.path.includes("raw/posts") && row.path !== "raw"))
-    tr = tr.filter(row=>(row.path !== tree[0].path && row.path !== tree[1].path));
+    if (tr.length > 0) {
+        var t = 0;
+        do {
+            var tt = 0;
+            var trt = tr[t];
+            do {
+                var trx = tree[tt];
+                var dir = rout.ed.dir(trx.path);
+                var ttt = 0;
+                do {
+                    var d = rout.ed.dir(trx.path)[ttt];
+                    var dd = rout.ed.dir(trx.path).splice(0, ttt + 1);
+                    var ddu = rout.ed.url(dd).replace(/^\/|\/$/g, '');
+                    //tr = tr.filter(row=>(row.path !== "raw"))
+                    tr = tr.filter(row=>(!ddu.startsWith(row.path)))
+                    tr = tr.filter(row=>(row.path !== trx.path));
+                    console.log(t, tt, ttt, {
+                        //dir,
+                        //d,
+                        //dd,
+                        ddu,
+                        trt: trt.path,
+                        trx: trx.path
+                    });
+                    ttt++;
+                } while (ttt < dir.length);
+                tt++;
+            } while (tt < tree.length);
+            t++;
+        } while (t < tr.length)
+    }
     //Convert to a loop for filtering excludes
     tree = tr.concat(tree);
     console.log(2533, 'controller.posts.update', "GET trees", {
-        trees,
+        trees: trees.tree,
         tree,
         tr
     });
 
     //TREES POST
-    var trees = await github.database.trees({
-        owner,
-        repo
-    }, {
-        data: JSON.stringify({
-            "tree": tree
-        }),
-        dataType: "POST"
-    }).catch(error=>{
-        console.log(2530, 'POST github.database.trees', error);
+    if (0 < 1) {
+        var trees = await github.database.trees({
+            owner,
+            repo
+        }, {
+            data: JSON.stringify({
+                "tree": tree
+            }),
+            dataType: "POST"
+        }).catch(error=>{
+            console.log(2530, 'POST github.database.trees', error);
+        }
+        );
+        console.log(2537, 'controller.posts.update', "POST trees", {
+            trees
+        });
     }
-    );
-    console.log(2537, 'controller.posts.update', "POST trees", {
-        trees
-    });
 
     //COMMIT
-    var commits = await github.database.commits({
-        owner,
-        repo
-    }, {
-        data: JSON.stringify({
-            "message": message,
-            "parents": [references.object.sha],
-            "tree": trees.sha
-        }),
-        dataType: "POST"
-    }).catch(error=>{
-        console.log(2530, 'POST github.database.commits', error);
+    if (0 < 1) {
+        var commits = await github.database.commits({
+            owner,
+            repo
+        }, {
+            data: JSON.stringify({
+                "message": message,
+                "parents": [references.object.sha],
+                "tree": trees.sha
+            }),
+            dataType: "POST"
+        }).catch(error=>{
+            console.log(2530, 'POST github.database.commits', error);
+        }
+        );
+        console.log(2575, 'controller.posts.commits', {
+            commits
+        });
     }
-    );
-    console.log(2575, 'controller.posts.commits', {
-        commits
-    });
 
     //REFERENCES
-    var refs = await github.database.references({
-        branch: "main",
-        owner,
-        repo
-    }, {
-        data: JSON.stringify({
-            force: true,
-            sha: commits.sha
-        }),
-        dataType: "PATCH"
-    });
-    //var sha = refs.object.sha;
-    console.log("references", {
-        refs
-    });
+    if (0 < 1) {
+        var refs = await github.database.references({
+            branch: "main",
+            owner,
+            repo
+        }, {
+            data: JSON.stringify({
+                force: true,
+                sha: commits.sha
+            }),
+            dataType: "PATCH"
+        });
+        //var sha = refs.object.sha;
+        console.log("references", {
+            refs
+        });
+    }
 
 }
 window.github.crud.delete = ()=>{}
