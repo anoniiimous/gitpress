@@ -472,13 +472,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //const name = rout.ed.dir(row.path)[0];
                                         const full_name = row.full_name;
                                         const dir = rout.ed.dir(full_name);
-                                        const arr = dir[1].split('.');
+                                        var repo = dir[1];
+                                        const arr = repo.split('.');
                                         const name = arr[arr.length - 1];
+                                        var owner = row.owner;
                                         console.log({
                                             full_name,
                                             dir,
-                                            name
+                                            name,
+                                            owner
                                         })
+
+                                        var screenshot = await github.repos.contents({
+                                            owner: owner.login,
+                                            path: "/raw/asset/png/template.png",
+                                            repo: repo
+                                        });
                                         //var repository = row['_links'].html.split('/');
                                         //var user = repository[0];
                                         //var repo = repository[1];
@@ -487,7 +496,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
                                         //template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
-                                        //template.find('picture').dataset.src = "/preview/" + name + "/index.jpg";
+                                        template.find('picture img').src = "raw/asset/png/template/template.spryce.png";
                                         feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                         x++;
                                     } while (x < data.length);
@@ -1312,7 +1321,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     design: {
-                    
+
         install: async(target)=>{
             var user = await github.user.get();
             var card = target.closest('card');
@@ -1437,7 +1446,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 }
             }
-        }        
+        }
 
     },
 
