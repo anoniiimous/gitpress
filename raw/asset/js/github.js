@@ -962,6 +962,10 @@ window.github.crud.create = async(event)=>{
 }
 window.github.crud.read = ()=>{}
 window.github.crud.update = async(params,array)=>{
+    console.log(2466, 'controller.posts.update', "variables", {
+        params,
+        array
+    });
 
     var user = await github.user.get();
     var message = params.message;
@@ -1040,11 +1044,11 @@ window.github.crud.update = async(params,array)=>{
                     var dd = rout.ed.dir(trx.path).splice(0, ttt + 1);
                     var ddu = rout.ed.url(dd).replace(/^\/|\/$/g, '');
                     tr = tr.filter(row=>(!ddu.startsWith(row.path)))
-                    console.log(t, tt, ttt, {
+                    0 > 1 ? console.log(t, tt, ttt, {
                         ddu,
                         trt: trt.path,
                         trx: trx.path
-                    });
+                    }) : null;
                     ttt++;
                 } while (ttt < dir.length);
                 tt++;

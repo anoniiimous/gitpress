@@ -456,15 +456,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 $(vp.all('block[data-step]')[0]).removeClass('display-none');
                             }
                             resolve(route);
-                        } else if (get[2] === "style" || get[2] === "theme") {
-                            var params = {
-                                owner: "dompad",
-                                path: "/",
-                                repo: "preview"
-                            };
-                            var settings = {};
-                            var a = async(data)=>{
-                                data = data.filter(row=>row.type === "dir")
+                        } else if (get[2] === "style") {
+                            var a = async(d)=>{
+                                //data = data.filter(row=>row.type === "dir")
+                                data = JSON.parse(d);
                                 console.log(319, {
                                     data
                                 });
@@ -475,16 +470,24 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     do {
                                         const row = data[x];
                                         //const name = rout.ed.dir(row.path)[0];
-                                        const name = row.name;
-                                        var repository = row['_links'].html.split('/');
+                                        const full_name = row.full_name;
+                                        const dir = rout.ed.dir(full_name);
+                                        const arr = dir[1].split('.');
+                                        const name = arr[arr.length - 1];
+                                        console.log({
+                                            full_name,
+                                            dir,
+                                            name
+                                        })
+                                        //var repository = row['_links'].html.split('/');
                                         //var user = repository[0];
                                         //var repo = repository[1];
                                         //template.dataset["full_name"] = row.repository["full_name"];
-                                        template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
+                                        //template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
                                         //template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
-                                        template.find('picture').dataset.src = "/preview/" + name + "/index.jpg";
+                                        //template.find('picture').dataset.src = "/preview/" + name + "/index.jpg";
                                         feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                         x++;
                                     } while (x < data.length);
@@ -492,22 +495,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                             const query = 'q="key": "design-28894391" filename:site.webmanifest user:dompad';
                             //github.search.code(query).then(a);
-                            github.repos.contents(params, settings).then(a);
+                            //github.repos.contents(params, settings).then(a);
+                            ajax('raw/asset/json/templates.json').then(a);
                         }
                     }
 
                     //alert(window.database.dashboard.hasOwnProperty(get[1]));
                     if (window.database.dashboard.hasOwnProperty(get[1]) === false) {
                         //const user = await github.user.get();
-                        var params = {
+                        github.repos.contents({
                             owner: user.login,
                             path: "/site.webmanifest",
                             repo: get[1]
-                        };
-                        var settings = {
+                        }, {
                             cache: "reload"
-                        };
-                        github.repos.contents(params, settings).then(async(data)=>{
+                        }).then(async(data)=>{
                             if (data) {
                                 var content = data.content;
                                 var raw = atob(content);
@@ -678,20 +680,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             //}
 
                             const user = await github.user.get();
-                            var file = "site.webmanifest";
-                            var json = {};
-
-                            var params = {};
-                            params.owner = user.login;
-                            params.path = "/" + file;
-                            params.repo = GET[1]
-
-                            var settings = {};
-                            settings.data = JSON.stringify({
-                                content: btoa(JSON.stringify(json, null, 2)),
-                                message: "Create " + file
-                            }),
-                            settings.dataType = "PUT";
 
                             console.log(498, {
                                 params,
@@ -699,7 +687,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             });
 
                             const aa = async(e)=>{
-                                const html = await ajax('/raw/html/template/template.setup.html');
+                                const html = await ajax('/raw/asset/html/template/template.setup.html');
                                 var ppp = await modal.page(html);
                                 ppp.find('form').classList.remove("display-none");
                                 resolve(route);
@@ -707,7 +695,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             const bb = (e)=>{}
 
-                            github.repos.contents(params, settings).then(aa).catch(bb);
+                            github.repos.contents({
+                                owner: user.login,
+                                path: "/site.webmanifest",
+                                repo: GET[1]
+                            }, {
+                                data: JSON.stringify({
+                                    content: btoa(JSON.stringify(json, null, 2)),
+                                    message: "Create site.webmanifest"
+                                }),
+                                dataType: "PUT"
+                            }).then(aa).catch(bb);
 
                         }
                         );
@@ -1314,333 +1312,132 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     design: {
-
+                    
         install: async(target)=>{
-            if (target) {
-                var user = await github.user.get();
-                var card = target.closest('card');
-                var owner = user.login;
-                var repo = GET[1];
-                var theme = card.find('box text').textContent;
-                if (theme) {
-                    const callBack = async()=>{
+            var user = await github.user.get();
+            var card = target.closest('card');
+            var theme = card.find('box text').textContent;
+            var owner = "dompad";
+            var repo = "design.dompad." + theme;
+            if (theme) {
+                var confirm = await modal.confirm({
+                    title: "Install " + theme.capitalize(),
+                    body: "Are you sure you want to use this template?"
+                }, ["Cancel", "Install"], callBack);
+                if (confirm) {
+                    callBack()
+                }
+                async function callBack() {
 
-                        //alert("Installing theme");
+                    //VARIABLES
+                    var array = [];
 
-                        //DATA
-                        window.source = {
-                            copy: {},
-                            paste: {}
-                        };
-                        window.tree = [];
+                    //REFERENCES
+                    var references = await github.database.references(params = {
+                        branch: "main",
+                        owner: "dompad",
+                        repo: "design.dompad." + theme
+                    }, {
+                        dataType: "GET"
+                    });
+                    console.log("references", {
+                        references
+                    });
 
-                        var params = {
-                            branch: "main",
-                            owner,
-                            repo
-                        }
-                        var s = (data)=>{
-                            return data;
-                        }
-                        var settings = {
-                            dataType: "GET"
-                        };
-                        var refs = await github.database.references(params, settings).then(s);
-                        var sha = refs.object.sha;
-                        console.log("references", {
-                            refs
-                        });
-
-                        //FILES
-                        var params = {
-                            owner: "dompad",
-                            repo: "preview",
-                            path: "/" + theme + "/raw/files"
-                        }
-                        var a = async(data)=>{
-                            var content = [];
-                            if (data.length > 0) {
-                                var d = 0;
-                                do {
-                                    var row = data[d];
-                                    if (row.type === "file") {
-                                        var name = row.name;
-                                        var path = row.path;
-                                        var html = await github.repos.contents({
-                                            owner: "dompad",
-                                            repo: "preview",
-                                            path
-                                        }, {});
-                                        content[d] = {
-                                            content: atob(html.content),
-                                            name,
-                                            path
-                                        };
-                                        //console.log("pages", { html, d, row });
-                                    }
-                                    d++;
-                                } while (d < data.length);
-                            }
-                            return content;
-                        }
-                        var asset = await github.repos.contents(params, {}).then(a);
-                        window.source.copy.files = asset;
-
-                        //PAGES
-                        var params = {
-                            owner: "dompad",
-                            repo: "preview",
-                            path: "/" + theme + "/raw/pages"
-                        }
-                        var p = async(data)=>{
-                            var content = [];
-                            if (data.length > 0) {
-                                var d = 0;
-                                do {
-                                    var row = data[d];
-                                    if (row.type === "file") {
-                                        var name = row.name;
-                                        var path = row.path;
-                                        var html = await github.repos.contents({
-                                            owner: "dompad",
-                                            repo: "preview",
-                                            path
-                                        }, {});
-                                        content[d] = {
-                                            content: atob(html.content),
-                                            name,
-                                            path
-                                        };
-                                        console.log("pages", {
-                                            html,
-                                            d,
-                                            row
-                                        }, content[d]);
-                                    }
-                                    d++;
-                                } while (d < data.length);
-                            }
-                            return content;
-                        }
-                        var pages = await github.repos.contents(params, {
-                            cache: "reload"
-                        }).then(p);
-                        window.source.copy.pages = pages;
-
-                        //STYLE
-                        var t = async(data)=>{
-                            var content = [];
-                            if (data.length > 0) {
-                                var d = 0;
-                                do {
-                                    var row = data[d];
-                                    if (row.type === "file") {
-                                        var name = row.name;
-                                        var path = row.path;
-                                        var html = await github.repos.contents({
-                                            owner: "dompad",
-                                            repo: "preview",
-                                            path
-                                        }, {});
-                                        content[d] = {
-                                            content: atob(html.content),
-                                            name,
-                                            path
-                                        };
-                                    }
-                                    d++;
-                                } while (d < data.length);
-                            }
-                            return content;
-                        }
-                        var css = await github.repos.contents({
-                            owner: "dompad",
-                            repo: "preview",
-                            path: "/" + theme + "/raw/style/"
-                        }, {
-                            cache: "reload"
-                        }).then(t);
-                        window.source.copy.style = css;
-
-                        //BLOBS
-                        var copy = source.copy;
-                        var keys = Object.keys(copy);
-                        var resources = {};
-                        if (keys.length > 0) {
-                            var c = 0;
-                            var t = 0;
-                            var values = Object.values(copy);
-                            do {
-                                var key = keys[c];
-                                var value = values[c];
-                                if (value.length > 0) {
-                                    var v = 0;
-                                    do {
-                                        var val = value[v];
-                                        var content = btoa(val.content);
-                                        var data = {
-                                            content
-                                        };
-                                        var params = {
-                                            owner,
-                                            repo
-                                        };
-                                        var settings = {
-                                            data: JSON.stringify({
-                                                content: val.content
-                                            }),
-                                            dataType: "POST"
-                                        };
-
-                                        var b = (data)=>{
-                                            return data;
-                                        }
-                                        var bb = (error)=>{
-                                            alert("Blob failed!");
-                                        }
-                                        var blob = await github.database.blobs(params, settings).then(b).catch(bb);
-
-                                        var path = "raw/" + key + "/" + val.name;
-
-                                        resources[path] = blob;
-                                        var mode = "100644";
-                                        var type = "blob";
-                                        tree[t] = {
-                                            path,
-                                            mode: "100644",
-                                            type: "blob",
-                                            sha: blob.sha
-                                        };
-
-                                        var rs = [{
-                                            path,
-                                            blob
-                                        }, {
-                                            key,
-                                            val
-                                        }, {
-                                            params,
-                                            settings
-                                        }];
-
-                                        console.log(t + " resource: " + path, rs);
-                                        t++;
-                                        v++;
-                                    } while (v < value.length)
-                                }
-
-                                c++;
-                            } while (c < keys.length);
-                            console.log("resources", {
-                                resources,
-                                tree
+                    //SPROUT
+                    if (0 < 1) {
+                        try {
+                            var sprout = [];
+                            var trees = await github.database.trees({
+                                owner,
+                                recursive: true,
+                                repo,
+                                sha: references.object.sha
                             });
+                            var array = trees.tree;
+                            array = array.filter(branch=>(branch.path !== "raw/pages" && branch.path !== "raw/style"))
+                            array = array.filter(branch=>(branch.path.startsWith('raw/pages') || branch.path.startsWith('raw/style')))
+                            if (array.length > 0) {
+                                var t = 0;
+                                do {
+                                    var tr = array[t];
+                                    var path = tr.path;
+                                    var content = await github.repos.contents({
+                                        owner,
+                                        path,
+                                        repo
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    })
+                                    sprout[t] = {
+                                        content,
+                                        path
+                                    };
+                                    0 > 1 ? console.log(1363, {
+                                        contents,
+                                        path,
+                                        tr
+                                    }) : null;
+                                    t++;
+                                } while (t < array.length)
+                            }
+                            console.log(1339, 'controller.design.installer', "GET trees", {
+                                sprout
+                            });
+                        } catch (error) {
+                            console.log(2530, 'GET github.database.trees', error);
                         }
+                    }
 
-                        //TREE
-                        var params = {
-                            owner,
-                            path: "/raw",
-                            repo,
-                            sha
-                        };
-                        var settings = {
-                            dataType: "GET"
-                        };
-                        var t = (data)=>{
-                            return data;
+                    //TREE
+                    if (0 > 1) {
+                        var tree = [];
+                        if (sprout.length > 0) {
+                            var b = 0;
+                            do {
+                                var row = sprout[b];
+                                var res = await github.database.blobs({
+                                    owner,
+                                    repo
+                                }, {
+                                    data: JSON.stringify({
+                                        content: row.content
+                                    }),
+                                    dataType: "POST"
+                                }).catch(error=>{
+                                    console.log(2504, 'github.database.blobs', error);
+                                }
+                                );
+                                tree[b] = {
+                                    path: row.path,
+                                    mode: "100644",
+                                    type: "blob",
+                                    sha: res.sha
+                                };
+                                b++;
+                            } while (b < sprout.length)
                         }
-                        var tt = (error)=>{}
-                        var trees = await github.database.trees(params, settings).then(t).catch(tt);
-                        var raw = trees.tree.filter(row=>row.path === "style")[0];
-                        tree = raw ? tree : trees.tree.concat(tree);
-                        var base_tree = raw ? raw.sha : null;
-                        console.log("trees: " + settings.dataType, {
-                            raw,
-                            trees,
+                        console.log(2517, 'controller.posts.update', "tree", {
                             tree
                         });
-
-                        var params = {
-                            owner,
-                            repo
-                        };
-                        var settings = {
-                            data: JSON.stringify({
-                                "base_tree": base_tree,
-                                "tree": tree
-                            }),
-                            dataType: "POST"
-                        };
-                        var t = (data)=>{
-                            return data;
-                        }
-                        var tt = (error)=>{}
-                        var trees = await github.database.trees(params, settings).then(t).catch(tt);
-                        console.log("trees: " + settings.dataType, {
-                            sha: trees.sha,
-                            tree,
-                            trees
-                        });
-
-                        //COMMIT
-                        var params = {
-                            owner,
-                            repo
-                        };
-                        var data = JSON.stringify({
-                            "message": "Install Template",
-                            "parents": [refs.object.sha],
-                            "tree": trees.sha
-                        });
-                        var settings = {
-                            data,
-                            dataType: "POST"
-                        };
-                        var c = (data)=>{
-                            return data;
-                        }
-                        var cc = (error)=>{}
-                        var commits = await github.database.commits(params, settings).then(t).catch(tt);
-                        console.log("commits: " + settings.dataType, {
-                            commits,
-                            sha: commits.sha
-                        });
-
-                        //REFERENCES
-                        var params = {
-                            branch: "main",
-                            owner,
-                            repo
-                        }
-                        var s = (data)=>{
-                            return data;
-                        }
-                        var settings = {
-                            data: JSON.stringify({
-                                force: true,
-                                sha: commits.sha
-                            }),
-                            dataType: "PATCH"
-                        };
-                        var refs = await github.database.references(params, settings).then(s);
-                        var sha = refs.object.sha;
-                        console.log("references", {
-                            refs
-                        });
-
-                        "/dashboard/:get/build/".router();
                     }
-                    var confirm = await modal.confirm({
-                        title: theme.capitalize(),
-                        body: "Are you sure you want to install this template?"
-                    }, ["Cancel", "Install"], callBack);
-                    if (confirm) {
-                        callBack()
+
+                    //PUSH
+                    if (0 < 1) {
+                        var params = {
+                            message: "Install " + theme.capitalize(),
+                            repo: GET[1],
+                            owner: user.login
+                        };
+                        console.log(2452, 'controller.posts.update', "array", {
+                            array: sprout
+                        });
+                        await github.crud.update(params, sprout);
                     }
+
                 }
             }
-        }
+        }        
 
     },
 
@@ -1835,10 +1632,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main nav + pages');
-                            
+
             nav.dataset["transform"] = "translateX(-100%)";
             blocks.dataset["transform"] = "0";
-                            
+
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
@@ -1850,10 +1647,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main nav + pages');
-                            
+
             nav.dataset["transform"] = "translateX(-100%)";
             blocks.dataset["transform"] = "0";
-                            
+
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
@@ -1866,17 +1663,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main nav + pages');
             const toggle = transform === "translateX(0)";
-                            
+
             if (toggle) {
                 nav.dataset["transform"] = "translateX(-100%)";
                 blocks.dataset["transform"] = "0";
-                                
+
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
                 blocks.dataset["960pxTransform"] = "0";
             } else {
                 nav.dataset["transform"] = "translateX(0)";
                 blocks.dataset["transform"] = "translateX(240px)";
-                                
+
                 nav.dataset["960pxTransform"] = "translateX(0)";
                 blocks.dataset["960pxTransform"] = "translateX(240px)";
             }
