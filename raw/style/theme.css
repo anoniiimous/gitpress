@@ -71,6 +71,10 @@
         background-color: #ccc;
     }
 
+    .background-color-db {
+        background-color: #dbdbdb;
+    }
+
     .background-color-ddd {
         background-color: #ddd;
     }
@@ -717,6 +721,14 @@
 
     .height-20px, [data-height="20px"] {
         height: 20px;
+    }
+
+    .height-30px, [data-height="30px"] {
+        height: 30px;
+    }
+
+    .height-24px, [data-height="24px"] {
+        height: 24px;
     }
 
     .height-30px, [data-height="30px"] {
@@ -1521,6 +1533,14 @@
 
     .width-20px, [data-width="20px"] {
         width: 20px;
+    }
+
+    .width-24px, [data-width="24px"] {
+        width: 24px;
+    }
+
+    .width-60px, [data-width="60px"] {
+        width: 60px;
     }
 
     .width-120px, [data-width="120px"] {
