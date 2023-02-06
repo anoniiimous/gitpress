@@ -502,9 +502,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     } while (x < data.length);
                                 }
                             }
-                            const query = 'q="key": "design-28894391" filename:site.webmanifest user:dompad';
-                            //github.search.code(query).then(a);
-                            //github.repos.contents(params, settings).then(a);
                             ajax('raw/asset/json/templates.json').then(a);
                         }
                     }
