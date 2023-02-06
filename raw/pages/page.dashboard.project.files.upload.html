@@ -1,4 +1,36 @@
 <blocks class="min-height-100vh" data-backdrop-filter="blur(10px)">
+    <header class="-dw480px-padding-10px padding-20px">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Upload</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row>
+                    <box class="line-height-30px" data-href="/dashboard/:get/files/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-folder"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">View Files</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
     <block class="height-100pct justify-content-center margin-20px">
         <picture data-background-color="rgba(255,255,255,0.5)" data-tap="mvc.c.files.cancel"></picture>
         <column class="padding-y-50px" data-max-height="calc(100% - 120px)">

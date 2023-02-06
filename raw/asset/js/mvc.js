@@ -75,7 +75,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
             if (root === "dashboard") {
-                controller.nav.close();
+                0 < 1 ? controller.nav.hide() : controller.nav.close();
                 if (get.length > 1) {
                     const user = await github.user.get();
 
@@ -106,7 +106,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
                             var iframe = vp.find('iframe');
 
-                            if (!iframe.contentWindow.document.body.querySelector('boot')) {
+                            if (iframe && !iframe.contentWindow.document.body.querySelector('boot')) {
                                 await mvc.c.build.boot(iframe);
                             }
 
@@ -130,7 +130,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "file") {}
                             }
                             var feed = byId('feed-dashboard-files');
-                            if (feed.innerHTML === "" && get.length < 4) {
+                            if (feed && feed.innerHTML === "" && get.length < 4) {
                                 const name = get[4] + '.html';
                                 var params = {
                                     owner: user.login,
@@ -469,7 +469,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     data
                                 });
                                 const feed = byId('feed-dashboard-blog-theme');
-                                if (feed.all('card').length === 0 && data.length > 0) {
+                                if (feed && feed.all('card').length === 0 && data.length > 0) {
                                     const template = byId('template-dashboard-blog-theme').content.firstElementChild.cloneNode(true);
                                     var x = 0;
                                     do {
@@ -993,7 +993,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
 
             //DOCUMENT
-            var path = "index.html";
+            var path = "/index.html";
             var params = {
                 owner,
                 repo,
@@ -1835,9 +1835,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main nav + pages');
+                            
+            nav.dataset["transform"] = "translateX(-100%)";
+            blocks.dataset["transform"] = "0";
+                            
+            nav.dataset["960pxTransform"] = "translateX(-100%)";
+            blocks.dataset["960pxTransform"] = "0";
 
-            nav.classList.remove('display-none');
-            //blocks.classList.add('left-240px');
+        }
+        ,
+
+        hide: ()=>{
+
+            const nav = document.body.find('body > main nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = dom.body.find('main nav + pages');
+                            
+            nav.dataset["transform"] = "translateX(-100%)";
+            blocks.dataset["transform"] = "0";
+                            
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
 
@@ -1850,15 +1866,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const transform = nav.dataset["960pxTransform"];
             const blocks = dom.body.find('main nav + pages');
             const toggle = transform === "translateX(0)";
-
-            nav.classList.remove('display-none');
+                            
             if (toggle) {
+                nav.dataset["transform"] = "translateX(-100%)";
+                blocks.dataset["transform"] = "0";
+                                
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
-                //blocks.classList.add('left-240px');
                 blocks.dataset["960pxTransform"] = "0";
             } else {
+                nav.dataset["transform"] = "translateX(0)";
+                blocks.dataset["transform"] = "translateX(240px)";
+                                
                 nav.dataset["960pxTransform"] = "translateX(0)";
-                blocks.classList.remove('left-240px');
                 blocks.dataset["960pxTransform"] = "translateX(240px)";
             }
 

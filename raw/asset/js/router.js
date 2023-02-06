@@ -11,11 +11,14 @@ String.prototype.router = async function(params) {
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
     console.log(13, {
+        page,
+        pages,
+        route,
         vp
     });
-    
-    if (pages) {
-        if (pages.innerHTML === "" && pages.dataset.fetch) {//pages.innerHTML = await ajax(pages.dataset.fetch);
+    if (page) {
+        if (page.innerHTML === "") {
+            page.innerHTML = await ajax(page.dataset.fetch);
         }
     }
 
@@ -83,7 +86,9 @@ String.prototype.router = async function(params) {
         if (route) {
             var pop = params ? params.pop : null;
 
-            route = window.view ? await view(route).then(rout.ed.bang(route)) : await rout.ed.bang(route);
+            await rout.ed.bang(route);
+            window.view ? await view(route) : null;
+            //route = window.view ? await view(route).then(rout.ed.bang(route)) : await rout.ed.bang(route);
 
             var path = route.path;
             window.GET = rout.ed.dir(path);
@@ -183,7 +188,17 @@ window.rout.ed.bang = async(route)=>{
     if (rs.length > 0) {
         var i = 0;
         do {
-            route.page.includes(rs[i].dataset.pages) ? rs[i].dataset.active = true : null;
+            //alert(route.page + "\r" + rs[i].dataset.pages);
+            if (rs[i].dataset.pages.startsWith(route.page)) {
+                console.log(rs[i]);
+                //alert(rs[i].dataset.pages + "\r" + route.page);
+                //if (rs[i].dataset.pages.includes(route.page)) {
+                //rs[i].innerHTML = await ajax(rs[i].dataset.fetch);
+            }
+            if (route.page.includes(rs[i].dataset.pages)) {
+                //if (rs[i].dataset.pages.includes(route.page)) {
+                rs[i].dataset.active = true;
+            }
             i++;
         } while (i < rs.length)
     }
@@ -285,10 +300,8 @@ window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
         (GOT.length > 1 && roots.indexOf(root) === -1) || 
         (root === 'dashboard' && n === 1) || 
         (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n === 3) || 
-        (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) || 
         (root === 'dashboard' && n > 2 && GOT[2] === "pages") || 
         (GOT.length > 3 && root === 'dashboard' && GOT[2] === "posts" && n === 3) || 
-        //(GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || 
-        //(GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || 
-        (root === 'design' && n === 1) || (root === 'preview' && n === 1)
+        (root === 'design' && n === 1) || 
+        (root === 'preview' && n === 1)
 }
