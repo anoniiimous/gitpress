@@ -10,6 +10,10 @@ String.prototype.router = async function(params) {
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
+    console.log(13, {
+        vp
+    });
+    
     if (pages) {
         if (pages.innerHTML === "" && pages.dataset.fetch) {//pages.innerHTML = await ajax(pages.dataset.fetch);
         }
@@ -33,7 +37,7 @@ String.prototype.router = async function(params) {
                 var pg = atob((await github.raw.path(path)).content);
             } else {
                 var path = vp.dataset.fetch;
-                var pg = await ajax(path)
+                var pg = await ajax(path);
             }
             vp.innerHTML = pg;
             console.log("router.js 33", path, vp, vp.dataset.fetch);
@@ -277,7 +281,7 @@ window.rout.ing = (href,GOT,n)=>{
 }
 window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
     window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
-    return m.includes("#") ||
+    return m.includes("#") || 
         (GOT.length > 1 && roots.indexOf(root) === -1) || 
         (root === 'dashboard' && n === 1) || 
         (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n === 3) || 

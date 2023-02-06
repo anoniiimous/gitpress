@@ -19,7 +19,7 @@
             </card>
             <card>
                 <row>
-                    <box class="line-height-30px" data-href="/dashboard/:get/pages/page/">
+                    <box class="display-none line-height-30px" data-href="/dashboard/:get/pages/page/">
                         <row class="align-items-center justify-content-center">
                             <ico data-height="30px" data-width="30px">
                                 <n class="gg-file-add"></n>
@@ -31,14 +31,17 @@
             </card>
         </row>
     </header>
-    <block class="margin-top-20px">
-        <column class="gap-20px" id="feed-dashboard-pages"></column>
-    </block>
-    <block class="align-items-center empty-state flex-grow-1 justify-content-center">
-        <column class="align-items-center justify-content-center">
+    <block class="flex-grow-1 margin-20px">
+        <column class="grid-gap-10px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-pages"></column>
+        <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
-                <img class="width-100pct" src="raw/png/astronaut-pages.png">
+                <img class="width-100pct" src="raw/asset/png/astronaut-pages.png">
             </picture>
+            <box>
+                <section>
+                    <text class="font-size-13px"></text>
+                </section>
+            </box>
             <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative" data-href="/dashboard/:get/pages/page/">
                 <section>
                     <text class="font-size-14px font-weight-bolder">Add New Page</text>
@@ -48,7 +51,7 @@
     </block>
 </blocks>
 <template id="template-feed-dashboard-pages">
-    <card class="background-color-ccc border-radius-10px margin-10px">
+    <card class="background-color-ccc border-radius-10px">
         <row class="align-items-center justify-content-center">
             <box data-tap="controller.pages.delete(event.target)">
                 <section>
@@ -68,24 +71,30 @@
                         <n class="gg-more-vertical-alt"></n>
                     </ico>
                 </row>
-                <column class="-hd-width-100pct- align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px width-120px z-index-3" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
-                    <text class="align-items-center display-flex justify-content-center">
+                <column class="-hd-width-100pct- align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px z-index-3" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                    <text class="white-space-nowrap">
                         <ico data-height="30px" data-width="30px">
                             <n class="gg-file-add"></n>
                         </ico>
-                        <span>Add Page</span>
+                        <span>Insert Page</span>
                     </text>
-                    <text class="align-items-center display-flex justify-content-center">
-                        <ico data-height="30px" data-width="30px">
-                            <n class="gg-code-slash"></n>
-                        </ico>
-                        <span>Edit page</span>
-                    </text>
-                    <text class="align-items-center display-flex jjustify-content-center">
+                    <text class="white-space-nowrap">
                         <ico data-height="30px" data-width="30px">
                             <n class="gg-eye"></n>
                         </ico>
-                        <span>View page</span>
+                        <span>Preview Page</span>
+                    </text>
+                    <text class="white-space-nowrap">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-code-slash"></n>
+                        </ico>
+                        <span>Update Page</span>
+                    </text>
+                    <text class="white-space-nowrap">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-trash"></n>
+                        </ico>
+                        <span>Delete Page</span>
                     </text>
                 </column>
             </box>

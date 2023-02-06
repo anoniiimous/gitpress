@@ -19,4 +19,22 @@
             </card>
         </row>
     </header>
+    <block class="flex-grow-1 margin-20px">
+        <column class="grid-gap-10px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-media"></column>
+        <column class="align-items-center empty-state flex-grow-1 justify-content-center">
+            <picture class="position-relative width-240px">
+                <img class="width-100pct" src="raw/asset/png/astronaut-cloud.png">
+            </picture>
+            <box>
+                <section>
+                    <text class="font-size-13px"></text>
+                </section>
+            </box>
+            <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative" data-href="/dashboard/:get/media/import/">
+                <section>
+                    <text class="font-size-14px font-weight-bolder">Add New Media</text>
+                </section>
+            </box>
+        </column>
+    </block>
 </blocks>

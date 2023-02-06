@@ -130,7 +130,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "file") {}
                             }
                             var feed = byId('feed-dashboard-files');
-                            if (feed.innerHTML === "" || get.length < 4) {
+                            if (feed.innerHTML === "" && get.length < 4) {
                                 const name = get[4] + '.html';
                                 var params = {
                                     owner: user.login,
@@ -306,7 +306,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (0 < 1) {
                                     var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/"]');
                                     //alert("Attempting to fetch files");
-                                    0 < 1 ? github.repos.contents({
+                                    github.repos.contents({
                                         owner: user.login,
                                         path: "/raw/pages/pages.json",
                                         repo: get[1]
@@ -369,81 +369,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             }
                                         }
 
-                                    }
-                                    ) : github.repos.contents({
-                                        owner: user.login,
-                                        path: "/raw/pages",
-                                        repo: get[1]
-                                    }, {}).then(data=>{
-                                        //alert("Files fetched successfully");
-                                        if (data) {
-                                            console.log(84, {
-                                                data
-                                            });
-                                            feed.innerHTML = "";
-                                            if (data.length > 0) {
-                                                //vp.all('card')[1].find('box').classList.remove('display-none');
-                                                var html = "";
-                                                var d = 0;
-                                                var names = [];
-                                                var html = "";
-                                                var hrefs = [];
-
-                                                do {
-                                                    var row = data[d];
-                                                    var name = row.name.split('.');
-                                                    if (name[name.length - 1] === "html") {
-                                                        name.pop();
-                                                        name.shift();
-                                                        var href = "/" + name.join('/');
-                                                        hrefs[d] = href;
-                                                    }
-                                                    d++;
-                                                } while (d < data.length);
-                                                hrefs.sort();
-
-                                                d = 0;
-                                                var names = [];
-                                                do {
-                                                    var href = hrefs[d];
-                                                    names[d] = rout.ed.dir(href);
-                                                    d++;
-                                                } while (d < hrefs.length);
-
-                                                d = 0;
-                                                do {
-                                                    var href = hrefs[d];
-                                                    var card = byId('template-feed-dashboard-pages').content.firstElementChild.cloneNode(true);
-                                                    if ((d > 0 && names[d][0] !== names[d - 1][0])) {
-                                                        html += "</card>";
-                                                    }
-                                                    if (d === 0 || (d > 0 && names[d][0] !== names[d - 1][0])) {
-                                                        html += "<card class='" + card.className + "'>";
-                                                    }
-                                                    card.find('[placeholder="Page URL"]').textContent = href;
-                                                    card.firstElementChild.dataset.sha = row.sha;
-                                                    //card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
-                                                    card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
-                                                    card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
-                                                    card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
-                                                    html += card.innerHTML;
-                                                    //feed.insertAdjacentHTML('beforeend', html);
-                                                    d++;
-                                                } while (d < names.length);
-
-                                                feed.innerHTML = html;
-                                            }
-                                        }
-                                    }
-                                    ).catch(async(error)=>{
-                                        //alert("Failed to fetch files");
-                                        console.log("43.error", {
-                                            error
-                                        });
-                                        if (error.code === 404) {
-                                            //alert("Setup Project");
-                                            resolve(route);
-                                        }
                                     }
                                     );
                                 }

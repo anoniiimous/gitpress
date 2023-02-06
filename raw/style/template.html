@@ -1,7 +1,7 @@
-<pages data-pages="/dashboard/*/files/file/">
+<!--<pages data-pages="/dashboard/*/files/file/">
     <page class="flex-grow-1 position-fixed top-0 width-100pct" data-fetch="raw/pages/page.dashboard.blog.files.file.html" data-page="/dashboard/*/files/file/"></page>
     <page class="flex-grow-1 position-fixed top-0 width-100pct" data-fetch="raw/pages/page.dashboard.blog.files.file.name.html" data-page="/dashboard/*/files/file/*/"></page>
-</pages>
+</pages>-->
 <pages class="-isauth backdrop-blur-10px flex-grow-1 min-height-100pct position-fixed width-100pct" data-background-color="rgba(0,0,0,0.5)" data-fetch="raw/pages/page.dashboard.blog.pages.page.html" data-pages="/dashboard/*/pages/*/"></pages>
 <main>
     <page class="flex-1" data-fetch="raw/pages/page.index.html" data-page="/"></page>
@@ -21,7 +21,9 @@
                     <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 margin-x-10px margin-top-10px overflow-hidden position-fixed right-0" data-960px-width="calc(100% - 20px)" data-fetch="raw/pages/pages.dashboard.blog.build.html" data-height="calc(100% - 10px)" data-pages="/dashboard/*/build/" data-transform="translateY(100%)" data-transition="0.3s" data-width="calc(100% - 260px)"></pages>
                 </pages>
                 <pages class="flex-grow-1" data-pages="/dashboard/*/files/">
-                    <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.blog.files.html" data-pages="/dashboard/*/files/" data-root="/dashboard/*/files/"></pages>
+                    <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.blog.files.html" data-page="/dashboard/*/files/"></pages>
+                    <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.blog.files.file.html" data-page="/dashboard/*/files/file/"></pages>
+                    <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.blog.files.file.name.html" data-page="/dashboard/*/files/file/*/"></pages>
                     <!--<page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.blog.files.file.html" data-page="/dashboard/*/files/file/"></page>-->
                 </pages>
                 <pages class="flex-grow-1" data-pages="/dashboard/*/media/">
