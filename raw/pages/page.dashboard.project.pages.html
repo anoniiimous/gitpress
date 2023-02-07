@@ -53,12 +53,10 @@
 <template id="template-feed-dashboard-pages">
     <card class="background-color-ccc border-radius-10px">
         <row class="align-items-center justify-content-center">
-            <box data-tap="controller.pages.delete(event.target)">
-                <section>
-                    <ico>
-                        <n class="gg-trash"></n>
-                    </ico>
-                </section>
+            <box>
+                <ico class="align-items-center display-flex justify-content-center">
+                    <input class="background-color-transparent border-radius-50pct" data-height="20px" data-width="20px" type="checkbox">
+                </ico>
             </box>
             <box class="flex-1">
                 <section>
@@ -71,30 +69,30 @@
                         <n class="gg-more-vertical-alt"></n>
                     </ico>
                 </row>
-                <column class="-hd-width-100pct- align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px z-index-3" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
-                    <text class="white-space-nowrap">
+                <column class="align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px z-index-3" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                    <text class="align-items-center display-flex grid-gap-5px justify-content-center">
                         <ico data-height="30px" data-width="30px">
                             <n class="gg-file-add"></n>
                         </ico>
-                        <span>Insert Page</span>
+                        <span>Insert</span>
                     </text>
-                    <text class="white-space-nowrap">
+                    <text class="align-items-center display-flex grid-gap-5px justify-content-center">
                         <ico data-height="30px" data-width="30px">
                             <n class="gg-eye"></n>
                         </ico>
-                        <span>Preview Page</span>
+                        <span>Preview</span>
                     </text>
-                    <text class="white-space-nowrap">
+                    <text class="align-items-center display-flex grid-gap-5px justify-content-center">
                         <ico data-height="30px" data-width="30px">
                             <n class="gg-code-slash"></n>
                         </ico>
-                        <span>Update Page</span>
+                        <span>Update</span>
                     </text>
-                    <text class="white-space-nowrap">
+                    <text class="align-items-center display-flex grid-gap-5px justify-content-center" data-tap="controller.pages.delete(event.target)">
                         <ico data-height="30px" data-width="30px">
                             <n class="gg-trash"></n>
                         </ico>
-                        <span>Delete Page</span>
+                        <span>Delete</span>
                     </text>
                 </column>
             </box>

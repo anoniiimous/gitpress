@@ -19,7 +19,7 @@
             </card>
             <card>
                 <row>
-                    <box class="line-height-30px" data-href="/dashboard/:get/merch/catalog/">
+                    <box class="display-none line-height-30px" data-href="/dashboard/:get/merch/catalog/">
                         <row class="align-items-center justify-content-center">
                             <ico data-height="30px" data-width="50px">
                                 <n class="gg-tag"></n>
@@ -35,14 +35,14 @@
         <template id="template-feed-dashboard-merch">
             <card class="background-color-ccc border-radius-10px" data-max-width="calc(100vw - 40px)">
                 <row class="justify-content-space-between">
-                    <box data-tap="controller.posts.delete(event.target)">
+                    <box>
                         <ico class="align-items-center display-flex justify-content-center">
-                            <input class="background-color-transparent border-radius-50pct" data-height="20px" data-width="20px" onchange="on.change.my.privacy(event)" type="checkbox">
+                            <input class="background-color-transparent border-radius-50pct" data-height="20px" data-width="20px" type="checkbox">
                         </ico>
                     </box>
                     <box data-width="calc(100% - 50px)">
                         <row class="align-items-center">
-                            <input class="display-block flex-1 font-size-16px font-weight-bolder line-height-50px overflow-hidden Rtext-overflow-ellipsis white-space-nowrap" disabled placeholder="Title" type="text">
+                            <text class="display-block flex-1 font-size-16px font-weight-bolder line-height-50px overflow-hidden Rtext-overflow-ellipsis white-space-nowrap" placeholder="Title"></text>
                             <ico data-display="none" data-height="30px" data-width="30px">
                                 <n class="--ggs-50pct gg-pen"></n>
                             </ico>
@@ -67,7 +67,7 @@
                                 </ico>
                                 <span>Update</span>
                             </text>
-                            <text class="align-items-center display-flex grid-gap-5px justify-content-center">
+                            <text class="align-items-center display-flex grid-gap-5px justify-content-center" data-tap="controller.merch.delete(event.target)">
                                 <ico data-height="30px" data-width="30px">
                                     <n class="gg-trash"></n>
                                 </ico>

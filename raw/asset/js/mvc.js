@@ -270,7 +270,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         });
                                         feed.innerHTML = "";
                                         if (data.length > 0) {
-                                            //vp.all('card')[1].find('box').classList.remove('display-none');
+                                            vp.all('header card')[1].find('box').classList.remove('display-none');
                                             var html = "";
                                             var d = 0;
                                             do {
@@ -278,13 +278,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var title = row.title;
                                                 var slug = row.slug;
                                                 var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
-                                                card.find('[placeholder="Title"]').setAttribute('value', title);
+                                                card.find('[placeholder="Title"]').textContent = title;
                                                 card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                                 html += card.outerHTML;
                                                 //feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
                                             } while (d < data.length);
                                             feed.innerHTML = html;
+                                        } else {
+                                            vp.all('header card')[1].find('box').classList.add('display-none');                                                        
                                         }
                                     }
 
@@ -322,7 +324,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             });
                                             feed.innerHTML = "";
                                             if (data.length > 0) {
-                                                //vp.all('card')[1].find('box').classList.remove('display-none');
+                                                vp.all('header card')[1].find('box').classList.remove('display-none');
                                                 var html = "";
                                                 var d = 0;
                                                 var names = [];
@@ -366,6 +368,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 } while (d < names.length);
 
                                                 feed.innerHTML = html;
+                                            } else {
+                                                vp.all('header card')[1].find('box').classList.add('display-none');
                                             }
                                         }
 
