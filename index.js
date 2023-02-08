@@ -140,7 +140,12 @@ async function init() {
     )
 
     //DATABASE
-    var cache = window.cache = {};
+    var cache = window.cache = {
+        feed: {
+            dashboard: {}
+        },
+        repository: null
+    };
     if (localStorage.githubAccessToken) {
         try {
             window.owner = await github.user.get();

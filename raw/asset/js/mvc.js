@@ -725,24 +725,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (github.oauth.verify()) {
                         var params = {};
                         const user = await github.user.get();
-                        params = 0 < 1 ? {
-                            owner: user.login,
-                            repo: "db.dompad.io",
-                            path: "/v1/apps/index.json"
-                        } : {
-                            query: {
-                                per_page: 25,
-                                sort: "created"
-                            }
-                        };
-                        //github.user.repos(params).then(d=>{
-                        github.repos.contents(params).then(d=>{
-                            var data = JSON.parse(atob(d.content))
-                            //var data = 0 < 1 ? d : JSON.parse(atob(d.content));
-                            console.log(596, {
-                                d,
-                                data
-                            });
+                        cache.feed.dashboard.index = true;
+                        var p = d=>{
+                            var data = d.content ? JSON.parse(atob(d.content)) : d;
                             const feed = byId('feed-dashboard');
                             feed.innerHTML = "";
                             if (data.length > 0) {
@@ -773,7 +758,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 } while (x < data.length);
                             }
                         }
-                        );
+                        cache.feed.dashboard.index ? github.repos.contents({
+                            owner: user.login,
+                            repo: "db.dompad.io",
+                            path: "/v1/apps/index.json"
+                        }).then(p) : github.user.repos({
+                            query: {
+                                per_page: 25,
+                                sort: "created"
+                            }
+                        }).then(p);
                     }
                 }
                 resolve(route);
@@ -1778,7 +1772,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 ) : null;
             }
         }
-        
+
     },
 
     pages: {
