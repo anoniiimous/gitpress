@@ -142,7 +142,9 @@ async function init() {
     //DATABASE
     var cache = window.cache = {
         feed: {
-            dashboard: {}
+            dashboard: {
+                index: false
+            }
         },
         repository: null
     };

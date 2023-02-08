@@ -130,7 +130,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "file") {}
                             }
                             var feed = byId('feed-dashboard-files');
-                            if (feed && feed.innerHTML === "" && get.length < 4) {
+                            if (feed && feed.innerHTML === "") {
                                 const name = get[4] + '.html';
                                 var params = {
                                     owner: user.login,
@@ -152,7 +152,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var d = 0;
                                             do {
                                                 var row = data[d];
-                                                var box = byId('template-dashboard-files').content.firstElementChild.cloneNode(true);
+                                                var box = byId('template-feed-dashboard-files').content.firstElementChild.cloneNode(true);
                                                 var name = row.name;
                                                 var arr = name.split('.');
                                                 var ext = arr[arr.length - 1];
@@ -162,12 +162,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 ["mp4", "wav"].includes(ext) ? icon = "video" : null;
                                                 ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
                                                 box.dataset.sha = row.sha;
-                                                box.find('ico n').className = "gg-" + icon;
+                                                box.find('ico n').classList.add("gg-" + icon);
                                                 box.find('text').dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
-                                                box.find('text span').textContent = row.name;
-                                                box.all('text')[1].textContent = formatBytes(row.size);
+                                                box.find('[placeholder="Filename"]').textContent = row.name;
+                                                //box.all('text')[1].textContent = formatBytes(row.size);
                                                 var html = box.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
+                                                //alert(html);
+                                                console.log(feed);
                                                 d++;
                                             } while (d < data.length)
                                         } else {
@@ -725,7 +727,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (github.oauth.verify()) {
                         var params = {};
                         const user = await github.user.get();
-                        cache.feed.dashboard.index = true;
                         var p = d=>{
                             var data = d.content ? JSON.parse(atob(d.content)) : d;
                             const feed = byId('feed-dashboard');
@@ -1358,8 +1359,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 sha: references.object.sha
                             });
                             var array = trees.tree;
-                            array = array.filter(branch=>(branch.path !== "raw/pages" && branch.path !== "raw/style"))
-                            array = array.filter(branch=>(branch.path.startsWith('raw/pages') || branch.path.startsWith('raw/style')))
+                            array = array.filter(branch=>(branch.path !== "raw/files" && branch.path !== "raw/pages" && branch.path !== "raw/style"))
+                            array = array.filter(branch=>(branch.path.startsWith('raw/files') || branch.path.startsWith('raw/pages') || branch.path.startsWith('raw/style')))
                             if (array.length > 0) {
                                 var t = 0;
                                 do {
