@@ -840,7 +840,7 @@ window.github = {
         }
     },
     user: {
-        get: ()=>{
+        get: (prams)=>{
             return new Promise((resolve,reject)=>{
                 const url = github.endpoint + "/user";
                 const a = (d)=>{
@@ -924,6 +924,32 @@ window.github = {
                 );
             }
         }
+    },
+    users: {
+
+        get: (params)=>{
+            return new Promise((resolve,reject)=>{
+                const url = github.endpoint + "/users/" + params.username;
+                const a = (d)=>{
+                    const data = JSON.parse(d);
+                    resolve(data);
+                }
+                const b = (error)=>{
+                    console.log(error);
+                    //alert(error.message.message);
+                    reject(error);
+                }
+                const settings = {};
+                const accessToken = localStorage.githubAccessToken;
+                accessToken ? settings.headers = {
+                    Accept: "application/vnd.github+json",
+                    Authorization: "token " + accessToken
+                } : null;
+                ajax(url, settings).then(a).catch(b);
+            }
+            );
+        }
+            
     }
 }
 window.github.crud = {};

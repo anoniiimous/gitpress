@@ -243,6 +243,10 @@
     .bottom-0 {
         bottom: 0;
     }
+
+    .top-60px {
+        top: 60px;
+    }
 }
 
 /*BOX SHADOW*/
@@ -901,6 +905,10 @@
         margin-top: 50px;
     }
 
+    .margin-top-60px {
+        margin-top: 60px;
+    }
+
     .margin-top-70px {
         margin-top: 70px;
     }
@@ -1176,6 +1184,10 @@
 
     .padding-top-20px {
         padding-top: 20px;
+    }
+
+    .padding-top-60px {
+        padding-top: 60px;
     }
 
     .padding-y-20px {

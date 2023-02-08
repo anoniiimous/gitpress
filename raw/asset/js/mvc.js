@@ -73,6 +73,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     );
                     resolve(route);
                 } else {
+                    var vp = dom.body.find('[data-page="/*/"]');
+                    var owner = await github.users.get({
+                        username: get[0]
+                    });
+                    console.log({
+                        owner
+                    });
+                    vp.find('block > picture + section picture img').src = owner.avatar_url;
+                    vp.find('[placeholder="Firstname Lastname"]').textContent = owner.name;
+                    vp.find('[placeholder="username"]').textContent = owner.login;
                     resolve(route);
                 }
             }
