@@ -56,20 +56,17 @@
     <block>
         <column>
             <card class="background-color-f5 border-radius-10px margin-auto width-100pct">
-                <column id="feed-new-import" data-tap="controller.new.import(event.target)"></column>
+                <column id="feed-new-import"></column>
             </card>
         </column>
     </block>
 </blocks>
 <template id="template-feed-new-import">
-    <card class="margin-bottom-1px margin-auto padding-y-10px width-100pct">
-        <row class="align-items-center flex-grow-1 margin-auto max-width-768px width-100pct">
+    <card class="margin-bottom-1px margin-auto padding-y-10px width-100pct" data-tap="controller.new.importer(event.target)">
+        <row class="-hd-max-width-480px -hd-padding-x-20px align-items-center flex-grow-1 margin-auto max-width-768px padding-x-4vw width-100pct" data-hd-width="calc(100% - 40px)" data-width="calc(100% - 8vw)">
             <box>
                 <row>
-                    <ico class="background-color-000 border-radius-15pct" data-height="30px" data-width="30px">
-                        <n></n>
-                        <n class="empty-state"></n>
-                    </ico>
+                    <ico class="background-color-000 border-radius-15pct" data-height="30px" data-width="30px"></ico>
                 </row>
             </box>
             <box class="flex-1 justify-content-space-between">

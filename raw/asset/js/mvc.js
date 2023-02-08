@@ -286,7 +286,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             } while (d < data.length);
                                             feed.innerHTML = html;
                                         } else {
-                                            vp.all('header card')[1].find('box').classList.add('display-none');                                                        
+                                            vp.all('header card')[1].find('box').classList.add('display-none');
                                         }
                                     }
 
@@ -725,21 +725,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (github.oauth.verify()) {
                         var params = {};
                         const user = await github.user.get();
-                        0 > 1 ? params = {
+                        params = 0 < 1 ? {
                             owner: user.login,
                             repo: "db.dompad.io",
                             path: "/v1/apps/index.json"
-                        } : null;
-                        0 < 1 ? params = {
+                        } : {
                             query: {
                                 per_page: 25,
                                 sort: "created"
                             }
-                        } : null;
-                        //github.repos.contents(params).then(d=>{
-                        github.user.repos(params).then(d=>{
-                            //var data = JSON.parse(atob(d.content))
-                            var data = 0 < 1 ? d : JSON.parse(atob(d.content));
+                        };
+                        //github.user.repos(params).then(d=>{
+                        github.repos.contents(params).then(d=>{
+                            var data = JSON.parse(atob(d.content))
+                            //var data = 0 < 1 ? d : JSON.parse(atob(d.content));
                             console.log(596, {
                                 d,
                                 data
@@ -1709,148 +1708,77 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         import: async(target)=>{
+
             const user = await github.user.get();
-            if (target.closest('card')) {
-                var el = target.closest('card').all('box')[1].find('text');
-                var owner = el.dataset.owner;
-                var repository = el.textContent;
-                var private = el.nextElementSibling.dataset.display === "flex";
-                var params = {
+
+            var el = target.closest('card').all('box')[1].find('text');
+            var owner = el.dataset.owner;
+            var repository = el.textContent;
+            var private = el.nextElementSibling.dataset.display === "flex";
+
+            var confirm = await modal.confirm({
+                body: "Are you sure you want to import this project?",
+                title: "Import " + repository
+            }, ["No", "Yes"]);
+            if (confirm) {
+
+                var date = new Date();
+                var pushed_at = date.toISOString();
+
+                var row = {
+                    "name": repository,
+                    "owner": {
+                        "login": owner
+                    },
+                    "private": private,
+                    "pushed_at": pushed_at
+                };
+                var sha = null;
+
+                try {
+                    var data = await github.repos.contents({
+                        owner: user.login,
+                        path: "/v1/apps/index.json",
+                        repo: "db.dompad.io"
+                    });
+                    var sha = data.sha;
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.find(item=>item.name === repository);
+                var str = JSON.stringify(rows, null, 4);
+
+                inc ? alert("This project already exists.") : 0 < 1 ? github.repos.contents({
                     owner: user.login,
-                    path: "/v1/apps/index.json",
-                    repo: "db.dompad.io"
-                }
-                var settings = {};
-
-                var n = async(data)=>{
-                    var href = "/dashboard/" + repository + "/";
-                    var confirm = await modal.confirm({
-                        body: "Would you like to start editing this project?",
-                        title: params.repo
-                    }, ["Builder", "Dashboard"]);
-                    console.log(1540, {
-                        href,
-                        confirm
-                    });
-                    if (confirm) {
-                        href = "/dashboard/";
-                    }
-                    console.log(1544, {
-                        href,
-                        confirm
-                    });
-                    href.router();
-                }
-
-                var s = async(d)=>{
-                    alert(1);
-                    var dd = JSON.parse(atob(d.content));
-                    console.log(d, dd, d.content.length);
-                    d.content = d.content.length > 0 ? d.content : [];
-                    console.log(d);
-                    aleret(2);
-                    var data = JSON.parse(atob(d.content))
-                    alert(3);
-                    var row = {
-                        "name": repository,
-                        "owner": {
-                            "login": owner
-                        },
-                        "private": private,
-                        "pushed_at": "2023-01-20T12:30:44Z"
-                    };
-                    alert(2);
-                    var data = nodb.check.value(data, {
-                        name: "name",
-                        value: row.name
-                    }, row);
-                    var obj = JSON.stringify({
-                        content: btoa(JSON.stringify(data, null, 4)),
-                        message: "Updated Apps Cache",
-                        sha: d.sha ? d.sha : null
-                    });
-                    settings = {
-                        data: obj,
-                        dataType: "PUT"
-                    }
-                    alert(3);
-                    console.log(1703, {
-                        a,
-                        d,
-                        data,
-                        settings
-                    });
-                    0 < 1 ? github.repos.contents(params, settings).then(n).catch((e)=>{
-                        console.log(1560, e);
-                        modal.alert({
-                            body: e.message.message,
-                            submit: "OK",
-                            title: "Import Error"
-                        });
-                    }
-                    ) : null;
-                }
-                var ss = ()=>{
-                    console.log("Creating database repository for " + user.login + "...", {
-                        params
-                    });
-                    github.user.repos({}, {
-                        data: JSON.stringify({
-                            name: params.repo
-                        }),
-                        dataType: "POST"
-                    }).then(()=>{
-                        settings = {
-                            data: JSON.stringify({
-                                content: btoa(JSON.stringify([], null, 4)),
-                                message: ""
-                            }),
-                            dataType: "PUT"
-                        }
-                        github.repos.contents(params, settings).then(n).catch((e)=>{
-                            console.log(1560, e);
-                            modal.alert({
-                                body: e.message.message,
-                                submit: "OK",
-                                title: "Import Error"
-                            });
-                        }
-                        );
-                    }
-                    ).catch((e)=>{
-                        console.log(1560, e);
-                        modal.alert({
-                            body: e.message.message,
-                            submit: "OK",
-                            title: "Database Error"
-                        });
-                    }
-                    )
-                }
-
-                var p = {
-                    "template_owner": "dompad",
-                    "template_repo": "database"
-                };
-                var c = {
+                    repo: "db.dompad.io",
+                    path: "/v1/apps/index.json"
+                }, {
                     data: JSON.stringify({
-                        name: "db.dompad.io",
-                        private: true
+                        content: btoa(unescape(encodeURIComponent(str))),
+                        message: "Import " + repository + " to Projects",
+                        sha
                     }),
-                    dataType: "POST"
-                };
-                var i = (e)=>{
-                    console.log(1560, e);
-                    modal.alert({
-                        body: e.message.message,
-                        submit: "OK",
-                        title: "Cache Error"
-                    });
+                    dataType: "PUT"
+                }).then(()=>{
+                    ("/dashboard/" + repository + "/").router()
                 }
-                github.repos.contents(params).then(s).catch(ss);
-                //github.repos.generate(p, c).then(s).catch(i)
+                ).catch(e=>{
+                    console.log(e);
+                    0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
+                        body: "There was an error creating this page.",
+                        submit: "OK",
+                        title: "Error"
+                    })) : null;
+                }
+                ) : null;
             }
         }
+        
     },
 
     pages: {
@@ -1994,6 +1922,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //alert(value);
 
             if (0 < 1 && value.length > 0) {
+
                 const user = await github.user.get();
                 const fix = value.toLowerCase();
                 const filename = "page." + fix.split(' ').join('-') + ".html";

@@ -321,7 +321,7 @@ function ajax(url, settings) {
             resolve(response);
         }
         ).then(response=>resolve(response)).catch(error=>{
-            console.log('vanilla.js ajax.fetch catch', error.message);
+            //console.log('vanilla.js ajax.fetch catch', error.message);
             const isJSON = is.json(error.message);
             var message = isJSON ? JSON.parse(error.message) : error.message;
             reject(message);
