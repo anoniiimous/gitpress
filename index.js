@@ -143,7 +143,7 @@ async function init() {
     var cache = window.cache = {
         feed: {
             dashboard: {
-                index: false
+                index: true
             }
         },
         repository: null

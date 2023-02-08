@@ -37,6 +37,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         }
 
         $(dom.body.all('aside')).remove()
+        console.log(route, root);
 
         if (root) {
 
@@ -70,6 +71,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         });
                     }
                     );
+                    resolve(route);
                 } else {
                     resolve(route);
                 }
