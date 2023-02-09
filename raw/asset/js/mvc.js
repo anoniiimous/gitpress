@@ -1620,7 +1620,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             if (["audio", "image", "video"].includes(type)) {
                 type === "image" ? type = "photo" : null;
                 ('/dashboard/:get/media/' + type).router().then(()=>{
-                    var vp = dom.body.find('[data-page="/dashboard/*/media/' + type + '/"]');
+                    var vp = dom.body.find('[data-pages="/dashboard/*/media/' + type + '/"]');
                     if (type === "photo") {
                         var img = document.createElement('img');
                         img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
