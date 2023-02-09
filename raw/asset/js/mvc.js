@@ -1614,7 +1614,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 type
             })
             if (["audio", "image", "video"].includes(type)) {
-                ('/dashboard/:get/media/' + type).router();
+                type === "image" ? type = "photo" : null;
+                ('/dashboard/:get/media/' + type).router().then(()=>{
+                    var vp = dom.body.find('[data-page="/dashboard/*/media/' + type + '/"]');
+                    if (type === "video") {
+                        vp.find('video').src = b64;
+                    }
+                }
+                );
             }
         }
 
