@@ -694,6 +694,12 @@
     .gap-50px {
         gap: 50px;
     }
+
+    @media (max-width: 480px) {
+        .-dw480px-gap-10px {
+            gap: 10px;
+        }
+    }
 }
 
 /*GRID GAP*/
@@ -1077,6 +1083,11 @@
         .-mobile-margin-top-10px {
             margin-top: 10px;
         }
+
+        .-dw480px-margin-x-10px {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
     }
 }
 
@@ -1140,6 +1151,12 @@
     @media (max-width: 640px) {
         .-dw960px-max-width-640px {
             max-width: 640px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        [data-480px-max-width="calc(100% - 20px)"] {
+            max-width: calc(100% - 20px);
         }
     }
 }
@@ -1824,7 +1841,7 @@
         .-dw1320px-width-100pct, [data-1320px-width="100%"] {
             width: 100%;
         }
-        
+
         .-dw1320px-width-960px, [data-1320px-width="960px"] {
             width: 960px;
         }
@@ -1850,7 +1867,7 @@
         .-dw960px-width-480px, [data-960px-width="480px"] {
             width: 648px
         }
-        
+
         .-dw960px-width-640px, [data-960px-width="640px"] {
             width: 640px
         }

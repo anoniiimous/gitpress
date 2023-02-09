@@ -1621,14 +1621,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 type === "image" ? type = "photo" : null;
                 ('/dashboard/:get/media/' + type).router().then(()=>{
                     var vp = dom.body.find('[data-pages="/dashboard/*/media/' + type + '/"]');
+                    if (type === "audio") {
+                        var audio = document.createElement('audio');
+                        audio.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                        audio.src = b64;
+                        vp.find('figure').innerHTML = udio.outerHTML;
+                    }
                     if (type === "photo") {
                         var img = document.createElement('img');
                         img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
                         img.src = b64;
-                        vp.find('picture').innerHTML = img.outerHTML;
+                        vp.find('figure').innerHTML = img.outerHTML;
                     }
                     if (type === "video") {
-                        vp.find('video').src = b64;
+                        var video = document.createElement('video');
+                        video.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                        video.controls = true;
+                        video.playsinline = true;
+                        video.src = b64;
+                        vp.find('figure').innerHTML = video.outerHTML;
                     }
                 }
                 );
