@@ -1623,7 +1623,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var vp = dom.body.find('[data-page="/dashboard/*/media/' + type + '/"]');
                     if (type === "photo") {
                         var img = document.createElement('img');
-                        img.className = "height-100pct object-fit-contain position-absolute top-0 width-100pct";
+                        img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
                         img.src = b64;
                         vp.find('picture').innerHTML = img.outerHTML;
                     }
