@@ -19,16 +19,78 @@
             </card>
             <card>
                 <row>
-                    <box class="display-none line-height-30px" data-href="/dashboard/:get/files/file/">
+                    <box class="line-height-30px" data-href="/dashboard/:get/media/">
                         <row class="align-items-center justify-content-center">
                             <ico data-height="30px" data-width="30px">
-                                <n class="gg-software-upload"></n>
+                                <n class="gg-cloud"></n>
                             </ico>
-                            <text class="font-size-14px font-weight-bolder">Upload File</text>
+                            <text class="font-size-14px font-weight-bolder">All Media</text>
                         </row>
                     </box>
                 </row>
             </card>
         </row>
     </header>
+    <block class="-dw480px-margin-10px grid-gap-20px margin-20px">
+        <column>
+            <card class="border-1px-solid border-radius-20px grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
+                <row class="align-items-center flex-1 gap-20px padding-20px">
+                    <box class="flex-1 flex-direction-column height-360px justify-content-space-between">
+                        <row>
+                            <ico class="background-color-000 border-radius-50px color-fff">
+                                <n class="gg-play-button"></n>
+                            </ico>
+                        </row>
+                        <column>
+                            <audio class="margin-top-auto width-100pct"></audio>
+                        </column>
+                    </box>
+                    <box class="height-360px width-360px">
+                        <figure class="border-1px-solid border-radius-10px height-100pct overflow-hidden position-absolute top-0 width-100pct"></figure>
+                        <column class="align-items-center display-flex empty-state flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
+                            <label for="file-dashboard-media-audio-cover">
+                                <text class="background-color-333 color-fff display-block line-height-50px padding-x-20px position-relative">Add New Cover</text>
+                                <input accept="image/jpeg" id="file-dashboard-media-audio-cover" onchange="controller.media.cover(event)" type="file">
+                            </label>
+                        </column>
+                    </box>
+                </row>
+            </card>
+        </column>
+        <flex class="-dw1320px-flex-direction-column flex-1 flex-direction-row grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
+            <card class="flex-1">
+                <column class="gap-50px">
+                    <box class="gap-10px">
+                        <header>
+                            <text class="font-weight-bolder text-transform-uppercase">Details</text>
+                        </header>
+                        <column class="gap-10px">
+                            <input class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
+                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" placeholder="Provide a detailed description."></textarea>
+                        </column>
+                        <footer class="gap-10px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <span class="font-weight-bolder" contenteditable="true" placeholder="Add Tag"></span>
+                            </text>
+                        </footer>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw1320px-width-100pct width-320px">
+                <section>
+                    <box class="width-100pct">
+                        <flex class="-dw480px-gap-10px gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/media/">Cancel</text>
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Post It</text>
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Preview</text>
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>
+                        </flex>
+                    </box>
+                </section>
+            </card>
+        </flex>
+    </block>
 </blocks>

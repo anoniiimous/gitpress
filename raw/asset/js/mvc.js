@@ -1608,6 +1608,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     media: {
 
+        cover: async(event)=>{
+            var figure = event.target.closest('box').firstElementChild;
+            var b64 = await on.change.file(event);
+            var split = b64.split(';base64,')
+            var mime = split[0].split(':')[1];
+            var type = mime.split('/')[0]
+            console.log({
+                b64,
+                figure,
+                mime,
+                type
+            })
+            if (type === "image") {
+                var img = document.createElement('img');
+                img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                img.src = b64;
+                figure.innerHTML = img.outerHTML;
+            }
+        }
+        ,
+
         import: (b64)=>{
             var split = b64.split(';base64,')
             var mime = split[0].split(':')[1];
@@ -1622,10 +1643,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 ('/dashboard/:get/media/' + type).router().then(()=>{
                     var vp = dom.body.find('[data-pages="/dashboard/*/media/' + type + '/"]');
                     if (type === "audio") {
+                        var column = vp.find('.gg-play-button').closest('box').find('column');
                         var audio = document.createElement('audio');
                         audio.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
                         audio.src = b64;
-                        vp.find('figure').innerHTML = udio.outerHTML;
+                        0 < 1 ? audio.controls = true : null;
+                        column.innerHTML = audio.outerHTML;
                     }
                     if (type === "photo") {
                         var img = document.createElement('img');

@@ -785,6 +785,10 @@
         height: 250px;
     }
 
+    .height-360px, [data-height="360px"] {
+        height: 360px;
+    }
+
     .height-30px, [data-height="30px"] {
         height: 30px;
     }
@@ -883,6 +887,10 @@
 
     .margin-20px {
         margin: 20px;
+    }
+
+    .margin-60px {
+        margin: 60px;
     }
 
     .margin-25px-auto {
@@ -1799,6 +1807,10 @@
 
     .width-320px, [data-width="320px"] {
         width: 320px;
+    }
+
+    .width-360px, [data-width="360px"] {
+        width: 360px;
     }
 
     .width-425px, [data-width="4250px"] {
