@@ -213,48 +213,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "catalog") {
                                     var feed = byId('feed-dashboard-catalog');
                                     if (get[4]) {
-                                        if (get[4] === "item") {
-                                            var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/item/"]');
-                                            var name = rout.ed.dir(route.path);
-                                            name.splice(0, 4);
-                                            //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
-                                            vp.find('[placeholder="Product Name"]').value = "";
-                                        }
-                                    } else {
-                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/"]');
-                                        //alert("Attempting to fetch files");
-                                        github.repos.contents({
-                                            owner: user.login,
-                                            path: "/raw/merch/catalog.json",
-                                            repo: get[1]
-                                        }, {}).then(d=>{
-                                            var data = JSON.parse(atob(d.content));
-                                            if (data) {
-                                                console.log(84, {
-                                                    data
-                                                });
-                                                feed.innerHTML = "";
-                                                if (data.length > 0) {
-                                                    //vp.all('card')[1].find('box').classList.remove('display-none');
-                                                    var html = "";
-                                                    var d = 0;
-                                                    do {
-                                                        var row = data[d];
-                                                        var title = row.title;
-                                                        var slug = row.slug;
-                                                        var card = byId('template-feed-dashboard-catalog').content.firstElementChild.cloneNode(true);
-                                                        card.find('[placeholder="Title"]').textContent = title;
-                                                        card.find('.gg-math-plus').closest('box').dataset.href = "/dashboard/:get/merch/product/" + slug + "/";
-                                                        html += card.outerHTML;
-                                                        //feed.insertAdjacentHTML('beforeend', html);
-                                                        d++;
-                                                    } while (d < data.length);
-                                                    feed.innerHTML = html;
-                                                }
-                                            }
-
-                                        }
-                                        )
+                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/"]');
+                                        var name = rout.ed.dir(route.path);
+                                        name.splice(0, 4);
+                                        //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+                                        vp.find('[placeholder="Enter a title"]').value = "";
                                     }
                                 } else if (get[3] === "product") {
                                     var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/product/"]');
@@ -264,7 +227,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var json = await github.repos.contents({
                                             owner: user.login,
                                             repo: get[1],
-                                            path: "raw/merch/catalog.json"
+                                            path: "raw/merch/merch.json"
                                         }, {
                                             accept: "application/vnd.github.raw"
                                         });
@@ -278,7 +241,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 //alert("Attempting to fetch files");
                                 github.repos.contents({
                                     owner: user.login,
-                                    path: "/raw/merch/catalog.json",
+                                    path: "/raw/merch/merch.json",
                                     repo: get[1]
                                 }, {}).then(d=>{
                                     var data = JSON.parse(atob(d.content));
@@ -1671,13 +1634,54 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    merch: {
+
+        thumb: async(event)=>{
+            var target = event.target;
+            var card = target.closest('card');
+            var section = card.find('box > section');
+            var thumbnails = card.find('[data-columns]')
+            var b64 = await on.change.file(event);
+
+            console.log(1645, {
+                picture
+            });
+
+            var template = card.find('template').content.firstElementChild.cloneNode(true);
+            var img = document.createElement('img');
+            img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+            img.src = b64;
+            template.find('picture').innerHTML = img.outerHTML;
+            thumbnails.lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+
+            var picture = document.createElement('picture');
+            picture.className = "border-radius-20px display-inline-flex height-100pct overflow-hidden position-relative top-0 width-100pct";
+            picture.appendChild(img);
+
+            section.appendChild(picture);
+            section.style.transform = "translateX(-" + section.lastElementChild.index() + "00%)";
+        }
+        ,
+
+        pinky: (target)=>{
+            var box = target.closest('box');
+            var row = box.firstElementChild;
+            var card = target.closest('card');
+            var thumbnails = card.find('card > row');
+            var index = row.lastElementChild.index();
+            row.lastElementChild.remove();
+            thumbnails.children[index].remove();
+        }
+
+    },
+
     menu: {
 
         close: ()=>{
 
             const nav = dom.body.find('body > main nav');
             nav.dataset["960pxTransform"] = "translateX(0%)";
-            nav.firstElementChild.classList.remove('display-none');
+            nav.firstElementChild.classList.rRemove('display-none');
 
         }
         ,

@@ -299,7 +299,7 @@ window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
     return m.includes("#") ||
         (roots.indexOf(root) === -1) ||
         (root === 'dashboard' && n === 1) ||
-        (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n === 3) ||
+        (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n > 3) ||
         (root === 'dashboard' && n > 2 && GOT[2] === "pages") ||
         (GOT.length > 3 && root === 'dashboard' && GOT[2] === "posts" && n === 3) ||
         (root === 'design' && n === 1) ||

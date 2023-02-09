@@ -31,15 +31,34 @@
             </card>
         </row>
     </header>
-    <block class="-dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-max-width-640px flex-direction-row grid-gap-20px justify-content-center margin-auto max-width-1280px padding-20px" data-width="calc(100% - 40px)">
-        <column class="grid-gap-20px">
-            <card class="-dw960px-width-100pct grid-gap-20px width-320px">
+    <block class="-dw480px-margin-10px -dw680px-margin-x-20px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-max-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px max-width-100pct" data-width="1280px">
+        <column class="grid-gap-10px">
+            <card class="-dw480px-gap-10px -dw960px-width-100pct gap-10px width-320px">
                 <section>
-                    <box class="border-1px-solid border-radius-20px padding-top-100pct width-100pct"></box>
+                    <box class="border-1px-solid border-radius-20px overflow-hidden padding-top-100pct width-100pct">
+                        <section class="height-100pct position-absolute top-0 white-space-nowrap width-100pct"></section>
+                        <section class="full-state height-100pct position-absolute top-0 width-100pct">
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" data-height="30px" data-tap="controller.merch.pinky(event.target)" data-width="30px">
+                                <n class="gg-close"></n>
+                            </ico>
+                        </section>
+                    </box>
                 </section>
-                <row>
-                    <box class="border-1px-solid border-radius-20px" data-height="64px" data-width="64px"></box>
+                <row class="gap-10px" data-960px-columns="6" data-columns="4">
+                    <box class="border-1px-solid border-radius-20px overflow-hidden">
+                        <label class="align-items-center height-0 justify-content-center padding-top-100pct position-relative top-0 width-100pct" for="file-dashboard-merch-catalog">
+                            <ico class="position-absolute top-0" data-height="100%" data-width="100%">
+                                <n class="gg-math-plus"></n>
+                            </ico>
+                            <input accept="image/jpeg,image/png" id="file-dashboard-merch-catalog" onchange="controller.merch.thumb(event)" type="file">
+                        </label>
+                    </box>
                 </row>
+                <template id="template-dashboard-merch-catalog">
+                    <box class="height-0 padding-top-100pct width-100pct">
+                        <picture class="border-1px-solid border-radius-20px height-100pct overflow-hidden position-absolute top-0 width-100pct"></picture>
+                    </box>
+                </template>
             </card>
         </column>
         <flex class="flex-1 grid-gap-20px" data-1320px-flex-direction="column" data-1320px-grid-gap="50px">
