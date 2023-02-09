@@ -1,7 +1,7 @@
 <blocks>
     <header class="line-height-50px position-fixed top-0 width-100pct z-index-5" data-fetch="raw/asset/html/template/template.header.html"></header>
     <block class="height-120px padding-top-120px width-100pct">
-        <picture class="background-color-ddd height-100pct width-100pct">
+        <picture class="background-color-bbb height-100pct width-100pct">
             <img>
         </picture>
         <section>
@@ -12,8 +12,49 @@
     </block>
     <block class="margin-top-60px padding-top-20px text-align-center">
         <column>
-            <text class="empty font-size-24px" placeholder="Firstname Lastname"></text>
-            <text class="color-333 empty font-size-18px" placeholder="username"></text>
+            <card class="gap-20px padding-y-20px">
+                <header>
+                    <box>
+                        <section>
+                            <text class="empty font-size-24px" placeholder="Firstname Lastname"></text>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="color-333 empty font-size-18px" placeholder="username"></text>
+                        </section>
+                    </box>
+                </header>
+            </card>
+            <card class="border-color-f0 border-top-1px-solid padding-y-20px">
+                <row class="gap-50px margin-auto">
+                    <box>
+                        <column>
+                            <text class="font-size-18px font-weight-bolder">0</text>
+                            <text class="color-777 font-size-13px" data-after="Projects"></text>
+                        </column>
+                    </box>
+                    <box class="display-none">
+                        <column>
+                            <text class="font-size-18px font-weight-bolder">0</text>
+                            <text class="color-777 font-size-13px" data-after="Snippets"></text>
+                        </column>
+                    </box>
+                    <box>
+                        <column>
+                            <text class="font-size-18px font-weight-bolder">0</text>
+                            <text class="color-777 font-size-13px" data-after="Followers"></text>
+                        </column>
+                    </box>
+                    <box>
+                        <column>
+                            <text class="font-size-18px font-weight-bolder">0</text>
+                            <text class="color-777 font-size-13px" data-after="Following"></text>
+                        </column>
+                    </box>
+                </row>
+            </card>
         </column>
     </block>
+    <block class="background-color-f0 border-color-ccc border-top-2px-solid min-height-100pct"></block>
 </blocks>

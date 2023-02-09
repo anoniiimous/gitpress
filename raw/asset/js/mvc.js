@@ -83,6 +83,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     vp.find('block > picture + section picture img').src = owner.avatar_url;
                     vp.find('[placeholder="Firstname Lastname"]').textContent = owner.name;
                     vp.find('[placeholder="username"]').textContent = owner.login;
+                    vp.find('[data-after="Projects"]').previousElementSibling.textContent = owner.public_repos;
+                    vp.find('[data-after="Snippets"]').previousElementSibling.textContent = owner.public_gists;
+                    vp.find('[data-after="Followers"]').previousElementSibling.textContent = owner.followers;
+                    vp.find('[data-after="Following"]').previousElementSibling.textContent = owner.following;
                     resolve(route);
                 }
             }

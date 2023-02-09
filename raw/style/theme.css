@@ -149,6 +149,10 @@
     .border-top-1px-solid {
         border-top: 1px solid;
     }
+
+    .border-top-2px-solid {
+        border-top: 2px solid;
+    }
 }
 
 /*BORDER COLOR*/
@@ -169,8 +173,16 @@
         border-color: #ccc;
     }
 
+    .border-color-db {
+        border-color: #dbdbdb;
+    }
+
     .border-color-ddd {
         border-color: #ddd;
+    }
+
+    .border-color-f0 {
+        border-color: #f0f0f0;
     }
 
     .border-color-fff {
