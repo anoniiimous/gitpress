@@ -58,24 +58,37 @@
                 </row>
             </box>
             <box>
-                <row>
-                    <ico class="-noauth" data-tap="github.oauth.login()">
+                <row class="align-items-center justify-content-center">
+                    <ico class="-noauth margin-10px" data-tap="github.oauth.login()">
                         <n class="gg-user"></n>
                     </ico>
-                    <ico class="-isauth" data-tap="github.oauth.logout()">
+                    <ico class="-isauth margin-10px" data-tap="github.oauth.logout()">
                         <n class="gg-log-off"></n>
                     </ico>
-                </row>
-            </box>
-            <box class="display-none">
-                <row>
-                    <ico class="-noauth" data-tap="controller.sign.in(event)">
-                        <n class="gg-user"></n>
-                    </ico>
-                    <ico class="-isauth" data-tap="controller.sign.out(event)">
-                        <n class="gg-log-off"></n>
+                    <ico class="background-color-777 border-radius-50pct display-none margin-20px" data-height="30px" data-width="30px">
+                        <img>
                     </ico>
                 </row>
+                <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder margin-auto padding-x-10px position-absolute right-5px" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                    <text class="align-items-center display-flex line-height-30px padding-y-10px white-space-nowrap" data-href="/:user/">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-user"></n>
+                        </ico>
+                        <span>Profile</span>
+                    </text>
+                    <text class="align-items-center display-flex line-height-30px padding-y-10px white-space-nowrap">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-options"></n>
+                        </ico>
+                        <span>Settings</span>
+                    </text>
+                    <text class="align-items-center display-flex line-height-30px padding-y-10px white-space-nowrap" data-tap="github.oauth.logout(event)">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-log-off"></n>
+                        </ico>
+                        <span>Sign Out</span>
+                    </text>
+                </column>
             </box>
         </row>
     </card>

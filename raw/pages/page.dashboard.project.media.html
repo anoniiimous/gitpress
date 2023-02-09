@@ -30,9 +30,10 @@
                     <text class="font-size-13px"></text>
                 </section>
             </box>
-            <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative" data-href="/dashboard/:get/media/import/">
-                <section>
+            <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative" data-accept="audio/mp3,image/jpeg,video/mp4">
+                <label for="file-dashboard-media">
                     <text class="font-size-14px font-weight-bolder">Add New Media</text>
+                    <input data-accept="audio/mp3,image/jpeg,video/mp4" id="file-dashboard-media" onchange="on.change.file(event).then(controller.media.import)" type="file">
                 </section>
             </box>
         </column>

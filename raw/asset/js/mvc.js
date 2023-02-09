@@ -1602,6 +1602,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    media: {
+
+        import: (b64)=>{
+            var split = b64.split(';base64,')
+            var mime = split[0].split(':')[1];
+            var type = mime.split('/')[0]
+            console.log({
+                b64,
+                mime,
+                type
+            })
+            if (["audio", "image", "video"].includes(type)) {
+                ('/dashboard/:get/media/' + type).router();
+            }
+        }
+
+    },
+
     menu: {
 
         close: ()=>{
