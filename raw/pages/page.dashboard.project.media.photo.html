@@ -19,16 +19,69 @@
             </card>
             <card>
                 <row>
-                    <box class="display-none line-height-30px" data-href="/dashboard/:get/files/file/">
+                    <box class="ine-height-30px" data-href="/dashboard/:get/media/">
                         <row class="align-items-center justify-content-center">
                             <ico data-height="30px" data-width="30px">
-                                <n class="gg-software-upload"></n>
+                                <n class="gg-cloud"></n>
                             </ico>
-                            <text class="font-size-14px font-weight-bolder">Upload File</text>
+                            <text class="font-size-14px font-weight-bolder">All Media</text>
                         </row>
                     </box>
                 </row>
             </card>
         </row>
     </header>
+    <block class="grid-gap-20px margin-x-20px" data-960px-columns="1" data-columns="2">
+        <column>
+            <card class="margin-auto max-width-100pct width-1280px" data-960px-width="480px">
+                <section>
+                    <box class="border-1px-solid border-radius-20px height-0 overflow-hidden padding-top-100pct width-100pct">
+                        <picture class="height-100pct position-absolute top-0 width-100pct"></picture>
+                        <column class="align-items-center display-flex empty-state flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
+                            <picture class="display-none height-0 padding-top-50pct position-relative width-50pct">
+                                <img class="height-100pct object-fit-contain position-absolute top-0 width-100pct" src="raw/asset/png/astronaut/astronaut-photo.png">
+                            </picture>
+                            <label for="file-dashboard-media-photo">
+                                <text class="background-color-333 color-fff display-block line-height-50px padding-x-20px position-relative">Add New Photo</text>
+                                <input accept="image/jpeg" id="file-dashboard-media-photo" onchange="on.change.file(event).then(controller.media.import)" type="file">
+                            </label>
+                        </column>
+                    </box>
+                </section>
+            </card>
+        </column>
+        <flex class="-dw960px-flex-direction-column flex-1 flex-direction-column grid-gap-20px margin-x-auto width-1280px" data-960px-width="480px" data-max-width="100%">
+            <card class="flex-1">
+                <column class="gap-50px">
+                    <box class="gap-10px">
+                        <header>
+                            <text class="font-weight-bolder text-transform-uppercase">Details</text>
+                        </header>
+                        <column class="gap-10px">
+                            <input class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
+                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" placeholder="Provide a detailed description."></textarea>
+                        </column>
+                        <footer class="gap-10px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <span class="font-weight-bolder" contenteditable="true" placeholder="Add Tag"></span>
+                            </text>
+                        </footer>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw1320px-width-100pct width-320px">
+                <section>
+                    <box class="width-100pct">
+                        <flex class="gap-20px" data-480px-columns="1" data-columns="2">
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/media/">Cancel</text>
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Post It</text>
+                        </flex>
+                    </box>
+                </section>
+            </card>
+        </flex>
+    </block>
 </blocks>

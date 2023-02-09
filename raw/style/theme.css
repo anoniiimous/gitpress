@@ -1081,7 +1081,7 @@
 }
 
 @media screen {
-    .max-width-100pct {
+    .max-width-100pct, [data-max-width="100%"] {
         max-width: 100%;
     }
 
@@ -1847,6 +1847,10 @@
     }
 
     @media (max-width: 960px) {
+        .-dw960px-width-480px, [data-960px-width="480px"] {
+            width: 648px
+        }
+        
         .-dw960px-width-640px, [data-960px-width="640px"] {
             width: 640px
         }
