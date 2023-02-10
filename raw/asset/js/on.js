@@ -66,9 +66,13 @@ window.on.change = {
                     }
                     function onLoad() {
                         s.onload ? s.onload : null;
-                        resolve(reader.result);
-                        target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
-                        target.remove();
+                        var obj = {
+                            files: target.files,
+                            result: reader.result
+                        }
+                        resolve(obj);
+                        //target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
+                        //target.remove();
                     }
                     function onProgress(e, f) {
                         if (e.lengthComputable) {

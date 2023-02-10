@@ -1488,7 +1488,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 var settings = {};
                 settings.data = JSON.stringify({
-                    content: result.split('base64,')[1],
+                    content: result.result.split('base64,')[1],
                     message: "Create " + file.name
                 }),
                 settings.dataType = "PUT";
@@ -1574,7 +1574,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         cover: async(event)=>{
             var figure = event.target.closest('box').firstElementChild;
             var b64 = await on.change.file(event);
-            var split = b64.split(';base64,')
+            var split = b64.result.split(';base64,')
             var mime = split[0].split(':')[1];
             var type = mime.split('/')[0]
             console.log({
@@ -1593,7 +1593,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         import: (b64)=>{
-            var split = b64.split(';base64,')
+            var split = b64.result.split(';base64,')
             var mime = split[0].split(':')[1];
             var type = mime.split('/')[0]
             console.log({
@@ -1609,14 +1609,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var column = vp.find('.gg-play-button').closest('box').find('column');
                         var audio = document.createElement('audio');
                         audio.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                        audio.src = b64;
+                        audio.src = b64.result;
                         0 < 1 ? audio.controls = true : null;
                         column.innerHTML = audio.outerHTML;
                     }
                     if (type === "photo") {
                         var img = document.createElement('img');
                         img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                        img.src = b64;
+                        img.dataset.filename = b64.files[0].name;
+                        img.src = b64.result;
                         vp.find('figure').innerHTML = img.outerHTML;
                     }
                     if (type === "video") {
@@ -1624,7 +1625,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         video.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
                         video.controls = true;
                         video.playsinline = true;
-                        video.src = b64;
+                        video.src = b64.result;
                         vp.find('figure').innerHTML = video.outerHTML;
                     }
                 }
@@ -1650,7 +1651,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var template = card.find('template').content.firstElementChild.cloneNode(true);
             var img = document.createElement('img');
             img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-            img.src = b64;
+            img.src = b64.result;
             template.find('picture').innerHTML = img.outerHTML;
             thumbnails.lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
 
@@ -1989,6 +1990,111 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 alert("There are no pages.");
             }
 
+        }
+
+    },
+
+    photo: {
+
+        create: async(event)=>{
+            event.preventDefault();
+            var form = event.target;
+            var description = form.find("textarea").value;
+            var photos = form.find('figure').children;
+            var photo = photos.length > 0 ? photos[0] : null;
+            var src = photo ? photo.src : null;
+            var filename = photo ? photo.dataset.filename : null;
+            var tags = [];
+            var children = form.lastElementChild.find('footer span').children;
+            if (children.length > 0) {
+                do {
+                    var child = children.children[c];
+                    var tag = child.textContent;
+                    tags.push(tag);
+                } while (c < children.length)
+            }
+            var title = form.find('input[type="text"]').value;
+            var data = {
+                description,
+                photo,
+                tags,
+                title
+            };
+            console.log(2001, {
+                data,
+                form
+            });
+            if (photos.length > 0 && title) {
+                //JSON
+                var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+                var row = {
+                    slug,
+                    title
+                };
+                description ? row.description = description : null;
+                tags ? row.tags : null;
+
+                //MEDIA
+                try {
+                    var data = await github.repos.contents({
+                        owner: owner.login,
+                        repo: GET[1],
+                        path: "/raw/media/media.json"
+                    });
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str1 = JSON.stringify(rows, null, 4);
+
+                //PHOTO
+                try {
+                    var data = await github.repos.contents({
+                        owner: owner.login,
+                        repo: GET[1],
+                        path: "/raw/media/photo/photo.json"
+                    });
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str2 = JSON.stringify(rows, null, 4);
+
+                //PUSH
+                var params = {
+                    message: "Add " + title + " to Photos",
+                    repo: GET[1],
+                    owner: owner.login
+                };
+                var array = [{
+                    content: str1,
+                    path: "raw/media/media.json"
+                }, {
+                    content: str2,
+                    path: "raw/media/photo/photo.json"
+                }, {
+                    content: photo.src.split(';base64,')[1],
+                    path: "raw/media/photo/" + slug + "/image." + filename.split('.')[filename.split('.').length - 1],
+                    type: "base64"
+                }];
+                console.log(2452, 'controller.photo.update', "array", {
+                    array
+                });
+                github.crud.update(params, array).then(()=>{
+                    "/dashboard/:get/media/".router()
+                }
+                )
+            }
         }
 
     },

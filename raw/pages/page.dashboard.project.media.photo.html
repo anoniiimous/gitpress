@@ -31,8 +31,8 @@
             </card>
         </row>
     </header>
-    <block class="-dw480px-margin-10px grid-gap-20px margin-20px" data-960px-columns="1" data-columns="2">
-        <column>
+    <block>
+        <form class="-dw480px-margin-10px grid-gap-20px margin-20px" data-960px-columns="1" data-columns="2" onsubmit="controller.photo.create(event)">
             <card class="margin-auto max-width-100pct width-1280px" data-960px-width="480px">
                 <section>
                     <box class="border-1px-solid border-radius-20px height-0 overflow-hidden padding-top-100pct width-100pct">
@@ -46,9 +46,7 @@
                     </box>
                 </section>
             </card>
-        </column>
-        <flex class="-dw960px-flex-direction-column flex-1 flex-direction-column grid-gap-20px margin-x-auto width-1280px" data-960px-width="480px" data-max-width="100%">
-            <card class="flex-1">
+            <card class="-dw960px-flex-direction-column flex-1 flex-direction-column grid-gap-20px justify-content-space-between margin-x-auto width-1280px" data-960px-width="480px" data-max-width="100%">
                 <column class="gap-50px">
                     <box class="gap-10px">
                         <header>
@@ -59,6 +57,7 @@
                             <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" placeholder="Provide a detailed description."></textarea>
                         </column>
                         <footer class="gap-10px">
+                            <span class="empty"></span>
                             <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
                                 <ico data-height="20px" data-width="20px">
                                     <n class="gg-math-plus"></n>
@@ -68,17 +67,18 @@
                         </footer>
                     </box>
                 </column>
-            </card>
-            <card class="-dw1320px-width-100pct width-320px">
-                <section>
+                <footer class="-dw1320px-width-100pct width-320px">
                     <box class="width-100pct">
-                        <flex class="gap-20px" data-480px-columns="1" data-columns="2">
+                        <flex class="gap-10px" data-480px-columns="1" data-columns="2">
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/media/">Cancel</text>
-                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Post It</text>
+                            <label class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
+                                <text>Post It</text>
+                                <input id="submit-dashboard-media-photo" type="submit">
+                            </label>
                         </flex>
                     </box>
-                </section>
+                </footer>
             </card>
-        </flex>
+        </form>
     </block>
 </blocks>

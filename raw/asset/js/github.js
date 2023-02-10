@@ -153,6 +153,7 @@ window.github = {
                     if (settings.dataType === "POST") {
                         return new Promise((resolve,reject)=>{
                             const data = settings.data;
+                            const encoding = params.encoding ? settings.encoding = params.encoding : null
                             const owner = params.owner;
                             const repo = params.repo;
                             const url = github.endpoint + "/repos/" + owner + "/" + repo + "/git/blobs";
@@ -170,7 +171,10 @@ window.github = {
                                 Accept: "application/vnd.github+json",
                                 Authorization: "token " + accessToken
                             } : null;
-                            //console.log({ url, settings });
+                            console.log(173, params, {
+                                url,
+                                settings
+                            });
                             ajax(url, settings).then(a).catch(b);
                         }
                         );
@@ -949,7 +953,7 @@ window.github = {
             }
             );
         }
-            
+
     }
 }
 window.github.crud = {};
@@ -1066,13 +1070,15 @@ window.github.crud.update = async(params,array)=>{
                 repo
             }, {
                 data: JSON.stringify({
-                    content: row.content
+                    content: row.content,
+                    encoding: row.type ? row.type : "utf-8"
                 }),
                 dataType: "POST"
             }).catch(error=>{
                 console.log(2504, 'github.database.blobs', error);
             }
             );
+            console.log(1076, row);
             tree[b] = {
                 path: row.path,
                 mode: "100644",
