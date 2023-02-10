@@ -240,23 +240,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             }
                                             card.find('[placeholder="Title"]').textContent = title;
                                             card.find('footer text').textContent = title;
-                                            var src = 0 > 1 ? await github.repos.contents({
+                                            var src = await github.raw.blob({
                                                 owner: user.login,
-                                                path: "/raw/media/" + format + "/" + slug + "/image.jpg",
-                                                repo: GET[1]
-                                            }, {
-                                                accept: "application/vnd.github.raw"
-                                            }) : await fetch("https://api.github.com/repos/" + user.login + "/" + GET[1] + "/contents/raw/media/" + format + "/" + slug + "/image.jpg", {
-                                                headers: {
-                                                    Accept: "application/vnd.github.raw",
-                                                    Authorization: "token " + localStorage.githubAccessToken
-                                                }
-                                            }).then((response)=>response.blob()).then((myBlob)=>{
-                                                return URL.createObjectURL(myBlob);
-                                            }
-                                            );
+                                                repo: get[1],
+                                                resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
+                                            });
                                             card.find('column picture img').src = src;
-                                            //"data:image/jpeg;base64," + src.content
                                             //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                             html += card.outerHTML;
                                             //feed.insertAdjacentHTML('beforeend', html);

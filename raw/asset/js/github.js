@@ -89,6 +89,18 @@ window.github = {
         }
     },
     raw: {
+        blob: async(params)=>{
+            return await fetch("https://api.github.com/repos/" + params.owner + "/" + params.repo + "/contents" + params.resource, {
+                headers: {
+                    Accept: "application/vnd.github.raw",
+                    Authorization: "token " + localStorage.githubAccessToken
+                }
+            }).then((response)=>response.blob()).then((myBlob)=>{
+                return URL.createObjectURL(myBlob);
+            }
+            );
+        }
+        ,
         file: (resource)=>{
             return new Promise((resolve,reject)=>{
                 var host = 'https://raw.dompad.workers.dev';
