@@ -1260,6 +1260,10 @@
         padding: 20px;
     }
 
+    .padding-bottom-10px {
+        padding-bottom: 10px;
+    }
+
     .padding-bottom-20px {
         padding-bottom: 20px;
     }
@@ -1486,7 +1490,7 @@
         top: 0;
     }
 
-    .top-5px {
+    .top-5px, [data-top="5px"] {
         top: 5px;
     }
 

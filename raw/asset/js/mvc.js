@@ -207,6 +207,71 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
 
                         }
+                        if (get[2] === "media") {
+
+                            var feed = byId('feed-dashboard-media');
+                            var vp = dom.body.find('page[data-page="/dashboard/*/media/"]');
+                            //alert("Attempting to fetch files");
+                            github.repos.contents({
+                                owner: user.login,
+                                path: "/raw/media/media.json",
+                                repo: get[1]
+                            }).then(async(d)=>{
+                                var data = JSON.parse(atob(d.content));
+                                if (data) {
+                                    console.log(84, {
+                                        data
+                                    });
+                                    feed.innerHTML = "";
+                                    if (data.length > 0) {
+                                        vp.all('header card')[1].find('box').classList.remove('display-none');
+                                        var html = "";
+                                        var d = 0;
+                                        do {
+                                            var row = data[d];
+                                            var format = "photo";
+                                            var title = row.title;
+                                            var slug = row.slug;
+                                            var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
+                                            if (format === "photo") {
+                                                card.find('footer n').classList.add('gg-image');
+                                            } else {
+                                                card.find('footer n').classList.add('gg-file');
+                                            }
+                                            card.find('[placeholder="Title"]').textContent = title;
+                                            card.find('footer text').textContent = title;
+                                            var src = 0 > 1 ? await github.repos.contents({
+                                                owner: user.login,
+                                                path: "/raw/media/" + format + "/" + slug + "/image.jpg",
+                                                repo: GET[1]
+                                            }, {
+                                                accept: "application/vnd.github.raw"
+                                            }) : await fetch("https://api.github.com/repos/" + user.login + "/" + GET[1] + "/contents/raw/media/" + format + "/" + slug + "/image.jpg", {
+                                                headers: {
+                                                    Accept: "application/vnd.github.raw",
+                                                    Authorization: "token " + localStorage.githubAccessToken
+                                                }
+                                            }).then((response)=>response.blob()).then((myBlob)=>{
+                                                return URL.createObjectURL(myBlob);
+                                            }
+                                            );
+                                            card.find('column picture img').src = src;
+                                            //"data:image/jpeg;base64," + src.content
+                                            //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
+                                            html += card.outerHTML;
+                                            //feed.insertAdjacentHTML('beforeend', html);
+                                            d++;
+                                        } while (d < data.length);
+                                        feed.innerHTML = html;
+                                    } else {
+                                        vp.all('header card')[1].find('box').classList.add('display-none');
+                                    }
+                                }
+
+                            }
+                            )
+
+                        }
                         if (get[2] === "merch") {
 
                             if (get.length > 3) {
@@ -2028,6 +2093,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 //JSON
                 var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
                 var row = {
+                    format: "photo",
                     slug,
                     title
                 };
