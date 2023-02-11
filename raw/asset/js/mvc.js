@@ -209,56 +209,62 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         if (get[2] === "media") {
 
-                            var feed = byId('feed-dashboard-media');
-                            var vp = dom.body.find('page[data-page="/dashboard/*/media/"]');
-                            //alert("Attempting to fetch files");
-                            github.repos.contents({
-                                owner: user.login,
-                                path: "/raw/media/media.json",
-                                repo: get[1]
-                            }).then(async(d)=>{
-                                var data = JSON.parse(atob(d.content));
-                                if (data) {
-                                    console.log(84, {
-                                        data
-                                    });
-                                    feed.innerHTML = "";
-                                    if (data.length > 0) {
-                                        vp.all('header card')[1].find('box').classList.remove('display-none');
-                                        var html = "";
-                                        var d = 0;
-                                        do {
-                                            var row = data[d];
-                                            var format = "photo";
-                                            var title = row.title;
-                                            var slug = row.slug;
-                                            var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
-                                            if (format === "photo") {
-                                                card.find('footer n').classList.add('gg-image');
-                                            } else {
-                                                card.find('footer n').classList.add('gg-file');
-                                            }
-                                            card.find('[placeholder="Title"]').textContent = title;
-                                            card.find('footer text').textContent = title;
-                                            var src = await github.raw.blob({
-                                                owner: user.login,
-                                                repo: get[1],
-                                                resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
-                                            });
-                                            card.find('column picture img').src = src;
-                                            //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
-                                            html += card.outerHTML;
-                                            //feed.insertAdjacentHTML('beforeend', html);
-                                            d++;
-                                        } while (d < data.length);
-                                        feed.innerHTML = html;
-                                    } else {
-                                        vp.all('header card')[1].find('box').classList.add('display-none');
+                            if (get[3]) {} else {
+
+                                var feed = byId('feed-dashboard-media');
+                                var vp = dom.body.find('page[data-page="/dashboard/*/media/"]');
+                                //alert("Attempting to fetch files");
+                                github.repos.contents({
+                                    owner: user.login,
+                                    path: "/raw/media/media.json",
+                                    repo: get[1]
+                                }).then(async(d)=>{
+                                    var data = JSON.parse(atob(d.content));
+                                    if (data) {
+                                        console.log(84, {
+                                            data
+                                        });
+                                        feed.innerHTML = "";
+                                        if (data.length > 0) {
+                                            vp.all('header card')[1].find('box').classList.remove('display-none');
+                                            var html = "";
+                                            var d = 0;
+                                            do {
+                                                var row = data[d];
+                                                var format = row.format;
+                                                var title = row.title;
+                                                var slug = row.slug;
+                                                var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
+                                                if (format === "photo") {
+                                                    card.find('footer n').classList.add('gg-image');
+                                                } else if (format === "video") {
+                                                    card.find('footer n').classList.add('gg-film');
+                                                } else {
+                                                    card.find('footer n').classList.add('gg-file');
+                                                }
+                                                card.find('[placeholder="Title"]').textContent = title;
+                                                card.find('footer text').textContent = title;
+                                                var src = await github.raw.blob({
+                                                    owner: user.login,
+                                                    repo: get[1],
+                                                    resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
+                                                });
+                                                card.find('column picture img').src = src;
+                                                //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
+                                                html += card.outerHTML;
+                                                //feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < data.length);
+                                            feed.innerHTML = html;
+                                        } else {
+                                            vp.all('header card')[1].find('box').classList.add('display-none');
+                                        }
                                     }
+
                                 }
+                                )
 
                             }
-                            )
 
                         }
                         if (get[2] === "merch") {
@@ -3050,7 +3056,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var form = event.target;
             var description = form.find("textarea").value;
             var photos = form.find('figure').children;
-            var photo = photos.length > 0 ? photos[0] : null;
+            var photo = video = photos.length > 0 ? photos[0] : null;
             var src = photo ? photo.src : null;
             var filename = photo ? photo.dataset.filename : null;
             var tags = [];
@@ -3078,12 +3084,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 //JSON
                 var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
                 var row = {
-                    format: "video",
-                    slug,
-                    title
+                    "format": "video",
+                    "slug": slug,
+                    "title": title
                 };
                 description ? row.description = description : null;
                 tags ? row.tags : null;
+                var str3 = JSON.stringify(row, null, 4);
 
                 //MEDIA
                 try {
@@ -3121,6 +3128,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
+                var canvas = form.find('canvas');
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
                 //PUSH
                 var params = {
                     message: "Add " + title + " to Videos",
@@ -3134,17 +3146,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     content: str2,
                     path: "raw/media/video/video.json"
                 }, {
+                    content: canvas.toDataURL().split(';base64,')[1],
+                    path: "raw/media/video/" + slug + "/image.jpg",
+                    type: "base64"
+                }, {
+                    content: str3,
+                    path: "raw/media/video/" + slug + "/video.json"
+                }, {
                     content: photo.src.split(';base64,')[1],
                     path: "raw/media/video/" + slug + "/video." + filename.split('.')[filename.split('.').length - 1],
                     type: "base64"
                 }];
                 console.log(2452, 'controller.video.update', "array", {
-                    array
+                    array,
+                    video: {
+                        width: video.videoWidth,
+                        height: video.videoHeight
+                    }
                 });
-                github.crud.update(params, array).then(()=>{
-                    "/dashboard/:get/media/".router()
-                }
-                )
+                github.crud.update(params, array).then("/dashboard/:get/media/".router())
             }
         }
     }
