@@ -218,7 +218,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     owner: user.login,
                                     path: "/raw/media/media.json",
                                     repo: get[1]
-                                }).then(async(d)=>{
+                                }).then(async(d)=>{ console.log(d)
                                     var data = JSON.parse(atob(d.content));
                                     if (data) {
                                         console.log(84, {
