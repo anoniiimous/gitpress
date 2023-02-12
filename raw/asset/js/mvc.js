@@ -235,21 +235,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var title = row.title;
                                                 var slug = row.slug;
                                                 var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
-                                                if (format === "photo") {
-                                                    card.find('footer n').classList.add('gg-image');
+                                                if (format === "audio") {
+                                                    card.find('n').classList.add('gg-music');
+                                                } else if (format === "photo") {
+                                                    card.find('n').classList.add('gg-image');
                                                 } else if (format === "video") {
-                                                    card.find('footer n').classList.add('gg-film');
+                                                    card.find('n').classList.add('gg-film');
                                                 } else {
-                                                    card.find('footer n').classList.add('gg-file');
+                                                    card.find('n').classList.add('gg-file');
                                                 }
                                                 card.find('[placeholder="Title"]').textContent = title;
-                                                card.find('footer text').textContent = title;
-                                                var src = await github.raw.blob({
+                                                var src = 0 > 1 ? await github.raw.blob({
                                                     owner: user.login,
                                                     repo: get[1],
                                                     resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
-                                                });
-                                                card.find('column picture img').src = src;
+                                                }) : null;
+                                                //card.find('column picture img').src = src;
                                                 //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                                 html += card.outerHTML;
                                                 //feed.insertAdjacentHTML('beforeend', html);
@@ -956,6 +957,170 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
 window.mvc.c ? null : (window.mvc.c = controller = {
 
+    audio: {
+
+        cover: async(event)=>{
+            var figure = event.target.closest('box').nextElementSibling.find('figure');
+            var b64 = await on.change.file(event);
+            var split = b64.result.split(';base64,')
+            var mime = split[0].split(':')[1];
+            var type = mime.split('/')[0]
+            console.log({
+                b64,
+                figure,
+                mime,
+                type
+            })
+            if (type === "image") {
+                var img = document.createElement('img');
+                img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                img.dataset.filename = b64.files[0].name;
+                img.src = b64.result;
+                figure.innerHTML = img.outerHTML;
+            }
+        }
+        ,
+
+        create: async()=>{
+
+            event.preventDefault();
+            var form = event.target;
+            var description = form.find("textarea").value;
+
+            var photos = form.find('box > figure').children;
+            var photo = photos.length > 0 ? photos[0] : null;
+            var src = photo ? photo.src : null;
+            var filename = photo ? photo.dataset.filename : null;
+
+            var photos2 = form.find('box > column > figure').lastElementChild;
+            var photo2 = photos2;
+            var src2 = photo2 ? photo2.src : null;
+            var filename2 = photo2 ? photo2.dataset.filename : null;
+            console.log(photos2, photo2);
+
+            var tags = [];
+            var children = form.lastElementChild.find('footer span').children;
+            if (children.length > 0) {
+                do {
+                    var child = children.children[c];
+                    var tag = child.textContent;
+                    tags.push(tag);
+                } while (c < children.length)
+            }
+            var title = form.find('input[type="text"]').value;
+            var data = {
+                description,
+                event,
+                photo,
+                tags,
+                title
+            };
+            console.log(2001, {
+                data,
+                form
+            });
+            if (photos.length > 0 && title) {
+                //JSON
+                var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+                var row = {
+                    "format": "audio",
+                    "slug": slug,
+                    "title": title
+                };
+                description ? row.description = description : null;
+                tags ? row.tags : null;
+                var str3 = JSON.stringify(row, null, 4);
+
+                //MEDIA
+                try {
+                    var data = await github.repos.contents({
+                        owner: owner.login,
+                        repo: GET[1],
+                        path: "/raw/media/media.json"
+                    });
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str1 = JSON.stringify(rows, null, 4);
+
+                //VIDEO
+                try {
+                    var data = await github.repos.contents({
+                        owner: owner.login,
+                        repo: GET[1],
+                        path: "/raw/media/audio/audio.json"
+                    });
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    json.push(row);
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str2 = JSON.stringify(rows, null, 4);
+
+                var canvas = form.find('canvas');
+
+                //PUSH
+                var params = {
+                    message: "Add " + title + " to Audio",
+                    repo: GET[1],
+                    owner: owner.login
+                };
+                var array = [{
+                    content: str1,
+                    path: "raw/media/media.json"
+                }, {
+                    content: str2,
+                    path: "raw/media/audio/audio.json"
+                }, {
+                    content: photo.src.split(';base64,')[1],
+                    path: "raw/media/audio/" + slug + "/image.jpg",
+                    type: "base64"
+                }, {
+                    content: str3,
+                    path: "raw/media/audio/" + slug + "/audio.json"
+                }, {
+                    content: photo2.src.split(';base64,')[1],
+                    path: "raw/media/audio/" + slug + "/audio." + filename2.split('.')[filename2.split('.').length - 1],
+                    type: "base64"
+                }];
+                console.log(2452, 'controller.audio.update', "array", {
+                    array
+                });
+                github.crud.update(params, array).then("/dashboard/:get/media/".router())
+            }
+        }
+        ,
+
+        track: async(event)=>{
+            var file = await on.change.file(event);
+            var audio = document.createElement('audio');
+            console.log({
+                event,
+                file
+            });
+            audio.src = file.result;
+            audio.dataset.filename = file.files[0].name;
+            var figure = event.target.closest('label').previousElementSibling;
+            window.wavesurfer = WaveSurfer.create({
+                container: figure
+            });
+            window.wavesurfer.load(file.result);
+            figure.insertAdjacentHTML('beforeend', audio.outerHTML);
+            figure.firstElementChild.dataset.filename = file.files[0].name;
+        }
+
+    },
+
     blog: {
 
         render: (iframe,json)=>{
@@ -1630,27 +1795,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     media: {
-
-        cover: async(event)=>{
-            var figure = event.target.closest('box').firstElementChild;
-            var b64 = await on.change.file(event);
-            var split = b64.result.split(';base64,')
-            var mime = split[0].split(':')[1];
-            var type = mime.split('/')[0]
-            console.log({
-                b64,
-                figure,
-                mime,
-                type
-            })
-            if (type === "image") {
-                var img = document.createElement('img');
-                img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                img.src = b64;
-                figure.innerHTML = img.outerHTML;
-            }
-        }
-        ,
 
         import: (b64)=>{
             var split = b64.result.split(';base64,')
@@ -3186,6 +3330,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
                 github.crud.update(params, array).then("/dashboard/:get/media/".router())
             }
+
         }
     }
 

@@ -32,34 +32,49 @@
         </row>
     </header>
     <block class="-dw480px-margin-10px grid-gap-20px margin-20px">
-        <column>
-            <card class="border-1px-solid border-radius-20px grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
-                <row class="align-items-center flex-1 gap-20px padding-20px">
-                    <box class="flex-1 flex-direction-column height-360px justify-content-space-between">
-                        <row>
-                            <ico class="background-color-000 border-radius-50px color-fff">
+        <form class="display-flex flex-direction-column gap-20px" onsubmit="controller.audio.create(event)">
+            <card class="-dw1024px-width-640px border-1px-solid border-radius-20px grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
+                <row class="-dw1024px-height-0 -dw1024px-padding-0 -dw1024px-padding-top-100pct align-items-center flex-1 gap-20px padding-20px">
+                    <box class="-dw1024px-height-100pct -dw1024px-position-absolute -dw1024px-width-100pct bottom-0 flex-1 flex-direction-column height-360px justify-content-center z-index-2">
+                        <row class="display-none">
+                            <ico class="background-color-000 border-radius-50px color-fff display-none">
                                 <n class="gg-play-button"></n>
                             </ico>
                         </row>
-                        <column>
-                            <audio class="margin-top-auto width-100pct"></audio>
+                        <column class="align-items-center justify-content-center">
+                            <figure class="margin-top-auto width-100pct"></figure>
+                            <label class="align-items-center background-color-333 color-fff display-flex empty-state font-weight-bolder padding-x-10px" for="file-dashboard-media-audio-track">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-software-upload"></n>
+                                </ico>
+                                <span class="line-height-50px white-space-nowrap">Add Audio Track</span>
+                                <input accept="audio/mp3" id="file-dashboard-media-audio-track" onchange="controller.audio.track(event)" type="file">
+                            </label>
+                            <label class="-dw1024px-display-flex align-items-center display-none font-weight-bolder justify-content-center line-height-50px margin-10px padding-x-10px position-absolute right-0 top-0" for="file-dashboard-media-audio-cover">
+                                <text>Add New Cover</text>
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-image"></n>
+                                </ico>
+                                <input accept="image/jpeg" id="file-dashboard-media-audio-cover" onchange="controller.audio.cover(event)" type="file">
+                            </label>
                         </column>
                     </box>
-                    <box class="height-360px width-360px">
+                    <box class="-dw960px-width-100pct -dw1024px-height-100pct -dw1024px-position-absolute -dw1024px-top-0 -dw1024px-width-100pct height-360px width-360px">
                         <figure class="border-1px-solid border-radius-10px height-100pct overflow-hidden position-absolute top-0 width-100pct"></figure>
-                        <column class="align-items-center display-flex empty-state flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
-                            <label for="file-dashboard-media-audio-cover">
-                                <text class="background-color-333 color-fff display-block line-height-50px padding-x-20px position-relative">Add New Cover</text>
-                                <input accept="image/jpeg" id="file-dashboard-media-audio-cover" onchange="controller.media.cover(event)" type="file">
+                        <column class="-dw1024px-display-none align-items-center display-flex empty-state flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
+                            <label class="align-items-center background-color-333 color-fff display-flex empty-state font-weight-bolder padding-x-10px" for="file-dashboard-media-audio-track">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-image"></n>
+                                </ico>
+                                <span class="line-height-50px white-space-nowrap">Add Cover</span>
+                                <input accept="audio/mp3" id="file-dashboard-media-audio-cover" onchange="controller.audio.cover(event)" type="file">
                             </label>
                         </column>
                     </box>
                 </row>
             </card>
-        </column>
-        <flex class="-dw1320px-flex-direction-column flex-1 flex-direction-row grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
-            <card class="flex-1">
-                <column class="gap-50px">
+            <card class="-dw1024px-width-640px -dw1320px-flex-direction-column flex-1 flex-direction-row grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
+                <column class="flex-1 gap-50px">
                     <box class="gap-10px">
                         <header>
                             <text class="font-weight-bolder text-transform-uppercase">Details</text>
@@ -78,19 +93,20 @@
                         </footer>
                     </box>
                 </column>
-            </card>
-            <card class="-dw1320px-width-100pct width-320px">
-                <section>
+                <section class="-dw1320px-width-100pct width-320px">
                     <box class="width-100pct">
                         <flex class="-dw480px-gap-10px gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/media/">Cancel</text>
-                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Post It</text>
+                            <label class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
+                                <text>Post It</text>
+                                <input id="submit-dashboard-media-photo" type="submit">
+                            </label>
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Preview</text>
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>
                         </flex>
                     </box>
                 </section>
             </card>
-        </flex>
+        </form>
     </block>
 </blocks>
