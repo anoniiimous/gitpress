@@ -1684,11 +1684,34 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     if (type === "video") {
                         var video = document.createElement('video');
                         video.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                        video.controls = true;
                         video.dataset.filename = b64.files[0].name;
                         video.playsinline = true;
                         video.src = b64.result;
                         vp.find('figure').innerHTML = video.outerHTML;
+                        var canvas = vp.find('canvas');
+                        var video = vp.find('figure video');
+                        video.autoplay = true;
+                        video.addEventListener("loadedmetadata", loadCanvas)
+                        video.addEventListener("play", loadPlay, true)
+                        video.addEventListener("pause", loadCapture, true)
+                        function loadCanvas() {
+                            canvas.height = video.videoHeight;
+                            canvas.width = video.videoWidth;
+                            video.classList.add('display-none');
+                        }
+                        function loadCapture() {
+                            video.currentTime = video.duration / 2;
+                            canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                            video.poster = canvas.toDataURL();
+                            video.removeEventListener("pause", loadCapture, true)
+                            video.controls = true;
+                            video.currentTime = 0;
+                            video.classList.remove('display-none');
+                        }
+                        function loadPlay() {
+                            video.pause();
+                            video.removeEventListener("play", loadPlay, true)
+                        }
                     }
                 }
                 );
@@ -3129,9 +3152,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var str2 = JSON.stringify(rows, null, 4);
 
                 var canvas = form.find('canvas');
-                canvas.height = video.videoHeight;
-                canvas.width = video.videoWidth;
-                canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
                 //PUSH
                 var params = {
@@ -3146,7 +3166,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     content: str2,
                     path: "raw/media/video/video.json"
                 }, {
-                    content: canvas.toDataURL().split(';base64,')[1],
+                    content: form.find('video').poster.split(';base64,')[1],
                     path: "raw/media/video/" + slug + "/image.jpg",
                     type: "base64"
                 }, {
