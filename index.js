@@ -8,6 +8,7 @@ window.onload = ()=>{
     dom.body.dataset.load = "ing";
 
     init();
+    eruda.init()
 }
 
 is.iframe ? null : window.onpopstate = (event)=>{
