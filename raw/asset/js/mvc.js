@@ -221,7 +221,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     owner: user.login,
                                     path: "/raw/media/media.json",
                                     repo: get[1]
-                                }).then(async(d)=>{
+                                }).then((d)=>{
                                     console.log(222, {
                                         d
                                     });
@@ -254,7 +254,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     card.find('n').classList.add('gg-file');
                                                 }
                                                 card.find('[placeholder="Title"]').textContent = title;
-                                                var src = 0 > 1 ? await github.raw.blob({
+                                                var src = 0 > 1 ? github.raw.blob({
                                                     owner: user.login,
                                                     repo: get[1],
                                                     resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
