@@ -230,6 +230,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var html = "";
                                             var d = 0;
                                             do {
+                                                console.log(d, {
+                                                    data
+                                                });
                                                 var row = data[d];
                                                 var format = row.format;
                                                 var title = row.title;
