@@ -209,7 +209,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         if (get[2] === "media") {
 
-                            if (get[3]) {} else {
+                            if (get[3]) {
+                                if (get[4]) {
+                                }
+                            } else {
 
                                 var feed = byId('feed-dashboard-media');
                                 var vp = dom.body.find('page[data-page="/dashboard/*/media/"]');
