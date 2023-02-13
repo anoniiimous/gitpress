@@ -24,7 +24,7 @@ is.iframe ? null : window.onpopstate = (event)=>{
 
 async function init() {
     console.log("Initializing...");
-    eruda.init();
+    //eruda.init();
 
     //SHELL
     var html = ``;
