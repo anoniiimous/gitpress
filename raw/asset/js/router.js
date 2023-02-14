@@ -17,8 +17,16 @@ String.prototype.router = async function(params) {
         vp
     });
     if (page) {
+        if (is.iframe) {
+            var path = "/"+window.parent.owner.login+"/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
+            var pg = atob((await github.raw.path(path)).content);
+        } else {
+            var path = vp.dataset.fetch;
+            var pg = await ajax(path);
+        }
         if (page.innerHTML === "") {
-            page.innerHTML = await ajax(page.dataset.fetch);
+            page.innerHTML = pg
+            //await ajax(page.dataset.fetch);
         }
     }
 
@@ -32,11 +40,10 @@ String.prototype.router = async function(params) {
             ff++;
         } while (ff < fetching3.length);
     }
-
     if (vp) {
         if (vp.innerHTML === "" && vp.dataset.fetch) {
             if (is.iframe) {
-                var path = "/anoniiimous/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
+                var path = "/" + window.parent + "/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
                 var pg = atob((await github.raw.path(path)).content);
             } else {
                 var path = vp.dataset.fetch;
@@ -296,12 +303,5 @@ window.rout.ing = (href,GOT,n)=>{
 }
 window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
     window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
-    return m.includes("#") ||
-        (roots.indexOf(root) === -1) ||
-        (root === 'dashboard' && n === 1) ||
-        (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n > 3) ||
-        (root === 'dashboard' && n > 2 && GOT[2] === "pages") ||
-        (GOT.length > 3 && root === 'dashboard' && GOT[2] === "posts" && n === 3) ||
-        (root === 'design' && n === 1) ||
-        (root === 'preview' && n === 1)
+    return m.includes("#") || (roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n > 3) || (root === 'dashboard' && n > 2 && GOT[2] === "pages") || (GOT.length > 3 && root === 'dashboard' && GOT[2] === "posts" && n === 3) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
 }
