@@ -13,9 +13,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         $(dom.body.all('aside')).remove()
 
         var page = route.page;
+        var path = route.path;
         var vp = dom.body.find('[data-page="' + page + '"]');
 
-        0 < 1 ? null : console.log(108, {
+        0 > 1 ? null : console.log(108, {
+            page,
+            path,
             route,
             vp
         });
@@ -94,7 +97,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 f++;
             } while (f < feeds.length)
         }
-
         resolve(route);
     }
     );
