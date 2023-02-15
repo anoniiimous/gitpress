@@ -137,7 +137,7 @@ window.modal = {
     }
     ,
     alert: async(h,ppp=document.createElement('aside'))=>{
-        var innerHTML = await ajax('raw/asset/html/template/template.modal.alert.html');
+        var innerHTML = await ajax('raw/asset/html/modal/modal.alert.html');
         var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
         h.title ? html.find('[placeholder="Title"]').textContent = h.title : null;
         h.body ? html.find('[placeholder="Body"]').textContent = h.body : null;
@@ -192,6 +192,89 @@ window.modal = {
     }
     ,
     counter: 0,
+    dropdown: async(dropdown,settings,ppp=document.createElement('aside'))=>{
+        return new Promise(async(resolve,reject)=>{
+
+            var multi = settings && settings.multi;
+
+            var innerHTML = await ajax('raw/asset/html/modal/modal.dropdown.html');
+            var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
+
+            html.find('[placeholder="Title"]').textContent = settings && settings.title ? settings.title : dropdown.find('[placeholder]').getAttribute('placeholder');
+            html.find('card > section').innerHTML = dropdown.lastElementChild.innerHTML;
+
+            if (html.find('card > section').children.length > 0) {
+                $(html.find('card > section').all('box text ico')).removeClass('color-0096c7')
+                $(html.find('card > section').all('box text ico')).addClass('border-color-ccc')
+                $(html.find('card > section').all('box text span')).removeClass('color-0096c7')
+            }
+
+            if (dropdown.find('[placeholder]').textContent.length > 0) {
+                var attribute = dropdown.find('[placeholder]').textContent;
+                var span = html.find('card > section box text span[data-after="' + attribute + '"]');
+                if (span) {
+                    var box = span.closest('box');
+                    box.find('box text ico').classList.add('color-0096c7')
+                    box.find('box text ico').classList.remove('border-color-ccc')
+                    box.find('box text span').classList.add('color-0096c7')
+                }
+            }
+            ppp.innerHTML = html.outerHTML;
+            ppp.onclick = event=>{
+                if (event.target.parentNode.tagName === 'ASIDE') {
+                    if (multi) {
+                        var attribute = multi.find('[placeholder]').textContent;
+                        var column = document.createElement('column');
+                        column.dataset.attribute = attribute;
+                        column.innerHTML = ppp.find('card > section').innerHTML;
+                        var element = dropdown.lastElementChild.find('[data-attribute="' + attribute + '"]');
+                        //dropdown.lastElementChild.appendChild(column);
+                        //alert(element.outerHTML);
+                        modal.exit(event.target);
+                        resolve(ppp.find('card > section').children);
+                    } else {
+                        dropdown.lastElementChild.innerHTML = ppp.find('card > section').innerHTML;
+                        modal.exit(event.target);
+                        resolve(ppp.find('card > section').children);
+                    }
+                } else {
+                    var box = event.target.closest('card > section > box text');
+                    if (box) {
+                        dropdown.find("[placeholder]").textContent = box.find('span').dataset.after;
+                        modal.exit(event.target);
+                        resolve(ppp.find('card > section').children);
+                    }
+                    var ico = event.target.closest('card > section > box ico');
+                    if (ico) {
+                        event.target.closest('box').remove();
+                        if (ico.closest('box').find('span').classList.contains('color-0096c7')) {
+                            dropdown.find("[placeholder]").textContent = "";
+                        }
+                    }
+                    var none = event.target.closest('card > row > box');
+                    if (none) {
+                        dropdown.find("[placeholder]").textContent = "";
+                        modal.exit(event.target);
+                        resolve(ppp.find('card > section').children);
+                    }
+                }
+            }
+            ppp.find('form').onsubmit = event=>{
+                event.preventDefault();
+                var form = event.target;
+                var input = form.find('input');
+                var value = input.value;
+                var template = form.parentNode.find('template').content.firstElementChild;
+                template.find('span').dataset.after = value;
+                ppp.find('card > section').insertAdjacentHTML('beforeend', template.outerHTML);
+                input.value = "";
+            }
+            dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
+            modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
+        }
+        );
+    }
+    ,
     exit: target=>target.closest('aside').remove(),
     popup: (h,ppp=document.createElement('aside'))=>{
         byId('boot').insertAdjacentHTML('afterend', `<aside class="aside body-aside popup"">` + h + `</aside>`);

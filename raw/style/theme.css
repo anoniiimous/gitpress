@@ -259,6 +259,10 @@
     .top-60px {
         top: 60px;
     }
+
+    .top-100pct, [data-top="100%"] {
+        top: 100%;
+    }
 }
 
 /*BOX SHADOW*/
@@ -424,6 +428,10 @@
         [data-640px-columns="4"] {
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
+        
+        [data-640px-columns="3"] {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
 
         [data-640px-columns="2"], [data-vga-columns="2"] {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -441,6 +449,10 @@
     }
 
     @media (max-width: 480px) {
+        [data-480px-columns="4"] {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        
         [data-480px-columns="1"] {
             grid-template-columns: repeat(1, minmax(0, 1fr));
         }
@@ -715,6 +727,16 @@
 
     .gap-50px {
         gap: 50px;
+    }
+
+    @media (max-width: 960px) {
+        .-dw960px-gap-20px {
+            gap: 20px;
+        }
+        
+        .-dw960px-gap-50px {
+            gap: 50px;
+        }
     }
 
     @media (max-width: 480px) {
@@ -1232,6 +1254,12 @@
 
     [data-min-height="calc(100vh - 240px)"] {
         min-height: calc(100vh - 240px);
+    }
+}
+
+@media screen {
+    .min-width-240px {
+        min-width: 240px;
     }
 }
 

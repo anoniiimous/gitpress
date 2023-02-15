@@ -1883,6 +1883,89 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     merch: {
 
+        attribute: async(target)=>{
+            var attribute = target.find('input');
+            var variations = target.nextElementSibling;
+            if (attribute.value.length > 0) {
+                variations.classList.remove('opacity-50pct');
+            } else {
+                variations.classList.add('opacity-50pct');
+            }
+        }
+        ,
+
+        attributes: async(target)=>{
+            var attributes = await modal.dropdown(target);
+            var variations = target.nextElementSibling;
+            console.log(attributes, variations, target.find('[placeholder]').textContent);
+            if (target.find('[placeholder]').textContent.length > 0) {
+                variations.classList.remove('opacity-50pct');
+            } else {
+                variations.classList.add('opacity-50pct');
+            }
+        }
+        ,
+
+        create: event=>{
+            event.preventDefault();
+
+            var form = event.target;
+
+            var images = [];
+            var thumbnails = form.find('card').firstElementChild.find('box > section').all('img');
+            if (thumbnails.length > 0) {
+                var i = 0;
+                do {
+                    var thumbnail = thumbnails[i];
+                    images[i] = thumbnail.src.split(';base64,')[1];
+                    ``
+                    i++;
+                } while (i < thumbnails.length)
+            }
+            var title = form.find('[placeholder="Enter a title"]').value;
+            var description = form.find('[placeholder="Provide a detailed description."]').value;
+            var tags = [];
+            var pricing = {
+                ListPrice: "",
+                MSRPPrice: "",
+                SalePrice: ""
+            };
+            var row = {
+                images,
+                title,
+                description,
+                tags,
+                pricing
+            }
+
+            var variations = {
+                dimensions: [{
+                    attribute: "",
+                    name: "",
+                    values: []
+                }, {
+                    attribute: "",
+                    name: "",
+                    value: []
+                }],
+                items: [row]
+            };
+
+            console.log(1902, "controller.merch.create", {
+                row,
+                variations
+            });
+        }
+        ,
+
+        ring: (target)=>{
+            var index = target.closest('box').index();
+            var card = target.closest('card');
+            var section = card.find('box > section');
+            section.style.transform = "translateX(-" + index + "00%)";
+        }
+        ,
+
         thumb: async(event)=>{
             var target = event.target;
             var card = target.closest('card');
@@ -1898,6 +1981,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var img = document.createElement('img');
             img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
             img.src = b64.result;
+            template.dataset.tap = "controller.merch.ring(target)";
             template.find('picture').innerHTML = img.outerHTML;
             thumbnails.lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
 
@@ -1910,14 +1994,44 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        variation: async(target)=>{
+            var footer = target.closest('footer');
+            var template = footer.find('template').content.firstElementChild.cloneNode(true);
+            footer.insertAdjacentHTML('beforebegin', template.outerHTML);
+        }
+        ,
+
+        variations: async(target)=>{
+            if (target.classList.contains('opacity-50pct')) {
+                modal.alert({
+                    body: "You must select an attribute before creating values for your variations.",
+                    submit: "OK",
+                    title: "No Attribute Selected"
+                });
+            } else {
+                var attributes = target.previousElementSibling;
+                var variations = await modal.dropdown(target, {
+                    //multi: attributes,
+                    title: attributes.find('[placeholder]').value
+                });
+                console.log({
+                    attributes,
+                    variations
+                });
+            }
+        }
+        ,
+
         pinky: (target)=>{
             var box = target.closest('box');
             var row = box.firstElementChild;
             var card = target.closest('card');
             var thumbnails = card.find('card > row');
-            var index = row.lastElementChild.index();
-            row.lastElementChild.remove();
+            var index = Math.abs(row.style.transform.replaceAll("translateX(", "").slice(0, -2)) / 100;
+
+            row.children[index].remove();
             thumbnails.children[index].remove();
+            row.style.transform = "translateX(-" + (index - 1) + "00%)";
         }
 
     },

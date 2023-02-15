@@ -71,7 +71,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 });
 
                                 if (post) {
-                                    date.textContent = post.date ? date.textContent = post.date : date.remove();
+                                    date ? date.textContent = post.date ? date.textContent = post.date : date.remove() : null;
                                     title.textContent = post.title;
                                     description.textContent = post.description;
                                     post.image ? picture.find('img').dataset.src = post.image : null;

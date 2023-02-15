@@ -1,38 +1,38 @@
-<blocks>
-    <header class="-dw480px-padding-10px max-width-100pct padding-20px">
-        <row class="justify-content-space-between">
-            <card>
-                <row class="gap-10px">
-                    <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
-                        <section>
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-menu"></n>
-                            </ico>
-                        </section>
-                    </box>
-                    <box>
-                        <section>
-                            <text class="font-size-24px font-weight-bolder">Product</text>
-                        </section>
-                    </box>
-                </row>
-            </card>
-            <card>
-                <row class="gap-20px">
-                    <box class="line-height-30px" data-href="/dashboard/:get/merch/">
-                        <row class="align-items-center justify-content-center">
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-view-list"></n>
-                            </ico>
-                            <text class="font-size-14px font-weight-bolder">Browse Catalog</text>
-                        </row>
-                    </box>
-                </row>
-            </card>
-        </row>
-    </header>
+<header class="-dw480px-padding-10px max-width-100pct padding-20px">
+    <row class="justify-content-space-between">
+        <card>
+            <row class="gap-10px">
+                <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                    <section>
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-menu"></n>
+                        </ico>
+                    </section>
+                </box>
+                <box>
+                    <section>
+                        <text class="font-size-24px font-weight-bolder">Product</text>
+                    </section>
+                </box>
+            </row>
+        </card>
+        <card>
+            <row class="gap-20px">
+                <box class="line-height-30px" data-href="/dashboard/:get/merch/">
+                    <row class="align-items-center justify-content-center">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-view-list"></n>
+                        </ico>
+                        <text class="font-size-14px font-weight-bolder">Browse Catalog</text>
+                    </row>
+                </box>
+            </row>
+        </card>
+    </row>
+</header>
+<form onsubmit="controller.merch.create(event)">
     <block class="-dw480px-margin-10px -dw680px-margin-x-20px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-max-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px max-width-100pct" data-width="1280px">
-        <column class="grid-gap-10px">
+        <flex class="-dw960px-gap-50px display-flex gap-10px max-width-100pct width-1280px" data-960px-flex-direction="column">
             <card class="-dw480px-gap-10px -dw960px-width-100pct gap-10px width-320px">
                 <section>
                     <box class="border-1px-solid border-radius-20px overflow-hidden padding-top-100pct width-100pct">
@@ -44,7 +44,7 @@
                         </section>
                     </box>
                 </section>
-                <row class="gap-10px" data-960px-columns="6" data-columns="4">
+                <row class="gap-10px" data-480px-columns="4" data-960px-columns="6" data-columns="4">
                     <box class="border-1px-solid border-radius-20px overflow-hidden">
                         <label class="align-items-center height-0 justify-content-center padding-top-100pct position-relative top-0 width-100pct" for="file-dashboard-merch-catalog">
                             <ico class="position-absolute top-0" data-height="100%" data-width="100%">
@@ -60,17 +60,15 @@
                     </box>
                 </template>
             </card>
-        </column>
-        <flex class="flex-1 grid-gap-20px" data-1320px-flex-direction="column" data-1320px-grid-gap="50px">
-            <card class="flex-1">
-                <column class="gap-50px">
+            <card class="flex-1 flex-direction-row grid-gap-20px" data-1320px-flex-direction="column" data-1320px-grid-gap="50px">
+                <column class="flex-1 gap-50px">
                     <box class="gap-10px">
                         <header>
                             <text class="font-weight-bolder text-transform-uppercase">Details</text>
                         </header>
                         <column class="gap-10px">
                             <input class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
-                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" placeholder="Provide a detailed description."></textarea>
+                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
                         </column>
                         <footer class="gap-10px">
                             <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
@@ -85,7 +83,7 @@
                         <header>
                             <text class="font-weight-bolder text-transform-uppercase">Traits</text>
                         </header>
-                        <column class="grid-gap-10px" data-columns="2">
+                        <column class="grid-gap-10px" data-columns="2" data-display="none">
                             <text class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px">
                                 <span class="flex-1 padding-x-10px" placeholder="Attribute"></span>
                                 <ico>
@@ -99,13 +97,56 @@
                                 </ico>
                             </text>
                         </column>
-                        <footer>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct">
+                        <column class="grid-gap-10px" data-columns="2">
+                            <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px" data-display="none">
+                                <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.attribute(event.target.closest('dropdown'))">
+                                    <text class="flex-1" placeholder="Attribute"></text>
+                                    <ico data-height="30px" data-width="30px">
+                                        <n class="gg-chevron-down"></n>
+                                    </ico>
+                                </row>
+                                <column class="background-color-fff border-radius-10px display-none margin-auto min-width-240px padding-10px z-index-5"></column>
+                            </dropdown>
+                            <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px">
+                                <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                    <input class="flex-1" onkeyup="controller.merch.attribute(event.target.closest('field'))" placeholder="Attribute" type="text">
+                                </row>
+                            </field>
+                            <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px opacity-50pct">
+                                <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.variations(event.target.closest('dropdown'))">
+                                    <text class="flex-1" placeholder="Value"></text>
+                                    <ico data-height="30px" data-width="30px">
+                                        <n class="gg-chevron-down"></n>
+                                    </ico>
+                                </row>
+                                <group data-display="none"></group>
+                            </dropdown>
+                        </column>
+                        <footer data-display="flex">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-tap="controller.merch.variation(event.target)">
                                 <ico data-height="20px" data-width="30px">
                                     <n class="gg-add"></n>
                                 </ico>
                                 <span>Add Variation</span>
                             </text>
+                            <template>
+                                <column class="grid-gap-10px" data-columns="2">
+                                    <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                            <input class="flex-1" onkeyup="controller.merch.attribute(event.target.closest('field'))" placeholder="Attribute" type="text">
+                                        </row>
+                                    </field>
+                                    <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px opacity-50pct">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.variations(event.target.closest('dropdown'))">
+                                            <text class="flex-1" placeholder="Value"></text>
+                                            <ico data-height="30px" data-width="30px">
+                                                <n class="gg-chevron-down"></n>
+                                            </ico>
+                                        </row>
+                                        <group data-display="none"></group>
+                                    </dropdown>
+                                </column>
+                            </template>
                         </footer>
                     </box>
                     <box class="gap-10px">
@@ -120,13 +161,14 @@
                         </section>
                     </box>
                 </column>
-            </card>
-            <card class="-dw1320px-width-100pct width-320px">
-                <section>
+                <section class="-dw1320px-width-100pct width-320px">
                     <box class="width-100pct">
                         <flex class="gap-20px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/merch/">Cancel</text>
-                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Post It</text>
+                            <label class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
+                                <text>Post It</text>
+                                <input id="submit-dashboard-media-photo" type="submit">
+                            </label>
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Preview</text>
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>
                         </flex>
@@ -135,4 +177,4 @@
             </card>
         </flex>
     </block>
-</blocks>
+</form>
