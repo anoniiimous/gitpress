@@ -1207,10 +1207,32 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 other: false,
                 title: attributes.find('[placeholder]').value
             });
-            console.log({
-                attributes,
-                variations
-            });
+
+            var values = [];
+            var traits = target.closest('box').all('column dropdown [placeholder]');
+            if (traits.length > 0) {
+                var t = 0;
+                do {
+                    var trait = traits[t];
+                    values[t] = trait.textContent.toLowerCase().replaceAll('-', '');
+                    t++;
+                } while (t < traits.length);
+                var matrix = values.join('-');
+
+                var vp = target.closest('pages');
+
+                ('/dashboard/:get/merch/catalog/:get/' + matrix + '/').router();
+
+                console.log({
+                    attributes,
+                    variations
+                }, {
+                    matrix,
+                    traits,
+                    values
+                });
+
+            }
         }
         ,
 

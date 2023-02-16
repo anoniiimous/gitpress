@@ -10,12 +10,12 @@ String.prototype.router = async function(params) {
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
-    console.log(13, {
+    0 > 1 ? console.log(13, {
         page,
         pages,
         route,
         vp
-    });
+    }) : null;
     if (page) {
         if (is.iframe) {
             var path = "/"+window.parent.owner.login+"/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;

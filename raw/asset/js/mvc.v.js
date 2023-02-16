@@ -292,10 +292,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var variant = false;
                                         var dimensions = json.dimensions;
                                         if (dimensions && dimensions.length > 0) {
+                                            var footer = vp.all('form card')[1].all('box')[1].find('footer');
+                                                            
+                                            footer.previousElementSibling.innerHTML = "";                                                            
                                             vp.find('[data-after="Traits"]').closest('box').removeAttribute('data-display');
+
                                             var d = 0;
                                             do {
-                                                var footer = vp.all('form card')[1].all('box')[1].find('footer');
                                                 var template = footer.find('template').content.firstElementChild.cloneNode(true);
 
                                                 var name = dimensions[d].name;
@@ -310,7 +313,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                         if (get[5]) {
                                                             var matrix = get[5];
                                                             var arr = matrix.split('-');
-                                                            if (arr[d].toLowerCase() === values[v].toLowerCase()) {
+                                                            if (arr[d] && arr[d].toLowerCase() === values[v].toLowerCase().replace('-', '')) {
                                                                 dropdown.find('[placeholder]').textContent = values[v];
                                                                 n++;
                                                             }
@@ -327,10 +330,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     }
                                                 }
 
-                                                footer.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                footer.previousElementSibling.insertAdjacentHTML('beforeend', template.outerHTML);
                                                 d++;
                                             } while (d < dimensions.length);
+                                        } else {
+                                            vp.find('[data-after="Traits"]').closest('box').dataset.display = "none";
+                                        }
+
+                                        if (get[5]) {
                                             if (variant === true) {
+                                                //alert("Finding Variation");
                                                 var json = await github.repos.contents({
                                                     owner: user.login,
                                                     repo: get[1],
@@ -342,14 +351,19 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 console.log(332, {
                                                     json
                                                 });
-                                            } else {
-                                                vp.find('form').dataset.display = "none";
+                                                //vp.find('form').removeAttribute('data-display');
+                                                //vp.find('error').dataset.display = "none";
+                                            } else {//vp.find('form').dataset.display = "none";
+                                            //vp.find('error').removeAttribute('data-display');
                                             }
-                                        } else {
-                                            vp.find('[data-after="Traits"]').closest('box').dataset.display = "none";
+                                        } else {//vp.find('form').removeAttribute('data-display');
+                                        //vp.find('error').dataset.display = "none";
                                         }
 
                                     } else {
+                                        //vp.find('form').removeAttribute('data-display');
+                                        //vp.find('error').dataset.display = "none";
+
                                         var json = await ajax("/raw/asset/json/categories.json");
                                         var categories = JSON.parse(json).merch;
                                         if (categories.length > 0) {
