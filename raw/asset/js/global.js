@@ -15,3 +15,6 @@ window.global = window.globals = {
         tld: domains[domains.length - 1]
     }
 };
+
+window.global.dashboard = {}
+window.global.dashboard.routes = ["build", "files", "media", "merch", "pages", "posts", "style"];

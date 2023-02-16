@@ -1,968 +1,3 @@
-window.mvc ? null : (window.mvc = {});
-
-window.mvc.m ? null : (window.mvc.m = model = {
-    error: {
-        image: e=>{
-            console.log('model.error.image', e);
-            e.remove();
-        }
-    }
-});
-
-window.mvc.v ? null : (window.mvc.v = view = function(route) {
-    return new Promise(async function(resolve, reject) {
-        var page = route.page;
-        var path = route.path;
-        var search = route.search;
-        var gut = route.hash ? rout.ed.dir(route.hash.split('#')[1]) : [];
-        var get = (route ? route.GOT : rout.ed.dir(dom.body.dataset.path)).concat(gut);
-        var root = get[0] || gut[0];
-
-        window.GET = window.GET ? GET : rout.ed.dir(dom.body.dataset.path);
-
-        if (search) {
-            var params = Object.fromEntries(new URLSearchParams(search));
-            var keys = Object.keys(params);
-            if (keys.length > 0) {
-                if (keys.includes("code")) {
-                    await github.oauth.authorize(params);
-                    route.search = "";
-                }
-            }
-        }
-
-        var token = localStorage.githubAccessToken;
-        if (token) {
-            dom.body.dataset.uid = token;
-        }
-
-        $(dom.body.all('aside')).remove()
-        console.log(route, root);
-
-        if (root) {
-
-            const roots = ["dashboard", "design", "developer", "marketplace", "new"];
-            if (roots.indexOf(root) === -1) {
-                if (get.length > 1) {
-                    const owner = root;
-                    const repo = get[1];
-                    const path = "/site.webmanifest";
-                    const params = {
-                        owner,
-                        repo,
-                        path
-                    }
-                    const settings = {}
-                    github.repos.contents(params, settings).then(data=>{
-                        const content = data.content;
-                        const raw = atob(content);
-                        const json = JSON.parse(raw);
-                        console.log(49, {
-                            data,
-                            json
-                        });
-                        const vp = dom.body.find('[data-page="/*/*/"]');
-                        //vp.find('[placeholder="Site"]').textContent = json.name;
-                        controller.blog.render(byId('iframe-user-blog'), json);
-                    }
-                    ).catch(async(error)=>{
-                        console.log("43.error", {
-                            error
-                        });
-                    }
-                    );
-                    resolve(route);
-                } else {
-                    var vp = dom.body.find('[data-page="/*/"]');
-                    var owner = await github.users.get({
-                        username: get[0]
-                    });
-                    console.log({
-                        owner
-                    });
-                    vp.find('block > picture + section picture img').src = owner.avatar_url;
-                    vp.find('[placeholder="Firstname Lastname"]').textContent = owner.name;
-                    vp.find('[placeholder="username"]').textContent = owner.login;
-                    vp.find('[data-after="Projects"]').previousElementSibling.textContent = owner.public_repos;
-                    vp.find('[data-after="Snippets"]').previousElementSibling.textContent = owner.public_gists;
-                    vp.find('[data-after="Followers"]').previousElementSibling.textContent = owner.followers;
-                    vp.find('[data-after="Following"]').previousElementSibling.textContent = owner.following;
-                    resolve(route);
-                }
-            }
-            if (root === "dashboard") {
-                0 < 1 ? controller.nav.hide() : controller.nav.close();
-                if (get.length > 1) {
-                    const user = await github.user.get();
-
-                    var project = dom.body.find('main nav').find('[placeholder="Project Name"]');
-                    var link = dom.body.find('main nav').find('[placeholder="Link"]');
-                    var username = dom.body.find('main nav').find('[placeholder="username"]');
-
-                    //link.dataset.href = "/" + user.login + "/" + get[1] + "." + "dompad.io";
-                    link.textContent = get[1];
-
-                    username.textContent = user.login;
-                    username.closest('box').dataset.href = "/" + user.login + "/";
-
-                    try {
-                        var icon = await github.raw.path("/" + user.login + "/" + get[1] + "/main/icon.svg");
-                        project.closest('box').previousElementSibling.find('img').src = "data:image/svg+xml;base64," + icon.content;
-                    } catch (e) {
-                        console.log(e);
-                    }
-
-                    if (get.length > 2) {
-                        var arr = ["build", "files", "media", "merch", "pages", "posts", "style"];
-                        if (arr.includes(get[2])) {
-                            var index = arr.indexOf(get[2]);
-                            dom.body.find('main nav').children[1].children[index].find('.gg-chevron-down').click();
-                        }
-                        if (get[2] === "build") {
-                            var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
-                            var iframe = vp.find('iframe');
-
-                            if (iframe && !iframe.contentWindow.document.body.querySelector('boot')) {
-                                await mvc.c.build.boot(iframe);
-                            }
-
-                            if (get[3]) {
-                                if (get[3] === "er") {
-                                    controller.build.editor(iframe);
-                                } else if (get[3] === "preview") {
-                                    controller.build.preview(iframe);
-                                } else {
-                                    controller.build.else(iframe);
-                                }
-                            } else {
-                                controller.build.index(iframe);
-                            }
-
-                            //alert(iframe.contentWindow.document.body.outerHTML);
-                            resolve(route);
-                        }
-                        if (get[2] === "files") {
-                            if (get.length > 3) {
-                                if (get[3] === "file") {}
-                            }
-                            var feed = byId('feed-dashboard-files');
-                            if (feed && feed.innerHTML === "") {
-                                const name = get[4] + '.html';
-                                var params = {
-                                    owner: user.login,
-                                    path: "/raw/files",
-                                    repo: get[1]
-                                };
-                                var settings = {};
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
-                                //alert("Attempting to fetch files");
-                                github.repos.contents(params, settings).then(data=>{
-                                    //alert("Files fetched successfully");
-                                    if (data) {
-                                        console.log(84, {
-                                            data
-                                        });
-                                        feed.innerHTML = "";
-                                        if (data.length > 0) {
-                                            vp.all('card')[1].find('box').classList.remove('display-none');
-                                            var d = 0;
-                                            do {
-                                                var row = data[d];
-                                                var box = byId('template-feed-dashboard-files').content.firstElementChild.cloneNode(true);
-                                                var name = row.name;
-                                                var arr = name.split('.');
-                                                var ext = arr[arr.length - 1];
-                                                var icon = "file";
-                                                ["jpg", "jpeg", "png", "svg", "webp"].includes(ext) ? icon = "image" : null;
-                                                ["mp3"].includes(ext) ? icon = "music" : null;
-                                                ["mp4", "wav"].includes(ext) ? icon = "video" : null;
-                                                ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
-                                                box.dataset.sha = row.sha;
-                                                box.find('ico n').classList.add("gg-" + icon);
-                                                box.find('text').dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
-                                                box.find('[placeholder="Filename"]').textContent = row.name;
-                                                //box.all('text')[1].textContent = formatBytes(row.size);
-                                                var html = box.outerHTML;
-                                                feed.insertAdjacentHTML('beforeend', html);
-                                                //alert(html);
-                                                console.log(feed);
-                                                d++;
-                                            } while (d < data.length)
-                                        } else {
-                                            vp.all('card')[1].find('box').classList.add('display-none');
-                                        }
-                                    }
-                                }
-                                ).catch(async(error)=>{
-                                    //alert("Failed to fetch files");
-                                    console.log("43.error", {
-                                        error
-                                    });
-                                    if (error.code === 404) {
-                                        //alert("Setup Project");
-                                        resolve(route);
-                                    }
-                                }
-                                );
-                            }
-
-                        }
-                        if (get[2] === "media") {
-
-                            if (get[3]) {
-                                if (get[4]) {}
-                            } else {
-
-                                var feed = byId('feed-dashboard-media');
-                                var vp = dom.body.find('page[data-page="/dashboard/*/media/"]');
-                                //alert("Attempting to fetch files");
-                                github.repos.contents({
-                                    owner: user.login,
-                                    path: "/raw/media/media.json",
-                                    repo: get[1]
-                                }).then((d)=>{
-                                    console.log(222, {
-                                        d
-                                    });
-                                    var data = 0 < 1 ? JSON.parse(atob(d.content)) : d;
-                                    if (data) {
-                                        console.log(84, {
-                                            data
-                                        });
-                                        feed.innerHTML = "";
-                                        if (data.length > 0) {
-                                            vp.all('header card')[1].find('box').classList.remove('display-none');
-                                            var html = "";
-                                            var d = 0;
-                                            do {
-                                                console.log(d, {
-                                                    data
-                                                });
-                                                var row = data[d];
-                                                var format = row.format;
-                                                var title = row.title;
-                                                var slug = row.slug;
-                                                var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
-                                                if (format === "audio") {
-                                                    card.find('n').classList.add('gg-music');
-                                                } else if (format === "photo") {
-                                                    card.find('n').classList.add('gg-image');
-                                                } else if (format === "video") {
-                                                    card.find('n').classList.add('gg-film');
-                                                } else {
-                                                    card.find('n').classList.add('gg-file');
-                                                }
-                                                card.find('[placeholder="Title"]').textContent = title;
-                                                var src = 0 > 1 ? github.raw.blob({
-                                                    owner: user.login,
-                                                    repo: get[1],
-                                                    resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
-                                                }) : null;
-                                                //card.find('column picture img').src = src;
-                                                //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
-                                                html += card.outerHTML;
-                                                //feed.insertAdjacentHTML('beforeend', html);
-                                                d++;
-                                            } while (d < data.length);
-                                            feed.innerHTML = html;
-                                        } else {
-                                            vp.all('header card')[1].find('box').classList.add('display-none');
-                                        }
-                                    }
-
-                                }
-                                )
-
-                            }
-
-                        }
-                        if (get[2] === "merch") {
-
-                            if (get.length > 3) {
-                                if (get[3] === "catalog") {
-                                    var feed = byId('feed-dashboard-catalog');
-                                    if (get[4]) {
-                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/"]');
-                                        var name = rout.ed.dir(route.path);
-                                        name.splice(0, 4);
-                                        //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
-                                        vp.find('[placeholder="Enter a title"]').value = "";
-                                    }
-                                } else if (get[3] === "product") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/product/"]');
-                                    var slug = get[4];
-                                    if (slug) {
-                                        var owner = await github.user.get();
-                                        var json = await github.repos.contents({
-                                            owner: user.login,
-                                            repo: get[1],
-                                            path: "raw/merch/catalog.json"
-                                        }, {
-                                            accept: "application/vnd.github.raw"
-                                        });
-                                        var row = json.find(i=>i.slug === slug);
-                                        vp.find('[placeholder="Enter a title"]').value = row.title;
-                                    }
-                                }
-                            } else {
-                                var feed = byId('feed-dashboard-merch');
-                                var vp = dom.body.find('page[data-page="/dashboard/*/merch/"]');
-                                //alert("Attempting to fetch files");
-                                github.repos.contents({
-                                    owner: user.login,
-                                    path: "/raw/merch/catalog.json",
-                                    repo: get[1]
-                                }, {}).then(d=>{
-                                    var data = JSON.parse(atob(d.content));
-                                    if (data) {
-                                        console.log(84, {
-                                            data
-                                        });
-                                        feed.innerHTML = "";
-                                        if (data.length > 0) {
-                                            vp.all('header card')[1].find('box').classList.remove('display-none');
-                                            var html = "";
-                                            var d = 0;
-                                            do {
-                                                var row = data[d];
-                                                var title = row.title;
-                                                var slug = row.slug;
-                                                var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
-                                                card.find('[placeholder="Title"]').textContent = title;
-                                                card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
-                                                html += card.outerHTML;
-                                                //feed.insertAdjacentHTML('beforeend', html);
-                                                d++;
-                                            } while (d < data.length);
-                                            feed.innerHTML = html;
-                                        } else {
-                                            vp.all('header card')[1].find('box').classList.add('display-none');
-                                        }
-                                    }
-
-                                }
-                                )
-                            }
-                        }
-                        if (get[2] === "pages") {
-
-                            if (get.length > 3) {
-                                if (get[3] === "page") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/*/"]');
-                                    var name = rout.ed.dir(route.path);
-                                    name.splice(0, 4);
-                                    vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
-                                }
-                            } else {
-                                var feed = byId('feed-dashboard-pages');
-                                if (0 < 1) {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/"]');
-                                    //alert("Attempting to fetch files");
-                                    github.repos.contents({
-                                        owner: user.login,
-                                        path: "/raw/pages/pages.json",
-                                        repo: get[1]
-                                    }, {}).then(d=>{
-                                        var data = JSON.parse(atob(d.content));
-                                        if (data) {
-                                            data.unshift({
-                                                page: "/",
-                                                path: "/"
-                                            });
-                                            console.log(84, {
-                                                data
-                                            });
-                                            feed.innerHTML = "";
-                                            if (data.length > 0) {
-                                                vp.all('header card')[1].find('box').classList.remove('display-none');
-                                                var html = "";
-                                                var d = 0;
-                                                var names = [];
-                                                var html = "";
-                                                var hrefs = [];
-
-                                                do {
-                                                    var row = data[d];
-                                                    hrefs[d] = row.path;
-                                                    d++;
-                                                } while (d < data.length);
-                                                hrefs.sort();
-
-                                                d = 0;
-                                                var names = [];
-                                                do {
-                                                    var href = hrefs[d];
-                                                    names[d] = rout.ed.dir(href);
-                                                    d++;
-                                                } while (d < hrefs.length);
-
-                                                d = 0;
-                                                do {
-                                                    var href = hrefs[d];
-                                                    var card = byId('template-feed-dashboard-pages').content.firstElementChild.cloneNode(true);
-                                                    if ((d > 0 && names[d][0] !== names[d - 1][0])) {
-                                                        html += "</card>";
-                                                    }
-                                                    if (d === 0 || (d > 0 && names[d][0] !== names[d - 1][0])) {
-                                                        html += "<card class='" + card.className + "'>";
-                                                    }
-                                                    card.find('[placeholder="Page URL"]').textContent = href;
-                                                    card.firstElementChild.dataset.sha = row.sha;
-                                                    //card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
-                                                    card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
-                                                    card.find('.gg-code-slash').closest('text').dataset.href = "/dashboard/:get/build/er" + href;
-                                                    card.find('.gg-eye').closest('text').dataset.href = "/dashboard/:get/build/preview" + href;
-                                                    html += card.innerHTML;
-                                                    //feed.insertAdjacentHTML('beforeend', html);
-                                                    d++;
-                                                } while (d < names.length);
-
-                                                feed.innerHTML = html;
-                                            } else {
-                                                vp.all('header card')[1].find('box').classList.add('display-none');
-                                            }
-                                        }
-
-                                    }
-                                    );
-                                }
-                            }
-                        }
-                        if (get[2] == "posts") {
-                            if (get[3] === "post") {
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*/"]');
-                                var title = vp.find('[placeholder="Title"]');
-                                var description = vp.find('[placeholder="Description"]');
-                                var article = vp.find('box [contenteditable]');
-
-                                title.value = "";
-                                description.value = "";
-                                article.innerHTML = "";
-
-                                if (get.length > 4) {
-                                    const user = await github.user.get();
-
-                                    if (0 < 1) {
-
-                                        github.repos.contents({
-                                            owner: user.login,
-                                            path: "/raw/posts/" + get[4] + "/index.html",
-                                            repo: get[1]
-                                        }, {
-                                            accept: "application/vnd.github.raw"
-                                        }).then(data=>{
-                                            //var data = atob(d.content);
-                                            if (data) {
-                                                const doc = new DOMParser().parseFromString(data, "text/html");
-                                                console.log(89, {
-                                                    data,
-                                                    doc,
-                                                    vp
-                                                });
-
-                                                title.value = doc.head.find("title").textContent;
-                                                on.key.up.auto.size(title);
-
-                                                description.value = doc.head.find("meta[name='description']").content;
-                                                on.key.up.auto.size(description);
-
-                                                article.innerHTML = doc.body.all('article')[doc.body.all('article').length - 1].innerHTML;
-
-                                                //vp.find('card textarea').value = doc.body.find('article').textContent;
-                                                //const gist = doc.head.find('meta[name="gist"]').content;
-                                                //gist ? vp.find('form > footer').all('button')[0].dataset.gist = gist : null;                                                
-                                            }
-                                        }
-                                        ).catch(async(error)=>{
-                                            console.log(507, "Post is empty", {
-                                                error
-                                            });
-                                            if (error.code === 404) {
-                                                //alert("Setup Project");
-                                                resolve(route);
-                                            }
-                                        }
-                                        );
-                                    }
-
-                                }
-                                resolve(route);
-                            } else {
-                                const user = await github.user.get();
-                                var params = {
-                                    owner: user.login,
-                                    path: "/raw/posts",
-                                    repo: get[1]
-                                };
-                                var settings = {};
-                                controller.posts.read(get[1]);
-                            }
-                        } else if (get[2] === "setup") {
-                            var vp = dom.body.find('[data-pages="/setup/"]');
-                            if (get.length > 1) {} else {
-                                //alert(vp.outerHTML);
-                                vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
-                                vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "true";
-                                vp.all('block[data-step]')[0].find('input[type="text"]').value = "";
-                                $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
-                                $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
-                                $(vp.all('block[data-step]')).addClass('display-none');
-                                $(vp.all('block[data-step]')[0]).removeClass('display-none');
-                            }
-                            resolve(route);
-                        } else if (get[2] === "style") {
-                            var a = async(d)=>{
-                                //data = data.filter(row=>row.type === "dir")
-                                data = JSON.parse(d);
-                                console.log(319, {
-                                    data
-                                });
-                                const feed = byId('feed-dashboard-blog-theme');
-                                if (feed && feed.all('card').length === 0 && data.length > 0) {
-                                    const template = byId('template-dashboard-blog-theme').content.firstElementChild.cloneNode(true);
-                                    var x = 0;
-                                    do {
-                                        const row = data[x];
-                                        //const name = rout.ed.dir(row.path)[0];
-                                        const full_name = row.full_name;
-                                        const dir = rout.ed.dir(full_name);
-                                        var repo = dir[1];
-                                        const arr = repo.split('.');
-                                        const name = arr[arr.length - 1];
-                                        var owner = row.owner;
-                                        console.log({
-                                            full_name,
-                                            dir,
-                                            name,
-                                            owner
-                                        })
-
-                                        var screenshot = await github.repos.contents({
-                                            owner: owner.login,
-                                            path: "/raw/asset/png/template.png",
-                                            repo: repo
-                                        });
-                                        //var repository = row['_links'].html.split('/');
-                                        //var user = repository[0];
-                                        //var repo = repository[1];
-                                        //template.dataset["full_name"] = row.repository["full_name"];
-                                        //template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
-                                        //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
-                                        template.find('text').textContent = name;
-                                        //template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
-                                        template.find('picture img').src = "raw/asset/png/template/template.spryce.png";
-                                        feed.insertAdjacentHTML('beforeend', template.outerHTML);
-                                        x++;
-                                    } while (x < data.length);
-                                }
-                            }
-                            ajax('raw/asset/json/templates.json').then(a);
-                        }
-                    }
-
-                    //alert(window.database.dashboard.hasOwnProperty(get[1]));
-                    if (window.database.dashboard.hasOwnProperty(get[1]) === false) {
-                        //const user = await github.user.get();
-                        github.repos.contents({
-                            owner: user.login,
-                            path: "/site.webmanifest",
-                            repo: get[1]
-                        }, {
-                            cache: "reload"
-                        }).then(async(data)=>{
-                            if (data) {
-                                var content = data.content;
-                                var raw = atob(content);
-                                var json = JSON.parse(raw);
-                                0 > 1 ? console.log(261, {
-                                    content,
-                                    data,
-                                    json,
-                                    raw
-                                }) : null;
-                                var description = json.description;
-                                var icons = json.icons;
-                                var name = json.name;
-                                var short_name = json.short_name;
-
-                                window.database.dashboard[short_name] = json;
-                                if (description && icons && name) {
-                                    dom.body.find('main nav').find('[placeholder="Project Name"]').textContent = name;
-                                } else {
-                                    const html = await ajax('/raw/html/template/template.setup.html');
-                                    var ppp = 0 < 1 ? await modal.page(html) : dom.body.find('[data-fetch="raw/html/template/template.setup.html"]')
-                                    var form = ppp.find('form');
-
-                                    //GET index.html
-                                    try {
-                                        var data = await github.repos.contents({
-                                            owner: user.login,
-                                            repo: GET[1],
-                                            path: "/index.html"
-                                        }, {
-                                            cache: "reload"
-                                        });
-                                        var raw = data.content;
-                                        var sha = data.sha;
-                                        var content = atob(raw);
-                                        var doc = new DOMParser().parseFromString(content, "text/html");
-                                        var title = doc.head.find('title').textContent.length > 0 ? doc.head.find('title').textContent : null;
-                                        console.log(807, {
-                                            content,
-                                            data,
-                                            doc,
-                                            raw,
-                                            sha
-                                        });
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
-
-                                    //GET icon.svg
-                                    try {
-                                        var data = await github.repos.contents({
-                                            owner: user.login,
-                                            repo: GET[1],
-                                            path: "/icon.svg"
-                                        }, {
-                                            cache: "reload"
-                                        });
-                                        var raw = data.content;
-                                        var sha = data.sha;
-                                        //var brand = raw ? "data:image/svg;base64," + raw : null;
-                                        var brand = raw ? atob(raw) : null;
-                                        console.log(307, {
-                                            content: atob(raw),
-                                            data,
-                                            raw,
-                                            sha
-                                        });
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
-
-                                    //GET site.webmanifest
-                                    try {
-                                        var data = await github.repos.contents({
-                                            owner: user.login,
-                                            repo: GET[1],
-                                            path: "/site.webmanifest"
-                                        }, {
-                                            cache: "reload"
-                                        });
-                                        var raw = atob(data.content);
-                                        var sha = data.sha;
-                                        var json = JSON.parse(raw);
-                                        var about = null;
-                                        console.log(319, {
-                                            data,
-                                            json,
-                                            raw,
-                                            sha
-                                        });
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
-
-                                    //GET data
-                                    console.log(316, {
-                                        title,
-                                        brand,
-                                        about
-                                    });
-
-                                    form.classList.remove("display-none");
-
-                                    if (title) {
-                                        var s1 = ppp.find('block').children[0];
-                                        s1.find('input').value = s1.find('input').dataset.value = title;
-                                        s1.all('footer box')[1].classList.remove('opacity-50pct');
-
-                                        var s2 = ppp.find('block').children[1];
-                                        var picture = s2.find('picture');
-                                        console.log(picture.firstElementChild)
-
-                                        if (brand) {
-                                            //alert("Step Three");
-
-                                            var svg = new DOMParser().parseFromString(brand, "image/svg+xml").documentElement;
-                                            var safety = 1 < 0;
-                                            if (safety) {
-                                                picture.innerHTML = svg.outerHTML;
-                                            } else {
-                                                var rect = svg.find('rect');
-                                                picture.find('rect').setAttribute('fill', rect.getAttribute('fill'))
-
-                                                var foreignObject = svg.find('foreignObject');
-                                                var scale = foreignObject.getAttribute('width').split("%")[0];
-                                                picture.find('foreignObject').innerHTML = foreignObject.innerHTML;
-                                                picture.find('foreignObject').setAttribute('height', scale + "%");
-                                                picture.find('foreignObject').setAttribute('width', scale + "%");
-                                                picture.find('foreignObject').style.transform = "translate(calc((100% - " + scale + "%)/2), calc((100% - " + scale + "%)/2))";
-
-                                                s2.find('[data-before="size"]').closest('box').find('input').setAttribute('value', foreignObject.getAttribute('width').split("%")[0]);
-                                            }
-
-                                            $(form.all('block > *')).addClass('display-none');
-                                            $(form.all('form > header box flex')).attr("data-height", "30px");
-                                            $(form.all('form > header box flex')).attr("data-width", "30px");
-                                            $(form.all('form > header box flex')[2]).attr("data-height", "50px");
-                                            $(form.all('form > header box flex')[2]).attr("data-width", "50px");
-                                            $(form.all('block > *')[2]).removeClass('display-none');
-
-                                            if (about) {
-                                                alert(about);
-                                            }
-                                        } else {
-                                            //alert("Step Two");
-
-                                            $(form.all('block > *')).addClass('display-none');
-                                            $(form.all('form > header box flex')).attr("data-height", "30px");
-                                            $(form.all('form > header box flex')).attr("data-width", "30px");
-                                            $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                                            $(form.all('form > header box flex')[1]).attr("data-width", "50px");
-                                            $(form.all('block > *')[1]).removeClass('display-none');
-
-                                            var color = colors.random();
-                                            controller.setup.iro(color);
-                                        }
-                                    }
-                                }
-                                resolve(route);
-                            }
-                        }
-                        ).catch(async(error)=>{
-                            console.log("43.error", {
-                                error
-                            });
-                            //if (error.code === 404) {
-                            //alert("Setup Project");
-                            //}
-
-                            const user = await github.user.get();
-
-                            console.log(498, {
-                                params,
-                                settings
-                            });
-
-                            const aa = async(e)=>{
-                                const html = await ajax('/raw/asset/html/template/template.setup.html');
-                                var ppp = await modal.page(html);
-                                ppp.find('form').classList.remove("display-none");
-                                resolve(route);
-                            }
-
-                            const bb = (e)=>{}
-
-                            github.repos.contents({
-                                owner: user.login,
-                                path: "/site.webmanifest",
-                                repo: GET[1]
-                            }, {
-                                data: JSON.stringify({
-                                    content: btoa(JSON.stringify(json, null, 2)),
-                                    message: "Create site.webmanifest"
-                                }),
-                                dataType: "PUT"
-                            }).then(aa).catch(bb);
-
-                        }
-                        );
-                    }
-                } else {
-
-                    if (github.oauth.verify()) {
-                        var params = {};
-                        const user = await github.user.get();
-                        var p = d=>{
-                            var data = d.content ? JSON.parse(atob(d.content)) : d;
-                            const feed = byId('feed-dashboard');
-                            feed.innerHTML = "";
-                            if (data.length > 0) {
-                                var x = 0;
-                                do {
-                                    const row = data[x].repository ? data[x].repository : data[x];
-                                    var private = row.private;
-                                    const shortname = row.name;
-                                    var pushed_at = new Date(row.pushed_at);
-                                    var date = pushed_at.toLocaleString('en-US', {
-                                        month: 'short'
-                                    }) + " " + (pushed_at.getDay() + 1) + ", " + pushed_at.getFullYear();
-
-                                    const template = byId('template-feed-dashboard').content.firstElementChild.cloneNode(true);
-
-                                    (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
-
-                                    //private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
-
-                                    template.find('text').dataset.owner = row.owner.login;
-                                    template.find('text').dataset.repo = row.name;
-                                    template.find('text').textContent = shortname;
-                                    template.find('[placeholder="Date"]').textContent = date;
-                                    template.dataset.href = "/dashboard/" + row.name + "/";
-
-                                    feed.insertAdjacentHTML('beforeend', template.outerHTML);
-                                    x++;
-                                } while (x < data.length);
-                            }
-                        }
-                        cache.feed.dashboard.index ? github.repos.contents({
-                            owner: user.login,
-                            repo: "db.dompad.io",
-                            path: "/v1/apps/index.json"
-                        }).then(p) : github.user.repos({
-                            query: {
-                                per_page: 25,
-                                sort: "created"
-                            }
-                        }).then(p);
-                    }
-                }
-                resolve(route);
-            } else if (root === "design") {
-
-                if (get.length > 1) {
-
-                    if (get.length > 2) {
-
-                        if (get[2] === "preview") {
-                            var vp = dom.body.find('[data-page="' + route.page + '"]');
-                            var iframe = vp.find('iframe');
-                            iframe.name = "iframe-" + get[1];
-                            controller.templates.preview(iframe);
-                        }
-
-                    }
-
-                } else {
-
-                    var params = {
-                        owner: "dompad",
-                        path: "/",
-                        repo: "preview"
-                    };
-                    var settings = {};
-                    github.repos.contents(params, settings).then(data=>{
-                        data = data.filter(row=>row.type === "dir")
-                        console.log(319, {
-                            data
-                        });
-                        const feed = byId('feed-templates');
-                        if (data.length > 0) {
-                            feed.innerHTML = "";
-                            const template = byId('template-template').content.firstElementChild.cloneNode(true);
-                            var x = 0;
-                            do {
-                                const row = data[x];
-                                const name = row.name;
-                                template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
-                                //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
-                                template.find('text').textContent = name;
-                                template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
-                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
-                                x++;
-                            } while (x < data.length);
-                        }
-                    }
-                    )
-
-                }
-                resolve(route)
-            } else if (root === "marketplace") {
-                if (github.oauth.verify()) {
-                    const settings = {};
-                    console.log(settings);
-                    const user = await github.user.get();
-                    console.log({
-                        user
-                    }, user.login);
-                    github.search.code('q="key": "32616927" filename:site.webmanifest').then(data=>{
-                        console.log(282, {
-                            data
-                        });
-                        const feed = byId('feed-directory');
-                        feed.innerHTML = "";
-                        if (data.length > 0) {
-                            const template = byId('template-feed-directory').content.firstElementChild.cloneNode(true);
-                            var x = 0;
-                            do {
-                                const row = data[x].repository;
-                                const shortname = row.name;
-                                template.find('picture').dataset.href = "/" + row.owner.login + "/" + shortname + "/";
-                                template.find('text').dataset.href = "/dashboard/" + shortname;
-                                template.find('text').dataset.owner = row.owner.login;
-                                template.find('text').dataset.repo = row.name;
-                                template.find('text').innerHTML = shortname;
-                                //.split('.')[2];
-                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
-                                x++;
-                            } while (x < data.length);
-                        }
-                    }
-                    );
-                }
-                resolve(route)
-            } else if (root === "new") {
-                if (get[1] === "app") {
-                    var vp = dom.body.find('[data-pages="/new/app/"]');
-                    var form = vp.find('form');
-                    form.find('input').value = "";
-                }
-                if (get[1] === "import") {
-                    const settings = {};
-                    console.log(settings);
-                    const user = await github.user.get();
-                    //github.search.code(query).then(data=>{
-                    github.user.repos({
-                        query: {
-                            per_page: 25,
-                            sort: "created"
-                        }
-                    }).then(data=>{
-                        console.log(596, {
-                            data
-                        });
-                        const feed = byId('feed-new-import');
-                        feed.innerHTML = "";
-                        if (data.length > 0) {
-                            var x = 0;
-                            do {
-                                const row = data[x].repository ? data[x].repository : data[x];
-                                var private = row.private;
-                                const shortname = row.name;
-                                const template = byId('template-feed-new-import').content.firstElementChild.cloneNode(true);
-
-                                (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
-
-                                private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
-
-                                template.find('text').dataset.owner = row.owner.login;
-                                template.find('text').dataset.repo = row.name;
-                                template.find('text').innerHTML = shortname;
-
-                                feed.insertAdjacentHTML('beforeend', template.outerHTML);
-                                x++;
-                            } while (x < data.length);
-                        }
-                    }
-                    );
-                }
-                resolve(route)
-            } else {
-                resolve(route);
-            }
-
-        } else {
-
-            resolve(route);
-
-        }
-    }
-    );
-}
-);
-
 window.mvc.c ? null : (window.mvc.c = controller = {
 
     audio: {
@@ -1906,6 +941,114 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        catalog: async(event)=>{
+            event.preventDefault();
+
+            var form = event.target;
+            var steps = form.all('block card');
+            var step1 = steps[0];
+            var step2 = steps[1];
+            var step3 = steps[2];
+
+            var title = step1.find('input').value;
+            var category = step2.find('dropdown [placeholder]').textContent;
+            var dimensions = [];
+
+            var variations = step3.firstElementChild.lastElementChild.all('column');
+            if (variations.length > 0) {
+                var d = 0;
+                do {
+                    var dimension = variations[d];
+                    dimensions[d] = {
+                        name: dimension.find('field input').value,
+                        values: []
+                    };
+
+                    var values = dimension.find('dropdown group').children;
+                    if (values.length) {
+                        var v = 0;
+                        do {
+                            dimensions[d].values[v] = values[v].find('span').dataset.after;
+                            v++;
+                        } while (v < values.length)
+                    }
+
+                    d++;
+                } while (d < variations.length);
+            }
+
+            var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+
+            var row = {
+                category,
+                dimensions,
+                slug,
+                title
+            }
+            console.log(1961, row);
+
+            //MERCH
+            try {
+                var data = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/merch/merch.json"
+                });
+                var j = JSON.parse(atob(data.content));
+                var json = JSON.parse(atob(data.content));
+                json.push(row);
+            } catch (e) {
+                var j = [];
+                var json = [row];
+            }
+            rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+            var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+            var str1 = JSON.stringify(rows, null, 4);
+
+            //PUSH
+            var params = {
+                message: "Add " + name + " to Merch",
+                repo: GET[1],
+                owner: owner.login
+            };
+            var array = [{
+                content: str1,
+                path: "raw/merch/merch.json"
+            }, {
+                content: JSON.stringify(row, null, 4),
+                path: "raw/merch/" + slug + "/merch.json"
+            }];
+            console.log(2452, 'controller.merch.update', "array", {
+                array
+            });
+            try {
+                await github.crud.update(params, array);
+                ("/dashboard/:get/merch/catalog/" + slug + "/").router()
+            } catch (e) {
+                modal.alert({
+                    body: "There was an error creating this product.",
+                    submit: "OK",
+                    title: "Catalog Error"
+                })
+            }
+        }
+        ,
+
+        category: async(target)=>{
+            var dropdown = await modal.dropdown(target.closest('dropdown'), {
+                other: false
+            });
+            var step = target.closest('card');
+            var category = step.find('[placeholder]').textContent;
+            var button = step.find('footer .gg-chevron-right').closest('box');
+            if (category.length > 0) {
+                button.classList.remove('opacity-50pct')
+            } else {
+                button.classList.add('opacity-50pct')
+            }
+        }
+        ,
+
         create: event=>{
             event.preventDefault();
 
@@ -1938,22 +1081,37 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 pricing
             }
 
-            var variations = {
-                dimensions: [{
-                    attribute: "",
-                    name: "",
-                    values: []
-                }, {
-                    attribute: "",
-                    name: "",
-                    value: []
-                }],
-                items: [row]
-            };
-
             console.log(1902, "controller.merch.create", {
-                row,
-                variations
+                row
+            });
+        }
+        ,
+
+        matrix: target=>{
+            var dimensions = [];
+            var traits = target.closest('box').all('column');
+            var t = 0;
+            if (traits.length > 0) {
+                do {
+                    var trait = traits[t];
+                    var attribute = trait.find('field').find('input').value;
+                    dimensions[t] = {
+                        name: attribute
+                    };
+                    var values = trait.find("dropdown").lastElementChild;
+                    if (values.length > 0) {
+                        var v = 0;
+                        dimensions[t].values = [];
+                        do {
+                            dimensions[t].values[v] = values.children[v].find('[placeholder="Value"]').textContent;
+                            v++;
+                        } while (v < values.length);
+                    }
+                    t++;
+                } while (t < traits.length);
+            }
+            console.log(1984, {
+                dimensions
             });
         }
         ,
@@ -1963,6 +1121,55 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var card = target.closest('card');
             var section = card.find('box > section');
             section.style.transform = "translateX(-" + index + "00%)";
+        }
+        ,
+
+        step: (target)=>{
+            var form = target.closest('form');
+            var step = target.closest('block > * > card');
+            var index = step.index();
+            var box = target.closest('box');
+            var button = box.find('n');
+            if (button) {
+                var steps = target.closest('block').all('block > * > card');
+                if (button.className === "gg-chevron-left") {
+                    if (index === 1) {
+                        step.dataset.display = "none";
+                        steps[index - 1].dataset.display = 'flex';
+                    }
+                    if (index === 2) {
+                        step.dataset.display = "none";
+                        steps[index - 1].dataset.display = 'flex';
+                    }
+                }
+                if (button.className === "gg-chevron-right") {
+                    if (index === 0) {
+                        if (box.classList.contains('opacity-50pct')) {
+                            modal.alert({
+                                body: "You must enter a name in order to continue.",
+                                submit: "OK",
+                                title: "Product Name"
+                            });
+                        } else {
+                            step.dataset.display = "none";
+                            steps[index + 1].dataset.display = 'flex';
+                        }
+                    }
+                    if (index === 1) {
+                        if (box.classList.contains('opacity-50pct')) {
+                            modal.alert({
+                                body: "You must select a category in order to continue.",
+                                submit: "OK",
+                                title: "Browse Node"
+                            });
+                        } else {
+                            step.dataset.display = "none";
+                            steps[index + 1].dataset.display = 'flex';
+                        }
+                    }
+                }
+            }
+
         }
         ,
 
@@ -1991,6 +1198,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             section.appendChild(picture);
             section.style.transform = "translateX(-" + section.lastElementChild.index() + "00%)";
+        }
+        ,
+
+        traits: async(target)=>{
+            var attributes = target.previousElementSibling;
+            var variations = await modal.dropdown(target, {
+                other: false,
+                title: attributes.find('[placeholder]').value
+            });
+            console.log({
+                attributes,
+                variations
+            });
         }
         ,
 

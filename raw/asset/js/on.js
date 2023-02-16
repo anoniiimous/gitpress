@@ -548,6 +548,14 @@ window.on.key.down.setup = {
         }
     }
 }
+window.on.key.down.prevent = {
+    submit: (event)=>{
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    }
+}
 
 window.on.key.up = {};
 window.on.key.up.auto = {
@@ -605,6 +613,31 @@ window.on.key.up.card = {
         //byId('preview-card').find('.card-holder :last-child').textContent = lastname;
     }
 };
+
+window.on.key.up.catalog = {
+    name: (target)=>{
+        var target = event.target;
+        var keyCode = event.keyCode;
+        var logo = byId("preview-logo");
+        const button = target.closest('block').all('footer box')[1];
+        if (target.value === "") {
+            //logo.firstElementChild.dataset.char = "A";
+            //logo.dataset.after = "App Title";
+            button.dataset.disabled = "true";
+            button.classList.add('opacity-50pct');
+        } else {
+            //logo.firstElementChild.dataset.char = target.value.charAt(0);
+            //logo.dataset.after = target.value;
+            button.dataset.disabled = "false";
+            button.classList.remove('opacity-50pct');
+        }
+        if (keyCode === 13) {
+            //button.click();
+            event.preventDefault();
+        }
+    }    
+}
+
 window.on.key.up.setup = {
     about: (target)=>{
         on.key.up.auto.size(target);

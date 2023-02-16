@@ -196,12 +196,17 @@ window.modal = {
         return new Promise(async(resolve,reject)=>{
 
             var multi = settings && settings.multi;
+            var other = settings && settings.other;
 
             var innerHTML = await ajax('raw/asset/html/modal/modal.dropdown.html');
             var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
 
             html.find('[placeholder="Title"]').textContent = settings && settings.title ? settings.title : dropdown.find('[placeholder]').getAttribute('placeholder');
-            html.find('card > section').innerHTML = dropdown.lastElementChild.innerHTML;
+            html.find('card > section').innerHTML = dropdown.children[1].innerHTML;
+
+            if(other === false) {
+                html.find('form').dataset.display = "none";
+            }
 
             if (html.find('card > section').children.length > 0) {
                 $(html.find('card > section').all('box text ico')).removeClass('color-0096c7')
@@ -221,26 +226,11 @@ window.modal = {
             }
             ppp.innerHTML = html.outerHTML;
             ppp.onclick = event=>{
-                if (event.target.parentNode.tagName === 'ASIDE') {
-                    if (multi) {
-                        var attribute = multi.find('[placeholder]').textContent;
-                        var column = document.createElement('column');
-                        column.dataset.attribute = attribute;
-                        column.innerHTML = ppp.find('card > section').innerHTML;
-                        var element = dropdown.lastElementChild.find('[data-attribute="' + attribute + '"]');
-                        //dropdown.lastElementChild.appendChild(column);
-                        //alert(element.outerHTML);
-                        modal.exit(event.target);
-                        resolve(ppp.find('card > section').children);
-                    } else {
-                        dropdown.lastElementChild.innerHTML = ppp.find('card > section').innerHTML;
-                        modal.exit(event.target);
-                        resolve(ppp.find('card > section').children);
-                    }
-                } else {
+                if (event.target.closest('card')) {
                     var box = event.target.closest('card > section > box text');
                     if (box) {
                         dropdown.find("[placeholder]").textContent = box.find('span').dataset.after;
+                        dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);
                     }
@@ -253,7 +243,24 @@ window.modal = {
                     }
                     var none = event.target.closest('card > row > box');
                     if (none) {
+                        dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         dropdown.find("[placeholder]").textContent = "";
+                        modal.exit(event.target);
+                        resolve(ppp.find('card > section').children);
+                    }
+                } else {
+                    if (multi) {
+                        var attribute = multi.find('[placeholder]').textContent;
+                        var column = document.createElement('column');
+                        column.dataset.attribute = attribute;
+                        column.innerHTML = ppp.find('card > section').innerHTML;
+                        var element = dropdown.lastElementChild.find('[data-attribute="' + attribute + '"]');
+                        //dropdown.lastElementChild.appendChild(column);
+                        //alert(element.outerHTML);
+                        modal.exit(event.target);
+                        resolve(ppp.find('card > section').children);
+                    } else {
+                        dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);
                     }

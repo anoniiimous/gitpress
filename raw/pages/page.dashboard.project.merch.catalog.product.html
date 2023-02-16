@@ -1,0 +1,157 @@
+<header class="-dw480px-padding-10px max-width-100pct padding-20px">
+    <row class="justify-content-space-between">
+        <card>
+            <row class="gap-10px">
+                <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                    <section>
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-menu"></n>
+                        </ico>
+                    </section>
+                </box>
+                <box>
+                    <section>
+                        <text class="font-size-24px font-weight-bolder">Product</text>
+                    </section>
+                </box>
+            </row>
+        </card>
+        <card>
+            <row class="gap-20px">
+                <box class="line-height-30px" data-href="/dashboard/:get/merch/">
+                    <row class="align-items-center justify-content-center">
+                        <ico data-height="30px" data-width="30px">
+                            <n class="gg-view-list"></n>
+                        </ico>
+                        <text class="font-size-14px font-weight-bolder">Browse Catalog</text>
+                    </row>
+                </box>
+            </row>
+        </card>
+    </row>
+</header>
+<form onsubmit="controller.merch.create(event)">
+    <block class="-dw480px-margin-10px -dw680px-margin-x-20px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-max-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px max-width-100pct" data-width="1280px">
+        <flex class="-dw960px-gap-50px display-flex gap-10px max-width-100pct width-1280px" data-960px-flex-direction="column">
+            <card class="-dw480px-gap-10px -dw960px-width-100pct gap-10px width-320px">
+                <section>
+                    <box class="border-1px-solid border-radius-20px overflow-hidden padding-top-100pct width-100pct">
+                        <section class="height-100pct position-absolute top-0 white-space-nowrap width-100pct"></section>
+                        <section class="full-state height-100pct position-absolute top-0 width-100pct">
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" data-height="30px" data-tap="controller.merch.pinky(event.target)" data-width="30px">
+                                <n class="gg-close"></n>
+                            </ico>
+                        </section>
+                    </box>
+                </section>
+                <row class="gap-10px" data-480px-columns="4" data-960px-columns="6" data-columns="4">
+                    <box class="border-1px-solid border-radius-20px overflow-hidden">
+                        <label class="align-items-center height-0 justify-content-center padding-top-100pct position-relative top-0 width-100pct" for="file-dashboard-merch-catalog">
+                            <ico class="position-absolute top-0" data-height="100%" data-width="100%">
+                                <n class="gg-math-plus"></n>
+                            </ico>
+                            <input accept="image/jpeg,image/png" id="file-dashboard-merch-catalog" onchange="controller.merch.thumb(event)" type="file">
+                        </label>
+                    </box>
+                </row>
+                <template id="template-dashboard-merch-catalog">
+                    <box class="height-0 padding-top-100pct width-100pct">
+                        <picture class="border-1px-solid border-radius-20px height-100pct overflow-hidden position-absolute top-0 width-100pct"></picture>
+                    </box>
+                </template>
+            </card>
+            <card class="flex-1 flex-direction-row grid-gap-20px" data-1320px-flex-direction="column" data-1320px-grid-gap="50px">
+                <column class="flex-1 gap-50px">
+                    <box class="gap-10px">
+                        <header>
+                            <text class="font-weight-bolder text-transform-uppercase">Details</text>
+                        </header>
+                        <column class="gap-10px">
+                            <input class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
+                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                        </column>
+                        <footer class="gap-10px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <span class="font-weight-bolder" contenteditable="true" placeholder="Add Tag"></span>
+                            </text>
+                        </footer>
+                    </box>
+                    <box class="gap-10px" data-display="none">
+                        <header>
+                            <text class="font-weight-bolder text-transform-uppercase" data-after="Traits"></text>
+                        </header>
+                        <footer class="flex-direction-column grid-gap-5px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-tap="controller.merch.variation(event.target)">
+                                <ico data-height="20px" data-width="30px">
+                                    <n class="gg-add"></n>
+                                </ico>
+                                <span>Add Variation</span>
+                            </text>
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.merch.matrix(event.target)">
+                                <ico data-height="20px" data-width="30px">
+                                    <n class="gg-software-upload"></n>
+                                </ico>
+                                <span>Save Theme</span>
+                            </text>
+                            <template>
+                                <column class="flex-direction-row grid-gap-10px">
+                                    <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                            <text class="flex-1" placeholder="Attribute"></text>
+                                        </row>
+                                    </field>
+                                    <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px width-50pct">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.traits(event.target.closest('dropdown'))">
+                                            <text class="flex-1" placeholder="Value"></text>
+                                            <ico data-height="30px" data-width="30px">
+                                                <n class="gg-chevron-down"></n>
+                                            </ico>
+                                        </row>
+                                        <group data-display="none"></group>
+                                        <template>
+                                            <box class="flex-1">
+                                                <row class="align-items-center justify-content-center width-100pct">
+                                                    <text class="align-items-center display-flex flex-1">
+                                                        <ico class="border-2px-solid border-color-ccc border-radius-50px" data-height="20px" data-width="20px"></ico>
+                                                        <span class="display-flex flex-1 height-36px line-height-36px padding-x-10px"></span>
+                                                    </text>
+                                                </row>
+                                            </box>
+                                        </template>
+                                    </dropdown>
+                                </column>
+                            </template>
+                        </footer>
+                    </box>
+                    <box class="gap-10px">
+                        <header>
+                            <text class="font-weight-bolder text-transform-uppercase">Pricing</text>
+                        </header>
+                        <section>
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px overflow-hidden width-160px">
+                                <span class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">$</span>
+                                <span class="flex-1 padding-x-10px"></span>
+                            </text>
+                        </section>
+                    </box>
+                </column>
+                <section class="-dw1320px-width-100pct width-320px">
+                    <box class="width-100pct">
+                        <flex class="gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/merch/">Cancel</text>
+                            <label class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
+                                <text>Post It</text>
+                                <input id="submit-dashboard-media-photo" type="submit">
+                            </label>
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Preview</text>
+                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>
+                        </flex>
+                    </box>
+                </section>
+            </card>
+        </flex>
+    </block>
+</form>
