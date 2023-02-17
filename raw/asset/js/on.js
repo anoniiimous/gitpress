@@ -11,14 +11,14 @@ window.on.change = {
             var FR = new FileReader();
 
             var files = target.files;
-            console.log({
+            0 > 1 ? console.log({
                 files
             }, {
                 s,
                 event,
                 target,
                 dataset
-            });
+            }) : null;
             if (files && files.length > 0) {
                 if (files.length === 1) {
                     var reader = FR;
@@ -53,9 +53,6 @@ window.on.change = {
                     }
                     reader.readAsDataURL(file);
                     if (s) {
-                        console.log(47, {
-                            s
-                        });
                         reader.onload = onLoad;
                         s.onloadstart ? reader.onloadstart = s.onloadstart : null;
                         s.onprogress ? reader.onprogress = s.onprogress : null;

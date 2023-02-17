@@ -271,30 +271,89 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var feed = byId('feed-dashboard-catalog');
                                     if (get[4]) {
                                         var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/*/"]');
+                                        try {
+                                            var res = await github.repos.contents({
+                                                owner: user.login,
+                                                repo: get[1],
+                                                path: "/raw/merch/" + get[4] + "/merch.json"
+                                            }, {
+                                                accept: "application/vnd.github.raw",
+                                                cache: "reload"
+                                            });
+                                            if (res.length > 0) {
+                                                var r = 0;
+                                                do {
+                                                    if (res[r].slug === get[4]) {
+                                                        var json = res[r];
+                                                    }
+                                                    r++;
+                                                } while (r < res.length);
+                                                if (json) {
+                                                    throw "Not Found";
+                                                }
+                                            }
+                                            console.log(295, {
+                                                json
+                                            });
+                                        } catch (e) {
+                                            console.log(287, {
+                                                e
+                                            });
+                                        }
 
-                                        var json = await github.repos.contents({
-                                            owner: user.login,
-                                            repo: get[1],
-                                            path: "raw/merch/" + get[4] + "/merch.json"
-                                        }, {
-                                            accept: "application/vnd.github.raw",
-                                            cache: "reload"
-                                        });
-                                        console.log(295, {
-                                            json
-                                        });
+                                        if (json.images && json.images.length > 0) {
+                                            var card = vp.find('form card');
+                                            var section = card.find('box > section');
+                                            var columns = card.find('[data-columns]');
+
+                                            section.innerHTML = "";
+                                            columns.innerHTML = columns.lastElementChild.outerHTML;
+
+                                            var i = 0;
+                                            do {
+                                                var thumbnail = card.all("box")[0].firstElementChild;
+
+                                                var img = document.createElement('img');
+                                                img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                                                img.src = await github.raw.blob({
+                                                    owner: window.owner.login,
+                                                    repo: get[1],
+                                                    resource: json.images[i]
+                                                });
+                                                img.dataset.resource = json.images[i];
+
+                                                var picture = document.createElement('picture');
+                                                picture.className = "border-radius-20px display-inline-flex height-100pct overflow-hidden position-relative top-0 width-100pct";
+                                                picture.appendChild(img);
+                                                section.appendChild(picture);
+
+                                                var template = card.find('template').content.firstElementChild.cloneNode(true);
+                                                template.dataset.tap = "controller.merch.ring(target)";
+                                                template.find('picture').innerHTML = img.outerHTML;
+                                                columns.lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+
+                                                if (i === json.images.length - 1) {
+                                                    section.style.transform = "translateX(-" + i + "00%)";
+                                                }
+
+                                                i++;
+                                            } while (i < json.images.length);
+                                        }
 
                                         //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+
                                         json.title ? vp.find('[placeholder="Enter a title"]').value = json.title : null;
-                                        json.description ? vp.find('[placeholder="Provide a detailed description"]').value = json.description : null;
+
+                                        json.description ? vp.find('[placeholder="Provide a detailed description."]').value = json.description : null;
+                                        on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
 
                                         var n = 0;
                                         var variant = false;
                                         var dimensions = json.dimensions;
                                         if (dimensions && dimensions.length > 0) {
-                                            var footer = vp.all('form card')[1].all('box')[1].find('footer');
-                                                            
-                                            footer.previousElementSibling.innerHTML = "";                                                            
+                                            var footer = vp.find('form [data-after="Traits"]').closest('box').find('footer');
+
+                                            footer.previousElementSibling.innerHTML = "";
                                             vp.find('[data-after="Traits"]').closest('box').removeAttribute('data-display');
 
                                             var d = 0;
@@ -303,7 +362,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                                 var name = dimensions[d].name;
                                                 var field = template.find('field');
-                                                field.find('text').textContent = dimensions[d].display;
+                                                field.find('text').textContent = dimensions[d].name;
 
                                                 var dropdown = template.find('dropdown');
                                                 var values = dimensions[d].values;
@@ -340,19 +399,31 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         if (get[5]) {
                                             if (variant === true) {
                                                 //alert("Finding Variation");
-                                                var json = await github.repos.contents({
-                                                    owner: user.login,
-                                                    repo: get[1],
-                                                    path: "raw/merch/" + get[4] + "/merch.json"
-                                                }, {
-                                                    accept: "application/vnd.github.raw",
-                                                    cache: "reload"
-                                                });
-                                                console.log(332, {
-                                                    json
-                                                });
+                                                try {
+                                                    var json = await github.repos.contents({
+                                                        owner: user.login,
+                                                        repo: get[1],
+                                                        path: "/raw/merch/" + get[4] + "/" + get[5] + "/merch.json"
+                                                    }, {
+                                                        accept: "application/vnd.github.raw",
+                                                        cache: "reload"
+                                                    });
+                                                    console.log(332, {
+                                                        json
+                                                    });
+                                                } catch (e) {
+                                                    console.log(394, {
+                                                        e
+                                                    });
+                                                }
                                                 //vp.find('form').removeAttribute('data-display');
                                                 //vp.find('error').dataset.display = "none";
+
+                                                if (json.pricing) {
+                                                    json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
+                                                    json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
+                                                }
+
                                             } else {//vp.find('form').dataset.display = "none";
                                             //vp.find('error').removeAttribute('data-display');
                                             }

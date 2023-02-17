@@ -1049,7 +1049,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        create: event=>{
+        create: async(event)=>{
             event.preventDefault();
 
             var form = event.target;
@@ -1060,30 +1060,285 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var i = 0;
                 do {
                     var thumbnail = thumbnails[i];
-                    images[i] = thumbnail.src.split(';base64,')[1];
-                    ``
+                    images[i] = thumbnail.src.startsWith("data:") ? {
+                        content: thumbnail.src,
+                        extension: thumbnail.src.split(';base64,')[0].split('/')[1]
+                    } : {
+                        content: thumbnail.dataset.resource,
+                        extension: thumbnail.dataset.resource.split('.')[thumbnail.dataset.resource.split('.').length - 1]
+                    };
                     i++;
                 } while (i < thumbnails.length)
             }
+
             var title = form.find('[placeholder="Enter a title"]').value;
+
             var description = form.find('[placeholder="Provide a detailed description."]').value;
-            var tags = [];
-            var pricing = {
-                ListPrice: "",
-                MSRPPrice: "",
-                SalePrice: ""
-            };
-            var row = {
-                images,
-                title,
-                description,
-                tags,
-                pricing
+
+            var slug = GET[4];
+
+            var attributes = [];
+            var dimensions = [];
+            var traits = form.find('[data-after="Traits"]').closest('box').children[1].children;
+            if (traits.length > 0) {
+                var t = 0;
+                do {
+                    var trait = traits[t];
+                    var name = trait.find('field [placeholder]').textContent;
+                    var value = trait.find('dropdown [placeholder]').textContent;
+                    if (name && value) {
+                        attributes[t] = {
+                            name,
+                            value
+                        };
+                    }
+                    dimensions[t] = {
+                        name,
+                        values: []
+                    };
+                    var values = trait.find('dropdown').children[1].children;
+                    if (values.length > 0) {
+                        var v = 0;
+                        do {
+                            dimensions[t].values[v] = values[v].find('span').dataset.after;
+                            v++;
+                        } while (v < values.length);
+                    }
+                    t++;
+                } while (t < traits.length);
             }
 
-            console.log(1902, "controller.merch.create", {
-                row
-            });
+            var tags = [];
+
+            var child = attributes.length > 0;
+
+            var valid = [];
+            if (images.length === 0) {
+                valid.push("images");
+            }
+
+            if (valid.length === 0) {
+                var row = {
+                    description,
+                    slug,
+                    title
+                }
+
+                if (images.length > 0) {
+                    row.images = [];
+                    var i = 0;
+                    do {
+                        if (child) {//row.images[i] = "/raw/merch/" + slug + "/" + variant + "/images." + i + "." +images[i].extension;
+                        } else {
+                            row.images[i] = "/raw/merch/" + slug + "/image." + i + "." + images[i].extension;
+                        }
+                        i++;
+                    } while (i < images.length)
+                }
+
+                if (tags.length > 0) {
+                    row.tags = tags;
+                }
+
+                if (child) {
+                    row.attributes = attributes;
+                    var ListPrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value;
+                    var SalePrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value;
+                    row.pricing = {};
+                    ListPrice ? row.pricing.ListPrice = ListPrice : null;
+                    SalePrice ? row.pricing.SalePrice = SalePrice : null;
+                    row.slug = slug = slug + "/" + GET[5];
+                } else {
+                    row.dimensions = dimensions;
+                }
+
+                //MERCH
+                if (child) {
+                    try {
+                        var data = await github.repos.contents({
+                            owner: owner.login,
+                            repo: GET[1],
+                            path: "/raw/merch/merch.json"
+                        });
+                        var j = JSON.parse(atob(data.content));
+                        var json = JSON.parse(atob(data.content));
+                        var exists = false;
+                        if (json.length > 0) {
+                            var js = 0;
+                            do {
+                                if (json[js].slug === slug) {
+                                    var exists = true;
+                                    json[js] = row;
+                                }
+                                js++;
+                            } while (js < json.length);
+                        }
+                        if (exists === false) {
+                            json.push(row);
+                        }
+                    } catch (e) {
+                        var j = [];
+                        var json = [row];
+                    }
+                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    var str = JSON.stringify(rows, null, 4);
+                        
+                    try {
+                        var data = await github.repos.contents({
+                            owner: owner.login,
+                            repo: GET[1],
+                            path: "/raw/merch/" + GET[4] + "/merch.json"
+                        });
+                        var j = JSON.parse(atob(data.content));
+                        var json = JSON.parse(atob(data.content));
+                        var exists = false;
+                        if (json.length > 0) {
+                            var js = 0;
+                            do {
+                                if (json[js].slug === slug) {
+                                    var exists = true;
+                                    json[js] = row;
+                                } else {}
+                                js++;
+                            } while (js < json.length);
+                        }
+                        if (exists === false) {
+                            json.push(row);
+                        }
+                    } catch (e) {
+                        var j = [];
+                        var json = [row];
+                    }
+                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    var str0 = JSON.stringify(rows, null, 4);
+                        
+                    var str1 = JSON.stringify(row, null, 4);
+                } else {
+                    try {
+                        var data = await github.repos.contents({
+                            owner: owner.login,
+                            repo: GET[1],
+                            path: "/raw/merch/merch.json"
+                        });
+                        var j = JSON.parse(atob(data.content));
+                        var json = JSON.parse(atob(data.content));
+                        var exists = false;
+                        if (json.length > 0) {
+                            var js = 0;
+                            do {
+                                if (json[js].slug === slug) {
+                                    var exists = true;
+                                    json[js] = row;
+                                }
+                                js++;
+                            } while (js < json.length);
+                        }
+                        if (exists === false) {
+                            json.push(row);
+                        }
+                    } catch (e) {
+                        var j = [];
+                        var json = [row];
+                    }
+                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    var str = JSON.stringify(rows, null, 4);
+
+                    try {
+                        var data = await github.repos.contents({
+                            owner: owner.login,
+                            repo: GET[1],
+                            path: "/raw/merch/" + GET[4] + "/merch.json"
+                        });
+                        var j = JSON.parse(atob(data.content));
+                        var json = JSON.parse(atob(data.content));
+                        var exists = false;
+                        if (json.length > 0) {
+                            var js = 0;
+                            do {
+                                if (json[js].slug === GET[4]) {
+                                    var exists = true;
+                                    json[js] = row;
+                                } else {}
+                                js++;
+                            } while (js < json.length);
+                        }
+                        if (exists === false) {
+                            json.push(row);
+                        }
+                    } catch (e) {
+                        var j = [];
+                        var json = [row];
+                    }
+                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    var str0 = JSON.stringify(rows, null, 4);
+                }
+
+                0 > 1 ? console.log(1902, "controller.merch.create", {
+                    row
+                }) : null;
+
+                //PUSH
+                if (child) {
+                    var params = {
+                        message: "Add " + title + " to Merch",
+                        repo: GET[1],
+                        owner: window.owner.login
+                    };
+                    var array = [{
+                        content: str,
+                        path: "raw/merch/merch.json"
+                    }, {
+                        content: str0,
+                        path: "raw/merch/" + GET[4] + "/merch.json"
+                    }, {
+                        content: str1,
+                        path: "raw/merch/" + GET[4] + "/" + GET[5] + "/merch.json"
+                    }];
+                } else {
+                    var params = {
+                        message: "Add " + title + " to Merch",
+                        repo: GET[1],
+                        owner: window.owner.login
+                    };
+                    var array = [{
+                        content: str,
+                        path: "raw/merch/merch.json"
+                    }, {
+                        content: str0,
+                        path: "raw/merch/" + GET[4] + "/merch.json"
+                    }];
+                    if (images.length > 0) {
+                        var i = 0;
+                        do {
+                            if (images[i].content.startsWith('data:')) {
+                                array.push({
+                                    content: images[i].content.split(';base64,')[1],
+                                    path: "raw/merch/" + slug + "/image." + i + "." + images[i].extension,
+                                    type: "base64"
+                                });
+                            }
+                            i++;
+                        } while (i < images.length)
+                    }
+                }
+                console.log(1168, 'controller.merch.update', "array", {
+                    array
+                }, {
+                    row,
+                    str: JSON.parse(str0)
+                });
+                await github.crud.update(params, array);
+            } else {
+                modal.alert({
+                    body: "You must supply " + valid.join(', ') + ".",
+                    submit: "OK",
+                    title: "Validation Error"
+                })
+            }
         }
         ,
 
@@ -1180,10 +1435,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var thumbnails = card.find('[data-columns]')
             var b64 = await on.change.file(event);
 
-            console.log(1645, {
-                picture
-            });
-
             var template = card.find('template').content.firstElementChild.cloneNode(true);
             var img = document.createElement('img');
             img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
@@ -1195,7 +1446,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var picture = document.createElement('picture');
             picture.className = "border-radius-20px display-inline-flex height-100pct overflow-hidden position-relative top-0 width-100pct";
             picture.appendChild(img);
-
             section.appendChild(picture);
             section.style.transform = "translateX(-" + section.lastElementChild.index() + "00%)";
         }
@@ -1208,20 +1458,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 title: attributes.find('[placeholder]').value
             });
 
+            var url = '/dashboard/:get/merch/catalog/:get/';
             var values = [];
             var traits = target.closest('box').all('column dropdown [placeholder]');
             if (traits.length > 0) {
                 var t = 0;
                 do {
                     var trait = traits[t];
-                    values[t] = trait.textContent.toLowerCase().replaceAll('-', '');
+                    if (trait.textContent.length > 0) {
+                        values[t] = trait.textContent.toLowerCase().replaceAll('-', '');
+                    }
                     t++;
                 } while (t < traits.length);
                 var matrix = values.join('-');
 
+                if (matrix.length > 0) {
+                    url += matrix + '/';
+                }
                 var vp = target.closest('pages');
-
-                ('/dashboard/:get/merch/catalog/:get/' + matrix + '/').router();
 
                 console.log({
                     attributes,
@@ -1233,6 +1487,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
 
             }
+            url.router();
         }
         ,
 

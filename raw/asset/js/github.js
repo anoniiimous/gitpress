@@ -95,8 +95,8 @@ window.github = {
                     Accept: "application/vnd.github.raw",
                     Authorization: "token " + localStorage.githubAccessToken
                 }
-            }).then((response)=>response.blob()).then((myBlob)=>{
-                return URL.createObjectURL(myBlob);
+            }).then((response)=>response.blob()).then((blob)=>{
+                return URL.createObjectURL(blob);
             }
             );
         }

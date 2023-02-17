@@ -32,10 +32,10 @@
 </header>
 <form onsubmit="controller.merch.create(event)">
     <block class="-dw480px-margin-10px -dw680px-margin-x-20px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-max-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px max-width-100pct" data-width="1280px">
-        <flex class="-dw960px-gap-50px display-flex gap-10px max-width-100pct width-1280px" data-960px-flex-direction="column">
+        <flex class="-dw960px-gap-50px display-flex gap-20px max-width-100pct width-1280px" data-960px-flex-direction="column">
             <card class="-dw480px-gap-10px -dw960px-width-100pct gap-10px width-320px">
                 <section>
-                    <box class="border-1px-solid border-radius-20px overflow-hidden padding-top-100pct width-100pct">
+                    <box class="background-color-fff border-radius-20px overflow-hidden padding-top-100pct width-100pct">
                         <section class="height-100pct position-absolute top-0 white-space-nowrap width-100pct"></section>
                         <section class="full-state height-100pct position-absolute top-0 width-100pct">
                             <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" data-height="30px" data-tap="controller.merch.pinky(event.target)" data-width="30px">
@@ -45,7 +45,7 @@
                     </box>
                 </section>
                 <row class="gap-10px" data-480px-columns="4" data-960px-columns="6" data-columns="4">
-                    <box class="border-1px-solid border-radius-20px overflow-hidden">
+                    <box class="background-color-fff border-radius-20px overflow-hidden">
                         <label class="align-items-center height-0 justify-content-center padding-top-100pct position-relative top-0 width-100pct" for="file-dashboard-merch-catalog">
                             <ico class="position-absolute top-0" data-height="100%" data-width="100%">
                                 <n class="gg-math-plus"></n>
@@ -56,36 +56,54 @@
                 </row>
                 <template id="template-dashboard-merch-catalog">
                     <box class="height-0 padding-top-100pct width-100pct">
-                        <picture class="border-1px-solid border-radius-20px height-100pct overflow-hidden position-absolute top-0 width-100pct"></picture>
+                        <picture class="border-radius-20px height-100pct overflow-hidden position-absolute top-0 width-100pct"></picture>
                     </box>
                 </template>
             </card>
             <card class="flex-1 flex-direction-row grid-gap-20px" data-1320px-flex-direction="column" data-1320px-grid-gap="50px">
                 <column class="flex-1 gap-50px">
-                    <box class="gap-10px">
-                        <header>
-                            <text class="font-weight-bolder text-transform-uppercase">Details</text>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Title</text>
                         </header>
-                        <column class="gap-10px">
-                            <input class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
-                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                        <column class="gap-0px">
+                            <input class="font-size-18px height-36px line-height-36px margin-10px" type="text" placeholder="Enter a title">
                         </column>
-                        <footer class="gap-10px">
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
+                        </header>
+                        <column class="gap-0px">
+                            <textarea class="border-bottom-1px-solid flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                        </column>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Tags</text>
+                        </header>
+                        <section class="gap-10px margin-10px">
+                            <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
                                 <ico data-height="20px" data-width="20px">
-                                    <n class="gg-math-plus"></n>
+                                    <n class="gg-hashtag"></n>
                                 </ico>
                                 <span class="font-weight-bolder" contenteditable="true" placeholder="Add Tag"></span>
                             </text>
-                        </footer>
+                        </section>
                     </box>
-                    <box class="gap-10px" data-display="none">
-                        <header>
-                            <text class="font-weight-bolder text-transform-uppercase" data-after="Traits"></text>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden" data-display="none">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Traits"></text>
                         </header>
-                        <column class="gap-10px"></column>
+                        <column class="gap-10px margin-10px"></column>
                         <footer class="flex-direction-column grid-gap-5px">
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-tap="controller.merch.variation(event.target)">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-href="/dashboard/:get/merch/catalog/:get/" data-pages="/dashboard/*/merch/catalog/*/*/">
+                                <ico data-height="20px" data-width="30px">
+                                    <n class="gg-eraser"></n>
+                                </ico>
+                                <span>Clear Options</span>
+                            </text>
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.merch.variation(event.target)">
                                 <ico data-height="20px" data-width="30px">
                                     <n class="gg-add"></n>
                                 </ico>
@@ -127,19 +145,33 @@
                             </template>
                         </footer>
                     </box>
-                    <box class="gap-10px">
-                        <header>
-                            <text class="font-weight-bolder text-transform-uppercase">Pricing</text>
-                        </header>
-                        <section>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px overflow-hidden width-160px">
-                                <span class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">$</span>
-                                <span class="flex-1 padding-x-10px"></span>
-                            </text>
-                        </section>
-                    </box>
                 </column>
-                <section class="-dw1320px-width-100pct width-320px">
+                <column class="-dw1320px-width-100pct gap-50px width-320px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Pricing"></text>
+                        </header>
+                        <flex class="flex-direction-row gap-10px margin-10px" data-columns="2">
+                            <column class="gap-5px">
+                                <header class="font-size-13px">List Price</header>
+                                <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center overflow-hidden">
+                                    <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                        <n class="gg-dollar"></n>
+                                    </ico>
+                                    <input class="flex-1 font-size-18px height-36px" data-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
+                                </row>
+                            </column>
+                            <column class="gap-5px">
+                                <header class="font-size-13px">Sale Price</header>
+                                <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center overflow-hidden">
+                                    <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                        <n class="gg-dollar"></n>
+                                    </ico>
+                                    <input class="flex-1 font-size-18px height-36px" data-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
+                                </row>
+                            </column>
+                        </flex>
+                    </box>
                     <box class="width-100pct">
                         <flex class="gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center" data-href="/dashboard/:get/merch/">Cancel</text>
@@ -151,7 +183,7 @@
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>
                         </flex>
                     </box>
-                </section>
+                </column>
             </card>
         </flex>
     </block>
