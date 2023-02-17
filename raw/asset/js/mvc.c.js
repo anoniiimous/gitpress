@@ -1077,7 +1077,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var slug = GET[4];
 
-            var attributes = [];
+            var attributes = {};
             var dimensions = [];
             var traits = form.find('[data-after="Traits"]').closest('box').children[1].children;
             if (traits.length > 0) {
@@ -1087,10 +1087,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var name = trait.find('field [placeholder]').textContent;
                     var value = trait.find('dropdown [placeholder]').textContent;
                     if (name && value) {
-                        attributes[t] = {
-                            name,
-                            value
-                        };
+                        attributes[name] = value;
                     }
                     dimensions[t] = {
                         name,
@@ -1110,7 +1107,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var tags = [];
 
-            var child = attributes.length > 0;
+            var child = null;
+            var cousin = null;
+            var parent = null;
+
+            var keys = Object.keys(attributes);
+            var child = keys > 0 && keys.length === traits.length;
+            var cousin = keys.length > 0 && keys.length < traits.length;
+            var parent = keys.length === 0;
+            //alert("child:" + child + ", " + "cousin: " + cousin + ", child: " + parent);
 
             var valid = [];
             if (!GET[5] && images.length === 0) {
@@ -1128,7 +1133,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     row.images = [];
                     var i = 0;
                     do {
-                        if (child) {//row.images[i] = "/raw/merch/" + slug + "/" + variant + "/images." + i + "." +images[i].extension;
+                        if (child || cousin) {
+                            row.images[i] = "/raw/merch/" + slug + "/" + GET[5] + "/image." + i + "." + images[i].extension;
                         } else {
                             row.images[i] = "/raw/merch/" + slug + "/image." + i + "." + images[i].extension;
                         }
@@ -1140,20 +1146,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     row.tags = tags;
                 }
 
-                if (child) {
-                    row.attributes = attributes;
-                    var ListPrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value;
-                    var SalePrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value;
+                var ListPrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value;
+                var SalePrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value;
+                if (ListPrice || SalePrice) {
                     row.pricing = {};
                     ListPrice ? row.pricing.ListPrice = ListPrice : null;
                     SalePrice ? row.pricing.SalePrice = SalePrice : null;
-                    row.slug = slug = slug + "/" + GET[5];
-                } else {
+                }
+
+                if (child || cousin) {
+                    row.attributes = attributes;
+                    row.slug = slug = GET[4] + "/" + GET[5];
+                }
+                if (parent) {
                     row.dimensions = dimensions;
                 }
 
                 //MERCH
-                if (child) {
+                if (child || cousin) {
                     try {
                         var data = await github.repos.contents({
                             owner: owner.login,
@@ -1180,10 +1190,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                     var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                     var str = JSON.stringify(rows, null, 4);
-                        
+
                     try {
                         var data = await github.repos.contents({
                             owner: owner.login,
@@ -1203,6 +1213,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 js++;
                             } while (js < json.length);
                         }
+                        console.log(1218, exists, row);
                         if (exists === false) {
                             json.push(row);
                         }
@@ -1210,10 +1221,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    console.log(1225, exists, rows);
                     var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                     var str0 = JSON.stringify(rows, null, 4);
-                        
+
                     var str1 = JSON.stringify(row, null, 4);
                 } else {
                     try {
@@ -1242,7 +1254,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                     var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                     var str = JSON.stringify(rows, null, 4);
 
@@ -1272,7 +1284,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                     var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                     var str0 = JSON.stringify(rows, null, 4);
                 }
@@ -1282,12 +1294,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }) : null;
 
                 //PUSH
-                if (child) {
-                    var params = {
-                        message: "Add " + title + " to Merch",
-                        repo: GET[1],
-                        owner: window.owner.login
-                    };
+                var params = {
+                    message: "Add " + title + " to Merch",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                if (child || cousin) {
                     var array = [{
                         content: str,
                         path: "raw/merch/merch.json"
@@ -1299,11 +1311,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         path: "raw/merch/" + GET[4] + "/" + GET[5] + "/merch.json"
                     }];
                 } else {
-                    var params = {
-                        message: "Add " + title + " to Merch",
-                        repo: GET[1],
-                        owner: window.owner.login
-                    };
                     var array = [{
                         content: str,
                         path: "raw/merch/merch.json"
@@ -1311,25 +1318,30 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         content: str0,
                         path: "raw/merch/" + GET[4] + "/merch.json"
                     }];
-                    if (images.length > 0) {
-                        var i = 0;
-                        do {
-                            if (images[i].content.startsWith('data:')) {
-                                array.push({
-                                    content: images[i].content.split(';base64,')[1],
-                                    path: "raw/merch/" + slug + "/image." + i + "." + images[i].extension,
-                                    type: "base64"
-                                });
-                            }
-                            i++;
-                        } while (i < images.length)
-                    }
+                }
+                if (images.length > 0) {
+                    var i = 0;
+                    do {
+                        if (images[i].content.startsWith('data:')) {
+                            array.push({
+                                content: images[i].content.split(';base64,')[1],
+                                path: "raw/merch/" + slug + "/image." + i + "." + images[i].extension,
+                                type: "base64"
+                            });
+                        }
+                        i++;
+                    } while (i < images.length)
                 }
                 console.log(1168, 'controller.merch.update', "array", {
-                    array
+                    array,
+                    child,
+                    cousin,
+                    parent
                 }, {
                     row,
-                    str: JSON.parse(str0)
+                    str: JSON.parse(str),
+                    str0: JSON.parse(str0),
+                    str1: str1 ? JSON.parse(str1) : null
                 });
                 await github.crud.update(params, array);
             } else {
@@ -1460,24 +1472,31 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var url = '/dashboard/:get/merch/catalog/:get/';
             var values = [];
-            var traits = target.closest('box').all('column dropdown [placeholder]');
+            var traits = target.closest('box column').children;
             if (traits.length > 0) {
                 var t = 0;
                 do {
                     var trait = traits[t];
-                    if (trait.textContent.length > 0) {
-                        values[t] = trait.textContent.toLowerCase().replaceAll('-', '');
+                    var name = trait.find('field [placeholder]').textContent;
+                    var value = trait.find('dropdown [placeholder]').textContent;
+                    if (name.length > 0 && value.length > 0) {
+                        values.push(name.toLowerCase().replaceAll('-', '') + "-" + value.toLowerCase().replaceAll('-', ''));
                     }
                     t++;
                 } while (t < traits.length);
-                var matrix = values.join('-');
+                var matrix = values.join('_');
 
                 if (matrix.length > 0) {
+                    console.log(matrix, values);
                     url += matrix + '/';
                 }
                 var vp = target.closest('pages');
 
                 console.log({
+                    url,
+                    matrix,
+                    values
+                }, {
                     attributes,
                     variations
                 }, {
@@ -1486,8 +1505,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     values
                 });
 
+                url.router();
+
             }
-            url.router();
         }
         ,
 

@@ -271,9 +271,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var feed = byId('feed-dashboard-catalog');
                                     if (get[4]) {
                                         var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/*/"]');
+
+                                        //ANCESTOR
                                         try {
                                             var slug = get[5] ? get[4] + "/" + get[5] : get[4];
-                                            var res = await github.repos.contents({
+                                            var res = window.ancestor = await github.repos.contents({
                                                 owner: user.login,
                                                 repo: get[1],
                                                 path: "/raw/merch/" + get[4] + "/merch.json"
@@ -289,7 +291,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     }
                                                     r++;
                                                 } while (r < res.length);
-                                                if (json) {
+                                                if (!json) {
                                                     throw "Not Found";
                                                 }
                                             }
@@ -302,12 +304,151 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             });
                                         }
 
-                                        if (get[5]) {
+                                        //DIMENSIONS
+                                        var n = 0;
+                                        var attr = [];
+                                        var variant = false;
+                                        var dimensions = json.dimensions;
+                                        if (dimensions && dimensions.length > 0) {
+                                            var footer = vp.find('form [data-after="Traits"]').closest('box').find('footer');
+
+                                            footer.previousElementSibling.innerHTML = "";
+                                            vp.find('[data-after="Traits"]').closest('box').removeAttribute('data-display');
+
+                                            var d = 0;
+                                            do {
+                                                var template = footer.find('template').content.firstElementChild.cloneNode(true);
+
+                                                var name = dimensions[d].name;
+                                                var field = template.find('field');
+                                                field.find('text').dataset.name = field.find('text').textContent = dimensions[d].name;
+
+                                                var dropdown = template.find('dropdown');
+                                                var values = dimensions[d].values;
+                                                if (values.length > 0) {
+                                                    var aa = 0;
+                                                    var v = 0;
+                                                    0 > 1 ? console.log(399, {
+                                                        values
+                                                    }) : null;
+                                                    do {
+                                                        var item = dropdown.find('template').content.firstElementChild.cloneNode(true);
+                                                        item.find('span').dataset.after = values[v];
+                                                        dropdown.children[1].insertAdjacentHTML('beforeend', item.outerHTML);
+                                                        v++;
+                                                    } while (v < values.length);
+
+                                                    if (get[5]) {
+                                                        var matrix = get[5];
+                                                        var arr = matrix.split('_');
+                                                        var ax = 0;
+                                                        do {
+                                                            var ar = arr[ax];
+                                                            if (0 < 1 && ar) {
+                                                                var dd = 0;
+                                                                do {
+                                                                    var vv = 0;
+                                                                    do {
+                                                                        if (ar) {
+                                                                            var value = dimensions[dd].values[vv];
+                                                                            var name = dimensions[dd].name;
+                                                                            if (value) {
+                                                                                var vars = {
+                                                                                    arr1: ar.split('-')[0].toLowerCase(),
+                                                                                    arr2: ar.split('-')[1].toLowerCase(),
+                                                                                    name: name.toLowerCase(),
+                                                                                    value: value.toLowerCase().replace('-', ''),
+                                                                                    element: template.find('[placeholder][data-name="' + name + '"]')
+                                                                                }
+                                                                                if (vars.element && vars.arr1 === vars.name && vars.arr2 === vars.value) {
+                                                                                    vars.element.closest('field').nextElementSibling.find('[placeholder]').textContent = value;
+                                                                                }
+                                                                            }
+                                                                            aa++;
+                                                                        }
+                                                                        vv++;
+                                                                    } while (vv < values.length);
+                                                                    dd++;
+                                                                } while (dd < dimensions.length);
+                                                            }
+                                                            ax++;
+                                                        } while (ax < arr.length);
+                                                    }
+
+                                                    //Find Variation
+                                                    if (n === dimensions.length) {
+                                                        var variant = true;
+                                                    }
+                                                }
+
+                                                footer.previousElementSibling.insertAdjacentHTML('beforeend', template.outerHTML);
+
+                                                var name = template.find('field [placeholder]').dataset.name;
+                                                var value = template.find('dropdown [placeholder]').textContent;
+                                                if (name && value) {
+                                                    attr.push(name.toLowerCase() + "-" + value.toLowerCase());
+                                                }
+                                                d++;
+                                            } while (d < dimensions.length);
+                                        } else {
+                                            vp.find('[data-after="Traits"]').closest('box').dataset.display = "none";
+                                        }
+
+                                        //DESCENDANT
+                                        if (attr.length > 0) {
+                                            console.log(395, attr);
+
+                                            if (0 < 1) {
+                                                console.log(413, {
+                                                    ancestor,
+                                                    variant
+                                                });
+                                                if (ancestor.length > 0) {
+                                                    var arrs = get[5].split('_');
+                                                    var r = 0;
+                                                    do {
+                                                        var row = ancestor[r];
+                                                        var slug = row.slug;
+                                                        var dir = rout.ed.dir(row.slug);
+                                                        if (dir.length > 1) {
+                                                            console.log(row.slug, dir);
+                                                            var attributes = row.attributes;
+                                                            var keys = Object.keys(attributes);
+                                                            var a = 0;
+                                                            if (keys.length > 0) {
+                                                                do {
+                                                                    var name = keys[a];
+                                                                    var value = Object.values(attributes)[a];
+                                                                    var str = name.toLowerCase() + "-" + value.toLowerCase();
+                                                                    if (arrs.length > 0) {
+                                                                        var s = 0;
+                                                                        do {
+                                                                            var as = arrs[s];
+                                                                            if (str === as) {
+                                                                                console.log(415, a, r, row.slug, {
+                                                                                    str,
+                                                                                    as,
+                                                                                    row
+                                                                                });
+                                                                                json.images = row.images;
+                                                                            }
+                                                                            s++;
+                                                                        } while (s < arrs.length);
+                                                                    }
+                                                                    a++;
+                                                                } while (a < attributes.length)
+                                                            }
+                                                        }
+                                                        r++;
+                                                    } while (r < ancestor.length);
+                                                }
+                                            }
+
                                             try {
                                                 var res = await github.repos.contents({
                                                     owner: user.login,
                                                     repo: get[1],
-                                                    path: "/raw/merch/" + get[4] + "/" + get[5] + "/merch.json"
+                                                    path: "/raw/merch/" + get[4] + "/" + attr.join('_') + "/merch.json"
                                                 }, {
                                                     accept: "application/vnd.github.raw",
                                                     cache: "reload"
@@ -316,22 +457,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var variant = true;
 
                                                 json.description = res.description;
-                                                //json.images = res.images;
-                                                json.pricing = res.pricing
+                                                json.images = res.images ? res.images : (json.images ? json.images : []);
+                                                json.pricing = res.pricing;
                                             } catch (e) {
                                                 console.log(316, {
-                                                    e, json
+                                                    e,
+                                                    json
                                                 });
                                             }
                                         }
 
+                                        //IMAGES
                                         var card = vp.find('form card');
                                         var section = card.find('box > section');
                                         var columns = card.find('[data-columns]');
-
                                         section.innerHTML = "";
                                         columns.innerHTML = columns.lastElementChild.outerHTML;
-
                                         if (json.images && json.images.length > 0) {
 
                                             var i = 0;
@@ -367,60 +508,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
 
+                                        //TITLE
                                         json.title ? vp.find('[placeholder="Enter a title"]').value = json.title : null;
 
+                                        //DESCRIPTION
                                         json.description ? vp.find('[placeholder="Provide a detailed description."]').value = json.description : null;
                                         on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
 
-                                        var n = 0;
-                                        var variant = false;
-                                        var dimensions = json.dimensions;
-                                        if (dimensions && dimensions.length > 0) {
-                                            var footer = vp.find('form [data-after="Traits"]').closest('box').find('footer');
-
-                                            footer.previousElementSibling.innerHTML = "";
-                                            vp.find('[data-after="Traits"]').closest('box').removeAttribute('data-display');
-
-                                            var d = 0;
-                                            do {
-                                                var template = footer.find('template').content.firstElementChild.cloneNode(true);
-
-                                                var name = dimensions[d].name;
-                                                var field = template.find('field');
-                                                field.find('text').textContent = dimensions[d].name;
-
-                                                var dropdown = template.find('dropdown');
-                                                var values = dimensions[d].values;
-                                                if (values.length > 0) {
-                                                    var v = 0;
-                                                    do {
-                                                        if (get[5]) {
-                                                            var matrix = get[5];
-                                                            var arr = matrix.split('-');
-                                                            if (arr[d] && arr[d].toLowerCase() === values[v].toLowerCase().replace('-', '')) {
-                                                                dropdown.find('[placeholder]').textContent = values[v];
-                                                                n++;
-                                                            }
-                                                        }
-                                                        var item = dropdown.find('template').content.firstElementChild.cloneNode(true);
-                                                        item.find('span').dataset.after = values[v];
-                                                        dropdown.children[1].insertAdjacentHTML('beforeend', item.outerHTML);
-                                                        v++;
-                                                    } while (v < values.length);
-
-                                                    //Find Variation
-                                                    if (n === dimensions.length) {
-                                                        var variant = true;
-                                                    }
-                                                }
-
-                                                footer.previousElementSibling.insertAdjacentHTML('beforeend', template.outerHTML);
-                                                d++;
-                                            } while (d < dimensions.length);
-                                        } else {
-                                            vp.find('[data-after="Traits"]').closest('box').dataset.display = "none";
-                                        }
-
+                                        //PRICING
                                         if (json.pricing) {
                                             json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
                                             json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
@@ -486,12 +581,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var d = 0;
                                             do {
                                                 var row = data[d];
-                                                var title = row.title;
                                                 var slug = row.slug;
-                                                var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
-                                                card.find('[placeholder="Title"]').textContent = title;
-                                                card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
-                                                html += card.outerHTML;
+                                                if (rout.ed.dir(slug).length === 1) {
+                                                    var title = row.title;
+                                                    var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
+                                                    card.find('[placeholder="Title"]').textContent = title;
+                                                    card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
+                                                    html += card.outerHTML;
+                                                }
                                                 //feed.insertAdjacentHTML('beforeend', html);
                                                 d++;
                                             } while (d < data.length);

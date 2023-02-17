@@ -197,7 +197,7 @@ window.rout.ed.bang = async(route)=>{
         do {
             //alert(route.page + "\r" + rs[i].dataset.pages);
             if (rs[i].dataset.pages.startsWith(route.page)) {
-                console.log(rs[i]);
+                //console.log(rs[i]);
                 //alert(rs[i].dataset.pages + "\r" + route.page);
                 //if (rs[i].dataset.pages.includes(route.page)) {
                 //rs[i].innerHTML = await ajax(rs[i].dataset.fetch);
