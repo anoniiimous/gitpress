@@ -1113,7 +1113,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var child = attributes.length > 0;
 
             var valid = [];
-            if (images.length === 0) {
+            if (!GET[5] && images.length === 0) {
                 valid.push("images");
             }
 

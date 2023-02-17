@@ -272,6 +272,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     if (get[4]) {
                                         var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/*/"]');
                                         try {
+                                            var slug = get[5] ? get[4] + "/" + get[5] : get[4];
                                             var res = await github.repos.contents({
                                                 owner: user.login,
                                                 repo: get[1],
@@ -301,13 +302,37 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             });
                                         }
 
-                                        if (json.images && json.images.length > 0) {
-                                            var card = vp.find('form card');
-                                            var section = card.find('box > section');
-                                            var columns = card.find('[data-columns]');
+                                        if (get[5]) {
+                                            try {
+                                                var res = await github.repos.contents({
+                                                    owner: user.login,
+                                                    repo: get[1],
+                                                    path: "/raw/merch/" + get[4] + "/" + get[5] + "/merch.json"
+                                                }, {
+                                                    accept: "application/vnd.github.raw",
+                                                    cache: "reload"
+                                                });
 
-                                            section.innerHTML = "";
-                                            columns.innerHTML = columns.lastElementChild.outerHTML;
+                                                var variant = true;
+
+                                                json.description = res.description;
+                                                //json.images = res.images;
+                                                json.pricing = res.pricing
+                                            } catch (e) {
+                                                console.log(316, {
+                                                    e, json
+                                                });
+                                            }
+                                        }
+
+                                        var card = vp.find('form card');
+                                        var section = card.find('box > section');
+                                        var columns = card.find('[data-columns]');
+
+                                        section.innerHTML = "";
+                                        columns.innerHTML = columns.lastElementChild.outerHTML;
+
+                                        if (json.images && json.images.length > 0) {
 
                                             var i = 0;
                                             do {
@@ -396,39 +421,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             vp.find('[data-after="Traits"]').closest('box').dataset.display = "none";
                                         }
 
-                                        if (get[5]) {
-                                            if (variant === true) {
-                                                //alert("Finding Variation");
-                                                try {
-                                                    var json = await github.repos.contents({
-                                                        owner: user.login,
-                                                        repo: get[1],
-                                                        path: "/raw/merch/" + get[4] + "/" + get[5] + "/merch.json"
-                                                    }, {
-                                                        accept: "application/vnd.github.raw",
-                                                        cache: "reload"
-                                                    });
-                                                    console.log(332, {
-                                                        json
-                                                    });
-                                                } catch (e) {
-                                                    console.log(394, {
-                                                        e
-                                                    });
-                                                }
-                                                //vp.find('form').removeAttribute('data-display');
-                                                //vp.find('error').dataset.display = "none";
-
-                                                if (json.pricing) {
-                                                    json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
-                                                    json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
-                                                }
-
-                                            } else {//vp.find('form').dataset.display = "none";
-                                            //vp.find('error').removeAttribute('data-display');
-                                            }
-                                        } else {//vp.find('form').removeAttribute('data-display');
-                                        //vp.find('error').dataset.display = "none";
+                                        if (json.pricing) {
+                                            json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
+                                            json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
                                         }
 
                                     } else {
