@@ -308,7 +308,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var n = 0;
                                         var attr = [];
                                         var variant = false;
-                                        var dimensions = json.dimensions;
+                                        var dimensions = json && json.dimensions;
                                         if (dimensions && dimensions.length > 0) {
                                             var footer = vp.find('form [data-after="Traits"]').closest('box').find('footer');
 
