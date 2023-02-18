@@ -1140,6 +1140,13 @@
         }
     }
 
+    @media (max-width: 520px) {
+        .-dw520px-margin-x-20px {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    }
+
     @media (max-width: 480px) {
         .-dw480px-margin-10px {
             margin: 10px;
@@ -1211,6 +1218,12 @@
         }
     }
 
+    @media (max-width: 768px) {
+        .-dw768px-max-width-480px {
+            max-width: 480px;
+        }
+    }
+
     @media (max-width: 720px) {
         .-hd-max-width-480px {
             max-width: 480px;
@@ -1218,8 +1231,8 @@
     }
 
     @media (max-width: 640px) {
-        .-dw960px-max-width-640px {
-            max-width: 640px;
+        .-dw640px-max-width-480px {
+            max-width: 480px;
         }
     }
 
@@ -2037,6 +2050,10 @@
     @media (max-width: 768px) {
         .-tablet-width-100pct, [data-tablet-width="100%"] {
             width: 100%;
+        }
+        
+        [data-768px-width="480px"] {
+            width: 480px;
         }
     }
 

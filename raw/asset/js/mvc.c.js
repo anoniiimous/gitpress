@@ -913,6 +913,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 );
             }
         }
+        ,
+
+        tags: event=>{
+            if ([13, 32].includes(event.keyCode)) {
+                var target = event.target;
+                var template = target.closest('box').find('template').content.firstElementChild.cloneNode(true);
+                template.find('span').textContent = target.textContent;
+                target.closest('text').insertAdjacentHTML('beforebegin', template.outerHTML);
+                target.textContent = "";
+            }
+        }
 
     },
 
@@ -1112,10 +1123,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var parent = null;
 
             var keys = Object.keys(attributes);
-            var child = keys > 0 && keys.length === traits.length;
+            var child = keys.length > 0 && keys.length === traits.length;
             var cousin = keys.length > 0 && keys.length < traits.length;
             var parent = keys.length === 0;
-            //alert("child:" + child + ", " + "cousin: " + cousin + ", child: " + parent);
 
             var valid = [];
             if (!GET[5] && images.length === 0) {
@@ -1213,7 +1223,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 js++;
                             } while (js < json.length);
                         }
-                        console.log(1218, exists, row);
+                        //console.log(1218, exists, row);
                         if (exists === false) {
                             json.push(row);
                         }
@@ -1222,7 +1232,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var json = [row];
                     }
                     rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                    console.log(1225, exists, rows);
+                    //console.log(1225, exists, rows);
                     var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                     var str0 = JSON.stringify(rows, null, 4);
 
@@ -1334,6 +1344,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 console.log(1168, 'controller.merch.update', "array", {
                     array,
+                    attributes,
                     child,
                     cousin,
                     parent

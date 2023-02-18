@@ -546,12 +546,24 @@ window.on.key.down.setup = {
     }
 }
 window.on.key.down.prevent = {
+    enter: (event)=>{
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    },
     submit: (event)=>{
         if (event.keyCode == 13) {
             event.preventDefault();
             return false;
         }
-    }
+    },
+    tags: (event)=>{
+        if ([13,32].includes(event.keyCode)) {
+            event.preventDefault();
+            return false;
+        }
+    },
 }
 
 window.on.key.up = {};
@@ -582,7 +594,6 @@ window.on.key.up.dashboard.pages = (event)=>{
         event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
     }
 }
-
 window.on.key.up.card = {
     holder: event=>{
         const target = event.target;
@@ -610,7 +621,6 @@ window.on.key.up.card = {
         //byId('preview-card').find('.card-holder :last-child').textContent = lastname;
     }
 };
-
 window.on.key.up.catalog = {
     name: (target)=>{
         var target = event.target;
@@ -634,7 +644,6 @@ window.on.key.up.catalog = {
         }
     }    
 }
-
 window.on.key.up.setup = {
     about: (target)=>{
         on.key.up.auto.size(target);

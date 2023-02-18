@@ -386,7 +386,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var name = template.find('field [placeholder]').dataset.name;
                                                 var value = template.find('dropdown [placeholder]').textContent;
                                                 if (name && value) {
-                                                    attr.push(name.toLowerCase() + "-" + value.toLowerCase());
+                                                    attr.push(name.toLowerCase().replaceAll('-', '') + "-" + value.toLowerCase().replaceAll('-', ''));
                                                 }
                                                 d++;
                                             } while (d < dimensions.length);
@@ -395,10 +395,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                         //DESCENDANT
+                                        console.log(398, {
+                                            attr
+                                        });
                                         if (attr.length > 0) {
                                             console.log(395, attr);
 
                                             if (0 < 1) {
+                                                ancestor.sort((a,b)=>(a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0))
                                                 console.log(413, {
                                                     ancestor,
                                                     variant
@@ -430,7 +434,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                                                     as,
                                                                                     row
                                                                                 });
-                                                                                json.images = row.images;
+                                                                                if (row.images) {
+                                                                                    json.images = row.images;
+                                                                                }
                                                                             }
                                                                             s++;
                                                                         } while (s < arrs.length);
@@ -459,6 +465,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 json.description = res.description;
                                                 json.images = res.images ? res.images : (json.images ? json.images : []);
                                                 json.pricing = res.pricing;
+                                                console.log(464, {
+                                                    json
+                                                });
                                             } catch (e) {
                                                 console.log(316, {
                                                     e,
@@ -516,6 +525,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
 
                                         //PRICING
+                                        console.log(522, json);
                                         if (json.pricing) {
                                             json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
                                             json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
