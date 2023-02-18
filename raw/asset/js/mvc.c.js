@@ -1498,12 +1498,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var matrix = values.join('_');
 
                 if (matrix.length > 0) {
-                    console.log(matrix, values);
+                    //console.log(matrix, values);
                     url += matrix + '/';
                 }
                 var vp = target.closest('pages');
 
-                console.log({
+                0 > 1 ? console.log({
                     url,
                     matrix,
                     values
@@ -1514,7 +1514,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     matrix,
                     traits,
                     values
-                });
+                }) : null;
 
                 url.router();
 

@@ -26,7 +26,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         }
 
         $(dom.body.all('aside')).remove()
-        console.log(route, root);
+        //console.log(route, root);
 
         if (root) {
 
@@ -295,9 +295,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     throw "Not Found";
                                                 }
                                             }
-                                            console.log(295, {
+                                            0 > 1 ? console.log(295, {
                                                 json
-                                            });
+                                            }) : null;
                                         } catch (e) {
                                             console.log(287, {
                                                 e
@@ -339,8 +339,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     } while (v < values.length);
 
                                                     if (get[5]) {
+                                                        var u = rout.ed.dir(route.path);
+                                                        var gat = u.splice(5, u.length - 1);
                                                         var matrix = get[5];
-                                                        var arr = matrix.split('_');
+                                                        var arr = 0 < 1 ? matrix.split('_') : gat;
                                                         var ax = 0;
                                                         do {
                                                             var ar = arr[ax];
@@ -395,18 +397,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                         //DESCENDANT
-                                        console.log(398, {
-                                            attr
-                                        });
                                         if (attr.length > 0) {
-                                            console.log(395, attr);
-
+                                            //console.log(395, attr);
                                             if (0 < 1) {
                                                 ancestor.sort((a,b)=>(a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0))
-                                                console.log(413, {
+                                                0 > 1 ? console.log(413, {
                                                     ancestor,
                                                     variant
-                                                });
+                                                }) : null;
                                                 if (ancestor.length > 0) {
                                                     var arrs = get[5].split('_');
                                                     var r = 0;
@@ -415,7 +413,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                         var slug = row.slug;
                                                         var dir = rout.ed.dir(row.slug);
                                                         if (dir.length > 1) {
-                                                            console.log(row.slug, dir);
+                                                            //console.log(row.slug, dir);
                                                             var attributes = row.attributes;
                                                             var keys = Object.keys(attributes);
                                                             var a = 0;
@@ -429,11 +427,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                                         do {
                                                                             var as = arrs[s];
                                                                             if (str === as) {
-                                                                                console.log(415, a, r, row.slug, {
+                                                                                0 > 1 ? console.log(415, a, r, row.slug, {
                                                                                     str,
                                                                                     as,
                                                                                     row
-                                                                                });
+                                                                                }) : null;
                                                                                 if (row.images) {
                                                                                     json.images = row.images;
                                                                                 }
@@ -465,11 +463,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 json.description = res.description;
                                                 json.images = res.images ? res.images : (json.images ? json.images : []);
                                                 json.pricing = res.pricing;
-                                                console.log(464, {
+                                                0 > 1 ? console.log(464, {
                                                     json
-                                                });
+                                                }) : null;
                                             } catch (e) {
-                                                console.log(316, {
+                                                console.log(316, 'error mvc.v DESCENDANT', {
                                                     e,
                                                     json
                                                 });
@@ -518,15 +516,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
 
                                         //TITLE
-                                        json.title ? vp.find('[placeholder="Enter a title"]').value = json.title : null;
+                                        json && json.title ? vp.find('[placeholder="Enter a title"]').value = json.title : null;
 
                                         //DESCRIPTION
-                                        json.description ? vp.find('[placeholder="Provide a detailed description."]').value = json.description : null;
+                                        json && json.description ? vp.find('[placeholder="Provide a detailed description."]').value = json.description : null;
                                         on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
 
                                         //PRICING
-                                        console.log(522, json);
-                                        if (json.pricing) {
+                                        if (json && json.pricing) {
                                             json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
                                             json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
                                         }
