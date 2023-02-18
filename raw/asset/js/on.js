@@ -551,19 +551,22 @@ window.on.key.down.prevent = {
             event.preventDefault();
             return false;
         }
-    },
+    }
+    ,
     submit: (event)=>{
         if (event.keyCode == 13) {
             event.preventDefault();
             return false;
         }
-    },
+    }
+    ,
     tags: (event)=>{
-        if ([13,32].includes(event.keyCode)) {
+        if ([13, 32].includes(event.keyCode)) {
             event.preventDefault();
             return false;
         }
-    },
+    }
+    ,
 }
 
 window.on.key.up = {};
@@ -642,7 +645,7 @@ window.on.key.up.catalog = {
             //button.click();
             event.preventDefault();
         }
-    }    
+    }
 }
 window.on.key.up.setup = {
     about: (target)=>{

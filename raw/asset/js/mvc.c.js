@@ -916,12 +916,34 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         tags: event=>{
+            var target = event.target;
+
+            var keywords = target.closest('box').find('flex').all('text');
+            var tags = [];
+            if (keywords.length > 0) {
+                var t = 0;
+                do {
+                    var tag = keywords[t];
+                    var keyword = tag.find('span').textContent.toLowerCase();
+                    tags.push(keyword);
+                    t++;
+                } while (t < keywords.length);
+                tags = [...new Set(tags)];
+            }
+
+            if (tags.includes(target.textContent.toLowerCase())) {
+                target.closest('flex > *').classList.add('color-ff3b30');
+            } else {
+                target.closest('flex > *').classList.remove('color-ff3b30');
+            }
+
             if ([13, 32].includes(event.keyCode)) {
-                var target = event.target;
-                var template = target.closest('box').find('template').content.firstElementChild.cloneNode(true);
-                template.find('span').textContent = target.textContent;
-                target.closest('text').insertAdjacentHTML('beforebegin', template.outerHTML);
-                target.textContent = "";
+                if (tags.includes(target.textContent.toLowerCase()) === false) {
+                    var template = target.closest('box').find('template').content.firstElementChild.cloneNode(true);
+                    template.find('span').textContent = target.textContent;
+                    target.closest('flex > *').insertAdjacentHTML('beforebegin', template.outerHTML);
+                    target.textContent = "";
+                }
             }
         }
 
@@ -1071,13 +1093,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var i = 0;
                 do {
                     var thumbnail = thumbnails[i];
-                    images[i] = thumbnail.src.startsWith("data:") ? {
+                    images.push(thumbnail.src.startsWith("data:") ? {
                         content: thumbnail.src,
                         extension: thumbnail.src.split(';base64,')[0].split('/')[1]
                     } : {
                         content: thumbnail.dataset.resource,
                         extension: thumbnail.dataset.resource.split('.')[thumbnail.dataset.resource.split('.').length - 1]
-                    };
+                    });
                     i++;
                 } while (i < thumbnails.length)
             }
@@ -1086,7 +1108,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var description = form.find('[placeholder="Provide a detailed description."]').value;
 
-            var slug = GET[4];
+            var keywords = form.find('[data-after="Tags"]').closest('box').find('flex').all('text');
+            var tags = [];
+            if (keywords.length > 0) {
+                var t = 0;
+                do {
+                    var tag = keywords[t];
+                    var keyword = tag.find('span').textContent;
+                    tags.push(keyword);
+                    t++;
+                } while (t < keywords.length);
+                tags = [...new Set(tags)];
+            }
 
             var attributes = {};
             var dimensions = [];
@@ -1116,8 +1149,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (t < traits.length);
             }
 
-            var tags = [];
-
             var child = null;
             var cousin = null;
             var parent = null;
@@ -1135,21 +1166,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             if (valid.length === 0) {
                 var row = {
                     description,
-                    slug,
                     title
                 }
 
                 if (images.length > 0) {
-                    row.images = [];
+                    var imgs = [];
                     var i = 0;
                     do {
-                        if (child || cousin) {
-                            row.images[i] = "/raw/merch/" + slug + "/" + GET[5] + "/image." + i + "." + images[i].extension;
+                        if (images[i].content.startsWith("data:")) {
+                            if (child || cousin) {
+                                imgs.push("/raw/merch/" + GET[4] + "/" + GET[5] + "/image." + i + "." + images[i].extension);
+                            } else {
+                                imgs.push("/raw/merch/" + GET[4] + "/image." + i + "." + images[i].extension);
+                            }
                         } else {
-                            row.images[i] = "/raw/merch/" + slug + "/image." + i + "." + images[i].extension;
+                            imgs.push(images[i].content);
                         }
                         i++;
-                    } while (i < images.length)
+                    } while (i < images.length);
+                    imgs.length > 0 ? row.images = imgs : null;
                 }
 
                 if (tags.length > 0) {
@@ -1170,6 +1205,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 if (parent) {
                     row.dimensions = dimensions;
+                    row.slug = slug = GET[4];
                 }
 
                 //MERCH
@@ -1345,6 +1381,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 console.log(1168, 'controller.merch.update', "array", {
                     array,
                     attributes,
+                    tags
+                }, {
                     child,
                     cousin,
                     parent

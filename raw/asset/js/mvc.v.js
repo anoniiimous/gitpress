@@ -460,9 +460,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                                 var variant = true;
 
-                                                json.description = res.description;
+                                                json.description = res.description ? res.description : null;
                                                 json.images = res.images ? res.images : (json.images ? json.images : []);
                                                 json.pricing = res.pricing;
+                                                json.tags = res.tags ? res.tags : null;
                                                 0 > 1 ? console.log(464, {
                                                     json
                                                 }) : null;
@@ -521,6 +522,18 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //DESCRIPTION
                                         json && json.description ? vp.find('[placeholder="Provide a detailed description."]').value = json.description : null;
                                         on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
+
+                                        //TAGS
+                                        if (json && json.tags) {
+                                            var t = 0;
+                                            do {
+                                                var tag = json.tags[t];
+                                                var template = vp.find('[data-after="Tags"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                template.find('span').textContent = tag;
+                                                vp.find('[data-after="Tags"]').closest('box').find('flex').lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                t++;
+                                            } while (t < json.tags.length)
+                                        }
 
                                         //PRICING
                                         if (json && json.pricing) {
