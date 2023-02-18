@@ -400,8 +400,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         if (attr.length > 0) {
                                             //console.log(395, attr);
                                             if (0 < 1) {
-                                                ancestor.sort((a,b)=>(a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0))
-                                                0 > 1 ? console.log(413, {
+                                                ancestor.sort((a, b) => b.slug.localeCompare(a.slug));
+                                                0 < 1 ? console.log(413, {
                                                     ancestor,
                                                     variant
                                                 }) : null;
@@ -427,7 +427,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                                         do {
                                                                             var as = arrs[s];
                                                                             if (str === as) {
-                                                                                0 > 1 ? console.log(415, a, r, row.slug, {
+                                                                                0 < 1 ? console.log(415, a, r, row.slug, {
                                                                                     str,
                                                                                     as,
                                                                                     row
