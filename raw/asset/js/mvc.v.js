@@ -400,7 +400,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         if (attr.length > 0) {
                                             //console.log(395, attr);
                                             if (0 < 1) {
-                                                ancestor.sort((a, b) => b.slug.localeCompare(a.slug));
+                                                ancestor.sort((a,b)=>b.slug.localeCompare(a.slug));
                                                 0 < 1 ? console.log(413, {
                                                     ancestor,
                                                     variant
@@ -524,6 +524,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
 
                                         //TAGS
+                                        $(vp.find('[data-after="Tags"]').closest('box').find('flex').all('text')).remove();
                                         if (json && json.tags) {
                                             var t = 0;
                                             do {
