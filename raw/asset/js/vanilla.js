@@ -1,3 +1,7 @@
+Array.prototype.has = function(that) {
+    return that.every(v => this.includes(v));
+}
+
 Array.prototype.remove = function(name) {
     var that = this;
     var vals = Object.values(that);

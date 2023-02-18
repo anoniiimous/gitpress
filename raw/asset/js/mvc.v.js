@@ -416,6 +416,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                             //console.log(row.slug, dir);
                                                             var attributes = row.attributes;
                                                             var keys = Object.keys(attributes);
+                                                            var vals = Object.values(attributes);
                                                             var a = 0;
                                                             if (keys.length > 0) {
                                                                 do {
@@ -426,7 +427,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                                         var s = 0;
                                                                         do {
                                                                             var as = arrs[s];
-                                                                            if (str === as) {
+                                                                            var atrs = [];
+                                                                            var k = 0
+                                                                            do {
+                                                                                atrs.push(keys[k].toLowerCase().replaceAll("-", "") + "-" + vals[k].toLowerCase().replaceAll("-", ""));
+                                                                                k++;
+                                                                            } while (k < keys.length);
+                                                                            var there = str === as && arrs.has(atrs);
+                                                                            console.log(there, row.slug, {
+                                                                                keys,
+                                                                                row,
+                                                                                attributes,
+                                                                                arrs,
+                                                                                atrs
+                                                                            });
+                                                                            if (there) {
                                                                                 0 < 1 ? console.log(415, a, r, row.slug, {
                                                                                     str,
                                                                                     as,
