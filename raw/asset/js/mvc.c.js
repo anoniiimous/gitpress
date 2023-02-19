@@ -1474,6 +1474,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     path: "raw/merch/" + slug
                 })
                 var url = '/dashboard/:get/merch/catalog/:get/';
+            } else {
+                array.push({
+                    content: null,
+                    path: "raw/merch/" + dir[0]
+                })                    
             }
             console.log(1168, 'controller.merch.update', "array", {
                 array,

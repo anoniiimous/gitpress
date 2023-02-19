@@ -295,7 +295,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     throw "Not Found";
                                                 }
                                             }
-                                            0 > 1 ? console.log(295, {
+                                            0 < 1 ? console.log(295, {
                                                 json
                                             }) : null;
                                         } catch (e) {
@@ -479,7 +479,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 json.images = res.images ? res.images : (json.images ? json.images : []);
                                                 json.pricing = res.pricing;
                                                 json.tags = res.tags ? res.tags : null;
-                                                0 > 1 ? console.log(464, {
+                                                0 < 1 ? console.log(464, {
                                                     json
                                                 }) : null;
                                             } catch (e) {
@@ -532,9 +532,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
 
                                         //TITLE
+                                        vp.find('[placeholder="Enter a title"]').value = "";
                                         json && json.title ? vp.find('[placeholder="Enter a title"]').value = json.title : null;
 
                                         //DESCRIPTION
+                                        vp.find('[placeholder="Provide a detailed description."]').value = "";
                                         json && json.description ? vp.find('[placeholder="Provide a detailed description."]').value = json.description : null;
                                         on.key.up.auto.size(vp.find('[placeholder="Provide a detailed description."]'));
 
@@ -552,6 +554,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                         //PRICING
+                                        vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = "";
+                                        vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = "";
                                         if (json && json.pricing) {
                                             json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
                                             json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;

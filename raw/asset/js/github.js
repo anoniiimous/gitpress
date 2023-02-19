@@ -1092,7 +1092,7 @@ window.github.crud.update = async(params,array)=>{
                 }
                 );
             }
-            console.log(1076, row);
+            //console.log(1076, row);
             tree[b] = {
                 content: row.content,
                 path: row.path,
@@ -1137,7 +1137,13 @@ window.github.crud.update = async(params,array)=>{
                     var d = rout.ed.dir(trx.path)[ttt];
                     var dd = rout.ed.dir(trx.path).splice(0, ttt + 1);
                     var ddu = rout.ed.url(dd).replace(/^\/|\/$/g, '');
-                    tr = tr.filter(row=>(!ddu.startsWith(row.path)))
+                    var dp = rout.ed.dir(ddu);
+                    tr = tr.filter(row=>{
+                        var rp = rout.ed.dir(row.path);
+                        var here = ddu.startsWith(row.path) && rp.has(dp);
+                        return !here;
+                    }
+                    )
                     0 > 1 ? console.log(t, tt, ttt, {
                         ddu,
                         trt: trt.path,
@@ -1159,15 +1165,36 @@ window.github.crud.update = async(params,array)=>{
         var t = 0;
         do {
             var trt = tree[t];
-            if (trt.content) {
-                delete trt.content;
-            }
+            //console.log(1167, trt);
             if ("content"in trt && trt.content === null) {
-                0 < 1 ? console.log(1161, t, {
+                var tp = rout.ed.dir(trt.path);
+                0 > 1 ? console.log(1161, t, row.path, trt.path, {
+                    tp
+                }, {
                     row,
-                    trt
+                    trt,
+                    treet: tree[t]
                 }) : null;
-                tree = tree.filter(row=>(!row.path.startsWith(trt.path)))
+                tree = tree.filter(row=>{
+                    var rp = rout.ed.dir(row.path);
+                    var here = row.path.startsWith(trt.path) && rp.has(tp);
+                    if (here) {
+                        0 > 1 ? console.log(1177, rp.has(tp), {
+                            rp,
+                            tp
+                        }) : null;
+                    }
+                    if (row.content) {
+                        //console.log(1193, row);
+                        delete row.content;
+                    }
+                    return !here;
+                    //return !row.path.startsWith(trt.path) && !rout.ed.dir(row.path).has(tp)
+                }
+                )
+                //tree = tree.filter(row=>(!row.path === trt.path))
+                //tree = tree.filter(row=>(!row.path.startsWith(trt.path)))
+                //tree = tree.filter(row=>(!rout.ed.dir(row.path).has(tp)))
             }
             t++;
         } while (t < tree.length);
