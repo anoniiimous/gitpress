@@ -1462,15 +1462,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var array = [{
                 content: JSON.stringify(merch, null, 4),
                 path: "raw/merch/merch.json"
-            }, {
-                content: JSON.stringify(ancestor, null, 4),
-                path: "raw/merch/" + dir[0]
             }];
+            var url = '/dashboard/:get/merch/catalog/';
             if (dir.length > 0) {
+                array.push({
+                    content: JSON.stringify(ancestor, null, 4),
+                    path: "raw/merch/" + dir[0] + "/merch.json"
+                })
                 array.push({
                     content: null,
                     path: "raw/merch/" + slug
                 })
+                var url = '/dashboard/:get/merch/catalog/:get/';
             }
             console.log(1168, 'controller.merch.update', "array", {
                 array,
@@ -1483,6 +1486,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 merch
             });
             await github.crud.update(params, array);
+            url.router();
         }
         ,
 
