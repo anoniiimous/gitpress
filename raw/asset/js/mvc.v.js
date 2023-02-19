@@ -397,7 +397,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                         //DESCENDANT
-                                        if (attr.length > 0) {
+                                        if (get.length > 5) {
                                             //console.log(395, attr);
                                             if (0 < 1) {
                                                 ancestor.sort((a,b)=>b.slug.localeCompare(a.slug));
@@ -462,15 +462,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     } while (r < ancestor.length);
                                                 }
                                             }
-
                                             try {
-                                                var res = await github.repos.contents({
+                                                var res = 0 > 1 ? await github.repos.contents({
                                                     owner: user.login,
                                                     repo: get[1],
                                                     path: "/raw/merch/" + get[4] + "/" + attr.join('_') + "/merch.json"
                                                 }, {
                                                     accept: "application/vnd.github.raw",
                                                     cache: "reload"
+                                                }) : window.ancestor.find(row=>row.slug === get[4] + "/" + get[5]);
+                                                                            if(!res) res = json
+
+                                                console.log(474, {
+                                                    res,
+                                                    json
                                                 });
 
                                                 var variant = true;
