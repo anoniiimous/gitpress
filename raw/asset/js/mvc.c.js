@@ -1403,6 +1403,89 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        delete: async(slug)=>{
+            console.log(slug);
+            var dir = rout.ed.dir(slug);
+
+            try {
+                var ancestor = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/merch/" + dir[0] + "/merch.json"
+                }, {
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (ancestor.length > 0) {
+                    var ancestor = ancestor.filter(function(obj) {
+                        return obj.slug !== slug;
+                    });
+                }
+                console.log(1417, {
+                    ancestor
+                })
+            } catch (e) {
+                console.log("error", {
+                    e
+                })
+            }
+
+            try {
+                var merch = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/merch/merch.json"
+                }, {
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (merch.length > 0) {
+                    var merch = merch.filter(function(obj) {
+                        return obj.slug !== slug;
+                    });
+                }
+                console.log(1447, {
+                    merch
+                })
+            } catch (e) {
+                console.log("error", {
+                    e
+                })
+            }
+
+            //PUSH
+            var params = {
+                message: "Delete " + slug + " from Merch",
+                repo: GET[1],
+                owner: window.owner.login
+            };
+            var array = [{
+                content: JSON.stringify(merch, null, 4),
+                path: "raw/merch/merch.json"
+            }, {
+                content: JSON.stringify(ancestor, null, 4),
+                path: "raw/merch/" + dir[0]
+            }];
+            if (dir.length > 0) {
+                array.push({
+                    content: null,
+                    path: "raw/merch/" + slug
+                })
+            }
+            console.log(1168, 'controller.merch.update', "array", {
+                array,
+                params
+            }, {
+                dir,
+                slug
+            }, {
+                ancestor,
+                merch
+            });
+            await github.crud.update(params, array);
+        }
+        ,
+
         matrix: target=>{
             var dimensions = [];
             var traits = target.closest('box').all('column');
@@ -1519,7 +1602,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 title: attributes.find('[placeholder]').value
             });
 
-            var url = '/dashboard/:get/merch/catalog/:get/';
+            var url = '/dashboard/' + GET[1] + '/merch/catalog/' + GET[4] + '/';
             var values = [];
             var traits = target.closest('box column').children;
             if (traits.length > 0) {
@@ -1541,7 +1624,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 var vp = target.closest('pages');
 
-                0 > 1 ? console.log({
+                0 < 1 ? console.log({
+                    route,
                     url,
                     matrix,
                     values
@@ -1554,7 +1638,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     values
                 }) : null;
 
-                url.router();
+                route.path === url ? null : url.router();
 
             }
         }

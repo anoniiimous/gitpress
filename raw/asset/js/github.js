@@ -1077,21 +1077,24 @@ window.github.crud.update = async(params,array)=>{
         var b = 0;
         do {
             var row = array[b];
-            var res = await github.database.blobs({
-                owner,
-                repo
-            }, {
-                data: JSON.stringify({
-                    content: row.content,
-                    encoding: row.type ? row.type : "utf-8"
-                }),
-                dataType: "POST"
-            }).catch(error=>{
-                console.log(2504, 'github.database.blobs', error);
+            if (row.content) {
+                var res = await github.database.blobs({
+                    owner,
+                    repo
+                }, {
+                    data: JSON.stringify({
+                        content: row.content,
+                        encoding: row.type ? row.type : "utf-8"
+                    }),
+                    dataType: "POST"
+                }).catch(error=>{
+                    console.log(2504, 'github.database.blobs', error);
+                }
+                );
             }
-            );
             console.log(1076, row);
             tree[b] = {
+                content: row.content,
                 path: row.path,
                 mode: "100644",
                 type: "blob",
@@ -1107,7 +1110,7 @@ window.github.crud.update = async(params,array)=>{
     //TREES GET
     var trees = await github.database.trees({
         owner,
-        path: "/raw/posts",
+        path: "/raw/merch",
         recursive: true,
         repo,
         sha: references.object.sha
@@ -1115,7 +1118,12 @@ window.github.crud.update = async(params,array)=>{
         console.log(2530, 'GET github.database.trees', error);
     }
     );
+    var rt = trees.tree;
     var tr = trees.tree;
+    console.log(1122, 'controller.posts.update', "GET trees", {
+        rt,
+        tr
+    });
     if (tr.length > 0) {
         var t = 0;
         do {
@@ -1134,6 +1142,8 @@ window.github.crud.update = async(params,array)=>{
                         ddu,
                         trt: trt.path,
                         trx: trx.path
+                    }, {
+                        trt
                     }) : null;
                     ttt++;
                 } while (ttt < dir.length);
@@ -1143,7 +1153,41 @@ window.github.crud.update = async(params,array)=>{
         } while (t < tr.length)
     }
     tree = tr.concat(tree);
+    if (tree.length > 0) {
+        tree.sort((a,b)=>a.path.localeCompare(b.path));
+        //var del = tree.filter(row=>row.content === null)
+        var t = 0;
+        do {
+            var trt = tree[t];
+            if (trt.content) {
+                delete trt.content;
+            }
+            if ("content"in trt && trt.content === null) {
+                0 < 1 ? console.log(1161, t, {
+                    row,
+                    trt
+                }) : null;
+                tree = tree.filter(row=>(!row.path.startsWith(trt.path)))
+            }
+            t++;
+        } while (t < tree.length);
+    }
+    var diff = {
+        deleted: rt.filter(function(obj) {
+            return !tree.some(function(el) {
+                return el.path === obj.path
+            })
+        }).filter(function(el) {
+            return el.type === "blob"
+        }),
+        removed: rt.filter(function(obj) {
+            return !tree.some(function(el) {
+                return el.path === obj.path
+            })
+        })
+    };
     console.log(2533, 'controller.posts.update', "GET trees", {
+        diff,
         trees: trees.tree,
         tree,
         tr

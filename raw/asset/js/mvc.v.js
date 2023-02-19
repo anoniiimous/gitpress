@@ -401,7 +401,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             //console.log(395, attr);
                                             if (0 < 1) {
                                                 ancestor.sort((a,b)=>b.slug.localeCompare(a.slug));
-                                                0 < 1 ? console.log(413, {
+                                                0 > 1 ? console.log(413, {
                                                     ancestor,
                                                     variant
                                                 }) : null;
@@ -434,15 +434,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                                                 k++;
                                                                             } while (k < keys.length);
                                                                             var there = str === as && arrs.has(atrs);
-                                                                            console.log(there, row.slug, {
+                                                                            0 > 1 ? console.log(there, row.slug, {
                                                                                 keys,
                                                                                 row,
                                                                                 attributes,
                                                                                 arrs,
                                                                                 atrs
-                                                                            });
+                                                                            }) : null;
                                                                             if (there) {
-                                                                                0 < 1 ? console.log(415, a, r, row.slug, {
+                                                                                0 > 1 ? console.log(415, a, r, row.slug, {
                                                                                     str,
                                                                                     as,
                                                                                     row
