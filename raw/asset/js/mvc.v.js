@@ -496,7 +496,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var columns = card.find('[data-columns]');
                                         section.innerHTML = "";
                                         columns.innerHTML = columns.lastElementChild.outerHTML;
-                                        if (json.images && json.images.length > 0) {
+                                        if (json && json.images && json.images.length > 0) {
 
                                             var i = 0;
                                             do {
