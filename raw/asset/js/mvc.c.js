@@ -1237,13 +1237,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var a = 0;
                     do {
                         var feature = about[a];
-                        var text = feature.find('span').textContent;
+                        var text = feature.find('textarea').value;
                         if (text.length > 0) {
                             features.push(text);
                         }
                         a++;
                     } while (a < about.length);
-                    row.features = features;
+                    row.about = features;
                 }
 
                 var ListPrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value;
@@ -1591,6 +1591,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         features: event=>{
+            on.key.up.auto.size(event.target)
             if (event.keyCode === 8) {
                 var target = event.target;
                 if (target.textContent === "" && target.closest('column').children.length > 1) {

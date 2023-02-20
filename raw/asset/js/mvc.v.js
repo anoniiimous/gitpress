@@ -472,7 +472,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     cache: "reload"
                                                 }) : window.ancestor.find(row=>row.slug === get[4] + "/" + get[5]);
                                                 if (!res)
-                                                    res = json
+                                                    res = json;
 
                                                 console.log(474, {
                                                     res,
@@ -484,7 +484,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 json.category = res.category ? res.category : json.category ? json.category : null;
                                                 json.description = res.description ? res.description : null;
                                                 json.images = res.images ? res.images : (json.images ? json.images : []);
+                                                json.details = res.details ? res.details : (json.details ? json.details : null);
+                                                json.about = res.about ? res.about : (json.about ? json.about : null);
                                                 json.pricing = res.pricing;
+                                                json.quantity = res.quantity ? res.quantity : null;
                                                 json.tags = res.tags ? res.tags : null;
                                                 0 < 1 ? console.log(464, {
                                                     json
@@ -581,12 +584,51 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             } while (t < json.tags.length)
                                         }
 
+                                        //DETAILS
+                                        var details = vp.find('[data-after="Details"]').closest('box').find('column');
+                                        if (json && json.details && Object.keys(json.details).length > 0) {
+                                            var d = 0;
+                                            do {
+                                                if (d > 0) {
+                                                    var template = vp.find('[data-after="Details"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                    details.insertAdjacentHTML('beforeend', template.outerHTML);
+                                                }
+                                                var detail = details.children[d];
+                                                detail.all('field')[0].find('input').value = Object.keys(json.details)[d];
+                                                detail.all('field')[1].find('input').value = Object.values(json.details)[d];
+                                                d++;
+                                            } while (d < Object.keys(json.details).length);
+                                        }
+
+                                        //ABOUT
+                                        var about = vp.find('[data-after="About"]').closest('box').find('column');
+                                        if (json && json.about && json.about.length > 0) {
+                                            var a = 0;
+                                            do {
+                                                var feature = json.about[a];
+                                                var template = vp.find('[data-after="About"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                template.find('textarea').textContent = feature;
+                                                about.insertAdjacentHTML('beforeend', template.outerHTML);
+                                                on.key.up.auto.size(about.lastElementChild.find('textarea'));
+                                                a++;
+                                            } while (a < json.about.length);
+                                        } else {
+                                            var template = vp.find('[data-after="About"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                            about.insertAdjacentHTML('beforeend', template.outerHTML);
+                                        }
+                                        console.log(json);
+
                                         //PRICING
                                         vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = "";
                                         vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = "";
                                         if (json && json.pricing) {
                                             json.pricing.ListPrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.pricing.ListPrice : false;
                                             json.pricing.SalePrice ? vp.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value = json.pricing.SalePrice : false;
+                                        }
+
+                                        //QUANTITY
+                                        if (json && json.quantity) {
+                                            vp.find('[data-after="Quantity"]').closest('box').find('flex').children[0].find('[type="number"]').value = json.quantity;
                                         }
 
                                     } else {
