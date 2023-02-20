@@ -471,7 +471,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     accept: "application/vnd.github.raw",
                                                     cache: "reload"
                                                 }) : window.ancestor.find(row=>row.slug === get[4] + "/" + get[5]);
-                                                                            if(!res) res = json
+                                                if (!res)
+                                                    res = json
 
                                                 console.log(474, {
                                                     res,
@@ -535,6 +536,26 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                         //vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+
+                                        //CATEGORY
+                                        var arr = await ajax("/raw/asset/json/categories.json");
+                                        var categories = JSON.parse(arr).merch;
+                                        if (categories.length > 0) {
+                                            var c = 0;
+                                            var vp = dom.body.find('[data-pages="/dashboard/*/merch/catalog/*/"]');
+                                            console.log({
+                                                vp
+                                            });
+                                            var step2 = vp.all('block card')[1];
+                                            var list = step2.find('dropdown group');
+                                            do {
+                                                var node = categories[c];
+                                                var item = step2.find('dropdown template').content.firstElementChild.cloneNode(true);
+                                                item.find('span').dataset.after = node;
+                                                list.insertAdjacentHTML('beforeend', item.outerHTML);
+                                                c++;
+                                            } while (c < categories.length)
+                                        }
 
                                         //TITLE
                                         vp.find('[placeholder="Enter a title"]').value = "";

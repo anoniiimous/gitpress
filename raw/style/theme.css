@@ -901,6 +901,10 @@
 
 /*LINE HEIGHT*/
 @media screen {
+    .line-height-20px {
+        line-height: 20px;
+    }
+    
     .line-height-24px {
         line-height: 24px;
     }

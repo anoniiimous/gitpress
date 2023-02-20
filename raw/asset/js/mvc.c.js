@@ -496,6 +496,21 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     catalog: {
 
+        category: async(target)=>{
+            var dropdown = await modal.dropdown(target.closest('dropdown'), {
+                other: false
+            });
+            var step = target.closest('card');
+            var category = step.find('[placeholder]').textContent;
+            var button = step.find('footer .gg-chevron-right').closest('box');
+            if (category.length > 0) {
+                button.classList.remove('opacity-50pct')
+            } else {
+                button.classList.add('opacity-50pct')
+            }
+        }
+        ,
+
         parent: async(event)=>{
             event.preventDefault();
             var form = event.target;
@@ -974,6 +989,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        browsenode: async(target)=>{
+            var dropdown = await modal.dropdown(target.closest('dropdown'), {
+                other: true
+            });
+            var step = target.closest('card');
+            var category = step.find('[placeholder]').textContent;
+        }
+        ,
+
         catalog: async(event)=>{
             event.preventDefault();
 
@@ -1069,16 +1093,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         category: async(target)=>{
             var dropdown = await modal.dropdown(target.closest('dropdown'), {
-                other: false
+                other: true
             });
             var step = target.closest('card');
             var category = step.find('[placeholder]').textContent;
-            var button = step.find('footer .gg-chevron-right').closest('box');
-            if (category.length > 0) {
-                button.classList.remove('opacity-50pct')
-            } else {
-                button.classList.add('opacity-50pct')
-            }
         }
         ,
 
@@ -1478,7 +1496,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 array.push({
                     content: null,
                     path: "raw/merch/" + dir[0]
-                })                    
+                })
             }
             console.log(1168, 'controller.merch.update', "array", {
                 array,
@@ -1492,6 +1510,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             });
             await github.crud.update(params, array);
             url.router();
+        }
+        ,
+
+        details: target=>{
+            var template = target.closest('footer').find('template').content.firstElementChild.cloneNode(true);
+            target.closest('box').find('column').insertAdjacentHTML('beforeend', template.outerHTML);
         }
         ,
 
@@ -1521,6 +1545,49 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             console.log(1984, {
                 dimensions
             });
+        }
+        ,
+
+        features: event=>{
+            if (event.keyCode === 8) {
+                var target = event.target;
+                if (target.textContent === "" && target.closest('column').children.length > 1) {
+                    var input = target.closest('text').previousElementSibling.find('span');
+                    var range = document.createRange();
+                    var sel = window.getSelection();
+                    range.setStart(input.childNodes[0], input.textContent.length);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                    input.focus();
+                    target.closest('text').remove();
+                }
+            }
+            if (event.keyCode === 13) {
+                var target = event.target;
+                var box = target.closest('box');
+                var template = box.find('template').content.firstElementChild.cloneNode(true);
+                box.find('column').insertAdjacentHTML('beforeend', template.outerHTML);
+                box.find('column').lastElementChild.find('span').focus();
+
+            }
+        }
+        ,
+
+        quantity: target=>{
+            var button = target.closest('row').find('input');
+            var ico = target.closest('ico');
+            if (button && ico) {
+                var up = ico.find('.gg-chevron-up');
+                var down = ico.find('.gg-chevron-down');
+                button.value = button.value === '' ? 0 : button.value;
+                if (up) {
+                    button.value = parseInt(button.value) + 1;
+                }
+                if (down && button.value > 0) {
+                    button.value = parseInt(button.value) - 1;
+                }
+            }
         }
         ,
 

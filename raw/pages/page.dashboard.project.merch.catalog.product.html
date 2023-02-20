@@ -64,43 +64,37 @@
                 <column class="flex-1 gap-50px">
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Category"></text>
+                        </header>
+                        <column class="gap-10px margin-10px">
+                            <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex flex-unset height-36px justify-content-center line-height-36px">
+                                <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.category(event.target.closest('dropdown'))">
+                                    <text class="flex-1" placeholder="Value"></text>
+                                    <ico data-height="30px" data-width="30px">
+                                        <n class="gg-chevron-down"></n>
+                                    </ico>
+                                </row>
+                                <group data-display="none"></group>
+                                <template>
+                                    <box class="flex-1">
+                                        <row class="align-items-center justify-content-center width-100pct">
+                                            <text class="align-items-center display-flex flex-1">
+                                                <ico class="border-2px-solid border-color-ccc border-radius-50px" data-height="20px" data-width="20px"></ico>
+                                                <span class="display-flex flex-1 height-36px line-height-36px padding-x-10px"></span>
+                                            </text>
+                                        </row>
+                                    </box>
+                                </template>
+                            </dropdown>
+                        </column>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Title</text>
                         </header>
                         <column class="gap-0px">
                             <input class="font-size-18px height-36px line-height-36px margin-10px" type="text" placeholder="Enter a title">
                         </column>
-                    </box>
-                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
-                        <header class="background-color-ccc">
-                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
-                        </header>
-                        <column class="gap-0px">
-                            <textarea class="border-bottom-1px-solid flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
-                        <header class="background-color-ccc">
-                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
-                        </header>
-                        <flex class="flex-wrap-wrap gap-10px padding-10px">
-                            <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
-                                    <n class="gg-hashtag"></n>
-                                </ico>
-                                <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
-                            </row>
-                        </flex>
-                        <template>
-                            <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
-                                    <n class="gg-hashtag"></n>
-                                </ico>
-                                <span></span>
-                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
-                                    <n class="gg-close"></n>
-                                </ico>
-                            </text>
-                        </template>
                     </box>
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden" data-display="none">
                         <header class="background-color-ccc">
@@ -156,13 +150,109 @@
                             </template>
                         </footer>
                     </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
+                        </header>
+                        <column class="gap-0px">
+                            <textarea class="border-bottom-1px-solid flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                        </column>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
+                        </header>
+                        <flex class="flex-wrap-wrap gap-10px padding-10px">
+                            <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-hashtag"></n>
+                                </ico>
+                                <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
+                            </row>
+                        </flex>
+                        <template>
+                            <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-hashtag"></n>
+                                </ico>
+                                <span></span>
+                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
+                                    <n class="gg-close"></n>
+                                </ico>
+                            </text>
+                        </template>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Details"></text>
+                        </header>
+                        <column class="margin-10px">
+                            <row class="grid-gap-10px">
+                                <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
+                                    <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                        <input class="flex-1 font-size-16px" placeholder="Name" type="text">
+                                    </row>
+                                </field>
+                                <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
+                                    <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                        <input class="flex-1 font-size-16px" placeholder="Value" type="text">
+                                    </row>
+                                </field>
+                                <ico data-tap="event.target.closest('row').innerHTML = event.target.closest('row').innerHTML;">
+                                    <n class="gg-erase"></n>
+                                </ico>
+                            </row>
+                        </column>
+                        <footer class="flex-direction-column grid-gap-5px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-tap="controller.merch.details(event.target)">
+                                <ico data-height="20px" data-width="30px">
+                                    <n class="gg-eraser"></n>
+                                </ico>
+                                <span>Add New Detail</span>
+                            </text>
+                            <template>
+                                <row class="grid-gap-10px">
+                                    <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                            <input class="flex-1 font-size-16px" placeholder="Name" type="text">
+                                        </row>
+                                    </field>
+                                    <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct">
+                                            <input class="flex-1 font-size-16px" placeholder="Value" type="text">
+                                        </row>
+                                    </field>
+                                    <ico class="color-ff3b30" data-tap="event.target.closest('row').remove()">
+                                        <n class="gg-close"></n>
+                                    </ico>
+                                </row>
+                            </template>
+                        </footer>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Features"></text>
+                        </header>
+                        <column class="align-items-center display-flex gap-10px margin-10px">
+                            <text class="display-flex font-size-16px gap-5px line-height-20px overflow-hidden padding-bottom-5px text-align-left width-100pct">
+                                <ico class="border-2px-solid border-color-ddd border-radius-50pct box-sizing-border-box" data-height="20px" data-width="20px"></ico>
+                                <span class="display-flex flex-1 flex-wrap-wrap" onkeydown="on.key.down.prevent.enter(event)" onkeyup="controller.merch.features(event)" contenteditable="true" placeholder="Enter a new product feature about this item."></span>
+                            </text>
+                        </column>
+                        <template>
+                            <text class="display-flex font-size-16px gap-5px line-height-20px overflow-hidden padding-bottom-5px text-align-left width-100pct">
+                                <ico class="border-2px-solid border-color-ddd border-radius-50pct box-sizing-border-box" data-height="20px" data-width="20px"></ico>
+                                <span class="display-flex flex-1 flex-wrap-wrap" oonkeydown="on.key.down.prevent.enter(event)" onkeyup="controller.merch.features(event)" contenteditable="true"></span>
+                            </text>
+                        </template>
+                    </box>
                 </column>
                 <column class="-dw1320px-width-100pct gap-50px width-320px">
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Pricing"></text>
                         </header>
-                        <flex class="flex-direction-row gap-10px margin-10px" data-columns="2">
+                        <flex class="flex-direction-row gap-10px margin-10px" data-480px-columns="1" data-1320px-columns="2" data-columns="1">
                             <column class="gap-5px">
                                 <header class="font-size-13px">List Price</header>
                                 <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center overflow-hidden">
@@ -181,6 +271,22 @@
                                     <input class="flex-1 font-size-18px height-36px" data-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
                                 </row>
                             </column>
+                        </flex>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Quantity"></text>
+                        </header>
+                        <flex class="flex-direction-row gap-10px margin-10px">
+                            <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center margin-auto overflow-hidden" data-tap="controller.merch.quantity(event.target)">
+                                <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                    <n class="gg-chevron-up"></n>
+                                </ico>
+                                <input class="flex-1 font-size-18px height-36px text-align-center" data-width="120px" min="0" placeholder="0" step="1" type="number">
+                                <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                    <n class="gg-chevron-down"></n>
+                                </ico>
+                            </row>
                         </flex>
                     </box>
                     <box class="width-100pct">

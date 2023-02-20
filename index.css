@@ -197,6 +197,15 @@
         outline: none;
     }
 
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
     [type="text"], [type="password"] {
         background: none;
         border: unset;
@@ -237,7 +246,7 @@
     }
 
     body > aside ~ * {
-        /* position: fixed; */
+        position: fixed;
     }
 
     body > page, body > pages {
