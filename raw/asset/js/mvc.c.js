@@ -1215,12 +1215,48 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     row.tags = tags;
                 }
 
+                var values = {};
+                var details = form.find('[data-after="Details"]').closest('box').find('column').children;
+                if (details.length > 0) {
+                    var d = 0;
+                    do {
+                        var detail = details[d];
+                        var name = detail.all('field')[0].find('input').value;
+                        var value = detail.all('field')[1].find('input').value;
+                        if (name.length > 0 && value.length > 0) {
+                            values[name] = value;
+                        }
+                        d++;
+                    } while (d < details.length);
+                    row.details = values;
+                }
+
+                var features = [];
+                var about = form.find('[data-after="About"]').closest('box').find('column').children;
+                if (about.length > 0) {
+                    var a = 0;
+                    do {
+                        var feature = about[a];
+                        var text = feature.find('span').textContent;
+                        if (text.length > 0) {
+                            features.push(text);
+                        }
+                        a++;
+                    } while (a < about.length);
+                    row.features = features;
+                }
+
                 var ListPrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value;
                 var SalePrice = form.find('[data-after="Pricing"]').closest('box').find('flex').children[1].find('[type="number"]').value;
                 if (ListPrice || SalePrice) {
                     row.pricing = {};
                     ListPrice ? row.pricing.ListPrice = ListPrice : null;
                     SalePrice ? row.pricing.SalePrice = SalePrice : null;
+                }
+
+                var quantity = form.find('[data-after="Quantity"]').closest('box').find('input').value;
+                if (quantity.length > 0 && parseInt(quantity) > 0) {
+                    row.quantity = parseInt(quantity);
                 }
 
                 if (child || cousin) {
