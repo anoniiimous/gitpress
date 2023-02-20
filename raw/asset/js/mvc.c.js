@@ -1122,6 +1122,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (i < thumbnails.length)
             }
 
+            var category = form.find('[data-after="Category"]').closest('box').find('[placeholder="Value"]').textContent;
+
             var title = form.find('[placeholder="Enter a title"]').value;
 
             var description = form.find('[placeholder="Provide a detailed description."]').value;
@@ -1185,6 +1187,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var row = {
                     description,
                     title
+                }
+
+                if (category.length > 0) {
+                    row.category = category;
                 }
 
                 if (images.length > 0) {

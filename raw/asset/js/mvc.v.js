@@ -481,6 +481,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                                 var variant = true;
 
+                                                json.category = res.category ? res.category : json.category ? json.category : null;
                                                 json.description = res.description ? res.description : null;
                                                 json.images = res.images ? res.images : (json.images ? json.images : []);
                                                 json.pricing = res.pricing;
@@ -547,14 +548,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 vp
                                             });
                                             var step2 = vp.all('block card')[1];
-                                            var list = step2.find('dropdown group');
+                                            var list = step2.find('[data-after="Category"]').closest('box').find('dropdown group');
                                             do {
                                                 var node = categories[c];
                                                 var item = step2.find('dropdown template').content.firstElementChild.cloneNode(true);
                                                 item.find('span').dataset.after = node;
                                                 list.insertAdjacentHTML('beforeend', item.outerHTML);
                                                 c++;
-                                            } while (c < categories.length)
+                                            } while (c < categories.length);
+                                            json.category ? vp.find('[data-after="Category"]').closest('box').find('dropdown [placeholder="Value"]').textContent = json.category : null;
                                         }
 
                                         //TITLE

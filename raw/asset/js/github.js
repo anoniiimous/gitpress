@@ -1184,10 +1184,6 @@ window.github.crud.update = async(params,array)=>{
                             tp
                         }) : null;
                     }
-                    if (row.content) {
-                        //console.log(1193, row);
-                        delete row.content;
-                    }
                     return !here;
                     //return !row.path.startsWith(trt.path) && !rout.ed.dir(row.path).has(tp)
                 }
@@ -1199,6 +1195,14 @@ window.github.crud.update = async(params,array)=>{
             t++;
         } while (t < tree.length);
     }
+    tree = tree.filter(row=>{
+        if (row.content) {
+            console.log(1193, row);
+            delete row.content;
+        }
+        return row;
+    }
+    )
     var diff = {
         deleted: rt.filter(function(obj) {
             return !tree.some(function(el) {

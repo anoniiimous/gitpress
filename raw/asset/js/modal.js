@@ -4,7 +4,6 @@ window.modal = {
         ppp.setAttribute('class', 'aside body-aside card');
         ppp.innerHTML = `<section><card class="card">` + h + `</card></section>`;
         ppp.onclick = event=>{
-            //console.log(event);
             event.target.classList.contains('aside') ? event.target.remove() : null
         }
         ;
@@ -204,7 +203,7 @@ window.modal = {
             html.find('[placeholder="Title"]').textContent = settings && settings.title ? settings.title : dropdown.find('[placeholder]').getAttribute('placeholder');
             html.find('card > section').innerHTML = dropdown.children[1].innerHTML;
 
-            if(other === false) {
+            if (other === false) {
                 html.find('form').dataset.display = "none";
             }
 
@@ -278,11 +277,16 @@ window.modal = {
             }
             dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
             modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
+            dom.body.classList.add('overflow-hidden');
         }
         );
     }
     ,
-    exit: target=>target.closest('aside').remove(),
+    exit: target=>{
+        target.closest('aside').remove();
+        dom.body.classList.remove('overflow-hidden');
+    }
+    ,
     popup: (h,ppp=document.createElement('aside'))=>{
         byId('boot').insertAdjacentHTML('afterend', `<aside class="aside body-aside popup"">` + h + `</aside>`);
         modal.zIndex(document.querySelectorAll('aside'));

@@ -1172,6 +1172,12 @@
 }
 
 @media screen {
+    .max-height-100pct {
+        max-height: 100%;
+    }
+}
+
+@media screen {
     .max-width-100pct, [data-max-width="100%"] {
         max-width: 100%;
     }
@@ -2159,7 +2165,24 @@ peel:hover {
     display: none;
 }
 
-.scrollbar-1:hover::-webkit-scrollbar-thumb {
+.scrollbar-2:hover::-webkit-scrollbar-thumb {
+    display: block;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+    opacity: 0.5;
+}
+
+.scrollbar-2::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+}
+
+.scrollbar-2:-webkit-scrollbar-thumb {
+    display: none;
+}
+
+.scrollbar-2:hover::-webkit-scrollbar-thumb {
     display: block;
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);

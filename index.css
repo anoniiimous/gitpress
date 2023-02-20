@@ -242,11 +242,12 @@
         position: fixed;
         width: 100%;
         height: 100%;
+        overflow-x: hidden;
         /* background: white; */
     }
 
     body > aside ~ * {
-        position: fixed;
+        /* position: fixed; */
     }
 
     body > page, body > pages {
