@@ -231,6 +231,7 @@
         border: unset;
         resize: none;
         font-family: Arial;
+        padding: 0;
     }
 
     textarea:focus {

@@ -1594,14 +1594,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             on.key.up.auto.size(event.target)
             if (event.keyCode === 8) {
                 var target = event.target;
-                if (target.textContent === "" && target.closest('column').children.length > 1) {
-                    var input = target.closest('text').previousElementSibling.find('span');
-                    var range = document.createRange();
-                    var sel = window.getSelection();
-                    range.setStart(input.childNodes[0], input.textContent.length);
-                    range.collapse(true);
-                    sel.removeAllRanges();
-                    sel.addRange(range);
+                if (target.value === "" && target.closest('column').children.length > 1) {
+                    var input = target.closest('text').previousElementSibling.find('textarea');
+                    input.selectionStart = input.selectEnd = input.value.length;
                     input.focus();
                     target.closest('text').remove();
                 }
@@ -1610,8 +1605,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var target = event.target;
                 var box = target.closest('box');
                 var template = box.find('template').content.firstElementChild.cloneNode(true);
-                box.find('column').insertAdjacentHTML('beforeend', template.outerHTML);
-                box.find('column').lastElementChild.find('span').focus();
+                target.closest('text').insertAdjacentHTML('afterend', template.outerHTML);
+                var input = target.closest('text').nextElementSibling.find('textarea');
+                var range = document.createRange();
+                var sel = window.getSelection();
+                range.setStart(input, input.value.length);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+                input.focus();
 
             }
         }
