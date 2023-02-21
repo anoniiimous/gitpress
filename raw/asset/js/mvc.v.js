@@ -586,6 +586,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         //DETAILS
                                         var details = vp.find('[data-after="Details"]').closest('box').find('column');
+                                        details.innerHTML = "";
                                         if (json && json.details && Object.keys(json.details).length > 0) {
                                             var d = 0;
                                             do {
@@ -605,10 +606,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 on.key.up.auto.size(value);
                                                 d++;
                                             } while (d < Object.keys(json.details).length);
+                                        } else {
+                                            var template = vp.find('[data-after="Details"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                            details.insertAdjacentHTML('beforeend', template.outerHTML);
                                         }
 
                                         //ABOUT
                                         var about = vp.find('[data-after="About"]').closest('box').find('column');
+                                        about.innerHTML = "";
                                         if (json && json.about && json.about.length > 0) {
                                             var a = 0;
                                             do {

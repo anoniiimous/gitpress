@@ -1221,8 +1221,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var d = 0;
                     do {
                         var detail = details[d];
-                        var name = detail.all('field')[0].find('input').value;
-                        var value = detail.all('field')[1].find('input').value;
+                        var name = detail.all('field')[0].find('textarea').value;
+                        var value = detail.all('field')[1].find('textarea').value;
                         if (name.length > 0 && value.length > 0) {
                             values[name] = value;
                         }
