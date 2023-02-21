@@ -295,7 +295,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     throw "Not Found";
                                                 }
                                             }
-                                            0 < 1 ? console.log(295, {
+                                            0 > 1 ? console.log(295, {
                                                 json
                                             }) : null;
                                         } catch (e) {
@@ -489,7 +489,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 json.pricing = res.pricing;
                                                 json.quantity = res.quantity ? res.quantity : null;
                                                 json.tags = res.tags ? res.tags : null;
-                                                0 < 1 ? console.log(464, {
+                                                0 > 1 ? console.log(464, {
                                                     json
                                                 }) : null;
                                             } catch (e) {
@@ -547,9 +547,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         if (categories.length > 0) {
                                             var c = 0;
                                             var vp = dom.body.find('[data-pages="/dashboard/*/merch/catalog/*/"]');
-                                            console.log({
-                                                vp
-                                            });
                                             var step2 = vp.all('block card')[1];
                                             var list = step2.find('[data-after="Category"]').closest('box').find('dropdown group');
                                             do {
@@ -595,9 +592,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     details.insertAdjacentHTML('beforeend', template.outerHTML);
                                                 }
                                                 var detail = details.children[d];
-                                                console.log({
-                                                    detail
-                                                });
                                                 var name = detail.all('field')[0].find('textarea');
                                                 var value = detail.all('field')[1].find('textarea');
                                                 name.value = Object.keys(json.details)[d];
@@ -609,6 +603,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         } else {
                                             var template = vp.find('[data-after="Details"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
                                             details.insertAdjacentHTML('beforeend', template.outerHTML);
+                                            var detail = details.lastElementChild;
+                                            var name = detail.all('field')[0].find('textarea');
+                                            var value = detail.all('field')[1].find('textarea');
+                                            on.key.up.auto.size(name);
+                                            on.key.up.auto.size(value);
                                         }
 
                                         //ABOUT
@@ -627,8 +626,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         } else {
                                             var template = vp.find('[data-after="About"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
                                             about.insertAdjacentHTML('beforeend', template.outerHTML);
+                                            on.key.up.auto.size(about.lastElementChild.find('textarea'));
                                         }
-                                        console.log(json);
+                                        //console.log(json);
 
                                         //PRICING
                                         vp.find('[data-after="Pricing"]').closest('box').find('flex').children[0].find('[type="number"]').value = "";
