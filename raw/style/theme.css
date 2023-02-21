@@ -1833,6 +1833,14 @@
         width: 1280px;
     }
 
+    [data-width="calc((100% - 50px)/2)"] {
+        width: calc((100% - 50px)/2);
+    }
+
+    [data-width="calc((100% - 70px)/2)"] {
+        width: calc((100% - 70px)/2);
+    }
+
     [data-width="calc(100% - 240px)"] {
         width: calc(100% - 240px);
     }

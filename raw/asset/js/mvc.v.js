@@ -594,8 +594,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     details.insertAdjacentHTML('beforeend', template.outerHTML);
                                                 }
                                                 var detail = details.children[d];
-                                                detail.all('field')[0].find('input').value = Object.keys(json.details)[d];
-                                                detail.all('field')[1].find('input').value = Object.values(json.details)[d];
+                                                console.log({
+                                                    detail
+                                                });
+                                                var name = detail.all('field')[0].find('textarea');
+                                                var value = detail.all('field')[1].find('textarea');
+                                                name.value = Object.keys(json.details)[d];
+                                                value.value = Object.values(json.details)[d];
+                                                on.key.up.auto.size(name);
+                                                on.key.up.auto.size(value);
                                                 d++;
                                             } while (d < Object.keys(json.details).length);
                                         }
