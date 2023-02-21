@@ -685,6 +685,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             } else {
                                 var feed = byId('feed-dashboard-merch');
                                 var vp = dom.body.find('page[data-page="/dashboard/*/merch/"]');
+                                vp.find('block > footer').dataset.display = "none";
                                 //alert("Attempting to fetch files");
                                 github.repos.contents({
                                     owner: user.login,
@@ -709,6 +710,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     var title = row.title;
                                                     var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
                                                     card.find('[placeholder="Title"]').textContent = title;
+                                                    card.find('[placeholder="Title"]').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                                     card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                                     html += card.outerHTML;
                                                 }

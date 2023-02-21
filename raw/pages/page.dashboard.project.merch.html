@@ -37,7 +37,7 @@
                 <row class="justify-content-space-between">
                     <box>
                         <label class="align-items-center display-flex justify-content-center">
-                            <input type="checkbox">
+                            <input onchange="controller.merch.select(event.target)" type="checkbox">
                             <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box margin-15px" data-height="20px" data-width="20px">
                                 <n class="-checked-display-flex display-none gg-check"></n>
                             </ico>
@@ -51,7 +51,14 @@
                             </ico>
                         </row>
                     </box>
-                    <box>
+                    <box data-tap="controller.merch.delete(rout.ed.dir(event.target.closest('text').previousElementSibling.dataset.href).splice(4,5).join('/'))">
+                        <section>
+                            <ico>
+                                <n class="gg-trash"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box data-display="none">
                         <row data-dropdown data-ignore>
                             <ico>
                                 <n class="gg-more-vertical-alt"></n>
@@ -97,5 +104,26 @@
                 </section>
             </box>
         </column>
+        <footer class="bottom-10px left-0 margin-auto right-0 position-fixed width-100pct" data-display="none">
+            <card class="background-color-fff border-radius-50px margin-auto">
+                <row>
+                    <box class="display-none">
+                        <section>
+                            <ico>
+                                <n class="gg-software-download"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box class="line-height-50px">
+                        <row class="align-items-center gap-5px justify-content-center padding-x-20px">
+                            <ico data-height="30px" data-width="20px">
+                                <n class="gg-trash"></n>
+                            </ico>
+                            <text class="font-weight-bolder">Delete</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </footer>
     </block>
 </blocks>

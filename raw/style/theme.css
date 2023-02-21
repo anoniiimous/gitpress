@@ -263,6 +263,10 @@
     .bottom-0 {
         bottom: 0;
     }
+    
+    .bottom-10px {
+        bottom: 10px;
+    }
 
     .top-60px {
         top: 60px;
