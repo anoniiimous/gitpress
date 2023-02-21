@@ -690,12 +690,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     owner: user.login,
                                     path: "/raw/merch/merch.json",
                                     repo: get[1]
-                                }, {}).then(d=>{
-                                    var data = JSON.parse(atob(d.content));
+                                }, {
+                                    accept: "application/vnd.github.raw"
+                                }).then(data=>{
                                     if (data) {
-                                        console.log(84, {
+                                        0 > 1 ? console.log(84, {
                                             data
-                                        });
+                                        }) : null;
                                         feed.innerHTML = "";
                                         if (data.length > 0) {
                                             vp.all('header card')[1].find('box').classList.remove('display-none');

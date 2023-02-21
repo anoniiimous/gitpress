@@ -1466,6 +1466,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         delete: async(slug)=>{
             console.log(slug);
             var dir = rout.ed.dir(slug);
+            console.log(dir);
 
             try {
                 var ancestor = await github.repos.contents({
@@ -1514,44 +1515,46 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
 
             //PUSH
-            var params = {
-                message: "Delete " + slug + " from Merch",
-                repo: GET[1],
-                owner: window.owner.login
-            };
-            var array = [{
-                content: JSON.stringify(merch, null, 4),
-                path: "raw/merch/merch.json"
-            }];
-            var url = '/dashboard/:get/merch/catalog/';
-            if (dir.length > 0) {
-                array.push({
-                    content: JSON.stringify(ancestor, null, 4),
-                    path: "raw/merch/" + dir[0] + "/merch.json"
-                })
-                array.push({
-                    content: null,
-                    path: "raw/merch/" + slug
-                })
-                var url = '/dashboard/:get/merch/catalog/:get/';
-            } else {
-                array.push({
-                    content: null,
-                    path: "raw/merch/" + dir[0]
-                })
+            if (0 < 1) {
+                var params = {
+                    message: "Delete " + slug + " from Merch",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                var array = [{
+                    content: JSON.stringify(merch, null, 4),
+                    path: "raw/merch/merch.json"
+                }];
+                var url = '/dashboard/:get/merch/';
+                if (dir.length > 1) {
+                    array.push({
+                        content: JSON.stringify(ancestor, null, 4),
+                        path: "raw/merch/" + dir[0] + "/merch.json"
+                    })
+                    array.push({
+                        content: null,
+                        path: "raw/merch/" + slug
+                    })
+                    var url = '/dashboard/:get/merch/catalog/:get/';
+                } else {
+                    array.push({
+                        content: null,
+                        path: "raw/merch/" + dir[0]
+                    })
+                }
+                console.log(1168, 'controller.merch.update', "array", {
+                    array,
+                    params
+                }, {
+                    dir,
+                    slug
+                }, {
+                    ancestor,
+                    merch
+                });
+                await github.crud.update(params, array);
+                url.router();
             }
-            console.log(1168, 'controller.merch.update', "array", {
-                array,
-                params
-            }, {
-                dir,
-                slug
-            }, {
-                ancestor,
-                merch
-            });
-            await github.crud.update(params, array);
-            url.router();
         }
         ,
 
