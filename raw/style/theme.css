@@ -943,6 +943,10 @@
     .justify-content-space-between {
         justify-content: space-between;
     }
+
+    .justify-content-flex-end {
+        justify-content: flex-end;
+    }
 }
 
 /*MARGIN*/
@@ -1335,6 +1339,10 @@
 
 /*PADDING*/
 @media screen {
+    .padding-5px {
+        padding: 5px;
+    }
+    
     .padding-10px {
         padding: 10px;
     }
@@ -1831,6 +1839,10 @@
 
     .width-1280px {
         width: 1280px;
+    }
+
+    [data-width="calc((100% - 10px)/2)"] {
+        width: calc((100% - 10px)/2);
     }
 
     [data-width="calc((100% - 50px)/2)"] {

@@ -589,7 +589,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         if (json && json.details && Object.keys(json.details).length > 0) {
                                             var d = 0;
                                             do {
-                                                if (d > 0) {
+                                                if (d >= 0) {
                                                     var template = vp.find('[data-after="Details"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
                                                     details.insertAdjacentHTML('beforeend', template.outerHTML);
                                                 }

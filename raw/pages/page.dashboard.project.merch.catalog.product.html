@@ -186,23 +186,7 @@
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Details"></text>
                         </header>
-                        <column>
-                            <row class="border-bottom-1px-solid border-color-ddd grid-gap-10px padding-10px">
-                                <field class="display-flex" data-width="calc((100% - 50px)/2)">
-                                    <row class="width-100pct">
-                                        <textarea class="flex-1 font-size-16px font-weight-bolder" onkeyup="on.key.up.auto.size(event.target)" placeholder="Name" type="text"></textarea>
-                                    </row>
-                                </field>
-                                <field data-width="calc((100% - 50px)/2)">
-                                    <row class="width-100pct">
-                                        <textarea class="flex-1 font-size-16px height-36px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Value" type="text"></textarea>
-                                    </row>
-                                </field>
-                                <ico data-height="30px" data-tap="event.target.closest('row').innerHTML = event.target.closest('row').innerHTML;" data-width="30px">
-                                    <n class="gg-erase"></n>
-                                </ico>
-                            </row>
-                        </column>
+                        <column></column>
                         <footer class="flex-direction-column grid-gap-5px">
                             <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-tap="controller.merch.details(event.target)">
                                 <ico data-height="20px" data-width="30px">
@@ -211,21 +195,22 @@
                                 <span>Add New Detail</span>
                             </text>
                             <template>
-                                <row class="border-bottom-1px-solid border-color-ddd grid-gap-10px padding-10px">
-                                    <field class="display-flex" data-width="calc((100% - 50px)/2)">
-                                        <row class="width-100pct">
-                                            <textarea class="display-flex flex-1 font-size-16px font-weight-bolder" onkeyup="on.key.up.auto.size(event.target)" placeholder="Name" type="text"></textarea>
-                                        </row>
-                                    </field>
-                                    <field class="display-flex" data-width="calc((100% - 50px)/2)">
-                                        <row class="width-100pct">
-                                            <textarea class="display-flex flex-1 font-size-16px height-36px" placeholder="Value" type="text"></textarea>
-                                        </row>
-                                    </field>
-                                    <ico class="color-ff3b30 width-30px" data-height="30px" data-tap="event.target.closest('row').remove()" data-width="30px">
-                                        <n class="gg-close"></n>
-                                    </ico>
-                                </row>
+                                <column class="border-bottom-1px-solid border-color-ddd gap-10px padding-10px">
+                                    <row class="display-flex gap-10px">
+                                        <field class="display-flex" data-width="calc((100% - 10px)/2)" data-widths="calc((100% - 50px)/2)">
+                                            <textarea class="border-1px-solid border-color-ddd flex-1 border-radius-5px font-size-16px font-weight-bolder overflow-hidden padding-5px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Name" type="text"></textarea>
+                                        </field>
+                                        <field class="display-flex" data-width="calc((100% - 10px)/2)" data-widths="calc((100% - 50px)/2)">
+                                            <textarea class="border-1px-solid border-color-ddd flex-1 border-radius-5px font-size-16px overflow-hidden padding-5px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Value" type="text"></textarea>
+                                        </field>
+                                    </row>
+                                    <row class="color-ff3b30 gap-5px justify-content-flex-end line-height-20px" data-tap="event.target.closest('column').remove()">
+                                        <ico class="color-ff3b30" data-height="20px" data-width="20px">
+                                            <n class="gg-close"></n>
+                                        </ico>
+                                        <span>Delete</span>
+                                    </row>
+                                </column>
                             </template>
                         </footer>
                     </box>
