@@ -31,14 +31,17 @@
             </card>
         </row>
     </header>
-    <block class="flex-grow-1 margin-20px">
+    <block class="-dw480px-margin-10px flex-grow-1 margin-20px">
         <template id="template-feed-dashboard-merch">
-            <card class="background-color-ccc border-radius-10px" data-max-width="calc(100vw - 40px)">
+            <card class="background-color-ccc border-radius-10px width-100pct">
                 <row class="justify-content-space-between">
                     <box>
-                        <ico class="align-items-center display-flex justify-content-center">
-                            <input class="background-color-transparent border-2px-solid border-color-000 border-radius-50pct" data-height="20px" data-width="20px" type="checkbox">
-                        </ico>
+                        <label class="align-items-center display-flex justify-content-center">
+                            <input type="checkbox">
+                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box margin-15px" data-height="20px" data-width="20px">
+                                <n class="-checked-display-flex display-none gg-check"></n>
+                            </ico>
+                        </label>
                     </box>
                     <box data-width="calc(100% - 50px)">
                         <row class="align-items-center">
@@ -78,7 +81,7 @@
                 </row>
             </card>
         </template>
-        <column class="grid-gap-10px" data-columns="1" data-max-width="calc(100vw - 40px)" id="feed-dashboard-merch"></column>
+        <column class="grid-gap-10px" data-columns="1" data-max-widths="calc(100vw - 40px)" id="feed-dashboard-merch"></column>
         <column class="align-items-center empty-state flex-grow-1 justify-content-center">
             <picture class="position-relative width-240px">
                 <img class="width-100pct" src="raw/asset/png/astronaut-shopping.png">

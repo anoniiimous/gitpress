@@ -111,6 +111,10 @@
             background-color: unset;
         }
     }
+
+    :checked + .-checked-background-color-005cc8 {
+        background-color: #005cc8;
+    }
 }
 
 /*BACKDROP FILTER*/
@@ -187,6 +191,10 @@
 
     .border-color-fff {
         border-color: #fff;
+    }
+
+    :checked + .-checked-border-color-005cc8 {
+        border-color: #005cc8;
     }
 }
 
@@ -311,6 +319,14 @@
 
     .color-ff3b30 {
         color: #ff3b30;
+    }
+
+    :checked + .-checked-color-005cc8 {
+        color: #005cc8;
+    }
+
+    :checked + .-checked-color-fff {
+        color: #fff;
     }
 }
 
@@ -493,6 +509,10 @@
 
     [data-display="none"], .display-none {
         display: none;
+    }
+
+    :checked + .-checked-display-flex, :checked + * .-checked-display-flex {
+        display: flex;
     }
 
     @media (max-width: 1024px) {
@@ -957,6 +977,10 @@
 
     .margin-10px {
         margin: 10px;
+    }
+
+    .margin-15px {
+        margin: 15px;
     }
 
     .margin-20px {
