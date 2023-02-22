@@ -2317,6 +2317,130 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         create: async(event)=>{
             event.preventDefault();
+
+            var form = event.target;
+
+            var image = form.find('[type="file"]').closest("card").firstElementChild.find('img') ? form.find('[type="file"]').closest("card").firstElementChild.find('img').src : null;
+            var title = form.find('[data-after="Title"]').closest('box').find('textarea').value;
+            var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+            var description = form.find('[data-after="Description"]').closest('box').find('textarea').value.length > 0 ? form.find('[data-after="Description"]').closest('box').find('textarea').value : null;
+            var body = form.find('wysiwyg').innerHTML.length > 0 ? form.find('wysiwyg').innerHTML : "";
+
+            console.log({
+                title,
+                category,
+                slug,
+                image,
+                body
+            });
+
+            if (body && description && image && title) {
+
+                var row = {
+                    description,
+                    image: image.startsWith("data:") ? "/raw/posts/" + slug + "/image.jpeg" : image,
+                    slug,
+                    title
+                }
+
+                var category = form.find('[data-after="Category"]').closest('box').find('dropdown [placeholder]').textContent.length > 0 ? form.find('[data-after="Category"]').closest('box').find('dropdown [placeholder]').textContent : null;
+                category ? row.category = category : null;
+
+                var tags = null;
+                var keywords = form.find('[data-after="Tags"]').closest('box').children[1].all('text');
+                if (keywords.length > 0) {
+                    tags = [];
+                    var t = 0;
+                    do {
+                        var keyword = keywords[t];
+                        tags[t] = keyword.find('span').textContent;
+                        t++;
+                    } while (t < keywords.length);
+                    row.tags = tags;
+                }
+
+                console.log(1961, row);
+
+                //POST
+                try {
+                    var data = await github.repos.contents({
+                        owner: owner.login,
+                        repo: GET[1],
+                        path: "/raw/posts/posts.json"
+                    });
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str1 = JSON.stringify(rows, null, 4);
+
+                var str = await ajax('raw/asset/html/template/template.post.html');
+                var doc = new DOMParser().parseFromString(str, 'text/html');
+                var html = doc.documentElement;
+                html.find('head title').textContent = row.title;
+                row.category ? html.find('head meta[name="category"]').setAttribute("content", row.category) : null;
+                html.find('head meta[name="description"]').setAttribute("content", row.description);
+                row.tags ? html.find('head meta[name="keywords"]').setAttribute("content", row.tags.join(', ')) : html.find('head meta[name="keywords"]').remove();
+                html.find('body article').innerHTML = body;
+
+                //PUSH
+                var params = {
+                    message: "Add " + name + " to Merch",
+                    repo: GET[1],
+                    owner: owner.login
+                };
+                var array = [{
+                    content: str1,
+                    path: "raw/posts/posts.json"
+                }, {
+                    content: image.split(';base64,')[1],
+                    path: "raw/posts/" + slug + "/image." + image.split(';base64,')[0].split('/')[1],
+                    type: "base64"
+                }, {
+                    content: html.outerHTML,
+                    path: "raw/posts/" + slug + "/index.html"
+                }, {
+                    content: JSON.stringify(row, null, 4),
+                    path: "raw/posts/" + slug + "/index.json"
+                }];
+                console.log(2452, 'controller.merch.update', "array", {
+                    array
+                });
+                try {
+                    await github.crud.update(params, array);
+                    //("/dashboard/:get/posts/").router()
+                } catch (e) {
+                    modal.alert({
+                        body: "There was an error creating this product.",
+                        submit: "OK",
+                        title: "Catalog Error"
+                    })
+                }
+
+            }
+        }
+        ,
+
+        creator: async(event)=>{
+            event.preventDefault();
             var form = event.target;
             var value = form.find('[type="text"]').value;
             //alert(value);
@@ -2639,7 +2763,21 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             );
 
-        },
+        }
+        ,
+
+        image: async(event)=>{
+            var reader = await on.change.file(event);
+            var card = event.target.closest('card');
+            var img = document.createElement('img');
+            img.className = "height-100pct object-fit-cover position-absolute width-100pct";
+            img.src = reader.result;
+            card.firstElementChild.innerHTML = img.outerHTML;
+            console.log({
+                reader
+            });
+        }
+        ,
 
         select: async(target)=>{
             var column = target.closest('column')

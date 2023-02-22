@@ -815,10 +815,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] == "posts") {
                             if (get[3] === "post") {
                                 var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*/"]');
-                                                            
+
+                                var image = vp.find('block > header card').firstElementChild;
                                 var title = vp.find('[data-after="Title"]').closest('box').find('textarea');
                                 var description = vp.find('[data-after="Description"]').closest('box').find('textarea');
                                 var article = vp.find('wysiwyg[contenteditable]');
+                                var category = vp.find('[data-after="Category"]').closest('box').find('dropdown [placeholder]');
 
                                 title.value = "";
                                 description.value = "";
@@ -835,7 +837,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             repo: get[1]
                                         }, {
                                             accept: "application/vnd.github.raw"
-                                        }).then(data=>{
+                                        }).then(async(data)=>{
                                             //var data = atob(d.content);
                                             if (data) {
                                                 const doc = new DOMParser().parseFromString(data, "text/html");
@@ -845,6 +847,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     vp
                                                 });
 
+                                                try {
+                                                    var res = await github.raw.blob({
+                                                        owner: window.owner.login,
+                                                        repo: get[1],
+                                                        resource: "/raw/posts/" + get[4] + "/image.jpeg"
+                                                    })
+                                                    var img = document.createElement('img');
+                                                    img.className = "height-100pct object-fit-cover position-absolute width-100pct";
+                                                    img.src = res;
+                                                    image.innerHTML = img.outerHTML;
+                                                } catch (e) {
+                                                    console.log(e);
+                                                }
+
                                                 title.value = doc.head.find("title").textContent;
                                                 on.key.up.auto.size(title);
 
@@ -853,9 +869,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                                 article.innerHTML = doc.body.all('article')[doc.body.all('article').length - 1].innerHTML;
 
-                                                //vp.find('card textarea').value = doc.body.find('article').textContent;
-                                                //const gist = doc.head.find('meta[name="gist"]').content;
-                                                //gist ? vp.find('form > footer').all('button')[0].dataset.gist = gist : null;                                                
+                                                doc.head.find("meta[name='category']") ? category.textContent = doc.head.find("meta[name='category']").content : null;
+
+                                                var keywords = doc.head.find("meta[name='keywords']");
+                                                if (keywords) {
+                                                    var t = 0;
+                                                    var tags = keywords.content.split(', ');
+                                                    do {
+                                                        var keyword = tags[t];
+                                                        var template = vp.find('[data-after="Tags"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                        template.find('span').textContent = keyword;
+                                                        vp.find('[data-after="Tags"]').closest('box').children[1].lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                        t++;
+                                                    } while (t < tags.length)
+                                                }                                               
                                             }
                                         }
                                         ).catch(async(error)=>{

@@ -263,7 +263,7 @@
     .bottom-0 {
         bottom: 0;
     }
-    
+
     .bottom-10px {
         bottom: 10px;
     }
@@ -416,7 +416,7 @@
         [data-960px-columns="6"] {
             grid-template-columns: repeat(6, minmax(0, 1fr));
         }
-        
+
         [data-960px-columns="2"] {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -448,7 +448,7 @@
         [data-640px-columns="4"] {
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
-        
+
         [data-640px-columns="3"] {
             grid-template-columns: repeat(3, minmax(0, 1fr));
         }
@@ -472,7 +472,7 @@
         [data-480px-columns="4"] {
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
-        
+
         [data-480px-columns="1"] {
             grid-template-columns: repeat(1, minmax(0, 1fr));
         }
@@ -523,7 +523,7 @@
         .-dw1024px-display-flex, [data-1024px-display="flex"] {
             display: flex;
         }
-        
+
         .-dw1024px-display-none, [data-1024px-display="none"] {
             display: none;
         }
@@ -549,6 +549,28 @@
         .-mobile-display-none, [data-480px-display="none"] {
             display: none;
         }
+    }
+}
+
+@media screen {
+    .empty:empty {
+        display: none;
+    }
+
+    :not(:empty) + .empty-state, :not(:empty) + .empty-state-adjacent {
+        display: none;
+    }
+
+    :not(:empty):first-child ~ .empty-state-subsequent {
+        display: none;
+    }
+
+    :empty + .full-state, :empty + .full-state-adjacent {
+        display: none;
+    }
+
+    :empty:first-child ~ .full-state-subsequent {
+        display: none;
     }
 }
 
@@ -761,7 +783,7 @@
         .-dw960px-gap-20px {
             gap: 20px;
         }
-        
+
         .-dw960px-gap-50px {
             gap: 50px;
         }
@@ -929,7 +951,7 @@
         .-dw960px-height-0 {
             height: 0;
         }
-        
+
         .-dw960px-height-auto {
             height: auto;
         }
@@ -948,7 +970,7 @@
     .line-height-20px {
         line-height: 20px;
     }
-    
+
     .line-height-24px {
         line-height: 24px;
     }
@@ -1378,7 +1400,7 @@
     .padding-5px {
         padding: 5px;
     }
-    
+
     .padding-10px {
         padding: 10px;
     }
@@ -1493,7 +1515,7 @@
         .-dw1024px-padding-0 {
             padding: 0;
         }
-        
+
         .-dw1024px-padding-top-100pct {
             padding-top: 100%;
         }
@@ -1503,7 +1525,7 @@
         .-dw960px-padding-top-50pct {
             padding-top: 50%;
         }
-        
+
         .-dw960px-padding-top-56pt25pct {
             padding-top: 56.25%;
         }
@@ -2145,7 +2167,7 @@
         .-tablet-width-100pct, [data-tablet-width="100%"] {
             width: 100%;
         }
-        
+
         [data-768px-width="480px"] {
             width: 480px;
         }

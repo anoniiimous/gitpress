@@ -1,7 +1,4 @@
-<form class="width-100pct" id="form-dashboard-post" onsubmit="
-    controller.posts.update(event);
-    //on.submit.dashboard.post(event)
-">
+<form class="width-100pct" id="form-dashboard-post" onsubmit="controller.posts.create(event);">
     <header class="-dw480px-padding-10px max-width-100pct padding-20px">
         <row class="justify-content-space-between">
             <card>
@@ -45,10 +42,13 @@
                                 <n class="gg-image"></n>
                             </ico>
                             <text>Upload Image</text>
-                            <input accept="image/jpeg" type="file">
+                            <input accept="image/jpeg" onchange="controller.posts.image(event)" type="file">
                         </label>
                     </box>
                 </flex>
+                <ico class="background-color-ff3b30 border-radius-50pct color-fff full-state-subsequent position-absolute margin-10px right-0 top-0" data-height="30px" data-tap="event.target.closest('card').firstElementChild.innerHTML = ''" data-width="30px">
+                    <n class="gg-close"></n>
+                </ico>
             </card>
         </header>
         <flex class="-dw480px-gap-10px -dw1320px-flex-direction-column flex-direction-row gap-20px max-width-100pct" data-width="1280px">
@@ -156,9 +156,9 @@
                     <box class="width-100pct">
                         <flex class="gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
                             <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.merch.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
-                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
+                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center">
                                 <text>Post It</text>
-                                <input id="submit-dashboard-media-photo" type="submit">
+                                <input id="submit-dashboard-posts-post" type="submit">
                             </label>
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Preview</text>
                             <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>

@@ -267,24 +267,4 @@
     [data-hide]:not([data-active="true"]), [data-page]:not([data-active="true"]):not(.-active), [data-pages]:not([data-active="true"]):not(.-active) {
         display: none;
     }
-
-    .empty:empty {
-        display: none;
-    }
-
-    :not(:empty) + .empty-state, :not(:empty) + .empty-state-adjacent {
-        display: none;
-    }
-
-    :not(:empty):first-child ~ .empty-state-subsequent {
-        display: none;
-    }
-
-    :empty + .full-state, :empty + .full-state-adjacent {
-        display: none;
-    }
-
-    :empty:first ~ .full-state-subsequent {
-        display: none;
-    }
 }
