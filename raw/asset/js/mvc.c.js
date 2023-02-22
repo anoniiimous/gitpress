@@ -2601,9 +2601,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }).then(data=>{
                 //var data = JSON.parse(atob(d.content));
                 if (data) {
-                    console.log(84, {
+                    0 > 1 ? console.log(84, {
                         data
-                    });
+                    }) : null;
                     feed.innerHTML = "";
                     if (data.length > 0) {
                         //vp.all('card')[1].find('box').classList.remove('display-none');

@@ -821,10 +821,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var description = vp.find('[data-after="Description"]').closest('box').find('textarea');
                                 var article = vp.find('wysiwyg[contenteditable]');
                                 var category = vp.find('[data-after="Category"]').closest('box').find('dropdown [placeholder]');
+                                var tags = vp.find('[data-after="Tags"]').closest('box');
 
+                                image.innerHTML = "";
                                 title.value = "";
                                 description.value = "";
                                 article.innerHTML = "";
+                                category.textContent = "";
+                                $(tags.children[1].all('text')).remove();
 
                                 if (get.length > 4) {
                                     const user = await github.user.get();
@@ -841,11 +845,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             //var data = atob(d.content);
                                             if (data) {
                                                 const doc = new DOMParser().parseFromString(data, "text/html");
-                                                console.log(89, {
-                                                    data,
-                                                    doc,
-                                                    vp
-                                                });
 
                                                 try {
                                                     var res = await github.raw.blob({
@@ -858,7 +857,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     img.src = res;
                                                     image.innerHTML = img.outerHTML;
                                                 } catch (e) {
-                                                    console.log(e);
+                                                    console.log(862, e);
                                                 }
 
                                                 title.value = doc.head.find("title").textContent;
@@ -874,15 +873,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var keywords = doc.head.find("meta[name='keywords']");
                                                 if (keywords) {
                                                     var t = 0;
-                                                    var tags = keywords.content.split(', ');
+                                                    var hashtags = keywords.content.split(', ');
                                                     do {
-                                                        var keyword = tags[t];
-                                                        var template = vp.find('[data-after="Tags"]').closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                        var keyword = hashtags[t];
+                                                        var template = tags.find('template').content.firstElementChild.cloneNode(true);
                                                         template.find('span').textContent = keyword;
-                                                        vp.find('[data-after="Tags"]').closest('box').children[1].lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                        tags.children[1].lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
                                                         t++;
-                                                    } while (t < tags.length)
-                                                }                                               
+                                                    } while (t < hashtags.length)
+                                                }
                                             }
                                         }
                                         ).catch(async(error)=>{

@@ -90,13 +90,31 @@ window.github = {
     },
     raw: {
         blob: async(params)=>{
-            return await fetch("https://api.github.com/repos/" + params.owner + "/" + params.repo + "/contents" + params.resource, {
-                headers: {
-                    Accept: "application/vnd.github.raw",
-                    Authorization: "token " + localStorage.githubAccessToken
+            return new Promise((resolve,reject)=>{
+                fetch("https://api.github.com/repos/" + params.owner + "/" + params.repo + "/contents" + params.resource, {
+                    headers: {
+                        Accept: "application/vnd.github.raw",
+                        Authorization: "token " + localStorage.githubAccessToken
+                    }
+                }).then(async(response)=>{
+                    if (response.status === 404) {
+                        var res = await response.json();
+                        var json = {
+                            json: res,
+                            error: new Error(response.status)
+                        }
+                        throw json;
+                    } else {
+                        return response.blob()
+                    }
                 }
-            }).then((response)=>response.blob()).then((blob)=>{
-                return URL.createObjectURL(blob);
+                ).then((blob)=>{
+                    resolve(URL.createObjectURL(blob));
+                }
+                ).catch((e)=>{
+                    reject(e.json)
+                }
+                );
             }
             );
         }
