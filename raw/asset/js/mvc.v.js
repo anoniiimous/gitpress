@@ -815,9 +815,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] == "posts") {
                             if (get[3] === "post") {
                                 var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*/"]');
-                                var title = vp.find('[placeholder="Title"]');
-                                var description = vp.find('[placeholder="Description"]');
-                                var article = vp.find('box [contenteditable]');
+                                                            
+                                var title = vp.find('[data-after="Title"]').closest('box').find('textarea');
+                                var description = vp.find('[data-after="Description"]').closest('box').find('textarea');
+                                var article = vp.find('wysiwyg[contenteditable]');
 
                                 title.value = "";
                                 description.value = "";
@@ -873,12 +874,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 resolve(route);
                             } else {
                                 const user = await github.user.get();
-                                var params = {
-                                    owner: user.login,
-                                    path: "/raw/posts",
-                                    repo: get[1]
-                                };
-                                var settings = {};
                                 controller.posts.read(get[1]);
                             }
                         } else if (get[2] === "setup") {
