@@ -51,32 +51,8 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Description"></text>
                         </header>
                         <column class="gap-0px">
-                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                            <textarea class="flex-unset font-size-16px height-20px line-height-20px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
                         </column>
-                    </box>
-                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
-                        <header class="background-color-ccc">
-                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
-                        </header>
-                        <flex class="flex-wrap-wrap gap-10px padding-10px">
-                            <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
-                                    <n class="gg-hashtag"></n>
-                                </ico>
-                                <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
-                            </row>
-                        </flex>
-                        <template>
-                            <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
-                                    <n class="gg-hashtag"></n>
-                                </ico>
-                                <span></span>
-                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
-                                    <n class="gg-close"></n>
-                                </ico>
-                            </text>
-                        </template>
                     </box>
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc display-flex justify-content-space-between">
@@ -106,6 +82,30 @@
                         <column>
                             <wysiwyg class="min-height-360px padding-20px" contenteditable="true"></wysiwyg>
                         </column>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
+                        </header>
+                        <flex class="flex-wrap-wrap gap-10px padding-10px">
+                            <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-hashtag"></n>
+                                </ico>
+                                <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
+                            </row>
+                        </flex>
+                        <template>
+                            <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-hashtag"></n>
+                                </ico>
+                                <span></span>
+                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
+                                    <n class="gg-close"></n>
+                                </ico>
+                            </text>
+                        </template>
                     </box>
                     <box class="line-height-50px margin-left-auto">
                         <row class="gap-10px">
