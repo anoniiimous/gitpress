@@ -1,62 +1,62 @@
-<header class="-dw480px-padding-10px max-width-100pct padding-20px position-relative z-index-5">
-    <row class="justify-content-space-between">
-        <card>
-            <row class="gap-10px">
-                <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
-                    <section>
-                        <ico data-height="30px" data-width="30px">
-                            <n class="gg-menu"></n>
-                        </ico>
-                    </section>
-                </box>
-                <box>
-                    <section>
-                        <text class="font-size-24px font-weight-bolder">Media</text>
-                    </section>
-                </box>
-            </row>
-        </card>
-        <card>
-            <row class="gap-20px">
-                <box class="display-none line-height-30px">
-                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
-                        <ico data-height="30px" data-width="30px">
-                            <n class="gg-cloud"></n>
-                        </ico>
-                        <text class="font-size-14px font-weight-bolder">Add Content</text>
-                    </row>
-                    <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
-                        <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-music"></n>
-                            </ico>
-                            <text">Audio</text>
-                        </row>
-                        <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-image"></n>
-                            </ico>
-                            <text>Photo</text>
-                        </row>
-                        <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/video/">
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-film"></n>
-                            </ico>
-                            <text>Video</text>
-                        </row>
-                        <label class="align-items-center display-flex flex-direction-row gap-5px" for="file-dashboard-media">
-                            <ico data-height="30px" data-width="30px">
-                                <n class="gg-file"></n>
-                            </ico>
-                            <text>Upload</text>
-                        </label>
-                    </column>
-                </box>
-            </row>
-        </card>
-    </row>
-</header>
 <blocks class="display-flex flex-direction-column position-absolute z-index-1">
+    <header class="-dw480px-padding-10px max-width-100pct padding-20px position-relative z-index-5">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Media</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row class="gap-20px">
+                    <box class="display-none line-height-30px">
+                        <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-cloud"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">Add Content</text>
+                        </row>
+                        <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                            <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-music"></n>
+                                </ico>
+                                <text>Audio</text>
+                            </row>
+                            <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-image"></n>
+                                </ico>
+                                <text>Photo</text>
+                            </row>
+                            <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/video/">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-film"></n>
+                                </ico>
+                                <text>Video</text>
+                            </row>
+                            <label class="align-items-center display-flex flex-direction-row gap-5px" for="file-dashboard-media">
+                                <ico data-height="30px" data-width="30px">
+                                    <n class="gg-file"></n>
+                                </ico>
+                                <text>Upload</text>
+                            </label>
+                        </column>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
     <block class="-dw480px-margin-10px flex-grow-1 margin-20px">
         <template id="template-feed-dashboard-media">
             <card class="background-color-ccc border-radius-10px">
@@ -69,7 +69,7 @@
                             </ico>
                         </label>
                     </box>
-                    <box class="flex-1" data-width="calc(100% - 100px)">
+                    <box class="flex-1" data-width="calc(100%-100px)">
                         <row class="align-items-center">
                             <ico data-height="30px" data-width="30px">
                                 <n></n>
