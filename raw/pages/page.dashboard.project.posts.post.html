@@ -35,95 +35,84 @@
         </row>
     </header>
     <block>
-        <column>
-            <card class="margin-bottom-20px margin-x-20px padding-top-56pt25pc">
-                <picture class="background-color-ffff"></picture>
-                <column class="bottom-0 gap-10px position-relative width-100pct">
-                    <textarea class="font-size-32px font-weight-bolder padding-20px" onkeyup="on.key.up.auto.size(event.target)" maxlength="300" placeholder="Title" rows="1"></textarea>
-                    <textarea class="font-size-16px padding-20px" onkeyup="on.key.up.auto.size(event.target)" maxlength="300" placeholder="Description" rows="1"></textarea>
-                </column>
-            </card>
-            <card class="background-color-fff margin-x-20px">
-                <header class="background-color-f0 display-flex flex-direction-row justify-content-space-between">
-                    <box class="display-none">
-                        <ico>
-                            <n class="gg-format-bold"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-format-italic"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-format-underline"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-format-text"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-format-left"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-format-center"></n>
-                        </ico>
-                        <ico>
-                            <n class="--ggs-1pt5 gg-layout-list"></n>
-                        </ico>
-                        <ico>
-                            <n class="gg-link"></n>
-                        </ico>
+        <column class="-dw480px-gap-10px gap-20px">
+            <card class="-dw480px-margin-10px flex-1 margin-20px">
+                <column class="-dw480px-gap-10px gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Title</text>
+                        </header>
+                        <column class="gap-0px">
+                            <input class="font-size-18px height-36px line-height-36px margin-10px" type="text" placeholder="Enter a title">
+                        </column>
                     </box>
-                    <box>
-                        <row>
-                            <ico>
-                                <img class="width-18px" src="raw/asset/svg/more-text.svg">
-                            </ico>
-                            <ico>
-                                <img class="width-18px" src="raw/asset/svg/more-paragraph.svg">
-                            </ico>
-                            <ico>
-                                <img class="width-18px" src="raw/asset/svg/more-rich.svg">
-                            </ico>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
+                        </header>
+                        <column class="gap-0px">
+                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                        </column>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
+                        </header>
+                        <flex class="flex-wrap-wrap gap-10px padding-10px">
+                            <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-hashtag"></n>
+                                </ico>
+                                <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
+                            </row>
+                        </flex>
+                        <template>
+                            <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-hashtag"></n>
+                                </ico>
+                                <span></span>
+                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
+                                    <n class="gg-close"></n>
+                                </ico>
+                            </text>
+                        </template>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <row>
+                                <ico>
+                                    <img class="width-18px" src="raw/asset/svg/more-text.svg">
+                                </ico>
+                                <ico>
+                                    <img class="width-18px" src="raw/asset/svg/more-paragraph.svg">
+                                </ico>
+                                <ico>
+                                    <img class="width-18px" src="raw/asset/svg/more-rich.svg">
+                                </ico>
+                                <ico>
+                                    <n class="gg-undo"></n>
+                                </ico>
+                                <ico>
+                                    <n class="gg-redo"></n>
+                                </ico>
+                                <ico>
+                                    <n class="gg-more-vertical-alt"></n>
+                                </ico>
+                            </row>
+                        </header>
+                        <column>
+                            <textarea class="min-height-360px padding-20px" contenteditable="true"></textarea>
+                        </column>
+                    </box>
+                    <box class="line-height-50px margin-left-auto">
+                        <row class="gap-10px">
+                            <button class="border-1px-solid border-radius-0px color-000 font-size-14px font-weight-bolder padding-x-20px" name="draft" type="submit">Save Draft</button>
+                            <button class="background-color-333 border-radius-0px color-fff font-size-14px font-weight-bolder line-height-50px padding-x-20px" name="publish" type="submit">Publish</button>
                         </row>
                     </box>
-                    <box>
-                        <row>
-                            <ico>
-                                <n class="gg-undo"></n>
-                            </ico>
-                            <ico>
-                                <n class="gg-redo"></n>
-                            </ico>
-                            <ico>
-                                <n class="gg-more-vertical-alt"></n>
-                            </ico>
-                        </row>
-                    </box>
-                </header>
-                <column>
-                    <box class="min-height-360px padding-20px">
-                        <section contenteditable="true"></section>
-                    </box>
                 </column>
-                <footer></footer>
             </card>
         </column>
     </block>
-    <footer>
-        <row class="justify-content-space-between">
-            <card></card>
-            <card class="margin-20px">
-                <row>
-                    <box class="border-1px-solid color-000 line-height-50px margin-right-20px padding-x-20px">
-                        <section>
-                            <button class="font-size-14px font-weight-bolder" name="draft" type="submit">Save Draft</button>
-                        </section>
-                    </box>
-                    <box class="background-color-333 color-fff line-height-50px padding-x-20px">
-                        <section>
-                            <button class="color-fff font-size-14px font-weight-bolder" name="publish" type="submit">Publish</button>
-                        </section>
-                    </box>
-                </row>
-            </card>
-        </row>
-    </footer>
 </form>
