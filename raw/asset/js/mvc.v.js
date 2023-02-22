@@ -232,15 +232,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var slug = row.slug;
                                                 var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
                                                 if (format === "audio") {
-                                                    card.find('n').classList.add('gg-music');
+                                                    card.find('box row n').classList.add('gg-music');
                                                 } else if (format === "photo") {
-                                                    card.find('n').classList.add('gg-image');
+                                                    card.find('box row n').classList.add('gg-image');
                                                 } else if (format === "video") {
-                                                    card.find('n').classList.add('gg-film');
+                                                    card.find('box row n').classList.add('gg-film');
                                                 } else {
-                                                    card.find('n').classList.add('gg-file');
+                                                    card.find('box row n').classList.add('gg-file');
                                                 }
                                                 card.find('[placeholder="Title"]').textContent = title;
+                                                card.find('[placeholder="Title"]').dataset.href = "/dashboard/:get/media/" + format + "/" + slug + "/";
                                                 var src = 0 > 1 ? github.raw.blob({
                                                     owner: user.login,
                                                     repo: get[1],

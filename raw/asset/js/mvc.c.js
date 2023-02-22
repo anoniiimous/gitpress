@@ -929,7 +929,26 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
         }
         ,
-
+            
+        select: async(target)=>{
+            var column = target.closest('column')
+            var row = target.closest('card');
+            var selected = column.all(':checked');
+            var footer = column.parentNode.lastElementChild;
+            if (selected.length > 0) {
+                footer.dataset.display = "flex";
+            } else {
+                footer.dataset.display = "none";
+            }
+            console.log({
+                column,
+                footer,
+                row,
+                selected
+            });
+        }
+        ,
+            
         tags: event=>{
             var target = event.target;
 
