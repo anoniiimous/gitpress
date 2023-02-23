@@ -48,7 +48,7 @@
                             <text class="display-block flex-1 font-size-16px font-weight-bolder line-height-50px overflow-hidden text-overflow-ellipsis white-space-nowrap" disabled placeholder="Title" type="text"></text>
                         </row>
                     </box>
-                    <box data-tap="controller.pages.delete(rout.ed.dir(event.target.closest('text').previousElementSibling.dataset.href).splice(4,5).join('/'))">
+                    <box data-tap="controller.posts.delete([rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href).splice(4,5).join('/')])">
                         <row>
                             <ico>
                                 <n class="gg-trash"></n>

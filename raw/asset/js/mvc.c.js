@@ -2420,7 +2420,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
                 try {
                     await github.crud.update(params, array);
-                    //("/dashboard/:get/posts/").router()
+                    ("/dashboard/:get/posts/").router()
                 } catch (e) {
                     modal.alert({
                         body: "There was an error creating this product.",
@@ -2506,7 +2506,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     params
                 });
                 await github.crud.update(params, array);
-                //('/dashboard/:get/posts/').router();
+                ('/dashboard/:get/posts/').router();
             }
         }
         ,
