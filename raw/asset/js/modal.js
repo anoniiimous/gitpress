@@ -131,6 +131,7 @@ window.modal = {
         ;
         byId('boot').insertAdjacentHTML('afterend', ppp.outerHTML);
         modal.zIndex(document.querySelectorAll('aside'));
+        dom.body.classList.add('overflow-hidden');
         //dom.body.onclick = () => on.touch.tap(event,'tap');
         return new Promise((resolve,reject)=>resolve(byId('boot').nextElementSibling));
     }

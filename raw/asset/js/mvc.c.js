@@ -2895,7 +2895,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         icon: data=>{
 
             //var files = event.target.files
-            ImageTracer.imageToSVG(data, (svgstr)=>{
+            ImageTracer.imageToSVG(data.result, (svgstr)=>{
+                //console.log(svgstr);
                 byId('new-app-icon').find('foreignObject').innerHTML = svgstr;
                 var svg = byId('new-app-icon').find('foreignObject').firstElementChild;
                 svg.classList.add('height-100pct');

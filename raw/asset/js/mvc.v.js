@@ -994,8 +994,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (description && icons && name) {
                                     dom.body.find('main nav').find('[placeholder="Project Name"]').textContent = name;
                                 } else {
-                                    const html = await ajax('/raw/html/template/template.setup.html');
-                                    var ppp = 0 < 1 ? await modal.page(html) : dom.body.find('[data-fetch="raw/html/template/template.setup.html"]')
+                                    const html = await ajax('/raw/asset/html/template/template.setup.html');
+                                    var ppp = 0 < 1 ? await modal.page(html) : dom.body.find('[data-fetch="raw/asset/html/template/template.setup.html"]')
                                     var form = ppp.find('form');
 
                                     //GET index.html
