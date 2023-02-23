@@ -2197,12 +2197,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 footer.dataset.display = "none";
             }
-            console.log({
-                column,
-                footer,
-                row,
-                selected
-            });
         }
 
     },
@@ -2439,84 +2433,85 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        creator: async(event)=>{
-            event.preventDefault();
-            var form = event.target;
-            var value = form.find('[type="text"]').value;
-            //alert(value);
+        delete: async(slugs)=>{
+            //console.log(2443, slugs);
 
-            if (0 < 1 && value.length > 0) {
-
-                const user = await github.user.get();
-                const fix = value.toLowerCase();
-                const filename = "page." + fix.split(' ').join('-') + ".html";
-
-                const message = "Add " + value + " to Posts";
-                const content = "";
-
-                var rte = rout.ed.dir(route.path);
-                rte.splice(0, 4);
-
-                event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
-                event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
-
-                var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
-                var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
-                var row = {
-                    slug: value.replaceAll(' ', '-').replaceAll(/[\u0250-\ue007]/g, '').replaceAll(/\W/g, "").toLowerCase(),
-                    title: value
-                };
-                var sha = null;
-
-                try {
-                    var data = await github.repos.contents({
-                        owner: user.login,
-                        repo: GET[1],
-                        path: "/raw/posts/posts.json"
-                    });
-                    var sha = data.sha;
-                    var j = JSON.parse(atob(data.content));
-                    var json = JSON.parse(atob(data.content));
-                    json.push(row);
-                } catch (e) {
-                    var j = [];
-                    var json = [row];
-                }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
-                var str = JSON.stringify(rows, null, 4);
-
-                inc ? alert("This item already exists.") : github.repos.contents({
-                    owner: user.login,
+            try {
+                var res = await github.repos.contents({
+                    owner: owner.login,
                     repo: GET[1],
                     path: "/raw/posts/posts.json"
                 }, {
-                    data: JSON.stringify({
-                        content: btoa(unescape(encodeURIComponent(str))),
-                        message,
-                        sha
-                    }),
-                    dataType: "PUT"
-                }).then(()=>{
-                    "/dashboard/:get/posts/".router()
-                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (res.length > 0) {
+                    var posts = res.filter(function(obj) {
+                        //console.log('posts', slugs, obj.slug, !slugs.includes(obj.slug));
+                        return !slugs.includes(obj.slug);
+                    });
+                    var deleted = res.filter(function(obj) {
+                        //console.log('deleted', slugs, obj.slug, slugs.includes(obj.slug));
+                        return slugs.includes(obj.slug);
+                    })
                 }
-                ).catch(e=>{
-                    console.log(e);
-                    0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
-                        body: "There was an error creating this page.",
-                        submit: "OK",
-                        title: "Error"
-                    })) : null;
-                }
-                );
+            } catch (e) {
+                console.log("error", {
+                    e
+                })
+            }
 
+            var titles = "";
+            if (slugs.length > 1) {
+                titles = slugs.length + " products";
+            } else {
+                titles = '"' + deleted[0].title + '"';
+            }
+
+            console.log(2475, {
+                slugs,
+                titles,
+                deleted,
+                posts,
+                res
+            });
+
+            //PUSH
+            if (0 < 1) {
+                var params = {
+                    message: "Delete " + titles + " from Posts",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                var array = [{
+                    content: JSON.stringify(posts, null, 4),
+                    path: "raw/posts/posts.json"
+                }];
+                //array = [];
+                if (deleted.length > 0) {
+                    var d = 0;
+                    do {
+                        var removed = deleted[d];
+                        var id = removed.slug;
+                        var arr = {
+                            content: null,
+                            path: "raw/posts/" + removed.slug
+                        };
+                        array.push(arr);
+                        d++;
+                    } while (d < deleted.length);
+                }
+                console.log(1168, 'controller.posts.delete', "array", {
+                    array,
+                    params
+                });
+                await github.crud.update(params, array);
+                //('/dashboard/:get/posts/').router();
             }
         }
         ,
 
-        delete: async(target)=>{
+        deletion: async(target)=>{
             console.log(target);
 
             const user = await github.user.get();
@@ -2763,6 +2758,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             );
 
+        }
+        ,
+
+        remove: target=>{
+            var column = target.closest('block').find('column');
+            var checked = column.all(':checked');
+            if (checked.length > 0) {
+                var slugs = [];
+                var c = 0;
+                do {
+                    var slug = rout.ed.dir(checked[c].closest('card').find('[placeholder="Title"]').dataset.href).splice(4, 5)[0];
+                    slugs.push(slug);
+                    c++;
+                } while (c < checked.length);
+                controller.posts.delete(slugs);
+            }
         }
         ,
 

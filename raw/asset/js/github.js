@@ -1106,17 +1106,17 @@ window.github.crud.update = async(params,array)=>{
                     }),
                     dataType: "POST"
                 }).catch(error=>{
-                    console.log(2504, 'github.database.blobs', error);
+                    console.log(2504, 'github.database.blobs', error, row);
                 }
                 );
             }
-            //console.log(1076, row);
+            console.log(1076, row);
             tree[b] = {
                 content: row.content,
                 path: row.path,
                 mode: "100644",
                 type: "blob",
-                sha: res.sha
+                sha: res && res.sha ? res.sha : ""
             };
             b++;
         } while (b < array.length)
@@ -1177,13 +1177,20 @@ window.github.crud.update = async(params,array)=>{
         } while (t < tr.length)
     }
     tree = tr.concat(tree);
+    var treef = [];
+    //console.log(1180, tree);
     if (tree.length > 0) {
         tree.sort((a,b)=>a.path.localeCompare(b.path));
+        //console.log(1183, tree);
         //var del = tree.filter(row=>row.content === null)
         var t = 0;
         do {
             var trt = tree[t];
-            //console.log(1167, trt);
+            if ("content"in trt && trt.content === null) {
+                treef.push(trt.path);
+                //console.log(1191, t, treef, trt.path);
+            }
+            //0 > 1 || trt.content === null ? console.log(1167, t, trt) : null;
             if ("content"in trt && trt.content === null) {
                 var tp = rout.ed.dir(trt.path);
                 0 > 1 ? console.log(1161, t, row.path, trt.path, {
@@ -1193,16 +1200,25 @@ window.github.crud.update = async(params,array)=>{
                     trt,
                     treet: tree[t]
                 }) : null;
-                tree = tree.filter(row=>{
+                //0 < 1 ? console.log(1198, row) : null;
+                tree.forEach(row=>{
                     var rp = rout.ed.dir(row.path);
-                    var here = row.path.startsWith(trt.path) && rp.has(tp);
-                    if (here) {
+                    var here = row.path.startsWith(trt.path)
+                    // && rp.has(tp);
+                    //0 < 1 ? console.log(1177, trt.path) : null;
+                    if (row.content === null || here) {
                         0 > 1 ? console.log(1177, rp.has(tp), {
                             rp,
                             tp
-                        }) : null;
+                        }, row, trt.path) : null;
+                        0 > 1 ? tree = tree.filter(r=>{
+                            if (row.path === r.path) {//console.log(row.path, r.path);
+                            }
+                            return row.path !== r.path;
+                        }
+                        ) : null;
                     }
-                    return !here;
+                    //return !here
                     //return !row.path.startsWith(trt.path) && !rout.ed.dir(row.path).has(tp)
                 }
                 )
@@ -1213,14 +1229,41 @@ window.github.crud.update = async(params,array)=>{
             t++;
         } while (t < tree.length);
     }
-    tree = tree.filter(row=>{
-        if (row.content) {
-            console.log(1193, row);
-            delete row.content;
+    var i = 0;
+    //console.log(1227, treef);
+    var treex = [];
+    0 < 1 ? treef.forEach(r=>{
+        var tp = rout.ed.dir(r);
+        tree.filter(row=>{
+            var rp = rout.ed.dir(row.path);
+            //console.log(1238, tp, row.path);
+            if (rp.has(tp)) {
+                console.log(1240, i, row);
+                treex.push(row.path);
+                //delete row.content;
+                //return row;
+            } else {//console.log(1243, i, row);
+            //return !rp.has(tp);
+            //return row;
+            }
+            i++;
         }
-        return row;
+        )
+    }
+    ) : null;
+    var treen = tree.filter((el)=>{
+        delete el.content;
+        console.log(1256, treex.includes(el.path), treex, el, el.path);
+        return !treex.includes(el.path)
     }
     )
+    tree = treen;
+    console.log(1227, {
+        tree,
+        treef,
+        treex,
+        treen
+    });
     var diff = {
         deleted: rt.filter(function(obj) {
             return !tree.some(function(el) {
@@ -1233,12 +1276,18 @@ window.github.crud.update = async(params,array)=>{
             return !tree.some(function(el) {
                 return el.path === obj.path
             })
+        }),
+        keep: rt.filter(function(obj) {
+            return tree.some(function(el) {
+                return el.path === obj.path
+            })
         })
     };
     console.log(2533, 'controller.posts.update', "GET trees", {
         diff,
         trees: trees.tree,
         tree,
+        rt,
         tr
     });
 
