@@ -296,6 +296,10 @@
     .color-000 {
         color: #000;
     }
+    
+    .color-005cc8 {
+        color: #005cc8;
+    }
 
     .color-0096c7 {
         color: #0096c7;
@@ -1268,6 +1272,10 @@
     .max-width-100pct, [data-max-width="100%"] {
         max-width: 100%;
     }
+    
+    .max-width-100pct-minus-20px, [data-max-width="calc(100% - 20px)"] {
+        max-width: calc(100% - 20px);
+    }
 
     .max-width-480px {
         max-width: 480px;
@@ -1368,6 +1376,10 @@
 
     [data-min-height="calc(100vh - 240px)"] {
         min-height: calc(100vh - 240px);
+    }
+
+    .min-height-100pct-minus-50px, [data-min-height="calc(100% - 50px)"] {
+        min-height: calc(100% - 50px);
     }
 }
 
@@ -1511,6 +1523,11 @@
     .padding-y-20px {
         padding-bottom: 20px;
         padding-top: 20px;
+    }
+
+    .padding-y-50px {
+        padding-bottom: 50px;
+        padding-top: 50px;
     }
 
     .padding-x-4vw {

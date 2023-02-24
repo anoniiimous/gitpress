@@ -1,0 +1,62 @@
+<blocks>
+    <header class="-dw480px-padding-10px padding-20px">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Upload</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row>
+                    <box class="line-height-30px" data-href="/dashboard/:get/files/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-folder"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">View Files</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
+    <block class="align-items-center justify-content-center min-height-100pct-minus-50px">
+        <section>
+            <card class="border-2px-dashed border-radius-20px margin-x-auto margin-y-50px padding-y-50px width-1280px" data-max-width="calc(100% - 20px)">
+                <column class="align-items-center">
+                    <box>
+                        <section>
+                            <ico>
+                                <n class="--ggs-2 gg-cloud"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box >
+                        <column class="align-items-center gap-20px">
+                            <text class="text-align-center padding-20px">Drag files here to<br>add them to your uploads</text>
+                            <text class="display-noner">Or</text>
+                            <label class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center margin-20px padding-x-20px">
+                                <ico data-width="20px">
+                                    <n class="gg-software-upload"></n>
+                                </ico>
+                                <span>Select Files</span>
+                                <input type="file">
+                            </label>
+                        </column>
+                    </box>
+                </column>
+            </card>
+        </section>
+    </block>
+</blocks>
