@@ -983,12 +983,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             name,
                                             owner
                                         })
-
-                                        var screenshot = await github.repos.contents({
-                                            owner: owner.login,
-                                            path: "/raw/asset/png/template.png",
-                                            repo: repo
-                                        });
                                         //var repository = row['_links'].html.split('/');
                                         //var user = repository[0];
                                         //var repo = repository[1];
@@ -997,7 +991,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
                                         //template.find('picture').dataset.href = "/" + root + "/" + name + "/preview/";
-                                        template.find('picture img').src = "raw/asset/png/template/template.spryce.png";
+                                        try {
+                                            var screenshot = 0 < 1 ? null : await github.raw.blob({
+                                                owner: owner.login,
+                                                resource: "/raw/asset/png/template.png",
+                                                repo: repo
+                                            }, {
+                                                accept: "application/vnd.github.raw"
+                                            });
+                                            template.find('picture img').src = "raw/asset/png/template/template." + repo.split('.')[2] + ".png";
+                                        } catch (e) {}
+
                                         feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                         x++;
                                     } while (x < data.length);
