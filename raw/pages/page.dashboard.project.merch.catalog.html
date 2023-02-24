@@ -30,7 +30,7 @@
         </card>
     </row>
 </header>
-<form onsubmit="controller.merch.catalog(event)">
+<form onsubmit="controller.catalog.create(event)">
     <block class="align-items-center display-flex justify-content-center height-100pct width-100pct">
         <column class="-dw960px-gap-50px display-flex gap-10px max-width-100pct width-640px">
             <card class="align-items-center justify-content-center" data-display="flex">
@@ -56,7 +56,7 @@
                             <text>Exit</text>
                         </row>
                     </box>
-                    <box class="opacity-50pct padding-x-10px" data-tap="controller.merch.step(event.target)">
+                    <box class="opacity-50pct padding-x-10px" data-tap="controller.catalog.step(event.target)">
                         <row>
                             <text>Next</text>
                             <ico data-width="25px">
@@ -99,7 +99,7 @@
                     </box>
                 </column>
                 <footer class="bottom-0 display-flex flex-direction-row left-0 justify-content-space-between line-height-50px margin-auto position-fixed right-0 width-100pct">
-                    <box class="padding-x-10px" data-tap="controller.merch.step(event.target)">
+                    <box class="padding-x-10px" data-tap="controller.catalog.step(event.target)">
                         <row>
                             <ico data-width="25px">
                                 <n class="gg-chevron-left"></n>
@@ -107,7 +107,7 @@
                             <text>Back</text>
                         </row>
                     </box>
-                    <box class="opacity-50pct padding-x-10px" data-tap="controller.merch.step(event.target)">
+                    <box class="opacity-50pct padding-x-10px" data-tap="controller.catalog.step(event.target)">
                         <row>
                             <text>Next</text>
                             <ico data-width="25px">
@@ -142,7 +142,7 @@
                             </cell>
                             <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
                                 <row class="align-items-center justify-content-center padding-x-10px width-100pct">
-                                    <input class="flex-1" onkeyup="controller.merch.attribute(event.target.closest('field'))" placeholder="Attribute" type="text">
+                                    <input class="flex-1" onkeyup="controller.catalog.attribute(event.target.closest('field'))" placeholder="Attribute" type="text">
                                 </row>
                             </field>
                         </header>
@@ -157,17 +157,11 @@
                     </box>
                     <box class="gap-10px">
                         <footer class="width-100pct">
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-tap="controller.merch.variation(event.target)">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-tap="controller.catalog.variation(event.target)">
                                 <ico data-height="20px" data-width="30px">
                                     <n class="gg-add"></n>
                                 </ico>
                                 <span>Add Variation</span>
-                            </text>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.merch.matrix(event.target)">
-                                <ico data-height="20px" data-width="30px">
-                                    <n class="gg-software-upload"></n>
-                                </ico>
-                                <span>Save Theme</span>
                             </text>
                             <template>
                                 <column class="flex-direction-row grid-gap-10px">
@@ -186,11 +180,11 @@
                                     </cell>
                                     <field class="align-items-center border-bottom-1px-solid display-flex height-36px justify-content-center line-height-36px width-50pct">
                                         <row class="align-items-center justify-content-center padding-x-10px width-100pct">
-                                            <input class="flex-1" onkeyup="controller.merch.attribute(event.target.closest('field'))" placeholder="Attribute" type="text">
+                                            <input class="flex-1" onkeyup="controller.catalog.attribute(event.target.closest('field'))" placeholder="Attribute" type="text">
                                         </row>
                                     </field>
                                     <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px opacity-50pct width-50pct">
-                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.variations(event.target.closest('dropdown'))">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.catalog.variations(event.target.closest('dropdown'))">
                                             <text class="flex-1" placeholder="Value"></text>
                                             <ico data-height="30px" data-width="30px">
                                                 <n class="gg-chevron-down"></n>
@@ -207,7 +201,7 @@
                     </box>
                 </column>
                 <footer class="bottom-0 display-flex flex-direction-row left-0 justify-content-space-between line-height-50px margin-auto position-fixed right-0 width-100pct">
-                    <box class="padding-x-10px" data-tap="controller.merch.step(event.target)">
+                    <box class="padding-x-10px" data-tap="controller.catalog.step(event.target)">
                         <row>
                             <ico data-width="25px">
                                 <n class="gg-chevron-left"></n>
@@ -215,7 +209,7 @@
                             <text>Back</text>
                         </row>
                     </box>
-                    <box class="padding-x-10px" data-tap="controller.merch.step(event.target)">
+                    <box class="padding-x-10px" data-tap="controller.catalog.step(event.target)">
                         <label for="submit-dashboard-merch-catalog">
                             <text>Done</text>
                             <ico data-width="25px">

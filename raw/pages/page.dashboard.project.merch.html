@@ -51,7 +51,7 @@
                             </ico>
                         </row>
                     </box>
-                    <box data-tap="controller.merch.delete(rout.ed.dir(event.target.closest('text').previousElementSibling.dataset.href).splice(4,5).join('/'))">
+                    <box data-tap="controller.merch.delete([rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href).splice(4,5).join('/')])">
                         <section>
                             <ico>
                                 <n class="gg-trash"></n>
@@ -77,7 +77,7 @@
                                 </ico>
                                 <span>Update</span>
                             </text>
-                            <text class="align-items-center display-flex grid-gap-5px justify-content-center" data-tap="controller.merch.delete(rout.ed.dir(event.target.closest('text').previousElementSibling.dataset.href).splice(4,5).join('/'))">
+                            <text class="align-items-center display-flex grid-gap-5px justify-content-center" data-tap="controller.merch.delete([rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href).splice(4,5).join('/')])">
                                 <ico data-height="30px" data-width="30px">
                                     <n class="gg-trash"></n>
                                 </ico>
@@ -114,7 +114,7 @@
                             </ico>
                         </section>
                     </box>
-                    <box class="line-height-50px">
+                    <box class="line-height-50px" data-tap="controller.merch.remove(event.target)">
                         <row class="align-items-center gap-5px justify-content-center padding-x-20px">
                             <ico data-height="30px" data-width="20px">
                                 <n class="gg-trash"></n>

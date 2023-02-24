@@ -30,7 +30,7 @@
         </card>
     </row>
 </header>
-<form onsubmit="controller.merch.create(event)">
+<form onsubmit="controller.product.create(event)">
     <block class="-dw480px-margin-x-auto -dw520px-margin-x-20px -dw768px-width-480px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px margin-x-auto" data-480px-max-width="calc(100% - 20px)" data-max-width="calc(100% - 40px)" data-width="1280px">
         <flex class="-dw960px-gap-50px display-flex gap-20px max-width-100pct width-1280px" data-960px-flex-direction="column">
             <card class="-dw480px-gap-10px -dw960px-width-100pct gap-10px width-320px">
@@ -38,7 +38,7 @@
                     <box class="background-color-fff border-radius-20px overflow-hidden padding-top-100pct width-100pct">
                         <section class="height-100pct position-absolute top-0 white-space-nowrap width-100pct"></section>
                         <section class="full-state height-100pct position-absolute top-0 width-100pct">
-                            <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" data-height="30px" data-tap="controller.merch.pinky(event.target)" data-width="30px">
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" data-height="30px" data-tap="controller.product.pinky(event.target)" data-width="30px">
                                 <n class="gg-close"></n>
                             </ico>
                         </section>
@@ -50,7 +50,7 @@
                             <ico class="position-absolute top-0" data-height="100%" data-width="100%">
                                 <n class="gg-math-plus"></n>
                             </ico>
-                            <input accept="image/jpeg,image/png" id="file-dashboard-merch-catalog" onchange="controller.merch.thumb(event)" type="file">
+                            <input accept="image/jpeg,image/png" id="file-dashboard-merch-catalog" onchange="controller.product.thumb(event)" type="file">
                         </label>
                     </box>
                 </row>
@@ -68,7 +68,7 @@
                         </header>
                         <column class="gap-10px margin-10px">
                             <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex flex-unset height-36px justify-content-center line-height-36px">
-                                <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.category(event.target.closest('dropdown'))">
+                                <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.product.category(event.target.closest('dropdown'))">
                                     <text class="flex-1" placeholder="Value"></text>
                                     <ico data-height="30px" data-width="30px">
                                         <n class="gg-chevron-down"></n>
@@ -108,13 +108,13 @@
                                 </ico>
                                 <span>Clear Options</span>
                             </text>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.merch.variation(event.target)">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.product.variation(event.target)">
                                 <ico data-height="20px" data-width="30px">
                                     <n class="gg-add"></n>
                                 </ico>
                                 <span>Add Variation</span>
                             </text>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.merch.matrix(event.target)">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.product.matrix(event.target)">
                                 <ico data-height="20px" data-width="30px">
                                     <n class="gg-software-upload"></n>
                                 </ico>
@@ -128,7 +128,7 @@
                                         </row>
                                     </field>
                                     <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px width-50pct">
-                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.merch.traits(event.target.closest('dropdown'))">
+                                        <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.product.traits(event.target.closest('dropdown'))">
                                             <text class="flex-1" placeholder="Value"></text>
                                             <ico data-height="30px" data-width="30px">
                                                 <n class="gg-chevron-down"></n>
@@ -188,7 +188,7 @@
                         </header>
                         <column></column>
                         <footer class="flex-direction-column grid-gap-5px">
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-tap="controller.merch.details(event.target)">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-tap="controller.product.details(event.target)">
                                 <ico data-height="20px" data-width="30px">
                                     <n class="gg-eraser"></n>
                                 </ico>
@@ -224,7 +224,7 @@
                                 <ico class="border-2px-solid border-color-ccc border-radius-50pct box-sizing-border-box" data-height="20px" data-width="20px">
                                     <n class="background-color-000 border-radius-50pct height-5px width-5px" data-display="none"></n>
                                 </ico>
-                                <textarea class="display-flex flex-1 flex-wrap-wrap font-size-16px height-20px line-height-20px overflow-hidden" onkeydown="on.key.down.prevent.enter(event)" onkeyup="controller.merch.features(event)" placeholder="Enter a new product feature about this item."></textarea>
+                                <textarea class="display-flex flex-1 flex-wrap-wrap font-size-16px height-20px line-height-20px overflow-hidden" onkeydown="on.key.down.prevent.enter(event)" onkeyup="controller.product.features(event)" placeholder="Enter a new product feature about this item."></textarea>
                             </text>
                         </template>
                     </box>
@@ -260,7 +260,7 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Quantity"></text>
                         </header>
                         <flex class="flex-direction-row gap-10px margin-10px">
-                            <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center margin-auto overflow-hidden" data-tap="controller.merch.quantity(event.target)">
+                            <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center margin-auto overflow-hidden" data-tap="controller.product.quantity(event.target)">
                                 <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
                                     <n class="gg-chevron-up"></n>
                                 </ico>
@@ -273,7 +273,7 @@
                     </box>
                     <box class="width-100pct">
                         <flex class="gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
-                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.merch.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
+                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.product.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
                             <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
                                 <text>Post It</text>
                                 <input id="submit-dashboard-media-photo" type="submit">

@@ -106,7 +106,7 @@ String.prototype.router = async function(params) {
 
                 const hash = window.hub ? "/#" : "";
                 const link = hash + (route.hash.length > 0 ? route.hash.split('#')[1] : route.path) + route.search;
-                1 < 0 ? console.log(66, {
+                0 > 1 ? console.log(66, {
                     hub,
                     hash,
                     link,
@@ -233,7 +233,7 @@ window.rout.ed.dir = function(url, num, g=[]) {
 window.rout.ed.url = function(dir) {
     if (dir.length > 0) {
         var end = dir[dir.length - 1];
-        href = dir.length === 0 ? "/" : "/" + dir.join("/") + (end.includes("?") ? "" : "/");
+        href = dir.length === 0 ? "/" : "/" + dir.join("/") + (end.includes("?") ? "" : "");
     } else {
         href = "/";
     }

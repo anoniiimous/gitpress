@@ -58,7 +58,7 @@
                             </ico>
                         </section>
                     </box>
-                    <box class="line-height-50px">
+                    <box class="line-height-50px" data-tap="controller.pages.remove(event.target)">
                         <row class="align-items-center gap-5px justify-content-center padding-x-20px">
                             <ico data-height="30px" data-width="20px">
                                 <n class="gg-trash"></n>
@@ -87,7 +87,15 @@
                     <text class="flex-1 font-size-16px oveflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Page URL"></text>
                 </section>
             </box>
-            <box>
+            <box data-tap="
+                    var dir = rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href);
+                    controller.pages.delete([dir.splice(4,dir.length)])
+                    ">
+                <ico>
+                    <n class="gg-trash"></n>
+                </ico>
+            </box>
+            <box data-display="none">
                 <row data-dropdown data-ignore>
                     <ico>
                         <n class="gg-more-vertical-alt"></n>

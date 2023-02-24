@@ -50,7 +50,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             data,
                             json
                         });
-                        const vp = dom.body.find('[data-page="/*/*/"]');
+                        const vp = dom.body.find('[data-page="/*/*"]');
                         //vp.find('[placeholder="Site"]').textContent = json.name;
                         controller.blog.render(byId('iframe-user-blog'), json);
                     }
@@ -62,7 +62,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     );
                     resolve(route);
                 } else {
-                    var vp = dom.body.find('[data-page="/*/"]');
+                    var vp = dom.body.find('[data-page="/*"]');
                     var owner = await github.users.get({
                         username: get[0]
                     });
@@ -107,7 +107,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             dom.body.find('main nav').children[1].children[index].find('.gg-chevron-down').click();
                         }
                         if (get[2] === "build") {
-                            var vp = dom.body.find('pages[data-pages="/dashboard/*/build/"]');
+                            var vp = dom.body.find('pages[data-pages="/dashboard/*/build"]');
                             var iframe = vp.find('iframe');
 
                             if (iframe && !iframe.contentWindow.document.body.querySelector('boot')) {
@@ -134,18 +134,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "file") {}
                             }
                             var feed = byId('feed-dashboard-files');
-                            if (feed && feed.innerHTML === "") {
-                                const name = get[4] + '.html';
-                                var params = {
-                                    owner: user.login,
+                            if (feed) {
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files"]');
+                                github.repos.contents({
+                                    owner: window.owner.login,
                                     path: "/raw/files",
                                     repo: get[1]
-                                };
-                                var settings = {};
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files/"]');
-                                //alert("Attempting to fetch files");
-                                github.repos.contents(params, settings).then(data=>{
-                                    //alert("Files fetched successfully");
+                                }, {}).then(data=>{
                                     if (data) {
                                         console.log(84, {
                                             data
@@ -166,14 +161,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 ["mp4", "wav"].includes(ext) ? icon = "video" : null;
                                                 ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
                                                 box.dataset.sha = row.sha;
-                                                box.find('ico n').classList.add("gg-" + icon);
+                                                //box.find('ico n').classList.add("gg-" + icon);
                                                 box.find('text').dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
                                                 box.find('[placeholder="Filename"]').textContent = row.name;
                                                 //box.all('text')[1].textContent = formatBytes(row.size);
                                                 var html = box.outerHTML;
                                                 feed.insertAdjacentHTML('beforeend', html);
                                                 //alert(html);
-                                                console.log(feed);
+                                                //console.log(feed);
                                                 d++;
                                             } while (d < data.length)
                                         } else {
@@ -201,36 +196,32 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[4]) {}
                             } else {
 
-                                var feed = byId('feed-dashboard-media');
-                                var vp = dom.body.find('page[data-page="/dashboard/*/media/"]');
+                                var vp = dom.body.find('page[data-page="/dashboard/*/media"]');
                                 //alert("Attempting to fetch files");
                                 github.repos.contents({
                                     owner: user.login,
                                     path: "/raw/media/media.json",
                                     repo: get[1]
-                                }).then((d)=>{
+                                }, {
+                                    accept: "application/vnd.github.raw"
+                                }).then((data)=>{
                                     console.log(222, {
-                                        d
+                                        data,
+                                        feed
                                     });
-                                    var data = 0 < 1 ? JSON.parse(atob(d.content)) : d;
                                     if (data) {
-                                        console.log(84, {
-                                            data
-                                        });
+                                        var feed = vp.all('block')[0].find('template').nextElementSibling;
                                         feed.innerHTML = "";
                                         if (data.length > 0) {
                                             vp.all('header card')[1].find('box').classList.remove('display-none');
                                             var html = "";
                                             var d = 0;
                                             do {
-                                                console.log(d, {
-                                                    data
-                                                });
                                                 var row = data[d];
                                                 var format = row.format;
                                                 var title = row.title;
                                                 var slug = row.slug;
-                                                var card = byId('template-feed-dashboard-media').content.firstElementChild.cloneNode(true);
+                                                var card = vp.all('block')[0].find('template').content.firstElementChild.cloneNode(true);
                                                 if (format === "audio") {
                                                     card.find('box row n').classList.add('gg-music');
                                                 } else if (format === "photo") {
@@ -259,6 +250,58 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
                                     }
 
+                                    if (0 > 1 && data) {
+                                        console.log(84, {
+                                            data
+                                        });
+                                        var feed = vp.all('block')[1].find('template').nextElementSibling;
+                                        feed.innerHTML = "";
+                                        if (data.length > 0) {
+                                            var html = "";
+                                            var d = 0;
+                                            do {
+                                                0 > 1 ? console.log(d, {
+                                                    data
+                                                }) : null;
+                                                var row = data[d];
+                                                var format = row.format;
+                                                var title = row.title;
+                                                var slug = row.slug;
+                                                var card = vp.all('block')[1].find('template').content.firstElementChild.cloneNode(true);
+                                                if (0 > 1) {
+                                                    if (format === "audio") {
+                                                        card.find('box row n').classList.add('gg-music');
+                                                    } else if (format === "photo") {
+                                                        card.find('box row n').classList.add('gg-image');
+                                                    } else if (format === "video") {
+                                                        card.find('box row n').classList.add('gg-film');
+                                                    } else {
+                                                        card.find('box row n').classList.add('gg-file');
+                                                    }
+                                                }
+                                                //card.find('[placeholder="Title"]').textContent = title;
+                                                //card.find('[placeholder="Title"]').dataset.href = "/dashboard/:get/media/" + format + "/" + slug + "/";
+                                                var src = 0 < 1 ? github.raw.blob({
+                                                    owner: window.owner.login,
+                                                    repo: get[1],
+                                                    resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
+                                                }).then(()=>{
+                                                    card.find('picture img').src = src;
+                                                }
+                                                ) : null;
+                                                card.find('picture img').src = src;
+                                                console.log("/raw/media/" + format + "/" + slug + "/image.jpg");
+                                                //card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
+                                                html += card.outerHTML;
+                                                //feed.insertAdjacentHTML('beforeend', html);
+                                                d++;
+                                            } while (d < data.length);
+                                            feed.innerHTML = html;
+                                        } else {
+                                            vp.all('header card')[1].find('box').classList.add('display-none');
+                                        }
+                                    }
+
                                 }
                                 )
 
@@ -271,7 +314,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "catalog") {
                                     var feed = byId('feed-dashboard-catalog');
                                     if (get[4]) {
-                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/*/"]');
+                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/*"]');
 
                                         //ANCESTOR
                                         try {
@@ -297,7 +340,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 }
                                             }
                                             0 > 1 ? console.log(295, {
-                                                json
+                                                json,
+                                                res
                                             }) : null;
                                         } catch (e) {
                                             console.log(287, {
@@ -358,11 +402,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                                             if (value) {
                                                                                 var vars = {
                                                                                     arr1: ar.split('-')[0].toLowerCase(),
-                                                                                    arr2: ar.split('-')[1].toLowerCase(),
+                                                                                    arr2: ar.split(ar.split('-')[0] + "-")[1].replace('-', ' ').toLowerCase(),
                                                                                     name: name.toLowerCase(),
                                                                                     value: value.toLowerCase().replace('-', ''),
                                                                                     element: template.find('[placeholder][data-name="' + name + '"]')
                                                                                 }
+                                                                                //console.log(367, vars);
                                                                                 if (vars.element && vars.arr1 === vars.name && vars.arr2 === vars.value) {
                                                                                     vars.element.closest('field').nextElementSibling.find('[placeholder]').textContent = value;
                                                                                 }
@@ -388,6 +433,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                                 var name = template.find('field [placeholder]').dataset.name;
                                                 var value = template.find('dropdown [placeholder]').textContent;
+                                                //console.log(template, name, value);
                                                 if (name && value) {
                                                     attr.push(name.toLowerCase().replaceAll('-', '') + "-" + value.toLowerCase().replaceAll('-', ''));
                                                 }
@@ -472,13 +518,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     accept: "application/vnd.github.raw",
                                                     cache: "reload"
                                                 }) : window.ancestor.find(row=>row.slug === get[4] + "/" + get[5]);
-                                                if (!res)
-                                                    res = json;
+                                                res ? null : res = json;
 
-                                                console.log(474, {
+                                                0 > 1 ? console.log(474, {
                                                     res,
                                                     json
-                                                });
+                                                }) : null;
 
                                                 var variant = true;
 
@@ -528,7 +573,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 section.appendChild(picture);
 
                                                 var template = card.find('template').content.firstElementChild.cloneNode(true);
-                                                template.dataset.tap = "controller.merch.ring(target)";
+                                                template.dataset.tap = "controller.product.ring(target)";
                                                 template.find('picture').innerHTML = img.outerHTML;
                                                 columns.lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
 
@@ -547,7 +592,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var categories = JSON.parse(arr).merch;
                                         if (categories.length > 0) {
                                             var c = 0;
-                                            var vp = dom.body.find('[data-pages="/dashboard/*/merch/catalog/*/"]');
+                                            var vp = dom.body.find('[data-pages="/dashboard/*/merch/catalog/*"]');
                                             var step2 = vp.all('block card')[1];
                                             var list = step2.find('[data-after="Category"]').closest('box').find('dropdown group');
                                             do {
@@ -557,7 +602,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 list.insertAdjacentHTML('beforeend', item.outerHTML);
                                                 c++;
                                             } while (c < categories.length);
-                                            json.category ? vp.find('[data-after="Category"]').closest('box').find('dropdown [placeholder="Value"]').textContent = json.category : null;
+                                            json && json.category ? vp.find('[data-after="Category"]').closest('box').find('dropdown [placeholder="Value"]').textContent = json.category : null;
                                         }
 
                                         //TITLE
@@ -652,7 +697,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var categories = JSON.parse(json).merch;
                                         if (categories.length > 0) {
                                             var c = 0;
-                                            var vp = dom.body.find('[data-page="/dashboard/*/merch/catalog/"]');
+                                            var vp = dom.body.find('[data-page="/dashboard/*/merch/catalog"]');
                                             console.log({
                                                 vp
                                             });
@@ -668,7 +713,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
                                     }
                                 } else if (get[3] === "product") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/product/"]');
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/product"]');
                                     var slug = get[4];
                                     if (slug) {
                                         var owner = await github.user.get();
@@ -685,7 +730,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }
                             } else {
                                 var feed = byId('feed-dashboard-merch');
-                                var vp = dom.body.find('page[data-page="/dashboard/*/merch/"]');
+                                var vp = dom.body.find('page[data-page="/dashboard/*/merch"]');
                                 vp.find('block > footer').dataset.display = "none";
                                 //alert("Attempting to fetch files");
                                 github.repos.contents({
@@ -732,7 +777,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             if (get.length > 3) {
                                 if (get[3] === "page") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/*/"]');
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/*"]');
                                     var name = rout.ed.dir(route.path);
                                     name.splice(0, 4);
                                     vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
@@ -740,7 +785,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             } else {
                                 var feed = byId('feed-dashboard-pages');
                                 if (0 < 1) {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/"]');
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages"]');
                                     //alert("Attempting to fetch files");
                                     github.repos.contents({
                                         owner: user.login,
@@ -749,10 +794,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     }, {}).then(d=>{
                                         var data = JSON.parse(atob(d.content));
                                         if (data) {
-                                            data.unshift({
-                                                page: "/",
-                                                path: "/"
-                                            });
                                             console.log(84, {
                                                 data
                                             });
@@ -790,6 +831,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     if (d === 0 || (d > 0 && names[d][0] !== names[d - 1][0])) {
                                                         html += "<card class='" + card.className + "'>";
                                                     }
+                                                    card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/pages/page" + href;
                                                     card.find('[placeholder="Page URL"]').textContent = href;
                                                     card.firstElementChild.dataset.sha = row.sha;
                                                     //card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
@@ -814,7 +856,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         if (get[2] == "posts") {
                             if (get[3] === "post") {
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*/"]');
+                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*"]');
 
                                 var image = vp.find('block > header card').firstElementChild;
                                 var title = vp.find('[data-after="Title"]').closest('box').find('textarea');
@@ -903,7 +945,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 controller.posts.read(get[1]);
                             }
                         } else if (get[2] === "setup") {
-                            var vp = dom.body.find('[data-pages="/setup/"]');
+                            var vp = dom.body.find('[data-pages="/setup"]');
                             if (get.length > 1) {} else {
                                 //alert(vp.outerHTML);
                                 vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
@@ -1310,7 +1352,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 resolve(route)
             } else if (root === "new") {
                 if (get[1] === "app") {
-                    var vp = dom.body.find('[data-pages="/new/app/"]');
+                    var vp = dom.body.find('[data-pages="/new/app"]');
                     var form = vp.find('form');
                     form.find('input').value = "";
                 }

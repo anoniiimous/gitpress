@@ -208,7 +208,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     raw
                 });
 
-                const vp = dom.body.find('[data-page="/*/*/"]');
+                const vp = dom.body.find('[data-page="/*/*"]');
                 iframe.contentWindow.document.body.innerHTML = body.innerHTML;
             }
             ).catch(async(error)=>{
@@ -496,6 +496,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     catalog: {
 
+        attribute: async(target)=>{
+            var attribute = target.find('input');
+            var variations = target.nextElementSibling;
+            if (attribute.value.length > 0) {
+                variations.classList.remove('opacity-50pct');
+            } else {
+                variations.classList.add('opacity-50pct');
+            }
+        }
+        ,
+
         category: async(target)=>{
             var dropdown = await modal.dropdown(target.closest('dropdown'), {
                 other: false
@@ -507,6 +518,99 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 button.classList.remove('opacity-50pct')
             } else {
                 button.classList.add('opacity-50pct')
+            }
+        }
+        ,
+
+        create: async(event)=>{
+            event.preventDefault();
+
+            var form = event.target;
+            var steps = form.all('block card');
+            var step1 = steps[0];
+            var step2 = steps[1];
+            var step3 = steps[2];
+
+            var title = step1.find('input').value;
+            var category = step2.find('dropdown [placeholder]').textContent;
+            var dimensions = [];
+
+            var variations = step3.firstElementChild.lastElementChild.all('column');
+            if (variations.length > 0) {
+                var d = 0;
+                do {
+                    var dimension = variations[d];
+                    dimensions[d] = {
+                        name: dimension.find('field input').value,
+                        values: []
+                    };
+
+                    var values = dimension.find('dropdown group').children;
+                    if (values.length) {
+                        var v = 0;
+                        do {
+                            dimensions[d].values[v] = values[v].find('span').dataset.after;
+                            v++;
+                        } while (v < values.length)
+                    }
+
+                    d++;
+                } while (d < variations.length);
+            }
+
+            var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+
+            var row = {
+                category,
+                dimensions,
+                slug,
+                title
+            }
+            console.log(1961, row);
+
+            //MERCH
+            try {
+                var data = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/merch/merch.json"
+                });
+                var j = JSON.parse(atob(data.content));
+                var json = JSON.parse(atob(data.content));
+                json.push(row);
+            } catch (e) {
+                var j = [];
+                var json = [row];
+            }
+            rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+            var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+            var str1 = JSON.stringify(rows, null, 4);
+
+            //PUSH
+            var params = {
+                message: "Add " + name + " to Merch",
+                repo: GET[1],
+                owner: owner.login
+            };
+            var array = [{
+                content: str1,
+                path: "raw/merch/merch.json"
+            }, {
+                content: JSON.stringify([row], null, 4),
+                path: "raw/merch/" + slug + "/merch.json"
+            }];
+            console.log(2452, 'controller.merch.update', "array", {
+                array
+            });
+            try {
+                await github.crud.update(params, array);
+                ("/dashboard/:get/merch/catalog/" + slug + "/").router()
+            } catch (e) {
+                modal.alert({
+                    body: "There was an error creating this product.",
+                    submit: "OK",
+                    title: "Catalog Error"
+                })
             }
         }
         ,
@@ -583,6 +687,84 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             }
         }
+        ,
+
+        step: (target)=>{
+            var form = target.closest('form');
+            var step = target.closest('block > * > card');
+            var index = step.index();
+            var box = target.closest('box');
+            var button = box.find('n');
+            if (button) {
+                var steps = target.closest('block').all('block > * > card');
+                if (button.className === "gg-chevron-left") {
+                    if (index === 1) {
+                        step.dataset.display = "none";
+                        steps[index - 1].dataset.display = 'flex';
+                    }
+                    if (index === 2) {
+                        step.dataset.display = "none";
+                        steps[index - 1].dataset.display = 'flex';
+                    }
+                }
+                if (button.className === "gg-chevron-right") {
+                    if (index === 0) {
+                        if (box.classList.contains('opacity-50pct')) {
+                            modal.alert({
+                                body: "You must enter a name in order to continue.",
+                                submit: "OK",
+                                title: "Product Name"
+                            });
+                        } else {
+                            step.dataset.display = "none";
+                            steps[index + 1].dataset.display = 'flex';
+                        }
+                    }
+                    if (index === 1) {
+                        if (box.classList.contains('opacity-50pct')) {
+                            modal.alert({
+                                body: "You must select a category in order to continue.",
+                                submit: "OK",
+                                title: "Browse Node"
+                            });
+                        } else {
+                            step.dataset.display = "none";
+                            steps[index + 1].dataset.display = 'flex';
+                        }
+                    }
+                }
+            }
+
+        }
+        ,
+
+        variation: async(target)=>{
+            var footer = target.closest('footer');
+            var template = footer.find('template').content.firstElementChild.cloneNode(true);
+            footer.insertAdjacentHTML('beforebegin', template.outerHTML);
+        }
+        ,
+
+        variations: async(target)=>{
+            if (target.classList.contains('opacity-50pct')) {
+                modal.alert({
+                    body: "You must select an attribute before creating values for your variations.",
+                    submit: "OK",
+                    title: "No Attribute Selected"
+                });
+            } else {
+                var attributes = target.previousElementSibling;
+                var variations = await modal.dropdown(target, {
+                    //multi: attributes,
+                    title: attributes.find('[placeholder]').value
+                });
+                console.log({
+                    attributes,
+                    variations
+                });
+            }
+        }
+        ,
 
     },
 
@@ -724,10 +906,76 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        delete: (target)=>{
-            const box = target.closest('box');
-            const sha = box.dataset.sha;
-            alert(sha);
+        delete: async(slugs)=>{
+            //console.log(2443, slugs);
+
+            try {
+                var res = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/files"
+                }, {
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (res.length > 0) {
+                    var files = res.filter(function(obj) {
+                        //console.log('posts', slugs, obj.slug, !slugs.includes(obj.slug));
+                        return !slugs.includes(obj.name);
+                    });
+                    var deleted = res.filter(function(obj) {
+                        //console.log('deleted', slugs, obj.slug, slugs.includes(obj.slug));
+                        return slugs.includes(obj.name);
+                    })
+                }
+            } catch (e) {
+                console.log("error", {
+                    e
+                })
+            }
+
+            var titles = "";
+            if (slugs.length > 1) {
+                titles = slugs.length + " files";
+            } else {
+                titles = '"' + deleted[0].name + '"';
+            }
+
+            console.log(944, {
+                slugs,
+                titles,
+                deleted,
+                files,
+                res
+            });
+
+            //PUSH
+            if (0 < 1) {
+                var params = {
+                    message: "Delete " + titles + " from Files",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                var array = [];
+                if (deleted.length > 0) {
+                    var d = 0;
+                    do {
+                        var removed = deleted[d];
+                        var arr = {
+                            content: null,
+                            path: removed.path
+                        };
+                        array.push(arr);
+                        d++;
+                    } while (d < deleted.length);
+                }
+                console.log(1168, 'controller.posts.delete', "array", {
+                    array,
+                    params
+                });
+                await github.crud.update(params, array);
+                ('/dashboard/:get/files/').router();
+            }
         }
         ,
 
@@ -750,7 +998,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        select: async(event)=>{
+        onchange: async(event)=>{
             const input = event.target;
             const label = input.closest('[data-file]');
             const select = input.closest('card');
@@ -817,6 +1065,41 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        remove: target=>{
+            var column = target.closest('block').find('column');
+            var checked = column.all(':checked');
+            if (checked.length > 0) {
+                var slugs = [];
+                var c = 0;
+                do {
+                    var slug = rout.ed.dir(checked[c].closest('card').find('[placeholder="Filename"]').dataset.href).splice(4, 5)[0];
+                    slugs.push(slug);
+                    c++;
+                } while (c < checked.length);
+                controller.files.delete(slugs);
+            }
+        }
+        ,
+
+        select: async(target)=>{
+            var column = target.closest('column')
+            var row = target.closest('card');
+            var selected = column.all(':checked');
+            var footer = column.parentNode.lastElementChild;
+            if (selected.length > 0) {
+                footer.dataset.display = "flex";
+            } else {
+                footer.dataset.display = "none";
+            }
+            0 > 1 ? console.log({
+                column,
+                footer,
+                row,
+                selected
+            }) : null;
+        }
+        ,
+
         selecting: e=>{
             console.log({
                 e
@@ -862,20 +1145,138 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     media: {
+        delete: async(slugs)=>{
+            //console.log(2443, slugs);
+
+            try {
+                var res = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/media/media.json"
+                }, {
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (res.length > 0) {
+                    var media = res.filter(function(obj) {
+                        //console.log('posts', slugs, obj.slug, !slugs.includes(obj.slug));
+                        return !slugs.includes(obj.slug);
+                    });
+                    var deleted = res.filter(function(obj) {
+                        //console.log('deleted', slugs, obj.slug, slugs.includes(obj.slug));
+                        return slugs.includes(obj.slug);
+                    })
+                    var formats = {};
+                    deleted.forEach(function(row) {
+                        var format = formats[row.format];
+                        format = format ? format : formats[row.format] = [];
+                        format.push(row);
+                    })
+                    var tables = {};
+                    var keys = Object.keys(formats);
+                    if (keys.length > 0) {
+                        var k = 0;
+                        do {
+                            var format = keys[k]
+                            var json = await github.repos.contents({
+                                owner: owner.login,
+                                repo: GET[1],
+                                path: "/raw/media/" + format + "/" + format + ".json"
+                            }, {
+                                accept: "application/vnd.github.raw",
+                                cache: "reload"
+                            });
+                            tables[format] = json.filter(function(row) {
+                                var exists = formats[format].some(f=>JSON.stringify(f) === JSON.stringify(row));
+                                0 > 1 ? console.log(1190, {
+                                    format: formats[format],
+                                    row,
+                                    exists
+                                }) : null;
+                                return exists === false;
+                            });
+                            k++;
+                        } while (k < keys.length)
+                    }
+                }
+            } catch (e) {
+                console.log("error", {
+                    e
+                })
+            }
+
+            var titles = "";
+            if (slugs.length > 1) {
+                titles = slugs.length + " uploads";
+            } else {
+                titles = '"' + deleted[0].title + '"';
+            }
+
+            console.log(2475, {
+                slugs,
+                titles,
+                deleted,
+                media,
+                formats,
+                tables,
+                res
+            });
+
+            //PUSH
+            if (0 < 1) {
+                var params = {
+                    message: "Delete " + titles + " from Media",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                var array = [{
+                    content: JSON.stringify(media, null, 4),
+                    path: "raw/media/media.json"
+                }];
+                //array = [];
+                var keys = Object.keys(tables);
+                if (keys.length > 0) {
+                    var k = 0;
+                    do {
+                        var format = keys[k];
+                        array.push({
+                            content: JSON.stringify(tables[format], null, 4),
+                            path: "raw/media/" + format + "/" + format + ".json"
+                        })
+                        k++;
+                    } while (k < keys.length);
+                }
+                if (deleted.length > 0) {
+                    var d = 0;
+                    do {
+                        var removed = deleted[d];
+                        var id = removed.slug;
+                        var arr = {
+                            content: null,
+                            path: "raw/media/" + removed.format + "/" + removed.slug
+                        };
+                        array.push(arr);
+                        d++;
+                    } while (d < deleted.length);
+                }
+                console.log(1168, 'controller.posts.delete', "array", {
+                    array,
+                    params
+                });
+                await github.crud.update(params, array);
+                ('/dashboard/:get/media/').router();
+            }
+        }
+        ,
 
         import: (b64)=>{
             var split = b64.result.split(';base64,')
             var mime = split[0].split(':')[1];
             var type = mime.split('/')[0]
-            console.log({
-                b64,
-                mime,
-                type
-            })
             if (["audio", "image", "video"].includes(type)) {
                 type === "image" ? type = "photo" : null;
                 ('/dashboard/:get/media/' + type).router().then(()=>{
-                    var vp = dom.body.find('[data-pages="/dashboard/*/media/' + type + '/"]');
+                    var vp = dom.body.find('[data-pages="/dashboard/*/media/' + type + '"]');
                     if (type === "audio") {
                         var column = vp.find('.gg-play-button').closest('box').find('column');
                         var audio = document.createElement('audio');
@@ -930,6 +1331,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        remove: target=>{
+            var column = target.closest('block').find('column');
+            var checked = column.all(':checked');
+            if (checked.length > 0) {
+                var slugs = [];
+                var c = 0;
+                do {
+                    var slug = rout.ed.dir(checked[c].closest('card').find('[placeholder="Title"]').dataset.href).splice(4, 5)[0];
+                    slugs.push(slug);
+                    c++;
+                } while (c < checked.length);
+                controller.media.delete(slugs);
+            }
+        }
+        ,
+
         select: async(target)=>{
             var column = target.closest('column')
             var row = target.closest('card');
@@ -940,12 +1357,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 footer.dataset.display = "none";
             }
-            console.log({
-                column,
-                footer,
-                row,
-                selected
-            });
         }
         ,
 
@@ -985,6 +1396,113 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     merch: {
 
+        delete: async(slugs)=>{
+            //console.log(2443, slugs);
+
+            try {
+                var res = await github.repos.contents({
+                    owner: owner.login,
+                    repo: GET[1],
+                    path: "/raw/merch/merch.json"
+                }, {
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (res.length > 0) {
+                    var posts = [];
+                    var deleted = [];
+                    var all = [];
+                    res.forEach(function(obj) {
+                        //console.log('posts', slugs, obj.slug, !slugs.includes(obj.slug));
+                        slugs.forEach((row)=>{
+                            if (rout.ed.dir(row).length === 1 && row === rout.ed.dir(obj.slug)[0]) {
+                                //console.log(1187, 'delete', row, obj.slug, obj);
+                                deleted.push(obj);
+                            }
+                            all.push(obj)
+                        }
+                        )
+                    });
+                    deleted = [...new Set(deleted)];
+                    all = [...new Set(all)];
+                    posts = all.filter(function(item) {
+                        return !deleted.includes(item)
+                    })
+                }
+            } catch (e) {
+                console.log("error", {
+                    e
+                })
+            }
+
+            var titles = "";
+            if (slugs.length > 1) {
+                titles = slugs.length + " products";
+            } else {
+                titles = '"' + deleted[0].title + '"';
+            }
+
+            console.log(2475, {
+                slugs,
+                titles,
+                all,
+                deleted,
+                posts,
+                res
+            });
+
+            //PUSH
+            if (0 < 1) {
+                var params = {
+                    message: "Delete " + titles + " from Merch",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                var array = [{
+                    content: JSON.stringify(posts, null, 4),
+                    path: "raw/merch/merch.json"
+                }];
+                //array = [];
+                if (slugs.length > 0) {
+                    var d = 0;
+                    do {
+                        var removed = slugs[d];
+                        var id = removed.slug;
+                        var arr = {
+                            content: null,
+                            path: "raw/merch/" + removed
+                        };
+                        array.push(arr);
+                        d++;
+                    } while (d < slugs.length);
+                }
+                console.log(1168, 'controller.merch.delete', "array", {
+                    array,
+                    params,
+                    posts,
+                });
+                await github.crud.update(params, array);
+                ('/dashboard/:get/merch/').router();
+            }
+        }
+        ,
+
+        remove: target=>{
+            var column = target.closest('block').find('column');
+            var checked = column.all(':checked');
+            if (checked.length > 0) {
+                var slugs = [];
+                var c = 0;
+                do {
+                    var slug = rout.ed.dir(checked[c].closest('card').find('[placeholder="Title"]').dataset.href).splice(4, 5)[0];
+                    slugs.push(slug);
+                    c++;
+                } while (c < checked.length);
+                controller.merch.delete(slugs);
+            }
+        }
+        ,
+
         select: async(target)=>{
             var column = target.closest('column')
             var row = target.closest('card');
@@ -995,12 +1513,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 footer.dataset.display = "none";
             }
-            console.log({
+            0 > 1 ? console.log({
                 column,
                 footer,
                 row,
                 selected
-            });
+            }) : null;
         }
 
     },
@@ -1055,99 +1573,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             });
             var step = target.closest('card');
             var category = step.find('[placeholder]').textContent;
-        }
-        ,
-
-        catalog: async(event)=>{
-            event.preventDefault();
-
-            var form = event.target;
-            var steps = form.all('block card');
-            var step1 = steps[0];
-            var step2 = steps[1];
-            var step3 = steps[2];
-
-            var title = step1.find('input').value;
-            var category = step2.find('dropdown [placeholder]').textContent;
-            var dimensions = [];
-
-            var variations = step3.firstElementChild.lastElementChild.all('column');
-            if (variations.length > 0) {
-                var d = 0;
-                do {
-                    var dimension = variations[d];
-                    dimensions[d] = {
-                        name: dimension.find('field input').value,
-                        values: []
-                    };
-
-                    var values = dimension.find('dropdown group').children;
-                    if (values.length) {
-                        var v = 0;
-                        do {
-                            dimensions[d].values[v] = values[v].find('span').dataset.after;
-                            v++;
-                        } while (v < values.length)
-                    }
-
-                    d++;
-                } while (d < variations.length);
-            }
-
-            var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
-
-            var row = {
-                category,
-                dimensions,
-                slug,
-                title
-            }
-            console.log(1961, row);
-
-            //MERCH
-            try {
-                var data = await github.repos.contents({
-                    owner: owner.login,
-                    repo: GET[1],
-                    path: "/raw/merch/merch.json"
-                });
-                var j = JSON.parse(atob(data.content));
-                var json = JSON.parse(atob(data.content));
-                json.push(row);
-            } catch (e) {
-                var j = [];
-                var json = [row];
-            }
-            rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-            var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
-            var str1 = JSON.stringify(rows, null, 4);
-
-            //PUSH
-            var params = {
-                message: "Add " + name + " to Merch",
-                repo: GET[1],
-                owner: owner.login
-            };
-            var array = [{
-                content: str1,
-                path: "raw/merch/merch.json"
-            }, {
-                content: JSON.stringify(row, null, 4),
-                path: "raw/merch/" + slug + "/merch.json"
-            }];
-            console.log(2452, 'controller.merch.update', "array", {
-                array
-            });
-            try {
-                await github.crud.update(params, array);
-                ("/dashboard/:get/merch/catalog/" + slug + "/").router()
-            } catch (e) {
-                modal.alert({
-                    body: "There was an error creating this product.",
-                    submit: "OK",
-                    title: "Catalog Error"
-                })
-            }
         }
         ,
 
@@ -1707,55 +2132,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        step: (target)=>{
-            var form = target.closest('form');
-            var step = target.closest('block > * > card');
-            var index = step.index();
-            var box = target.closest('box');
-            var button = box.find('n');
-            if (button) {
-                var steps = target.closest('block').all('block > * > card');
-                if (button.className === "gg-chevron-left") {
-                    if (index === 1) {
-                        step.dataset.display = "none";
-                        steps[index - 1].dataset.display = 'flex';
-                    }
-                    if (index === 2) {
-                        step.dataset.display = "none";
-                        steps[index - 1].dataset.display = 'flex';
-                    }
-                }
-                if (button.className === "gg-chevron-right") {
-                    if (index === 0) {
-                        if (box.classList.contains('opacity-50pct')) {
-                            modal.alert({
-                                body: "You must enter a name in order to continue.",
-                                submit: "OK",
-                                title: "Product Name"
-                            });
-                        } else {
-                            step.dataset.display = "none";
-                            steps[index + 1].dataset.display = 'flex';
-                        }
-                    }
-                    if (index === 1) {
-                        if (box.classList.contains('opacity-50pct')) {
-                            modal.alert({
-                                body: "You must select a category in order to continue.",
-                                submit: "OK",
-                                title: "Browse Node"
-                            });
-                        } else {
-                            step.dataset.display = "none";
-                            steps[index + 1].dataset.display = 'flex';
-                        }
-                    }
-                }
-            }
-
-        }
-        ,
-
         thumb: async(event)=>{
             var target = event.target;
             var card = target.closest('card');
@@ -1767,7 +2143,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var img = document.createElement('img');
             img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
             img.src = b64.result;
-            template.dataset.tap = "controller.merch.ring(target)";
+            template.dataset.tap = "controller.product.ring(target)";
             template.find('picture').innerHTML = img.outerHTML;
             thumbnails.lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
 
@@ -1796,7 +2172,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var name = trait.find('field [placeholder]').textContent;
                     var value = trait.find('dropdown [placeholder]').textContent;
                     if (name.length > 0 && value.length > 0) {
-                        values.push(name.toLowerCase().replaceAll('-', '') + "-" + value.toLowerCase().replaceAll('-', ''));
+                        values.push(name.toLowerCase().replaceAll('-', '') + "-" + value.toLowerCase().replaceAll('-', '').replaceAll(' ', '-'));
                     }
                     t++;
                 } while (t < traits.length);
@@ -2133,57 +2509,103 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        delete: async(target)=>{
-
-            const user = await github.user.get();
-
-            var row = target.closest('row');
-            var sha = row.dataset.sha;
-            var page = row.find('[placeholder="Page URL"]').textContent;
+        delete: async(slugs)=>{
+            console.log(2443, slugs);
 
             try {
-                var data = await github.repos.contents({
-                    owner: user.login,
-                    repo: GET[1],
-                    path: "/raw/pages/pages.json"
-                });
-                var sha = data.sha;
-                var json = JSON.parse(atob(data.content)).filter(function(obj) {
-                    return obj.page !== page;
-                });
-                var j = JSON.parse(atob(data.content));
-                console.log(2040, {
-                    j,
-                    json
-                });
-
-                0 < 1 ? github.repos.contents({
-                    owner: user.login,
+                var res = await github.repos.contents({
+                    owner: owner.login,
                     repo: GET[1],
                     path: "/raw/pages/pages.json"
                 }, {
-                    data: JSON.stringify({
-                        content: btoa(JSON.stringify(json, null, 4)),
-                        message: "Delete Page",
-                        sha
-                    }),
-                    dataType: "PUT"
-                }).then(()=>{
-                    "/dashboard/:get/pages/".router()
+                    accept: "application/vnd.github.raw",
+                    cache: "reload"
+                });
+                if (res.length > 0) {
+                    var pages = res.filter(function(obj) {
+                        var dir = rout.ed.dir(obj.path);
+                        var exists = slugs.some(e => JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
+                        //console.log('posts', slugs, obj.path, dir, exists);
+                        return !exists;
+                    });
+                    var deleted = res.filter(function(obj) {
+                        var dir = rout.ed.dir(obj.path);
+                        var exists = slugs.some(e => JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
+                        //console.log('posts', slugs, obj.path, dir, exists);
+                        return exists;
+                    })
+                        console.log({pages, deleted});
                 }
-                ).catch(e=>{
-                    console.log(e);
-                    0 > 1 ? "/dashboard/:get/pages/".router().then(modal.alert({
-                        body: "There was an error creating this page.",
-                        submit: "OK",
-                        title: "Error"
-                    })) : null;
-                }
-                ) : null;
             } catch (e) {
-                alert("There are no pages.");
+                console.log("error", {
+                    e
+                })
             }
 
+            var titles = "";
+            if (slugs.length > 1) {
+                titles = slugs.length + " pages";
+            } else {
+                titles = '"' + deleted[0].name + '"';
+            }
+
+            console.log(2475, {
+                slugs,
+                titles,
+                deleted,
+                pages,
+                res
+            });
+
+            //PUSH
+            if (0 < 1) {
+                var params = {
+                    message: "Delete " + titles + " from Pages",
+                    repo: GET[1],
+                    owner: window.owner.login
+                };
+                var array = [{
+                    content: JSON.stringify(pages, null, 4),
+                    path: "raw/pages/pages.json"
+                }];
+                //array = [];
+                if (deleted.length > 0) {
+                    var d = 0;
+                    do {
+                        var removed = deleted[d];
+                        var arr = {
+                            content: null,
+                            path: "raw/pages/page." + rout.ed.dir(removed.path).join('.') + '.html'
+                        };
+                        array.push(arr);
+                        d++;
+                    } while (d < deleted.length);
+                }
+                console.log(1168, 'controller.posts.delete', "array", {
+                    array,
+                    params
+                });
+                await github.crud.update(params, array);
+                ('/dashboard/:get/pages/').router();
+            }
+        }
+        ,
+
+        remove: target=>{
+            var column = target.closest('block').find('column');
+            var checked = column.all(':checked');
+            if (checked.length > 0) {
+                var slugs = [];
+                var c = 0;
+                do {
+                    var href = checked[c].closest('row').find('[placeholder="Page URL"]').dataset.href;
+                    var dir = rout.ed.dir(href)
+                    var slug = dir.splice(4, dir.length);
+                    slugs.push(slug);
+                    c++;
+                } while (c < checked.length);
+                controller.pages.delete(slugs);
+            }
         }
         ,
 
@@ -2511,81 +2933,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        deletion: async(target)=>{
-            console.log(target);
-
-            const user = await github.user.get();
-            const a = ()=>{
-                target.closest('card').remove();
-            }
-            const b = (error)=>{
-                console.log({
-                    error
-                });
-            }
-
-            params = {
-                repo: GET[1],
-                owner: user.login,
-                path: '/raw/cache/posts.json'
-            }
-            settings = {}
-            const get = await github.repos.contents(params, settings);
-            var content = JSON.parse(atob(get.content));
-            var filter = content.filter(row=>row.id !== parseInt(target.closest('card').dataset.id))
-            console.log(364, {
-                content,
-                filter,
-                get
-            });
-
-            params = {
-                repo: GET[1],
-                owner: user.login,
-                path: '/raw/cache/posts.json',
-                sha: get.sha
-            }
-            settings = {
-                data: JSON.stringify({
-                    content: btoa(JSON.stringify(filter, null, 4)),
-                    message: "Update Posts Table",
-                    sha: get.sha
-                }),
-                dataType: "PUT"
-            }
-            github.repos.contents(params, settings).then(a).catch(b);
-
-            var params = {
-                gist: target.closest('card').dataset.gist,
-                repo: GET[1],
-                owner: user.login,
-                path: 'cdn/posts/' + target.closest('card').dataset.filename + '.html',
-                sha: target.closest('card').dataset.sha
-            }
-            var settings = {
-                data: JSON.stringify({
-                    message: 'Delete ' + params.path,
-                    sha: params.sha
-                }),
-                dataType: "DELETE"
-            }
-            github.repos.contents(params, settings).catch(b);
-
-            params = {
-                gist: params.gist
-            }
-            settings = {
-                dataType: "DELETE"
-            }
-            github.gists.delete(params, settings).catch(b);
-        }
-        ,
-
         read: async()=>{
 
             var user = await github.user.get();
             var feed = byId('feed-dashboard-posts');
-            var vp = dom.body.find('page[data-page="/dashboard/*/merch/"]');
+            var vp = dom.body.find('page[data-page="/dashboard/*/merch"]');
             //alert("Attempting to fetch files");
             github.repos.contents({
                 owner: user.login,
@@ -2727,7 +3079,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     json
                 });
 
-                var vp = dom.body.find('page[data-page="/dashboard/*/posts/"]');
+                var vp = dom.body.find('page[data-page="/dashboard/*/posts"]');
                 if (json.length > 0) {
                     const feed = byId('feed-dashboard-posts');
                     feed.innerHTML = "";
@@ -3488,5 +3840,3 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     }
 
 });
-
-controller.merch = controller.product;

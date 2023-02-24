@@ -1,4 +1,4 @@
-<blocks class="display-flex flex-direction-column position-absolute z-index-1">
+<blocks class="display-flex flex-direction-column position-relative z-index-1">
     <header class="-dw480px-padding-10px max-width-100pct padding-20px position-relative z-index-5">
         <row class="justify-content-space-between">
             <card>
@@ -57,7 +57,7 @@
             </card>
         </row>
     </header>
-    <block class="-dw480px-margin-10px flex-grow-1 margin-20px">
+    <block class="-dw480px-margin-10px flex-grow-1 margin-20px z-index-1">
         <template id="template-feed-dashboard-media">
             <card class="background-color-ccc border-radius-10px">
                 <row class="display-flex justify-content-space-between position-relative top-0 width-100pct z-index-5">
@@ -80,7 +80,7 @@
                             </ico>
                         </row>
                     </box>
-                    <box data-tap="controller.media.delete(rout.ed.dir(event.target.closest('text').previousElementSibling.dataset.href).splice(4,5).join('/'))">
+                    <box data-tap="controller.media.delete([rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href).splice(4,5).join('/')])">
                         <row>
                             <ico>
                                 <n class="gg-trash"></n>
@@ -144,7 +144,7 @@
                             </ico>
                         </section>
                     </box>
-                    <box class="line-height-50px">
+                    <box class="line-height-50px" data-tap="controller.media.remove(event.target)">
                         <row class="align-items-center gap-5px justify-content-center padding-x-20px">
                             <ico data-height="30px" data-width="20px">
                                 <n class="gg-trash"></n>
@@ -155,5 +155,47 @@
                 </row>
             </card>
         </footer>
+    </block>
+    <block class="-dw480px-margin-10px flex-grow-1 margin-20px" data-display="none">
+        <template id="template-feed-dashboard-media">
+            <card class="background-color-ccc border-radius-10px">
+                <column class="display-flex justify-content-space-between position-relative top-0 width-100pct z-index-5">
+                    <box class="background-color-000">
+                        <section>
+                            <picture class="height-0 width-100pct padding-top-100pct">
+                                <img class="height-100pct position-absolute top-0 width-100pct">
+                            </picture>
+                        </section>
+                    </box>
+                    <box class="left-0 position-absolute top-0">
+                        <label class="align-items-center display-flex justify-content-center">
+                            <input onchange="controller.media.select(event.target)" type="checkbox">
+                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box margin-15px" data-height="20px" data-width="20px">
+                                <n class="-checked-display-flex display-none gg-check"></n>
+                            </ico>
+                        </label>
+                    </box>
+                    <box class="position-absolute right-0 top-0" data-tap="controller.media.delete(rout.ed.dir(event.target.closest('text').previousElementSibling.dataset.href).splice(4,5).join('/'))">
+                        <row>
+                            <ico>
+                                <n class="gg-trash"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </column>
+            </card>
+        </template>
+        <column class="grid-gap-10px" data-480px-columns="2" data-columns="6" id="feed-dashboard-media"></column>
+        <column class="align-items-center empty-state flex-grow-1 justify-content-center">
+            <picture class="position-relative width-240px">
+                <img class="width-100pct" src="raw/asset/png/astronaut-cloud.png">
+            </picture>
+            <box class="background-color-333 color-fff line-height-50px margin-top-20px padding-x-20px position-relative">
+                <label for="file-dashboard-media">
+                    <text class="font-size-14px font-weight-bolder">Add New Media</text>
+                    <input data-accept="audio/mp3,image/jpeg,video/mp4" id="file-dashboard-media" onchange="on.change.file(event).then(controller.media.import)" type="file">
+                </label>
+            </box>
+        </column>
     </block>
 </blocks>
