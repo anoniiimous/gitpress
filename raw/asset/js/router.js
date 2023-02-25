@@ -30,7 +30,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching3 = dom.body.all('pages[data-fetch][data-page="' + rout.es() + '"]:empty');
+    const fetching3 = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]:empty');
     if (fetching3.length > 0) {
         var ff = 0;
         do {
@@ -64,7 +64,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching = dom.body.all('pages[data-fetch][data-page="' + rout.es() + '"]');
+    const fetching = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]');
     if (fetching.length > 0) {
         var f = 0;
         do {
@@ -76,13 +76,14 @@ String.prototype.router = async function(params) {
         } while (fetching.length < 0);
     }
 
-    const fetching4 = dom.body.all('pages[data-fetch]:not(page[data-page]):not(pages[data-page])');
+    const fetching4 = dom.body.all('[data-fetch]:not(page[data-page]):not(pages[data-page])');
     if (fetching4.length > 0) {
         var f = 0;
         do {
             //console.log(fetching[f]);
             if (fetching4[f].innerHTML === "") {
                 fetching4[f].innerHTML = await ajax(fetching4[f].dataset.fetch);
+                fetching4[f].dataset.active = true;
             }
             f++;
         } while (fetching4.length < 0);
@@ -162,7 +163,7 @@ window.rout.e = state=>{
 
 window.rout.ed = {};
 window.rout.ed.bang = async(route)=>{
-    var pages = dom.body.find('pages[data-page="' + rout.es() + '"]');
+    var pages = dom.body.find('[data-page="' + rout.es() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
 
@@ -190,7 +191,7 @@ window.rout.ed.bang = async(route)=>{
 
     //dom.body.find('[data-page="' + route.page + '"]').setAttribute("data-active", true);
 
-    var rs = $('pages[data-page]');
+    var rs = $(':not(page)[data-page]');
     if (rs.length > 0) {
         var i = 0;
         do {
@@ -329,7 +330,7 @@ window.rout.ing = (href,GOT,n)=>{
             var slug = dir[i];
             var bool = [slug, '*'].includes(ei);
             bools.push(bool);
-            0 < 1 ? console.log(312, bool, ei, slug, {
+            0 > 1 ? console.log(312, bool, ei, slug, {
                 d,
                 i,
                 e

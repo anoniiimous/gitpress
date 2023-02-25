@@ -107,7 +107,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             dom.body.find('main nav').children[1].children[index].find('.gg-chevron-down').click();
                         }
                         if (get[2] === "build") {
-                            var vp = dom.body.find('pages[data-pages="/dashboard/*/build"]');
+                            var vp = dom.body.find('pages[data-page="/dashboard/*/build"]');
                             var iframe = vp.find('iframe');
 
                             if (iframe && !iframe.contentWindow.document.body.querySelector('boot')) {
@@ -141,7 +141,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             } else {
                                 var feed = byId('feed-dashboard-files');
                                 if (feed) {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/files"]');
+                                    var vp = dom.body.find('pages[data-page="/dashboard/*/files"]');
                                     github.repos.contents({
                                         owner: window.owner.login,
                                         path: "/raw/files",
@@ -317,7 +317,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "catalog") {
                                     var feed = byId('feed-dashboard-catalog');
                                     if (get[4]) {
-                                        var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/catalog/*"]');
+                                        var vp = dom.body.find('pages[data-page="/dashboard/*/merch/catalog/*"]');
 
                                         //ANCESTOR
                                         try {
@@ -595,7 +595,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var categories = JSON.parse(arr).merch;
                                         if (categories.length > 0) {
                                             var c = 0;
-                                            var vp = dom.body.find('[data-pages="/dashboard/*/merch/catalog/*"]');
+                                            var vp = dom.body.find('[data-page="/dashboard/*/merch/catalog/*"]');
                                             var step2 = vp.all('block card')[1];
                                             var list = step2.find('[data-after="Category"]').closest('box').find('dropdown group');
                                             do {
@@ -716,7 +716,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
                                     }
                                 } else if (get[3] === "product") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/merch/product"]');
+                                    var vp = dom.body.find('pages[data-page="/dashboard/*/merch/product"]');
                                     var slug = get[4];
                                     if (slug) {
                                         var owner = await github.user.get();
@@ -780,7 +780,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             if (get.length > 3) {
                                 if (get[3] === "page") {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages/*"]');
+                                    var vp = dom.body.find('pages[data-page="/dashboard/*/pages/*"]');
                                     var name = rout.ed.dir(route.path);
                                     name.splice(0, 4);
                                     vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
@@ -788,7 +788,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             } else {
                                 var feed = byId('feed-dashboard-pages');
                                 if (0 < 1) {
-                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/pages"]');
+                                    var vp = dom.body.find('pages[data-page="/dashboard/*/pages"]');
                                     //alert("Attempting to fetch files");
                                     github.repos.contents({
                                         owner: user.login,
@@ -859,7 +859,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         if (get[2] == "posts") {
                             if (get[3] === "post") {
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/posts/*"]');
+                                var vp = dom.body.find('pages[data-page="/dashboard/*/posts/*"]');
 
                                 var image = vp.find('block > header card').firstElementChild;
                                 var title = vp.find('[data-after="Title"]').closest('box').find('textarea');
@@ -948,7 +948,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 controller.posts.read(get[1]);
                             }
                         } else if (get[2] === "setup") {
-                            var vp = dom.body.find('[data-pages="/setup"]');
+                            var vp = dom.body.find('[data-page="/setup"]');
                             if (get.length > 1) {} else {
                                 //alert(vp.outerHTML);
                                 vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
@@ -1361,7 +1361,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 resolve(route)
             } else if (root === "new") {
                 if (get[1] === "app") {
-                    var vp = dom.body.find('[data-pages="/new/app"]');
+                    var vp = dom.body.find('[data-page="/new/app"]');
                     var form = vp.find('form');
                     form.find('input').value = "";
                 }
