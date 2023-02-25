@@ -7,7 +7,7 @@ String.prototype.router = async function(params) {
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
     //console.log(8, uri, route);
 
-    var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
+    var pages = dom.body.find('pages[data-page="' + rout.es() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
     0 > 1 ? console.log(13, {
@@ -30,7 +30,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching3 = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]:empty');
+    const fetching3 = dom.body.all('pages[data-fetch][data-page="' + rout.es() + '"]:empty');
     if (fetching3.length > 0) {
         var ff = 0;
         do {
@@ -64,7 +64,7 @@ String.prototype.router = async function(params) {
         }
     }
 
-    const fetching = dom.body.all('[data-fetch][data-pages="' + getRoot() + '"]');
+    const fetching = dom.body.all('pages[data-fetch][data-page="' + rout.es() + '"]');
     if (fetching.length > 0) {
         var f = 0;
         do {
@@ -76,7 +76,7 @@ String.prototype.router = async function(params) {
         } while (fetching.length < 0);
     }
 
-    const fetching4 = dom.body.all('[data-fetch]:not(page[data-page]):not(pages[data-pages])');
+    const fetching4 = dom.body.all('pages[data-fetch]:not(page[data-page]):not(pages[data-page])');
     if (fetching4.length > 0) {
         var f = 0;
         do {
@@ -89,7 +89,7 @@ String.prototype.router = async function(params) {
     }
 
     var go = async function(resolve, reject) {
-        //console.log('String.prototype.router', route);
+        console.log('String.prototype.router', route);
         if (route) {
             var pop = params ? params.pop : null;
 
@@ -162,24 +162,24 @@ window.rout.e = state=>{
 
 window.rout.ed = {};
 window.rout.ed.bang = async(route)=>{
-    var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
+    var pages = dom.body.find('pages[data-page="' + rout.es() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
 
     $('[data-hide]').attr("data-active", true);
-    $('[data-pages]').removeAttr("data-active");
-    $(':not(pages)[data-pages]').removeAttr("data-active");
+    $('pages').removeAttr("data-active");
+    //$(':not(pages)[data-pages]').removeAttr("data-active");
     $(':not(page)[data-page]').removeAttr("data-active");
     $('[data-path]').removeAttr("data-active");
 
     if (vp && vp.closest('main')) {
-        $('pages[data-pages]').removeAttr("data-active");
+        $('pages[data-page]').removeAttr("data-active");
         $('page[data-page]').removeAttr("data-active");
     } else {
         $('body > page[data-page]').removeAttr("data-active");
-        $('body > pages[data-pages]').removeAttr("data-active");
+        $('body > pages[data-page]').removeAttr("data-active");
         $('body > :not(main) page[data-page]').removeAttr("data-active");
-        $('body > :not(main) pages[data-pages]').removeAttr("data-active");
+        $('body > :not(main) pages[data-page]').removeAttr("data-active");
     }
 
     $('[data-hide="' + route.page + '"]').attr("data-active", false);
@@ -190,17 +190,17 @@ window.rout.ed.bang = async(route)=>{
 
     //dom.body.find('[data-page="' + route.page + '"]').setAttribute("data-active", true);
 
-    var rs = $('[data-pages]');
+    var rs = $('pages[data-page]');
     if (rs.length > 0) {
         var i = 0;
         do {
             //alert(route.page + "\r" + rs[i].dataset.pages);
-            if (rs[i].dataset.pages.startsWith(route.page)) {//console.log(rs[i]);
+            if (rs[i].dataset.page.startsWith(route.page)) {//console.log(rs[i]);
             //alert(rs[i].dataset.pages + "\r" + route.page);
             //if (rs[i].dataset.pages.includes(route.page)) {
             //rs[i].innerHTML = await ajax(rs[i].dataset.fetch);
             }
-            if (route.page.includes(rs[i].dataset.pages)) {
+            if (route.page && route.page.includes(rs[i].dataset.page)) {
                 //if (rs[i].dataset.pages.includes(route.page)) {
                 rs[i].dataset.active = true;
             }
@@ -296,6 +296,26 @@ window.rout.ed.vars = async function(tabs) {
     return tabs;
 }
 
+window.rout.es = function getRoot(els) {
+    var els = $('pages[data-page]');
+    var root = null;
+    if (els.length > 0) {
+        var arr = [];
+        var r = 0;
+        do {
+            arr.push(els[r].dataset.page);
+            r++;
+        } while (r < els.length);
+        arr.sort();
+        arr.reverse();
+        window.paths.arr = arr;
+        root = paths.page.stringExists(arr);
+        //root = arr.includes(paths.page) ? paths.page : null;
+        //console.log({page:paths.page,arr,root});
+    }
+    return root;
+}
+
 window.rout.ing = (href,GOT,n)=>{
     var ed = null;
     var pages = dom.body.all('[data-page]');
@@ -309,14 +329,14 @@ window.rout.ing = (href,GOT,n)=>{
             var slug = dir[i];
             var bool = [slug, '*'].includes(ei);
             bools.push(bool);
-            0 > 1 ? console.log(312, bool, ei, slug, {
+            0 < 1 ? console.log(312, bool, ei, slug, {
                 d,
                 i,
                 e
             }) : null;
             is++;
         });
-        check = is === dir.length && bools.includes(false) === false;
+        check = is <= dir.length && bools.includes(false) === false;
         if (check) {
             0 > 1 ? console.log(318, check, {
                 bools,
