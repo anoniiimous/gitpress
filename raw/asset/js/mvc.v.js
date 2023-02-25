@@ -131,64 +131,67 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         if (get[2] === "files") {
                             if (get.length > 3) {
-                                if (get[3] === "file") {}
-                            }
-                            var feed = byId('feed-dashboard-files');
-                            if (feed) {
-                                var vp = dom.body.find('pages[data-pages="/dashboard/*/files"]');
-                                github.repos.contents({
-                                    owner: window.owner.login,
-                                    path: "/raw/files",
-                                    repo: get[1]
-                                }, {}).then(data=>{
-                                    if (data) {
-                                        console.log(84, {
-                                            data
-                                        });
-                                        feed.innerHTML = "";
-                                        if (data.length > 0) {
-                                            vp.all('card')[1].find('box').classList.remove('display-none');
-                                            var d = 0;
-                                            do {
-                                                var row = data[d];
-                                                var box = byId('template-feed-dashboard-files').content.firstElementChild.cloneNode(true);
-                                                var name = row.name;
-                                                var arr = name.split('.');
-                                                var ext = arr[arr.length - 1];
-                                                var icon = "file";
-                                                ["jpg", "jpeg", "png", "svg", "webp"].includes(ext) ? icon = "image" : null;
-                                                ["mp3"].includes(ext) ? icon = "music" : null;
-                                                ["mp4", "wav"].includes(ext) ? icon = "video" : null;
-                                                ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
-                                                box.dataset.sha = row.sha;
-                                                //box.find('ico n').classList.add("gg-" + icon);
-                                                box.find('text').dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
-                                                box.find('[placeholder="Filename"]').textContent = row.name;
-                                                //box.all('text')[1].textContent = formatBytes(row.size);
-                                                var html = box.outerHTML;
-                                                feed.insertAdjacentHTML('beforeend', html);
-                                                //alert(html);
-                                                //console.log(feed);
-                                                d++;
-                                            } while (d < data.length)
-                                        } else {
-                                            vp.all('card')[1].find('box').classList.add('display-none');
+                                if (get[3] === "file") {
+                                    var vp = dom.body.find('page[data-page="/dashboard/*/files/file"]');
+                                    var form = vp.find('form');
+                                    form.children[0].find('[type="file"]').closest('label').innerHTML = form.children[0].find('[type="file"]').closest('label').innerHTML;
+                                    form.children[1].find('column').innerHTML = "";
+                                    resolve(route);
+                                }
+                            } else {
+                                var feed = byId('feed-dashboard-files');
+                                if (feed) {
+                                    var vp = dom.body.find('pages[data-pages="/dashboard/*/files"]');
+                                    github.repos.contents({
+                                        owner: window.owner.login,
+                                        path: "/raw/files",
+                                        repo: get[1]
+                                    }, {}).then(data=>{
+                                        if (data) {
+                                            feed.innerHTML = "";
+                                            if (data.length > 0) {
+                                                vp.all('card')[1].find('box').classList.remove('display-none');
+                                                var d = 0;
+                                                do {
+                                                    var row = data[d];
+                                                    var box = byId('template-feed-dashboard-files').content.firstElementChild.cloneNode(true);
+                                                    var name = row.name;
+                                                    var arr = name.split('.');
+                                                    var ext = arr[arr.length - 1];
+                                                    var icon = "file";
+                                                    ["jpg", "jpeg", "png", "svg", "webp"].includes(ext) ? icon = "image" : null;
+                                                    ["mp3"].includes(ext) ? icon = "music" : null;
+                                                    ["mp4", "wav"].includes(ext) ? icon = "video" : null;
+                                                    ["doc", "docx", "pdf", "txt"].includes(ext) ? icon = "file-document" : null;
+                                                    box.dataset.sha = row.sha;
+                                                    //box.find('ico n').classList.add("gg-" + icon);
+                                                    box.find('text').dataset.href = "/dashboard/" + get[1] + "/files/file/" + row.name;
+                                                    box.find('[placeholder="Filename"]').textContent = row.name;
+                                                    //box.all('text')[1].textContent = formatBytes(row.size);
+                                                    var html = box.outerHTML;
+                                                    feed.insertAdjacentHTML('beforeend', html);
+                                                    //alert(html);
+                                                    //console.log(feed);
+                                                    d++;
+                                                } while (d < data.length)
+                                            } else {
+                                                vp.all('card')[1].find('box').classList.add('display-none');
+                                            }
                                         }
                                     }
-                                }
-                                ).catch(async(error)=>{
-                                    //alert("Failed to fetch files");
-                                    console.log("43.error", {
-                                        error
-                                    });
-                                    if (error.code === 404) {
-                                        //alert("Setup Project");
-                                        resolve(route);
+                                    ).catch(async(error)=>{
+                                        //alert("Failed to fetch files");
+                                        console.log("43.error", {
+                                            error
+                                        });
+                                        if (error.code === 404) {
+                                            //alert("Setup Project");
+                                            resolve(route);
+                                        }
                                     }
+                                    );
                                 }
-                                );
                             }
-
                         }
                         if (get[2] === "media") {
 
@@ -1008,6 +1011,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 }
                             }
                             ajax('raw/asset/json/templates.json').then(a);
+                            resolve(route);
                         }
                     }
 
@@ -1221,6 +1225,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         );
                     }
+                    resolve(route);
                 } else {
 
                     if (github.oauth.verify()) {
@@ -1269,8 +1274,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                         }).then(p);
                     }
+                    resolve(route);
                 }
-                resolve(route);
             } else if (root === "design") {
 
                 if (get.length > 1) {

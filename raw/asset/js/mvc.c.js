@@ -329,7 +329,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             block.dataset.transform = "translateY(100%)";
             block.dataset.height = "calc(100% - 10px)";
-            block.dataset.width = "calc(100% - 260px)";
+            //block.dataset.width = "calc(100% - 260px)";
 
             const win = iframe.contentWindow;
             const head = win.document.head;
@@ -414,7 +414,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             block.dataset.transform = "translateY(calc(100% - 50px))";
             block.dataset.height = "calc(100% - 10px)";
-            block.dataset.width = "calc(100% - 260px)";
+            //block.dataset.width = "calc(100% - 260px)";
 
             const win = iframe.contentWindow;
             const head = win.document.head;
@@ -906,6 +906,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        clear: target=>{
+            var form = target.closest('form');
+            form.find('[type="file"]').closest('label').innerHTML = form.find('[type="file"]').closest('label').innerHTML;
+            form.children[1].find('column').innerHTML = "";
+        }
+        ,
+
         delete: async(slugs)=>{
             //console.log(2443, slugs);
 
@@ -980,15 +987,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         deselect: target=>{
-            const metadata = target.closest('box');
-            const select = metadata.previousElementSibling;
-            const actions = metadata.nextElementSibling;
-            const label = select.find('[data-file]');
-            metadata.classList.add('display-none');
-            select.classList.remove('display-none');
-            actions.classList.add('display-none');
-            label.insertAdjacentHTML('beforebegin', label.outerHTML);
-            label.remove();
+            var box = target.closest('box');
+            var name = box.find('[placeholder="filename.ext"]').textContent;
+            var input = box.closest('form').children[0].find('[type="file"]');
+            if (input.fileList && input.fileList.length > 0) {
+                var f = 0;
+                do {
+                    var file = input.fileList[f];
+                    if (file.name === name) {
+                        input.fileList.splice(f, 1);
+                        box.remove();
+                    }
+                    f++;
+                } while (f < input.fileList.length);
+            } else {
+                box.remove();
+            }
         }
         ,
 
@@ -1065,6 +1079,33 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        multiple: async(event)=>{
+
+            var target = window.select = event.target;
+            var form = target.closest('form');
+            var list = form.children[1].find('column');
+            var template = form.children[1].find('template');
+
+            target.fileList ? null : target.fileList = [];
+            Array.from(target.files).forEach(function(file) {
+                var exists = target.fileList.some(row=>file.name === row.name);
+                exists ? null : target.fileList.push(file);
+            });
+
+            if (target.fileList.length > 0) {
+                list.innerHTML = "";
+                var f = 0;
+                do {
+                    var elem = template.content.firstElementChild.cloneNode(true);
+                    elem.find('[placeholder="filename.ext"]').textContent = target.fileList[f].name;
+                    list.insertAdjacentHTML('beforeend', elem.outerHTML);
+                    f++;
+                } while (f < target.fileList.length);
+            }
+
+        }
+        ,
+
         remove: target=>{
             var column = target.closest('block').find('column');
             var checked = column.all(':checked');
@@ -1115,30 +1156,82 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         upload: async(event)=>{
 
-            const user = await github.user.get();
+            event.preventDefault();
 
-            var params = {};
-            params.owner = user.login;
-            params.path = "/raw/files/" + file.name;
-            params.repo = GET[1]
+            var form = event.target;
+            var input = form.children[0].find('[type="file"]');
 
-            var settings = {};
-            settings.data = JSON.stringify({
-                content: btoa(result),
-                message: "Create " + file.name
-            }),
-            settings.dataType = "PUT";
-
-            console.log({
-                params,
-                settings
-            });
-
-            const aa = (e)=>{
-                ('/dashboard/' + GET[1] + '/files/').router();
+            window.files = [];
+            //console.log(1165, input.fileList, input.fileList.length);
+            if (input.fileList.length > 0) {
+                var f = 0
+                  , ff = 0;
+                ;do {
+                    var reader = new FileReader();
+                    reader.onloadend = (function(file) {
+                        return function(evt) {
+                            files.push({
+                                data: evt.target.result.split(';base64,')[1],
+                                name: file.name
+                            });
+                            if (files.length === input.fileList.length) {
+                                push(files);
+                            }
+                            ff++;
+                        }
+                    }
+                    )(input.fileList[f])
+                    reader.readAsDataURL(input.fileList[f]);
+                    //console.log(f, file);
+                    f++;
+                } while (f < input.fileList.length);
             }
 
-            github.repos.contents(params, settings).then(aa);
+            async function push(files) {
+
+                var titles = "";
+                if (files.length > 0) {
+                    if (files.length > 1) {
+                        titles = files.length + " products";
+                    } else {
+                        titles = '"' + files[0].name + '"';
+                    }
+                }
+
+                console.log(2475, {
+                    files,
+                    titles
+                });
+
+                //PUSH
+                if (0 < 1) {
+                    var params = {
+                        message: "Add " + titles + " to Files",
+                        repo: GET[1],
+                        owner: window.owner.login
+                    };
+                    var array = [];
+                    if (files.length > 0) {
+                        var f = 0;
+                        do {
+                            var file = files[f];
+                            array.push({
+                                content: file.data,
+                                path: "raw/files/" + file.name,
+                                type: "base64"
+                            });
+                            f++;
+                        } while (f < files.length);
+                    }
+                    console.log(1168, 'controller.files.create', "array", {
+                        array,
+                        params
+                    });
+                    await github.crud.update(params, array);
+                    ('/dashboard/:get/files/').router();
+                }
+
+            }
 
         }
 
@@ -2524,17 +2617,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 if (res.length > 0) {
                     var pages = res.filter(function(obj) {
                         var dir = rout.ed.dir(obj.path);
-                        var exists = slugs.some(e => JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
+                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
                         //console.log('posts', slugs, obj.path, dir, exists);
                         return !exists;
                     });
                     var deleted = res.filter(function(obj) {
                         var dir = rout.ed.dir(obj.path);
-                        var exists = slugs.some(e => JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
+                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
                         //console.log('posts', slugs, obj.path, dir, exists);
                         return exists;
                     })
-                        console.log({pages, deleted});
+                    console.log({
+                        pages,
+                        deleted
+                    });
                 }
             } catch (e) {
                 console.log("error", {
