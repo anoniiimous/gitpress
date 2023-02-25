@@ -5,7 +5,7 @@ String.prototype.router = async function(params) {
     var tabs = await rout.ed.vars(rout.ed.dir(url.hash ? url.hash.split('#')[1] : uri));
     var goto = rout.ed.url(tabs);
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-    //console.log(8, uri, url, route, getRoot());
+    //console.log(8, uri, route);
 
     var pages = dom.body.find('pages[data-pages="' + getRoot() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
@@ -18,7 +18,7 @@ String.prototype.router = async function(params) {
     }) : null;
     if (page) {
         if (is.iframe) {
-            var path = "/"+window.parent.owner.login+"/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
+            var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
             var pg = atob((await github.raw.path(path)).content);
         } else {
             var path = vp.dataset.fetch;
@@ -142,14 +142,13 @@ window.rout.e = state=>{
     if (GOT.length > 0) {
         var n = 0;
         do {
-            var m = GOT[n];
-            var bool = window.rout.ing(state, GOT, n);
-            arr1[n] = bool ? "*" : m;
+            page = window.rout.ing(state, GOT, n);
+            //console.log(148, n, state, page);
+            if (page) break;
             n++;
         } while (n < GOT.length);
-        page = rout.ed.url(arr1);
     }
-
+    
     const data = {
         GOT,
         hash,
@@ -196,11 +195,10 @@ window.rout.ed.bang = async(route)=>{
         var i = 0;
         do {
             //alert(route.page + "\r" + rs[i].dataset.pages);
-            if (rs[i].dataset.pages.startsWith(route.page)) {
-                //console.log(rs[i]);
-                //alert(rs[i].dataset.pages + "\r" + route.page);
-                //if (rs[i].dataset.pages.includes(route.page)) {
-                //rs[i].innerHTML = await ajax(rs[i].dataset.fetch);
+            if (rs[i].dataset.pages.startsWith(route.page)) {//console.log(rs[i]);
+            //alert(rs[i].dataset.pages + "\r" + route.page);
+            //if (rs[i].dataset.pages.includes(route.page)) {
+            //rs[i].innerHTML = await ajax(rs[i].dataset.fetch);
             }
             if (route.page.includes(rs[i].dataset.pages)) {
                 //if (rs[i].dataset.pages.includes(route.page)) {
@@ -298,15 +296,43 @@ window.rout.ed.vars = async function(tabs) {
     return tabs;
 }
 
-window.rout.ing = (href,GOT,n)=>{
-    return false;
-}
 window.rout.ing = function(href, GOT, n, m=GOT[n], root=GOT[0]) {
     window.roots = ["create", "dashboard", "design", "directory", "new", "preview"];
-    if(is.iframe) {
-        var wildcard = false;
-    } else {
-        var wildcard = m.includes("#") || (roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length > 3 && root === 'dashboard' && GOT[2] === "merch" && GOT[3] === "catalog" && n > 3) || (root === 'dashboard' && n > 2 && GOT[2] === "pages") || (GOT.length > 3 && root === 'dashboard' && GOT[2] === "posts" && n === 3) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
-    }
-    return wildcard;
+    return m.includes("#") || (GOT.length > 1 && roots.indexOf(root) === -1) || (root === 'dashboard' && n === 1) || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "files" && GOT[3] === "file" && n === 4) || (root === 'dashboard' && n > 2 && GOT[2] === "pages") || (GOT.length === 3 && root === 'dashboard' && n === 1 && GOT[2] === "posts") || (GOT.length === 4 && root === 'dashboard' && n === 1 && GOT[2] === "posts" && GOT[3] === "post") || (GOT.length === 5 && root === 'dashboard' && GOT[2] === "posts" && GOT[3] === "post" && n === 4) || (root === 'design' && n === 1) || (root === 'preview' && n === 1)
+}
+window.rout.ing = (href,GOT,n)=>{
+    var ed = null;
+    var pages = dom.body.all('[data-page]');
+    var routes = pages.forEach(function(el) {
+        var page = el.dataset.page;
+        var dir = rout.ed.dir(href);
+        var is = 0;
+        var bools = [];
+        var same = rout.ed.dir(page).forEach(function(d, i, e) {
+            var ei = e[i];
+            var slug = dir[i];
+            var bool = [slug, '*'].includes(ei);
+            bools.push(bool);
+            0 > 1 ? console.log(312, bool, ei, slug, {
+                d,
+                i,
+                e
+            }) : null;
+            is++;
+        });
+        check = is === dir.length && bools.includes(false) === false;
+        if (check) {
+            0 > 1 ? console.log(318, check, {
+                bools,
+                dir
+            }, {
+                is,
+                page
+            }) : null;
+            ed = page;
+            //return check;
+        }
+    });
+    //console.log(338, ed);
+    return ed;
 }
