@@ -64,18 +64,20 @@ Array.prototype.removeAttr = function(name) {
     return that;
 }
 Array.prototype.html = function(html) {
-    var that = this;
-    var vals = Object.values(that);
+    var that = [];
+    var vals = Object.values(this);
     if (vals.length > 0) {
         for (var i = vals.length; i--; ) {
-            this[i].innerHTML = "";
+            var val = vals[i]
+            if (html && html.length > 0) {
+                that[i] = this[i].innerHTML = html;
+            } else {
+                that[i] = this[i].innerHTML;
+            }
         }
-    } else {
-        that[0] ? that[0].classList.add(name) : null;
     }
     return that;
 }
-;
 Array.prototype.remove = function(name) {
     var that = this;
     if (that.length > 0) {
@@ -99,7 +101,6 @@ Array.prototype.removeAttribute = function(name) {
     }
     return that;
 }
-;
 Array.prototype.siblings = function(name) {
     var i = 0
       , elems = []
@@ -112,7 +113,21 @@ Array.prototype.siblings = function(name) {
     });
     return elems;
 }
-;
+Array.prototype.text = function(html) {
+    var that = [];
+    var vals = Object.values(this);
+    if (vals.length > 0) {
+        for (var i = vals.length; i--;) {
+            var val = vals[i]
+            if (html && html.length > 0) {
+                that[i] = this[i].textContent = html;
+            } else {
+                that[i] = this[i].textContent;
+            }
+        }
+    }
+    return that;
+}
 Array.prototype.toggleClass = function(name) {
     var that = this;
     if (that.length > 1) {
