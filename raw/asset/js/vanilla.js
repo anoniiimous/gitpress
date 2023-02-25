@@ -1,7 +1,3 @@
-Array.prototype.has = function(that) {
-    return that.every(v => this.includes(v));
-}
-
 Array.prototype.remove = function(name) {
     var that = this;
     var vals = Object.values(that);
@@ -152,9 +148,27 @@ Element.prototype.index = function() {
     return whl;
 }
 ;
-
-JSON.query = {};
-
+function objectExists(obj, where) {
+    var data = obj;
+    var keys = Object.keys(obj);
+    var bool = false;
+    if (keys.length > 0) {
+        var values = Object.values(obj);
+        var k = 0;
+        do {
+            var key = keys[k]
+            var value = values[k];
+            var hasKey = data.hasOwnProperty(obj);
+            var hasVal = data[key].includes(value);
+            bool = hasKey && hasVal;
+            if (bool === false) {
+                k = keys.length;
+            }
+            k++;
+        } while (k < keys.length);
+    }
+    return bool;
+}
 String.prototype.capitalize = function() {
     const str = this.valueOf();
     return (str.charAt(0).toUpperCase() + str.slice(1));
@@ -325,7 +339,7 @@ function ajax(url, settings) {
             resolve(response);
         }
         ).then(response=>resolve(response)).catch(error=>{
-            //console.log('vanilla.js ajax.fetch catch', error.message);
+            console.log('vanilla.js ajax.fetch catch', error.message);
             const isJSON = is.json(error.message);
             var message = isJSON ? JSON.parse(error.message) : error.message;
             reject(message);
@@ -388,9 +402,7 @@ function lazyLoad(images, vp) {
                                     owner: user.login,
                                     path: "/" + src,
                                     repo: win.parent.GET[1]
-                                }, {
-                                    accept: "vnd.github.raw"
-                                });
+                                }, {});
                                 var b = await github.database.blobs({
                                     owner: user.login,
                                     repo: win.parent.GET[1],
@@ -400,7 +412,7 @@ function lazyLoad(images, vp) {
                                     b,
                                     c
                                 });
-                                var b64 = b;
+                                var b64 = b.content;
 
                                 var arr = c.name.split('.');
                                 const ext = arr[arr.length - 1];
@@ -433,88 +445,6 @@ function getPath(links) {
     link += (links[f].link.includes('https:') ? `` : (window.location.protocol === "file:" ? `.` : ``));
     link += links[f].link;
     return link;
-}
-function getRoot(els) {
-    var els = $('[data-pages]');
-    var root = null;
-    if (els.length > 0) {
-        var arr = [];
-        var r = 0;
-        do {
-            arr.push(els[r].dataset.pages);
-            r++;
-        } while (r < els.length);
-        arr.sort();
-        arr.reverse();
-        window.paths.arr = arr;
-        root = paths.page.stringExists(arr);
-        //root = arr.includes(paths.page) ? paths.page : null;
-        //console.log({page:paths.page,arr,root});
-    }
-    return root;
-}
-function getPages(win) {
-    var els = win.document.body.all('[data-page]');
-    var root = null;
-    if (els.length > 0) {
-        var arr = [];
-        var r = 0;
-        do {
-            arr.push(els[r].dataset.root);
-            r++;
-        } while (r < els.length);
-        window.paths.arr = arr;
-        root = paths.page.stringExists(arr);
-    }
-    return root;
-}
-function objectExists(obj, where) {
-    var data = obj;
-    var keys = Object.keys(obj);
-    var bool = false;
-    if (keys.length > 0) {
-        var values = Object.values(obj);
-        var k = 0;
-        do {
-            var key = keys[k]
-            var value = values[k];
-            var hasKey = data.hasOwnProperty(obj);
-            var hasVal = data[key].includes(value);
-            bool = hasKey && hasVal;
-            if (bool === false) {
-                k = keys.length;
-            }
-            k++;
-        } while (k < keys.length);
-    }
-    return bool;
-}
-function translated(element) {
-    const style = window.getComputedStyle(element)
-    const matrix = style['transform'] || style.webkitTransform || style.mozTransform
-    if (matrix === 'none' || typeof matrix === 'undefined') {
-        return {
-            x: 0,
-            y: 0,
-            z: 0
-        }
-    }
-    const matrixType = matrix.includes('3d') ? '3d' : '2d'
-    const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
-    if (matrixType === '2d') {
-        return {
-            x: matrixValues[4],
-            y: matrixValues[5],
-            z: 0
-        }
-    }
-    if (matrixType === '3d') {
-        return {
-            x: matrixValues[12],
-            y: matrixValues[13],
-            z: matrixValues[14]
-        }
-    }
 }
 
 window.colors = {
