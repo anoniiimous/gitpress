@@ -165,6 +165,10 @@
         flex-direction: column;
     }
 
+    picture > img {
+        width: 100%;
+    }
+
     ico {
         align-items: center;
         display: inline-flex;
