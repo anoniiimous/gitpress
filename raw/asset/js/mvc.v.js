@@ -383,6 +383,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var r = 0;
                                                 do {
                                                     if (res[r].slug === get[4]) {
+                                                        console.log(211, res[r], slug);
                                                         var json = res[r];
                                                     }
                                                     r++;
@@ -391,7 +392,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     throw "Not Found";
                                                 }
                                             }
-                                            0 > 1 ? console.log(295, {
+                                            0 < 1 ? console.log(295, {
                                                 json,
                                                 res
                                             }) : null;
