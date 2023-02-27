@@ -132,11 +132,60 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "files") {
                             if (get.length > 3) {
                                 if (get[3] === "file") {
-                                    var vp = dom.body.find('page[data-page="/dashboard/*/files/file"]');
-                                    var form = vp.find('form');
-                                    form.children[0].find('[type="file"]').closest('label').innerHTML = form.children[0].find('[type="file"]').closest('label').innerHTML;
-                                    form.children[1].find('column').innerHTML = "";
-                                    resolve(route);
+                                    if (get[4]) {
+                                        var vp = dom.body.find('page[data-page="/dashboard/*/files/file/*"]');
+                                        var filename = get[4];
+                                        var extension = filename.split('.')[filename.split('.').length - 1];
+                                        vp.find('block card > header').find('[placeholder="filename.ext"]').textContent = filename;
+                                        var column = vp.find('block card > column');
+                                        $(column.all('card > column > *')).addClass('display-none');
+                                        if (['mp4'].includes(extension)) {
+                                            console.log(extension);
+                                        } else if (['jpg', 'png', 'svg', 'webp'].includes(extension)) {
+                                            var src = '';
+                                            if (extension === 'svg') {
+                                                var res = await github.repos.contents({
+                                                    owner: user.login,
+                                                    repo: get[1],
+                                                    path: '/raw/files/' + filename
+                                                }, {
+                                                    accept: "application/vnd.github.raw",
+                                                    cache: "reload"
+                                                });
+                                                src = 'data:image/svg+xml;base64,' + btoa(res);
+                                            } else {
+                                                src = await github.raw.blob({
+                                                    owner: user.login,
+                                                    repo: get[1],
+                                                    resource: '/raw/files/' + filename
+                                                });
+                                            }
+                                            var picture = column.find('picture');
+                                            picture.classList.remove('display-none');
+                                            var img = picture.find('img');
+                                            img.src = '';
+                                            img.src = src;
+                                        } else {
+                                            var text = await github.raw.git("/" + user.login + "/" + get[1] + '/main/raw/files/' + filename);
+                                            console.log({
+                                                text,
+                                                json: is.json(text)
+                                            });
+                                            if (typeof text === "object") {
+                                                text = JSON.stringify(text);
+                                            }
+                                            var textarea = column.find('textarea');
+                                            textarea.closest('box').classList.remove('display-none');
+                                            textarea.value = text;
+                                            on.key.up.auto.size(textarea);
+                                        }
+                                    } else {
+                                        var vp = dom.body.find('page[data-page="/dashboard/*/files/file"]');
+                                        var form = vp.find('form');
+                                        form.children[0].find('[type="file"]').closest('label').innerHTML = form.children[0].find('[type="file"]').closest('label').innerHTML;
+                                        form.children[1].find('column').innerHTML = "";
+                                        resolve(route);
+                                    }
                                 }
                             } else {
                                 var feed = byId('feed-dashboard-files');

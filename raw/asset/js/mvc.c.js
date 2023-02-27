@@ -1006,6 +1006,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+        download: (target)=>{
+            var src = null;
+            var element = target.closest('header').nextElementSibling.find('card > column > :not(.display-none)');
+            if (element.find('img')) {
+                src = {
+                    download: GET[4],
+                    href: element.find('img').src
+                };
+            } else if (element.find('textarea')) {
+                src = {
+                    download: GET[4],
+                    href: blob(element.find('textarea').value)
+                };
+            }
+            console.log(src);
+            src ? download(src) : null;
+        }
+        ,
+
         file: ()=>{
             dom.body.find('[data-page="/dashboard/*/files/file/"]').innerHTML = "";
             ("/dashboard/:get/files/file/").router();
@@ -1192,7 +1211,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var titles = "";
                 if (files.length > 0) {
                     if (files.length > 1) {
-                        titles = files.length + " products";
+                        titles = files.length + " uploads";
                     } else {
                         titles = '"' + files[0].name + '"';
                     }

@@ -1,0 +1,70 @@
+<blocks>
+    <header class="-dw480px-padding-10px padding-20px">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Upload</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row>
+                    <box class="line-height-30px" data-href="/dashboard/:get/files/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-folder"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">View Files</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
+    <block class="align-items-center justify-content-center">
+        <section>
+            <card class="-dw480px-margin-10px -dw480px-max-width-100pct-minus-20px border-radius-5px line-height-50px margin-x-20px max-width-100pct-minus-40px overflow-hidden width-1280px">
+                <header class="background-color-ccc display-flex flex-direction-row justify-content-space-between">
+                    <box class="padding-x-10px">
+                        <row class="align-items-center gap-5px justify-content-center">
+                            <ico data-height="20px" data-width="20px">
+                                <n class="gg-file"></n>
+                            </ico>
+                            <text class="font-weight-bolder" placeholder="filename.ext"></text>
+                        </row>
+                    </box>
+                    <box>
+                        <row>
+                            <ico data-tap="controller.files.download(event.target)">
+                                <n class="gg-software-download"></n>
+                            </ico>
+                            <ico class="display-none">
+                                <n class="gg-pen"></n>
+                            </ico>
+                        </row>
+                    </box>
+                </header>
+                <column class="background-color-fff">
+                    <box class="display-none">
+                        <column class="overflow-auto">
+                            <textarea class="overflow-hidden padding-20px white-space-pre"></textarea>
+                        </column>
+                    </box>
+                    <picture class="display-none">
+                        <img>
+                    </picture>
+                </column>
+            </card>
+        </section>
+    </block>
+</blocks>

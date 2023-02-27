@@ -139,24 +139,22 @@ window.github = {
             );
         }
         ,
-        git: (resource)=>{
-            return new Promise((resolve,reject)=>{
-                var host = 'https://raw.githubusercontent.com';
-                var url = host + resource;
-                var settings = {
-                    headers: {
-                        'Accept': 'application/vnd.github.v3.raw',
-                        'Access-Control-Allow-Origin': '*',
-                        'Authorization': 'token ' + localStorage.githubAccessToken
-                    },
-                    mode: 'cors'
-                };
-                const a = (data)=>{
-                    resolve(data);
-                }
-                ajax(url, settings).then(a);
-            }
-            );
+        git: async(resource)=>{
+            var r = rout.ed.dir(resource);
+            var repo = r[1];
+            r.splice(0, 3);
+            var path = rout.ed.url(r);
+            var user = await github.user.get();
+            var owner = user.login;
+            //console.log({owner, path, repo});
+            return await github.repos.contents({
+                owner,
+                path,
+                repo
+            }, {
+                accept: "application/vnd.github.raw",
+                cache: "reload"
+            });
         }
         ,
         path: async(resource)=>{
@@ -166,6 +164,7 @@ window.github = {
             var path = rout.ed.url(r);
             var user = await github.user.get();
             var owner = user.login;
+            //console.log({owner, path, repo});
             return await github.repos.contents({
                 owner,
                 path,

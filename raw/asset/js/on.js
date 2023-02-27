@@ -574,6 +574,8 @@ window.on.key.up.auto = {
     size: (target)=>{
         target.style.height = 0;
         target.style.height = (target.scrollHeight) + "px";
+        target.style.width = 0;
+        target.style.width = (target.scrollWidth) + "px";
     }
 };
 window.on.key.up.dashboard = {}
