@@ -23,7 +23,11 @@ Array.prototype.addClass = function(name) {
     }
     return that;
 }
-;
+
+Array.prototype.has = function(that) {
+    return that.every(v => this.includes(v));
+}
+
 Array.prototype.removeClass = function(name) {
     var that = this;
     var vals = Object.values(that);
