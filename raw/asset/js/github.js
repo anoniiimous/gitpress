@@ -59,7 +59,7 @@ window.github = {
             var search = route.search;
 
             var scope = github.oauth.config.scope;
-            var state = Crypto.uid.create(1);
+            var state = 'github_' + Crypto.uid.create(1);
             var obj = {
                 client_id,
                 scope,

@@ -13,6 +13,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             var params = Object.fromEntries(new URLSearchParams(search));
             var keys = Object.keys(params);
             if (keys.length > 0) {
+                console.log(params);
                 if (keys.includes("code")) {
                     if (keys.includes('state')) {
                         var state = params['state'].split('_')[0];
@@ -22,8 +23,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (state === 'stripe') {
                             await stripe.oauth.authorize(params);
                         }
-                    } else {
-                        await github.oauth.authorize(params);
                     }
                     route.search = "";
                 }
