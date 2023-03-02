@@ -14,7 +14,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             var keys = Object.keys(params);
             if (keys.length > 0) {
                 if (keys.includes("code")) {
-                    await github.oauth.authorize(params);
+                    if (keys.includes('state')) {
+                        var state = params['state'].split('_')[0];
+                        if (state === 'github') {
+                            await github.oauth.authorize(params);
+                        }
+                        if (state === 'stripe') {
+                            await stripe.oauth.authorize(params);
+                        }
+                    } else {
+                        await github.oauth.authorize(params);
+                    }
                     route.search = "";
                 }
             }
@@ -128,6 +138,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             //alert(iframe.contentWindow.document.body.outerHTML);
                             resolve(route);
+                        }
+                        if (get[2] === "config") {
+                            if (get.length === 4) {
+                                if (get[3] === "checkout") {
+                                    var vp = dom.body.find('page[data-page="' + route.page + '"]');
+                                    var connect = {
+                                        stripe: vp.find('[data-value="stripe.connect"]')
+                                    };
+                                    var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
+                                    var state = 'stripe_' + Crypto.uid.create(1);
+                                    localStorage.redirect_uri = route.path;
+                                    connect.stripe.href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + stripe.config.client_id.test + "&redirect_uri=" + stripe.config.redirect_uri + "&scope=read_write&state=" + stripe.config.state;
+                                }
+                            }
                         }
                         if (get[2] === "files") {
                             if (get.length > 3) {

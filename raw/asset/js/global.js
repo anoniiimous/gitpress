@@ -17,4 +17,4 @@ window.global = window.globals = {
 };
 
 window.global.dashboard = {}
-window.global.dashboard.routes = ["build", "files", "media", "merch", "pages", "posts", "style"];
+window.global.dashboard.routes = ["build", "config", "files", "media", "merch", "pages", "posts"];

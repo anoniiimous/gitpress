@@ -313,12 +313,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         else: async()=>{
             const iframe = byId('iframe-editor');
-            const block = iframe.closest('pages');
+            const block = dom.body.find('[data-page="/dashboard/*/build/er"]'); //iframe.closest('pages');
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main nav + pages');
+            const blocks = block.closest('main nav + pages');
             const toggle = 0 < 1;
 
             nav.classList.remove('display-none');
@@ -331,11 +331,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             block.dataset.height = "calc(100% - 10px)";
             //block.dataset.width = "calc(100% - 260px)";
 
-            const win = iframe.contentWindow;
-            const head = win.document.head;
-            const body = win.document.body;
+            //const win = iframe.contentWindow;
+            //const head = win.document.head;
+            //const body = win.document.body;
 
-            if (head.find) {
+            if (iframe) {
                 const css = head.find("#style-editor");
                 header.classList.remove('display-none');
                 block.classList.add('border-top-left-radius-10px');
@@ -398,12 +398,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         index: async()=>{
             const iframe = byId('iframe-editor');
-            const block = iframe.closest('pages');
+            const block = dom.body.find('[data-page="/dashboard/*/build/er"]'); //iframe.closest('pages');
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
             const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main nav + pages');
+            const blocks = block.closest('main nav + pages');
             const toggle = 0 < 1;
 
             nav.classList.remove('display-none');
@@ -416,11 +416,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             block.dataset.height = "calc(100% - 10px)";
             //block.dataset.width = "calc(100% - 260px)";
 
-            const win = iframe.contentWindow;
-            const head = win.document.head;
-            const body = win.document.body;
-
-            if (head.find) {
+            if(iframe) {
                 const css = head.find("#style-editor");
                 header.classList.remove('display-none');
                 block.classList.add('border-top-left-radius-10px');

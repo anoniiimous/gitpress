@@ -42,7 +42,7 @@
             </box>
         </row>
         <column data-display="none">
-            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/config/">
+            <box class="flex-1 line-height-50px" data-display="none" data-href="/dashboard/:get/build/config/">
                 <row class="align-items-center justify-content-center">
                     <text class="display-flex flex-1 height-50px">
                         <ico>
@@ -66,6 +66,17 @@
                     </ico>
                 </row>
             </box>
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/style/">
+                <row>
+                    <ico>
+                        <n class="gg-template"></n>
+                    </ico>
+                    <text>Style</text>
+                    <ico class="margin-left-auto">
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
             <box class="flex-1 line-height-50px" data-display="none" data-href="/dashboard/:get/build/preview/">
                 <row>
                     <ico>
@@ -73,6 +84,64 @@
                     </ico>
                     <text>Preview</text>
                     <ico class="margin-left-auto">
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
+        </column>
+    </card>
+    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+        <row data-tap="controller.nav.card(event.target)">
+            <box class="flex-1 font-weight-bolder line-height-50px">
+                <row class="align-items-center justify-content-center">
+                    <text class="display-flex flex-1 height-50px" data-href="/dashboard/:get/config">
+                        <ico>
+                            <n class="gg-options"></n>
+                        </ico>
+                        <span>Config</span>
+                    </text>
+                    <ico class="transition-1s">
+                        <n class="gg-chevron-down"></n>
+                    </ico>
+                </row>
+            </box>
+        </row>
+        <column data-display="none">
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/config/checkout">
+                <row>
+                    <text class="display-flex flex-1 height-50px">
+                        <ico>
+                            <n class="gg-credit-card"></n>
+                        </ico>
+                        <span>Checkout</span>
+                    </text>
+                    <ico>
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
+            <box class="flex-1 line-height-50px" data-href="/dashboard/:get/build/config/domains">
+                <row class="align-items-center justify-content-center">
+                    <text class="display-flex flex-1 height-50px">
+                        <ico>
+                            <n class="gg-globe-alt"></n>
+                        </ico>
+                        <span>Domains</span>
+                    </text>
+                    <ico>
+                        <n class="gg-chevron-right"></n>
+                    </ico>
+                </row>
+            </box>
+            <box class="flex-1 line-height-50px" data-display="none" data-href="/dashboard/:get/config/shipping">
+                <row>
+                    <text class="display-flex flex-1 height-50px">
+                        <ico>
+                            <n class="gg-"></n>
+                        </ico>
+                        <span>Settings</span>
+                    </text>
+                    <ico>
                         <n class="gg-chevron-right"></n>
                     </ico>
                 </row>
@@ -290,7 +359,7 @@
             </box>
         </column>
     </card>
-    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-ccc border-radius-10px margin-20px" data-display="none">
         <row data-tap="controller.nav.card(event.target)">
             <box class="flex-1 font-weight-bolder line-height-50px">
                 <row class="align-items-center justify-content-center">

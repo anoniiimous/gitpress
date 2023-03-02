@@ -54,6 +54,16 @@ async function init() {
         html = await ajax('/raw/style/template.html');
     }
     html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
+    const fetching = dom.body.all(':not(page):not(pages)[data-fetch]');
+    if (fetching.length > 0) {
+        var f = 0;
+        do {
+            if (fetching[f].innerHTML === "") {
+                fetching[f].innerHTML = await ajax(fetching[f].dataset.fetch);
+            }
+            f++;
+        } while (fetching.length < 0);
+    }
 
     //EVENTS
     touch.ing = false;

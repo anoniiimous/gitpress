@@ -1,20 +1,25 @@
 <pages class="-isauth flex-grow-1 height-100pct position-fixed width-100pct" data-fetch="raw/pages/page.dashboard.project.pages.page.html" data-page="/dashboard/*/pages/*"></pages>
 <main>
-    <page class="flex-1" data-fetch="raw/pages/page.index.html" data-page=""></page>
+    <page class="flex-1" data-fetch="raw/pages/page.index.html" data-page="/"></page>
     <page class="flex-1 width-100pct" data-fetch="raw/pages/page.user.html" data-page="/*"></page>
     <page class="flex-1 width-100pct" data-fetch="raw/pages/page.user.blog.html" data-page="/*/*"></page>
     <pages class="background-color-e2dcd8 flex-grow-1 overflow-hidden" data-page="/dashboard">
         <page class="-isauth background-color-f5 flex-grow-1 height-100pct min-height-100pct overflow-x-hidden width-100pct" data-fetch="raw/pages/page.dashboard.html" data-page="/dashboard"></page>
         <pages class="-noauth flex-grow-1 min-height-100pct width-100pct" data-fetch="raw/asset/html/template/template.login.html" data-page="/dashboard"></pages>
         <pages class="-isauth flex-grow-1 min-height-100pct overflow-hidden" data-page="/dashboard/*" data-transition="0.3s">
-            <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-240px z-index-5" data-960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" data-page="/dashboard/*" data-transition="0.3s"></nav>
+            <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-240px z-index-5" data-960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" data-transition="0.3s"></nav>
             <pages class="background-color-e2dcd8 flex-grow-1 margin-left-240pxt z-index-6" data-960px-margin-left="0" data-page="/dashboard/*" data-transition="0.3s">
                 <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.html" data-page="/dashboard/*"></page>
                 <pages class="flex-grow-1" data-page="/dashboard/*/build">
                     <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.build.html" data-page="/dashboard/*/build"></page>
-                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.config.html" data-page="/dashboard/*/build/config"></page>
-                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.domain.html" data-page="/dashboard/*/build/domain"></page>
-                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 margin-x-10px margin-top-10px overflow-hidden position-fixed right-0" data-960px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 10px)" data-page="/dashboard/*/build" data-transform="translateY(100%)" data-transition="0.3s" data-width="calc(100% - 20px)"></pages>
+                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 margin-x-10px margin-top-10px overflow-hidden position-fixed right-0" data-960px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 10px)" data-page="/dashboard/*/build/er" data-transform="translateY(100%)" data-transition="0.3s" data-width="calc(100% - 20px)"></pages>
+                </pages>
+                <pages class="flex-grow-1" data-page="/dashboard/*/config">
+                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.config.html" data-page="/dashboard/*/config"></page>
+                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.config.branding.html" data-page="/dashboard/*/config/branding"></page>
+                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.config.checkout.html" data-page="/dashboard/*/config/checkout"></page>
+                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.config.domains.html" data-page="/dashboard/*/config/domains"></page>
+                    <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.config.settings.html" data-page="/dashboard/*/config/settings"></page>
                 </pages>
                 <pages class="flex-grow-1" data-page="/dashboard/*/files">
                     <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.files.html" data-page="/dashboard/*/files"></page>
@@ -30,7 +35,6 @@
                 <pages class="flex-grow-1" data-page="/dashboard/*/merch">
                     <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.merch.html" data-page="/dashboard/*/merch"></page>
                     <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.merch.catalog.html" data-page="/dashboard/*/merch/catalog"></page>
-                    <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.merch.catalog.product.html" data-page="/dashboard/*/merch/catalog/*"></pages>
                     <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.merch.orders.html" data-page="/dashboard/*/merch/orders"></pages>
                 </pages>
                 <pages class="flex-grow-1" data-page="/dashboard/*/pages">

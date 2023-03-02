@@ -1,0 +1,267 @@
+<blocks>
+    <header class="-dw480px-padding-10px display-flex flex-direction-column gap-10px padding-20px">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-nonre" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
+                    </box>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Config</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card data-display="none">
+                <row>
+                    <box class="display-none line-height-30px" data-href="/dashboard/:get/merch/catalog/">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="50px">
+                                <n class="gg-tag"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">Add Item</text>
+                        </row>
+                    </box>
+                </row>
+            </card>
+        </row>
+        <row>
+            <card class="font-weight-bolder padding-y-20px">
+                <row class="gap-10px">
+                    <box data-href="/dashboard/:get/config">
+                        <column class="gap-5px">
+                            <text>About</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config"></line>
+                        </column>
+                    </box>
+                    <box data-href="/dashboard/:get/config/branding">
+                        <column class="gap-5px">
+                            <text>Branding</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/branding"></line>
+                        </column>
+                    </box>
+                    <box data-href="/dashboard/:get/config/checkout">
+                        <column class="gap-5px">
+                            <text>Checkout</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/checkout"></line>
+                        </column>
+                    </box>
+                    <box data-href="/dashboard/:get/config/domains">
+                        <column class="gap-5px">
+                            <text>Domains</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/domains"></line>
+                        </column>
+                    </box>
+                    <box data-display="none">
+                        <column class="gap-5px">
+                            <text>Analytics</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/analytics"></line>
+                        </column>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
+    <block class="margin-x-20px" data-display="none">
+        <flex class="-dw960px-flex-direction-column gap-20px">
+            <card class="-dw960px-width-100pct width-320px">
+                <section>
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Current payment methods</text>
+                            <text>These are the payment methods that you have set up in your store. If enabled, they are available for your customers to choose from at checkout.</text>
+                        </column>
+                    </box>
+                </section>
+            </card>
+            <card class="flex-1">
+                <column class="gap-20px"></column>
+                <template>
+                    <box class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 padding-20px">
+                        <row class="align-items-center">
+                            <ico>
+                                <n class="gg-dollar"></n>
+                            </ico>
+                            <column class="margin-right-auto">
+                                <text class="font-weight-bolder">Pay by cash</text>
+                                <text>Manual Payment &#8212;Settings</text>
+                            </column>
+                            <field>
+                                <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                    <text class="font-size-14px font-weight-bolder" data-display="none">Actions</text>
+                                    <ico>
+                                        <n class="gg-more-alt"></n>
+                                    </ico>
+                                </row>
+                                <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
+                                        <ico data-height="30px" data-width="30px">
+                                            <n class="gg-music"></n>
+                                        </ico>
+                                        <text>Edit</text>
+                                    </row>
+                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
+                                        <ico data-height="30px" data-width="30px">
+                                            <n class="gg-image"></n>
+                                        </ico>
+                                        <text>Remove</text>
+                                    </row>
+                                </column>
+                            </field>
+                        </row>
+                    </box>
+                    <box class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 padding-20px">
+                        <row class="align-items-center">
+                            <ico>
+                                <svg></svg>
+                            </ico>
+                            <column class="margin-right-auto">
+                                <text class="font-weight-bolder">Stripe</text>
+                                <text>Stripe is connected.</text>
+                            </column>
+                            <field>
+                                <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                    <text class="font-size-14px font-weight-bolder" data-display="none">Actions</text>
+                                    <ico>
+                                        <n class="gg-more-alt"></n>
+                                    </ico>
+                                </row>
+                                <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
+                                        <ico data-height="30px" data-width="30px">
+                                            <n class="gg-music"></n>
+                                        </ico>
+                                        <text>Edit</text>
+                                    </row>
+                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
+                                        <ico data-height="30px" data-width="30px">
+                                            <n class="gg-image"></n>
+                                        </ico>
+                                        <text>Remove</text>
+                                    </row>
+                                </column>
+                            </field>
+                        </row>
+                    </box>
+                </template>
+            </card>
+        </flex>
+    </block>
+    <block class="margin-x-20px">
+        <flex class="-dw960px-flex-direction-column gap-20px">
+            <card class="-dw960px-width-100pct width-320px">
+                <section>
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Add new payment methods</text>
+                            <text>Choose a payment provider from our list or set up your own manual payment methods to get paid for your online orders.</text>
+                        </column>
+                    </box>
+                </section>
+            </card>
+            <card class="flex-1">
+                <column class="gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                        <header>
+                            <text class="display-flex font-weight-bolder font-size-18px">Stripe</text>
+                        </header>
+                        <column class="gap-20px">
+                            <text class="display-flex">Stripe is the easiest way to accept major international credit or debit cards and Apple Pay. You don't need a merchant account, so you can start accpeting payments today.</text>
+                            <text>Click "Connect with Stripe", create a free Stripe account in a few minutes and start processing payments immediately. By enabling payments throogh Stripe, you will be accepting Stripe Services Agreement. Please refer to the list of Prohibited Businesses before registering and opening a Stripe account.</text>
+                        </column>
+                        <footer>
+                            <a class="background-color-0096c7 border-radius-5px color-fff padding-x-20px padding-y-10px" data-value="stripe.connect">Connect and Enable</a>
+                        </footer>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                        <header>
+                            <text class="display-flex font-weight-bolder font-size-18px">Manual</text>
+                        </header>
+                        <column>
+                            <text class="display-flex">Not ready to accept online payments yet? Add cash on delivery, phone orders, or check to receive payments outside of your store’s online checkout.</text>
+                        </column>
+                        <footer>
+                            <flex class="align-items-center border-1px-solid border-color-ddd border-radius-5px gap-10px padding-x-20px padding-y-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <text>Add Manual Payment Payment</text>
+                            </flex>
+                        </footer>
+                    </box>
+                </column>
+            </card>
+        </flex>
+    </block>
+    <block class="margin-x-20px margin-y-50px">
+        <flex class="-dw960px-flex-direction-column gap-20px">
+            <card class="-dw960px-width-100pct width-320px">
+                <section>
+                    <box>
+                        <column class="gap-20px">
+                            <text class="font-weight-bolder">Add new shipping method or delivery method</text>
+                            <text>Select how you'll be getting your products to customers. Add local delivery, curbside and drive-through pickup, or enable shipping with the most popular carriers.</text>
+                        </column>
+                    </box>
+                </section>
+            </card>
+            <card class="flex-1">
+                <column class="gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                        <header>
+                            <text class="display-flex font-weight-bolder font-size-18px">Shipping</text>
+                        </header>
+                        <column>
+                            <text class="display-flex">Ship within your country or internationally. Enable automatic shipping rates from carriers or use your own custom rates if your product requires special shipping fees.</text>
+                        </column>
+                        <footer>
+                            <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <text>Add Shipping</text>
+                            </flex>
+                        </footer>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                        <header>
+                            <text class="display-flex font-weight-bolder font-size-18px">Local Delivery</text>
+                        </header>
+                        <column>
+                            <text class="display-flex">Deliver orders yourself in city and suburbs or outsource delivery to the services you trust. Set when, where, and under which conditions you deliver.</text>
+                        </column>
+                        <footer>
+                            <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <text>Add Delivery</text>
+                            </flex>
+                        </footer>
+                    </box>
+                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                        <header>
+                            <text class="display-flex font-weight-bolder font-size-18px">Self Pickup</text>
+                        </header>
+                        <column>
+                            <text class="display-flex">Add a curbside, drive-through, or in-store pickup. Specify your business hours, the pickup location, and add a brief instruction on how the pickup works for customers.</text>
+                        </column>
+                        <footer>
+                            <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
+                                <ico data-height="20px" data-width="20px">
+                                    <n class="gg-math-plus"></n>
+                                </ico>
+                                <text>Add Pickup</text>
+                            </flex>
+                        </footer>
+                    </box>
+                </column>
+            </card>
+        </flex>
+    </block>
+</blocks>

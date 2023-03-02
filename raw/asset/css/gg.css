@@ -514,6 +514,38 @@
 }
 
 @media {
+    .gg-credit-card {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 24px;
+        height: 18px;
+        border: 2px solid;
+        border-radius: 4px
+    }
+
+    .gg-credit-card::after, .gg-credit-card::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 24px;
+        left: -2px;
+        height: 2px;
+        background: currentColor;
+        top: 9px
+    }
+
+    .gg-credit-card::before {
+        width: 6px;
+        left: 2px;
+        top: 3px
+    }
+}
+
+@media {
     .gg-dollar {
         box-sizing: border-box;
         position: relative;
@@ -1479,6 +1511,36 @@
         height: 4px;
         background: currentColor;
         box-shadow: 0 6px 0, 6px 6px 0, 12px 6px 0, 6px 12px 0, 12px 12px 0, 6px 0 0, 12px 0 0, 0 12px 0 ;
+    }
+}
+
+@media {
+    .gg-more-alt {
+        transform: scale(var(--ggs,1))
+    }
+
+    .gg-more-alt, .gg-more-alt::after, .gg-more-alt::before {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+        border-radius: 100%
+    }
+
+    .gg-more-alt::after, .gg-more-alt::before {
+        content: "";
+        position: absolute;
+        top: 0
+    }
+
+    .gg-more-alt::after {
+        left: -6px
+    }
+
+    .gg-more-alt::before {
+        right: -6px
     }
 }
 
