@@ -206,6 +206,12 @@
         margin: 0;
     }
 
+    input::placeholder {
+        color: #8e8e8e;
+        font-size: 16px;
+        font-family: Arial;
+    }
+
     input[type="checkbox"] {
         display: none;
     }
