@@ -313,7 +313,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         else: async()=>{
             const iframe = byId('iframe-editor');
-            const block = dom.body.find('[data-page="/dashboard/*/build/er"]'); //iframe.closest('pages');
+            const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
+            //iframe.closest('pages');
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
@@ -398,7 +399,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         index: async()=>{
             const iframe = byId('iframe-editor');
-            const block = dom.body.find('[data-page="/dashboard/*/build/er"]'); //iframe.closest('pages');
+            const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
+            //iframe.closest('pages');
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
@@ -416,7 +418,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             block.dataset.height = "calc(100% - 10px)";
             //block.dataset.width = "calc(100% - 260px)";
 
-            if(iframe) {
+            if (iframe) {
                 const css = head.find("#style-editor");
                 header.classList.remove('display-none');
                 block.classList.add('border-top-left-radius-10px');
@@ -762,6 +764,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
+    },
+
+    connect: {
+        stripe: target=>{
+            var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
+            var state = 'stripe_' + Crypto.uid.create(1);
+            localStorage.redirect_uri = route.path;
+            target.href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + stripe.config.client_id.test + "&redirect_uri=" + stripe.config.redirect_uri + "&scope=read_write&state=" + stripe.config.state;
+        }
     },
 
     design: {

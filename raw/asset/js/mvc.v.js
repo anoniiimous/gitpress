@@ -24,7 +24,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             await stripe.oauth.authorize(params);
                         }
                     }
-                    route.search = "";
+                    //route.search = "";
                 }
             }
         }
@@ -142,13 +142,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             if (get.length === 4) {
                                 if (get[3] === "checkout") {
                                     var vp = dom.body.find('page[data-page="' + route.page + '"]');
-                                    var connect = {
-                                        stripe: vp.find('[data-value="stripe.connect"]')
-                                    };
-                                    var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
-                                    var state = 'stripe_' + Crypto.uid.create(1);
-                                    localStorage.redirect_uri = route.path;
-                                    connect.stripe.href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + stripe.config.client_id.test + "&redirect_uri=" + stripe.config.redirect_uri + "&scope=read_write&state=" + stripe.config.state;
                                 }
                             }
                         }
