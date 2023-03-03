@@ -1252,7 +1252,7 @@ window.github.crud.update = async(params,array)=>{
     ) : null;
     var treen = tree.filter((el)=>{
         delete el.content;
-        console.log(1256, treex.includes(el.path), treex, el, el.path);
+        //console.log(1256, treex.includes(el.path), treex, el, el.path);
         return !treex.includes(el.path)
     }
     )

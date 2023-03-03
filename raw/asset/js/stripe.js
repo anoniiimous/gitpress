@@ -35,7 +35,7 @@ window.stripe = {
         token: async(settings)=>{
             console.log(32, settings);
             try {
-                var host = 0 < 1 ? 'https://stripe.dompad.workers.dev' : 'https://connect.stripe.com/oauth/token';
+                var host = 0 < 1 ? 'https://stripe.dompad.workers.dev/oauth/token' : 'https://connect.stripe.com/oauth/token';
                 var res = await ajax(host, settings);
                 var data = JSON.parse(res);
                 var access_token = btoa(data["access_token"]);
@@ -61,39 +61,43 @@ window.stripe = {
                     } else {
                         var metas = doc.head.all('meta');
                         var el = document.createElement('meta')
-                        el.content = data.stripe_publishable_key;
                         el.name = 'stripe_publishable_key';
-                        console.log(metas);
+                        el.content = data.stripe_publishable_key;
                         metas[metas.length - 1].insertAdjacentHTML('afterend', '\n        ' + el.outerHTML);
                     }
                 }
+                if (data.stripe_user_id) {
+                    var meta = doc.head.find('meta[name="stripe_user_id"]');
+                    if (meta) {
+                        meta.content = data.stripe_user_id
+                    } else {
+                        var metas = doc.head.all('meta');
+                        var el = document.createElement('meta')
+                        el.name = 'stripe_user_id';
+                        el.content = data.stripe_user_id;
+                        metas[metas.length - 1].insertAdjacentHTML('afterend', '\n        ' + el.outerHTML);
+                    }
+                }
+                
                 console.log(42, 'success', {
                     html,
                     doc,
                     document: doc.documentElement.outerHTML,
                     head: doc.head.outerHTML
                 });
-                0 > 1 ? github.repos.contents({
-                    owner: window.owner.login,
-                    repo: GET[1],
-                    path: '/index.html'
-                }, {
-                    data: JSON.stringify({
-                        "content": btoa(doc.documentElement.outerHTML),
-                        "message": 'Update Client-side Stripe Publishable Key'
-                    }),
-                    dataType: 'PUT'
-                }) : null;
-                var params = {
-                    message: 'Update Client-side Stripe Publishable Key',
-                    repo: GET[1],
-                    owner: window.owner.login
-                };
-                var array = [{
-                    content: doc.documentElement.outerHTML,
-                    path: "index.html"
-                }];
-                await github.crud.update(params, array);
+
+                if(access_token) {
+                    var params = {
+                        message: 'Update Client-side Stripe Publishable Key',
+                        repo: GET[1],
+                        owner: window.owner.login
+                    };
+                    var array = [{
+                        content: doc.documentElement.outerHTML,
+                        path: "index.html"
+                    }];
+                    await github.crud.update(params, array);
+                }
             } catch (e) {
                 console.log(30, 'error', e);
             }
