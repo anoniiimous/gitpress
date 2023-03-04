@@ -771,7 +771,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
             var state = 'stripe_' + Crypto.uid.create(1);
             localStorage.redirect_uri = route.path;
-            target.href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + stripe.config.client_id.test + "&redirect_uri=" + stripe.config.redirect_uri + "&scope=read_write&state=" + stripe.config.state;
+            target.href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + stripe.oauth.client_id[stripe.config.livemode ? 'live' : 'test'] + "&redirect_uri=" + stripe.config.redirect_uri + "&scope=read_write&state=" + stripe.config.state;
         }
     },
 
