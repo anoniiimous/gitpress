@@ -4,7 +4,7 @@ window.stripe = {
             live: null,
             test: null
         },
-        livemode: true,
+        livemode: false,
         redirect_uri: window.location.protocol + "//" + window.location.host,
         scope: "read_write",
         state: 'stripe_' + Crypto.uid.create(1)
