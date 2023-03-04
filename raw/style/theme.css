@@ -1358,6 +1358,10 @@
 
 /*MIN HEIGHT*/
 @media screen {
+    .min-height-54px {
+        min-height: 54px;
+    }
+    
     .min-height-60px {
         min-height: 60px;
     }

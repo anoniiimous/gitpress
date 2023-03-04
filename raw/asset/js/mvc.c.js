@@ -1388,64 +1388,64 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        import: (b64)=>{
+        import: async(b64)=>{
             var split = b64.result.split(';base64,')
             var mime = split[0].split(':')[1];
             var type = mime.split('/')[0]
             if (["audio", "image", "video"].includes(type)) {
                 type === "image" ? type = "photo" : null;
-                ('/dashboard/:get/media/' + type).router().then(()=>{
-                    var vp = dom.body.find('[data-pages="/dashboard/*/media/' + type + '"]');
-                    if (type === "audio") {
-                        var column = vp.find('.gg-play-button').closest('box').find('column');
-                        var audio = document.createElement('audio');
-                        audio.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                        audio.dataset.filename = b64.files[0].name;
-                        audio.src = b64.result;
-                        0 < 1 ? audio.controls = true : null;
-                        column.innerHTML = audio.outerHTML;
+                GET.length > 4 ? null : await ('/dashboard/:get/media/' + type).router();
+                //.then(()=>{
+                var vp = dom.body.find('[data-page="/dashboard/*/media/' + type + '"]');
+                if (type === "audio") {
+                    var column = vp.find('.gg-play-button').closest('box').find('column');
+                    var audio = document.createElement('audio');
+                    audio.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                    audio.dataset.filename = b64.files[0].name;
+                    audio.src = b64.result;
+                    0 < 1 ? audio.controls = true : null;
+                    column.innerHTML = audio.outerHTML;
+                }
+                if (type === "photo") {
+                    var img = document.createElement('img');
+                    img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                    img.dataset.filename = b64.files[0].name;
+                    img.src = b64.result;
+                    vp.find('figure').innerHTML = img.outerHTML;
+                }
+                if (type === "video") {
+                    var video = document.createElement('video');
+                    video.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                    video.dataset.filename = b64.files[0].name;
+                    video.playsinline = true;
+                    video.src = b64.result;
+                    vp.find('figure').innerHTML = video.outerHTML;
+                    var canvas = vp.find('canvas');
+                    var video = vp.find('figure video');
+                    video.autoplay = true;
+                    video.addEventListener("loadedmetadata", loadCanvas)
+                    video.addEventListener("play", loadPlay, true)
+                    video.addEventListener("pause", loadCapture, true)
+                    function loadCanvas() {
+                        canvas.height = video.videoHeight;
+                        canvas.width = video.videoWidth;
+                        video.classList.add('display-none');
                     }
-                    if (type === "photo") {
-                        var img = document.createElement('img');
-                        img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                        img.dataset.filename = b64.files[0].name;
-                        img.src = b64.result;
-                        vp.find('figure').innerHTML = img.outerHTML;
+                    function loadCapture() {
+                        video.currentTime = video.duration / 2;
+                        canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                        video.poster = canvas.toDataURL();
+                        video.removeEventListener("pause", loadCapture, true)
+                        video.controls = true;
+                        video.currentTime = 0;
+                        video.classList.remove('display-none');
                     }
-                    if (type === "video") {
-                        var video = document.createElement('video');
-                        video.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
-                        video.dataset.filename = b64.files[0].name;
-                        video.playsinline = true;
-                        video.src = b64.result;
-                        vp.find('figure').innerHTML = video.outerHTML;
-                        var canvas = vp.find('canvas');
-                        var video = vp.find('figure video');
-                        video.autoplay = true;
-                        video.addEventListener("loadedmetadata", loadCanvas)
-                        video.addEventListener("play", loadPlay, true)
-                        video.addEventListener("pause", loadCapture, true)
-                        function loadCanvas() {
-                            canvas.height = video.videoHeight;
-                            canvas.width = video.videoWidth;
-                            video.classList.add('display-none');
-                        }
-                        function loadCapture() {
-                            video.currentTime = video.duration / 2;
-                            canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-                            video.poster = canvas.toDataURL();
-                            video.removeEventListener("pause", loadCapture, true)
-                            video.controls = true;
-                            video.currentTime = 0;
-                            video.classList.remove('display-none');
-                        }
-                        function loadPlay() {
-                            video.pause();
-                            video.removeEventListener("play", loadPlay, true)
-                        }
+                    function loadPlay() {
+                        video.pause();
+                        video.removeEventListener("play", loadPlay, true)
                     }
                 }
-                );
+                //});
             }
         }
         ,
@@ -2747,6 +2747,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     photo: {
 
+        clear: target=>{
+            var box = target.closest('box');
+            box.firstElementChild.innerHTML = '';
+            var input = box.find('input');
+            input.insertAdjacentHTML('beforebegin', input.outerHTML);
+            input.remove();
+        }
+        ,
+
         create: async(event)=>{
             event.preventDefault();
             var form = event.target;
@@ -2756,13 +2765,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var src = photo ? photo.src : null;
             var filename = photo ? photo.dataset.filename : null;
             var tags = [];
-            var children = form.lastElementChild.find('footer span').children;
-            if (children.length > 0) {
+            var keywords = form.find('[data-value="photo.tags"]').all('text');
+            if (keywords.length > 0) {
+                var k = 0;
                 do {
-                    var child = children.children[c];
-                    var tag = child.textContent;
+                    var child = keywords[k];
+                    var tag = child.find('span').textContent;
                     tags.push(tag);
-                } while (c < children.length)
+                    k++;
+                } while (k < keywords.length)
             }
             var title = form.find('input[type="text"]').value;
             var data = {
@@ -2772,10 +2783,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 title
             };
             console.log(2001, {
-                data,
-                form
+                data
             });
-            if (photos.length > 0 && title) {
+            if (0 < 1 && photos.length > 0 && title) {
                 //JSON
                 var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
                 var row = {
@@ -2784,7 +2794,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     title
                 };
                 description ? row.description = description : null;
-                tags ? row.tags : null;
+                tags ? row.tags = tags : null;
 
                 //MEDIA
                 try {
@@ -2795,12 +2805,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var j = JSON.parse(atob(data.content));
                     var json = JSON.parse(atob(data.content));
-                    json.push(row);
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
                 } catch (e) {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
@@ -2813,12 +2836,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var j = JSON.parse(atob(data.content));
                     var json = JSON.parse(atob(data.content));
-                    json.push(row);
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
                 } catch (e) {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
@@ -2835,10 +2871,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     content: str2,
                     path: "raw/media/photo/photo.json"
                 }, {
+                    content: JSON.stringify(row, null, 4),
+                    path: "raw/media/photo/" + slug + "/photo.json"
+                }];
+                photo.src.startsWith('data:') ? array.push({
                     content: photo.src.split(';base64,')[1],
                     path: "raw/media/photo/" + slug + "/image." + filename.split('.')[filename.split('.').length - 1],
                     type: "base64"
-                }];
+                }) : null;
                 console.log(2452, 'controller.photo.update', "array", {
                     array
                 });
@@ -2847,7 +2887,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 )
             }
-        }
+        }        
 
     },
 

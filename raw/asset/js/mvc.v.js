@@ -261,7 +261,92 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         if (get[2] === "media") {
 
                             if (get[3]) {
-                                if (get[4]) {}
+
+                                var vp = dom.body.find('pages[data-page="/dashboard/*/media/' + get[3] + '"]');
+
+                                if (get[3] === "photo") {
+                                    var image = vp.find('[data-value="photo.image"]');
+                                    var box = image.closest('box');
+                                    var input = box.find('input[type="file"]');
+                                    input.insertAdjacentHTML('beforebegin', input.outerHTML);
+                                    input.remove();
+                                    image.innerHTML = '';
+
+                                    var title = vp.find('[data-value="photo.title"]');
+                                    title.value = '';
+
+                                    var description = vp.find('[data-value="photo.description"]');
+                                    description.value = '';
+
+                                    var tags = vp.find('[data-value="photo.tags"]');
+                                    tags.innerHTML = tags.lastElementChild.outerHTML;
+                                    $(tags.all('text')).remove();
+
+                                    on.key.up.auto.size(description)
+                                }
+
+                                if (get[4]) {
+                                    if (get[3] === "audio") {
+                                        var res = await github.repos.contents({
+                                            owner: window.owner.login,
+                                            path: "/raw/media/audio/" + get[4] + "/audio.json",
+                                            repo: get[1]
+                                        }, {
+                                            accept: "application/vnd.github.raw"
+                                        });
+                                    } else if (get[3] === "photo") {
+
+                                        try {
+                                            var filename = 'image.jpg';
+                                            var src = await github.raw.blob({
+                                                owner: window.owner.login,
+                                                resource: "/raw/media/photo/" + get[4] + "/" + filename,
+                                                repo: get[1]
+                                            });
+
+                                            var img = document.createElement('img');
+                                            img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                                            img.dataset.filename = filename;
+                                            img.src = src;
+                                            image.innerHTML = img.outerHTML;
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+
+                                        var res = await github.repos.contents({
+                                            owner: window.owner.login,
+                                            path: "/raw/media/photo/" + get[4] + "/photo.json",
+                                            repo: get[1]
+                                        }, {
+                                            accept: "application/vnd.github.raw"
+                                        });
+
+                                        res.title ? title.value = res.title : null;
+
+                                        res.description ? description.value = res.description : null;
+
+                                        if (res.tags) {
+                                            var t = 0;
+                                            do {
+                                                var tag = res.tags[t];
+                                                var template = tags.closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                template.find('span').textContent = tag;
+                                                vp.find('[data-after="Tags"]').closest('box').find('flex').lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                t++;
+                                            } while (t < res.tags.length)
+                                        }
+
+                                    } else if (get[3] === "video") {
+                                        var res = await github.repos.contents({
+                                            owner: window.owner.login,
+                                            path: "/raw/media/video/" + get[4] + "/video.json",
+                                            repo: get[1]
+                                        }, {
+                                            accept: "application/vnd.github.raw"
+                                        });
+                                    }
+                                }
+
                             } else {
 
                                 var vp = dom.body.find('page[data-page="/dashboard/*/media"]');

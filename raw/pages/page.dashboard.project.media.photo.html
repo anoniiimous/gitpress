@@ -36,12 +36,17 @@
             <card class="margin-x-auto max-width-100pct width-1280px" data-960px-width="480px">
                 <section>
                     <box class="background-color-fff border-0px-solid border-radius-10px height-0 overflow-hidden padding-top-100pct width-100pct">
-                        <figure class="height-100pct position-absolute top-0 width-100pct"></figure>
+                        <figure class="height-100pct position-absolute top-0 width-100pct" data-value="photo.image"></figure>
                         <column class="align-items-center display-flex empty-state flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
                             <label for="file-dashboard-media-photo">
                                 <text class="background-color-333 color-fff display-block line-height-50px padding-x-20px position-relative">Add New Photo</text>
                                 <input accept="image/jpeg" id="file-dashboard-media-photo" onchange="on.change.file(event).then(controller.media.import)" type="file">
                             </label>
+                        </column>
+                        <column class="align-items-center display-flex full-state-subsequent flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff v position-absolute right-5px top-5px" data-height="30px" data-tap="controller.photo.clear(event.target)" data-width="30px">
+                                <n class="gg-close"></n>
+                            </ico>
                         </column>
                     </box>
                 </section>
@@ -53,7 +58,7 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Title</text>
                         </header>
                         <column class="gap-0px">
-                            <input class="font-size-18px height-36px line-height-36px margin-10px" type="text" placeholder="Enter a title">
+                            <input class="font-size-18px height-36px line-height-36px margin-10px" data-value="photo.title" type="text" placeholder="Enter a title">
                         </column>
                     </box>
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
@@ -61,14 +66,14 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
                         </header>
                         <column class="gap-0px">
-                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-54px overflow-hidden" data-value="photo.description" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
                         </column>
                     </box>
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
                         </header>
-                        <flex class="flex-wrap-wrap gap-10px padding-10px">
+                        <flex class="flex-wrap-wrap gap-10px padding-10px" data-value="photo.tags">
                             <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
                                 <ico data-height="20px" data-width="20px">
                                     <n class="gg-hashtag"></n>
@@ -117,7 +122,7 @@
                             </label>
                         </flex>
                         <flex class="gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="4">
-                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.merch.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
+                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.media.delete([rout.ed.dir(route.path).splice(4,5).join('/')])">Delete</text>
                             <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
                                 <text>Post It</text>
                                 <input id="submit-dashboard-media-photo" type="submit">

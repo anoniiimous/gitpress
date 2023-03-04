@@ -92,6 +92,7 @@ window.github = {
         blob: async(params)=>{
             return new Promise((resolve,reject)=>{
                 fetch("https://api.github.com/repos/" + params.owner + "/" + params.repo + "/contents" + params.resource, {
+                    cache: "reload",
                     headers: {
                         Accept: "application/vnd.github.raw",
                         Authorization: "token " + localStorage.githubAccessToken
