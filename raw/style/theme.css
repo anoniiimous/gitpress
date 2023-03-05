@@ -1439,6 +1439,24 @@
     }
 }
 
+@media {
+    .outline-4px-solid {
+        outline: 4px solid;
+    }
+}
+
+@media {
+    .outline-color-005cc8 {
+        outline-color: #005cc8;
+    }
+}
+
+@media {
+    .outline-offset-minus-2px {
+        outline-offset: -2px;
+    }
+}
+
 /*OVERFLOW*/
 @media {
     .overflow-auto {

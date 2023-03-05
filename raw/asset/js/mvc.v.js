@@ -405,7 +405,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             video.muted = true;
                                             //video.controls = true;
 
-                                            controller.video.thumbs(video);
+                                            await controller.video.thumbs(video);
 
                                             canvas.parentElement.dataset.display = "flex";
                                         } catch (e) {
@@ -425,7 +425,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         } catch (e) {
                                             console.log(e);
                                         }
-                                        s
+
+                                        controller.video.poster(vp.find('form').all('card')[1].all('box')[0].find('figure picture img'));
 
                                         var res = await github.repos.contents({
                                             owner: window.owner.login,

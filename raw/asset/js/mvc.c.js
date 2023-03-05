@@ -1451,7 +1451,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     vp.find('figure').innerHTML = video.outerHTML;
                     var canvas = vp.find('canvas');
                     var video = vp.find('figure video');
-                    controller.video.thumbs(video)
+                    await controller.video.thumbs(video);
                 }
                 //});
             }
@@ -4030,8 +4030,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 //var thumbnails = form.all('card')[0].all('box')[1].all('img');
                 //if (thumbnails.length > 0) {
-                form.all('card')[1].all('box')[0].all('img')[0].src.startsWith('data:') ? array.push({
-                    content: form.all('card')[1].all('box')[0].all('img')[0].src.split(';base64,')[1],
+                form.all('card')[1].all('box')[0].all('img.outline-4px-solid')[0].src.startsWith('data:') ? array.push({
+                    content: form.all('card')[1].all('box')[0].all('img.outline-4px-solid')[0].src.split(';base64,')[1],
                     path: "raw/media/video/" + slug + "/image.jpg",
                     type: "base64"
                 }) : null;
@@ -4076,41 +4076,59 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        thumbs: async(video)=>{
+        poster: target=>{
+            $(target.closest('column').all('img')).removeClass('outline-4px-solid').removeClass('outline-color-005cc8').removeClass('outline-offset-minus-2px');
+            target.closest('img') ? $(target.closest('img')).addClass('outline-4px-solid').addClass('outline-color-005cc8').addClass('outline-offset-minus-2px') : null;
+        }
+        ,
 
-            var canvas = video.closest('box').find('canvas');
-            var form = video.closest('form');
-            var thumbs = form.all('card')[1].all('box')[0].all('figure:not(:first-child) picture');
-            var i = 0;
-            var t = 0;
+        thumbs: (video)=>{
 
-            video.addEventListener('loadedmetadata', function() {
-                canvas.height = video.videoHeight;
-                canvas.width = video.videoWidth;
-                video.classList.add('display-none');
-                this.currentTime = i;
-            });
-            video.addEventListener('seeked', seeking, true);
-            function seeking() {
-                generateThumbnail(i);
-                var x = thumbs.length > 1 ? (video.duration / (thumbs.length + 1)) * t : (video.duration / 2);
-                i += x;
-                if (i <= this.duration) {
+            return new Promise(async function(resolve, reject) {
+
+                var canvas = video.closest('box').find('canvas');
+                var form = video.closest('form');
+                var thumbs = form.all('card')[1].all('box')[0].all('figure picture');
+                console.log(thumbs)
+                var i = 0;
+                var t = 0;
+
+                video.addEventListener('loadedmetadata', function() {
+                    canvas.height = video.videoHeight;
+                    canvas.width = video.videoWidth;
+                    video.classList.add('display-none');
                     this.currentTime = i;
-                } else {
-                    this.classList.remove('display-none');
-                    this.removeEventListener("seeked", seeking, true);
-                    this.currentTime = 0;
+                });
+                video.addEventListener('seeked', seeking, true);
+                function seeking() {
+                    var x = thumbs.length > 1 ? (this.duration / (thumbs.length + 1)) * t : (this.duration / thumbs.length + 1);
+                    generateThumbnail(i);
+                    console.log('seeking', {
+                        i,
+                        x
+                    }, (video.duration / (thumbs.length + 1)));
+                    i += x;
+                    if (i <= this.duration) {
+                        this.currentTime = i;
+                    } else {
+                        this.classList.remove('display-none');
+                        this.removeEventListener("seeked", seeking, true);
+                        this.currentTime = 0;
+                        resolve(this);
+                    }
                 }
+                function generateThumbnail(i) {
+                    canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                    var img = document.createElement('img');
+                    img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct";
+                    img.src = canvas.toDataURL();
+                    thumbs[t].innerHTML = img.outerHTML;
+                    console.log(i, t);
+                    t++;
+                }
+
             }
-            function generateThumbnail(i) {
-                canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-                var img = document.createElement('img');
-                img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct";
-                img.src = canvas.toDataURL();
-                thumbs[t].innerHTML = img.outerHTML;
-                t++;
-            }
+            );
 
         }
         ,
