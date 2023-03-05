@@ -777,7 +777,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     controls: {
 
-        video: node=>{
+        video: event=>{
+            var node = event.target;
             var target = node.closest('[data-element]');
             if (target) {
                 var video = target.closest('box').find('video') || target.closest('card').find('video') || target.closest('block').find('video');
@@ -790,6 +791,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         target.find('n').className = 'gg-play-button';
                         video.pause();
                     }
+                }
+                if (element === 'video.seeker') {
+                    var rect = target.getBoundingClientRect();
+                    var x = event.clientX - rect.left;
+                    var width = rect.width;
+                    var percent = x / width;
+                    video.currentTime = video.duration * percent;
                 }
             }
         }
@@ -1443,40 +1451,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     vp.find('figure').innerHTML = video.outerHTML;
                     var canvas = vp.find('canvas');
                     var video = vp.find('figure video');
-                    video.autoplay = true;
-                    video.addEventListener("loadedmetadata", loadCanvas)
-                    video.addEventListener("play", loadPlay, true)
-                    video.addEventListener("pause", loadCapture, true)
-                    function loadCanvas() {
-                        canvas.height = video.videoHeight;
-                        canvas.width = video.videoWidth;
-                        video.classList.add('display-none');
-                    }
-                    function loadCapture() {
-                        var thumbs = vp.find('form').all('card')[1].all('box')[0].all('picture');
-                        if (0 < 1 && thumbs.length > 0) {
-                            var img = document.createElement('img');
-                            img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct";
-                            var t = 0;
-                            do {
-                                var currentTime = thumbs.length > 1 ? (video.duration / thumbs.length) * t : (video.duration / 2);
-                                console.log(currentTime);
-                                video.currentTime = currentTime;
-                                canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-                                img.src = canvas.toDataURL();
-                                thumbs[t].innerHTML = img.outerHTML;
-                                t++;
-                            } while (t < thumbs.length);
-                        }
-                        video.currentTime = 0;
-                        video.classList.remove('display-none');
-                        video.ontimeupdate = controller.video.ontimeupdate;
-                        video.removeEventListener("pause", loadCapture, true);
-                    }
-                    function loadPlay() {
-                        video.pause();
-                        video.removeEventListener("play", loadPlay, true);
-                    }
+                    controller.video.thumbs(video)
                 }
                 //});
             }
@@ -4055,11 +4030,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 //var thumbnails = form.all('card')[0].all('box')[1].all('img');
                 //if (thumbnails.length > 0) {
-                    form.all('card')[1].all('box')[0].all('img')[0].src.startsWith('data:') ? array.push({
-                        content: form.all('card')[1].all('box')[0].all('img')[0].src.split(';base64,')[1],
-                        path: "raw/media/video/" + slug + "/image.jpg",
-                        type: "base64"
-                    }) : null;
+                form.all('card')[1].all('box')[0].all('img')[0].src.startsWith('data:') ? array.push({
+                    content: form.all('card')[1].all('box')[0].all('img')[0].src.split(';base64,')[1],
+                    path: "raw/media/video/" + slug + "/image.jpg",
+                    type: "base64"
+                }) : null;
                 //}
 
                 photo.src.startsWith('data:') ? array.push({
@@ -4098,6 +4073,45 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 s = (s >= 10) ? s : "0" + s;
                 return m + ":" + s;
             }
+        }
+        ,
+
+        thumbs: async(video)=>{
+
+            var canvas = video.closest('box').find('canvas');
+            var form = video.closest('form');
+            var thumbs = form.all('card')[1].all('box')[0].all('figure:not(:first-child) picture');
+            var i = 0;
+            var t = 0;
+
+            video.addEventListener('loadedmetadata', function() {
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
+                video.classList.add('display-none');
+                this.currentTime = i;
+            });
+            video.addEventListener('seeked', seeking, true);
+            function seeking() {
+                generateThumbnail(i);
+                var x = thumbs.length > 1 ? (video.duration / (thumbs.length + 1)) * t : (video.duration / 2);
+                i += x;
+                if (i <= this.duration) {
+                    this.currentTime = i;
+                } else {
+                    this.classList.remove('display-none');
+                    this.removeEventListener("seeked", seeking, true);
+                    this.currentTime = 0;
+                }
+            }
+            function generateThumbnail(i) {
+                canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                var img = document.createElement('img');
+                img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct";
+                img.src = canvas.toDataURL();
+                thumbs[t].innerHTML = img.outerHTML;
+                t++;
+            }
+
         }
         ,
 

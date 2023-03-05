@@ -313,9 +313,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     input.insertAdjacentHTML('beforebegin', input.outerHTML);
                                     input.remove();
                                     image.innerHTML = '';
-                                                                    
+
                                     $(vp.find('form').all('card')[1].all('box')[0].all('picture')).html('');
-                                                                    
+
                                     //vp.find('[data-value="video.poster"]').innerHTML = '';
 
                                     var title = vp.find('[data-value="video.title"]');
@@ -402,7 +402,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var video = vp.find('figure video');
                                             video.ontimeupdate = controller.video.ontimeupdate;
                                             //video.autoplay = true;
+                                            video.muted = true;
                                             //video.controls = true;
+
+                                            controller.video.thumbs(video);
 
                                             canvas.parentElement.dataset.display = "flex";
                                         } catch (e) {
@@ -422,6 +425,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         } catch (e) {
                                             console.log(e);
                                         }
+                                        s
 
                                         var res = await github.repos.contents({
                                             owner: window.owner.login,
