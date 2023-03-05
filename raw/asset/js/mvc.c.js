@@ -775,6 +775,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
     },
 
+    controls: {
+
+        video: node=>{
+            var target = node.closest('[data-element]');
+            if (target) {
+                var video = target.closest('box').find('video') || target.closest('card').find('video') || target.closest('block').find('video');
+                var element = target.dataset.element;
+                if (element === 'video.play') {
+                    if (video.paused) {
+                        target.find('n').className = 'gg-play-pause';
+                        video.play();
+                    } else {
+                        target.find('n').className = 'gg-play-button';
+                        video.pause();
+                    }
+                }
+            }
+        }
+
+    },
+
     design: {
 
         install: async(target)=>{
@@ -1432,17 +1453,29 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         video.classList.add('display-none');
                     }
                     function loadCapture() {
-                        video.currentTime = video.duration / 2;
-                        canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-                        video.poster = canvas.toDataURL();
-                        video.removeEventListener("pause", loadCapture, true)
-                        video.controls = true;
+                        var thumbs = vp.find('figure').closest('box').nextElementSibling.all('picture');
+                        if (0 < 1 && thumbs.length > 0) {
+                            var img = document.createElement('img');
+                            img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct";
+                            var t = 0;
+                            do {
+                                var currentTime = thumbs.length > 1 ? (video.duration / thumbs.length) * t : (video.duration / 2);
+                                console.log(currentTime);
+                                video.currentTime = currentTime;
+                                canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                                img.src = canvas.toDataURL();
+                                thumbs[t].innerHTML = img.outerHTML;
+                                t++;
+                            } while (t < thumbs.length);
+                        }
                         video.currentTime = 0;
                         video.classList.remove('display-none');
+                        video.ontimeupdate = controller.video.ontimeupdate;
+                        video.removeEventListener("pause", loadCapture, true);
                     }
                     function loadPlay() {
                         video.pause();
-                        video.removeEventListener("play", loadPlay, true)
+                        video.removeEventListener("play", loadPlay, true);
                     }
                 }
                 //});
@@ -2887,7 +2920,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 )
             }
-        }        
+        }
 
     },
 
@@ -3884,6 +3917,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     video: {
 
+        clear: target=>{
+            var box = target.closest('box');
+            box.firstElementChild.innerHTML = '';
+            var input = box.find('input');
+            input.insertAdjacentHTML('beforebegin', input.outerHTML);
+            input.remove();
+            var thumbnails = $(box.nextElementSibling.all('figure picture'));
+            thumbnails.html('');
+        }
+        ,
+
         create: async(event)=>{
 
             event.preventDefault();
@@ -3894,13 +3938,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var src = photo ? photo.src : null;
             var filename = photo ? photo.dataset.filename : null;
             var tags = [];
-            var children = form.lastElementChild.find('footer span').children;
-            if (children.length > 0) {
+            var keywords = form.find('[data-value="video.tags"]').all('text');
+            if (keywords.length > 0) {
+                var k = 0;
                 do {
-                    var child = children.children[c];
-                    var tag = child.textContent;
+                    var child = keywords[k];
+                    var tag = child.find('span').textContent;
                     tags.push(tag);
-                } while (c < children.length)
+                    k++;
+                } while (k < keywords.length)
             }
             var title = form.find('input[type="text"]').value;
             var data = {
@@ -3923,7 +3969,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     "title": title
                 };
                 description ? row.description = description : null;
-                tags ? row.tags : null;
+                tags ? row.tags = tags : null;
                 var str3 = JSON.stringify(row, null, 4);
 
                 //MEDIA
@@ -3935,12 +3981,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var j = JSON.parse(atob(data.content));
                     var json = JSON.parse(atob(data.content));
-                    json.push(row);
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
                 } catch (e) {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
@@ -3953,12 +4012,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var j = JSON.parse(atob(data.content));
                     var json = JSON.parse(atob(data.content));
-                    json.push(row);
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
                 } catch (e) {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
@@ -3977,17 +4049,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     content: str2,
                     path: "raw/media/video/video.json"
                 }, {
-                    content: form.find('video').poster.split(';base64,')[1],
-                    path: "raw/media/video/" + slug + "/image.jpg",
-                    type: "base64"
-                }, {
                     content: str3,
                     path: "raw/media/video/" + slug + "/video.json"
-                }, {
+                }];
+
+                //var thumbnails = form.all('card')[0].all('box')[1].all('img');
+                //if (thumbnails.length > 0) {
+                    form.all('card')[0].all('box')[1].all('img')[0].src.startsWith('data:') ? array.push({
+                        content: form.all('card')[0].all('box')[1].all('img')[0].src.split(';base64,')[1],
+                        path: "raw/media/video/" + slug + "/image.jpg",
+                        type: "base64"
+                    }) : null;
+                //}
+
+                photo.src.startsWith('data:') ? array.push({
                     content: photo.src.split(';base64,')[1],
                     path: "raw/media/video/" + slug + "/video." + filename.split('.')[filename.split('.').length - 1],
                     type: "base64"
-                }];
+                }) : null;
+
                 console.log(2452, 'controller.video.update', "array", {
                     array,
                     video: {
@@ -3995,8 +4075,41 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         height: video.videoHeight
                     }
                 });
-                github.crud.update(params, array).then("/dashboard/:get/media/".router())
+                await github.crud.update(params, array);
+                "/dashboard/:get/media/".router();
             }
+
+        }
+        ,
+
+        ontimeupdate: event=>{
+            var video = event.target;
+            var elapsed = video.currentTime;
+            var duration = video.duration;
+            var width = (elapsed / duration) * 100;
+            var seeker = video.closest('box').find('[data-element="video.seeker"]');
+            seeker.find('line').style.width = width + '%';
+            var time = video.closest('box').find('[data-element="video.time"]').all('span')[0].textContent = format(elapsed);
+            var time = video.closest('box').find('[data-element="video.time"]').all('span')[2].textContent = format(duration);
+            function format(s) {
+                var m = Math.floor(s / 60);
+                m = (m >= 10) ? m : "0" + m;
+                s = Math.floor(s % 60);
+                s = (s >= 10) ? s : "0" + s;
+                return m + ":" + s;
+            }
+        }
+        ,
+
+        thumbnail: async(event)=>{
+
+            var target = event.target;
+            var file = await on.change.file(event);
+
+            var img = document.createElement('img');
+            img.className = "border-radius-10px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct"
+            img.src = file.result;
+            target.closest('figure').find('picture').innerHTML = img.outerHTML;
 
         }
     }

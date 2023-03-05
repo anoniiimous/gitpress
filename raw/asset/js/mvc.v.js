@@ -264,8 +264,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                 var vp = dom.body.find('pages[data-page="/dashboard/*/media/' + get[3] + '"]');
 
-                                if (get[3] === "photo") {
-                                    var image = vp.find('[data-value="photo.image"]');
+                                if (get[3] === "audio") {
+                                    var image = vp.find('[data-value="audio.src"]');
                                     var box = image.closest('box');
                                     var input = box.find('input[type="file"]');
                                     input.insertAdjacentHTML('beforebegin', input.outerHTML);
@@ -279,6 +279,52 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     description.value = '';
 
                                     var tags = vp.find('[data-value="photo.tags"]');
+                                    tags.innerHTML = tags.lastElementChild.outerHTML;
+                                    $(tags.all('text')).remove();
+
+                                    on.key.up.auto.size(description)
+                                }
+
+                                if (get[3] === "photo") {
+                                    var image = vp.find('[data-value="photo.src"]');
+                                    var box = image.closest('box');
+                                    var input = box.find('input[type="file"]');
+                                    input.insertAdjacentHTML('beforebegin', input.outerHTML);
+                                    input.remove();
+                                    image.innerHTML = '';
+
+                                    var title = vp.find('[data-value="photo.title"]');
+                                    title.value = '';
+
+                                    var description = vp.find('[data-value="photo.description"]');
+                                    description.value = '';
+
+                                    var tags = vp.find('[data-value="photo.tags"]');
+                                    tags.innerHTML = tags.lastElementChild.outerHTML;
+                                    $(tags.all('text')).remove();
+
+                                    on.key.up.auto.size(description)
+                                }
+
+                                if (get[3] === "video") {
+                                    var image = vp.find('[data-value="video.src"]');
+                                    var box = image.closest('box');
+                                    var input = box.find('input[type="file"]');
+                                    input.insertAdjacentHTML('beforebegin', input.outerHTML);
+                                    input.remove();
+                                    image.innerHTML = '';
+                                                                    
+                                    $(vp.find('form').all('card')[0].all('box')[1].all('picture')).html('');
+                                                                    
+                                    //vp.find('[data-value="video.poster"]').innerHTML = '';
+
+                                    var title = vp.find('[data-value="video.title"]');
+                                    title.value = '';
+
+                                    var description = vp.find('[data-value="video.description"]');
+                                    description.value = '';
+
+                                    var tags = vp.find('[data-value="video.tags"]');
                                     tags.innerHTML = tags.lastElementChild.outerHTML;
                                     $(tags.all('text')).remove();
 
@@ -337,6 +383,46 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                     } else if (get[3] === "video") {
+
+                                        try {
+                                            var filename = 'video.mp4';
+                                            var src = await github.raw.blob({
+                                                owner: window.owner.login,
+                                                resource: "/raw/media/video/" + get[4] + "/" + filename,
+                                                repo: get[1]
+                                            });
+
+                                            var video = document.createElement('video');
+                                            video.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                                            video.dataset.filename = filename;
+                                            video.playsinline = true;
+                                            video.src = src;
+                                            vp.find('figure').innerHTML = video.outerHTML;
+                                            var canvas = vp.find('canvas');
+                                            var video = vp.find('figure video');
+                                            video.ontimeupdate = controller.video.ontimeupdate;
+                                            //video.autoplay = true;
+                                            //video.controls = true;
+
+                                            canvas.parentElement.dataset.display = "flex";
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+
+                                        try {
+                                            var poster = await github.raw.blob({
+                                                owner: window.owner.login,
+                                                resource: "/raw/media/video/" + get[4] + "/image.jpg",
+                                                repo: get[1]
+                                            });
+                                            var img = document.createElement('img');
+                                            img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct"
+                                            img.src = poster;
+                                            vp.find('[data-value="video.poster"]').innerHTML = img.outerHTML;
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+
                                         var res = await github.repos.contents({
                                             owner: window.owner.login,
                                             path: "/raw/media/video/" + get[4] + "/video.json",
@@ -344,6 +430,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }, {
                                             accept: "application/vnd.github.raw"
                                         });
+
+                                        res.title ? title.value = res.title : null;
+
+                                        res.description ? description.value = res.description : null;
+
+                                        if (res.tags) {
+                                            var t = 0;
+                                            do {
+                                                var tag = res.tags[t];
+                                                var template = tags.closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                template.find('span').textContent = tag;
+                                                vp.find('[data-after="Tags"]').closest('box').find('flex').lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                t++;
+                                            } while (t < res.tags.length)
+                                        }
                                     }
                                 }
 

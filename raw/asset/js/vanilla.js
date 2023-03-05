@@ -72,8 +72,8 @@ Array.prototype.html = function(html) {
     var vals = Object.values(this);
     if (vals.length > 0) {
         for (var i = vals.length; i--; ) {
-            var val = vals[i]
-            if (html && html.length > 0) {
+            var val = vals[i];
+            if (typeof html === 'string') {
                 that[i] = this[i].innerHTML = html;
             } else {
                 that[i] = this[i].innerHTML;

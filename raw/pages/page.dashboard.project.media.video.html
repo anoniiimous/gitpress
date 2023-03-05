@@ -34,18 +34,72 @@
     <block class="-dw480px-margin-10px grid-gap-20px margin-20px">
         <form class="display-flex flex-direction-column gap-20px" onsubmit="controller.video.create(event)">
             <card class="grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
-                <section>
+                <column class="gap-5px">
                     <box class="-dw1320px-height-0 -dw1320px-padding-top-56pt25pct background-color-000 border-1px-solid border-radius-20px height-480px overflow-hidden width-100pct">
-                        <canvas></canvas>
-                        <figure class="height-100pct position-absolute top-0 width-100pct"></figure>
+                        <figure class="height-100pct position-absolute top-0 width-100pct" data-value="video.src"></figure>
                         <column class="align-items-center display-flex empty-state flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
                             <label for="file-dashboard-media-video">
                                 <text class="background-color-333 color-fff display-block line-height-50px padding-x-20px position-relative">Add New Video</text>
                                 <input accept="video/mp4" id="file-dashboard-media-video" onchange="on.change.file(event).then(controller.media.import)" type="file">
                             </label>
                         </column>
+                        <column class="-hover-full-state-subsequent display-none flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
+                            <canvas class="display-none"></canvas>
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff v position-absolute right-5px top-5px" data-height="30px" data-tap="controller.video.clear(event.target)" data-width="30px">
+                                <n class="gg-close"></n>
+                            </ico>
+                            <footer class="bottom-0 color-fff display-flex flex-1 flex-direction-column position-absolute width-100pct" data-tap="controller.controls.video(event.target)">
+                                <column class="gap-5px margin-20px">
+                                    <row class="height-30px line-height-30px">
+                                        <ico data-element="video.play" data-height="30px" data-width="30px">
+                                            <n class="gg-play-button"></n>
+                                        </ico>
+                                        <row class="gap-5px margin-right-auto" data-element="video.time">
+                                            <span>0:00</span>
+                                            <span>/</span>
+                                            <span>0:00</span>
+                                        </row>
+                                        <ico>
+                                            <n class="gg-full-screen"></n>
+                                        </ico>
+                                    </row>
+                                    <line class="background-color-777 border-radius-50px height-5px overflow-hidden width-100pct" data-element="video.seeker">
+                                        <line class="background-color-fff height-100pct"></line>
+                                    </line>
+                                </column>
+                            </footer>
+                        </column>
                     </box>
-                </section>
+                    <box>
+                        <column class="align-items-center gap-5px justify-content-space-between" data-columns="4">
+                            <figure class="box-sizing-border-box overflow-hidden position-relative">
+                                <picture class="display-block height-0 padding-top-56pt25pct width-100pct" data-value="video.poster"></picture>
+                                <label class="align-items-center border-1px-dashed border-color-777 border-radius-20px box-sizing-border-box display-flex empty-state flex-direction-column gap-5px height-100pct left-0 justify-content-center position-absolute top-0 width-100pct">
+                                    <ico data-height="20px" data-width="20px">
+                                        <n class="gg-software-upload"></n>
+                                    </ico>
+                                    <text class="font-size-13px">Upload Image</text>
+                                    <input accept="image/jpeg" onchange="controller.video.thumbnail(event)" type="file">
+                                </label>
+                                <label class="-hover-full-state-subsequent align-items-center background-color-000 border-radius-50pct box-sizing-border-box color-fff display-none flex-direction-column gap-5px right-0 justify-content-center margin-5px position-absolute top-0" data-height="36px" data-width="36px">
+                                    <ico data-height="20px" data-width="20px">
+                                        <n class="gg-software-upload"></n>
+                                    </ico>
+                                    <input accept="image/jpeg" onchange="controller.video.thumbnail(event)" type="file">
+                                </label>
+                            </figure>
+                            <figure class="background-color-000 border-radius-20px position-relative">
+                                <picture class="display-block height-0 padding-top-56pt25pct width-100pct"></picture>
+                            </figure>
+                            <figure class="background-color-000 border-radius-20px position-relative">
+                                <picture class="display-block height-0 padding-top-56pt25pct width-100pct"></picture>
+                            </figure>
+                            <figure class="background-color-000 border-radius-20px position-relative">
+                                <picture class="display-block height-0 padding-top-56pt25pct width-100pct"></picture>
+                            </figure>
+                        </column>
+                    </box>
+                </column>
             </card>
             <card class="-dw1320px-flex-direction-column flex-1 flex-direction-row grid-gap-20px margin-auto max-width-100pct width-1280px" data-1320px-width="960px">
                 <column class="flex-1 gap-20px">
@@ -54,7 +108,7 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Title</text>
                         </header>
                         <column class="gap-0px">
-                            <input class="font-size-18px height-36px line-height-36px margin-10px" type="text" placeholder="Enter a title">
+                            <input class="font-size-18px height-36px line-height-36px margin-10px" data-value="video.title" type="text" placeholder="Enter a title">
                         </column>
                     </box>
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
@@ -62,14 +116,14 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
                         </header>
                         <column class="gap-0px">
-                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
+                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-54px overflow-hidden" data-value="video.description" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
                         </column>
                     </box>
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Tags"></text>
                         </header>
-                        <flex class="flex-wrap-wrap gap-10px padding-10px">
+                        <flex class="flex-wrap-wrap gap-10px padding-10px" data-value="video.tags">
                             <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
                                 <ico data-height="20px" data-width="20px">
                                     <n class="gg-hashtag"></n>
@@ -89,41 +143,12 @@
                             </text>
                         </template>
                     </box>
-                    <box class="gap-10px" data-display="none">
-                        <header>
-                            <text class="font-weight-bolder text-transform-uppercase">Details</text>
-                        </header>
-                        <column class="gap-10px">
-                            <!--<canvas></canvas>-->
-                            <input class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px padding-10px" type="text" placeholder="Enter a title">
-                            <textarea class="border-1px-solid border-radius-20px flex-1 font-size-18px min-height-60px padding-10px" type="text" placeholder="Provide a detailed description."></textarea>
-                        </column>
-                        <footer class="gap-10px">
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
-                                    <n class="gg-math-plus"></n>
-                                </ico>
-                                <span class="font-weight-bolder" contenteditable="true" placeholder="Add Tag"></span>
-                            </text>
-                        </footer>
-                    </box>
                 </column>
                 <section class="-dw1320px-width-100pct width-320px">
                     <box class="width-100pct">
                         <flex class="gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
-                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.merch.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
-                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
-                                <text>Post It</text>
-                                <input id="submit-dashboard-media-photo" type="submit">
-                            </label>
-                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Preview</text>
-                            <text class="border-1px-solid border-radius-50px font-size-18px height-36px line-height-36px text-align-center">Save Draft</text>
-                        </flex>
-                    </box>
-                    <box class="width-100pct" data-display="none">
-                        <flex class="-dw480px-gap-10px gap-10px" data-480px-columns="1" data-640px-columns="2" data-1320px-columns="4" data-columns="1">
                             <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.media.delete([rout.ed.dir(route.path).splice(4,5).join('/')])">Delete</text>
-                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-videoo">
+                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-video">
                                 <text>Post It</text>
                                 <input id="submit-dashboard-media-video" type="submit">
                             </label>

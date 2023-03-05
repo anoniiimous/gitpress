@@ -592,6 +592,10 @@
     :empty:first-child ~ .full-state-subsequent {
         display: none;
     }
+
+    :not(:empty):first-child:hover ~ .-hover-full-state-subsequent, :not(:empty):first-child ~ .-hover-full-state-subsequent:hover {
+        display: flex;
+    }
 }
 
 @media screen {
@@ -1027,6 +1031,10 @@
 @media screen {
     .margin-auto {
         margin: auto;
+    }
+
+    .margin-5px {
+        margin: 5px;
     }
 
     .margin-10px {
