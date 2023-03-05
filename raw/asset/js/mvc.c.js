@@ -1453,7 +1453,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         video.classList.add('display-none');
                     }
                     function loadCapture() {
-                        var thumbs = vp.find('figure').closest('box').nextElementSibling.all('picture');
+                        var thumbs = vp.find('form').all('card')[1].all('box')[0].all('picture');
                         if (0 < 1 && thumbs.length > 0) {
                             var img = document.createElement('img');
                             img.className = "border-radius-20px height-100pct left-0 object-fit-cover position-absolute top-0 width-100pct";
@@ -3923,7 +3923,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var input = box.find('input');
             input.insertAdjacentHTML('beforebegin', input.outerHTML);
             input.remove();
-            var thumbnails = $(box.nextElementSibling.all('figure picture'));
+            var thumbnails = $(box.closest('form').all('card')[1].all('box')[0].all('figure picture'));
             thumbnails.html('');
         }
         ,
@@ -4055,8 +4055,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 //var thumbnails = form.all('card')[0].all('box')[1].all('img');
                 //if (thumbnails.length > 0) {
-                    form.all('card')[0].all('box')[1].all('img')[0].src.startsWith('data:') ? array.push({
-                        content: form.all('card')[0].all('box')[1].all('img')[0].src.split(';base64,')[1],
+                    form.all('card')[1].all('box')[0].all('img')[0].src.startsWith('data:') ? array.push({
+                        content: form.all('card')[1].all('box')[0].all('img')[0].src.split(';base64,')[1],
                         path: "raw/media/video/" + slug + "/image.jpg",
                         type: "base64"
                     }) : null;

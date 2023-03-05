@@ -314,7 +314,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     input.remove();
                                     image.innerHTML = '';
                                                                     
-                                    $(vp.find('form').all('card')[0].all('box')[1].all('picture')).html('');
+                                    $(vp.find('form').all('card')[1].all('box')[0].all('picture')).html('');
                                                                     
                                     //vp.find('[data-value="video.poster"]').innerHTML = '';
 
