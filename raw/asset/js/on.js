@@ -574,8 +574,9 @@ window.on.key.up.auto = {
     size: (target)=>{
         target.style.height = 0;
         target.style.height = (target.scrollHeight) + "px";
-    },
-    width: (target) => {
+    }
+    ,
+    width: (target)=>{
         target.style.width = 0;
         target.style.width = (target.scrollWidth) + "px";
     }
@@ -682,6 +683,22 @@ window.on.key.up.setup = {
         if (keyCode === 13) {
             button.click();
         }
+    }
+}
+
+window.on["resize"] = function(event) {
+    var as = dom.body.all('[onkeyup="on.key.up.auto.size(event.target)"]');
+    if (as.length > 0) {
+        var i = 0;
+        do {
+            var el = as[i];
+            on.key.up.auto.size(el);
+            i++;
+        } while (i < as.length);
+    }
+
+    if (dom.body.find('[data-active="true"] sound')) {
+        wavesurfer.drawer.fireEvent('redraw');
     }
 }
 

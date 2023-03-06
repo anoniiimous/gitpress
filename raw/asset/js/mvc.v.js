@@ -143,6 +143,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (get[3] === "checkout") {
                                     var vp = dom.body.find('page[data-page="' + route.page + '"]');
 
+                                    var block = vp.find('block');
+                                    var column = block.all('card')[1].find('column');
+                                    column.innerHTML = "";
+
                                     try {
                                         var res = await github.repos.contents({
                                             owner: window.owner.login,
@@ -153,10 +157,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         });
                                         var doc = new DOMParser().parseFromString(res, 'text/html');
                                         var head = doc.head;
-
-                                        var block = vp.find('block');
                                         block.removeAttribute('data-display');
-                                        var column = block.all('card')[1].find('column');
                                         var template = block.find('template').content;
                                         var checkout = {
                                             cash: template.children[0],
@@ -302,20 +303,27 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 var vp = dom.body.find('pages[data-page="/dashboard/*/media/' + get[3] + '"]');
 
                                 if (get[3] === "audio") {
-                                    var image = vp.find('[data-value="audio.src"]');
+                                    var track = vp.find('[data-value="audio.track"]');
+                                    var box = track.closest('box');
+                                    var input = box.find('input[type="file"]');
+                                    input.insertAdjacentHTML('beforebegin', input.outerHTML);
+                                    input.remove();
+                                    track.innerHTML = '';
+
+                                    var image = vp.find('[data-value="audio.cover"]');
                                     var box = image.closest('box');
                                     var input = box.find('input[type="file"]');
                                     input.insertAdjacentHTML('beforebegin', input.outerHTML);
                                     input.remove();
                                     image.innerHTML = '';
 
-                                    var title = vp.find('[data-value="photo.title"]');
+                                    var title = vp.find('[data-value="audio.title"]');
                                     title.value = '';
 
-                                    var description = vp.find('[data-value="photo.description"]');
+                                    var description = vp.find('[data-value="audio.description"]');
                                     description.value = '';
 
-                                    var tags = vp.find('[data-value="photo.tags"]');
+                                    var tags = vp.find('[data-value="audio.tags"]');
                                     tags.innerHTML = tags.lastElementChild.outerHTML;
                                     $(tags.all('text')).remove();
 
@@ -370,6 +378,54 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                 if (get[4]) {
                                     if (get[3] === "audio") {
+
+                                        try {
+                                            var filename = 'image.jpg';
+                                            var src = await github.raw.blob({
+                                                owner: window.owner.login,
+                                                resource: "/raw/media/audio/" + get[4] + "/" + filename,
+                                                repo: get[1]
+                                            });
+
+                                            var img = document.createElement('img');
+                                            img.className = "height-100pct object-fit-cover position-absolute top-0 width-100pct";
+                                            img.dataset.filename = filename;
+                                            img.src = src;
+                                            image.innerHTML = img.outerHTML;
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+
+                                        try {
+                                            var filename = 'audio.mp3';
+                                            var src = await github.raw.blob({
+                                                owner: window.owner.login,
+                                                resource: "/raw/media/audio/" + get[4] + "/" + filename,
+                                                repo: get[1]
+                                            });
+
+                                            var figure = vp.find('[data-value="audio.track"]');
+                                            var template = figure.closest('column').find('template').content.firstElementChild.cloneNode(true);
+                                            figure.innerHTML = template.outerHTML;
+                                            var container = figure.find('sound');
+                                            var options = {
+                                                container,
+                                                backend: "MediaElement",
+                                                barHeight: 50,
+                                                barWidth: 3,
+                                                cursorColor: "#fff",
+                                                mediaType: "audio",
+                                                normalize: true,
+                                                progressColor: "#000",
+                                                waveColor: "#fff"
+                                            };
+                                            window.wavesurfer = WaveSurfer.create(options);
+                                            window.wavesurfer.load(src, [0.0218, 0.0183, 0.0165, 0.0198, 0.2137, 0.2888, 0.2313, 0.15, 0.2542, 0.2538, 0.2358, 0.1195, 0.1591, 0.2599, 0.2742, 0.1447, 0.2328, 0.1878, 0.1988, 0.1645, 0.1218, 0.2005, 0.2828, 0.2051, 0.1664, 0.1181, 0.1621, 0.2966, 0.189, 0.246, 0.2445, 0.1621, 0.1618, 0.189, 0.2354, 0.1561, 0.1638, 0.2799, 0.0923, 0.1659, 0.1675, 0.1268, 0.0984, 0.0997, 0.1248, 0.1495, 0.1431, 0.1236, 0.1755, 0.1183, 0.1349, 0.1018, 0.1109, 0.1833, 0.1813, 0.1422, 0.0961, 0.1191, 0.0791, 0.0631, 0.0315, 0.0157, 0.0166, 0.0108]);
+                                            figure.find('audio').dataset.filename = filename;
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+
                                         var res = await github.repos.contents({
                                             owner: window.owner.login,
                                             path: "/raw/media/audio/" + get[4] + "/audio.json",
@@ -377,6 +433,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }, {
                                             accept: "application/vnd.github.raw"
                                         });
+
+                                        res.title ? title.value = res.title : null;
+
+                                        res.description ? description.value = res.description : null;
+
+                                        if (res.tags) {
+                                            var t = 0;
+                                            do {
+                                                var tag = res.tags[t];
+                                                var template = tags.closest('box').find('template').content.firstElementChild.cloneNode(true);
+                                                template.find('span').textContent = tag;
+                                                vp.find('[data-after="Tags"]').closest('box').find('flex').lastElementChild.insertAdjacentHTML('beforebegin', template.outerHTML);
+                                                t++;
+                                            } while (t < res.tags.length)
+                                        }
+
                                     } else if (get[3] === "photo") {
 
                                         try {

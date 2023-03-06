@@ -137,18 +137,7 @@ async function init() {
     }
     )
 
-    window.addEventListener("resize", event=>{
-        var as = dom.body.all('[onkeyup="on.key.up.auto.size(event.target)"]');
-        if (as.length > 0) {
-            var i = 0;
-            do {
-                var el = as[i];
-                on.key.up.auto.size(el);
-                i++;
-            } while (i < as.length);
-        }
-    }
-    )
+    window.addEventListener("resize", window.on.resize)
 
     //DATABASE
     var cache = window.cache = {

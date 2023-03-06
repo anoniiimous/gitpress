@@ -120,6 +120,20 @@
         background-color: rgba(0,0,0,0.5);
     }
 
+    @media (max-width: 1024px) {
+        .-dw1024px-background-color-000, [data-1024px-background-color="#000"] {
+            background-color: #000;
+        }
+        
+        .-dw1024px-background-color-ccc, [data-1024px-background-color="#ccc"] {
+            background-color: #ccc;
+        }
+        
+        .-dw1024px-background-color-unset, [data-1024px-background-color="unset"] {
+            background-color: unset;
+        }
+    }
+
     @media (max-width: 640px) {
         [data-640px-background-color="unset"] {
             background-color: unset;
@@ -365,6 +379,12 @@
 
     :checked + .-checked-color-fff {
         color: #fff;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .-dw1024px-color-fff {
+            color: #fff;
+        }        
     }
 }
 
@@ -676,6 +696,16 @@
     @media (max-width: 1320px) {
         .-dw1320px-flex-direction-column, [data-1320px-flex-direction="column"] {
             flex-direction: column;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .-dw1024px-flex-direction-column, [data-1024px-flex-direction="column"] {
+            flex-direction: column;
+        }
+        
+        .-dw1024px-flex-direction-column-reverse, [data-1024px-flex-direction="column-reverse"] {
+            flex-direction: column-reverse;
         }
     }
 
@@ -1002,6 +1032,14 @@
     @media (max-width: 1024px) {
         .-dw1024px-height-100pct {
             height: 100%;
+        }
+        
+        .-dw1024px-height-auto {
+            height: auto;
+        }
+        
+        .-dw1024px-height-0 {
+            height: 0;
         }
     }
 
@@ -1652,6 +1690,12 @@
     }
 
     @media (max-width: 720px) {
+        .-dw1024px-padding-top-100pct {
+            padding-top: 100%;
+        }
+    }
+
+    @media (max-width: 720px) {
         .-hd-padding-x-20px {
             padding-left: 20px;
             padding-right: 20px;
@@ -1700,6 +1744,10 @@
     @media (max-width: 1024px) {
         .-dw1024px-position-absolute {
             position: absolute;
+        }
+        
+        .-dw1024px-position-relative {
+            position: relative;
         }
     }
 

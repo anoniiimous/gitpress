@@ -3,7 +3,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     audio: {
 
         cover: async(event)=>{
-            var figure = event.target.closest('box').nextElementSibling.find('figure');
+            var input = event.target.closest('label').find('input');
+            var figure = input.closest('box').find('figure');
             var b64 = await on.change.file(event);
             var split = b64.result.split(';base64,')
             var mime = split[0].split(':')[1];
@@ -20,6 +21,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 img.dataset.filename = b64.files[0].name;
                 img.src = b64.result;
                 figure.innerHTML = img.outerHTML;
+                input.insertAdjacentHTML('beforebegin', input.outerHTML);
+                input.remove();
             }
         }
         ,
@@ -35,21 +38,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var src = photo ? photo.src : null;
             var filename = photo ? photo.dataset.filename : null;
 
-            var photos2 = form.find('box > column > figure').lastElementChild;
+            var photos2 = form.find('card').all('box')[0].find('audio');
             var photo2 = photos2;
             var src2 = photo2 ? photo2.src : null;
             var filename2 = photo2 ? photo2.dataset.filename : null;
             console.log(photos2, photo2);
 
+            var keywords = form.find('[data-after="Tags"]').closest('box').find('flex').all('text');
             var tags = [];
-            var children = form.lastElementChild.find('footer span').children;
-            if (children.length > 0) {
+            if (keywords.length > 0) {
+                var t = 0;
                 do {
-                    var child = children.children[c];
-                    var tag = child.textContent;
-                    tags.push(tag);
-                } while (c < children.length)
+                    var tag = keywords[t];
+                    var keyword = tag.find('span').textContent.toLowerCase();
+                    tags.push(keyword);
+                    t++;
+                } while (t < keywords.length);
+                tags = [...new Set(tags)];
             }
+
             var title = form.find('input[type="text"]').value;
             var data = {
                 description,
@@ -71,7 +78,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     "title": title
                 };
                 description ? row.description = description : null;
-                tags ? row.tags : null;
+                tags ? row.tags = tags : null;
                 var str3 = JSON.stringify(row, null, 4);
 
                 //MEDIA
@@ -83,16 +90,29 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var j = JSON.parse(atob(data.content));
                     var json = JSON.parse(atob(data.content));
-                    json.push(row);
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
                 } catch (e) {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
-                //VIDEO
+                //AUDIO
                 try {
                     var data = await github.repos.contents({
                         owner: owner.login,
@@ -101,12 +121,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var j = JSON.parse(atob(data.content));
                     var json = JSON.parse(atob(data.content));
-                    json.push(row);
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
                 } catch (e) {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
@@ -125,10 +158,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     content: str2,
                     path: "raw/media/audio/audio.json"
                 }, {
-                    content: photo.src.split(';base64,')[1],
-                    path: "raw/media/audio/" + slug + "/image.jpg",
-                    type: "base64"
-                }, {
                     content: str3,
                     path: "raw/media/audio/" + slug + "/audio.json"
                 }, {
@@ -136,39 +165,52 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     path: "raw/media/audio/" + slug + "/audio." + filename2.split('.')[filename2.split('.').length - 1],
                     type: "base64"
                 }];
+                photo.src.startsWith('data:') ? array.push({
+                    content: photo.src.split(';base64,')[1],
+                    path: "raw/media/audio/" + slug + "/image.jpg",
+                    type: "base64"
+                }) : null;
                 console.log(2452, 'controller.audio.update', "array", {
                     array
                 });
-                github.crud.update(params, array).then("/dashboard/:get/media/".router())
+                await github.crud.update(params, array);
+                "/dashboard/:get/media/".router()
             }
         }
         ,
 
+        remove: target=>{
+            if (window.wavesurfer) {
+                window.wavesurfer.destroy();
+            }
+            target.closest('column').firstElementChild.innerHTML = "";
+        }
+        ,
+
         track: async(event)=>{
+            var input = event.target.closest('label').find('input');
             var file = await on.change.file(event);
-            var audio = document.createElement('audio');
-            console.log({
-                event,
-                file
-            });
-            audio.src = file.result;
-            audio.dataset.filename = file.files[0].name;
-            var figure = event.target.closest('label').previousElementSibling;
+            s
+            var figure = input.closest('label').previousElementSibling;
+            var template = input.closest('column').find('template').content.firstElementChild.cloneNode(true);
+            figure.innerHTML = template.outerHTML;
+            var container = figure.find('sound');
             var options = {
-                container: figure,
+                container,
                 backend: "MediaElement",
                 barHeight: 50,
                 barWidth: 3,
                 cursorColor: "#fff",
                 mediaType: "audio",
                 normalize: true,
-                progressColor: "#ff5900",
+                progressColor: "#000",
                 waveColor: "#fff"
             };
             window.wavesurfer = WaveSurfer.create(options);
             window.wavesurfer.load(file.result, [0.0218, 0.0183, 0.0165, 0.0198, 0.2137, 0.2888, 0.2313, 0.15, 0.2542, 0.2538, 0.2358, 0.1195, 0.1591, 0.2599, 0.2742, 0.1447, 0.2328, 0.1878, 0.1988, 0.1645, 0.1218, 0.2005, 0.2828, 0.2051, 0.1664, 0.1181, 0.1621, 0.2966, 0.189, 0.246, 0.2445, 0.1621, 0.1618, 0.189, 0.2354, 0.1561, 0.1638, 0.2799, 0.0923, 0.1659, 0.1675, 0.1268, 0.0984, 0.0997, 0.1248, 0.1495, 0.1431, 0.1236, 0.1755, 0.1183, 0.1349, 0.1018, 0.1109, 0.1833, 0.1813, 0.1422, 0.0961, 0.1191, 0.0791, 0.0631, 0.0315, 0.0157, 0.0166, 0.0108]);
-            figure.insertAdjacentHTML('beforeend', audio.outerHTML);
-            figure.firstElementChild.dataset.filename = file.files[0].name;
+            figure.find('audio').dataset.filename = file.files[0].name;
+            input.insertAdjacentHTML('beforebegin', input.outerHTML);
+            input.remove();
         }
 
     },
@@ -767,8 +809,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     checkout: {
-        toggle: (event)=>{
-        }
+        toggle: (event)=>{}
     },
 
     connect: {
@@ -781,6 +822,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     controls: {
+
+        audio: event=>{
+            var node = event.target;
+            var target = node.closest('[data-element]');
+            if (target) {
+                var audio = window.wavesurfer;
+                var element = target.dataset.element;
+                if (element === 'audio.play') {
+                    if (audio.isPlaying()) {
+                        target.find('n').className = 'gg-play-button';
+                        audio.pause();
+                    } else {
+                        target.find('n').className = 'gg-play-pause';
+                        audio.play();
+                    }
+                }
+            }
+        }
+        ,
 
         video: event=>{
             var node = event.target;
