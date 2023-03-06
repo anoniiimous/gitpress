@@ -174,6 +174,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         if (stripe_pk.content && stripe_uid.content) {
                                             var box = checkout.stripe.cloneNode(true);
                                             column.insertAdjacentHTML('beforeend', box.outerHTML);
+                                            vp.all('block')[1].all('card')[1].all('box')[0].dataset.display = "none";
                                         }
                                     } catch (e) {
                                         console.log(e);
