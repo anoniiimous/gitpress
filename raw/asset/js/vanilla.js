@@ -368,6 +368,14 @@ function ajax(url, settings) {
     );
 }
 
+function truth(obj) {
+    for (var o in obj)
+        if (!obj[o])
+            return false;
+
+    return true;
+}
+
 function download(file) {
     var download = file.download;
     var href = file.href;

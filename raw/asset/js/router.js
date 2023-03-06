@@ -5,7 +5,7 @@ String.prototype.router = async function(params) {
     var tabs = await rout.ed.vars(rout.ed.dir(url.hash ? url.hash.split('#')[1] : uri));
     var goto = rout.ed.url(tabs);
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-    //console.log(8, uri, route);
+    console.log(8, uri, route);
 
     var pages = dom.body.find('pages[data-page="' + rout.es() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
@@ -29,7 +29,7 @@ String.prototype.router = async function(params) {
             //await ajax(page.dataset.fetch);
         }
     }
-    
+
     const fetching3 = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]:empty');
     if (fetching3.length > 0) {
         var ff = 0;
@@ -145,11 +145,12 @@ window.rout.e = state=>{
         do {
             page = window.rout.ing(state, GOT, n);
             //console.log(148, n, state, page);
-            if (page) break;
+            if (page)
+                break;
             n++;
         } while (n < GOT.length);
     }
-    
+
     const data = {
         GOT,
         hash,
@@ -312,7 +313,9 @@ window.rout.es = function getRoot(els) {
 
 window.rout.ing = (href,GOT,n)=>{
     var ed = null;
-    var pages = dom.body.all('[data-page]');
+    var pages = $(dom.body.all('[data-page]')).sort(function(a, b) {
+        return a.dataset.page.localeCompare(b.dataset.page);
+    })
     var routes = pages.forEach(function(el) {
         var page = el.dataset.page;
         var dir = rout.ed.dir(href);
@@ -324,14 +327,15 @@ window.rout.ing = (href,GOT,n)=>{
             var slug = dir[i];
             var bool = [slug, '*'].includes(ei);
             bools.push(bool);
-            0 > 1 ? console.log(312, bool, ei, slug, {
+            0 > 1 ? console.log(312, bool, rout.ed.url(e), ei, slug, {
                 d,
                 i,
                 e
             }) : null;
             is++;
         });
-        check = is <= dir.length && bools.includes(false) === false;
+        check = is <= dir.length && truth(bools);
+        //check ? console.log(page, bools, {is, dir}) : null;
         if (check) {
             0 > 1 ? console.log(318, check, {
                 bools,
