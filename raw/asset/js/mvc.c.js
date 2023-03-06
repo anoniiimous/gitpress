@@ -160,14 +160,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }, {
                     content: str3,
                     path: "raw/media/audio/" + slug + "/audio.json"
-                }, {
-                    content: photo2.src.split(';base64,')[1],
-                    path: "raw/media/audio/" + slug + "/audio." + filename2.split('.')[filename2.split('.').length - 1],
-                    type: "base64"
                 }];
                 photo.src.startsWith('data:') ? array.push({
                     content: photo.src.split(';base64,')[1],
                     path: "raw/media/audio/" + slug + "/image.jpg",
+                    type: "base64"
+                }) : null;
+                photo2.src.startsWith('data:') ? array.push({
+                    content: photo2.src.split(';base64,')[1],
+                    path: "raw/media/audio/" + slug + "/audio." + filename2.split('.')[filename2.split('.').length - 1],
                     type: "base64"
                 }) : null;
                 console.log(2452, 'controller.audio.update', "array", {
