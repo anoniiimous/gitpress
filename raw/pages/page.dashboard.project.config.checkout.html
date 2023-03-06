@@ -82,7 +82,7 @@
             <card class="flex-1">
                 <column class="gap-20px"></column>
                 <template>
-                    <box class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 padding-20px">
+                    <box class="background-color-fff border-radius-10px padding-20px" data-value="checkout.cash">
                         <row class="align-items-center">
                             <ico>
                                 <n class="gg-dollar"></n>
@@ -115,44 +115,58 @@
                             </field>
                         </row>
                     </box>
-                    <box class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 padding-20px">
-                        <row class="align-items-center">
-                            <ico>
-                                <svg></svg>
+                    <box class="background-color-fff border-radius-10px padding-20px" data-value="checkout.stripe">
+                        <flex class="-dw768px-align-items-flex-start -dw768px-flex-direction-column align-items-center flex-direction-row gap-10px">
+                            <ico data-768px-display="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="55" height="23" viewBox="0 0 55 23" focusable="false">
+                                    <path fill="#6772E5" fill-rule="evenodd" d="M54.07,11.62 C54.07,7.78 52.21,4.75 48.65,4.75 C45.08,4.75 42.91,7.78 42.91,11.6 C42.91,16.12 45.47,18.41 49.12,18.41 C50.91,18.41 52.26,18 53.28,17.44 L53.28,14.42 C52.26,14.94 51.09,15.25 49.6,15.25 C48.14,15.25 46.85,14.73 46.68,12.97 L54.02,12.97 C54.03,12.77 54.07,11.98 54.07,11.62 L54.07,11.62 Z M46.64,10.2 C46.64,8.51 47.68,7.8 48.62,7.8 C49.54,7.8 50.52,8.51 50.52,10.2 L46.64,10.2 L46.64,10.2 Z M37.11,4.75 C35.64,4.75 34.69,5.44 34.17,5.93 L33.97,5 L30.67,5 L30.67,22.51 L34.42,21.71 L34.43,17.47 C34.97,17.86 35.77,18.42 37.08,18.42 C39.76,18.42 42.22,16.26 42.22,11.5 C42.22,7.12 39.74,4.75 37.11,4.75 L37.11,4.75 Z M36.21,15.1 C35.33,15.1 34.81,14.78 34.44,14.39 L34.42,8.82 C34.81,8.39 35.35,8.08 36.21,8.08 C37.58,8.08 38.53,9.62 38.53,11.58 C38.53,13.59 37.6,15.1 36.21,15.1 L36.21,15.1 Z M25.5,3.85 L29.27,3.05 L29.27,0 L25.5,0.8 M25.5,5 L29.26,5 L29.26,18.15 L25.5,18.15 L25.5,5 Z M21.47,6.11 L21.23,5 L17.99,5 L17.99,18.15 L21.74,18.15 L21.74,9.24 C22.63,8.08 24.12,8.3 24.6,8.45 L24.6,5 C24.1,4.82 22.35,4.49 21.47,6.11 L21.47,6.11 Z M13.95,1.74 L10.29,2.52 L10.27,14.55 C10.27,16.77 11.94,18.41 14.17,18.41 C15.4,18.41 16.3,18.19 16.8,17.91 L16.8,14.86 C16.32,15.05 13.95,15.74 13.95,13.53 L13.95,8.2 L16.8,8.2 L16.8,5 L13.95,5 L13.95,1.74 Z M3.79,8.81 C3.79,8.22 4.28,8 5.06,8 C6.2,8 7.65,8.35 8.79,8.97 L8.79,5.44 C7.55,4.94 6.31,4.75 5.06,4.75 C2.03,4.75 0,6.34 0,8.99 C0,13.14 5.7,12.47 5.7,14.26 C5.7,14.95 5.1,15.18 4.26,15.18 C3.02,15.18 1.41,14.67 0.16,13.98 L0.16,17.56 C1.55,18.16 2.97,18.41 4.26,18.41 C7.38,18.41 9.53,16.87 9.53,14.17 C9.53,9.7 3.79,10.5 3.79,8.81 L3.79,8.81 Z"></path>
+                                </svg>
                             </ico>
-                            <column class="margin-right-auto">
+                            <column class="gap-10px margin-right-auto">
                                 <text class="font-weight-bolder">Stripe</text>
                                 <text>Stripe is connected.</text>
                             </column>
-                            <field>
-                                <row class="align-items-center justify-content-center" data-dropdown data-ignore>
-                                    <text class="font-size-14px font-weight-bolder" data-display="none">Actions</text>
-                                    <ico>
-                                        <n class="gg-more-alt"></n>
+                            <field class="display-inline-flex position-relative z-index-5" data-display="inline-flex">
+                                <row class="align-items-center border-1px-solid border-color-777 border-radius-5px height-36px justify-content-center padding-x-20px" data-dropdown data-ignore>
+                                    <text class="font-size-14px">Actions</text>
+                                    <ico data-height="20px" data-width="20px">
+                                        <n class="gg-chevron-down"></n>
                                     </ico>
                                 </row>
-                                <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                <column class="-dw768px-left-0 -dw768px-right-unset background-color-fff border-1px-solid border-color-ddd border-radius-5px color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" data-display="none" data-hidden="tap" data-top="calc(100% + 5px)">
                                     <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
                                         <ico data-height="30px" data-width="30px">
-                                            <n class="gg-music"></n>
+                                            <n class="gg-pen"></n>
                                         </ico>
                                         <text>Edit</text>
                                     </row>
                                     <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
                                         <ico data-height="30px" data-width="30px">
-                                            <n class="gg-image"></n>
+                                            <n class="gg-view-list"></n>
+                                        </ico>
+                                        <text>Sort</text>
+                                    </row>
+                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
+                                        <ico data-height="30px" data-width="30px">
+                                            <n class="gg-close"></n>
                                         </ico>
                                         <text>Remove</text>
                                     </row>
                                 </column>
                             </field>
-                        </row>
+                            <label class="-dw768px-position-absolute -dw768px-margin-20px -dw768px-right-20px -dw768px-top-20px align-items-center display-inline-flex justify-content-space-between">
+                                <input class="opacity-0 height-0 width-0" onchange="controller.checkout.toggle(event)" type="checkbox">
+                                <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
+                                    <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
+                                </row>
+                            </label>
+                        </flex>
                     </box>
                 </template>
             </card>
         </flex>
     </block>
-    <block class="margin-x-20px">
+    <block class="margin-y-50px margin-x-20px">
         <flex class="-dw960px-flex-direction-column gap-20px">
             <card class="-dw960px-width-100pct width-320px">
                 <section>

@@ -142,6 +142,42 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             if (get.length === 4) {
                                 if (get[3] === "checkout") {
                                     var vp = dom.body.find('page[data-page="' + route.page + '"]');
+
+                                    try {
+                                        var res = await github.repos.contents({
+                                            owner: window.owner.login,
+                                            repo: get[1],
+                                            path: 'index.html'
+                                        }, {
+                                            accept: 'application/vnd.github.raw'
+                                        });
+                                        var doc = new DOMParser().parseFromString(res, 'text/html');
+                                        var head = doc.head;
+
+                                        var block = vp.find('block');
+                                        block.removeAttribute('data-display');
+                                        var column = block.all('card')[1].find('column');
+                                        var template = block.find('template').content;
+                                        var checkout = {
+                                            cash: template.children[0],
+                                            stripe: template.children[1]
+                                        };
+
+                                        var stripe_pk = head.find('meta[name="stripe_publishable_key"]');
+                                        var stripe_uid = head.find('meta[name="stripe_user_id"]');
+
+                                        console.log(153, {
+                                            head: head.outerHTML,
+                                            res
+                                        });
+
+                                        if (stripe_pk.content && stripe_uid.content) {
+                                            var box = checkout.stripe.cloneNode(true);
+                                            column.insertAdjacentHTML('beforeend', box.outerHTML);
+                                        }
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
                                 }
                             }
                         }

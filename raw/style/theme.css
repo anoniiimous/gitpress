@@ -8,6 +8,20 @@
         align-items: flex-start;
     }
 
+    @media (max-width: 768px) {
+        .-dw768px-align-items-baseline {
+            align-items: baseline;
+        }
+        
+        .-dw768px-align-items-flex-start {
+            align-items: flex-start;
+        }
+        
+        .-dw768px-align-items-unset {
+            align-items: unset;
+        }
+    }
+
     @media (max-width: 480px) {
         .-mobile-align-items-self-start {
             align-items: self-start;
@@ -114,6 +128,10 @@
 
     :checked + .-checked-background-color-005cc8 {
         background-color: #005cc8;
+    }
+
+    :checked + .-checked-background-color-32cd32 {
+        background-color: #32cd32;
     }
 }
 
@@ -282,6 +300,10 @@
 
     .top-100pct, [data-top="100%"] {
         top: 100%;
+    }
+
+    [data-top="calc(100% + 5px)"] {
+        top: calc(100% + 5px);
     }
 }
 
@@ -555,6 +577,12 @@
         }
     }
 
+    @media (max-width: 768px) {
+        .-tablet-display-none, [data-768px-display="none"] {
+            display: none;
+        }
+    }
+
     @media (max-width: 640px) {
         .-vga-display-none, [data-640px-display="none"] {
             display: none;
@@ -601,6 +629,12 @@
 @media screen {
     .left-0 {
         left: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+        .-dw768px-left-0 {
+            left: 0;
+        }
     }
 }
 
@@ -1031,6 +1065,10 @@
 @media screen {
     .margin-auto {
         margin: auto;
+    }
+
+    .margin-3px {
+        margin: 3px;
     }
 
     .margin-5px {
@@ -1666,6 +1704,10 @@
     }
 
     @media (max-width: 768px) {
+        .-dw768px-position-absolute {
+            position: absolute;
+        }
+        
         .-tablet-position-fixed {
             position: fixed;
         }
@@ -1698,6 +1740,16 @@
 
     [data-right="calc(100% - 5px)"] {
         right: calc(100% - 5px);
+    }
+
+    @media screen and (max-width: 768px) {        
+        .-dw768px-right-20px {
+            right: 20px;
+        }
+        
+        .-dw768px-right-unset {
+            right: unset;
+        }
     }
 }
 
@@ -1774,6 +1826,10 @@
     @media (max-width: 768px) {
         .-tablet-top-0 {
             top: 0;
+        }
+        
+        .-dw768px-top-20px {
+            right: 20px;
         }
     }
 }
@@ -1858,6 +1914,10 @@
 
     [data-transform="translateX(280px)"] {
         transform: translateX(280px);
+    }
+
+    :checked + .-checked-translateX-30px, :checked + * .-checked-translateX-30px {
+        transform: translateX(30px);
     }
 
     @media (max-width: 960px) {

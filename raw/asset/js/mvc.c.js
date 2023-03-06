@@ -766,6 +766,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    checkout: {
+        toggle: (event)=>{
+        }
+    },
+
     connect: {
         stripe: target=>{
             var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
