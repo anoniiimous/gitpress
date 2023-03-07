@@ -391,7 +391,7 @@
         .-dw1024px-color-000 {
             color: #000;
         }
-        
+
         .-dw1024px-color-fff {
             color: #fff;
         }
@@ -873,6 +873,10 @@
         gap: 20px;
     }
 
+    .gap-30px {
+        gap: 30px;
+    }
+
     .gap-50px {
         gap: 50px;
     }
@@ -1302,11 +1306,11 @@
         .-dw1024px-margin-5px {
             margin: 5px;
         }
-        
+
         .-dw1024px-margin-10px {
             margin: 10px;
         }
-        
+
         [data-1024px-margin-right="0"] {
             margin-right: 0;
         }
@@ -1423,11 +1427,19 @@
         max-width: calc(100% - 100px);
     }
 
+    [data-max-width="calc(100% - 340px)"] {
+        max-width: calc(100% - 340px);
+    }
+
     [data-max-width="calc(100vw - 40px)"] {
         max-width: calc(100vw - 40px);
     }
 
     @media (max-width: 960px) {
+        .-dw960px-max-width-100pct, [data-960px-max-width="100%"] {
+            max-width: 100%;
+        }
+
         .-dw960px-max-width-640px, [data-960px-max-width="640px"] {
             max-width: 640px;
         }
@@ -1478,6 +1490,10 @@
 
     .min-height-120px {
         min-height: 120px;
+    }
+
+    .min-height-270px {
+        min-height: 270px;
     }
 
     .min-height-100pct {
@@ -1567,6 +1583,10 @@
 
     .overflow-x-hidden {
         overflow-x: hidden;
+    }
+
+    .overflow-y-hidden {
+        overflow-y: hidden;
     }
 }
 
@@ -1851,6 +1871,10 @@
 @media screen {
     .text-transform-capitalize {
         text-transform: capitalize;
+    }
+
+    .text-transform-lowercase {
+        text-transform: lowercase;
     }
 
     .text-transform-uppercase {
@@ -2330,11 +2354,12 @@
             width: 960px;
         }
     }
+
     @media (max-width: 1024px) {
         [data-1024px-width="30px"] {
             width: 30px;
         }
-        
+
         [data-1024px-width="calc((100% - 20px)/2)"] {
             width: calc((100% - 20px)/2);
         }
@@ -2485,6 +2510,14 @@ peel:hover {
 }
 
 /*SCROLLBAR*/
+.scrollbar-0::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-0::-webkit-scrollbar-thumb {
+    display: none;
+}
+
 .scrollbar-1::-webkit-scrollbar {
     width: 12px;
     background-color: transparent;

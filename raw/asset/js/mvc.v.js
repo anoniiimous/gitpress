@@ -1147,9 +1147,51 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             if (get.length > 3) {
                                 if (get[3] === "page") {
                                     var vp = dom.body.find('pages[data-page="/dashboard/*/pages/*"]');
-                                    var name = rout.ed.dir(route.path);
-                                    name.splice(0, 4);
-                                    vp.find('[placeholder="Page URL"]').innerHTML = "<span>" + rout.ed.url(name) + "</span><span contenteditable placeholder=':slug'></span>";
+
+                                    vp.find('[data-value="pages.title"]').value = "";
+
+                                    var slug = get[4];
+                                    slug === "/index.html" ? slug = "/" : null;
+
+                                    var url = vp.find('[data-value="pages.slug"]');
+                                    //url.dataset.slug = url.value = url.placeholder = slug + (name.length > 0 ? "/" : "");
+                                    url.value = "";
+                                    on.key.up.auto.width(url.previousElementSibling);
+                                    on.key.up.auto.width(url);
+
+                                    var url = vp.find('[data-value="pages.route"]');
+                                    url.value = "";
+                                    on.key.up.auto.width(url.previousElementSibling);
+                                    on.key.up.auto.width(url);
+
+                                    if (get.length > 4) {
+
+                                        try {
+                                            var res = await github.repos.contents({
+                                                owner: window.owner.login,
+                                                path: '/raw/pages/pages.json',
+                                                repo: get[1]
+                                            }, {
+                                                accept: "application/vnd.github.raw"
+                                            });
+                                            var json = res.find(o=>o.page === slug);
+                                            console.log(1161, {
+                                                json,
+                                                res,
+                                                slug
+                                            });
+                                            if (json) {
+                                                vp.find('[data-value="pages.title"]').value = json.title;
+                                                vp.find('[data-value="pages.slug"]').value = json.slug.length > 1 ? json.slug.slice(1) : "index.html";
+                                            } else {
+                                                throw Error("Page not found");
+                                            }
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+                                    }
+
+                                    resolve(route);
                                 }
                             } else {
                                 var feed = byId('feed-dashboard-pages');
@@ -1174,24 +1216,32 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 var names = [];
                                                 var html = "";
                                                 var hrefs = [];
+                                                var arr = [];
 
                                                 do {
                                                     var row = data[d];
-                                                    hrefs[d] = row.path;
+                                                    hrefs[d] = row.slug;
                                                     d++;
                                                 } while (d < data.length);
-                                                hrefs.sort();
+                                                hrefs.sort(function(a, b) {
+                                                    return a.localeCompare(b)
+                                                });
 
                                                 d = 0;
                                                 var names = [];
                                                 do {
                                                     var href = hrefs[d];
                                                     names[d] = rout.ed.dir(href);
+                                                    arr[d] = data[d];
                                                     d++;
                                                 } while (d < hrefs.length);
+                                                arr.sort(function(a, b) {
+                                                    return a.slug.localeCompare(b.slug);
+                                                });
 
                                                 d = 0;
                                                 do {
+                                                    var row = arr[d];
                                                     var href = hrefs[d];
                                                     var card = byId('template-feed-dashboard-pages').content.firstElementChild.cloneNode(true);
                                                     if ((d > 0 && names[d][0] !== names[d - 1][0])) {
@@ -1200,8 +1250,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                     if (d === 0 || (d > 0 && names[d][0] !== names[d - 1][0])) {
                                                         html += "<card class='" + card.className + "'>";
                                                     }
-                                                    card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/pages/page" + href;
-                                                    card.find('[placeholder="Page URL"]').textContent = href;
+                                                    card.find('[placeholder="Page URL"]').closest('box').dataset.href = "/dashboard/:get/pages/page/" + row.page;
+                                                    card.find('[placeholder="Page URL"]').textContent = row.title;
                                                     card.firstElementChild.dataset.sha = row.sha;
                                                     //card.find('[placeholder="Page URL"]').dataset.href = "/dashboard/:get/build/er/" + name.join('/');
                                                     card.find('.gg-file-add').closest('text').dataset.href = "/dashboard/:get/pages/page" + href;
@@ -1221,6 +1271,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     }
                                     );
                                 }
+                                resolve(route);
                             }
                         }
                         if (get[2] == "posts") {

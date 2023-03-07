@@ -686,6 +686,86 @@ window.on.key.up.setup = {
     }
 }
 
+window.on.key.down.route = event=>{
+    var target = event.target;
+    var value = target.value;
+    var keyCode = event.keyCode;
+    var slug = target.dataset.slug;
+    var pos = target.selectionStart;
+    (pos > 0 && keyCode === 37) ? pos = pos - 1 : null;
+    (pos < target.value.length && keyCode === 39) ? pos = pos + 1 : null;
+    (keyCode === 38) ? pos = 0 : null;
+    (keyCode === 40) ? pos = target.value.length : null;
+    0 > 1 ? console.log(keyCode, event, {
+        pos
+    }, target.value.charAt(pos)) : null;
+    //var alpha = (event.keyCode >= 65 && event.keyCode <= 90);
+    //var numeric = (keyCode >= 48 && keyCode <= 57)
+    if (event.shiftKey === true && ![56, 186].includes(keyCode)) {
+        event.preventDefault();
+    } else if (event.shiftKey === false && [186].includes(keyCode)) {
+        event.preventDefault();
+    } else if ([13, 32, 187, 188, 190, 192, 219, 220, 221, 222].includes(keyCode)) {
+        event.preventDefault();
+    } else if (target.value.charAt(pos - 1) === ':' && keyCode === 186) {
+        event.preventDefault();
+    } else if (target.value.charAt(pos - 1) === '/' && keyCode === 191) {
+        event.preventDefault();
+    } else if (keyCode === 191 && pos === 0) {
+        event.preventDefault();
+    } else if (event.shiftKey === true && target.value.charAt(pos - 1) === '*' && keyCode === 56) {
+        event.preventDefault();
+    } else if (event.shiftKey === true && target.value.charAt(pos - 1) !== '/' && keyCode === 56) {
+        event.preventDefault();
+    } else {
+        if (target.value.charAt(pos - 1) === '*' && ![8, 191].includes(keyCode)) {
+            event.preventDefault();
+        } else if (target.value.charAt(pos - 1) === ':' && ![8].includes(keyCode) && [191].includes(keyCode)) {
+            event.preventDefault();
+        } else if (target.value.endsWith(':dir') && ![8, 35, 36, 37, 38, 39, 40].includes(keyCode) && !(event.ctrlKey === true && keyCode === 65)) {
+            event.preventDefault();
+        }
+    }
+    target.value = target.value.toLowerCase();
+    //.replace(/ /g, '-').replace(/[^\w-]+/g, '');
+}
+window.on.key.up.route = event=>{
+    var target = event.target
+    var value = target.value;
+    var slug = target.previousElementSibling;
+    on.key.up.auto.width(event.target);
+}
+
+window.on.key.down.slug = event=>{
+    var target = event.target;
+    var value = target.value;
+    var keyCode = event.keyCode;
+    var slug = target.dataset.slug;
+    var pos = target.selectionStart;
+    (pos > 0 && keyCode === 37) ? pos = pos - 1 : null;
+    (pos < target.value.length && keyCode === 39) ? pos = pos + 1 : null;
+    (keyCode === 38) ? pos = 0 : null;
+    (keyCode === 40) ? pos = target.value.length : null;
+    //console.log(keyCode, event, {pos}, target.value.charAt(pos));
+    //var alpha = (event.keyCode >= 65 && event.keyCode <= 90);
+    //var numeric = (keyCode >= 48 && keyCode <= 57)
+    if (event.shiftKey === true) {
+        event.preventDefault();
+    } else if ([13, 32, 186, 187, 188, 190, 192, 219, 220, 221, 222].includes(keyCode)) {
+        event.preventDefault();
+    } else if (target.value.charAt(pos - 1) === '/' && keyCode === 191) {
+        event.preventDefault();
+    }
+    target.value = target.value.toLowerCase();
+    //.replace(/ /g, '-').replace(/[^\w-]+/g, '');
+}
+window.on.key.up.slug = event=>{
+    var target = event.target
+    var value = target.value;
+    var slug = target.previousElementSibling;
+    on.key.up.auto.width(event.target);
+}
+
 window.on["resize"] = function(event) {
     var as = dom.body.all('[onkeyup="on.key.up.auto.size(event.target)"]');
     if (as.length > 0) {

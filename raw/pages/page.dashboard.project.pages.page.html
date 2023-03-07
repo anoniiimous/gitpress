@@ -1,27 +1,211 @@
-<blocks class="display-flex flex-1">
-    <block class="flex-1 justify-content-center">
-        <picture data-backdrop-filter="blur(10px)" data-background-color="rgba(0,0,0,0.5)" data-href="/dashboard/:get/pages/"></picture>
-        <column class="padding-y-50px" data-max-height="calc(100% - 120px)">
-            <card class="background-color-fff border-radius-10px display-inline-flex margin-auto max-width-240px">
-                <form onsubmit="controller.pages.create(event)" id="form-dashboard-pages-page">
-                    <box class="padding-20px">
-                        <column>
-                            <text class="font-size-16px font-weight-bolder line-height-30px text-align-center" placeholder="Title">Create Page</text>
-                            <text class="font-size-13px min-height-180px text-align-center" placeholder="Body">Provide a name for your new page.</text>
-                            <input class="border-1px-solid border-color-bbb border-radius-5px font-size-16px line-height-30px margin-top-20px padding-x-10px" onkeyup="on.key.up.dashboard.pages(event)" placeholder="Page Name" type="text">
-                            <text class="border-1px-solid border-color-bbb border-radius-5px display-flex flex-1 font-size-16px line-height-30px margin-top-10px overflow-hidden padding-x-10px white-space-nowrap" placeholder="Page URL" type="text"></text>
-                            <input disabled="true" type="submit">
-                        </column>
+<form onsubmit="controller.pages.create(event)">
+    <header class="-dw480px-padding-10px display-flex flex-direction-column gap-30px padding-20px">
+        <row class="justify-content-space-between">
+            <card>
+                <row class="gap-10px">
+                    <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                        <section>
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-menu"></n>
+                            </ico>
+                        </section>
                     </box>
-                    <box class="border-color-ddd border-top-1px-solid color-0096c7 line-height-50px">
-                        <row>
-                            <text class="flex-1 font-weight-bolder opacity-1 text-align-center" data-href="/dashboard/:get/pages/" placeholder="No">Cancel</text>
-                            <line class="background-color-ddd height-50px width-1px"></line>
-                            <text class="flex-1 opacity-50pct text-align-center" data-submit placeholder="Yes">Continue</text>
+                    <box>
+                        <section>
+                            <text class="font-size-24px font-weight-bolder">Page</text>
+                        </section>
+                    </box>
+                </row>
+            </card>
+            <card>
+                <row>
+                    <box class="line-height-30px" data-href="/dashboard/:get/pages">
+                        <row class="align-items-center justify-content-center">
+                            <ico data-height="30px" data-width="30px">
+                                <n class="gg-file-document"></n>
+                            </ico>
+                            <text class="font-size-14px font-weight-bolder">View Pages</text>
                         </row>
                     </box>
-                </form>
+                </row>
+            </card>
+        </row>
+        <row>
+            <card class="font-weight-bolder">
+                <row class="gap-10px">
+                    <box data-href="/dashboard/:get/pages/page/:get">
+                        <column class="gap-5px">
+                            <text>General</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/pages/page"></line>
+                        </column>
+                    </box>
+                    <box data-href="/dashboard/:get/pages/seo/:get">
+                        <column class="gap-5px">
+                            <text>SEO</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/pages/seo"></line>
+                        </column>
+                    </box>
+                    <box data-href="/dashboard/:get/pages/social/:get">
+                        <column class="gap-5px">
+                            <text>Social</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/pages/social"></line>
+                        </column>
+                    </box>
+                    <box data-href="/dashboard/:get/pages/advanced/:get">
+                        <column class="gap-5px">
+                            <text>Advanced</text>
+                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/pages/advanced"></line>
+                        </column>
+                    </box>
+                </row>
+            </card>
+        </row>
+    </header>
+    <block class="flex-1 gap-50px justify-content-center padding-20px" data-page="/dashboard/*/pages">
+        <column class="display-flex flex-direction-column gap-20px">
+            <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
+                <section class="-dw960px-width-100pct width-320px">
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page Title</text>
+                            <text>The page title appears in the top of the browser window.</text>
+                        </column>
+                    </box>
+                </section>
+                <column class="flex-1 gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Page Title</text>
+                        </header>
+                        <column class="gap-0px">
+                            <input class="font-size-18px height-36px line-height-36px margin-10px" data-value="pages.title" type="text" placeholder="Enter a title">
+                        </column>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
+                <section class="-dw960px-width-100pct width-320px">
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page URL</text>
+                            <text>The unique location slug for this page.</text>
+                        </column>
+                    </box>
+                </section>
+                <column class="flex-1 gap-20px" data-960px-max-width="100%" data-max-width="calc(100% - 340px)">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">URL Route</text>
+                        </header>
+                        <flex class="align-items-center font-size-18px height-36px line-height-36px overflow-y-hidden padding-10px position-relative scrollbar-0 white-space-nowrap">
+                            <input class="display-flex font-size-16px height-100pct white-space-nowrap" disabled type="text" value="/">
+                            <input class="display-flex flex-1 font-size-16px height-100pct text-transform-lowercase white-space-nowrap" data-value="pages.slug" onkeydown="on.key.down.route(event)" onkeyup="on.key.up.route(event)" type="text" placeholder="url/*/route/:slug/goes/*/here/:dir">
+                        </flex>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw960px-flex-direction-column flex-direction-row gap-20px" data-display="none">
+                <section class="-dw960px-width-100pct width-320px">
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page Route</text>
+                            <text>The dynamic URL pattern linking to this page.</text>
+                        </column>
+                    </box>
+                </section>
+                <column class="flex-1 gap-20px" data-960px-max-width="100%" data-max-width="calc(100% - 340px)">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Dynamic Link</text>
+                        </header>
+                        <flex class="align-items-center font-size-18px height-36px line-height-36px overflow-y-hidden padding-10px position-relative scrollbar-0 white-space-nowrap">
+                            <input class="display-flex font-size-16px height-100pct white-space-nowrap" disabled type="text" value="/">
+                            <input class="display-flex flex-1 font-size-16px height-100pct text-transform-lowercase white-space-nowrap" data-value="pages.route" onkeydown="on.key.down.route(event)" onkeyup="on.key.up.route(event)" type="text" placeholder="url/route/*/here/:slug">
+                        </flex>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
+                <section class="-dw960px-width-100pct width-320px">
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page Visibility</text>
+                            <text>Disabled pages can’t be accessed by your site visitors..</text>
+                        </column>
+                    </box>
+                </section>
+                <column class="flex-1 gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Page Visibility</text>
+                        </header>
+                        <row class="align-items-center gap-0px justify-content-space-between padding-10px">
+                            <text class="font-size-13px">Disabled pages are not accessible by site visitors.</text>
+                            <label class="display-inline-flex justify-content-space-between">
+                                <input class="opacity-0 height-0 width-0" data-value="pages.visibility" type="checkbox">
+                                <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
+                                    <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
+                                </row>
+                            </label>
+                        </row>
+                    </box>
+                </column>
             </card>
         </column>
+        <footer class="display-flex flex-direction-column">
+            <card>
+                <column>
+                    <box class="-dw960px-width-100pct margin-left-auto width-50pct">
+                        <flex class="gap-10px" data-columns="2">
+                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.pages.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
+                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center">
+                                <text>Post It</text>
+                                <input type="submit">
+                            </label>
+                        </flex>
+                    </box>
+                </column>
+            </card>
+        </footer>
     </block>
-</blocks>
+    <block class="flex-1 justify-content-center padding-20px" data-page="/dashboard/*/pages/seo">
+        <form class="display-flex flex-direction-column gap-50px">
+            <card class="max-width-100pct width-640pxl">
+                <column class="gap-20px"></column>
+            </card>
+        </form>
+    </block>
+    <block class="flex-1 justify-content-center padding-20px" data-page="/dashboard/*/pages/social">
+        <form class="display-flex flex-direction-column gap-50px">
+            <card class="max-width-100pct width-640pxl">
+                <column class="gap-20px"></column>
+            </card>
+        </form>
+    </block>
+    <block class="flex-1 justify-content-center padding-20px" data-page="/dashboard/*/pages/advanced">
+        <flex class="-dw960px-flex-direction-column gap-20px">
+            <card class="-dw960px-width-100pct width-320px">
+                <section>
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page Header Script Injection</text>
+                            <text>Inject custom code or scripts to enhance specific parts of your page.</text>
+                        </column>
+                    </box>
+                </section>
+            </card>
+            <card class="flex-1">
+                <column class="gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Header Code</text>
+                        </header>
+                        <column class="gap-0px">
+                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-270px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder=""></textarea>
+                        </column>
+                    </box>
+                </column>
+            </card>
+        </flex>
+    </block>
+</form>

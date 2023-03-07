@@ -2628,6 +2628,99 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     pages: {
 
         create: async(event)=>{
+
+            event.preventDefault();
+
+            var form = event.target;
+            var postfix = form.find("[data-value='pages.slug']");
+            var prefix = postfix.previousElementSibling;
+            var slug = rout.ed.url(rout.ed.dir(prefix.value.substring(0, prefix.value.length - 1) + (postfix.value ? "/" + postfix.value : "").toLowerCase()));
+            var title = form.find("[data-value='pages.title']").value;
+            var route = form.find("[data-value='pages.route']").value;
+            var visibility = form.find("[data-value='pages.visibility']").checked;
+
+            var dir = [];
+            rout.ed.dir(slug).forEach(function(o) {
+                var name = o === "*" ? "wildcard" : o;
+                dir.push(name);
+            })
+            var page = 'page.' + dir.join('.') + '.html';
+
+            var data = {
+                page,
+                slug,
+                title,
+                visibility
+            };
+            console.log(2644, {
+                data
+            });
+            if (0 < 1 && href.length > 0 && title.length > 0) {
+                //JSON
+                //var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
+                var row = {
+                    page: page,
+                    slug: slug,
+                    title: title,
+                    visibility: visibility
+                };
+
+                //MEDIA
+                try {
+                    var data = await github.repos.contents({
+                        owner: owner.login,
+                        repo: GET[1],
+                        path: "/raw/pages/pages.json"
+                    });
+                    var j = JSON.parse(atob(data.content));
+                    var json = JSON.parse(atob(data.content));
+                    var exists = false;
+                    if (json.length > 0) {
+                        var js = 0;
+                        do {
+                            if (json[js].slug === slug) {
+                                var exists = true;
+                                json[js] = row;
+                            }
+                            js++;
+                        } while (js < json.length);
+                    }
+                    if (exists === false) {
+                        json.push(row);
+                    }
+                } catch (e) {
+                    var j = [];
+                    var json = [row];
+                }
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var str1 = JSON.stringify(rows, null, 4);
+
+                //PUSH
+                var params = {
+                    message: 'Create "' + title + ' Page',
+                    repo: GET[1],
+                    owner: owner.login
+                };
+                var array = [{
+                    content: str1,
+                    path: "raw/pages/pages.json"
+                }, {
+                    content: "<blocks></blocks>",
+                    path: "raw/pages/" + page
+                }];
+                console.log(2452, 'controller.audio.update', "array", {
+                    array
+                });
+                await github.crud.update(params, array);
+                "/dashboard/:get/pages/".router()
+            } else {
+                alert("You must supply a title.");
+            }
+        }
+        ,
+
+        creator: async(event)=>{
             event.preventDefault();
 
             const form = event.target;

@@ -5,7 +5,7 @@ String.prototype.router = async function(params) {
     var tabs = await rout.ed.vars(rout.ed.dir(url.hash ? url.hash.split('#')[1] : uri));
     var goto = rout.ed.url(tabs);
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-    console.log(8, uri, route);
+    //console.log(8, uri, route);
 
     var pages = dom.body.find('pages[data-page="' + rout.es() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
@@ -68,7 +68,6 @@ String.prototype.router = async function(params) {
     if (fetching.length > 0) {
         var f = 0;
         do {
-            //console.log(fetching[f]);
             if (fetching[f].innerHTML === "") {
                 fetching[f].innerHTML = await ajax(fetching[f].dataset.fetch);
             }
@@ -199,10 +198,42 @@ window.rout.ed.bang = async(route)=>{
             var check = rs[i].closest('[data-fetch]') && rs[i].closest('[data-fetch]') === rs[i];
             if (route.page && route.page.includes(rs[i].dataset.page)) {
                 rs[i].dataset.active = true;
+
+                var roots = rs[i].all('[data-page]');
+                if (rout.ed.dir(rs[i].dataset.page).length === rout.ed.dir(route.page).length && roots.length > 0) {
+                    var p = null;
+                    var r = 0;
+                    do {
+                        var root = roots[r];
+                        var page = root.dataset.page;
+                        var dir = rout.ed.dir(page)
+                        var dirs = rout.ed.dir(route.path);
+                        var bools = [];
+                        //console.log(page);
+                        var is = 0;
+                        var same = dir.forEach(function(d, i, e) {
+                            var ei = e[i];
+                            var slug = dirs[i];
+                            var bool = [slug, '*'].includes(ei);
+                            bools.push(bool);
+                            0 > 1 ? console.log(312, bool, rout.ed.url(e), ei, slug, {
+                                d,
+                                i,
+                                e
+                            }) : null;
+                            is++;
+                        });
+                        truth(bools) ? p = page : null;
+                        r++;
+                    } while (r < roots.length);
+                    var ps = $(rs[i].all('[data-page="' + p + '"]'));
+                    ps.attr("data-active", true);
+                }
             }
             i++;
         } while (i < rs.length)
     }
+
     return route;
 }
 window.rout.ed.close = ()=>{
@@ -313,7 +344,7 @@ window.rout.es = function getRoot(els) {
 
 window.rout.ing = (href,GOT,n)=>{
     var ed = null;
-    var pages = $(dom.body.all('[data-page]')).sort(function(a, b) {
+    var pages = $(dom.body.all('page[data-page], pages[data-page]')).sort(function(a, b) {
         return a.dataset.page.localeCompare(b.dataset.page);
     })
     var routes = pages.forEach(function(el) {

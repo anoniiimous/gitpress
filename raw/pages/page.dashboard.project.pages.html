@@ -82,13 +82,13 @@
                     </ico>
                 </label>
             </box>
-            <box class="flex-1">
+            <box class="flex-1 height-50px line-height-50px">
                 <section>
                     <text class="flex-1 font-size-16px oveflow-hidden text-overflow-ellipsis white-space-nowrap" placeholder="Page URL"></text>
                 </section>
             </box>
             <box data-tap="
-                    var dir = rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href);
+                    var dir = rout.ed.dir(event.target.closest('box').previousElementSibling.dataset.href);
                     controller.pages.delete([dir.splice(4,dir.length)])
                     ">
                 <ico>
