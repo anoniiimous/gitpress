@@ -2809,15 +2809,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
                 if (res.length > 0) {
                     var pages = res.filter(function(obj) {
-                        var dir = rout.ed.dir(obj.path);
-                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
-                        //console.log('posts', slugs, obj.path, dir, exists);
+                        var dir = rout.ed.dir(obj.page);
+                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(dir));
+                        console.log('posts', {
+                            slugs,
+                            obj,
+                            page: obj.page,
+                            dir,
+                            exists
+                        });
                         return !exists;
                     });
                     var deleted = res.filter(function(obj) {
-                        var dir = rout.ed.dir(obj.path);
-                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(rout.ed.dir(obj.path)));
-                        //console.log('posts', slugs, obj.path, dir, exists);
+                        var dir = rout.ed.dir(obj.page);
+                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(dir));
+                        console.log('posts', {
+                            slugs,
+                            obj,
+                            page: obj.page,
+                            dir,
+                            exists
+                        });
                         return exists;
                     })
                     console.log({
@@ -2835,7 +2847,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             if (slugs.length > 1) {
                 titles = slugs.length + " pages";
             } else {
-                titles = '"' + deleted[0].name + '"';
+                deleted.length > 0 ? titles = '"' + deleted[0].title + '"' : null;
             }
 
             console.log(2475, {
@@ -2887,7 +2899,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var slugs = [];
                 var c = 0;
                 do {
-                    var href = checked[c].closest('row').find('[placeholder="Page URL"]').dataset.href;
+                    var href = checked[c].closest('row').find('[placeholder="Page URL"]').closest('box').dataset.href;
                     var dir = rout.ed.dir(href)
                     var slug = dir.splice(4, dir.length);
                     slugs.push(slug);

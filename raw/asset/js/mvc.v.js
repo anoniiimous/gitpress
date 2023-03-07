@@ -1183,6 +1183,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             if (json) {
                                                 vp.find('[data-value="pages.title"]').value = json.title;
                                                 vp.find('[data-value="pages.slug"]').value = json.slug.length > 1 ? json.slug.slice(1) : "index.html";
+                                                vp.find('[data-value="pages.visibility"]').checked = json.visibility;
                                             } else {
                                                 throw Error("Page not found");
                                             }

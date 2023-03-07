@@ -157,7 +157,7 @@
                 <column>
                     <box class="-dw960px-width-100pct margin-left-auto width-50pct">
                         <flex class="gap-10px" data-columns="2">
-                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.pages.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
+                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.pages.delete([rout.ed.dir(route.path).splice(4,5)])">Delete</text>
                             <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center">
                                 <text>Post It</text>
                                 <input type="submit">
@@ -198,7 +198,29 @@
                 <column class="gap-20px">
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
-                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Header Code</text>
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Head Code</text>
+                        </header>
+                        <column class="gap-0px">
+                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-270px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder=""></textarea>
+                        </column>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw960px-width-100pct width-320px">
+                <section>
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page Body Code Editor</text>
+                            <text>Modify the source code of your page to insert custom elements.</text>
+                        </column>
+                    </box>
+                </section>
+            </card>
+            <card class="flex-1">
+                <column class="gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Body Code</text>
                         </header>
                         <column class="gap-0px">
                             <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-270px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder=""></textarea>
