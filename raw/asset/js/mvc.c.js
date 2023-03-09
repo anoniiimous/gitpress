@@ -2684,7 +2684,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var head = "";
             head += "<head>";
             head += "<style>" + code.css + "</style>";
-            head += "<script>" + code.js + "</script>";
+            head += `<script type="text/javasript">` + code.js + "</script>";
             head += "</head>";
             var body = "<body>" + code.html + "</body>";
             var content = "<html>" + head + body + "</html>";
