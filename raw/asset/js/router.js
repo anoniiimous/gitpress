@@ -216,17 +216,17 @@ window.rout.ed.bang = async(route)=>{
                             var ei = e[i];
                             var slug = dirs[i];
                             var bool = [slug, '*'].includes(ei);
-                            if(dir.length <= dirs.length) {
-                            bools.push(bool);
-                            0 > 1 ? console.log(312, bool, rout.ed.url(e), ei, slug, {
-                                d,
-                                i,
-                                e
-                            }) : null;
+                            if (dir.length <= dirs.length) {
+                                bools.push(bool);
+                                0 > 1 ? console.log(312, bool, rout.ed.url(e), ei, slug, {
+                                    d,
+                                    i,
+                                    e
+                                }) : null;
                             }
                             is++;
                         });
-                        if(truth(bools)) {
+                        if (bools.length > 0 && truth(bools)) {
                             //console.log(truth(bools), bools, page);
                             p = page;
                         }

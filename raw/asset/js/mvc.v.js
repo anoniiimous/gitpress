@@ -1808,7 +1808,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         });
                                         if (error.code === 404) {
                                             //alert("Setup Project");
-                                            resolve(route);
+                                            //resolve(route);
                                         }
                                     }
                                     );
@@ -1819,6 +1819,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         } else {
                             const user = await github.user.get();
                             controller.posts.read(get[1]);
+                            resolve(route);
                         }
                     } else if (get[2] === "setup") {
                         var vp = dom.body.find('[data-page="/setup"]');
