@@ -25,7 +25,7 @@ Array.prototype.addClass = function(name) {
 }
 
 Array.prototype.has = function(that) {
-    return that.every(v => this.includes(v));
+    return that.every(v=>this.includes(v));
 }
 
 Array.prototype.removeClass = function(name) {
@@ -92,7 +92,6 @@ Array.prototype.remove = function(name) {
     }
     return that;
 }
-;
 Array.prototype.removeAttribute = function(name) {
     var that = this;
     if (that.length > 1) {
@@ -121,7 +120,7 @@ Array.prototype.text = function(html) {
     var that = [];
     var vals = Object.values(this);
     if (vals.length > 0) {
-        for (var i = vals.length; i--;) {
+        for (var i = vals.length; i--; ) {
             var val = vals[i]
             if (html && html.length > 0) {
                 that[i] = this[i].textContent = html;
@@ -238,7 +237,27 @@ String.prototype.pend = {
 window.all = function(str) {
     return document.querySelectorAll(str);
 }
-;
+window.beautify = {
+    html: function(html) {
+        var tab = '\t';
+        var result = '';
+        var indent = '';
+
+        html.split(/>\s*</).forEach(function(element) {
+            if (element.match(/^\/\w/)) {
+                indent = indent.substring(tab.length);
+            }
+
+            result += indent + '<' + element + '>\r\n';
+
+            if (element.match(/^<?\w[^>]*[^\/]$/) && !element.startsWith("input")) {
+                indent += tab;
+            }
+        });
+
+        return result.substring(1, result.length - 3);
+    }
+}
 window.byId = s=>{
     return document.getElementById(s);
 }

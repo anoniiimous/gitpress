@@ -2634,36 +2634,68 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var form = event.target;
             var postfix = form.find("[data-value='pages.slug']");
             var prefix = postfix.previousElementSibling;
-            var slug = rout.ed.url(rout.ed.dir(prefix.value.substring(0, prefix.value.length - 1) + (postfix.value ? "/" + postfix.value : "").toLowerCase()));
+            var slug = postfix.value === "index.html" ? prefix.value : rout.ed.url(rout.ed.dir(prefix.value.substring(0, prefix.value.length - 1) + (postfix.value ? "/" + postfix.value : "").toLowerCase()));
             var title = form.find("[data-value='pages.title']").value;
             var route = form.find("[data-value='pages.route']").value;
+            var pages = form.find("[data-value='pages.pages']").checked;
+            var main = !form.find("[data-value='pages.main']").checked;
             var visibility = form.find("[data-value='pages.visibility']").checked;
 
             var dir = [];
             rout.ed.dir(slug).forEach(function(o) {
-                var name = o === "*" ? "wildcard" : o;
-                dir.push(name);
+                var name = o === "*" ? "_" : o;
+                name ? dir.push(name) : null;
             })
-            var page = 'page.' + dir.join('.') + '.html';
+            var page = 'page.' + dir.join('.') + (dir.length > 0 ? '.' : '') + 'html';
 
-            var data = {
-                page,
-                slug,
-                title,
-                visibility
+            var seo = {};
+            var description = form.find("textarea[data-value='seo.description']").value;
+            var seo_title = form.find("textarea[data-value='seo.title']").value;
+            description && description.length > 0 ? seo.description = description : null;
+            seo_title && seo_title.length > 0 ? seo.title = seo_title : null;
+            var noindex = form.find("[data-value='seo.noindex']").checked;
+            0 > 1 ? console.log({
+                seo,
+                desc: form.find("textarea[data-value='seo.description']"),
+                description,
+                seo_title,
+                ttl: form.find("textarea[data-value='seo.title']")
+            }) : null;
+
+            var photo = form.find('[data-value="social.image"]').find('img') ? form.find('[data-value="social.image"]').find('img').src : null;
+            var image = photo ? "image." + photo.split(';base64,')[0].split('/')[1] : null;
+
+            var data = {};
+            image ? data.image = image : null;
+            data.main = main;
+            data.noindex = noindex;
+            data.page = page;
+            data.pages = pages;
+            Object.keys(seo).length > 0 ? data.seo = seo : null;
+            data.slug = slug;
+            data.title = title;
+            data.visibility = visibility;
+
+            var code = {
+                css: vp.advanced.find('[data-value="advanced.css"]').value,
+                js: vp.advanced.find('[data-value="advanced.js"]').value,
+                html: vp.advanced.find('[data-value="advanced.html"]').value
             };
-            console.log(2644, {
+            var head = "";
+            head += "<head>";
+            head += "<style>" + code.css + "</style>";
+            head += "<script>" + code.js + "</script>";
+            head += "</head>";
+            var body = "<body>" + code.html + "</body>";
+            var content = "<html>" + head + body + "</html>";
+
+            0 > 1 ? console.log(2644, {
                 data
-            });
+            }) : null;
             if (0 < 1 && href.length > 0 && title.length > 0) {
                 //JSON
                 //var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
-                var row = {
-                    page: page,
-                    slug: slug,
-                    title: title,
-                    visibility: visibility
-                };
+                var row = data;
 
                 //MEDIA
                 try {
@@ -2696,101 +2728,66 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
-                //PUSH
-                var params = {
-                    message: 'Create "' + title + ' Page',
-                    repo: GET[1],
-                    owner: owner.login
-                };
-                var array = [{
-                    content: str1,
-                    path: "raw/pages/pages.json"
-                }, {
-                    content: "<blocks></blocks>",
-                    path: "raw/pages/" + page
-                }];
-                console.log(2452, 'controller.audio.update', "array", {
-                    array
-                });
-                await github.crud.update(params, array);
-                "/dashboard/:get/pages/".router()
+                if (exists === true && GET.length === 4) {
+
+                    alert("This page already exists");
+
+                } else {
+
+                    //PUSH
+                    var params = {
+                        message: 'Create "' + title + ' Page',
+                        repo: GET[1],
+                        owner: owner.login
+                    };
+                    var array = [{
+                        content: str1,
+                        path: "raw/pages/pages.json"
+                    }, {
+                        content,
+                        path: "raw/pages/" + page
+                    }, {
+                        content,
+                        path: "raw/pages" + (slug === "/" ? "" : slug.replace('*', '_')) + "/page.html"
+                    }, {
+                        content: JSON.stringify(row, null, 4),
+                        path: "raw/pages" + (slug === "/" ? "" : slug.replace('*', '_')) + "/page.json"
+                    }];
+                    if (photo) {
+                        if (photo.startsWith('data:')) {
+                            array.push({
+                                content: photo.split(';base64,')[1],
+                                path: "raw/pages" + (slug === "/" ? "" : slug.replace('*', '_')) + "/" + image,
+                                type: "base64"
+                            });
+                        }
+                        var img = form.find('[data-value="social.preview"]');
+                        if (img.dataset.filename !== "image") {
+                            var filename = img.dataset.filename;
+                            array.push({
+                                content: null,
+                                path: "raw/pages" + (slug === "/" ? "" : slug.replace('*', '_')) + "/" + filename,
+                            });
+                        }
+                    } else {
+                        var img = form.find('[data-value="social.preview"]');
+                        if (img.dataset.filename) {
+                            var filename = img.dataset.filename;
+                            array.push({
+                                content: null,
+                                path: "raw/pages" + (slug === "/" ? "" : slug.replace('*', '_')) + "/image." + filename.split(';base64,')[0].split('.')[filename.split(';base64,')[0].split('.').length - 1],
+                            });
+                        }
+                    }
+                    console.log(2452, 'controller.pages.update', "array", {
+                        array
+                    });
+                    await github.crud.update(params, array);
+                    "/dashboard/:get/pages/".router();
+
+                }
             } else {
                 alert("You must supply a title.");
-            }
-        }
-        ,
-
-        creator: async(event)=>{
-            event.preventDefault();
-
-            const form = event.target;
-            const value = form.find('[type="text"]').value;
-
-            if (value.length > 0) {
-                const user = await github.user.get();
-                const fix = value.toLowerCase();
-                const filename = "page." + fix.split(' ').join('-') + ".html";
-
-                const message = "Create " + value + " Page";
-                const content = "";
-
-                var rte = rout.ed.dir(route.path);
-                rte.splice(0, 4);
-
-                event.target.closest('form').find('[type="submit"]').removeAttribute('disabled');
-                event.target.closest('form').find('[data-submit]').classList.remove('opacity-50pct');
-
-                var page = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
-                var path = (rte.length > 0 ? "/" : "") + rte.join('/') + "/" + fix.split(' ').join('-') + "/";
-                var row = {
-                    "page": page,
-                    "path": path
-                }
-                var sha = null;
-
-                try {
-                    var data = await github.repos.contents({
-                        owner: user.login,
-                        repo: GET[1],
-                        path: "/raw/pages/pages.json"
-                    });
-                    var sha = data.sha;
-                    var j = JSON.parse(atob(data.content));
-                    var json = JSON.parse(atob(data.content));
-                    json.push(row);
-                } catch (e) {
-                    var j = [];
-                    var json = [row];
-                }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
-
-                inc ? alert("This page already exists.") : github.repos.contents({
-                    owner: user.login,
-                    repo: GET[1],
-                    path: "/raw/pages/pages.json"
-                }, {
-                    data: JSON.stringify({
-                        content: btoa(JSON.stringify(rows, null, 4)),
-                        message,
-                        sha
-                    }),
-                    dataType: "PUT"
-                }).then(()=>{
-                    "/dashboard/:get/pages/".router()
-                    event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
-                    event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
-                }
-                ).catch(e=>{
-                    console.log(e);
-                    0 > 1 ? "/dashboard/:get/pages/".router().then(modal.alert({
-                        body: "There was an error creating this page.",
-                        submit: "OK",
-                        title: "Error"
-                    })) : null;
-                }
-                );
-
             }
         }
         ,
@@ -2874,11 +2871,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var d = 0;
                     do {
                         var removed = deleted[d];
-                        var arr = {
+                        array.push({
                             content: null,
-                            path: "raw/pages/page." + rout.ed.dir(removed.path).join('.') + '.html'
-                        };
-                        array.push(arr);
+                            path: "raw/pages" + removed.slug.replace('*', '_') + '/page.html'
+                        });
+                        array.push({
+                            content: null,
+                            path: "raw/pages" + removed.slug.replace('*', '_') + '/page.json'
+                        });
+                        removed.image ? array.push({
+                            content: null,
+                            path: "raw/pages" + removed.slug.replace('*', '_') + '/' + removed.image
+                        }) : null;
                         d++;
                     } while (d < deleted.length);
                 }
@@ -2891,6 +2895,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
         }
         ,
+
+        image: async function(event) {
+            var input = event.target;
+            var file = await on.change.file(event);
+
+            var img = document.createElement('img');
+            img.className = 'height-100pct object-fit-cover position-absolute top-0 width-100pct';
+            img.src = file.result;
+            $(event.target.closest('block').all('picture[data-value]')).html(img.outerHTML);
+
+            var img = document.createElement('img');
+            img.className = 'height-100pct object-fit-contain position-absolute top-0 width-100pct';
+            img.src = file.result;
+            $(event.target.closest('box').find('picture[data-value]')).html(img.outerHTML);
+
+            input.insertAdjacentHTML('beforebegin', input.outerHTML);
+            input.remove();
+            console.log(event, file);
+        },
 
         remove: target=>{
             var column = target.closest('block').find('column');
@@ -2919,6 +2942,36 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 footer.dataset.display = "flex";
             } else {
                 footer.dataset.display = "none";
+            }
+        }
+        ,
+
+        seo: target=>{
+            var characters = target.value.length;
+            var maxlength = parseInt(target.closest('box').find('[data-maxlength]').dataset.maxlength);
+            on.key.up.auto.size(event.target);
+            target.closest('box').find('[data-maxlength]').textContent = maxlength - characters;
+            var value = target.closest('box').find('[data-after]').dataset.after;
+            var preview = target.closest('block').find('[data-value="seo.' + value + '"]');
+            var social = target.closest('form').find('[data-page="/dashboard/*/pages/social"] [data-value="social.' + value + '"]');
+            if (target.value.length > 0) {
+                social.textContent = preview.textContent = target.value;
+            } else {
+                var el = target.closest('form').find('[data-value="pages.' + value + '"]');
+                social.textContent = preview.textContent = (el ? el : target).value;
+            }
+        }
+        ,
+
+        title: event=>{
+            if (event.type === "keydown") {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                }
+            }
+            if (event.type === "keyup") {
+                event.target.closest('form').find('[data-value="social.title"]').textContent = event.target.value;
+                event.target.closest('form').find('[data-value="seo.title"]').textContent = event.target.value;
             }
         }
 

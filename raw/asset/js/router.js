@@ -203,6 +203,7 @@ window.rout.ed.bang = async(route)=>{
                 if (rout.ed.dir(rs[i].dataset.page).length === rout.ed.dir(route.page).length && roots.length > 0) {
                     var p = null;
                     var r = 0;
+                    //console.log(roots);
                     do {
                         var root = roots[r];
                         var page = root.dataset.page;
@@ -215,15 +216,20 @@ window.rout.ed.bang = async(route)=>{
                             var ei = e[i];
                             var slug = dirs[i];
                             var bool = [slug, '*'].includes(ei);
+                            if(dir.length <= dirs.length) {
                             bools.push(bool);
                             0 > 1 ? console.log(312, bool, rout.ed.url(e), ei, slug, {
                                 d,
                                 i,
                                 e
                             }) : null;
+                            }
                             is++;
                         });
-                        truth(bools) ? p = page : null;
+                        if(truth(bools)) {
+                            //console.log(truth(bools), bools, page);
+                            p = page;
+                        }
                         r++;
                     } while (r < roots.length);
                     var ps = $(rs[i].all('[data-page="' + p + '"]'));
@@ -321,6 +327,8 @@ window.rout.ed.vars = async function(tabs) {
     //console.log({tabs});
     return tabs;
 }
+
+window.rout.ed.history = [];
 
 window.rout.es = function getRoot(els) {
     var els = $('pages[data-page]');

@@ -1,6 +1,6 @@
-<form onsubmit="controller.pages.create(event)">
-    <header class="-dw480px-padding-10px display-flex flex-direction-column gap-30px padding-20px">
-        <row class="justify-content-space-between">
+<form class="align-items-center display-flex flex-direction-column" onsubmit="controller.pages.create(event)">
+    <header class="-dw480px-padding-10px display-flex flex-direction-column flex-grow-1 gap-30px padding-y-20px width-100pct">
+        <row class="justify-content-space-between padding-x-20px">
             <card>
                 <row class="gap-10px">
                     <box class="display-noner" data-960px-display="flex" data-tap="controller.nav.toggle(event.target)">
@@ -30,7 +30,7 @@
                 </row>
             </card>
         </row>
-        <row>
+        <row class="padding-x-20px">
             <card class="font-weight-bolder">
                 <row class="gap-10px">
                     <box data-href="/dashboard/:get/pages/page/:get">
@@ -61,8 +61,8 @@
             </card>
         </row>
     </header>
-    <block class="-dw480px-padding-10px flex-1 gap-50px justify-content-center padding-20px" data-page="/dashboard/*/pages">
-        <column class="display-flex flex-direction-column gap-20px">
+    <block class="-dw480px-padding-10px flex-1 justify-content-center max-width-1280px width-100pct" data-page="/dashboard/*/pages/page">
+        <column class="display-flex flex-direction-column gap-20px padding-20px">
             <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
                 <section class="-dw960px-width-100pct width-320px">
                     <box>
@@ -78,7 +78,7 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Page Title</text>
                         </header>
                         <column class="gap-0px">
-                            <input class="font-size-18px height-36px line-height-36px margin-10px" data-value="pages.title" type="text" placeholder="Enter a title">
+                            <input class="font-size-18px height-36px line-height-36px margin-10px" data-value="pages.title" onkeydown="controller.pages.title(event)" onkeyup="controller.pages.title(event)" type="text" placeholder="Enter a title">
                         </column>
                     </box>
                 </column>
@@ -98,7 +98,7 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">URL Route</text>
                         </header>
                         <flex class="align-items-center font-size-18px height-36px line-height-36px overflow-y-hidden padding-10px position-relative scrollbar-0 white-space-nowrap">
-                            <input class="display-flex font-size-16px height-100pct white-space-nowrap" disabled type="text" value="/">
+                            <input class="display-flex font-size-16px height-100pct white-space-nowrap width-4px" disabled type="text" value="/">
                             <input class="display-flex flex-1 font-size-16px height-100pct text-transform-lowercase white-space-nowrap" data-value="pages.slug" onkeydown="on.key.down.route(event)" onkeyup="on.key.up.route(event)" type="text" placeholder="url/*/route/:slug/goes/*/here/:dir">
                         </flex>
                     </box>
@@ -129,6 +129,58 @@
                 <section class="-dw960px-width-100pct width-320px">
                     <box>
                         <column>
+                            <text class="font-weight-bolder line-height-50px">Dynamic Route</text>
+                            <text>The container will remain active for any paths relative to this page.</text>
+                        </column>
+                    </box>
+                </section>
+                <column class="flex-1 gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Pages Element</text>
+                        </header>
+                        <row class="align-items-center gap-0px justify-content-space-between padding-10px">
+                            <text class="font-size-13px">Dynamic pages enable unlimited paths for relative subdirectories.</text>
+                            <label class="display-inline-flex justify-content-space-between">
+                                <input class="opacity-0 height-0 width-0" data-value="pages.pages" type="checkbox">
+                                <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
+                                    <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
+                                </row>
+                            </label>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
+                <section class="-dw960px-width-100pct width-320px">
+                    <box>
+                        <column>
+                            <text class="font-weight-bolder line-height-50px">Page Modal</text>
+                            <text>Determine if this page is contained above the main content area.</text>
+                        </column>
+                    </box>
+                </section>
+                <column class="flex-1 gap-20px">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
+                        <header class="background-color-ccc">
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Popup Container</text>
+                        </header>
+                        <row class="align-items-center gap-0px justify-content-space-between padding-10px">
+                            <text class="font-size-13px">Popups are located above the entire template.</text>
+                            <label class="display-inline-flex justify-content-space-between">
+                                <input class="opacity-0 height-0 width-0" data-value="pages.main" type="checkbox">
+                                <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
+                                    <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
+                                </row>
+                            </label>
+                        </row>
+                    </box>
+                </column>
+            </card>
+            <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
+                <section class="-dw960px-width-100pct width-320px">
+                    <box>
+                        <column>
                             <text class="font-weight-bolder line-height-50px">Page Visibility</text>
                             <text>Disabled pages can’t be accessed by your site visitors..</text>
                         </column>
@@ -152,24 +204,9 @@
                 </column>
             </card>
         </column>
-        <footer class="display-flex flex-direction-column">
-            <card>
-                <column>
-                    <box class="-dw960px-width-100pct margin-left-auto width-50pct">
-                        <flex class="gap-10px" data-columns="2">
-                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.pages.delete([rout.ed.dir(route.path).splice(4,5)])">Delete</text>
-                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center">
-                                <text>Post It</text>
-                                <input type="submit">
-                            </label>
-                        </flex>
-                    </box>
-                </column>
-            </card>
-        </footer>
     </block>
-    <block class="-dw480px-padding-10px flex-1 gap-20px justify-content-center padding-20px" data-page="/dashboard/*/pages/seo">
-        <column class="display-flex flex-direction-column gap-50px">
+    <block class="-dw480px-padding-10px flex-1 justify-content-center max-width-1280px width-100pct" data-page="/dashboard/*/pages/seo">
+        <column class="display-flex flex-direction-column gap-50px padding-20px">
             <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
                 <section class="-dw960px-width-100pct width-320px">
                     <box>
@@ -187,20 +224,20 @@
                         <column>
                             <field class="display-flex flex-direction-column gap-10px padding-10px">
                                 <header class="display-flex flex-direction-column">
-                                    <text class="color-005cc8 display-flex flex-wrap-wrap gap-5px">
-                                        <span data-value="seo.page">New Page</span>
+                                    <text class="color-005cc8 gap-5px">
+                                        <span data-empty="Page Title" data-value="seo.title"></span>
                                         <span>&#8211;</span>
-                                        <span data-value="seo.title">Your Site Title</span>
+                                        <span data-empty="Site Title" data-value="seo.site"></span>
                                     </text>
-                                    <text class="color-777 display-flex flex-wrap-wrap font-size-13px">
-                                        <span>https://</span>
-                                        <span data-value="seo.subdomain">subdomain</span>
-                                        <span>.dompad.app</span>
+                                    <text class="color-777 font-size-0">
+                                        <span class="font-size-13px">https://</span>
+                                        <span class="font-size-13px" data-value="seo.subdomain">subdomain</span>
+                                        <span class="font-size-13px">.dompad.io</span>
                                     </text>
                                 </header>
                                 <line class="border-bottom-1px-solid border-color-ddd"></line>
                                 <section>
-                                    <text>This description will be automatically generated by search engines. To override that description, enter one below.</text>
+                                    <text data-value="seo.description" data-empty="This description will be automatically generated by search engines. To override that description, enter one below."></text>
                                 </section>
                             </field>
                         </column>
@@ -219,11 +256,14 @@
                 <column class="flex-1 gap-20px">
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
-                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Title</text>
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="title"></text>
                         </header>
-                        <column>
-                            <textarea class="border-color-ddd font-size-16px margin-10px min-height-54px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Add title..."></textarea>
-                        </column>
+                        <row class="align-items-flex-end justify-content-center min-height-50px">
+                            <field class="align-items-flex-end bottom-0 display-flex margin-auto text-align-right width-100pct">
+                                <textarea class="border-color-ddd flex-1 font-size-16px margin-auto height-38px overflow-hidden padding-10px" data-value="seo.title" onkeyup="controller.pages.seo(event.target)" placeholder="Add title..."></textarea>
+                                <span class="padding-10px" data-maxlength="100">100</span>
+                            </field>
+                        </row>
                     </box>
                 </column>
             </card>
@@ -239,11 +279,14 @@
                 <column class="flex-1 gap-20px">
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
-                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Description</text>
+                            <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="description"></text>
                         </header>
-                        <column>
-                            <textarea class="border-color-ddd font-size-16px margin-10px min-height-108px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Add desription..."></textarea>
-                        </column>
+                        <row class="align-items-flex-end justify-content-center min-height-50px">
+                            <field class="align-items-flex-end bottom-0 display-flex margin-auto text-align-right width-100pct">
+                                <textarea class="border-color-ddd flex-1 font-size-16px margin-auto height-38px overflow-hidden padding-10px" data-value="seo.description" onkeyup="controller.pages.seo(event.target)" placeholder="Add description..."></textarea>
+                                <span class="padding-10px" data-maxlength="400">400</span>
+                            </field>
+                        </row>
                     </box>
                 </column>
             </card>
@@ -264,7 +307,7 @@
                         <row class="align-items-center gap-0px justify-content-space-between padding-10px">
                             <text class="font-size-13px">Hide page from search results.</text>
                             <label class="display-inline-flex justify-content-space-between">
-                                <input class="opacity-0 height-0 width-0" data-value="pages.visibility" type="checkbox">
+                                <input class="opacity-0 height-0 width-0" data-value="seo.noindex" type="checkbox">
                                 <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
                                     <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
                                 </row>
@@ -275,8 +318,8 @@
             </card>
         </column>
     </block>
-    <block class="-dw480px-padding-10px flex-1 justify-content-center padding-20px" data-page="/dashboard/*/pages/social">
-        <column class="display-flex flex-direction-column gap-50px">
+    <block class="-dw480px-padding-10px flex-1 justify-content-center max-width-1280px width-100pct" data-page="/dashboard/*/pages/social">
+        <column class="display-flex flex-direction-column gap-50px padding-20px">
             <card class="-dw960px-flex-direction-column flex-direction-row gap-20px">
                 <section class="-dw960px-width-100pct width-320px">
                     <box>
@@ -292,22 +335,23 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Preview</text>
                         </header>
                         <column>
+                            <picture class="empty padding-top-50pct position-relative width-100pct" data-value="social.preview"></picture>
                             <field class="display-flex flex-direction-column gap-10px padding-10px">
                                 <header class="display-flex flex-direction-column">
                                     <text class="color-005cc8 display-flex flex-wrap-wrap gap-5px">
-                                        <span data-value="seo.page">New Page</span>
+                                        <span data-value="social.title">New Page</span>
                                         <span>&#8211;</span>
-                                        <span data-value="seo.title">Your Site Title</span>
+                                        <span data-value="social.site">Your Site Title</span>
                                     </text>
                                     <text class="color-777 display-flex flex-wrap-wrap font-size-13px">
                                         <span>https://</span>
-                                        <span data-value="seo.subdomain">subdomain</span>
-                                        <span>.dompad.app</span>
+                                        <span data-value="social.subdomain">subdomain</span>
+                                        <span>.dompad.io</span>
                                     </text>
                                 </header>
                                 <line class="border-bottom-1px-solid border-color-ddd"></line>
                                 <section>
-                                    <text>This description will be automatically generated by search engines. To override that description, enter one below.</text>
+                                    <text data-empty="This description will be automatically generated by search engines. To override that description, enter one below." data-value="social.description"></text>
                                 </section>
                             </field>
                         </column>
@@ -329,22 +373,27 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Image</text>
                         </header>
                         <column class="padding-top-160px position-relative width-100pct">
-                            <picture></picture>
+                            <picture class="align-items-center display-flex empty-state flex-direction-row gap-5px height-100pct justify-content-center position-absolute top-0 width-100pct" data-value="social.image"></picture>
                             <label class="align-items-center display-flex empty-state flex-direction-row gap-5px height-100pct justify-content-center position-absolute top-0 width-100pct">
                                 <ico data-width="20px">
                                     <n class="gg-software-upload"></n>
                                 </ico>
                                 <text>Add Image</text>
-                                <input accept="image/jpeg" onchange="controller.pages.image(event)" type="file">
+                                <input accept="image/jpg,image/jpeg,image/png" onchange="controller.pages.image(event)" type="file">
                             </label>
+                            <text class="align-items-center color-ff3b30 display-flex full-state-subsequent gap-5px position-absolute right-0 top-minus-50px" data-tap="$(event.target.closest('block').all('picture[data-value]')).html('')">
+                                <ico>
+                                    <n class="gg-trash"></n>
+                                </ico>
+                            </text>
                         </column>
                     </box>
                 </column>
             </card>
         </column>
     </block>
-    <block class="-dw480px-padding-10px flex-1 gap-20px justify-content-center padding-20px" data-page="/dashboard/*/pages/advanced">
-        <flex class="-dw960px-flex-direction-column gap-20px">
+    <block class="-dw480px-padding-10px flex-1 justify-content-center max-width-1280px width-100pct" data-page="/dashboard/*/pages/advanced">
+        <flex class="-dw960px-flex-direction-column gap-20px padding-20px">
             <card class="-dw960px-width-100pct width-320px">
                 <section>
                     <box>
@@ -362,13 +411,13 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">CSS</text>
                         </header>
                         <column class="gap-0px">
-                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-270px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder=""></textarea>
+                            <textarea class="flex-unset font-size-16px line-height-18px min-height-270px padding-10px" data-value="advanced.css" type="text" placeholder=""></textarea>
                         </column>
                     </box>
                 </column>
             </card>
         </flex>
-        <flex class="-dw960px-flex-direction-column gap-20px">
+        <flex class="-dw960px-flex-direction-column gap-20px padding-20px">
             <card class="-dw960px-width-100pct width-320px">
                 <section>
                     <box>
@@ -386,13 +435,13 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">JS</text>
                         </header>
                         <column class="gap-0px">
-                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-270px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder=""></textarea>
+                            <textarea class="flex-unset font-size-16px line-height-18px min-height-270px padding-10px" data-value="advanced.js" type="text" placeholder=""></textarea>
                         </column>
                     </box>
                 </column>
             </card>
         </flex>
-        <flex class="-dw960px-flex-direction-column gap-20px">
+        <flex class="-dw960px-flex-direction-column gap-20px padding-20px">
             <card class="-dw960px-width-100pct width-320px">
                 <section>
                     <box>
@@ -410,11 +459,28 @@
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">HTML</text>
                         </header>
                         <column class="gap-0px">
-                            <textarea class="flex-unset font-size-16px line-height-18px margin-10px min-height-270px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder=""></textarea>
+                            <textarea class="flex-unset font-size-16px line-height-18px min-height-270px padding-10px" data-value="advanced.html" type="text" placeholder=""></textarea>
                         </column>
                     </box>
                 </column>
             </card>
         </flex>
     </block>
+    <footer class="-dw480px-padding-10px flex-1 gap-50px justify-content-center margin-top-50px max-width-1280px width-100pct">
+        <column class="padding-20px">
+            <card class="flex-direction-column gap-20px">
+                <column>
+                    <box class="-dw960px-width-100pct margin-left-auto width-480px">
+                        <flex class="gap-10px" data-columns="2">
+                            <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.pages.delete([rout.ed.dir(route.path).splice(4,5)])">Delete</text>
+                            <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center">
+                                <text>Post It</text>
+                                <input type="submit">
+                            </label>
+                        </flex>
+                    </box>
+                </column>
+            </card>
+        </column>
+    </footer>
 </form>

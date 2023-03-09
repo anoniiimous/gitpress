@@ -717,6 +717,8 @@ window.on.key.down.route = event=>{
         event.preventDefault();
     } else if (event.shiftKey === true && target.value.charAt(pos - 1) !== '/' && keyCode === 56) {
         event.preventDefault();
+    } else if (target.value.length > 0 && target.value.charAt(pos - 1) !== '/' && keyCode === 186) {
+        event.preventDefault();
     } else {
         if (target.value.charAt(pos - 1) === '*' && ![8, 191].includes(keyCode)) {
             event.preventDefault();
