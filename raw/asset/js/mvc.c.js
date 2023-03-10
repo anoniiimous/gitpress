@@ -4427,7 +4427,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 } else {
 
-                    if (["bold", "fontName", "indent", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "outdent", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo"].includes(command)) {
+                    if (["bold", "fontName", "indent", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertOrderedList", "outdent", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value);
                         if (window.range) {
