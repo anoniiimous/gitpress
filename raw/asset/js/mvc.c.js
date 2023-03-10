@@ -4368,6 +4368,87 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             target.closest('figure').find('picture').innerHTML = img.outerHTML;
 
         }
+    },
+
+    wysiwyg: {
+
+        command: (target)=>{
+            const wysiwyg = target.closest('box').find('wysiwyg');
+            var button = target.closest('[data-command]');
+            const command = button ? button.dataset.command : null;
+
+                console.log(command)
+
+            if (command) {
+
+                if (command === "deselect") {
+                                                                        window.selected = window.getSelection();
+                                                                        window.range = window.selected.getRangeAt(0);
+                    window.selected.removeAllRanges();
+                        console.log({selected, range});
+                }
+
+                var value = button.dataset.value ? button.dataset.value : (target.closest('[data-value]') ? target.closest('[data-value]').dataset.value : null);
+                if (value) {
+
+                    if (["foreColor", "fontName"].includes(command)) {
+                        wysiwyg === document.activeElement ? null : wysiwyg.focus();
+                        console.log(command, value, selected, range);
+                    wysiwyg.focus();
+                    window.selected.addRange(window.range);
+                        document.execCommand(command, false, value);
+
+                        if (window.selected && window.range) {
+                            window.selected = null;
+                            window.range = null;
+                        }
+                    } else if (command === "fontSize") {
+                        wysiwyg === document.activeElement ? null : wysiwyg.focus();
+                        var span = document.createElement('span');
+                        span.innerHTML = document.getSelection();
+                        span.style = "font-size: " + value + ";";
+                        console.log(command, value, span.outerHTML);
+                    window.selected.addRange(window.range);
+                        document.execCommand('insertHTML', false, span.outerHTML);
+
+                        if (window.selected && window.range) {
+                            window.selected = null;
+                            window.range = null;
+                        }
+                    }
+
+                } else {
+
+                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "removeFormat", "strikethrough", "subscript", "superscript", "underline"].includes(command)) {
+                        wysiwyg === document.activeElement ? null : wysiwyg.focus();
+                        console.log(command, value);
+                    window.selected.addRange(window.range);
+                        document.execCommand(command, false, value);
+
+                        if (window.selected && window.range) {
+                            window.selected = null;
+                            window.range = null;
+                        }
+                    }
+                }
+
+            }
+
+        }
+        ,
+
+        more: button=>{
+            var menu = event.target.closest('header').nextElementSibling;
+            var value = menu.find('[data-more="' + button + '"]');
+            if (value.dataset.display) {
+                $(menu.all('[data-more]')).attr('data-display', 'none');
+                $(value).removeAttr('data-display');
+            } else {
+                $(menu.all('[data-more]')).attr('data-display', 'none');
+                $(value).attr('data-display', 'none');
+            }
+        }
+
     }
 
 });

@@ -101,6 +101,10 @@
         background-color: #e2dcd8;
     }
 
+    .background-color-eb {
+        background-color: #ebebeb;
+    }
+
     .background-color-f5 {
         background-color: #f5f5f5;
     }
@@ -150,6 +154,118 @@
 
     :checked + .-checked-background-color-32cd32 {
         background-color: #32cd32;
+    }
+
+    :hover.-hover-background-color-eb {
+        background-color: #ebebeb;
+    }
+
+    [data-background-color="#61BD6D"] {
+        background-color: #61BD6D;
+    }
+
+    [data-background-color="#1ABC9C"] {
+        background-color: #1ABC9C;
+    }
+
+    [data-background-color="#54ACD2"] {
+        background-color: #54ACD2;
+    }
+
+    [data-background-color="#2C82C9"] {
+        background-color: #2C82C9;
+    }
+
+    [data-background-color="#9365B8"] {
+        background-color: #9365B8;
+    }
+
+    [data-background-color="#475577"] {
+        background-color: #475577;
+    }
+
+    [data-background-color="#CCCCCC"] {
+        background-color: #CCCCCC;
+    }    
+
+    [data-background-color="#41A85F"] {
+        background-color: #41A85F;
+    }
+
+    [data-background-color="#00A885"] {
+        background-color: #00A885;
+    }
+
+    [data-background-color="#3D8EB9"] {
+        background-color: #3D8EB9;
+    }
+
+    [data-background-color="#2969B0"] {
+        background-color: #2969B0;
+    }
+
+    [data-background-color="#553982"] {
+        background-color: #553982;
+    }
+
+    [data-background-color="#28324E"] {
+        background-color: #28324E;
+    }
+
+    [data-background-color="#000000"] {
+        background-color: #000000;
+    }    
+
+    [data-background-color="#F7DA64"] {
+        background-color: #F7DA64;
+    }
+
+    [data-background-color="#FBA026"] {
+        background-color: #FBA026;
+    }
+
+    [data-background-color="#EB6B56"] {
+        background-color: #EB6B56;
+    }
+
+    [data-background-color="#E25041"] {
+        background-color: #E25041;
+    }
+
+    [data-background-color="#A38F84"] {
+        background-color: #A38F84;
+    }
+
+    [data-background-color="#EFEFEF"] {
+        background-color: #EFEFEF;
+    }
+
+    [data-background-color="#FFFFFF"] {
+        background-color: #FFFFFF;
+    }    
+
+    [data-background-color="#FAC51C"] {
+        background-color: #FAC51C;
+    }
+
+    [data-background-color="#F37934"] {
+        background-color: #F37934;
+    }
+
+    [data-background-color="#D14841"] {
+        background-color: #D14841;
+    }
+
+    [data-background-color="#B8312F"] {
+        background-color: #B8312F;
+    }
+
+    [data-background-color="#7C706B"] {
+        background-color: #7C706B;
+    }
+
+    [data-background-color="#D1D5D8"] {
+        background-color: #D1D5D8;
     }
 }
 
@@ -318,6 +434,10 @@
         bottom: 10px;
     }
 
+    .top-minus-10px {
+        top: calc(-10px);
+    }
+
     .top-minus-50px {
         top: calc(-50px);
     }
@@ -422,6 +542,10 @@
 
     [data-columns="6"] {
         grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    [data-columns="7"] {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
     }
 
     [data-columns="5"] {
@@ -672,6 +796,10 @@
     .left-0 {
         left: 0;
     }
+    
+    .left-5px {
+        left: 5px;
+    }
 
     @media screen and (max-width: 768px) {
         .-dw768px-left-0 {
@@ -794,8 +922,40 @@
 
 /*FONT FAMiLY*/
 @media screen {
-    .font-family-courier {
-        font-family: Courier;
+    .font-family-arial, [data-font-family="Arial"] {
+        font-family: Arial;
+    }
+    
+    .font-family-brush-script-mt, [data-font-family="Brush Script MT"] {
+        font-family: Brush Script MT;
+    }
+    
+    .font-family-courier-new, [data-font-family="Courier New"] {
+        font-family: Courier New;
+    }
+    
+    .font-family-garamond, [data-font-family="Garamond"] {
+        font-family: Garamond;
+    }
+    
+    .font-family-georgia, [data-font-family="Georgia"] {
+        font-family: Georgia;
+    }
+    
+    .font-family-tahoma, [data-font-family="Tahoma"] {
+        font-family: Tahoma;
+    }
+    
+    .font-family-times-new-roman, [data-font-family="Times New Roman"] {
+        font-family: Times New Roman;
+    }
+    
+    .font-family-trebuchet-ms, [data-font-family="Trebuchet MS"] {
+        font-family: Trebuchet MS;
+    }
+    
+    .font-family-verdana, [data-font-family="Verdana"] {
+        font-family: Verdana;
     }
 }
 
@@ -981,10 +1141,6 @@
         height: 20px;
     }
 
-    .height-30px, [data-height="30px"] {
-        height: 30px;
-    }
-
     .height-24px, [data-height="24px"] {
         height: 24px;
     }
@@ -992,9 +1148,17 @@
     .height-30px, [data-height="30px"] {
         height: 30px;
     }
+
+    .height-32px, [data-height="32px"] {
+        height: 32px;
+    }
     
     .height-38px, [data-height="38px"] {
         height: 38px;
+    }
+
+    .height-50px, [data-height="50px"] {
+        height: 50px;
     }
 
     .height-64px, [data-height="64px"] {
@@ -1011,6 +1175,10 @@
 
     .height-250px, [data-height="250px"] {
         height: 250px;
+    }
+
+    .height-275px, [data-height="275px"] {
+        height: 275px;
     }
 
     .height-360px, [data-height="360px"] {
@@ -2200,6 +2368,10 @@
         width: 160px;
     }
 
+    .width-224px, [data-width="224px"] {
+        width: 224px;
+    }
+
     .width-240px, [data-width="240px"] {
         width: 120px;
     }
@@ -2314,6 +2486,10 @@
 
     .width-30px, [data-width="30px"] {
         width: 30px;
+    }
+
+    .width-32px, [data-width="32px"] {
+        width: 32px;
     }
 
     .width-36px, [data-width="36px"] {
