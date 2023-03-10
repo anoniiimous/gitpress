@@ -237,7 +237,7 @@
                                             </svg>-->
                                         </ico>
                                     </row>
-                                    <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto padding-20px position-absolute width-224px white-space-nowrap" data-command="foreColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                    <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto padding-20px position-absolute width-224px white-space-nowrap" data-command="hiliteColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
                                         <ico class="display-inline-flex" data-background-color="#61BD6D" data-height="32px" data-width="32px" data-value="#61BD6D"></ico>
                                         <ico class="display-inline-flex" data-background-color="#1ABC9C" data-height="32px" data-width="32px" data-value="#1ABC9C"></ico>
                                         <ico class="display-inline-flex" data-background-color="#54ACD2" data-height="32px" data-width="32px" data-value="#54ACD2"></ico>
@@ -276,7 +276,7 @@
                                             <text class="color-005cc8 height-50px line-height-50px text-align-center width-50px" data-tap="
                                                     event.target.closest('field > row').dataset.display = 'none';
                                                     window.selected.addRange(window.range);
-                                                    document.execCommand('foreColor', null, event.target.closest('text').previousElementSibling.find('input').value)
+                                                    document.execCommand('backColor', null, event.target.closest('text').previousElementSibling.find('input').value)
                                                                     window.range = null;
                                                                     window.selected = null;
                                             ">OK</text>

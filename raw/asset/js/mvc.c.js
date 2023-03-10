@@ -4394,7 +4394,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var value = button.dataset.value ? button.dataset.value : (target.closest('[data-value]') ? target.closest('[data-value]').dataset.value : null);
                 if (value) {
 
-                    if (["foreColor", "fontName"].includes(command)) {
+                    if (["foreColor", "fontName", "hiliteColor"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value, selected, range);
                         if (window.range) {
