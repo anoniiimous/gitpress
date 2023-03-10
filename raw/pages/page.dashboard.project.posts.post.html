@@ -70,7 +70,7 @@
                             <textarea class="flex-unset font-size-16px height-20px line-height-20px margin-10px overflow-hidden" type="text" onkeyup="on.key.up.auto.size(event.target)" placeholder="Provide a detailed description."></textarea>
                         </column>
                     </box>
-                    <box class="background-color-fff border-radius-10px gap-0px">
+                    <box class="background-color-fff border-radius-10px gap-0px" data-tap="controller.wysiwyg.command(event.target)">
                         <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px display-flex justify-content-space-between position-relative" onmousedown="event.preventDefault()">
                             <row>
                                 <ico data-tap="controller.wysiwyg.more('text')">
@@ -84,10 +84,10 @@
                                 </ico>
                             </row>
                             <row>
-                                <ico data-command="">
+                                <ico data-command="undo">
                                     <n class="gg-undo"></n>
                                 </ico>
-                                <ico data-command="">
+                                <ico data-command="redo">
                                     <n class="gg-redo"></n>
                                 </ico>
                                 <ico data-tap="controller.wysiwyg.more('misc')">
@@ -95,7 +95,7 @@
                                 </ico>
                             </row>
                         </header>
-                        <flex class="background-color-f5 flex-wrap-wrap" data-tap="controller.wysiwyg.command(event.target)" onmousedown="event.preventDefault()">
+                        <flex class="background-color-f5 flex-wrap-wrap" onmousedown="event.preventDefault()">
                             <row class="flex-wrap-wrap" data-display="none" data-more='text'>
                                 <ico data-command="bold">
                                     <!--<img class="width-30px" src="raw/asset/svg/more-text-bold.svg">-->
@@ -227,21 +227,87 @@
                                         </footer>
                                     </row>
                                 </field>
-                                <ico data-command="backgroundcolor">
-                                    <img class="width-30px" src="raw/asset/svg/more-text-backgroundcolor.svg">
-                                    <!--<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.20348 2.00378C9.46407 2.00378 10.5067 3.10742 10.6786 4.54241L19.1622 13.0259L11.384 20.8041C10.2124 21.9757 8.31291 21.9757 7.14134 20.8041L2.8987 16.5615C1.72713 15.3899 1.72713 13.4904 2.8987 12.3188L5.70348 9.51404V4.96099C5.70348 3.32777 6.82277 2.00378 8.20348 2.00378ZM8.70348 4.96099V6.51404L7.70348 7.51404V4.96099C7.70348 4.63435 7.92734 4.36955 8.20348 4.36955C8.47963 4.36955 8.70348 4.63435 8.70348 4.96099ZM8.70348 10.8754V9.34247L4.31291 13.733C3.92239 14.1236 3.92239 14.7567 4.31291 15.1473L8.55555 19.3899C8.94608 19.7804 9.57924 19.7804 9.96977 19.3899L16.3337 13.0259L10.7035 7.39569V10.8754C10.7035 10.9184 10.7027 10.9612 10.7012 11.0038H8.69168C8.69941 10.9625 8.70348 10.9195 8.70348 10.8754Z" fill="currentColor"/>
-                                        <path d="M16.8586 16.8749C15.687 18.0465 15.687 19.946 16.8586 21.1175C18.0302 22.2891 19.9297 22.2891 21.1013 21.1175C22.2728 19.946 22.2728 18.0465 21.1013 16.8749L18.9799 14.7536L16.8586 16.8749Z" fill="currentColor"/>
-                                    </svg>-->
-                                </ico>
-                                <ico data-command="inlineclass">
-                                    <img class="width-30px" src="raw/asset/svg/more-text-inlineclass.svg">
-                                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
-                                </ico>
-                                <ico data-command="inlinestyle">
-                                    <img class="width-30px" src="raw/asset/svg/more-text-inlinestyle.svg">
-                                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
-                                </ico>
+                                <field class="position-relative">
+                                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                        <ico data-command="deselect">
+                                            <img class="width-30px" src="raw/asset/svg/more-text-backgroundcolor.svg">
+                                            <!--<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.20348 2.00378C9.46407 2.00378 10.5067 3.10742 10.6786 4.54241L19.1622 13.0259L11.384 20.8041C10.2124 21.9757 8.31291 21.9757 7.14134 20.8041L2.8987 16.5615C1.72713 15.3899 1.72713 13.4904 2.8987 12.3188L5.70348 9.51404V4.96099C5.70348 3.32777 6.82277 2.00378 8.20348 2.00378ZM8.70348 4.96099V6.51404L7.70348 7.51404V4.96099C7.70348 4.63435 7.92734 4.36955 8.20348 4.36955C8.47963 4.36955 8.70348 4.63435 8.70348 4.96099ZM8.70348 10.8754V9.34247L4.31291 13.733C3.92239 14.1236 3.92239 14.7567 4.31291 15.1473L8.55555 19.3899C8.94608 19.7804 9.57924 19.7804 9.96977 19.3899L16.3337 13.0259L10.7035 7.39569V10.8754C10.7035 10.9184 10.7027 10.9612 10.7012 11.0038H8.69168C8.69941 10.9625 8.70348 10.9195 8.70348 10.8754Z" fill="currentColor"/>
+                                                <path d="M16.8586 16.8749C15.687 18.0465 15.687 19.946 16.8586 21.1175C18.0302 22.2891 19.9297 22.2891 21.1013 21.1175C22.2728 19.946 22.2728 18.0465 21.1013 16.8749L18.9799 14.7536L16.8586 16.8749Z" fill="currentColor"/>
+                                            </svg>-->
+                                        </ico>
+                                    </row>
+                                    <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto padding-20px position-absolute width-224px white-space-nowrap" data-command="foreColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                        <ico class="display-inline-flex" data-background-color="#61BD6D" data-height="32px" data-width="32px" data-value="#61BD6D"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#1ABC9C" data-height="32px" data-width="32px" data-value="#1ABC9C"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#54ACD2" data-height="32px" data-width="32px" data-value="#54ACD2"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#2C82C9" data-height="32px" data-width="32px" data-value="#2C82C9"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#9365B8" data-height="32px" data-width="32px" data-value="#9365B8"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#475577" data-height="32px" data-width="32px" data-value="#475577"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#CCCCCC" data-height="32px" data-width="32px" data-value="#CCCCCC"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#41A85F" data-height="32px" data-width="32px" data-value="#41A85F"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#00A885" data-height="32px" data-width="32px" data-value="#00A885"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#3D8EB9" data-height="32px" data-width="32px" data-value="#3D8EB9"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#2969B0" data-height="32px" data-width="32px" data-value="#2969B0"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#553982" data-height="32px" data-width="32px" data-value="#553982"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#28324E" data-height="32px" data-width="32px" data-value="#28324E"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#000000" data-height="32px" data-width="32px" data-value="#000000"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#F7DA64" data-height="32px" data-width="32px" data-value="#F7DA64"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#FBA026" data-height="32px" data-width="32px" data-value="#FBA026"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#EB6B56" data-height="32px" data-width="32px" data-value="#EB6B56"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#E25041" data-height="32px" data-width="32px" data-value="#E25041"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#A38F84" data-height="32px" data-width="32px" data-value="#A38F84"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#EFEFEF" data-height="32px" data-width="32px" data-value="#EFEFEF"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#FFFFFF" data-height="32px" data-width="32px" data-value="#FFFFFF"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#FAC51C" data-height="32px" data-width="32px" data-value="#FAC51C"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#F37934" data-height="32px" data-width="32px" data-value="#F37934"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#D14841" data-height="32px" data-width="32px" data-value="#D14841"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#B8312F" data-height="32px" data-width="32px" data-value="#B8312F"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#7C706B" data-height="32px" data-width="32px" data-value="#7C706B"></ico>
+                                        <ico class="display-inline-flex" data-background-color="#D1D5D8" data-height="32px" data-width="32px" data-value="#D1D5D8"></ico>
+                                        <ico class="display-inline-flex" data-height="30px" data-width="30px">
+                                            <n class="gg-trash"></n>
+                                        </ico>
+                                        <footer class="display-flex flex-direction-row margin-top-20px width-100pct" data-ignore>
+                                            <field class="border-1px-solid display-flex flex-1 position-relative">
+                                                <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">HEX Color</text>
+                                                <input class="line-height-50px padding-x-10px width-100pct" data-tap="event.target.focus()" type="text">
+                                            </field>
+                                            <text class="color-005cc8 height-50px line-height-50px text-align-center width-50px" data-tap="
+                                                    event.target.closest('field > row').dataset.display = 'none';
+                                                    window.selected.addRange(window.range);
+                                                    document.execCommand('foreColor', null, event.target.closest('text').previousElementSibling.find('input').value)
+                                                                    window.range = null;
+                                                                    window.selected = null;
+                                            ">OK</text>
+                                        </footer>
+                                    </row>
+                                </field>
+                                <field class="position-relative">
+                                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                        <ico data-command="inlineclass">
+                                            <img class="width-30px" src="raw/asset/svg/more-text-inlineclass.svg">
+                                            <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                        </ico>
+                                    </row>
+                                    <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-0 line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="fontName" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                        <text class="-hover-background-color-eb padding-x-20px">Code</text>
+                                        <text class="-hover-background-color-eb padding-x-20px">Highlighted</text>
+                                        <text class="-hover-background-color-eb padding-x-20px">Transparent</text>
+                                    </column>
+                                </field>
+                                <field class="position-relative">
+                                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                        <ico data-command="inlinestyle">
+                                            <img class="width-30px" src="raw/asset/svg/more-text-inlinestyle.svg">
+                                            <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                        </ico>
+                                    </row>
+                                    <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-0 line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="fontName" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                        <text class="-hover-background-color-eb color-005cc8 font-size-20px font-weight-bolder padding-x-20px">Big Blue</text>
+                                        <text class="-hover-background-color-eb color-ff3b30 font-size-14px padding-x-20px">Lil Red</text>
+                                    </column>
+                                </field>
                                 <ico data-command="removeFormat">
                                     <img class="width-30px" src="raw/asset/svg/more-text-clearformatting.svg">
                                 </ico>
@@ -286,6 +352,18 @@
                                         <path d="M4 17C3.44772 17 3 17.4477 3 18C3 18.5523 3.44772 19 4 19H20C20.5523 19 21 18.5523 21 18C21 17.4477 20.5523 17 20 17H4Z" fill="currentColor"/>
                                     </svg>
                                 </ico>
+                                <ico>
+                                    <img class="width-30px" src="raw/asset/svg/more-paragraph-orderedlist.svg">
+                                    <!--<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 7H7V9H9V7Z" fill="currentColor"/>
+                                        <path d="M7 13V11H9V13H7Z" fill="currentColor"/>
+                                        <path d="M7 15V17H9V15H7Z" fill="currentColor"/>
+                                        <path d="M11 15V17H17V15H11Z" fill="currentColor"/>
+                                        <path d="M17 13V11H11V13H17Z" fill="currentColor"/>
+                                        <path d="M17 7V9H11V7H17Z" fill="currentColor"/>
+                                    </svg>-->
+                                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                </ico>
                                 <ico data-command="unorderedlist">
                                     <img class="width-30px" src="raw/asset/svg/more-paragraph-unorderedlist.svg">
                                     <!--<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -317,23 +395,23 @@
                                     </svg>
                                     <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
                                 </ico>
-                                <ico data-command="increaseindent">
-                                    <!--<img class="width-30px" src="raw/asset/svg/more-paragraph-increaseindent.svg">-->
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20 7H4V5H20V7Z" fill="currentColor"/>
-                                        <path d="M20 11H12V9H20V11Z" fill="currentColor"/>
-                                        <path d="M12 15H20V13H12V15Z" fill="currentColor"/>
-                                        <path d="M4 15L9 12L4 9V15Z" fill="currentColor"/>
-                                        <path d="M4 17V19H20V17H4Z" fill="currentColor"/>
-                                    </svg>
-                                </ico>
-                                <ico data-command="decreaseindent">
+                                <ico data-command="outdent">
                                     <!--<img class="width-30px" src="raw/asset/svg/more-paragraph-decreaseindent.svg">-->
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20 7H4V5H20V7Z" fill="currentColor"/>
                                         <path d="M20 11H12V9H20V11Z" fill="currentColor"/>
                                         <path d="M12 15H20V13H12V15Z" fill="currentColor"/>
                                         <path d="M9 9L4 12L9 15V9Z" fill="currentColor"/>
+                                        <path d="M4 17V19H20V17H4Z" fill="currentColor"/>
+                                    </svg>
+                                </ico>
+                                <ico data-command="indent">
+                                    <!--<img class="width-30px" src="raw/asset/svg/more-paragraph-increaseindent.svg">-->
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 7H4V5H20V7Z" fill="currentColor"/>
+                                        <path d="M20 11H12V9H20V11Z" fill="currentColor"/>
+                                        <path d="M12 15H20V13H12V15Z" fill="currentColor"/>
+                                        <path d="M4 15L9 12L4 9V15Z" fill="currentColor"/>
                                         <path d="M4 17V19H20V17H4Z" fill="currentColor"/>
                                     </svg>
                                 </ico>

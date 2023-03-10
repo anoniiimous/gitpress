@@ -4377,15 +4377,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var button = target.closest('[data-command]');
             const command = button ? button.dataset.command : null;
 
-                console.log(command)
+            console.log(command)
 
             if (command) {
 
-                if (command === "deselect") {
-                                                                        window.selected = window.getSelection();
-                                                                        window.range = window.selected.getRangeAt(0);
+                window.selected = window.getSelection();
+                if (command === "deselect" && window.selected.rangeCount > 0) {
+                    window.range = window.selected.getRangeAt(0);
                     window.selected.removeAllRanges();
-                        console.log({selected, range});
+                    console.log({
+                        selected,
+                        range
+                    });
                 }
 
                 var value = button.dataset.value ? button.dataset.value : (target.closest('[data-value]') ? target.closest('[data-value]').dataset.value : null);
@@ -4394,8 +4397,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     if (["foreColor", "fontName"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value, selected, range);
-                    wysiwyg.focus();
-                    window.selected.addRange(window.range);
+                        if (window.range) {
+                            //wysiwyg.focus();
+                            window.selected.addRange(window.range);
+                        }
                         document.execCommand(command, false, value);
 
                         if (window.selected && window.range) {
@@ -4408,7 +4413,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         span.innerHTML = document.getSelection();
                         span.style = "font-size: " + value + ";";
                         console.log(command, value, span.outerHTML);
-                    window.selected.addRange(window.range);
+                        if (window.range) {
+                            //wysiwyg.focus();
+                            window.selected.addRange(window.range);
+                        }
                         document.execCommand('insertHTML', false, span.outerHTML);
 
                         if (window.selected && window.range) {
@@ -4419,10 +4427,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 } else {
 
-                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "removeFormat", "strikethrough", "subscript", "superscript", "underline"].includes(command)) {
+                    if (["bold", "fontName", "indent", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "outdent", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value);
-                    window.selected.addRange(window.range);
+                        if (window.range) {
+                            //wysiwyg.focus();
+                            window.selected.addRange(window.range);
+                        }
                         document.execCommand(command, false, value);
 
                         if (window.selected && window.range) {
