@@ -4448,8 +4448,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        more: button=>{
-            var menu = event.target.closest('header').nextElementSibling;
+        more: (target, button)=>{
+            var menu = target.closest('header').nextElementSibling;
             var value = menu.find('[data-more="' + button + '"]');
             if (value.dataset.display) {
                 $(menu.all('[data-more]')).attr('data-display', 'none');

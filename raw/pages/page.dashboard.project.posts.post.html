@@ -73,13 +73,13 @@
                     <box class="background-color-fff border-radius-10px gap-0px" data-tap="controller.wysiwyg.command(event.target)">
                         <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px display-flex justify-content-space-between position-relative" onmousedown="event.preventDefault()">
                             <row>
-                                <ico data-tap="controller.wysiwyg.more('text')">
+                                <ico data-tap="controller.wysiwyg.more(event.target, 'text')">
                                     <img class="width-18px" src="raw/asset/svg/more-text.svg">
                                 </ico>
-                                <ico data-tap="controller.wysiwyg.more('paragraph')">
+                                <ico data-tap="controller.wysiwyg.more(event.target, 'paragraph')">
                                     <img class="width-18px" src="raw/asset/svg/more-paragraph.svg">
                                 </ico>
-                                <ico data-tap="controller.wysiwyg.more('rich')">
+                                <ico data-tap="controller.wysiwyg.more(event.target, 'rich')">
                                     <img class="width-18px" src="raw/asset/svg/more-rich.svg">
                                 </ico>
                             </row>
