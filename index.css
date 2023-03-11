@@ -195,6 +195,12 @@
         width: 100%;
     }
 
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        oveflow-wrap: break-word;
+    }
+
     ico {
         align-items: center;
         display: inline-flex;
@@ -274,6 +280,13 @@
     page, pages {
         display: inherit;
         position: relative;
+    }
+
+    pre {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        overflow: auto;
+        -ms-overflow-style: scrollbar;
     }
 
     textarea {

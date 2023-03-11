@@ -4446,6 +4446,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             window.range = null;
                         }
 
+                    } else if (command === "paragraphFormat") {
+
+                        var node = controller.wysiwyg.node();
+                        var sel = document.getSelection();
+                        var pos = sel.focusOffset;
+                        let range = new Range();
+                        range.selectNodeContents(node)
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+
+                        console.log(4443, node, sel);
+                        var el = document.createElement(value);
+                        el.innerHTML = node.outerHTML;
+                        document.execCommand('insertHTML', false, el.outerHTML);
+                        var node = controller.wysiwyg.node();
+                        console.log(4480, node, sel);
+                        controller.wysiwyg.caret(node, pos);
+
                     } else if (command === "quote") {
 
                         var node = controller.wysiwyg.node();

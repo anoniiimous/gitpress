@@ -319,14 +319,36 @@
                         </column>
                     </flex>
                 </field>
-                <ico data-command="format">
-                    <img class="width-30px" src="raw/asset/svg/more-paragraph-format.svg">
-                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
-                </ico>
-                <ico data-command="style">
-                    <img class="width-30px" src="raw/asset/svg/more-paragraph-style.svg">
-                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
-                </ico>
+                <field class="position-relative">
+                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                        <ico data-command="format">
+                            <img class="width-30px" src="raw/asset/svg/more-paragraph-format.svg">
+                            <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                        </ico>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-0 line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="paragraphFormat" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="normal">Normal</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="h1"><h1>Heading 1</h1></text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="h2"><h2>Heading 2</h2></text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="h3"><h3>Heading 3</h3></text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="h4"><h4>Heading 4</h4></text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="pre"><pre>Code</pre></text>
+                    </column>
+                </field>
+                <field class="position-relative">
+                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                        <ico data-command="style">
+                            <img class="width-30px" src="raw/asset/svg/more-paragraph-style.svg">
+                            <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                        </ico>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-0 line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="paragraphStyle" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="increase">Gray</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="decrease">Bordered</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="decrease">Spaced</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="decrease">Uppercase</text>
+                    </column>
+                </field>
                 <ico data-command="lineheight">
                     <!--<img class="width-30px" src="raw/asset/svg/more-paragraph-lineheight.svg">-->
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -358,7 +380,7 @@
                         <path d="M4 17V19H20V17H4Z" fill="currentColor"/>
                     </svg>
                 </ico>
-                <flex class="position-relative">
+                <field class="position-relative">
                     <row class="align-items-center justify-content-center" data-dropdown data-ignore>
                         <ico>
                             <!--<img class="width-30px" src="raw/asset/svg/more-paragraph-quote.svg">-->
@@ -372,7 +394,7 @@
                         <text class="-hover-background-color-eb padding-x-20px" data-value="increase">Increase</text>
                         <text class="-hover-background-color-eb padding-x-20px" data-value="decrease">Decrease</text>
                     </column>
-                </flex>
+                </field>
             </row>
             <row class="flex-wrap-wrap" data-display="none" data-more="rich">
                 <ico data-command="insertlink">

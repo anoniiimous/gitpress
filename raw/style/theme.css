@@ -1804,6 +1804,10 @@
 
 /*PADDING*/
 @media screen {
+    .padding-0 {
+        padding: 0;
+    }
+    
     .padding-5px {
         padding: 5px;
     }
