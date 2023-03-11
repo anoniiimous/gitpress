@@ -3134,7 +3134,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var title = form.find('[data-after="Title"]').closest('box').find('textarea').value;
             var slug = title.replaceAll(/[^\w ]/g, "").replaceAll(' ', '-').toLowerCase();
             var description = form.find('[data-after="Description"]').closest('box').find('textarea').value.length > 0 ? form.find('[data-after="Description"]').closest('box').find('textarea').value : null;
-            var body = form.find('wysiwyg').innerHTML.length > 0 ? form.find('wysiwyg').innerHTML : "";
+            var body = form.find('[contenteditable]').innerHTML.length > 0 ? form.find('[contenteditable]').innerHTML : "";
 
             console.log({
                 title,
@@ -4372,14 +4372,26 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     wysiwyg: {
 
+        caret: (node,pos)=>{
+
+            var sel = document.getSelection();
+            let range = new Range();
+            range.setStart(node.childNodes[0], pos);
+            range.setEnd(node.childNodes[0], pos);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+        }
+        ,
+
         command: (target)=>{
-            const wysiwyg = target.closest('box').find('wysiwyg');
+            const wysiwyg = target.closest('box').find('[contenteditable]');
             var button = target.closest('[data-command]');
             const command = button ? button.dataset.command : null;
 
-            console.log(command)
-
             if (command) {
+
+                //console.log(command)
 
                 window.selected = window.getSelection();
                 if (command === "deselect" && window.selected.rangeCount > 0) {
@@ -4394,8 +4406,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var value = button.dataset.value ? button.dataset.value : (target.closest('[data-value]') ? target.closest('[data-value]').dataset.value : null);
                 if (value) {
 
-                    if (["foreColor", "fontName", "hiliteColor"].includes(command)) {
-                        wysiwyg === document.activeElement ? null : wysiwyg.focus();
+                    if (["fontName"].includes(command)) {
                         console.log(command, value, selected, range);
                         if (window.range) {
                             //wysiwyg.focus();
@@ -4407,7 +4418,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             window.selected = null;
                             window.range = null;
                         }
+                    } else if (["foreColor", "hiliteColor", ].includes(command)) {
+
+                        if (window.range) {
+                            //wysiwyg.focus();
+                            window.selected.addRange(window.range);
+                        }
+                        document.execCommand(command, null, value)
+                        window.range = null;
+                        window.selected = null;
+
                     } else if (command === "fontSize") {
+
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         var span = document.createElement('span');
                         span.innerHTML = document.getSelection();
@@ -4423,6 +4445,70 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             window.selected = null;
                             window.range = null;
                         }
+
+                    } else if (command === "quote") {
+
+                        var node = controller.wysiwyg.node();
+                        console.log(command, value);
+                        if (value === "decrease" && node.parentNode.tagName.toLowerCase() === "blockquote") {
+                            //document.execCommand('formatBlock', false, 'blockquote');
+                            if (node.parentNode.parentNode === "blockquote") {
+                                var sel = document.getSelection();
+                                var pos = sel.focusOffset;
+                                console.log(4443, node, sel);
+                                var blockquote = document.createElement('blockquote');
+                                node.parentNode.parentNode.innerHTML = node.outerHTML;
+                            } else {
+                                var sel = document.getSelection();
+                                var pos = sel.focusOffset;
+                                node.parentNode.replaceWith(node);
+                            }
+                            controller.wysiwyg.caret(node, pos);
+                            console.log(4455, node);
+                        }
+                        if (value === "increase") {
+                            var node = controller.wysiwyg.node();
+                            var sel = document.getSelection();
+                            var pos = sel.focusOffset;
+                            let range = new Range();
+                            range.selectNodeContents(node)
+                            sel.removeAllRanges();
+                            sel.addRange(range);
+
+                            console.log(4443, node, sel);
+                            var blockquote = document.createElement('blockquote');
+                            blockquote.innerHTML = node.outerHTML;
+                            document.execCommand('insertHTML', false, blockquote.outerHTML);
+                            var node = controller.wysiwyg.node();
+                            console.log(4480, node, sel);
+                            controller.wysiwyg.caret(node, pos);
+                        }
+
+                    } else if (command === "inlineStyle") {
+
+                        console.log(command, value);
+                        var span = document.createElement('span');
+                        span.innerHTML = document.getSelection();
+                        span.style = value;
+                        document.execCommand('insertHTML', false, span.outerHTML);
+
+                    } else if (["insertOrderedList", "insertUnorderedList"].includes(command)) {
+
+                        var el = window.getSelection().focusNode.parentNode;
+                        var ul = el.closest('ol, ul');
+                        var tagName = el.tagName.toLowerCase();
+                        console.log({
+                            command,
+                            value,
+                            el,
+                            ul
+                        });
+                        if (ul) {
+                            value === "default" ? ul.removeAttribute('style') : ul.style.listStyleType = value;
+                        } else {
+                            document.execCommand(command, false, value);
+                        }
+
                     }
 
                 } else {
@@ -4443,13 +4529,20 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
 
+                //POST EVENTS
+                if (["insertOrderedList", "insertUnorderedList"].includes(command)) {
+
+                    controller.wysiwyg.onmouseup(wysiwyg)
+
+                }
+
             }
 
         }
         ,
 
-        more: (target, button)=>{
-            var menu = target.closest('header').nextElementSibling;
+        more: (target,button)=>{
+            var menu = target.closest('box > header > flex').nextElementSibling;
             var value = menu.find('[data-more="' + button + '"]');
             if (value.dataset.display) {
                 $(menu.all('[data-more]')).attr('data-display', 'none');
@@ -4457,6 +4550,62 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 $(menu.all('[data-more]')).attr('data-display', 'none');
                 $(value).attr('data-display', 'none');
+            }
+        }
+        ,
+
+        node: event=>{
+            var sel = window.getSelection();
+            var node = sel.focusNode && sel.focusNode.nodeType === 3 ? sel.focusNode.parentNode : sel.focusNode;
+            return node;
+        }
+        ,
+
+        onkeydown: event=>{
+
+            var wysiwyg = event.target;
+
+        }
+        ,
+
+        onkeyup: event=>{
+
+            var wysiwyg = event.target;
+            wysiwyg.innerHTML === "" ? wysiwyg.innerHTML = "<p><br></p>" : null;
+            wysiwyg.firstElementChild.focus();
+
+        }
+        ,
+
+        onmouseup: wysiwyg=>{
+            //console.log('onmouseup');
+
+            var wysiwyg = event.target;
+            var header = wysiwyg.closest('block, card, box').firstElementChild;
+            var indent = header.find('[data-command="indent"]');
+            var outdent = header.find('[data-command="outdent"]');
+
+            var sel = window.getSelection();
+            var node = sel.focusNode && sel.focusNode.nodeType === 3 ? sel.focusNode.parentNode : sel.focusNode;
+
+            var el = node.closest('blockquote, ul');
+            var ul = node.closest('ul');
+            var ol = node.closest('ol');
+            //var tagName = el.tagName.toLowerCase();
+            console.log('onmouseup', {
+                node,
+                ul,
+                ol
+            });
+
+            if (ol) {//indent.classList.add('opacity-50pct');
+            //outdent.classList.remove('opacity-50pct');
+            } else if (el) {
+                indent.classList.add('opacity-50pct');
+                outdent.classList.remove('opacity-50pct');
+            } else {
+                indent.classList.remove('opacity-50pct');
+                outdent.classList.add('opacity-50pct');
             }
         }
 

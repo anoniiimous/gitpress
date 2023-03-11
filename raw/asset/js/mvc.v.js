@@ -1737,14 +1737,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var image = vp.find('block > header card').firstElementChild;
                             var title = vp.find('[data-after="Title"]').closest('box').find('textarea');
                             var description = vp.find('[data-after="Description"]').closest('box').find('textarea');
-                            var article = vp.find('wysiwyg[contenteditable]');
+                            var article = vp.find('[contenteditable]');
                             var category = vp.find('[data-after="Category"]').closest('box').find('dropdown [placeholder]');
                             var tags = vp.find('[data-after="Tags"]').closest('box');
 
                             image.innerHTML = "";
                             title.value = "";
                             description.value = "";
-                            article.innerHTML = "";
+                            article.innerHTML = "<p><br></p>";
                             category.textContent = "";
                             $(tags.children[1].all('text')).remove();
 

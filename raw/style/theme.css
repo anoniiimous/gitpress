@@ -2352,6 +2352,10 @@
         width: 10px;
     }
 
+    .width-16px, [data-width="16px"] {
+        width: 16px;
+    }
+
     .width-20px, [data-width="20px"] {
         width: 20px;
     }
