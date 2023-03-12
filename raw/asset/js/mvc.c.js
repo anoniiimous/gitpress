@@ -4376,8 +4376,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var sel = document.getSelection();
             let range = new Range();
-            range.setStart(node.childNodes[0], pos);
-            range.setEnd(node.childNodes[0], pos);
+            range.setStart(node, pos);
+            range.setEnd(node, pos);
             sel.removeAllRanges();
             sel.addRange(range);
 
@@ -4450,19 +4450,34 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                         var node = controller.wysiwyg.node();
                         var sel = document.getSelection();
+                        var aos = sel.anchorOffset;
+                        var fne = sel.focusNode;
                         var pos = sel.focusOffset;
-                        let range = new Range();
-                        range.selectNodeContents(node)
-                        sel.removeAllRanges();
-                        sel.addRange(range);
 
-                        console.log(4443, node, sel);
+                        var parent = node.closest('p, h1, h2, h3, h4, h5, h6, wysiwyg > *');
                         var el = document.createElement(value);
-                        el.innerHTML = node.outerHTML;
-                        document.execCommand('insertHTML', false, el.outerHTML);
-                        var node = controller.wysiwyg.node();
-                        console.log(4480, node, sel);
-                        controller.wysiwyg.caret(node, pos);
+                        if (parent) {
+                            el.innerHTML = parent.innerHTML;
+                            parent.replaceWith(el);
+                            var idx = Array.from(parent.childNodes).indexOf(fne);
+                            var nnd = el.childNodes[idx];
+                            0 < 1 ? console.log(4480, {
+                                node,
+                                nnd,
+                                idx
+                            }, {
+                                aos,
+                                fne,
+                                pos
+                            }) : null;
+                            controller.wysiwyg.caret(nnd, pos);
+                            //el.innerHTML = parent.innerHTML;
+                            //console.log(sel, el, fn, pos);
+                            //controller.wysiwyg.caret(el, pos);
+                        } else {
+                            el.innerHTML = node.innerHTML;
+                            node.parentNode.innerHTML = el.outerHTML;
+                        }
 
                     } else if (command === "quote") {
 
@@ -4526,6 +4541,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         } else {
                             document.execCommand(command, false, value);
                         }
+
+                    } else if (command === "lineHeight") {
+
+                        var node = controller.wysiwyg.node();
+                        var sel = getSelection();
+
+                        if (value === "lineHeight") {
+                            node.style.lineHeight = null;
+                        } else {
+                            node.style.lineHeight = value;
+                        }
+                        console.log(4551, {
+                            node,
+                            sel,
+                            value
+                        });
 
                     }
 
@@ -4610,11 +4641,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var ul = node.closest('ul');
             var ol = node.closest('ol');
             //var tagName = el.tagName.toLowerCase();
-            console.log('onmouseup', {
+            0 > 1 ? console.log('onmouseup', {
                 node,
                 ul,
                 ol
-            });
+            }) : null;
 
             if (ol) {//indent.classList.add('opacity-50pct');
             //outdent.classList.remove('opacity-50pct');
@@ -4625,6 +4656,41 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 indent.classList.remove('opacity-50pct');
                 outdent.classList.add('opacity-50pct');
             }
+        }
+        ,
+
+        onpaste: function(e) {
+
+            var clipboardData, pastedData;
+
+            // Stop data actually being pasted into div
+            e.stopPropagation();
+            e.preventDefault();
+
+            // Get pasted data via clipboard API
+            clipboardData = e.clipboardData || window.clipboardData;
+            pastedData = clipboardData.getData('text/html').replace('<span>&nbsp;</span>', '');
+            var doc = new DOMParser().parseFromString(pastedData, 'text/html');
+            $(doc.body.all('*')).forEach(function(o) {
+                while (o.attributes.length > 0) {
+                    o.removeAttribute(o.attributes[0].name);
+                }
+            });
+
+            // Do whatever with pasteddata
+            var node = controller.wysiwyg.node();
+            var sel = document.getSelection();
+            var fo = sel.focusOffset;
+            controller.wysiwyg.caret(node, fo);
+            range = document.getSelection().getRangeAt(0);
+            var pasted = document.createElement('p');
+            pasted.innerHTML = doc.body.innerHTML;
+            range.insertNode(pasted);
+
+            document.execCommand('removeFormat', false, null);
+            controller.wysiwyg.caret(node, fo);
+
+            console.log(pastedData, node, sel);
         }
 
     }
