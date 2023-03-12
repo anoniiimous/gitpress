@@ -4562,7 +4562,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 } else {
 
-                    if (["bold", "fontName", "indent", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertOrderedList", "outdent", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
+                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertOrderedList", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value);
                         if (window.range) {
@@ -4574,6 +4574,50 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         if (window.selected && window.range) {
                             window.selected = null;
                             window.range = null;
+                        }
+                    } else if (["indent", "outdent"].includes(command)) {
+                        var node = controller.wysiwyg.node();
+                        var parent = node.closest('p, h1, h2, h3, h4, h5, h6');
+                        var ou = node.closest('ol, ul');
+                        if (parent && !ou) {
+                            if (command === "indent") {
+                                var ml = parent.style.marginLeft;
+                                if (ml === "") {
+                                    parent.style.marginLeft = "20px";
+                                    console.log({
+                                        command,
+                                        parent,
+                                        ml,
+                                    });
+                                } else {
+                                    var px = parseInt(ml.split('px')[0]) + 20;
+                                    parent.style.marginLeft = px + "px";
+                                }
+                            } else if (command === "outdent") {
+                                var ml = parent.style.marginLeft;
+                                if (ml.length > 0) {
+                                    var val = parseInt(ml.split('px')[0]);
+                                    if (val === 20) {
+                                        parent.style.marginLeft = "";
+                                    } else {
+                                        var px = val - 20;
+                                        parent.style.marginLeft = px + "px";
+                                    }
+                                }
+                            }
+                        } else {
+                            wysiwyg === document.activeElement ? null : wysiwyg.focus();
+                            console.log(command, value);
+                            if (window.range) {
+                                //wysiwyg.focus();
+                                window.selected.addRange(window.range);
+                            }
+                            document.execCommand(command, false, value);
+
+                            if (window.selected && window.range) {
+                                window.selected = null;
+                                window.range = null;
+                            }
                         }
                     }
                 }
