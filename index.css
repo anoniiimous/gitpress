@@ -50,6 +50,10 @@
         text-decoration: none;
     }
 
+    wysiwyg a[href]{
+        text-decoration: underline;
+    }
+
     blocks {
         /* min-height: 100%; */
         width: 100%;

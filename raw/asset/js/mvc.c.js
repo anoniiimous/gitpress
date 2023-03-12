@@ -4671,10 +4671,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             clipboardData = e.clipboardData || window.clipboardData;
             pastedData = clipboardData.getData('text/html').replace('<span>&nbsp;</span>', '');
             var doc = new DOMParser().parseFromString(pastedData, 'text/html');
-            $(doc.body.all('*')).forEach(function(o) {
-                while (o.attributes.length > 0) {
-                    o.removeAttribute(o.attributes[0].name);
-                }
+            $(doc.body.all('[class], [id], [style]')).forEach(function(o) {
+                var a = 0;
+                do {
+                    if (o.attributes.length > 0) {
+                        var name = o.attributes[a].name;
+                        ["class", "id", "style"].includes(name) ? o.removeAttribute(name) : null;
+                    }
+                    a++;
+                } while (a < o.attributes.length)
             });
 
             // Do whatever with pasteddata
@@ -4690,7 +4695,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             document.execCommand('removeFormat', false, null);
             controller.wysiwyg.caret(node, fo);
 
-            console.log(pastedData, node, sel);
+            //console.log(pastedData, node, sel);
         }
 
     }
