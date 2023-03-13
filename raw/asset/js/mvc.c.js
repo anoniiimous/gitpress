@@ -4439,7 +4439,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             //wysiwyg.focus();
                             window.selected.addRange(window.range);
                         }
-                        document.execCommand('insertHTML', false, span.outerHTML);
+                        //document.execCommand('insertHTML', false, span.outerHTML);
+                        document.execCommand('fontSize', false, "7");
+
+                        var fontElements = wysiwyg.getElementsByTagName("font");
+                        for (var i = 0, len = fontElements.length; i < len; ++i) {
+                            if (fontElements[i].size == "7") {
+                                fontElements[i].removeAttribute("size");
+                                fontElements[i].style.fontSize = value;
+                            }
+                        }
+                        //node.removeAttribute('size');
+                        //node.style.fontSize = value;
 
                         if (window.selected && window.range) {
                             window.selected = null;
@@ -4484,29 +4495,29 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var node = controller.wysiwyg.node();
                         console.log(command, value);
 
-                            var parent = node.closest('blockquote, p, h1, h2, h3, h4, h5, h6');
-                            if (parent) {
-                                var sel = document.getSelection();
-                                var pos = sel.focusOffset;
-                                var fne = sel.focusNode;
-                                var idx = Array.from(parent.childNodes).indexOf(fne);
-                                var nnd = parent.childNodes[idx];
+                        var parent = node.closest('blockquote, p, h1, h2, h3, h4, h5, h6');
+                        if (parent) {
+                            var sel = document.getSelection();
+                            var pos = sel.focusOffset;
+                            var fne = sel.focusNode;
+                            var idx = Array.from(parent.childNodes).indexOf(fne);
+                            var nnd = parent.childNodes[idx];
 
-                                if (value === "increase") {
-                                    var tab = document.createElement('blockquote');
-                                    tab.innerHTML = node.innerHTML;
-                                    parent.innerHTML = tab.outerHTML;
-                                    controller.wysiwyg.caret(parent.find('blockquote').childNodes[idx], pos);
-                                } else if (value === "decrease") {
-                                    var tab = node.closest('blockquote');
-                                    var mother = tab ? tab.parentNode : null;
-                                    if (mother) {
-                                        mother.innerHTML = tab.innerHTML;
-                                        controller.wysiwyg.caret(mother.childNodes[idx], pos);
-                                    }
+                            if (value === "increase") {
+                                var tab = document.createElement('blockquote');
+                                tab.innerHTML = node.innerHTML;
+                                parent.innerHTML = tab.outerHTML;
+                                controller.wysiwyg.caret(parent.find('blockquote').childNodes[idx], pos);
+                            } else if (value === "decrease") {
+                                var tab = node.closest('blockquote');
+                                var mother = tab ? tab.parentNode : null;
+                                if (mother) {
+                                    mother.innerHTML = tab.innerHTML;
+                                    controller.wysiwyg.caret(mother.childNodes[idx], pos);
                                 }
                             }
-                        
+                        }
+
                     } else if (command === "inlineStyle") {
 
                         console.log(command, value);
