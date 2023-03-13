@@ -4495,7 +4495,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var node = controller.wysiwyg.node();
                         console.log(command, value);
 
-                        var parent = node.closest('blockquote, p, h1, h2, h3, h4, h5, h6');
+                        var parent = node.closest('blockquote, tab, p, h1, h2, h3, h4, h5, h6');
                         if (parent) {
                             var sel = document.getSelection();
                             var pos = sel.focusOffset;
