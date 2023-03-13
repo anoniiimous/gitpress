@@ -4483,40 +4483,30 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                         var node = controller.wysiwyg.node();
                         console.log(command, value);
-                        if (value === "decrease" && node.parentNode.tagName.toLowerCase() === "blockquote") {
-                            //document.execCommand('formatBlock', false, 'blockquote');
-                            if (node.parentNode.parentNode === "blockquote") {
+
+                            var parent = node.closest('blockquote, p, h1, h2, h3, h4, h5, h6');
+                            if (parent) {
                                 var sel = document.getSelection();
                                 var pos = sel.focusOffset;
-                                console.log(4443, node, sel);
-                                var blockquote = document.createElement('blockquote');
-                                node.parentNode.parentNode.innerHTML = node.outerHTML;
-                            } else {
-                                var sel = document.getSelection();
-                                var pos = sel.focusOffset;
-                                node.parentNode.replaceWith(node);
+                                var fne = sel.focusNode;
+                                var idx = Array.from(parent.childNodes).indexOf(fne);
+                                var nnd = parent.childNodes[idx];
+
+                                if (value === "increase") {
+                                    var tab = document.createElement('blockquote');
+                                    tab.innerHTML = node.innerHTML;
+                                    parent.innerHTML = tab.outerHTML;
+                                    controller.wysiwyg.caret(parent.find('blockquote').childNodes[idx], pos);
+                                } else if (value === "decrease") {
+                                    var tab = node.closest('blockquote');
+                                    var mother = tab ? tab.parentNode : null;
+                                    if (mother) {
+                                        mother.innerHTML = tab.innerHTML;
+                                        controller.wysiwyg.caret(mother.childNodes[idx], pos);
+                                    }
+                                }
                             }
-                            controller.wysiwyg.caret(node, pos);
-                            console.log(4455, node);
-                        }
-                        if (value === "increase") {
-                            var node = controller.wysiwyg.node();
-                            var sel = document.getSelection();
-                            var pos = sel.focusOffset;
-                            let range = new Range();
-                            range.selectNodeContents(node)
-                            sel.removeAllRanges();
-                            sel.addRange(range);
-
-                            console.log(4443, node, sel);
-                            var blockquote = document.createElement('blockquote');
-                            blockquote.innerHTML = node.outerHTML;
-                            document.execCommand('insertHTML', false, blockquote.outerHTML);
-                            var node = controller.wysiwyg.node();
-                            console.log(4480, node, sel);
-                            controller.wysiwyg.caret(node, pos);
-                        }
-
+                        
                     } else if (command === "inlineStyle") {
 
                         console.log(command, value);
@@ -4593,44 +4583,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 window.range = null;
                             }
                         } else {
-                            var parent = node.closest('tab, p, h1, h2, h3, h4, h5, h6');
+                            var parent = node.closest('blockquote, tab, p, h1, h2, h3, h4, h5, h6');
                             if (parent) {
-                                    var sel = document.getSelection();
-                                    var pos = sel.focusOffset;
-                                    var fne = sel.focusNode;
-                                    var idx = Array.from(parent.childNodes).indexOf(fne);
-                                    var nnd = parent.childNodes[idx];
-                                    
+                                var sel = document.getSelection();
+                                var pos = sel.focusOffset;
+                                var fne = sel.focusNode;
+                                var idx = Array.from(parent.childNodes).indexOf(fne);
+                                var nnd = parent.childNodes[idx];
+
                                 if (command === "indent") {
                                     var tab = document.createElement('tab');
                                     tab.innerHTML = node.innerHTML;
-                                    parent.innerHTML = tab.outerHTML
-                                    console.log({
-                                            parent, fne, idx, nnd
-                                    });
+                                    parent.innerHTML = tab.outerHTML;
                                     controller.wysiwyg.caret(parent.find('tab').childNodes[idx], pos);
                                 } else if (command === "outdent") {
-
                                     var tab = node.closest('tab');
-                                    console.log({
-                                        parent,
-                                        node,
-                                        tab
-                                    });
                                     var mother = tab ? tab.parentNode : null;
                                     if (mother) {
                                         mother.innerHTML = tab.innerHTML;
-                                        //controller.wysiwyg.caret(tab, pos);
-                                        0 < 1 ? console.log(4480, {
-                                            node,
-                                            nnd,
-                                            idx
-                                        }, {
-                                            aos,
-                                            fne,
-                                            pos,
-                                            mother
-                                        }) : null;
                                         controller.wysiwyg.caret(mother.childNodes[idx], pos);
                                     }
                                 }
