@@ -4407,12 +4407,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 if (value) {
 
                     if (["fontName"].includes(command)) {
-                        console.log(command, value, selected, range);
+                        wysiwyg === document.activeElement ? null : wysiwyg.focus();
+                        console.log(command, value);
                         if (window.range) {
                             //wysiwyg.focus();
                             window.selected.addRange(window.range);
                         }
-                        document.execCommand(command, false, value);
+                        //document.execCommand('insertHTML', false, span.outerHTML);
+                        document.execCommand('fontName', false, value);
+                        //node.removeAttribute('size');
+                        //node.style.fontSize = value;
 
                         if (window.selected && window.range) {
                             window.selected = null;
@@ -4431,10 +4435,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     } else if (command === "fontSize") {
 
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
-                        var span = document.createElement('span');
-                        span.innerHTML = document.getSelection();
-                        span.style = "font-size: " + value + ";";
-                        console.log(command, value, span.outerHTML);
+                        console.log(command, value);
                         if (window.range) {
                             //wysiwyg.focus();
                             window.selected.addRange(window.range);
@@ -4446,7 +4447,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         for (var i = 0, len = fontElements.length; i < len; ++i) {
                             if (fontElements[i].size == "7") {
                                 fontElements[i].removeAttribute("size");
-                                fontElements[i].style.fontSize = value;
+                                fontElements[i].setAttribute('size', value + "px");
                             }
                         }
                         //node.removeAttribute('size');
@@ -4719,10 +4720,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     if (o.attributes.length > 0) {
                         var name = o.attributes[a].name;
                         ["class", "id", "style"].includes(name) ? o.removeAttribute(name) : null;
+                        //console.log(name);
                     }
                     a++;
                 } while (a < o.attributes.length)
             });
+            //$(doc.body.all('[class], [id], [style]')).removeAttr('class', '').removeAttr('id', '').removeAttr('style', '');
 
             // Do whatever with pasteddata
             var node = controller.wysiwyg.node();

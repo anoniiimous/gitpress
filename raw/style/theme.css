@@ -961,60 +961,80 @@
 
 /*FONT SIZE*/
 @media screen {
-    .font-size-0 {
+    .font-size-0, font[size="0"] {
         font-size: 0;
     }
     
-    .font-size-12px {
+    .font-size-8px, font[size="8px"] {
+        font-size: 8px;
+    }
+    
+    .font-size-9px, font[size="9px"] {
+        font-size: 9px;
+    }
+    
+    .font-size-10px, font[size="10px"] {
+        font-size: 10px;
+    }
+    
+    .font-size-12px, font[size="12px"] {
         font-size: 12px;
     }
 
-    .font-size-13px {
+    .font-size-13px, font[size="13px"] {
         font-size: 13px;
     }
 
-    .font-size-14px {
+    .font-size-14px, font[size="14px"] {
         font-size: 14px;
     }
 
-    .font-size-16px {
+    .font-size-16px, font[size="16px"] {
         font-size: 16px;
     }
 
-    .font-size-18px {
+    .font-size-18px, font[size="18px"] {
         font-size: 18px;
     }
 
-    .font-size-20px {
+    .font-size-20px, font[size="20px"] {
         font-size: 20px;
     }
 
-    .font-size-22px {
+    .font-size-22px, font[size="22px"] {
         font-size: 22px;
     }
 
-    .font-size-24px {
+    .font-size-24px, font[size="24px"] {
         font-size: 24px;
     }
 
-    .font-size-30px {
+    .font-size-30px, font[size="30px"] {
         font-size: 30px;
     }
 
-    .font-size-32px {
+    .font-size-32px, font[size="32px"] {
         font-size: 32px;
     }
 
-    .font-size-36px {
+    .font-size-36px, font[size="36px"] {
         font-size: 36px;
     }
 
-    .font-size-48px {
+    .font-size-48px, font[size="48px"] {
         font-size: 48px;
     }
 
-    .font-size-72px {
+    .font-size-60px, font[size="60px"] {
+        font-size: 60px;
+    }
+
+    .font-size-72px, font[size="72px"] {
         font-size: 72px;
+    }
+
+    .font-size-96px, font[size="96px"] {
+        font-size: 96px;
     }
 
     @media (max-width: 480px) {
