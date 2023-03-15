@@ -109,12 +109,12 @@ Element.prototype.textual = function() {
     var n = 0
       , a = [];
     var html = "";
-    var els = this.all('*'); console.log({els});
+    var els = this.all('*');
     if (els.length > 0) {
         do {
             var el = els[n];
             var tagName = el.tagName.toLowerCase();
-            if(['div', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find('div, p, picture, video')) {
+            if(['div', 'hr', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find('div, p, picture, video')) {
                 a.push(el);
                 html += el.outerHTML;
             } else {
@@ -123,7 +123,7 @@ Element.prototype.textual = function() {
             n++;
         } while (n < els.length - 1)
     }
-    console.log(a);
+    //console.log(a);
     return html;
 }
 

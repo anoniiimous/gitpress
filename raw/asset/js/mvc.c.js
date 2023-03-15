@@ -4564,14 +4564,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 } else {
 
-                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertOrderedList", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
+                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertHorizontalRule", "insertOrderedList", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value);
                         if (window.range) {
                             //wysiwyg.focus();
                             window.selected.addRange(window.range);
                         }
-                        document.execCommand(command, false, value);
+                        document.execCommand(command, false, '');
 
                         if (window.selected && window.range) {
                             window.selected = null;
@@ -4618,6 +4618,34 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 }
                             }
                         }
+                    } else if (["inserthref"].includes(command)) {
+                        if (window.range) {
+                            //wysiwyg.focus();
+                            window.selected.removeAllRanges();
+                            window.selected.addRange(window.range);
+                        }
+
+                        var row = target.closest('row');
+                        var href = row.all('input[type="text"]')[0].value;
+                        var text = row.all('input[type="text"]')[1].value;
+                        var blank = row.find('input[type="checkbox"]').checked;
+                        console.log({
+                            href,
+                            text,
+                            blank,
+                            range
+                        });
+                        var a = document.createElement('a');
+                        a.href = href;
+                        text ? a.textContent = text : a.innerHTML = window.selected.getRangeAt(0);
+                        blank ? a.target = "_blank" : null;
+                        document.execCommand('insertHTML', false, a.outerHTML);
+                        target.closest('field > row').dataset.display = "none";
+
+                        if (window.selected && window.range) {
+                            window.selected = null;
+                            window.range = null;
+                        }
                     }
                 }
 
@@ -4661,7 +4689,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         onkeyup: event=>{
-                
+
             var wysiwyg = event.target.closest('wysiwyg');
             wysiwyg.innerHTML === "" ? wysiwyg.innerHTML = "<p><br></p>" : null;
             wysiwyg.firstElementChild.focus();
@@ -4714,30 +4742,29 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var mime = 'text/html';
             clipboardData = e.clipboardData || window.clipboardData;
             pastedData = clipboardData.getData(mime).replace('<span>&nbsp;</span>', '');
-            console.log({
+            0 > 1 ? console.log({
                 pastedData
-            });
+            }) : null;
             var doc = new DOMParser().parseFromString(pastedData, mime);
             $(doc.body.all('[class], [id], [style]')).removeAttr('class').removeAttr('id').removeAttr('style');
             $(doc.body.all('picture source')).remove();
-            console.log(doc.body.innerHTML);
+            //console.log(doc.body.innerHTML);
             var ps = doc.body.textual();
             doc.body.innerHTML = ps;
-            console.log(ps);
+            //console.log(ps);
 
             // Do whatever with pasteddata
             var node = controller.wysiwyg.node();
             wysiwyg = node.closest('wysiwyg')
-            console.log(node);
+            //console.log(node);
             var sel = document.getSelection();
             var fo = sel.focusOffset;
             //controller.wysiwyg.caret(node, fo);
             range = document.getSelection().getRangeAt(0);
             var pasted = document.createElement('p');
             pasted.innerHTML = doc.body.innerHTML;
-            if (node.parentElement === wysiwyg) {
-                node.parentElement.innerHTML = "";
-                //range.selectNode(wysiwyg);
+            if (node.parentElement === wysiwyg) {//node.parentElement.innerHTML = "";
+            //range.selectNode(wysiwyg);
             }
             //range.insertNode(pasted);
             //insertHtmlAfterSelection(pasted.outerHTML);
