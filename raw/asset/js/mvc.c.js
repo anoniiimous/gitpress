@@ -4661,8 +4661,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
 
         onkeyup: event=>{
-
-            var wysiwyg = event.target;
+                
+            var wysiwyg = event.target.closest('wysiwyg');
             wysiwyg.innerHTML === "" ? wysiwyg.innerHTML = "<p><br></p>" : null;
             wysiwyg.firstElementChild.focus();
 
@@ -4714,24 +4714,57 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var mime = 'text/html';
             clipboardData = e.clipboardData || window.clipboardData;
             pastedData = clipboardData.getData(mime).replace('<span>&nbsp;</span>', '');
+            console.log({
+                pastedData
+            });
             var doc = new DOMParser().parseFromString(pastedData, mime);
             $(doc.body.all('[class], [id], [style]')).removeAttr('class').removeAttr('id').removeAttr('style');
             $(doc.body.all('picture source')).remove();
+            console.log(doc.body.innerHTML);
+            var ps = doc.body.textual();
+            doc.body.innerHTML = ps;
+            console.log(ps);
 
             // Do whatever with pasteddata
             var node = controller.wysiwyg.node();
+            wysiwyg = node.closest('wysiwyg')
+            console.log(node);
             var sel = document.getSelection();
             var fo = sel.focusOffset;
-            controller.wysiwyg.caret(node, fo);
+            //controller.wysiwyg.caret(node, fo);
             range = document.getSelection().getRangeAt(0);
             var pasted = document.createElement('p');
             pasted.innerHTML = doc.body.innerHTML;
-            range.insertNode(pasted);
+            if (node.parentElement === wysiwyg) {
+                node.parentElement.innerHTML = "";
+                //range.selectNode(wysiwyg);
+            }
+            //range.insertNode(pasted);
+            //insertHtmlAfterSelection(pasted.outerHTML);
 
-            document.execCommand('removeFormat', false, null);
-            controller.wysiwyg.caret(node, fo);
+            replaceSelectionWithHtml(pasted.outerHTML);
+
+            //controller.wysiwyg.caret(node, fo);
 
             //console.log(pastedData, node, sel);
+            function replaceSelectionWithHtml(html) {
+                var range;
+                if (window.getSelection && window.getSelection().getRangeAt) {
+                    range = window.getSelection().getRangeAt(0);
+                    range.deleteContents();
+                    var div = document.createElement("div");
+                    div.innerHTML = html;
+                    var frag = document.createDocumentFragment(), child;
+                    while ((child = div.firstChild)) {
+                        frag.appendChild(child);
+                    }
+                    range.insertNode(frag);
+                } else if (document.selection && document.selection.createRange) {
+                    range = document.selection.createRange();
+                    range.pasteHTML(html);
+                }
+            }
+
         }
 
     }

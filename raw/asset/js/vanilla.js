@@ -104,6 +104,29 @@ Array.prototype.removeAttribute = function(name) {
     }
     return that;
 }
+
+Element.prototype.textual = function() {
+    var n = 0
+      , a = [];
+    var html = "";
+    var els = this.all('*'); console.log({els});
+    if (els.length > 0) {
+        do {
+            var el = els[n];
+            var tagName = el.tagName.toLowerCase();
+            if(['div', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find('div, p, picture, video')) {
+                a.push(el);
+                html += el.outerHTML;
+            } else {
+                el = null;
+            }
+            n++;
+        } while (n < els.length - 1)
+    }
+    console.log(a);
+    return html;
+}
+
 Array.prototype.siblings = function(name) {
     var i = 0
       , elems = []
@@ -143,7 +166,7 @@ Array.prototype.toggleClass = function(name) {
     }
     return that;
 }
-;
+
 Element.prototype.display = function(display) {
     this.ariaHidden = (display === true || display === false) ? display : this.ariaHidden === "true" ? false : true;
     return this;
@@ -151,7 +174,7 @@ Element.prototype.display = function(display) {
 Element.prototype.find = function(elem) {
     return this.querySelector(elem);
 }
-;
+
 Element.prototype.all = function(elem) {
     return this.querySelectorAll(elem);
 }
