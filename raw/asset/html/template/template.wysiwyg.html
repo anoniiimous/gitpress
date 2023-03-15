@@ -468,7 +468,7 @@
                     </row>
                     <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto overflow-hidden position-absolute width-224px white-space-nowrap" data-command="hiliteColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
                         <header class="background-color-f5 flex-1" data-ignore>
-                            <ico>
+                            <ico class="background-color-fff">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 14.9861C11 15.5384 11.4477 15.9861 12 15.9861C12.5523 15.9861 13 15.5384 13 14.9861V7.82831L16.2428 11.0711L17.657 9.65685L12.0001 4L6.34326 9.65685L7.75748 11.0711L11 7.82854V14.9861Z" fill="currentColor"/>
                                     <path d="M4 14H6V18H18V14H20V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V14Z" fill="currentColor"/>
@@ -489,6 +489,13 @@
                             </ico>
                         </header>
                         <section class="display-flex flex-direction-column padding-20px width-100pct" data-ignore>
+                            <label class="align-items-center border-2px-dashed border-color-777 border-radius-5px color-000 display-flex flex-direction-column justify-content-center" data-height="100px" data-width="100%">
+                                <text>Drop image</text>
+                                <text>(or click)</text>
+                                <input type="file">
+                            </label>
+                        </section>
+                        <section class="display-flex flex-direction-column padding-20px width-100pct" data-display="none" data-ignore>
                             <field class="border-1px-solid display-flex flex-1 position-relative">
                                 <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">Paste in a video URL</text>
                                 <input class="line-height-50px padding-x-10px width-100pct" type="text">
@@ -519,7 +526,7 @@
                     </row>
                     <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto overflow-hidden position-absolute width-224px white-space-nowrap" data-command="hiliteColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
                         <header class="background-color-f5 flex-1" data-ignore>
-                            <ico>
+                            <ico class="background-color-fff">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14.8284 12L16.2426 13.4142L19.071 10.5858C20.6331 9.02365 20.6331 6.49099 19.071 4.9289C17.509 3.3668 14.9763 3.3668 13.4142 4.9289L10.5858 7.75732L12 9.17154L14.8284 6.34311C15.6095 5.56206 16.8758 5.56206 17.6568 6.34311C18.4379 7.12416 18.4379 8.39049 17.6568 9.17154L14.8284 12Z" fill="currentColor"/>
                                     <path d="M12 14.8285L13.4142 16.2427L10.5858 19.0711C9.02372 20.6332 6.49106 20.6332 4.92896 19.0711C3.36686 17.509 3.36686 14.9764 4.92896 13.4143L7.75739 10.5858L9.1716 12L6.34317 14.8285C5.56212 15.6095 5.56212 16.8758 6.34317 17.6569C7.12422 18.4379 8.39055 18.4379 9.1716 17.6569L12 14.8285Z" fill="currentColor"/>

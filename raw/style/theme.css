@@ -1209,6 +1209,10 @@
         height: 64px;
     }
 
+    .height-100px, [data-height="100px"] {
+        height: 100px;
+    }
+
     .height-120px, [data-height="120px"] {
         height: 120px;
     }
