@@ -332,6 +332,15 @@
         width: 100%;
     }
 
+    wysiwyg * {
+        max-width: 100%;        
+    }
+
+    wysiwyg div {
+        margin: 0;
+        margin-bottom: 5px;
+    }
+
     [placeholder]:not(input):empty:before {
         content: attr(placeholder);
         opacity: 0.5;

@@ -368,6 +368,26 @@
         border-radius: 50%;
     }
 
+    .border-radius-1px {
+        border-radius: 1px;
+    }
+
+    .border-radius-2px {
+        border-radius: 2px;
+    }
+
+    .border-radius-3px {
+        border-radius: 3px;
+    }
+
+    .border-radius-4px {
+        border-radius: 4px;
+    }
+
+    .border-radius-5px {
+        border-radius: 5px;
+    }
+
     .border-radius-5px {
         border-radius: 5px;
     }

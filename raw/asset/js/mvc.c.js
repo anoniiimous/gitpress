@@ -4711,21 +4711,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             e.preventDefault();
 
             // Get pasted data via clipboard API
+            var mime = 'text/html';
             clipboardData = e.clipboardData || window.clipboardData;
-            pastedData = clipboardData.getData('text/html').replace('<span>&nbsp;</span>', '');
-            var doc = new DOMParser().parseFromString(pastedData, 'text/html');
-            $(doc.body.all('[class], [id], [style]')).forEach(function(o) {
-                var a = 0;
-                do {
-                    if (o.attributes.length > 0) {
-                        var name = o.attributes[a].name;
-                        ["class", "id", "style"].includes(name) ? o.removeAttribute(name) : null;
-                        //console.log(name);
-                    }
-                    a++;
-                } while (a < o.attributes.length)
-            });
-            //$(doc.body.all('[class], [id], [style]')).removeAttr('class', '').removeAttr('id', '').removeAttr('style', '');
+            pastedData = clipboardData.getData(mime).replace('<span>&nbsp;</span>', '');
+            var doc = new DOMParser().parseFromString(pastedData, mime);
+            $(doc.body.all('[class], [id], [style]')).removeAttr('class').removeAttr('id').removeAttr('style');
+            $(doc.body.all('picture source')).remove();
 
             // Do whatever with pasteddata
             var node = controller.wysiwyg.node();

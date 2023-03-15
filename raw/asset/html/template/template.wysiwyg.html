@@ -442,14 +442,17 @@
                                 <input class="line-height-50px padding-x-10px width-100pct" type="text">
                             </field>
                         </section>
-                        <footer class="align-items-right display-flex flex-direction-column margin-top-20px width-100pct" data-ignore>
-                            <field class="display-flex flex-1 position-relative">
-                                <label>
+                        <footer class="align-items-right display-flex flex-direction-column gap-10px margin-top-20px width-100pct" data-ignore>
+                            <field class="align-items-center display-flex flex-1 font-size-13px gap-5px position-relative">
+                                <label class='align-items-center display-flex justify-content-center' data-height="36px" data-width="36px">
                                     <input type="checkbox">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 box-sizing-border-box color-777 border-radius-5px color-ddd" data-height="20px" data-width="20px">
+                                        <n class="-checked-display-flex gg-check display-none"></n>
+                                    </ico>
                                 </label>
                                 <text>Open in new tab</text>
                             </field>
-                            <text class="color-0096c7 line-height-50px padding-x-10px width-100pct">Insert</text>
+                            <text class="color-0096c7 line-height-unset margin-left-auto padding-x-10px text-align-right">Insert</text>
                         </footer>
                     </row>
                 </field>
@@ -463,36 +466,99 @@
                             </svg>
                         </ico>
                     </row>
-                    <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto padding-20px position-absolute width-224px white-space-nowrap" data-command="hiliteColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
-                        <section class="display-flex flex-direction-row margin-top-20px width-100pct" data-ignore>
+                    <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto overflow-hidden position-absolute width-224px white-space-nowrap" data-command="hiliteColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                        <header class="background-color-f5 flex-1" data-ignore>
+                            <ico>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 14.9861C11 15.5384 11.4477 15.9861 12 15.9861C12.5523 15.9861 13 15.5384 13 14.9861V7.82831L16.2428 11.0711L17.657 9.65685L12.0001 4L6.34326 9.65685L7.75748 11.0711L11 7.82854V14.9861Z" fill="currentColor"/>
+                                    <path d="M4 14H6V18H18V14H20V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V14Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
+                            <ico>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.8284 12L16.2426 13.4142L19.071 10.5858C20.6331 9.02365 20.6331 6.49099 19.071 4.9289C17.509 3.3668 14.9763 3.3668 13.4142 4.9289L10.5858 7.75732L12 9.17154L14.8284 6.34311C15.6095 5.56206 16.8758 5.56206 17.6568 6.34311C18.4379 7.12416 18.4379 8.39049 17.6568 9.17154L14.8284 12Z" fill="currentColor"/>
+                                    <path d="M12 14.8285L13.4142 16.2427L10.5858 19.0711C9.02372 20.6332 6.49106 20.6332 4.92896 19.0711C3.36686 17.509 3.36686 14.9764 4.92896 13.4143L7.75739 10.5858L9.1716 12L6.34317 14.8285C5.56212 15.6095 5.56212 16.8758 6.34317 17.6569C7.12422 18.4379 8.39055 18.4379 9.1716 17.6569L12 14.8285Z" fill="currentColor"/>
+                                    <path d="M14.8285 10.5857C15.219 10.1952 15.219 9.56199 14.8285 9.17147C14.4379 8.78094 13.8048 8.78094 13.4142 9.17147L9.1716 13.4141C8.78107 13.8046 8.78107 14.4378 9.1716 14.8283C9.56212 15.2188 10.1953 15.2188 10.5858 14.8283L14.8285 10.5857Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
+                            <ico>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 7C5.34315 7 4 8.34315 4 10C4 11.6569 5.34315 13 7 13C8.65685 13 10 11.6569 10 10C10 8.34315 8.65685 7 7 7ZM6 10C6 9.44772 6.44772 9 7 9C7.55228 9 8 9.44772 8 10C8 10.5523 7.55228 11 7 11C6.44772 11 6 10.5523 6 10Z" fill="currentColor"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 3C1.34315 3 0 4.34315 0 6V18C0 19.6569 1.34315 21 3 21H21C22.6569 21 24 19.6569 24 18V6C24 4.34315 22.6569 3 21 3H3ZM21 5H3C2.44772 5 2 5.44772 2 6V18C2 18.5523 2.44772 19 3 19H7.31374L14.1924 12.1214C15.364 10.9498 17.2635 10.9498 18.435 12.1214L22 15.6863V6C22 5.44772 21.5523 5 21 5ZM21 19H10.1422L15.6066 13.5356C15.9971 13.145 16.6303 13.145 17.0208 13.5356L21.907 18.4217C21.7479 18.7633 21.4016 19 21 19Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
+                        </header>
+                        <section class="display-flex flex-direction-column padding-20px width-100pct" data-ignore>
                             <field class="border-1px-solid display-flex flex-1 position-relative">
-                                <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">URL</text>
+                                <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">Paste in a video URL</text>
                                 <input class="line-height-50px padding-x-10px width-100pct" type="text">
                             </field>
+                            <footer class="align-items-right display-flex flex-direction-row gap-10px margin-top-20px width-100pct">
+                                <field class="align-items-center display-flex flex-1 font-size-13px gap-5px position-relative">
+                                    <label class='align-items-center display-flex justify-content-center' data-height="36px" data-width="36px">
+                                        <input type="checkbox">
+                                        <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 box-sizing-border-box color-777 border-radius-5px color-ddd" data-height="20px" data-width="20px">
+                                            <n class="-checked-display-flex gg-check display-none"></n>
+                                        </ico>
+                                    </label>
+                                    <text>Autoplay</text>
+                                </field>
+                                <text class="color-0096c7 line-height-36px margin-left-auto padding-x-10px text-align-right">Insert</text>
+                            </footer>
                         </section>
-                        <section class="display-flex flex-direction-row margin-top-20px width-100pct" data-ignore>
-                            <field class="border-1px-solid display-flex flex-1 position-relative">
-                                <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">Text</text>
-                                <input class="line-height-50px padding-x-10px width-100pct" type="text">
-                            </field>
-                        </section>
-                        <footer class="align-items-right display-flex flex-direction-column margin-top-20px width-100pct" data-ignore>
-                            <field class="display-flex flex-1 position-relative">
-                                <label>
-                                    <input type="checkbox">
-                                </label>
-                                <text>Open in new tab</text>
-                            </field>
-                            <text class="color-0096c7 line-height-50px padding-x-10px width-100pct">Insert</text>
-                        </footer>
                     </row>
                 </field>
-                <ico data-command="insertvideo">
-                    <!--<img class="width-30px" src="raw/asset/svg/more-rich-insertvideo.svg">-->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4 4.5V6.5H12V7.5H3C1.34315 7.5 0 8.84315 0 10.5V16.5C0 18.1569 1.34315 19.5 3 19.5H15C16.5731 19.5 17.8634 18.2892 17.9898 16.7487L24 17.5V9.5L17.9898 10.2513C17.8634 8.71078 16.5731 7.5 15 7.5H14V5.5C14 4.94772 13.5523 4.5 13 4.5H4ZM18 12.2656V14.7344L22 15.2344V11.7656L18 12.2656ZM16 10.5C16 9.94772 15.5523 9.5 15 9.5H3C2.44772 9.5 2 9.94772 2 10.5V16.5C2 17.0523 2.44772 17.5 3 17.5H15C15.5523 17.5 16 17.0523 16 16.5V10.5Z" fill="currentColor"/>
-                    </svg>
-                </ico>
+                <field class="position-relative">
+                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                        <ico data-command="insertvideo">
+                            <!--<img class="width-30px" src="raw/asset/svg/more-rich-insertvideo.svg">-->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4 4.5V6.5H12V7.5H3C1.34315 7.5 0 8.84315 0 10.5V16.5C0 18.1569 1.34315 19.5 3 19.5H15C16.5731 19.5 17.8634 18.2892 17.9898 16.7487L24 17.5V9.5L17.9898 10.2513C17.8634 8.71078 16.5731 7.5 15 7.5H14V5.5C14 4.94772 13.5523 4.5 13 4.5H4ZM18 12.2656V14.7344L22 15.2344V11.7656L18 12.2656ZM16 10.5C16 9.94772 15.5523 9.5 15 9.5H3C2.44772 9.5 2 9.94772 2 10.5V16.5C2 17.0523 2.44772 17.5 3 17.5H15C15.5523 17.5 16 17.0523 16 16.5V10.5Z" fill="currentColor"/>
+                            </svg>
+                        </ico>
+                    </row>
+                    <row class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto overflow-hidden position-absolute width-224px white-space-nowrap" data-command="hiliteColor" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                        <header class="background-color-f5 flex-1" data-ignore>
+                            <ico>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.8284 12L16.2426 13.4142L19.071 10.5858C20.6331 9.02365 20.6331 6.49099 19.071 4.9289C17.509 3.3668 14.9763 3.3668 13.4142 4.9289L10.5858 7.75732L12 9.17154L14.8284 6.34311C15.6095 5.56206 16.8758 5.56206 17.6568 6.34311C18.4379 7.12416 18.4379 8.39049 17.6568 9.17154L14.8284 12Z" fill="currentColor"/>
+                                    <path d="M12 14.8285L13.4142 16.2427L10.5858 19.0711C9.02372 20.6332 6.49106 20.6332 4.92896 19.0711C3.36686 17.509 3.36686 14.9764 4.92896 13.4143L7.75739 10.5858L9.1716 12L6.34317 14.8285C5.56212 15.6095 5.56212 16.8758 6.34317 17.6569C7.12422 18.4379 8.39055 18.4379 9.1716 17.6569L12 14.8285Z" fill="currentColor"/>
+                                    <path d="M14.8285 10.5857C15.219 10.1952 15.219 9.56199 14.8285 9.17147C14.4379 8.78094 13.8048 8.78094 13.4142 9.17147L9.1716 13.4141C8.78107 13.8046 8.78107 14.4378 9.1716 14.8283C9.56212 15.2188 10.1953 15.2188 10.5858 14.8283L14.8285 10.5857Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
+                            <ico>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.95263 16.9123L8.59323 18.3608L2.03082 12.2016L8.18994 5.63922L9.64826 7.00791L4.85783 12.112L9.95212 16.8932L9.95263 16.9123Z" fill="currentColor"/>
+                                    <path d="M14.0474 16.9123L15.4068 18.3608L21.9692 12.2016L15.8101 5.63922L14.3517 7.00791L19.1422 12.112L14.0479 16.8932L14.0474 16.9123Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
+                            <ico>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 14.9861C11 15.5384 11.4477 15.9861 12 15.9861C12.5523 15.9861 13 15.5384 13 14.9861V7.82831L16.2428 11.0711L17.657 9.65685L12.0001 4L6.34326 9.65685L7.75748 11.0711L11 7.82854V14.9861Z" fill="currentColor"/>
+                                    <path d="M4 14H6V18H18V14H20V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V14Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
+                        </header>
+                        <section class="display-flex flex-direction-column padding-20px width-100pct" data-ignore>
+                            <field class="border-1px-solid display-flex flex-1 position-relative">
+                                <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">Paste in a video URL</text>
+                                <input class="line-height-50px padding-x-10px width-100pct" type="text">
+                            </field>
+                            <footer class="align-items-right display-flex flex-direction-row gap-10px margin-top-20px width-100pct">
+                                <field class="align-items-center display-flex flex-1 font-size-13px gap-5px position-relative">
+                                    <label class='align-items-center display-flex justify-content-center' data-height="36px" data-width="36px">
+                                        <input type="checkbox">
+                                        <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 box-sizing-border-box color-777 border-radius-5px color-ddd" data-height="20px" data-width="20px">
+                                            <n class="-checked-display-flex gg-check display-none"></n>
+                                        </ico>
+                                    </label>
+                                    <text>Autoplay</text>
+                                </field>
+                                <text class="color-0096c7 line-height-36px margin-left-auto padding-x-10px text-align-right">Insert</text>
+                            </footer>
+                        </section>
+                    </row>
+                </field>
                 <ico data-command="insertline">
                     <img class="width-30px" src="raw/asset/svg/more-rich-insertline.svg">
                 </ico>
