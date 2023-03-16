@@ -519,28 +519,28 @@
                     </row>
                     <column class="background-color-fff border-radius-10px box-shadow-0-1px-6px-0 flex-wrap-wrap left-0 margin-auto overflow-hidden position-absolute width-224px white-space-nowrap" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
                         <header class="background-color-f5 flex-1" data-ignore data-tap="controller.wysiwyg.tab(event.target)">
-                            <ico class="background-color-fff" data-tab="1">
+                            <ico data-display="none" data-tab="1">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14.8284 12L16.2426 13.4142L19.071 10.5858C20.6331 9.02365 20.6331 6.49099 19.071 4.9289C17.509 3.3668 14.9763 3.3668 13.4142 4.9289L10.5858 7.75732L12 9.17154L14.8284 6.34311C15.6095 5.56206 16.8758 5.56206 17.6568 6.34311C18.4379 7.12416 18.4379 8.39049 17.6568 9.17154L14.8284 12Z" fill="currentColor"/>
                                     <path d="M12 14.8285L13.4142 16.2427L10.5858 19.0711C9.02372 20.6332 6.49106 20.6332 4.92896 19.0711C3.36686 17.509 3.36686 14.9764 4.92896 13.4143L7.75739 10.5858L9.1716 12L6.34317 14.8285C5.56212 15.6095 5.56212 16.8758 6.34317 17.6569C7.12422 18.4379 8.39055 18.4379 9.1716 17.6569L12 14.8285Z" fill="currentColor"/>
                                     <path d="M14.8285 10.5857C15.219 10.1952 15.219 9.56199 14.8285 9.17147C14.4379 8.78094 13.8048 8.78094 13.4142 9.17147L9.1716 13.4141C8.78107 13.8046 8.78107 14.4378 9.1716 14.8283C9.56212 15.2188 10.1953 15.2188 10.5858 14.8283L14.8285 10.5857Z" fill="currentColor"/>
                                 </svg>
                             </ico>
-                            <ico data-tab="2">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.95263 16.9123L8.59323 18.3608L2.03082 12.2016L8.18994 5.63922L9.64826 7.00791L4.85783 12.112L9.95212 16.8932L9.95263 16.9123Z" fill="currentColor"/>
-                                    <path d="M14.0474 16.9123L15.4068 18.3608L21.9692 12.2016L15.8101 5.63922L14.3517 7.00791L19.1422 12.112L14.0479 16.8932L14.0474 16.9123Z" fill="currentColor"/>
-                                </svg>
-                            </ico>
-                            <ico data-tab="3">
+                            <ico class="background-color-fff" data-tab="2">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 14.9861C11 15.5384 11.4477 15.9861 12 15.9861C12.5523 15.9861 13 15.5384 13 14.9861V7.82831L16.2428 11.0711L17.657 9.65685L12.0001 4L6.34326 9.65685L7.75748 11.0711L11 7.82854V14.9861Z" fill="currentColor"/>
                                     <path d="M4 14H6V18H18V14H20V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V14Z" fill="currentColor"/>
                                 </svg>
                             </ico>
+                            <ico data-tab="3">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.95263 16.9123L8.59323 18.3608L2.03082 12.2016L8.18994 5.63922L9.64826 7.00791L4.85783 12.112L9.95212 16.8932L9.95263 16.9123Z" fill="currentColor"/>
+                                    <path d="M14.0474 16.9123L15.4068 18.3608L21.9692 12.2016L15.8101 5.63922L14.3517 7.00791L19.1422 12.112L14.0479 16.8932L14.0474 16.9123Z" fill="currentColor"/>
+                                </svg>
+                            </ico>
                         </header>
                         <flex class="flex-1">
-                            <section class="display-flex flex-direction-column padding-20px width-100pct" data-ignore>
+                            <section class="display-flex flex-direction-column padding-20px width-100pct" data-display="none" data-ignore>
                                 <field class="border-1px-solid display-flex flex-1 position-relative">
                                     <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">Paste in a video URL</text>
                                     <input class="line-height-50px padding-x-10px width-100pct" type="text">
@@ -558,6 +558,13 @@
                                     <text class="color-0096c7 line-height-36px margin-left-auto padding-x-10px text-align-right">Insert</text>
                                 </footer>
                             </section>
+                            <section class="display-flex flex-direction-column padding-20px width-100pct" data-ignore>
+                                <label class="align-items-center border-2px-dashed border-color-777 border-radius-5px color-000 display-flex flex-direction-column justify-content-center" data-height="100px" data-width="100%">
+                                    <text>Drop video</text>
+                                    <text>(or click)</text>
+                                    <input accept="video/mp4" onchange="controller.wysiwyg.video(event)" type="file">
+                                </label>
+                            </section>
                             <section class="display-flex flex-direction-column padding-20px width-100pct" data-display="none" data-ignore>
                                 <field class="border-1px-solid display-flex flex-1 position-relative">
                                     <text class="background-color-fff font-size-13px height-20px line-height-20px margin-x-10px padding-x-10px position-absolute top-minus-10px">Embedded Code</text>
@@ -567,13 +574,6 @@
                                     <text class="color-0096c7 line-height-36px margin-left-auto padding-x-10px text-align-right" data-tap="controller.wysiwyg.iframe(event.target)">Insert</text>
                                 </footer>
                             </section>
-                            <section class="display-flex flex-direction-column padding-20px width-100pct" data-display="none" data-ignore>
-                                <label class="align-items-center border-2px-dashed border-color-777 border-radius-5px color-000 display-flex flex-direction-column justify-content-center" data-height="100px" data-width="100%">
-                                    <text>Drop video</text>
-                                    <text>(or click)</text>
-                                    <input onchange="controller.wysiwyg.image(event)" type="file">
-                                </label>
-                            </section>
                         </flex>
                     </column>
                 </field>
@@ -582,6 +582,14 @@
                 </ico>
             </row>
             <row class="flex-wrap-wrap justify-content-flex-end width-100pct" data-display="none" data-more="misc">
+                <ico data-command="clear">
+                    <!--<img class="width-30px" src="raw/asset/svg/more-misc-code.svg">-->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17 5V4C17 2.89543 16.1046 2 15 2H9C7.89543 2 7 2.89543 7 4V5H4C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H5V18C5 19.6569 6.34315 21 8 21H16C17.6569 21 19 19.6569 19 18V7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H17ZM15 4H9V5H15V4ZM17 7H7V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V7Z" fill="currentColor"/>
+                        <path d="M9 9H11V17H9V9Z" fill="currentColor"/>
+                        <path d="M13 9H15V17H13V9Z" fill="currentColor"/>
+                    </svg>
+                </ico>
                 <ico data-command="fullscreen">
                     <img class="width-30px" src="raw/asset/svg/more-misc-fullscreen.svg">
                 </ico>
@@ -594,7 +602,7 @@
                 <ico data-command="selectAll">
                     <img class="width-30px" src="raw/asset/svg/more-misc-selectall.svg">
                 </ico>
-                <ico data-command="code">
+                <ico data-command="code" data-display="none">
                     <!--<img class="width-30px" src="raw/asset/svg/more-misc-code.svg">-->
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9.95263 16.9123L8.59323 18.3608L2.03082 12.2016L8.18994 5.63922L9.64826 7.00791L4.85783 12.112L9.95212 16.8932L9.95263 16.9123Z" fill="currentColor"/>
@@ -613,6 +621,6 @@
         </flex>
     </header>
     <column>
-        <wysiwyg class="min-height-360px padding-20px" contenteditable="true" onkeydown="controller.wysiwyg.onkeydown(event)" onkeyup="controller.wysiwyg.onkeyup(event)" onmouseup="controller.wysiwyg.onmouseup(event.target)" onpaste="controller.wysiwyg.onpaste(event)"></wysiwyg>
+        <wysiwyg class="min-height-360px padding-20px" contenteditable="true" onkeydown="controller.wysiwyg.onkeydown(event)" onkeyup="controller.wysiwyg.onkeyup(event)" onmouseup="controller.wysiwyg.onmouseup(event.target)" onpaste="controller.wysiwyg.onpaste(event)" printable="true"></wysiwyg>
     </column>
 </box>

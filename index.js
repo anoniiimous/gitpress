@@ -123,7 +123,7 @@ async function init() {
                 var path = route.path;
                 var slug = data;
 
-                if (getRoot() === "/dashboard/*/build/er/") {
+                if (rout.es() === "/dashboard/*/build/er/") {
                     var rte1 = rout.ed.dir(path).splice(0, 4);
                     var rte2 = rout.ed.dir(slug);
                     var rte0 = rte1.concat(rte2);

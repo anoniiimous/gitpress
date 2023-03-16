@@ -325,11 +325,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.add('display-none');
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
-            blocks.classList.remove('left-320px');
-            blocks.dataset["960pxTransform"] = "0";
-
-            block.removeAttribute('data-transform');
-            block.dataset.width = "calc(100% - 20px)";
+            const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
+            builder.dataset.transform = "translateY(0)";
 
             const win = iframe.contentWindow;
             const head = win.document.head;
@@ -337,11 +334,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             if (head.find) {
                 const css = head.find("#style-editor");
-                header.classList.remove('display-none');
-                block.classList.add('border-top-left-radius-10px');
-                block.classList.add('border-top-right-radius-10px');
-                block.classList.add('margin-top-10px');
-                block.classList.add('margin-x-10px');
+                //header.classList.remove('display-none');
+                builder.classList.add('border-top-left-radius-10px');
+                builder.classList.add('border-top-right-radius-10px');
+                builder.classList.add('margin-top-10px');
+                builder.classList.add('margin-x-20px');
+                builder.dataset.width = "calc(100% - 40px)";
                 //block.find('builder-toolbar-preview').classList.add('display-none');
                 //css.setAttribute('href', 'raw/css/editor.css')
             }
@@ -357,7 +355,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         else: async()=>{
             const iframe = byId('iframe-editor');
             const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
-            //iframe.closest('pages');
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
@@ -369,10 +366,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
             //blocks.classList.add('left-320px');
-            blocks.dataset["960pxTransform"] = "0";
+            //blocks.dataset["960pxTransform"] = "0";
 
-            block.dataset.transform = "translateY(100%)";
-            block.dataset.height = "calc(100% - 10px)";
+            //block.dataset.transform = "translateY(100%)";
+            //block.dataset.height = "calc(100% - 10px)";
             //block.dataset.width = "calc(100% - 260px)";
 
             //const win = iframe.contentWindow;
@@ -387,7 +384,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 block.classList.add('margin-top-10px');
                 block.classList.add('margin-x-10px');
                 //block.find('builder-toolbar-preview').classList.add('display-none');
-                css.removeAttribute('href')
+                css.removeAttribute('href');
             }
         }
         ,
@@ -422,10 +419,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log(e);
                     }
 
-                    console.log('controller.build.iframe', {
+                    0 > 1 ? console.log('controller.build.iframe', {
                         doc,
                         raw: doc.documentElement.outerHTML
-                    });
+                    }) : null;
 
                     iframe.src = blob(doc.documentElement.outerHTML, "text/html");
                     iframe.onload = ()=>{
@@ -442,7 +439,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         ,
         index: async()=>{
             const iframe = byId('iframe-editor');
-            const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
+            const block = dom.body.find('[data-page="/dashboard/*/build"]');
             //iframe.closest('pages');
             const header = block.find('header');
 
@@ -455,13 +452,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //nav.dataset["960pxTransform"] = "translateX(0%)";
 
             //blocks.classList.add('left-320px');
-            blocks.dataset["960pxTransform"] = "0";
+            //blocks.dataset["960pxTransform"] = "0";
 
-            block.dataset.transform = "translateY(calc(100% - 50px))";
-            block.dataset.height = "calc(100% - 10px)";
+            const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
+            builder.dataset.transform = "translateY(calc(100% - 50px))";
+            //block.dataset.height = "calc(100% - 10px)";
             //block.dataset.width = "calc(100% - 260px)";
 
-            if (iframe) {
+            if (0 > 1 && iframe) {
                 const css = head.find("#style-editor");
                 header.classList.remove('display-none');
                 block.classList.add('border-top-left-radius-10px');
@@ -4564,7 +4562,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 } else {
 
-                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertHorizontalRule", "insertOrderedList", "redo", "removeFormat", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
+                    if (["bold", "fontName", "italic", "justifyCenter", "justifyFull", "justifyLeft", "justifyRight", "insertHorizontalRule", "insertOrderedList", "redo", "removeFormat", "selectAll", "strikethrough", "subscript", "superscript", "underline", "undo", "insertUnorderedList"].includes(command)) {
                         wysiwyg === document.activeElement ? null : wysiwyg.focus();
                         console.log(command, value);
                         if (window.range) {
@@ -4577,6 +4575,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             window.selected = null;
                             window.range = null;
                         }
+                    } else if (["clear"].includes(command)) {
+
+                        document.execCommand('selectAll', false, null);
+                        document.execCommand("insertHTML", false, "<p><br></p>");
+
+                    } else if (["fullscreen"].includes(command)) {
+
+                        fullscreen(event.target.closest('box'));
+
                     } else if (["indent", "outdent"].includes(command)) {
                         var node = controller.wysiwyg.node();
                         var ou = node.closest('ol, ul');
@@ -4668,6 +4675,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             window.selected = null;
                             window.range = null;
                         }
+                    } else if (["print"].includes(command)) {
+                        printer(target.closest('box').find('[printable="true"]'));
                     }
                 }
 
@@ -4781,6 +4790,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var el = node.closest('blockquote, ul');
             var ul = node.closest('ul');
             var ol = node.closest('ol');
+            var img = node.closest('img');
             //var tagName = el.tagName.toLowerCase();
             0 > 1 ? console.log('onmouseup', {
                 node,
@@ -4788,8 +4798,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 ol
             }) : null;
 
-            if (ol) {//indent.classList.add('opacity-50pct');
-            //outdent.classList.remove('opacity-50pct');
+            if (img) {
+                console.log(img);
             } else if (el) {
                 indent.classList.add('opacity-50pct');
                 outdent.classList.remove('opacity-50pct');
@@ -4874,6 +4884,35 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 $(target.closest('[data-tap]').nextElementSibling.children).attr('data-display', 'none');
                 target.closest('[data-tap]').nextElementSibling.children[index].setAttribute('data-display', 'flex');
+            }
+        }
+        ,
+
+        video: async function(event) {
+            var wysiwyg = event.target.closest('box').find('wysiwyg');
+            if (window.range) {
+                //wysiwyg.focus();
+                window.selected.removeAllRanges();
+                window.selected.addRange(window.range);
+            }
+
+            var row = event.target.closest('row');
+            var image = await on.change.file(event);
+            var href = image.result;
+            0 > 1 ? console.log({
+                href
+            }) : null;
+            var video = document.createElement('video');
+            video.controls = true;
+            video.src = href;
+            //console.log(img);
+            document.activeElement === wysiwyg ? null : wysiwyg.focus()
+            document.execCommand('insertHTML', false, video.outerHTML);
+            event.target.closest('field > *').dataset.display = "none";
+
+            if (window.selected && window.range) {
+                window.selected = null;
+                window.range = null;
             }
         }
 

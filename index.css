@@ -54,6 +54,10 @@
         text-decoration: underline;
     }
 
+    :fullscreen{
+        overflow-x: hidden
+    }
+
     blocks {
         /* min-height: 100%; */
         width: 100%;
@@ -347,9 +351,19 @@
     }
 
     wysiwyg img {
-        width: 300px;
+        /* width: 300px; */
+        width: 100%;
+        /* max-height: 300px; */
         margin: 5px auto;
         display: block;
+        object-fit: contain;
+    }
+
+    wysiwyg video {
+        width: 600px;
+        margin: 5px auto;
+        display: block;
+        object-fit: contain;
     }
 
     [placeholder]:not(input):empty:before {
@@ -359,5 +373,22 @@
 
     [data-hide]:not([data-active="true"]), [data-page]:not([data-active="true"]):not(.-active), [data-pages]:not([data-active="true"]):not(.-active) {
         display: none;
+    }
+}
+
+@media print {    
+    body :not(print) {
+        display: none;
+    }
+    
+    body print {
+        display: block;
+        position: absolute;
+        z-index: 12345;
+        top: 0;
+    }
+    
+    body print * {
+        display: block !important;
     }
 }

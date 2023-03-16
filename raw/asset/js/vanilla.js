@@ -114,7 +114,8 @@ Element.prototype.textual = function() {
         do {
             var el = els[n];
             var tagName = el.tagName.toLowerCase();
-            if (['div', 'hr', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find('div, p, picture, video')) {
+            var selectors = 'div, iframe, p, picture, video';
+            if (['div', 'hr', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find(selectors)) {
                 a.push(el);
                 html += el.outerHTML;
             } else {
@@ -440,6 +441,16 @@ function ajax(url, settings) {
     );
 }
 
+function fullscreen(elem) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
 function truth(obj) {
     for (var o in obj)
         if (!obj[o])
@@ -579,6 +590,15 @@ window.colors = {
         return Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
     }
 
+}
+
+function printer(elem, obj) {
+    var el = document.createElement('print');
+    el.innerHTML = elem.innerHTML;
+    document.body.append(el)
+    window.print();
+    document.body.find('print').remove();
+    return true;
 }
 
 window.nodb = {
