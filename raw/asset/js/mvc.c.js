@@ -322,9 +322,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const transform = nav.dataset["960pxTransform"];
             const blocks = iframe.closest('main nav + pages');
 
-            nav.classList.add('display-none');
-            //nav.dataset["960pxTransform"] = "translateX(0%)";
-
             const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
             builder.dataset.transform = "translateY(0)";
 
@@ -353,6 +350,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
         else: async()=>{
+
             const iframe = byId('iframe-editor');
             const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
             const header = block.find('header');
@@ -438,6 +436,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
         index: async()=>{
+
             const iframe = byId('iframe-editor');
             const block = dom.body.find('[data-page="/dashboard/*/build"]');
             //iframe.closest('pages');
@@ -482,11 +481,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const blocks = iframe.closest('main nav + pages');
             const toggle = nav.classList.contains('display-none');
 
-            nav.classList.add('display-none');
-            //nav.dataset["960pxTransform"] = "translateX(0)";
-            blocks.classList.remove('left-320px');
-            //blocks.dataset["960pxTransform"] = "translateX(320px)";
-
             block.removeAttribute('data-transform');
             block.dataset.height = "100%";
             block.dataset.width = "100%";
@@ -517,18 +511,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //block.find('builder-toolbar-preview').classList.remove('display-none');
                     css.removeAttribute('href');
                 }
-            }
-        }
-        ,
-        route: (iframe)=>{
-            if (0 > 1) {
-                const nav = document.body.find('body > main nav');
-                const transform = nav.dataset["960pxTransform"];
-                const blocks = dom.body.find('main > pages');
-                nav.classList.add('display-none');
-                //nav.dataset["960pxTransform"] = "translateX(0%)";
-                blocks.classList.remove('left-320px');
-                blocks.dataset["960pxTransform"] = "0";
             }
         }
     },
@@ -4583,6 +4565,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     } else if (["fullscreen"].includes(command)) {
 
                         fullscreen(event.target.closest('box'));
+
+                    } else if (["help"].includes(command)) {
+
+                        ajax('raw/asset/html/template/template.wysiwyg.help.html').then(function(html) {
+                            modal.popup(html);
+                        })
 
                     } else if (["indent", "outdent"].includes(command)) {
                         var node = controller.wysiwyg.node();

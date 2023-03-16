@@ -290,6 +290,7 @@ window.modal = {
     ,
     popup: (h,ppp=document.createElement('aside'))=>{
         byId('boot').insertAdjacentHTML('afterend', `<aside class="aside body-aside popup"">` + h + `</aside>`);
+        dom.body.classList.add('overflow-hidden');
         modal.zIndex(document.querySelectorAll('aside'));
         return new Promise((resolve,reject)=>resolve(byId('boot').nextElementSibling));
     }

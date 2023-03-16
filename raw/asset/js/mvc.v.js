@@ -392,6 +392,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
 
                         if (get[3]) {
+
+                            dom.body.classList.add('overflow-hidden');
                             if (get[3] === "er") {
                                 controller.build.editor(iframe);
                             } else if (get[3] === "preview") {
@@ -400,11 +402,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 controller.build.else(iframe);
                             }
                         } else {
+
+                            dom.body.classList.remove('overflow-hidden');
                             controller.build.index(iframe);
                         }
 
                         //alert(iframe.contentWindow.document.body.outerHTML);
                         resolve(route);
+                    } else {
+
+                        dom.body.classList.remove('overflow-hidden');
+
                     }
                     if (get[2] === "config") {
                         if (get.length === 4) {
@@ -1806,9 +1814,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         console.log(507, "Post is empty", {
                                             error
                                         });
-                                        if (error.code === 404) {
-                                            //alert("Setup Project");
-                                            //resolve(route);
+                                        if (error.code === 404) {//alert("Setup Project");
+                                        //resolve(route);
                                         }
                                     }
                                     );
