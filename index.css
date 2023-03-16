@@ -341,6 +341,17 @@
         margin-bottom: 20px;
     }
 
+    wysiwyg iframe {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    wysiwyg img {
+        width: 300px;
+        margin: 5px auto;
+        display: block;
+    }
+
     [placeholder]:not(input):empty:before {
         content: attr(placeholder);
         opacity: 0.5;

@@ -4629,18 +4629,40 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var href = row.all('input[type="text"]')[0].value;
                         var text = row.all('input[type="text"]')[1].value;
                         var blank = row.find('input[type="checkbox"]').checked;
-                        console.log({
+                        0 < 1 ? console.log({
                             href,
                             text,
                             blank,
                             range
-                        });
+                        }) : null;
                         var a = document.createElement('a');
                         a.href = href;
-                        text ? a.textContent = text : a.innerHTML = window.selected.getRangeAt(0);
+                        text ? a.innerHTML = text : a.innerHTML = ranger.getSelectionHTML();
                         blank ? a.target = "_blank" : null;
                         document.execCommand('insertHTML', false, a.outerHTML);
                         target.closest('field > row').dataset.display = "none";
+
+                        if (window.selected && window.range) {
+                            window.selected = null;
+                            window.range = null;
+                        }
+                    } else if (["insertimg"].includes(command)) {
+                        if (window.range) {
+                            //wysiwyg.focus();
+                            window.selected.removeAllRanges();
+                            window.selected.addRange(window.range);
+                        }
+
+                        var row = target.closest('field > *');
+                        var href = row.all('input[type="text"]')[0].value;
+                        0 > 1 ? console.log({
+                            href,
+                            range
+                        }) : null;
+                        var img = document.createElement('img');
+                        img.src = href;
+                        document.execCommand('insertHTML', false, img.outerHTML);
+                        target.closest('field > *').dataset.display = "none";
 
                         if (window.selected && window.range) {
                             window.selected = null;
@@ -4673,6 +4695,54 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
         }
         ,
+
+        image: async function(event) {
+            var wysiwyg = event.target.closest('box').find('wysiwyg');
+            if (window.range) {
+                //wysiwyg.focus();
+                window.selected.removeAllRanges();
+                window.selected.addRange(window.range);
+            }
+
+            var row = event.target.closest('row');
+            var image = await on.change.file(event);
+            var href = image.result;
+            0 > 1 ? console.log({
+                href
+            }) : null;
+            var img = document.createElement('img');
+            img.src = href;
+            //console.log(img);
+            document.activeElement === wysiwyg ? null : wysiwyg.focus()
+            document.execCommand('insertHTML', false, img.outerHTML);
+            event.target.closest('field > *').dataset.display = "none";
+
+            if (window.selected && window.range) {
+                window.selected = null;
+                window.range = null;
+            }
+        },
+
+        iframe: async function(target) {
+            var wysiwyg = target.closest('box').find('wysiwyg');
+            if (window.range) {
+                //wysiwyg.focus();
+                window.selected.removeAllRanges();
+                window.selected.addRange(window.range);
+            }
+
+            var row = event.target.closest('row');
+            html = target.closest('section').find('textarea').value;
+            //console.log(img);
+            document.activeElement === wysiwyg ? null : wysiwyg.focus()
+            document.execCommand('insertHTML', false, html);
+            event.target.closest('field > *').dataset.display = "none";
+
+            if (window.selected && window.range) {
+                window.selected = null;
+                window.range = null;
+            }
+        },
 
         node: event=>{
             var sel = window.getSelection();
@@ -4792,6 +4862,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
             }
 
+        },
+
+        tab: target=>{
+            var button = target.closest('[data-tap] > [data-tab]');
+            if (button) {
+                var index = button.index();
+
+                $(target.closest('[data-tap]').children).removeClass('background-color-fff');
+                button.classList.add('background-color-fff');
+
+                $(target.closest('[data-tap]').nextElementSibling.children).attr('data-display', 'none');
+                target.closest('[data-tap]').nextElementSibling.children[index].setAttribute('data-display', 'flex');
+            }
         }
 
     }

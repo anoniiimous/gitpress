@@ -114,7 +114,7 @@ Element.prototype.textual = function() {
         do {
             var el = els[n];
             var tagName = el.tagName.toLowerCase();
-            if(['div', 'hr', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find('div, p, picture, video')) {
+            if (['div', 'hr', 'iframe', 'p', 'picture', 'video'].includes(tagName) && !el.find('div, p, picture, video')) {
                 a.push(el);
                 html += el.outerHTML;
             } else {
@@ -297,6 +297,34 @@ window.blob = (code,type)=>{
 window.nd = ()=>{
     return new Date;
 }
+window.ranger = {
+    getSelectionHTML: function() {
+        var userSelection;
+        if (window.getSelection) {
+            // W3C Ranges
+            userSelection = window.getSelection();
+            // Get the range:
+            if (userSelection.getRangeAt)
+                var range = userSelection.getRangeAt(0);
+            else {
+                var range = document.createRange();
+                range.setStart(userSelection.anchorNode, userSelection.anchorOffset);
+                range.setEnd(userSelection.focusNode, userSelection.focusOffset);
+            }
+            // And the HTML:
+            var clonedSelection = range.cloneContents();
+            var div = document.createElement('div');
+            div.appendChild(clonedSelection);
+            return div.innerHTML;
+        } else if (document.selection) {
+            // Explorer selection, return the HTML
+            userSelection = document.selection.createRange();
+            return userSelection.htmlText;
+        } else {
+            return '';
+        }
+    }
+}
 window.s = (ar,a,b)=>{
     return ar === 1 ? a : b;
 }
@@ -304,6 +332,8 @@ window.$ = e=>{
     var obj = e;
     if (typeof obj === 'object') {
         if (NodeList.prototype.isPrototypeOf(obj)) {
+            obj = Array.from(obj);
+        } else if (HTMLCollection.prototype.isPrototypeOf(obj)) {
             obj = Array.from(obj);
         } else {
             if (Element.prototype.isPrototypeOf(obj)) {
