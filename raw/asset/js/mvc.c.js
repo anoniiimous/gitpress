@@ -4391,6 +4391,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log(command, value);
                         if (window.range) {
                             //wysiwyg.focus();
+                            window.selected.removeAllRanges();
                             window.selected.addRange(window.range);
                         }
                         //document.execCommand('insertHTML', false, span.outerHTML);
@@ -4402,10 +4403,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             window.selected = null;
                             window.range = null;
                         }
-                    } else if (["foreColor", "hiliteColor", ].includes(command)) {
+                    } else if (["foreColor", "hiliteColor"].includes(command)) {
 
                         if (window.range) {
                             //wysiwyg.focus();
+                            window.selected.removeAllRanges();
                             window.selected.addRange(window.range);
                         }
                         document.execCommand(command, null, value)
@@ -4418,6 +4420,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log(command, value);
                         if (window.range) {
                             //wysiwyg.focus();
+                            window.selected.removeAllRanges();
                             window.selected.addRange(window.range);
                         }
                         //document.execCommand('insertHTML', false, span.outerHTML);
@@ -4512,12 +4515,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var el = window.getSelection().focusNode.parentNode;
                         var ul = el.closest('ol, ul');
                         var tagName = el.tagName.toLowerCase();
-                        console.log({
-                            command,
-                            value,
-                            el,
-                            ul
-                        });
                         if (ul) {
                             value === "default" ? ul.removeAttribute('style') : ul.style.listStyleType = value;
                         } else {
@@ -4549,6 +4546,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log(command, value);
                         if (window.range) {
                             //wysiwyg.focus();
+                            window.selected.removeAllRanges();
                             window.selected.addRange(window.range);
                         }
                         document.execCommand(command, false, '');
@@ -4581,6 +4579,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                             if (window.range) {
                                 //wysiwyg.focus();
+                                window.selected.removeAllRanges();
                                 window.selected.addRange(window.range);
                             }
                             document.execCommand(command, false, value);
