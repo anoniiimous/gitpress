@@ -1,39 +1,20 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Apple</title>
+        <title></title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="#021025">
-        <meta name="apple-mobile-web-app-title" content="Gitpress">
-        <meta name="application-name" content="Gitpress">
-        <meta name="application-shortname" content="gitpress">
+        <meta name="apple-mobile-web-app-title" content>
+        <meta name="application-name" content>
+        <meta name="application-shortname" content>
         <meta name="msapplication-TileColor" content="#f26c4f">
         <meta name="theme-color" content="#f26c4f">
         <meta content="pk_test_51MhgsvAaZPhy2mUxENR4iqlEWO4RztjDLovcKPKZZxpDeNiw4FgsPX7reUUKJBrzif5NSfTVgjzlF3lH14glPecI00IvwnCWqR" name="stripe_publishable_key">
         <meta name="stripe_user_id" content="acct_1MhgsvAaZPhy2mUx">
         <base>
-        <script>
-            var host = window.location.host;
-            var protocol = window.location.protocol;
-            var domains = host.split('.');
-            var subdomain = domains[domains.length - 3];
-            var domain = domains[domains.length - 2];
-            var tld = domains[domains.length - 1];
-            if (domain === "github" && tld === "tld") {
-                host = "dompad." + domain + '.' + tld;
-            }
-            if (domain === "dompad" && tld === "io") {
-                host = "dompad.io";
-            }
-            if (domain === "pages" && tld === "dev") {
-                host = "dompad.pages.dev";
-            }
-            if (window.self !== window.top) {
-                host = window.parent.location.host;
-                protocol = window.parent.location.protocol;
-            }
-            
+        <script>            
             const base = document.head.querySelector("base");
             if (window.self === window.top) {
                 base.href = "/";
@@ -55,6 +36,7 @@
         <script async="" src="raw/asset/js/router.js"></script>
         <script async="" src="raw/asset/js/touch.js"></script>
         <script async="" src="raw/asset/js/vanilla.js"></script>
+        <script async="" src="raw/style/framework.js"></script>
         <script defer="" src="index.js"></script>
         <link href="index.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/css.gg/icons/all.css" rel="stylesheet">

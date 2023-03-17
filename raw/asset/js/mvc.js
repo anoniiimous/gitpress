@@ -52,6 +52,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         }) : null;
 
         if (vp) {
+
+            //MODIFIER
+            if (0 < 1) {
+                if (is.iframe) {
+                    var TEG = window.parent.GET;
+                    if (TEG.length > 3 && TEG[0] === "dashboard" && TEG[2] === "build" && TEG[3] === "er") {
+                        dom.body.dataset.router = "disabled";
+                    } else {
+                        dom.body.removeAttribute('data-router');
+                    }
+                } else {
+                    vp.removeAttribute('data-router');
+                }
+            }
+
             //PLACEHOLDERS
             var el = $(dom.body.all('[data-value="cart.quantity"]'));
             if (el.length > 0) {

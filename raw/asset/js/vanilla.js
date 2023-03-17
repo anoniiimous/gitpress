@@ -331,6 +331,7 @@ window.s = (ar,a,b)=>{
 }
 window.$ = e=>{
     var obj = e;
+    //console.log(334, obj, typeof obj);
     if (typeof obj === 'object') {
         if (NodeList.prototype.isPrototypeOf(obj)) {
             obj = Array.from(obj);
@@ -340,12 +341,13 @@ window.$ = e=>{
             if (Element.prototype.isPrototypeOf(obj)) {
                 obj = [obj];
             } else {
-                obj = null;
+                obj = obj;
             }
         }
     } else if (typeof obj === 'string') {
         var body = window.document.body;
-        obj = body.querySelectorAll(obj);
+        var selectors = obj.split(',');
+        obj = window.document.querySelectorAll(obj);
         if (obj.length === 0) {
             obj = [];
         } else {
@@ -442,13 +444,15 @@ function ajax(url, settings) {
 }
 
 function fullscreen(elem) {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        /* Safari */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        /* IE11 */
+        elem.msRequestFullscreen();
+    }
 }
 
 function truth(obj) {

@@ -400,7 +400,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }, {
                         accept: 'application/vnd.github.raw'
                     }) : await ajax('raw/asset/html/template/template.iframe.html');
-                    var doc = new DOMParser().parseFromString(raw, 'text/html')
+                    var doc = new DOMParser().parseFromString(raw, 'text/html');
 
                     try {
                         var css = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/raw/style/theme.css')).content);
@@ -412,12 +412,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         console.log(e);
                     }
 
-                    0 > 1 ? console.log('controller.build.iframe', {
+                    0 < 1 ? console.log('controller.build.iframe', {
                         doc,
-                        raw: doc.documentElement.outerHTML
+                        html: doc.documentElement.outerHTML,
+                        raw
                     }) : null;
 
-                    iframe.src = blob(doc.documentElement.outerHTML, "text/html");
+                    iframe.src = blob('<!DOCTYPE html>' + doc.documentElement.outerHTML, "text/html");
                     0 < 1 ? iframe.onload = ()=>{
                         console.log(422, "controller.build.iframe iframe.onload", {
                             iframe,
