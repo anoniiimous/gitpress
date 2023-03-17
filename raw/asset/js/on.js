@@ -293,7 +293,7 @@ window.on.touch = {
     }
 
     var elem = target.closest("[data-href]");
-    if (elem) {
+    if (elem && !elem.closest('[data-router="disabled"]')) {
         //elem.dataset.href.router({cookie:elem.dataset.cookie});
         var href = elem.dataset.href;
 
@@ -450,6 +450,8 @@ window.on.touch = {
         //console.log({library},library.dataset);
         window[library.dataset.api][library.dataset.method][library.dataset.resource](target);
     }
+
+    on.custom ? on.custom(event) : null;
 }
 );
 
