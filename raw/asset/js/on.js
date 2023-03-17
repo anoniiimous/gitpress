@@ -451,7 +451,7 @@ window.on.touch = {
         window[library.dataset.api][library.dataset.method][library.dataset.resource](target);
     }
 
-    on.custom ? on.custom(event) : null;
+    framework && framework.on ? framework.custom(event) : null;
 }
 );
 
