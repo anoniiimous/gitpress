@@ -552,6 +552,7 @@ window.github = {
     },
     repos: {
         contents: (params,settings)=>{
+            //console.log(555, {params, settings});
             if (settings && settings.dataType) {
                 if (settings.dataType === "DELETE") {
                     console.log(7, {
@@ -652,6 +653,9 @@ window.github = {
                     const repo = params.repo;
                     const path = params.path;
                     const url = github.endpoint + "/repos/" + owner + "/" + repo + "/contents" + path;
+                    0 > 1 ? console.log(695, {
+                        url
+                    }) : null;
                     const a = (d)=>{
                         const data = is.json(d) ? JSON.parse(d) : d;
                         resolve(data);

@@ -23,35 +23,38 @@ is.iframe ? null : window.onpopstate = (event)=>{
 }
 
 async function init() {
-    console.log("Initializing...");
+    console.log("Initializing...", {iframe: is.iframe, head: window.document.head.outerHTML});
     //eruda.init();
+
+    window.loaded = is.iframe;
 
     //SHELL
     var html = ``;
-    if (is.iframe) {
+    if (window.self === window.top) {
+        html = await ajax('/raw/style/template.html');
+        console.log(35, {html, location});
+    } else {
         const user = await github.user.get();
         const owner = user.login;
         const repo = window.parent.route.GOT[1];
         const branch = 'main';
-        const file = 'raw/style/template.html';
-        const path = '/' + owner + '/' + repo + '/' + branch + '/' + file;
-        console.log("index.js init", {
-            branch,
-            file,
-            html,
-            owner,
-            path,
-            repo
-        });
+        const path = '/raw/style/template.html';
+        const resource = '/' + owner + '/' + repo + '/' + branch + path;
         try {
-            html = atob((await github.raw.path(path)).content);
+            console.log(44, {owner, path, repo});
+            html = await github.raw.git(resource);
         } catch (e) {
             if (e.code === 404) {
                 modal.alert(e.code + ": " + e.message);
             }
         }
-    } else {
-        html = await ajax('/raw/style/template.html');
+        console.log(43, "index.js init", {
+            branch,
+            html,
+            owner,
+            path,
+            repo
+        });
     }
     html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
     const fetching = dom.body.all(':not(page):not(pages)[data-fetch]');
@@ -114,7 +117,8 @@ async function init() {
         }
     });
 
-    window.addEventListener("message", (e)=>{
+    console.log('iframe', is.iframe);
+    is.iframe ? null : window.addEventListener("message", (e)=>{
         var event = e.data[0]
         var data = e.data[1];
         if (is.iframe === false) {
@@ -123,15 +127,25 @@ async function init() {
                 var path = route.path;
                 var slug = data;
 
-                if (rout.es() === "/dashboard/*/build/er/") {
+                if (rout.es() === "/dashboard/*/build/er") {
                     var rte1 = rout.ed.dir(path).splice(0, 4);
                     var rte2 = rout.ed.dir(slug);
                     var rte0 = rte1.concat(rte2);
                     var href = rout.ed.url(rte0);
                 }
 
-                //console.log({path, slug, href}, {rte0, rte1, rte2});
-                href.router();
+                if (href) {
+                    console.log(window.location, is.iframe, {
+                        path,
+                        slug,
+                        href
+                    }, {
+                        rte0,
+                        rte1,
+                        rte2
+                    });
+                    href.router();
+                }
             }
         }
     }

@@ -13,33 +13,51 @@
         <meta content="pk_test_51MhgsvAaZPhy2mUxENR4iqlEWO4RztjDLovcKPKZZxpDeNiw4FgsPX7reUUKJBrzif5NSfTVgjzlF3lH14glPecI00IvwnCWqR" name="stripe_publishable_key">
         <meta name="stripe_user_id" content="acct_1MhgsvAaZPhy2mUx">
         <base>
-        <link href="index.css" rel="stylesheet">
-        <link href="raw/style/theme.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/css.gg/icons/all.css" rel="stylesheet">
         <script>
+            var host = window.location.host;
+            var protocol = window.location.protocol;
+            var domains = host.split('.');
+            var subdomain = domains[domains.length - 3];
+            var domain = domains[domains.length - 2];
+            var tld = domains[domains.length - 1];
+            if (domain === "github" && tld === "tld") {
+                host = "dompad." + domain + '.' + tld;
+            }
+            if (domain === "dompad" && tld === "io") {
+                host = "dompad.io";
+            }
+            if (domain === "pages" && tld === "dev") {
+                host = "dompad.pages.dev";
+            }
+            if (window.self !== window.top) {
+                host = window.parent.location.host;
+                protocol = window.parent.location.protocol;
+            }
+            
             const base = document.head.querySelector("base");
             if (window.self === window.top) {
                 base.href = "/";
                 window.boot = window.location.pathname + window.location.search + window.location.hash;
             } else {
                 base.href = window.parent.location.protocol + "//" + window.parent.location.host;
-                document.head.appendChild(base);
                 var pathname = window.parent.location.pathname;
                 var dir = window.parent.rout.ed.dir(pathname);
                 dir.splice(0, 4);
                 window.boot = window.parent.rout.ed.url(dir);
             }
+
+            base.href = protocol + "//" + host;
         </script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/github.js"></script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/mvc.js"></script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/modal.js"></script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/on.js"></script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/router.js"></script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/touch.js"></script>
-        <script async="" src="https://dompad.pages.dev/raw/asset/js/vanilla.js"></script>
-        <script async="" src="raw/style/framework.js"></script>
-        <script async="" src="https://js.stripe.com/v3/"></script>
+        <script async="" src="raw/asset/js/github.js"></script>
+        <script async="" src="raw/asset/js/mvc.js"></script>
+        <script async="" src="raw/asset/js/modal.js"></script>
+        <script async="" src="raw/asset/js/on.js"></script>
+        <script async="" src="raw/asset/js/router.js"></script>
+        <script async="" src="raw/asset/js/touch.js"></script>
+        <script async="" src="raw/asset/js/vanilla.js"></script>
         <script defer="" src="index.js"></script>
+        <link href="index.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/css.gg/icons/all.css" rel="stylesheet">
     </head>
     <body>
         <boot id="boot"></boot>

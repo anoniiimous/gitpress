@@ -7,85 +7,74 @@
         <pages class="-noauth flex-grow-1 min-height-100pct width-100pct" data-fetch="raw/asset/html/template/template.login.html" data-page="/dashboard"></pages>
         <pages class="-isauth flex-grow-1 min-height-100pct overflow-hidden" data-page="/dashboard/*" data-transition="0.3s">
             <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-320px z-index-5" data-960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" data-transition="0.3s"></nav>
-            <pages class="background-color-e2dcd8 flex-grow-1 z-index-6" data-page="/dashboard/*">
+            <pages class="background-color-e2dcd8 flex-grow-1 z-index-6" data-page="/dashboard/*" data-transition="0.3s">
                 <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.html" data-page="/dashboard/*"></page>
                 <pages class="flex-grow-1" data-page="/dashboard/*/build">
                     <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.build.html" data-page="/dashboard/*/build"></pages>
-                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 margin-x-20px margin-top-20px overflow-hidden position-fixed right-0" data-480px-margin-x="10px" data-480px-height="calc(100% - 10px)" data-480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-transform="translateY(calc(100% - 50px))" data-transition="0.3s" data-width="calc(100% - 40px)">
-                        <blocks class="display-flex flex-1">
-                            <block class="flex-grow-1">
-                                <header class="align-items-center background-color-ccc display-flex flex-direction-row justify-content-space-between">
-                                    <card class="height-50px justify-content-center">
+                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 flex-direction-column margin-x-20px margin-top-20px overflow-hidden position-fixed z-index-5" data-480px-margin-x="10px" data-480px-height="calc(100% - 10px)" data-480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-transform="translateY(calc(100% - 50px))" data-transition="0.3s" data-width="calc(100% - 40px)">
+                        <header class="align-items-center background-color-ccc display-flex flex-direction-row justify-content-space-between">
+                            <card class="height-50px justify-content-center">
+                                <row class="align-items-center">
+                                    <box data-href="/dashboard/:get/build/er" data-page="/dashboard/*/build">
                                         <row class="align-items-center">
-                                            <box data-href="/dashboard/:get/build/er" data-page="/dashboard/*/build">
-                                                <row class="align-items-center">
-                                                    <ico>
-                                                        <n class="gg-pen"></n>
-                                                    </ico>
-                                                </row>
-                                            </box>
-                                            <box data-href="/dashboard/:get/build" data-page="/dashboard/*/build/er">
-                                                <row class="align-items-center">
-                                                    <ico>
-                                                        <n class="gg-close"></n>
-                                                    </ico>
-                                                </row>
-                                            </box>
-                                            <box>
-                                                <column class="align-items-center justify-content-center">
-                                                    <text class="font-weight-bolder" placeholder="Page Name"></text>
-                                                    <text class="color-0096c7" placeholder="/page-name"></text>
-                                                </column>
-                                            </box>
+                                            <ico>
+                                                <n class="gg-pen"></n>
+                                            </ico>
                                         </row>
-                                    </card>
-                                    <card class="font-weight-bolder padding-x-10px" data-page="/dashboard/*/build">
+                                    </box>
+                                    <box data-href="/dashboard/:get/build" data-page="/dashboard/*/build/er">
+                                        <row class="align-items-center">
+                                            <ico>
+                                                <n class="gg-close"></n>
+                                            </ico>
+                                        </row>
+                                    </box>
+                                    <box>
+                                        <column class="align-items-center justify-content-center">
+                                            <text class="font-weight-bolder" placeholder="Page Name"></text>
+                                            <text class="color-0096c7" placeholder="/page-name"></text>
+                                        </column>
+                                    </box>
+                                </row>
+                            </card>
+                            <card class="font-weight-bolder padding-x-10px">
+                                <row data-page="/dashboard/*/build">
+                                    <box data-960px-display="flex" data-href="/dashboard/:get/build/preview">
                                         <row>
-                                            <box data-960px-display="flex" data-href="/dashboard/:get/build/preview">
-                                                <row>
-                                                    <ico>
-                                                        <n class="gg-eye"></n>
-                                                    </ico>
-                                                </row>
-                                            </box>
+                                            <ico>
+                                                <n class="gg-eye"></n>
+                                            </ico>
                                         </row>
-                                    </card>
-                                    <card class="font-weight-bolder padding-x-10px" data-page="/dashboard/*/build/er">
+                                    </box>
+                                </row>
+                                <row data-page="/dashboard/*/build/er">
+                                    <box>
                                         <row>
-                                            <box>
-                                                <row>
-                                                    <ico>
-                                                        <n class="gg-add"></n>
-                                                    </ico>
-                                                </row>
-                                            </box>
-                                            <box>
-                                                <row>
-                                                    <ico>
-                                                        <n class="gg-add"></n>
-                                                    </ico>
-                                                </row>
-                                            </box>
-                                            <box>
-                                                <row>
-                                                    <ico>
-                                                        <n class="gg-add"></n>
-                                                    </ico>
-                                                </row>
-                                            </box>
+                                            <ico>
+                                                <n class="gg-pen"></n>
+                                            </ico>
                                         </row>
-                                    </card>
-                                </header>
-                                <pages class="flex-1 position-relative" data-page="/dashboard/*/build/er">
-                                    <card class="background-color-fff" id="builder-toolbar">
-                                        <row class="display-none" id="builder-toolbar-preview">
-                                            <box data-tap="controller.build.preview"></box>
+                                    </box>
+                                    <box>
+                                        <row>
+                                            <ico>
+                                                <n class="gg-add-r"></n>
+                                            </ico>
                                         </row>
-                                    </card>
-                                    <iframe class="background-color-fff height-100pct width-100pct" id="iframe-editor"></iframe>
-                                </pages>
-                            </block>
-                        </blocks>
+                                    </box>
+                                    <box>
+                                        <row>
+                                            <ico>
+                                                <n class="gg-trash"></n>
+                                            </ico>
+                                        </row>
+                                    </box>
+                                </row>
+                            </card>
+                        </header>
+                        <pages class="flex-1 position-relative" data-page="/dashboard/*/build/er">
+                            <iframe class="background-color-fff height-100pct width-100pct" id="iframe-editor"></iframe>
+                        </pages>
                     </pages>
                 </pages>
                 <pages class="flex-grow-1" data-page="/dashboard/*/config">

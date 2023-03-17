@@ -14,7 +14,19 @@
         <link href="index.css" rel="stylesheet">
         <link href="raw/asset/css/gg.css" rel="stylesheet">
         <link href="raw/style/theme.css" rel="stylesheet">
-        <script>window.boot = window.location.pathname + window.location.search + window.location.hash;</script>
+        <script>
+            if (window.self === window.top) {
+                window.boot = window.location.pathname + window.location.search + window.location.hash;
+            } else {
+                const base = document.createElement("base");
+                base.href = window.parent.location.protocol + "//" + window.parent.location.host;
+                document.head.appendChild(base);
+                var pathname = window.parent.location.pathname;
+                var dir = window.parent.rout.ed.dir(pathname);
+                dir.splice(0, 4);
+                window.boot = window.parent.rout.ed.url(dir);
+            }
+        </script>
         <script src="raw/asset/js/crypto.js"></script>
         <script src="raw/asset/js/github.js"></script>
         <script src="raw/asset/js/global.js"></script>

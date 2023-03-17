@@ -393,22 +393,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 const repo = route.GOT[1];
                 const branch = 'main';
                 try {
-                    var raw = await ajax('raw/asset/html/template/template.iframe.document.html');
-                    //var raw = atob((await github.raw.path('/anoniiimous/' + GET[1] + '/' + branch + '/index.html')).content);
+                    var raw = 0 > 1 ? await github.repos.contents({
+                        owner: window.owner.login,
+                        path: 'index.html',
+                        repo: GET[1]
+                    }, {
+                        accept: 'application/vnd.github.raw'
+                    }) : await ajax('raw/asset/html/template/template.iframe.html');
                     var doc = new DOMParser().parseFromString(raw, 'text/html')
 
                     try {
                         var css = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/raw/style/theme.css')).content);
-                        var link = document.createElement('link');
-                        link.href = blob(css, 'text/css');
-                        link.rel = "stylesheet";
-                        doc.head.appendChild(link);
-                    } catch (e) {
-                        console.log(e);
-                    }
-
-                    try {
-                        var css = atob((await github.raw.path('/' + owner + '/' + repo + '/' + branch + '/index.css')).content);
                         var link = document.createElement('link');
                         link.href = blob(css, 'text/css');
                         link.rel = "stylesheet";
@@ -423,13 +418,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }) : null;
 
                     iframe.src = blob(doc.documentElement.outerHTML, "text/html");
-                    iframe.onload = ()=>{
-                        console.log("controller.build.iframe iframe.onload", {
+                    0 < 1 ? iframe.onload = ()=>{
+                        console.log(422, "controller.build.iframe iframe.onload", {
                             iframe,
+                            head: iframe.contentWindow.document.head.outerHTML,
                             body: iframe.contentWindow.document.body.outerHTML
                         });
+                        iframe.contentWindow.document.body.setAttribute('buildable', true);
                         resolve(iframe);
                     }
+                    : resolve(iframe);
                 } catch (e) {}
             }
             )
@@ -2500,15 +2498,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             if (toggle) {
                 nav.dataset["transform"] = "translateX(-100%)";
                 blocks.dataset["transform"] = "0";
+                blocks.dataset["left"] = "0";
 
                 nav.dataset["960pxTransform"] = "translateX(-100%)";
-                blocks.dataset["960pxTransform"] = "0";
+                //blocks.dataset["960pxTransform"] = "0";
+                blocks.dataset["960pxLeft"] = "0";
             } else {
                 nav.dataset["transform"] = "translateX(0)";
-                blocks.dataset["transform"] = "translateX(320px)";
+                //blocks.dataset["transform"] = "translateX(320px)";
+                blocks.dataset["left"] = "320px";
 
                 nav.dataset["960pxTransform"] = "translateX(0)";
-                blocks.dataset["960pxTransform"] = "translateX(320px)";
+                //blocks.dataset["960pxTransform"] = "translateX(320px)";
+                blocks.dataset["960pxLeft"] = "320px";
             }
 
         }

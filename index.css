@@ -50,11 +50,11 @@
         text-decoration: none;
     }
 
-    wysiwyg a[href]{
+    wysiwyg a[href] {
         text-decoration: underline;
     }
 
-    :fullscreen{
+    :fullscreen {
         overflow-x: hidden
     }
 
@@ -297,12 +297,12 @@
         overflow: auto;
         -ms-overflow-style: scrollbar;
     }
-    
+
     tab {
         margin-left: 20px;
         display: block;
     }
-    
+
     textarea {
         -webkit-appearance: none;
         border: unset;
@@ -337,7 +337,7 @@
     }
 
     wysiwyg * {
-        max-width: 100%;        
+        max-width: 100%;
     }
 
     wysiwyg div {
@@ -376,19 +376,106 @@
     }
 }
 
-@media print {    
+@media print {
     body :not(print) {
         display: none;
     }
-    
+
     body print {
         display: block;
         position: absolute;
         z-index: 12345;
         top: 0;
     }
-    
+
     body print * {
         display: block !important;
+    }
+}
+
+/*FOCUS*/
+@media screen {
+    body > footer, body > header, body > nav {
+        position: relative;
+    }
+
+    body block, body card, body card box {
+        position: relative;
+    }
+
+    body > header > *, body > header card > *, body > header box > * {
+        z-index: 12;
+    }
+
+    body > header > picture, body > header > card > picture, body > header > card > box > picture {
+        z-index: 0;
+    }
+
+    body > header > video, body > header > card > picture, body > header > card > box > picture {
+        z-index: 0;
+    }
+
+    body > header > * ~ *, body > header card > * ~ *, body > header card box > * ~ * {
+        z-index: 12;
+    }
+
+    body > footer > *, body > footer card > *, body > footer box > * {
+        z-index: 12;
+    }
+
+    body > footer > picture, body > footer > card > picture, body > footer > card > box > picture {
+        z-index: 0;
+    }
+
+    body > footer > video, body > footer > card > picture, body > footer > card > box > picture {
+        z-index: 0;
+    }
+
+    body > footer > * ~ *, body > footer card > * ~ *, body > footer card box > * ~ * {
+        z-index: 12;
+    }
+
+    body block > * {
+        z-index: 1;
+    }
+
+    body card > * {
+        z-index: 1;
+    }
+
+    body card box > * {
+        z-index: 1;
+    }
+
+    body block > picture, body card > picture, body card box > picture {
+        z-index: 0;
+    }
+
+    body block > video, body card > video, body card box > video {
+        z-index: 0;
+    }
+
+    body block > * ~ *, body card > * ~ *, body card box > * ~ * {
+        z-index: 12;
+    }
+}
+
+@media screen {
+    body[buildable="true"] > header:hover, body[buildable="true"] block:hover, body[buildable="true"] > footer:hover {
+        outline: 4px solid #ff3b30;
+        outline-offset: 0px;
+        box-sizing: border-box;
+    }
+
+    body[buildable="true"] > footer card:hover, body[buildable="true"] > header card:hover, body[buildable="true"] card:hover {
+        outline: 4px solid #32cd32;
+        outline-offset: 0px;
+        /* box-sizing: border-box; */
+    }
+
+    body[buildable="true"] > footer card box:hover, body[buildable="true"] > header card box:hover, body[buildable="true"] card box:hover {
+        outline: 4px solid #52b9d6;
+        outline-offset: 0px;
+        box-sizing: border-box;
     }
 }

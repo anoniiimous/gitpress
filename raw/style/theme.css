@@ -186,7 +186,7 @@
 
     [data-background-color="#CCCCCC"] {
         background-color: #CCCCCC;
-    }    
+    }
 
     [data-background-color="#41A85F"] {
         background-color: #41A85F;
@@ -214,7 +214,7 @@
 
     [data-background-color="#000000"] {
         background-color: #000000;
-    }    
+    }
 
     [data-background-color="#F7DA64"] {
         background-color: #F7DA64;
@@ -242,7 +242,7 @@
 
     [data-background-color="#FFFFFF"] {
         background-color: #FFFFFF;
-    }    
+    }
 
     [data-background-color="#FAC51C"] {
         background-color: #FAC51C;
@@ -786,7 +786,7 @@
     [data-empty]:empty:before {
         content: attr(data-empty);
     }
-    
+
     .empty:empty {
         display: none;
     }
@@ -813,17 +813,25 @@
 }
 
 @media screen {
-    .left-0 {
+    .left-0, [data-left="0"] {
         left: 0;
     }
-    
+
     .left-5px {
         left: 5px;
+    }
+
+    .left-320px, [data-left="320px"] {
+        left: 320px;
     }
 
     @media screen and (max-width: 768px) {
         .-dw768px-left-0 {
             left: 0;
+        }
+
+        .-dw960px-left-320px, [data-960px-left="320px"] {
+            left: 320px;
         }
     }
 }
@@ -945,35 +953,35 @@
     .font-family-arial, [data-font-family="Arial"] {
         font-family: Arial;
     }
-    
+
     .font-family-brush-script-mt, [data-font-family="Brush Script MT"] {
         font-family: Brush Script MT;
     }
-    
+
     .font-family-courier-new, [data-font-family="Courier New"] {
         font-family: Courier New;
     }
-    
+
     .font-family-garamond, [data-font-family="Garamond"] {
         font-family: Garamond;
     }
-    
+
     .font-family-georgia, [data-font-family="Georgia"] {
         font-family: Georgia;
     }
-    
+
     .font-family-tahoma, [data-font-family="Tahoma"] {
         font-family: Tahoma;
     }
-    
+
     .font-family-times-new-roman, [data-font-family="Times New Roman"] {
         font-family: Times New Roman;
     }
-    
+
     .font-family-trebuchet-ms, [data-font-family="Trebuchet MS"] {
         font-family: Trebuchet MS;
     }
-    
+
     .font-family-verdana, [data-font-family="Verdana"] {
         font-family: Verdana;
     }
@@ -984,19 +992,19 @@
     .font-size-0, font[size="0"] {
         font-size: 0;
     }
-    
+
     .font-size-8px, font[size="8px"] {
         font-size: 8px;
     }
-    
+
     .font-size-9px, font[size="9px"] {
         font-size: 9px;
     }
-    
+
     .font-size-10px, font[size="10px"] {
         font-size: 10px;
     }
-    
+
     .font-size-12px, font[size="12px"] {
         font-size: 12px;
     }
@@ -1196,7 +1204,7 @@
     .height-32px, [data-height="32px"] {
         height: 32px;
     }
-    
+
     .height-38px, [data-height="38px"] {
         height: 38px;
     }
@@ -1313,8 +1321,8 @@
         [data-960px-height="calc(100% - 10px)"] {
             height: calc(100% - 10px);
         }
-    }    
-    
+    }
+
     @media (max-width: 480px) {
         [data-480px-height="calc(100% - 10px)"] {
             height: calc(100% - 10px);
@@ -1751,11 +1759,11 @@
     .min-height-38px {
         min-height: 38px;
     }
-    
+
     .min-height-50px {
         min-height: 50px;
     }
-    
+
     .min-height-54px {
         min-height: 54px;
     }
@@ -1767,7 +1775,7 @@
     .min-height-85px {
         min-height: 85px;
     }
-    
+
     .min-height-108px {
         min-height: 108px;
     }
@@ -1879,7 +1887,7 @@
     .padding-0 {
         padding: 0;
     }
-    
+
     .padding-5px {
         padding: 5px;
     }
@@ -2314,7 +2322,6 @@
         transform: translateX(320px);
     }
 
-    
     :checked + .-checked-translateX-30px, :checked + * .-checked-translateX-30px {
         transform: translateX(30px);
     }
