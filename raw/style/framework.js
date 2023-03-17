@@ -11,7 +11,7 @@ framework.on = async function(event) {
                 var elem = target.closest('box > * > *');
                 $('[focus]').removeAttr('focus');
                 if (elem) {
-                    $([dom.body, elem, elem.closest('block')]).attr('focus', true);
+                    $([dom.body, elem, elem.closest('block, footer, header')]).attr('focus', true);
                 }
             }
         }
