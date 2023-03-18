@@ -303,6 +303,10 @@
         display: block;
     }
 
+    text {
+        display: inline-block;
+    }
+
     textarea {
         -webkit-appearance: none;
         border: unset;

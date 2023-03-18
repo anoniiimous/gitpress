@@ -407,7 +407,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var link = document.createElement('link');
                         link.href = blob(css, 'text/css');
                         link.rel = "stylesheet";
-                        doc.head.appendChild(link);
+                        doc.head.find('link').insertAdjacentHTML('beforebegin', link.outerHTML);
                     } catch (e) {
                         console.log(e);
                     }
