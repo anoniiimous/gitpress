@@ -22,14 +22,26 @@
                                             </ico>
                                         </row>
                                     </box>
-                                    <box data-href="/dashboard/:get/build" data-page="/dashboard/*/build/er">
+                                    <box class="display-none" data-href="/dashboard/:get/build" data-page="/dashboard/*/build/er">
                                         <row class="align-items-center">
                                             <ico>
                                                 <n class="gg-close"></n>
                                             </ico>
                                         </row>
                                     </box>
-                                    <box>
+                                    <box class="position-relative" data-page="/dashboard/*/build/er">
+                                        <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                            <ico class="margin-left-5px" data-command="fontfamily">
+                                                <n class="gg-menu"></n>
+                                                <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                            </ico>
+                                        </row>
+                                        <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-5px line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="fontName" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                            <text class="-hover-background-color-eb padding-x-20px">Save</text>
+                                            <text class="-hover-background-color-eb color-ff3b30 padding-x-20px" data-href="/dashboard/:get/build">Discard Changes</text>
+                                        </column>
+                                    </box>
+                                    <box class="margin-x-5px">
                                         <column class="align-items-center justify-content-center">
                                             <text class="font-weight-bolder" placeholder="Page Name"></text>
                                             <text class="color-0096c7" placeholder="/page-name"></text>
@@ -62,7 +74,7 @@
                                             </ico>
                                         </row>
                                     </box>
-                                    <box>
+                                    <box data-tap="controller.builder.trash(event.target)">
                                         <row>
                                             <ico>
                                                 <n class="gg-trash"></n>

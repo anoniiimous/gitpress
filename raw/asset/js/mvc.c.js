@@ -514,6 +514,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
     },
 
+    builder: {
+
+        trash: function(target) {
+            var iframe = byId('iframe-editor');
+            var doc = iframe.contentWindow.document;
+            var focused = doc.body.all('[focus="true"]');
+            var focus = focused[focused.length - 1];
+            console.log(focus);
+            focus.remove();
+        }
+
+    },
+
     catalog: {
 
         attribute: async(target)=>{
@@ -2485,6 +2498,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             nav.dataset["960pxTransform"] = "translateX(-100%)";
             blocks.dataset["960pxTransform"] = "0";
+
+            blocks.dataset["left"] = "0";
+            blocks.dataset["960pxLeft"] = "0";
 
         }
         ,
