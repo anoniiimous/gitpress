@@ -474,19 +474,19 @@
     }
 
     body[buildable="true"] > header:not([focus]):hover, body[buildable="true"] block:not([focus]):hover, body[buildable="true"] > footer:not([focus]):hover {
-        outline: 4px solid #ff3b30;
+        outline: 4px dashed #ff3b30;
         outline-offset: 0px;
         box-sizing: border-box;
     }
 
     body[buildable="true"] > header:not([focus]) card:hover, body[buildable="true"] block:not([focus]) card:hover, body[buildable="true"] > footer:not([focus]) card:hover {
-        outline: 4px solid #32cd32;
+        outline: 4px dashed #32cd32;
         outline-offset: 0px;
         /* box-sizing: border-box; */
     }
 
     body[buildable="true"] > footer card box > * > *:hover, body[buildable="true"] > header card box > * > *:hover, body[buildable="true"] card box > * > *:hover {
-        outline: 4px solid #52b9d6;
+        outline: 4px dashed #52b9d6;
         outline-offset: 0px;
         box-sizing: border-box;
     }

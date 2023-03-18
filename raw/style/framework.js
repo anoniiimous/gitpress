@@ -14,15 +14,37 @@ framework.on = function(event) {
                 $('[focus]').forEach(function(el) {
                     el === elem ? null : el.removeAttribute('focus');
                 });
+                $('box text[contenteditable]').forEach(function(el) {
+                    el === elem ? null : el.removeAttribute('contenteditable');
+                });
 
                 if (elem) {
 
                     var focused = elem.getAttribute('focus');
-                    console.log({
-                        elem,
-                        focused
-                    });
+                    var tagName = elem.tagName.toLowerCase();
+                    
                     $([dom.body, elem, elem.closest('block, footer, header')]).attr('focus', true);
+
+                    if(focused === "true") {
+                        if(tagName === "picture") {
+                            
+                        }                        
+                        if(tagName === "text") {
+                            //elem.contentEditable = "true";
+                        }
+                    } else {
+                        if(tagName === "picture") {
+                            
+                        }                        
+                        if(tagName === "text") {
+                            elem.contentEditable = "true";
+                        }
+                    }
+                    
+                    console.log({
+                        focused,
+                        tagName
+                    });
 
                     $('focus').remove();
                     var selection = window.parent.byId('focus-element').content.firstElementChild.cloneNode(true);
@@ -33,7 +55,7 @@ framework.on = function(event) {
                     selection.style.left = (rect.left + document.documentElement.scrollLeft) + "px";
                     selection.style.top = (rect.top + document.documentElement.scrollTop) + "px";
                     selection.style.zIndex = "1234568799";
-                    dom.body.insertAdjacentHTML('beforeend', selection.outerHTML);
+                    //dom.body.insertAdjacentHTML('beforeend', selection.outerHTML);
 
                 } else {
 
