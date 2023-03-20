@@ -333,15 +333,21 @@ window.$ = e=>{
     var obj = e;
     //console.log(334, obj, typeof obj);
     if (typeof obj === 'object') {
-        if (NodeList.prototype.isPrototypeOf(obj)) {
+        var s_repr = Object.prototype.toString.call(obj);
+        var NodeList = /^\[object NodeList\]$/.test(s_repr);
+        var HTMLCollection = /^\[object HTMLCollection\]$/.test(s_repr);
+        if (NodeList) {
             obj = Array.from(obj);
-        } else if (HTMLCollection.prototype.isPrototypeOf(obj)) {
+            console.log('Object NodeList');
+        } else if (HTMLCollection) {
             obj = Array.from(obj);
         } else {
             if (Element.prototype.isPrototypeOf(obj)) {
                 obj = [obj];
+                console.log('Object Element');
             } else {
                 obj = obj;
+                console.log('Object Other', obj, {nl: NodeList});
             }
         }
     } else if (typeof obj === 'string') {

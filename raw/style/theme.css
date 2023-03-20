@@ -2294,6 +2294,10 @@
 }
 
 @media screen {
+    [data-transform="scale(calc(1/3))"] {
+        transform: scale(calc(1/3));
+    }
+    
     [data-transform="scale(0.75)"] {
         transform: scale(0.75);
     }

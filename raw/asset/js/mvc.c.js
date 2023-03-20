@@ -518,26 +518,71 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         create: function(target) {
             var iframe = byId('iframe-editor');
-            var doc = iframe.contentWindow.document;
-            var focused = doc.body.all('[focus]');
-            var focus = focused[focused.length - 1];
-            console.log(focus);
-            focus.remove();
+            var win = iframe.contentWindow;
+            var doc = win.document;
+            var blocks = $(doc.body.all('blocks block'));
+            //blocks.attr('data-transform', 'scale(calc(1/3))');
+            var element = target.closest('[data-element]').dataset.element;
+            console.log({
+                blocks,
+                element,
+                target
+            });
+            if (element === 'main') {
+                if (target.closest('[data-tap]').tagName.toLowerCase() === 'text') {
+                    var el = document.createElement('block');
+                    el.innerHTML = '<flex></flex>';
+
+                    var page = doc.body.find('[data-active="true"][data-page]');
+                    page.find('blocks').insertAdjacentHTML('beforeend', el.outerHTML);
+
+                    var block = page.find('blocks').lastElementChild;
+                    $(doc.body.all('[focus]')).removeAttr('focus');
+                    block.setAttribute('focus', 'block');
+                    doc.body.setAttribute('focus', 'block');
+
+                    var rect = block.getBoundingClientRect();
+                    console.log(doc, doc.body.all('[focus]'), block, block.scrollTop, win.scrollTop, rect);
+                    win.scrollTo({
+                        behavior: 'smooth',
+                        left: 0,
+                        top: rect.top + doc.documentElement.scrollTop
+                    });
+
+                    modal.exit(target);
+                }
+            }
         },
 
-        delete: function(target) {
+        delete: async function(target) {
             var iframe = byId('iframe-editor');
             var doc = iframe.contentWindow.document;
-            var focused = doc.body.all('[focus]');
-            var focus = focused[focused.length - 1];
-            var tagName = doc.body.getAttribute('focus');
-            var parent = null;
-            if (tagName === "card") {
-                parent = focus.closest("block");
+            var type = doc.body.getAttribute('focus');
+            var confirm = await modal.confirm({
+                body: "Are you sure you want to remove this " + type + "?",
+                title: "Remove " + type
+            }, ["Cancel", "Remove"]);
+            console.log(536, {
+                confirm
+            });
+            if (confirm) {
+                var iframe = byId('iframe-editor');
+                var doc = iframe.contentWindow.document;
+                var focused = doc.body.all('[focus]');
+                var focus = focused[focused.length - 1];
+                var tagName = doc.body.getAttribute('focus');
+                var parent = null;
+                if (tagName === "card") {
+                    parent = focus.closest("block");
+                }
+                console.log({
+                    focus,
+                    parent,
+                    tagName
+                }, doc.body.dataset);
+                focus.remove();
+                parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
             }
-            console.log({focus, parent, tagName}, doc.body.dataset);
-            focus.remove();
-            parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
         }
 
     },
