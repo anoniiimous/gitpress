@@ -23,7 +23,10 @@ is.iframe ? null : window.onpopstate = (event)=>{
 }
 
 async function init() {
-    console.log("Initializing...", {iframe: is.iframe, head: window.document.head.outerHTML});
+    console.log("Initializing...", {
+        iframe: is.iframe,
+        head: window.document.head.outerHTML
+    });
     //eruda.init();
 
     window.loaded = is.iframe;
@@ -32,7 +35,11 @@ async function init() {
     var html = ``;
     if (window.self === window.top) {
         html = await ajax('/raw/style/template.html');
-        console.log(35, {html, location});
+        console.log(35, {
+            html,
+            location
+        });
+        html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
     } else {
         const user = await github.user.get();
         const owner = user.login;
@@ -41,8 +48,58 @@ async function init() {
         const path = '/raw/style/template.html';
         const resource = '/' + owner + '/' + repo + '/' + branch + path;
         try {
-            console.log(44, {owner, path, repo});
+            console.log(44, {
+                owner,
+                path,
+                repo
+            }, resource);
             html = await github.raw.git(resource);
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+
+            var header = doc.body.find('body > header');
+            if (header) {
+                dom.body.find('body > header').replaceWith(header);
+            }
+
+            try {
+                var pages = await github.raw.git('/' + owner + '/' + repo + '/' + branch + "/raw/pages/pages.json");
+                console.log(66, {
+                    pages
+                });
+                if (pages && pages.length > 0) {
+                    var main = dom.body.find('main');
+                    var p = 0;
+                    do {
+                        var row = pages[p];
+                        var tagName = 'page' + (row.pages ? 's' : '');
+                        var sel = tagName + '[data-page="' + row.page + '"]';
+                        el = doc.createElement(tagName);
+                        el.dataset.fetch = "raw/pages" + row.slug + row.page;
+                        el.dataset.page = row.slug;
+                        if (row.main) {
+                            main.find('template').insertAdjacentHTML('beforebegin', el.outerHTML);
+                        } else {
+                            main.insertAdjacentHTML('beforebegin', el.outerHTML);                            
+                        }
+                        p++;
+                    } while (p < pages.length);
+                }
+            } catch (e) {
+                console.log(72, e);
+            }
+
+            var footer = doc.body.find('body > footer');
+            if (footer) {
+                dom.body.find('body > footer').replaceWith(footer);
+            }
+
+            console.log(48, {
+                doc,
+                html
+            }, {
+                header,
+                footer
+            });
         } catch (e) {
             if (e.code === 404) {
                 modal.alert(e.code + ": " + e.message);
@@ -56,7 +113,6 @@ async function init() {
             repo
         });
     }
-    html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
     const fetching = dom.body.all(':not(page):not(pages)[data-fetch]');
     if (fetching.length > 0) {
         var f = 0;
@@ -195,5 +251,5 @@ async function init() {
     var go = false;
     window.boot.router().then(go = true);
 
-    console.log("...Initialized");
+    console.log("...Initialized", {boot});
 }

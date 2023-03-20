@@ -14,7 +14,7 @@
         <meta content="pk_test_51MhgsvAaZPhy2mUxENR4iqlEWO4RztjDLovcKPKZZxpDeNiw4FgsPX7reUUKJBrzif5NSfTVgjzlF3lH14glPecI00IvwnCWqR" name="stripe_publishable_key">
         <meta name="stripe_user_id" content="acct_1MhgsvAaZPhy2mUx">
         <base>
-        <script>            
+        <script>
             const base = document.head.querySelector("base");
             if (window.self === window.top) {
                 base.href = "/";
@@ -26,8 +26,6 @@
                 dir.splice(0, 4);
                 window.boot = window.parent.rout.ed.url(dir);
             }
-
-            base.href = protocol + "//" + host;
         </script>
         <script async="" src="raw/asset/js/github.js"></script>
         <script async="" src="raw/asset/js/mvc.js"></script>
@@ -44,5 +42,29 @@
     </head>
     <body>
         <boot id="boot"></boot>
+        <header></header>
+        <empty class="align-items-center display-flex flex-direction-column gap-5px justify-content-center position-absolute text-align-center top-0 width-100pct z-index-5">
+            <column class="gap-5px padding-30px">
+                <text class="display-block font-weight-bolder">Add Site Header</text>
+                <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px">Add Block</text>
+            </column>
+        </empty>
+        <main>
+            <template>
+                <empty class="align-items-center background-color-f5 display-flex flex-direction-column gap-5px justify-content-center min-height-586px padding-30px text-align-center">
+                    <column class="gap-5px padding-30px">
+                        <text class="display-block font-weight-bolder">Add Page Content</text>
+                        <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px" data-tap="framework.builder.blocks(event.target)">Add Block</text>
+                    </column>
+                </empty>
+            </template>
+        </main>
+        <footer></footer>
+        <empty class="align-items-center display-flex flex-direction-column gap-5px justify-content-center padding-30px text-align-center">
+            <column class="gap-5px padding-30px">
+                <text class="display-block font-weight-bolder">Add Site Footer</text>
+                <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px">Add Block</text>
+            </column>
+        </empty>
     </body>
 </html>

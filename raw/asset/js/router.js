@@ -25,7 +25,7 @@ String.prototype.router = async function(params) {
             var pg = await ajax(path);
         }
         if (page.innerHTML === "") {
-            page.innerHTML = pg
+            page.innerHTML = pg.replace(/>\s+</g,'><');
             //await ajax(page.dataset.fetch);
         }
     }

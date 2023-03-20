@@ -59,29 +59,21 @@
                                         </row>
                                     </box>
                                 </row>
-                                <row data-page="/dashboard/*/build/er">
+                                <tool class="display-flex flex-direction-row" data-page="/dashboard/*/build/er">
                                     <box>
                                         <row>
-                                            <ico>
+                                            <ico class="display-none">
                                                 <n class="gg-pen"></n>
                                             </ico>
-                                        </row>
-                                    </box>
-                                    <box>
-                                        <row>
-                                            <ico>
+                                            <ico data-tap="controller.builder.create(event.target)">
                                                 <n class="gg-add-r"></n>
                                             </ico>
-                                        </row>
-                                    </box>
-                                    <box data-tap="controller.builder.trash(event.target)">
-                                        <row>
-                                            <ico>
+                                            <ico class="display-none" data-tap="controller.builder.delete(event.target)">
                                                 <n class="gg-trash"></n>
                                             </ico>
                                         </row>
                                     </box>
-                                </row>
+                                </tool>
                             </card>
                         </header>
                         <pages class="flex-1 position-relative" data-page="/dashboard/*/build/er">

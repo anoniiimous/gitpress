@@ -516,13 +516,28 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     builder: {
 
-        trash: function(target) {
+        create: function(target) {
             var iframe = byId('iframe-editor');
             var doc = iframe.contentWindow.document;
-            var focused = doc.body.all('[focus="true"]');
+            var focused = doc.body.all('[focus]');
             var focus = focused[focused.length - 1];
             console.log(focus);
             focus.remove();
+        },
+
+        delete: function(target) {
+            var iframe = byId('iframe-editor');
+            var doc = iframe.contentWindow.document;
+            var focused = doc.body.all('[focus]');
+            var focus = focused[focused.length - 1];
+            var tagName = doc.body.getAttribute('focus');
+            var parent = null;
+            if (tagName === "card") {
+                parent = focus.closest("block");
+            }
+            console.log({focus, parent, tagName}, doc.body.dataset);
+            focus.remove();
+            parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
         }
 
     },
@@ -2670,6 +2685,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             data.noindex = noindex;
             data.page = page;
             data.pages = pages;
+            data.popup = popup;
             Object.keys(seo).length > 0 ? data.seo = seo : null;
             data.slug = slug;
             data.title = title;
