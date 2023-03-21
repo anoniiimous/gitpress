@@ -124,70 +124,81 @@ framework.on = function(event) {
     var touch = event.touch;
     if (touch === "tap") {
         if (is.iframe) {
+            var target = event.target;
             var buildable = dom.body.getAttribute('buildable') === "true";
             var insertable = dom.body.getAttribute('insertable') === "true";
+            var elem = target.closest('box, card, block, body > header, body > footer');
+            var element = dom.body.getAttribute('focus');
+            var sel = element ? ':not(body)[focus="' + element + '"] ' + element + '' : null;
+            var focusing = sel && event.target.closest(sel) ? event.target.closest(sel).getAttribute('focus') : null;
+            console.log({
+                sel,
+                focusing
+            });
             if (buildable && !insertable) {
-                var target = event.target;
-                var elem = target.closest('box > * > *, card, block, body > header, body > footer');
                 var focus = target.closest('focus');
+                if (elem !== event.target.closest(':not(block):not(body > header):not(body > footer)[focus]')) {
 
-                $('[focus]').forEach(function(el) {
-                    el === elem ? null : el.removeAttribute('focus');
-                });
-                $('box text[contenteditable]').forEach(function(el) {
-                    el === elem ? null : el.removeAttribute('contenteditable');
-                });
-
-                console.log(89, {
-                    elem
-                });
-
-                if (elem) {
-
-                    var tool = window.top.dom.body.find('tool');
-
-                    var focused = elem.getAttribute('focus');
-                    var tagName = elem.tagName.toLowerCase();
-                    var el = ["block", "card", "footer", "header"].includes(tagName) ? tagName : 'box';
-
-                    $([dom.body]).attr('focus', el);
-                    $([elem, elem.closest('block, footer, header')]).attr('focus', el);
-
-                    if (focused === "true") {
-                        if (tagName === "picture") {}
-                        if (tagName === "text") {//elem.contentEditable = "true";
-                        }
-                    } else {
-                        if (tagName === "picture") {}
-                        if (tagName === "text") {
-                            elem.contentEditable = "true";
-                        }
-                    }
-
-                    console.log({
-                        focused,
-                        tagName,
-                        tool,
-                        icons: $(tool.all('ico')),
-                        array: Array.prototype
+                    console.log(89, {
+                        elem,
+                        target: event.target.closest('[focus]'),
+                        focus,
+                        focused: $('[focus]')
                     });
 
-                    $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
+                    if ((elem && $('[focus]').length === 0) || (elem && ((!sel) || (sel && !focusing && element === elem.tagName.toLowerCase())))) {
 
-                    $('focus').remove();
-                    var selection = window.parent.byId('focus-element').content.firstElementChild.cloneNode(true);
-                    var rect = elem.getBoundingClientRect();
-                    selection.style.height = elem.clientHeight + "px";
-                    selection.style.width = elem.clientWidth + "px";
-                    //selection.style.backgroundColor = "rgba(0,0,0,0.5)";
-                    selection.style.left = (rect.left + document.documentElement.scrollLeft) + "px";
-                    selection.style.top = (rect.top + document.documentElement.scrollTop) + "px";
-                    selection.style.zIndex = "1234568799";
-                    //dom.body.insertAdjacentHTML('beforeend', selection.outerHTML);
+                        $('[focus]').forEach(function(el) {
+                            el === elem ? null : el.removeAttribute('focus');
+                        });
+                        $('box text[contenteditable]').forEach(function(el) {
+                            el === elem ? null : el.removeAttribute('contenteditable');
+                        });
 
-                } else {
+                        var tool = window.top.dom.body.find('tool');
 
-                    $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add-r') ? null : o.classList.add('display-none'));
+                        var focused = elem.getAttribute('focus');
+                        var tagName = elem.tagName.toLowerCase();
+                        var el = ["block", "card", "footer", "header"].includes(tagName) ? tagName : 'box';
+
+                        $([dom.body]).attr('focus', el);
+                        $([elem, elem.closest('block, footer, header')]).attr('focus', el);
+
+                        if (focused === "true") {
+                            if (tagName === "picture") {}
+                            if (tagName === "text") {//elem.contentEditable = "true";
+                            }
+                        } else {
+                            if (tagName === "picture") {}
+                            if (tagName === "text") {
+                                elem.contentEditable = "true";
+                            }
+                        }
+
+                        console.log({
+                            focused,
+                            tagName,
+                            tool,
+                            icons: $(tool.all('ico')),
+                            array: Array.prototype
+                        });
+
+                        $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
+
+                    } else {
+
+                        console.log($('[focus]'));
+
+                        $('[focus]').forEach(function(el) {
+                            el.removeAttribute('focus');
+                        });
+                        $('box text[contenteditable]').forEach(function(el) {
+                            el.removeAttribute('contenteditable');
+                        });
+
+                        $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
+
+                    }
 
                 }
             }

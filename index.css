@@ -473,7 +473,7 @@
         user-select: none;
     }
 
-    body[buildable="true"]:not([insertable]) > header:not([focus]):hover, body[buildable="true"]:not([insertable]) block:not([focus="blocks"]):hover, body[buildable="true"]:not([insertable]) > footer:not([focus]):hover {
+    body[buildable="true"]:not([insertable]) > header:not([focus]):hover, body[buildable="true"]:not([insertable]) block:not([focus]):hover, body[buildable="true"]:not([insertable]) > footer:not([focus]):hover {
         outline: 4px dashed #ff3b30;
         outline-offset: 0px;
         box-sizing: border-box;
@@ -484,7 +484,7 @@
         box-sizing: border-box;
     }
 
-    body[buildable="true"]:not([insertable]) > header card:hover, body[buildable="true"]:not([insertable]) block:not([focus="boxes"]) card:hover, body[buildable="true"]:not([insertable]):not([focus="box"]) > footer card:hover {
+    body[buildable="true"]:not([insertable]) > header card:hover, body[buildable="true"]:not([insertable]) block:not([focus="box"]) card:hover, body[buildable="true"]:not([insertable]):not([focus="box"]) > footer card:hover {
         outline: 4px dashed #32cd32;
         outline-offset: 0px;
         /* box-sizing: border-box; */
@@ -495,12 +495,12 @@
         /* box-sizing: border-box; */
     }
 
-    body[buildable="true"]:not([insertable]) > footer card box > * > *:hover, body[buildable="true"]:not([insertable]) > header card box > * > *:hover, body[buildable="true"]:not([insertable]) card box > * > *:hover {
+    body[buildable="true"]:not([insertable]) > footer card box:hover, body[buildable="true"]:not([insertable]) > header card box:hover, body[buildable="true"]:not([insertable]) card box:hover {
         outline: 4px dashed #52b9d6;
         outline-offset: 0px;
         box-sizing: border-box;
     }
-    body[buildable="true"]:not([insertable])[focus] > footer card box [focus="box"], body[buildable="true"]:not([insertable])[focus] > header card box [focus="box"], body[buildable="true"]:not([insertable])[focus] card box [focus="box"] {
+    body[buildable="true"]:not([insertable])[focus] > footer card box[focus="box"], body[buildable="true"]:not([insertable])[focus] > header card box[focus="box"], body[buildable="true"]:not([insertable])[focus] card box[focus="box"] {
         outline: 4px solid #52b9d6;
         outline-offset: 0px;
         box-sizing: border-box;
