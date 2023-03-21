@@ -191,6 +191,7 @@
         /* min-height: 100%; */
         /* background: #bbb; */
         /* overflow-x: hidden; */
+        z-index: 1;
     }
 
     nav {
@@ -401,6 +402,7 @@
 @media screen {
     body > footer, body > header, body > nav {
         position: relative;
+        z-index: 123456789;
     }
 
     body block, body card, body card box {
@@ -521,9 +523,9 @@
         transform: scale(calc(75%));
     }
     body[insertable="true"] insertable {
-        height: 4px;
         z-index: 123456789;
         position: relative;
-        margin: 17px 0;
+        /* transform: scale(.75); */
+        /* box-shadow: 0 1px 6px rgb(32 33 36 / 28%); */
     }
 }

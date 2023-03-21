@@ -79,7 +79,7 @@ async function init() {
                         if (row.main) {
                             main.find('template').insertAdjacentHTML('beforebegin', el.outerHTML);
                         } else {
-                            main.insertAdjacentHTML('beforebegin', el.outerHTML);                            
+                            main.insertAdjacentHTML('beforebegin', el.outerHTML);
                         }
                         p++;
                     } while (p < pages.length);
@@ -249,7 +249,16 @@ async function init() {
 
     //ROUTE
     var go = false;
-    window.boot.router().then(go = true);
+    window.boot.router().then(function() {
+        go = true;
+        if (window.self !== window.top) {
+            var vp = dom.body.find('[data-fetch][data-page="' + route.page + '"]');
+            var empty = dom.body.find('main').lastElementChild.content.firstElementChild.cloneNode(true);
+            vp.find('blocks').insertAdjacentHTML('afterend', empty.outerHTML);
+        }
+    });
 
-    console.log("...Initialized", {boot});
+    console.log("...Initialized", {
+        boot
+    });
 }

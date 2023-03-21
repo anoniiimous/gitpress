@@ -554,6 +554,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         },
 
+        read: async function(target) {},
+
+        update: async function(target) {},
+
         delete: async function(target) {
             var iframe = byId('iframe-editor');
             var doc = iframe.contentWindow.document;
@@ -580,6 +584,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     parent,
                     tagName
                 }, doc.body.dataset);
+                if (["footer", "header"].includes(tagName)) {
+                    var replace = doc.createElement(tagName);
+                    focus.insertAdjacentHTML('beforebegin', replace.outerHTML);
+                }
                 focus.remove();
                 parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
             }
