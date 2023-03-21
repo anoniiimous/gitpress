@@ -152,7 +152,7 @@ framework.on = function(event) {
                         focused
                     });
 
-                    if ((elem && $('[focus]').length === 0) || (elem && ((focused && focused[focused.length - 1].contains(elem)) || (sel && !focusing && element === elem.tagName.toLowerCase())))) {
+                    if ((elem && $('[focus]').length === 0) || (elem && ((focused && focused[focused.length - 1].contains(elem)) || (sel && focused && focused[focused.length - 1].parentNode.contains(elem) && !focusing && element === elem.tagName.toLowerCase())))) {
 
                         $('[focus]').forEach(function(el) {
                             el === elem ? null : el.removeAttribute('focus');
