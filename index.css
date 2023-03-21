@@ -478,7 +478,7 @@
         outline-offset: 0px;
         box-sizing: border-box;
     }
-    body[buildable="true"]:not([insertable])[focus] > header[focus], body[buildable="true"]:not([insertable])[focus] block[focus="block"], body[buildable="true"]:not([insertable])[focus] > footer[focus] {
+    body[buildable="true"]:not([insertable])[focus] > header[focus="header"], body[buildable="true"]:not([insertable])[focus] block[focus="block"], body[buildable="true"]:not([insertable])[focus] > footer[focus="footer"] {
         outline: 4px solid #ff3b30;
         outline-offset: 0px;
         box-sizing: border-box;
