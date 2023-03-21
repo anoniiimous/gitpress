@@ -130,23 +130,29 @@ framework.on = function(event) {
             var elem = target.closest('box, card, block, body > header, body > footer');
             var element = dom.body.getAttribute('focus');
             var sel = element ? ':not(body)[focus="' + element + '"] ' + element + '' : null;
+            var selected = sel ? event.target.closest(sel) : null;
             var focusing = sel && event.target.closest(sel) ? event.target.closest(sel).getAttribute('focus') : null;
             console.log({
                 sel,
+                selected,
                 focusing
             });
             if (buildable && !insertable) {
                 var focus = target.closest('focus');
                 if (elem !== event.target.closest(':not(block):not(body > header):not(body > footer)[focus]')) {
 
+                    var focused = $('[focus]');
+
                     console.log(89, {
                         elem,
                         target: event.target.closest('[focus]'),
+                        focuser: focused.length > 0 ? focused[focused.length - 1] : null,
+                        contains: focused.length > 0 ? focused[focused.length - 1].contains(elem) : null,
                         focus,
-                        focused: $('[focus]')
+                        focused
                     });
 
-                    if ((elem && $('[focus]').length === 0) || (elem && ((!sel) || (sel && !focusing && element === elem.tagName.toLowerCase())))) {
+                    if ((elem && $('[focus]').length === 0) || (elem && ((focused && focused[focused.length - 1].contains(elem)) || (sel && !focusing && element === elem.tagName.toLowerCase())))) {
 
                         $('[focus]').forEach(function(el) {
                             el === elem ? null : el.removeAttribute('focus');
