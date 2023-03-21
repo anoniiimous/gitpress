@@ -517,41 +517,41 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     builder: {
 
         create: function(target) {
+
             var iframe = byId('iframe-editor');
             var win = iframe.contentWindow;
             var doc = win.document;
-            var blocks = $(doc.body.all('blocks block'));
-            //blocks.attr('data-transform', 'scale(calc(1/3))');
-            var element = target.closest('[data-element]').dataset.element;
-            console.log({
-                blocks,
-                element,
-                target
-            });
-            if (element === 'main') {
-                if (target.closest('[data-tap]').tagName.toLowerCase() === 'text') {
-                    var el = document.createElement('block');
-                    el.innerHTML = '<flex></flex>';
 
-                    var page = doc.body.find('[data-active="true"][data-page]');
-                    page.find('blocks').insertAdjacentHTML('beforeend', el.outerHTML);
+            $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
 
-                    var block = page.find('blocks').lastElementChild;
-                    $(doc.body.all('[focus]')).removeAttr('focus');
-                    block.setAttribute('focus', 'block');
-                    doc.body.setAttribute('focus', 'block');
+            if (target.closest('ico').dataset.transform === "rotate(45deg)") {
 
-                    var rect = block.getBoundingClientRect();
-                    console.log(doc, doc.body.all('[focus]'), block, block.scrollTop, win.scrollTop, rect);
-                    win.scrollTo({
-                        behavior: 'smooth',
-                        left: 0,
-                        top: rect.top + doc.documentElement.scrollTop
-                    });
+                doc.body.removeAttribute('insertable');
 
-                    modal.exit(target);
-                }
+                $(doc.body.all('insertable')).remove();
+                target.closest('ico').removeAttribute("data-transform");
+
+            } else {
+
+                doc.body.setAttribute('insertable', true);
+
+                $(doc.documentElement.all('[focus]')).forEach(function(el) {
+                    el.removeAttribute('focus');
+                });
+                $(doc.documentElement.all('box text[contenteditable]')).forEach(function(el) {
+                    el.removeAttribute('contenteditable');
+                });
+
+                $(doc.body.all('blocks block')).forEach(function(block) {
+                    var add = byId('framework-builder-insert').content.firstElementChild.cloneNode(true);
+                    block.insertAdjacentHTML('beforebegin', add.outerHTML);
+                    block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
+                });
+
+                target.closest('ico').dataset.transform = "rotate(45deg)";
+
             }
+
         },
 
         delete: async function(target) {

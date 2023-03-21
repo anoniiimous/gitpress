@@ -24,10 +24,13 @@ framework.builder.block = async function(target) {
 }
 framework.builder.blocks = async function(target) {
     if (target) {
-        var tagName = typeof target === "string" ? target : (target.closest('empty').closest('block, main') || target.closest('empty').previousElementSibling).tagName.toLowerCase();
+        var tagName = typeof target === "string" ? target : (target.closest('block, main') || target.closest('empty').previousElementSibling).tagName.toLowerCase();
         var html = await ajax('raw/asset/html/template/template.blocks.' + tagName + '.html')
         var ppp = await window.parent.modal.popup(html);
-        console.log(27, {tagName, target}, typeof target);
+        console.log(27, {
+            tagName,
+            target
+        }, typeof target);
         ppp.find('card').lastElementChild.onclick = async(event)=>{
             //framework.builder.block(event.target);
             var box = event.target.closest('box');
@@ -78,6 +81,43 @@ framework.builder.select = ()=>{
     selection.style.zIndex = "1234568799";
     doc.body.insertAdjacentHTML('beforeend', selection.outerHTML);
 }
+framework.builder.insert = function(target) {
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    var blocks = $(doc.body.all('blocks block'));
+    //blocks.attr('data-transform', 'scale(calc(1/3))');
+    var element = target.closest('[data-element]').dataset.element;
+    console.log({
+        blocks,
+        element,
+        target
+    });
+    if (element === 'main') {
+        if (target.closest('[data-tap]').tagName.toLowerCase() === 'text') {
+            var el = document.createElement('block');
+            el.innerHTML = '<flex></flex>';
+
+            var page = doc.body.find('[data-active="true"][data-page]');
+            page.find('blocks').insertAdjacentHTML('beforeend', el.outerHTML);
+
+            var block = page.find('blocks').lastElementChild;
+            $(doc.body.all('[focus]')).removeAttr('focus');
+            block.setAttribute('focus', 'block');
+            doc.body.setAttribute('focus', 'block');
+
+            var rect = block.getBoundingClientRect();
+            console.log(doc, doc.body.all('[focus]'), block, block.scrollTop, win.scrollTop, rect);
+            win.scrollTo({
+                behavior: 'smooth',
+                left: 0,
+                top: rect.top + doc.documentElement.scrollTop
+            });
+
+            modal.exit(target);
+        }
+    }
+}
 
 framework.on = function(event) {
     //console.log(is.iframe, event);
@@ -85,7 +125,8 @@ framework.on = function(event) {
     if (touch === "tap") {
         if (is.iframe) {
             var buildable = dom.body.getAttribute('buildable') === "true";
-            if (buildable) {
+            var insertable = dom.body.getAttribute('insertable') === "true";
+            if (buildable && !insertable) {
                 var target = event.target;
                 var elem = target.closest('box > * > *, card, block, body > header, body > footer');
                 var focus = target.closest('focus');

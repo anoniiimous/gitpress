@@ -198,6 +198,8 @@ window.rout.ed.bang = async(route)=>{
             var check = rs[i].closest('[data-fetch]') && rs[i].closest('[data-fetch]') === rs[i];
             if (route.page && route.page.includes(rs[i].dataset.page)) {
                 rs[i].dataset.active = true;
+                
+                //rs[i].dataset.fetch ? rs[i].innerHTML = await ajax(rs[i].dataset.fetch) : null;
 
                 var roots = rs[i].all('[data-page]');
                 if (rout.ed.dir(rs[i].dataset.page).length === rout.ed.dir(route.page).length && roots.length > 0) {

@@ -65,18 +65,9 @@
                                             <ico class="display-none">
                                                 <n class="gg-pen"></n>
                                             </ico>
-                                            <box class="position-relative" data-page="/dashboard/*/build/er">
-                                                <row class="align-items-center justify-content-center" data-dropdown data-ignore>
-                                                    <ico>
-                                                        <n class="gg-add-r"></n>
-                                                    </ico>
-                                                </row>
-                                                <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
-                                                    <text class="-hover-background-color-eb padding-x-20px" data-tap="framework.builder.blocks('header')">Header</text>
-                                                    <text class="-hover-background-color-eb padding-x-20px" data-tap="framework.builder.blocks('main')">Block</text>
-                                                    <text class="-hover-background-color-eb padding-x-20px" data-tap="framework.builder.blocks('footer')">Footer</text>
-                                                </column>
-                                            </box>
+                                            <ico data-tap="controller.builder.create(event.target)" data-transition="0.3s">
+                                                <n class="gg-add"></n>
+                                            </ico>
                                             <ico class="display-none" data-tap="controller.builder.delete(event.target)">
                                                 <n class="gg-trash"></n>
                                             </ico>
@@ -98,6 +89,13 @@
                                     <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-left="-8px" data-margin="auto" data-right="-8px" data-width="5px"></cell>
                                     <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-right="-8px" data-width="5px"></cell>
                                 </focus>
+                            </template>
+                            <template id="framework-builder-insert">
+                                <insertable class="align-items-center background-color-333 color-fff display-flex flex-direction-row height-3px justify-content-center">
+                                    <text class="align-items-center background-color-333 border-radius-50px color-fff display-flex font-size-13px height-36px line-height-36px justify-content-center padding-x-20px" data-tap="framework.builder.blocks(event.target)">
+                                        <span>Add Block</span>
+                                    </text>
+                                </insertable>
                             </template>
                         </pages>
                     </pages>

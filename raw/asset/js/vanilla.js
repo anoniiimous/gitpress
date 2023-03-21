@@ -338,16 +338,16 @@ window.$ = e=>{
         var HTMLCollection = /^\[object HTMLCollection\]$/.test(s_repr);
         if (NodeList) {
             obj = Array.from(obj);
-            console.log('Object NodeList');
+            //console.log('Object NodeList');
         } else if (HTMLCollection) {
             obj = Array.from(obj);
         } else {
             if (Element.prototype.isPrototypeOf(obj)) {
                 obj = [obj];
-                console.log('Object Element');
+                //console.log('Object Element');
             } else {
                 obj = obj;
-                console.log('Object Other', obj, {nl: NodeList});
+                //console.log('Object Other', obj, {nl: NodeList});
             }
         }
     } else if (typeof obj === 'string') {
