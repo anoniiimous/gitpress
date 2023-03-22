@@ -542,6 +542,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     el.removeAttribute('contenteditable');
                 });
 
+                var main = doc.body.find('main');
+                var section = main.previousElementSibling.content.firstElementChild.cloneNode(true);
+                var sections = $(doc.body.all('body > section'));
+                if (sections.length > 0) {
+                    sections.forEach(function(block) {
+                        console.log(546, {
+                            block
+                        });
+                        //block.insertAdjacentHTML('beforebegin', add.outerHTML);
+                        //block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
+                    });
+                } else {
+                    main.insertAdjacentHTML('beforebegin', section.outerHTML);
+                    main.insertAdjacentHTML('afterend', section.outerHTML);
+                }
+
                 $(doc.body.all('blocks block')).forEach(function(block) {
                     var add = byId('framework-builder-insert').content.firstElementChild.cloneNode(true);
                     block.insertAdjacentHTML('beforebegin', add.outerHTML);
@@ -556,7 +572,21 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         read: async function(target) {},
 
-        update: async function(target) {},
+        update: async function(target) {
+            var iframe = byId('iframe-editor');
+            var doc = iframe.contentWindow.document;
+            var element = doc.body.getAttribute('focus');
+
+            var html = await ajax('raw/asset/html/template/template.toolbox.update.html');
+            var ppp = await modal.popup(html);
+
+            var focused = $(doc.body.all('[focus]'));
+            ppp.focus = focused[focused.length - 1];
+
+            var tab = ppp.find('text[data-before="' + element + '"]').closest('box');
+            tab.classList.remove('border-bottom-1px-solid');
+            //console.log({ppp, focus: ppp.focus})
+        },
 
         delete: async function(target) {
             var iframe = byId('iframe-editor');

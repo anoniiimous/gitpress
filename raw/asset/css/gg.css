@@ -100,6 +100,20 @@
 }
 
 @media {
+    .gg-block {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        height: 14px;
+        width: 14px;
+        border: 2px solid transparent;
+        border-radius: 0;
+        box-shadow: 0 0 0 2px
+    }
+}
+
+@media {
     .gg-bookmark, .gg-bookmark::after {
         display: block;
         box-sizing: border-box;
@@ -195,6 +209,31 @@
         width: 10px;
         top: -4px;
         box-shadow: 0 6px 0 0
+    }
+}
+
+@media {
+    .gg-card {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        height: 14px;
+        width: 14px;
+        border-radius: 3px;
+        outline: 2px solid black;
+    }
+
+    .gg-card::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        height: 0;
+        border: 1px solid;
+        top: 4px;
+        left: 0
     }
 }
 
@@ -1123,6 +1162,36 @@
         border-bottom: 2px solid;
         top: -11px;
         left: -5px
+    }
+}
+
+@media {
+    .gg-display-grid {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        height: 14px;
+        width: 14px;
+        border: 2px solid transparent;
+        box-shadow: 0 0 0 2px
+    }
+
+    .gg-display-grid::after, .gg-display-grid::before {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 10px;
+        height: 4px;
+        border-right: 4px solid;
+        border-left: 4px solid;
+        top: 0;
+        left: 0
+    }
+
+    .gg-display-grid::before {
+        top: 6px
     }
 }
 

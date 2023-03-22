@@ -40,7 +40,7 @@
         <link href="raw/style/theme.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/css.gg/icons/all.css" rel="stylesheet">
     </head>
-    <body oncontextmenu="return false;">
+    <body oncontextmenu="return true;">
         <boot id="boot"></boot>
         <header></header>
         <empty class="align-items-center display-flex flex-direction-column gap-5px justify-content-center text-align-center top-0 width-100pct z-index-5">
@@ -49,6 +49,14 @@
                 <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px">Add Block</text>
             </column>
         </empty>
+        <template>
+            <insertable class="align-items-center display-flex flex-direction-column gap-5px justify-content-center text-align-center top-0 width-100pct z-index-5">
+                <column class="gap-5px padding-30px">
+                    <text class="display-block font-weight-bolder">Add New Section</text>
+                    <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px">Add Block</text>
+                </column>
+            </insertable>
+        </template>
         <main>
             <template>
                 <empty class="align-items-center background-color-f5 display-flex flex-direction-column gap-5px justify-content-center min-height-586px padding-30px text-align-center">

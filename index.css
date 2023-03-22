@@ -476,7 +476,7 @@
     }
 
     body[buildable="true"]:not([insertable]) > header:not([focus]):hover, body[buildable="true"]:not([insertable]) block:not([focus]):hover, body[buildable="true"]:not([insertable]) > footer:not([focus]):hover {
-        outline: 4px dashed #ff3b30;
+        outline: 4px dashed #ff3b3080;
         outline-offset: 0px;
         box-sizing: border-box;
     }
@@ -487,7 +487,7 @@
     }
 
     body[buildable="true"]:not([insertable]) > header card:hover, body[buildable="true"]:not([insertable]) block:not([focus="box"]) card:hover, body[buildable="true"]:not([insertable]):not([focus="box"]) > footer card:hover {
-        outline: 4px dashed #32cd32;
+        outline: 4px dashed #32cd3280;
         outline-offset: 0px;
         /* box-sizing: border-box; */
     }
@@ -498,7 +498,7 @@
     }
 
     body[buildable="true"]:not([insertable]) > footer card box:hover, body[buildable="true"]:not([insertable]) > header card box:hover, body[buildable="true"]:not([insertable]) card box:hover {
-        outline: 4px dashed #52b9d6;
+        outline: 4px dashed #52b9d680;
         outline-offset: 0px;
         box-sizing: border-box;
     }
@@ -516,7 +516,9 @@
     body[buildable] block, body[buildable] > header, body[buildable] > footer {
         transition: 0.3s transform;
     }
-    
+    body:not([insertable]) insertable {
+        display: none;
+    }
     body[insertable="true"] block, body[insertable="true"] > header, body[insertable="true"] > footer {
         box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
         position: relative;
