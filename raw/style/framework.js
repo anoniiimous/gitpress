@@ -119,6 +119,49 @@ framework.builder.insert = function(target) {
     }
 }
 
+framework.tool = {};
+framework.tool.box = function(target) {
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    
+    var ppp = target.closest('aside');
+
+    var header = target.closest('header');
+    $(header.children).addClass('border-bottom-1px-solid');
+
+    var box = target.closest('box');
+    box.classList.remove('border-bottom-1px-solid');
+
+    var tabs = header.parentNode.all('column');
+    var tab = $(tabs)[box.index()];
+
+    $(tabs).attr('data-display', 'none')
+    tab.removeAttribute('data-display');
+
+    var element = box.find('text').dataset.before;
+    var parent = ppp.focus.closest(element);
+    var elem = ppp.focus.closest('box, card, block, body > header, body > footer');
+
+    $(doc.body.all('[focus]')).forEach(function(el) {
+        el.removeAttribute('focus');
+    });
+    $(doc.body.all('box text[contenteditable]')).forEach(function(el) {
+        el.removeAttribute('contenteditable');
+    });
+    $([doc.body]).attr('focus', element);
+    $([parent, elem.closest('block, footer, header')]).attr('focus', element);
+
+    console.log(dom.body, $('[focus]'), $(dom.body.all('[focus]')), {
+        tabs,
+        tab
+    }, {
+        elem,
+        focus: ppp.focus,
+        parent
+    });
+}
+
 framework.on = function(event) {
     //console.log(is.iframe, event);
     var touch = event.touch;

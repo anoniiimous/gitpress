@@ -583,9 +583,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var focused = $(doc.body.all('[focus]'));
             ppp.focus = focused[focused.length - 1];
 
-            var tab = ppp.find('text[data-before="' + element + '"]').closest('box');
-            tab.classList.remove('border-bottom-1px-solid');
+            var box = ppp.find('text[data-before="' + element + '"]').closest('box');
+            box.classList.remove('border-bottom-1px-solid');
             //console.log({ppp, focus: ppp.focus})
+                
+            var header = ppp.find('card header');
+
+            var tabs = header.parentNode.all('column');
+            var tab = $(tabs)[box.index()];
+
+            $(tabs).attr('data-display', 'none')
+            tab.removeAttribute('data-display');
         },
 
         delete: async function(target) {
