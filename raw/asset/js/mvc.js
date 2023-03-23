@@ -46,7 +46,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         var page = route.page;
         var vp = dom.body.find('[data-page="' + page + '"]');
 
-        0 < 1 ? console.log(108, {
+        0 > 1 ? console.log(108, {
             route,
             vp
         }) : null;
@@ -88,7 +88,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 var f = 0;
                 do {
                     var feed = feeds[f];
-                    var limit = feed.children.length;
+
+                    var template = feed.nextElementSibling.content;
+                    var limit = template.children.length;
                     var media = feed.dataset.media;
                     console.log(63, {
                         limit,
@@ -126,8 +128,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             do {
 
                                 var post = ancestors[p];
-
-                                var elem = 0 < 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                                var elem = 0 < 1 ? template.children[p].cloneNode(true) : template.firstElementChild.cloneNode(true);
+                                console.log(132, post);
 
                                 if (post) {
 
@@ -144,6 +146,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     elem.dataset.display = "flex";
                                     elem.dataset.href = "/shop/merch/" + post.slug;
+
+                                    if (is.iframe && dom.body.getAttribute('buildable')) {
+                                        //console.log(178, 'buildable', p);
+                                        elem.dataset.id = Crypto.uid.create(1);
+                                    }
 
                                     var image = elem.find('picture img');
                                     if (is.iframe) {
@@ -171,11 +178,18 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     if (pricing && post.pricing) {}
 
                                     //html += elem.outerHTML;
+
+                                    feed.insertAdjacentHTML('beforeend', elem.outerHTML);
+                                    
                                 } else {
 
-                                    elem.dataset.display = "none";
+                                    if (is.iframe && dom.body.getAttribute('buildable')) {
+                                        //console.log(178, 'buildable', p);
+                                        feed.insertAdjacentHTML('beforeend', elem.outerHTML);
+                                    }
 
                                 }
+                                //console.log(p);
 
                                 p++;
 

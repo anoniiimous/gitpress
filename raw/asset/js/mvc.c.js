@@ -516,55 +516,109 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     builder: {
 
-        create: function(target) {
+        create: async function(target) {
 
             var iframe = byId('iframe-editor');
             var win = iframe.contentWindow;
             var doc = win.document;
 
-            $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
+            //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
 
-            if (target.closest('ico').dataset.transform === "rotate(45deg)") {
+            var focus = doc.body.getAttribute('focus');
+            var focused = win.$('[focus]');
+            var focusing = focused[focused.length - 1];
 
-                doc.body.removeAttribute('insertable');
+            if (focus) {
 
-                $(doc.body.all('insertable')).remove();
-                target.closest('ico').removeAttribute("data-transform");
+                var template = win.byId('template-elements').content.firstElementChild;
+                var parent = focusing.find('column, row, section');
+                var length = parent.children.length;
+                var el = template.find(focus).nextElementSibling
+
+                if (el) {
+
+                    console.log({
+                        template,
+                        el
+                    });
+
+                    parent.insertAdjacentHTML('beforeend', el.outerHTML);
+                    var elem = parent.lastElementChild;
+                    focus = elem.tagName.toLowerCase();
+                    console.log({
+                        focus,
+                        el,
+                        elem
+                    });
+
+                    $(doc.body.all('[focus]')).forEach(function(l) {
+                        l.removeAttribute('focus');
+                    });
+                    $(doc.body.all('box text[contenteditable]')).forEach(function(l) {
+                        l.removeAttribute('contenteditable');
+                    });
+                    $([doc.body]).attr('focus', focus);
+                    $([elem, elem.closest('block, footer, header')]).attr('focus', focus);
+
+                }
+
+                if (focus === "box") {
+                    console.log({
+                        focus
+                    });
+
+                    var html = await ajax('raw/asset/html/template/template.toolbox.create.html');
+                    var ppp = await modal.popup(html);
+
+                    var focused = $(doc.body.all('[focus]'));
+                    ppp.focus = focused[focused.length - 1];
+                }
 
             } else {
 
-                doc.body.setAttribute('insertable', true);
+                if (target.closest('ico').dataset.transform === "rotate(45deg)") {
 
-                $(doc.documentElement.all('[focus]')).forEach(function(el) {
-                    el.removeAttribute('focus');
-                });
-                $(doc.documentElement.all('box text[contenteditable]')).forEach(function(el) {
-                    el.removeAttribute('contenteditable');
-                });
+                    doc.body.removeAttribute('insertable');
 
-                var main = doc.body.find('main');
-                var section = main.previousElementSibling.content.firstElementChild.cloneNode(true);
-                var sections = $(doc.body.all('body > section'));
-                if (sections.length > 0) {
-                    sections.forEach(function(block) {
-                        console.log(546, {
-                            block
-                        });
-                        //block.insertAdjacentHTML('beforebegin', add.outerHTML);
-                        //block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
-                    });
+                    $(doc.body.all('insertable')).remove();
+                    target.closest('ico').removeAttribute("data-transform");
+
                 } else {
-                    main.insertAdjacentHTML('beforebegin', section.outerHTML);
-                    main.insertAdjacentHTML('afterend', section.outerHTML);
+
+                    doc.body.setAttribute('insertable', true);
+
+                    $(doc.documentElement.all('[focus]')).forEach(function(el) {
+                        el.removeAttribute('focus');
+                    });
+                    $(doc.documentElement.all('box text[contenteditable]')).forEach(function(el) {
+                        el.removeAttribute('contenteditable');
+                    });
+
+                    var main = doc.body.find('main');
+                    var section = main.previousElementSibling.content.firstElementChild.cloneNode(true);
+                    var sections = $(doc.body.all('body > section'));
+                    if (sections.length > 0) {
+                        sections.forEach(function(block) {
+                            console.log(546, {
+                                block
+                            });
+                            //block.insertAdjacentHTML('beforebegin', add.outerHTML);
+                            //block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
+                        });
+                    } else {
+                        main.insertAdjacentHTML('beforebegin', section.outerHTML);
+                        main.insertAdjacentHTML('afterend', section.outerHTML);
+                    }
+
+                    $(doc.body.all('blocks block')).forEach(function(block) {
+                        var add = byId('framework-builder-insert').content.firstElementChild.cloneNode(true);
+                        block.insertAdjacentHTML('beforebegin', add.outerHTML);
+                        block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
+                    });
+
+                    target.closest('ico').dataset.transform = "rotate(45deg)";
+
                 }
-
-                $(doc.body.all('blocks block')).forEach(function(block) {
-                    var add = byId('framework-builder-insert').content.firstElementChild.cloneNode(true);
-                    block.insertAdjacentHTML('beforebegin', add.outerHTML);
-                    block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
-                });
-
-                target.closest('ico').dataset.transform = "rotate(45deg)";
 
             }
 
@@ -586,10 +640,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var box = ppp.find('text[data-before="' + element + '"]').closest('box');
             box.classList.remove('border-bottom-1px-solid');
             //console.log({ppp, focus: ppp.focus})
-                
+
             var header = ppp.find('card header');
 
-            var tabs = header.parentNode.all('column');
+            var tabs = header.parentNode.all('card > column');
             var tab = $(tabs)[box.index()];
 
             $(tabs).attr('data-display', 'none')
@@ -616,6 +670,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var parent = null;
                 if (tagName === "card") {
                     parent = focus.closest("block");
+                }
+                if (tagName === "box") {
+                    parent = focus.closest("card");
                 }
                 console.log({
                     focus,

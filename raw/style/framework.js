@@ -119,50 +119,7 @@ framework.builder.insert = function(target) {
     }
 }
 
-framework.tool = {};
-framework.tool.box = function(target) {
-    var iframe = byId('iframe-editor');
-    var win = iframe.contentWindow;
-    var doc = win.document;
-    
-    var ppp = target.closest('aside');
-
-    var header = target.closest('header');
-    $(header.children).addClass('border-bottom-1px-solid');
-
-    var box = target.closest('box');
-    box.classList.remove('border-bottom-1px-solid');
-
-    var tabs = header.parentNode.all('column');
-    var tab = $(tabs)[box.index()];
-
-    $(tabs).attr('data-display', 'none')
-    tab.removeAttribute('data-display');
-
-    var element = box.find('text').dataset.before;
-    var parent = ppp.focus.closest(element);
-    var elem = ppp.focus.closest('box, card, block, body > header, body > footer');
-
-    $(doc.body.all('[focus]')).forEach(function(el) {
-        el.removeAttribute('focus');
-    });
-    $(doc.body.all('box text[contenteditable]')).forEach(function(el) {
-        el.removeAttribute('contenteditable');
-    });
-    $([doc.body]).attr('focus', element);
-    $([parent, elem.closest('block, footer, header')]).attr('focus', element);
-
-    console.log(dom.body, $('[focus]'), $(dom.body.all('[focus]')), {
-        tabs,
-        tab
-    }, {
-        elem,
-        focus: ppp.focus,
-        parent
-    });
-}
-
-framework.on = function(event) {
+framework.on = async function(event) {
     //console.log(is.iframe, event);
     var touch = event.touch;
     if (touch === "tap") {
@@ -171,6 +128,9 @@ framework.on = function(event) {
             var buildable = dom.body.getAttribute('buildable') === "true";
             var insertable = dom.body.getAttribute('insertable') === "true";
             var elem = target.closest('box, card, block, body > header, body > footer');
+            var focused = elem.getAttribute('focus');
+            var tagName = elem.tagName.toLowerCase();
+            var el = ["block", "card", "footer", "header"].includes(tagName) ? tagName : 'box';
             var element = dom.body.getAttribute('focus');
             var sel = element ? ':not(body)[focus="' + element + '"] ' + element + '' : null;
             var selected = sel ? event.target.closest(sel) : null;
@@ -205,10 +165,6 @@ framework.on = function(event) {
                         });
 
                         var tool = window.top.dom.body.find('tool');
-
-                        var focused = elem.getAttribute('focus');
-                        var tagName = elem.tagName.toLowerCase();
-                        var el = ["block", "card", "footer", "header"].includes(tagName) ? tagName : 'box';
 
                         $([dom.body]).attr('focus', el);
                         $([elem, elem.closest('block, footer, header')]).attr('focus', el);
@@ -249,8 +205,112 @@ framework.on = function(event) {
 
                     }
 
+                } else {
+
+                    if (el === "box") {
+                        var media = selected.closest('[data-media]') ? selected.closest('[data-media]').dataset.media : null;
+                        var id = selected.dataset.id;
+                        if (media && !id) {
+                            var json = is.json(media) ? JSON.parse(media) : false;
+                            if (json) {
+                                console.log('mixed', media);
+                            } else {
+                                var confirm = await window.top.modal.confirm({
+                                    body: "Do you want to save your changes before creating a new item?",
+                                    title: "Unsaved Changes"
+                                }, ["No", "Yes"]);
+                                if (confirm) {
+                                    '/dashboard/:get/merch/catalog'.router();
+                                }
+                            }
+                            console.log(media, json);
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+window.tool = {}
+
+window.tool.set = {};
+window.tool.set.tab = function(target) {
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+
+    var ppp = target.closest('aside');
+
+    var header = target.closest('header');
+    $(header.children).addClass('border-bottom-1px-solid');
+
+    var box = target.closest('box');
+    box.classList.remove('border-bottom-1px-solid');
+
+    var tabs = header.parentNode.all('column');
+    var tab = $(tabs)[box.index()];
+
+    $(tabs).attr('data-display', 'none')
+    tab.removeAttribute('data-display');
+
+    var element = box.find('text').dataset.before;
+    var parent = ppp.focus.closest(element);
+    var elem = ppp.focus.closest('box, card, block, body > header, body > footer');
+
+    $(doc.body.all('[focus]')).forEach(function(el) {
+        el.removeAttribute('focus');
+    });
+    $(doc.body.all('box text[contenteditable]')).forEach(function(el) {
+        el.removeAttribute('contenteditable');
+    });
+    $([doc.body]).attr('focus', element);
+    $([parent, elem.closest('block, footer, header')]).attr('focus', element);
+
+    console.log(dom.body, $('[focus]'), $(dom.body.all('[focus]')), {
+        tabs,
+        tab
+    }, {
+        elem,
+        focus: ppp.focus,
+        parent
+    });
+}
+
+/*TOOL API*/
+window.tool.tip = {};
+
+window.tool.bar = {};
+
+window.tool.box = {};
+window.tool.box.columns = function(event) {
+    var target = event.target;
+    var value = target.value;
+    console.log(268, value);
+}
+window.tool.box.element = function(target) {
+    var button = target.closest('[data-value]');
+    if (button) {
+        var iframe = byId('iframe-editor');
+        var win = iframe.contentWindow;
+        var doc = win.document;
+
+        var focused = win.$('[focus]');
+        var focusing = focused[focused.length - 1];
+
+        var element = null;
+        var value = button.dataset.value;
+        console.log(268, {
+            focused,
+            focusing,
+            value
+        });
+
+        if (value === "text") {
+            element = doc.createElement('text');
+            element.setAttribute('placeholder', 'Write here...')
+        }
+
+        element ? focusing.find('column, row').insertAdjacentHTML('beforeend', element.outerHTML) : null;
     }
 }

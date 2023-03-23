@@ -27,6 +27,7 @@
                 window.boot = window.parent.rout.ed.url(dir);
             }
         </script>
+        <script async="" src="raw/asset/js/crypto.js"></script>
         <script async="" src="raw/asset/js/github.js"></script>
         <script async="" src="raw/asset/js/mvc.js"></script>
         <script async="" src="raw/asset/js/modal.js"></script>
@@ -34,7 +35,7 @@
         <script async="" src="raw/asset/js/router.js"></script>
         <script async="" src="raw/asset/js/touch.js"></script>
         <script async="" src="raw/asset/js/vanilla.js"></script>
-        <script async="" src="raw/style/framework.js"></script>
+        <script async="" src="raw/asset/js/iframe.js"></script>
         <script defer="" src="index.js"></script>
         <link href="index.css" rel="stylesheet">
         <link href="raw/style/theme.css" rel="stylesheet">
@@ -74,5 +75,25 @@
                 <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px">Add Block</text>
             </column>
         </empty>
+        <template id="template-elements">
+            <insertable>
+                <block>
+                    <column></column>
+                    <empty class="align-items-center display-flex flex-direction-column gap-5px justify-content-center padding-30px text-align-center">
+                        <column class="gap-5px padding-30px">
+                            <text class="display-block font-weight-bolder">Add New Element</text>
+                            <text class="background-color-777 border-radius-5px color-fff display-block font-size-13px margin-auto padding-5px text-transform-uppercase width-100px" data-tap="framework.elements.card(event.target)">Add Card</text>
+                        </column>
+                    </empty>
+                </block>
+                <card>
+                    <row class="flex-wrap-wrap"></row>
+                    <template></template>
+                </card>
+                <box>
+                    <column></column>
+                </box>
+            </insertable>
+        </template>
     </body>
 </html>

@@ -1545,6 +1545,19 @@
 }
 
 @media {
+    .gg-math-minus {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 16px;
+        height: 2px;
+        background: currentColor;
+        border-radius: 10px
+    }
+}
+
+@media {
     .gg-math-plus, .gg-math-plus::after {
         display: block;
         box-sizing: border-box;
@@ -2109,6 +2122,72 @@
         border: 1px dashed;
         top: -6px;
         left: -8px
+    }
+}
+
+@media {
+    .gg-text {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 10px;
+        height: 8px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        box-shadow: 0 -2px 0 0, inset 0 0 0 2px
+    }
+
+    .gg-text::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border: 1px dashed;
+        top: -6px;
+        left: -8px
+    }
+}
+
+@media {
+    .gg-format-underline {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 12px;
+        height: 12px;
+        border: 2px solid;
+        border-top: 0;
+        border-bottom-left-radius: 100px;
+        border-bottom-right-radius: 100px
+    }
+
+    .gg-format-underline::after {
+        content: "";
+        display: block;
+        box-sizing: border-box;
+        position: absolute;
+        border-radius: 3px;
+        width: 12px;
+        height: 2px;
+        background: currentColor;
+        left: -2px;
+        bottom: -6px
+    }
+}
+
+@media {
+    .gg-line {
+        box-sizing: border-box;
+        position: relative;
+        display: block;
+        transform: scale(var(--ggs,1));
+        width: 12px;
+        height: 2px;
+        background: #000;
     }
 }
 
