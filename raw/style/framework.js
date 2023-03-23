@@ -312,12 +312,51 @@ window.tool.box.element = function(target) {
             element.setAttribute('placeholder', 'Write here...');
 
             modal.exit(target);
-            
+
             var wrapper = focusing.find('flex, column, row, section');
             wrapper.insertAdjacentHTML('beforeend', element.outerHTML)
             wrapper.lastElementChild.focus();
         }
+    }
+}
+window.tool.box.unit = function(target) {
+    var button = target.closest('[data-tap] > *');
+    if (button) {
+        var unit = button.textContent;
+        var text = button.closest('[data-dropdown] + *').previousElementSibling.firstElementChild;
+        text.textContent = unit;
 
-        
+        var input = text.closest('input + *').previousElementSibling;
+        var onchange = input.getAttribute('onchange').split('(')[0].split('.');
+        var method = window;
+
+        if (unit === "auto") {
+            input.classList.add('display-none');
+        } else {
+            input.classList.remove('display-none');
+        }
+        onchange.forEach(function(o) {
+            method = method[o];
+        });
+        method(input);
+    }
+}
+window.tool.box.width = function(target) {
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    var focused = win.$('[focus]');
+    var focus = focused[focused.length - 1];
+    var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
+    var value = target.value;
+    console.log(347, {
+        focus,
+        unit,
+        value
+    });
+    if (unit === "auto") {
+        focus.style.width = "auto";
+    } else {
+        focus.style.width = value + unit;
     }
 }

@@ -15,6 +15,10 @@
     :focus {
         outline: none;
     }
+
+    [tabindex]:has([data-dropdown] + :not([data-display="none"])) {
+        z-index: 123456;
+    }
 }
 
 /*SHELL*/
@@ -27,7 +31,7 @@
     body {
         background-color: #fff;
         font-family: Arial;
-        /* height: 100%; */
+        min-height: 100%;
         margin: 0;
         width: 100%;
     }
@@ -163,6 +167,10 @@
 
     row {
         flex-direction: row;
+    }
+
+    row[tabindex]:focus {
+        z-index: 123456;
     }
 
     figure {
@@ -493,6 +501,7 @@
             outline-offset: 0px;
         }
     }
+
     @media screen {
         body[buildable="true"][wireframe="true"] > header, body[buildable="true"][wireframe="true"] block, body[buildable="true"][wireframe="true"] footer {
             outline: 4px dashed #77777780;

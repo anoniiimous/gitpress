@@ -40,15 +40,16 @@
                     <header>
                         <text class="font-size-13px font-weight-bolder text-transform-uppercase">Size</text>
                     </header>
-                    <row class="flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="1">
                         <text class="font-weight-bolder">Width</text>
                         <flex class="gap-5px">
-                            <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="960">
-                            <field class="position-relative">
+                            <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" onchange="tool.box.width(event.target)" type="number" value="960">
+                            <field class="position-relative" data>
                                 <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                                     <text>px</text>
                                 </row>
-                                <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
+                                <column class="background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" data-top="100%">
+                                    <text class="-hover-background-color-eb padding-x-20px">auto</text>
                                     <text class="-hover-background-color-eb padding-x-20px">px</text>
                                     <text class="-hover-background-color-eb padding-x-20px">vw</text>
                                     <text class="-hover-background-color-eb padding-x-20px">%</text>
@@ -56,7 +57,7 @@
                             </field>
                         </flex>
                     </row>
-                    <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px">
+                    <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" tabindex="2">
                         <text class="font-weight-bolder">Text Align</text>
                         <flex class="gap-5px">
                             <field class="position-relative">
@@ -79,7 +80,7 @@
                     <header>
                         <text class="font-size-13px font-weight-bolder text-transform-uppercase">Display</text>
                     </header>
-                    <row class="gap-5px justify-content-space-between padding-y-10px">
+                    <row class="gap-5px justify-content-space-between padding-y-10px" tabindex="3">
                         <text class="font-weight-bolder">Display</text>
                         <flex class="gap-5px">
                             <field class="position-relative">
@@ -98,7 +99,7 @@
                         </flex>
                     </row>
                     <column>
-                        <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px">
+                        <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="3">
                             <text class="font-weight-bolder">Columns</text>
                             <field>
                                 <ico data-height="20px" data-width="20px">
@@ -110,7 +111,7 @@
                                 </ico>
                             </field>
                         </row>
-                        <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px">
+                        <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="4">
                             <text class="font-weight-bolder">Grid Gap</text>
                             <flex class="gap-5px">
                                 <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="20">
@@ -132,7 +133,7 @@
                     <header>
                         <text class="font-size-13px font-weight-bolder text-transform-uppercase">Media</text>
                     </header>
-                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px">
+                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="5">
                         <text class="font-weight-bolder">Audio</text>
                         <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
                             <input type="checkbox">
@@ -141,7 +142,7 @@
                             </ico>
                         </label>
                     </row>
-                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px">
+                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="6">
                         <text class="font-weight-bolder">Merch</text>
                         <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
                             <input type="checkbox">
@@ -150,7 +151,7 @@
                             </ico>
                         </label>
                     </row>
-                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px">
+                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="7">
                         <text class="font-weight-bolder">Pages</text>
                         <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
                             <input type="checkbox">
@@ -159,7 +160,7 @@
                             </ico>
                         </label>
                     </row>
-                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px">
+                    <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="8">
                         <text class="font-weight-bolder">Photo</text>
                         <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
                             <input type="checkbox">
@@ -168,7 +169,7 @@
                             </ico>
                         </label>
                     </row>
-                    <row class="border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px">
+                    <row class="border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="9">
                         <text class="font-weight-bolder">Video</text>
                         <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
                             <input type="checkbox">
@@ -182,7 +183,7 @@
                     <header>
                         <text class="font-size-13px font-weight-bolder text-transform-uppercase">Children</text>
                     </header>
-                    <row class="border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px">
+                    <row class="border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="10">
                         <text class="font-weight-bolder">Aspect Ratio</text>
                         <field class="position-relative">
                             <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
@@ -209,15 +210,15 @@
                     <header>
                         <text class="font-size-13px font-weight-bolder text-transform-uppercase">Size</text>
                     </header>
-                    <row class="flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="1">
                         <text class="font-weight-bolder">Width</text>
                         <flex class="gap-5px">
-                            <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="50">
+                            <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" onchange="tool.box.width(event.target)" type="number" value="50">
                             <field class="position-relative">
                                 <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                                     <text>px</text>
                                 </row>
-                                <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
+                                <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" data-top="100%">
                                     <text class="-hover-background-color-eb padding-x-20px">px</text>
                                     <text class="-hover-background-color-eb padding-x-20px">vw</text>
                                     <text class="-hover-background-color-eb padding-x-20px">%</text>
@@ -225,7 +226,7 @@
                             </field>
                         </flex>
                     </row>
-                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="2">
                         <text class="font-weight-bolder">Height</text>
                         <flex class="gap-5px">
                             <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="50">
@@ -246,7 +247,7 @@
                     <header>
                         <text class="font-size-13px font-weight-bolder text-transform-uppercase">Margin</text>
                     </header>
-                    <row class="flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="3">
                         <text class="font-weight-bolder">Margin Top</text>
                         <flex class="gap-5px">
                             <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="50">
@@ -262,7 +263,7 @@
                             </field>
                         </flex>
                     </row>
-                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="4">
                         <text class="font-weight-bolder">Margin Right</text>
                         <flex class="gap-5px">
                             <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="50">
@@ -278,7 +279,7 @@
                             </field>
                         </flex>
                     </row>
-                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="5">
                         <text class="font-weight-bolder">Margin Bottom</text>
                         <flex class="gap-5px">
                             <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="50">
@@ -294,7 +295,7 @@
                             </field>
                         </flex>
                     </row>
-                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px">
+                    <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="6">
                         <text class="font-weight-bolder">Margin Left</text>
                         <flex class="gap-5px">
                             <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" type="number" value="50">
@@ -303,6 +304,7 @@
                                     <text>px</text>
                                 </row>
                                 <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
+                                    <text class="-hover-background-color-eb padding-x-20px">auto</text>
                                     <text class="-hover-background-color-eb padding-x-20px">px</text>
                                     <text class="-hover-background-color-eb padding-x-20px">vw</text>
                                     <text class="-hover-background-color-eb padding-x-20px">%</text>
