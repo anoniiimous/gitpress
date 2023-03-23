@@ -308,9 +308,16 @@ window.tool.box.element = function(target) {
 
         if (value === "text") {
             element = doc.createElement('text');
-            element.setAttribute('placeholder', 'Write here...')
+            element.setAttribute('contenteditable', true);
+            element.setAttribute('placeholder', 'Write here...');
+
+            modal.exit(target);
+            
+            var wrapper = focusing.find('flex, column, row, section');
+            wrapper.insertAdjacentHTML('beforeend', element.outerHTML)
+            wrapper.lastElementChild.focus();
         }
 
-        element ? focusing.find('column, row').insertAdjacentHTML('beforeend', element.outerHTML) : null;
+        
     }
 }

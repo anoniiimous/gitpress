@@ -136,6 +136,7 @@ framework.on = async function(event) {
             var selected = sel ? event.target.closest(sel) : null;
             var focusing = sel && event.target.closest(sel) ? event.target.closest(sel).getAttribute('focus') : null;
             console.log({
+                el,
                 sel,
                 selected,
                 focusing
@@ -170,13 +171,9 @@ framework.on = async function(event) {
                         $([elem, elem.closest('block, footer, header')]).attr('focus', el);
 
                         if (focused === "true") {
-                            if (tagName === "picture") {}
-                            if (tagName === "text") {//elem.contentEditable = "true";
-                            }
                         } else {
-                            if (tagName === "picture") {}
-                            if (tagName === "text") {
-                                elem.contentEditable = "true";
+                            if (tagName === "box") {
+                                $(elem.all('text')).attr('contenteditable', true);
                             }
                         }
 
