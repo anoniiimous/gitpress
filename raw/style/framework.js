@@ -242,14 +242,15 @@ window.tool.set.tab = function(target) {
 
     var ppp = target.closest('aside');
 
-    var header = target.closest('header');
+    var header = target.closest('card > header');
     $(header.children).addClass('border-bottom-1px-solid');
 
     var box = target.closest('box');
     box.classList.remove('border-bottom-1px-solid');
 
-    var tabs = header.parentNode.all('column');
+    var tabs = header.parentNode.all('card > column');
     var tab = $(tabs)[box.index()];
+    console.log(tabs);
 
     $(tabs).attr('data-display', 'none')
     tab.removeAttribute('data-display');
@@ -287,6 +288,92 @@ window.tool.box.columns = function(event) {
     var target = event.target;
     var value = target.value;
     console.log(268, value);
+}
+window.tool.box.css = function(tab) {
+
+    var ppp = tab.closest('aside');
+
+    var iframe = byId('iframe-editor');
+    var doc = iframe.contentWindow.document;
+    var element = doc.body.getAttribute('focus');
+
+    var declarations = $(tab.all('[data-declaration]'));
+    if (declarations.length > 0) {
+        var rules = {};
+        var classList = Array.from(ppp.focus.classList).concat(Array.from(ppp.focus.find('flex, column, row, section').classList));
+        classList.forEach(function(c) {
+            var split = c.split('-');
+            var value = split.splice(split.length - 1)[0];
+            var properties = [];
+            split.forEach(function(s) {
+                if (s.startsWith('dw') || s.startsWith('_')) {
+                    split;
+                } else {
+                    properties.push(s);
+                }
+            });
+            var property = properties.join('-');
+            rules[property] = value;
+            0 > 1 ? console.log(731, {
+                c,
+                split,
+                property,
+                value
+            }) : null;
+        });
+        var d1 = Object.assign({}, ppp.focus.dataset);
+        var d2 = Object.assign({}, ppp.focus.find('flex, column, row, section').dataset);
+        var dataset = Object.assign(d1, d2);
+        Object.assign(rules, dataset);
+        console.log(718, {
+            classList,
+            dataset,
+            rules
+        });
+        declarations.forEach(function(el) {
+            var row = el.closest('[data-property]');
+            if (row) {
+                var property = row.dataset.property;
+                var number = el.find('[data-value="value"], [data-value="number"]');
+                if (number) {
+                    var value = number.getAttribute('value');
+                    var unit = el.find('[data-value="unit"]');
+                    if (unit) {
+                        value = value + unit.textContent;
+                    }
+                    var selector = "block";
+                    var cssRule = selector + " {" + property + ": " + value + "}";
+                    Object.entries(rules).forEach(function(rule) {
+                        var k = rule[0];
+                        var v = rule[1];
+                        if (property === k) {
+                            var value = v.cssValue();
+                            console.log({
+                                unit,
+                                value,
+                                v
+                            });
+                            if (value && unit) {
+                                unit.textContent = value.unit;
+                                if (value.unit === null) {
+                                    number.classList.add('display-none');
+                                }
+                            }
+                            number.value = value.number;
+                            console.log(cssRule, {
+                                unit,
+                                number,
+                                rule,
+                                k,
+                                v
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 }
 window.tool.box.element = function(target) {
     var button = target.closest('[data-value]');
@@ -329,7 +416,10 @@ window.tool.box.unit = function(target) {
         var input = text.closest('input + *').previousElementSibling;
         var onchange = input.getAttribute('onchange').split('(')[0].split('.');
         var method = window;
-        console.log({input, onchange});
+        console.log({
+            input,
+            onchange
+        });
 
         if (unit === "auto") {
             input.classList.add('display-none');
@@ -361,11 +451,11 @@ window.tool.box.value = function(target) {
         unit,
         value
     });
-    if(element === "wrapper") {
+    if (element === "wrapper") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
     }
-    if(element === "children") {
-        focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");        
+    if (element === "children") {
+        focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");
     }
     if (unit === "auto") {
         focus.style[attribute] = "auto";

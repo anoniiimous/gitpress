@@ -248,6 +248,16 @@ String.prototype.trim = function(ing, str) {
     }
     return str;
 }
+String.prototype.cssValue = function () {
+    v = this.toString();
+    if (typeof v === 'string' && v !== ""){
+        var split = v.match(/^([-.\d]+(?:\.\d+)?)(.*)$/);
+        return {'number':split[1].trim(),  'unit':split[2].trim()};
+    }
+    else{
+        return { 'number':v, 'unit': null }
+    }
+}
 String.prototype.pend = {
     app: str=>{
         alert("App: " + str);

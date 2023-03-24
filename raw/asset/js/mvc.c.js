@@ -526,7 +526,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //alert("controller.build.editor: " + href);
 
             console.log(524, iframe.closest('pages').previousElementSibling);
-                if() {
+
             var dock = iframe.closest('pages').previousElementSibling;
             dock.find('[placeholder="Page Name"]').textContent = json.title;
             dock.find('[placeholder="/page-name"]').textContent = json.slug;
@@ -712,73 +712,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             tab.removeAttribute('data-display');
 
             if (tab) {
-                if (element === "card") {
-                    var declarations = $(tab.all('[data-declaration]'));
-                    if (declarations.length > 0) {
-                        var rules = {};
-                        var classList = Array.from(ppp.focus.classList).concat(Array.from(ppp.focus.find('flex, column, row, section').classList));
-                        classList.forEach(function(c) {
-                            var split = c.split('-');
-                            var value = split.splice(split.length - 1)[0];
-                            var properties = [];
-                            split.forEach(function(s) {
-                                if (s.startsWith('dw') || s.startsWith('_')) {
-                                    split;
-                                } else {
-                                    properties.push(s);
-                                }
-                            });
-                            var property = properties.join('-');
-                            rules[property] = value;
-                            0 > 1 ? console.log(731, {
-                                c,
-                                split,
-                                property,
-                                value
-                            }) : null;
-                        });
-                        var d1 = Object.assign({}, ppp.focus.dataset);
-                        var d2 = Object.assign({}, ppp.focus.find('flex, column, row, section').dataset);
-                        var dataset = Object.assign(d1, d2);
-                        Object.assign(rules, dataset);
-                        console.log(718, {
-                            classList,
-                            dataset,
-                            rules
-                        });
-                        declarations.forEach(function(el) {
-                            var row = el.closest('[data-property]');
-                            if (row) {
-                                var property = row.dataset.property;
-                                var number = el.find('[data-value="value"], [data-value="number"]');
-                                if (number) {
-                                    var value = number.getAttribute('value');
-                                    var unit = el.find('[data-value="unit"]');
-                                    if (unit) {
-                                        value = value + unit.textContent;
-                                    }
-                                    var selector = "block";
-                                    var cssRule = selector + " {" + property + ": " + value + "}";
-                                    Object.entries(rules).forEach(function(rule) {
-                                        var k = rule[0];
-                                        var v = rule[1];
-                                        if (property === k) {
-                                            if (v === "auto") {
-                                                unit.textContent = v;
-                                                number.classList.add('display-none');
-                                            }
-                                            console.log(cssRule, {
-                                                rule,
-                                                k,
-                                                v
-                                            });
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
+                tool.box.css(tab);
             }
         },
 
