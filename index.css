@@ -17,7 +17,7 @@
     }
 
     [tabindex]:has([data-dropdown] + :not([data-display="none"])) {
-        z-index: 123456;
+        z-index: 12345;
     }
 }
 
@@ -73,6 +73,19 @@
         display: -webkit-flex;
         flex-direction: column;
         position: relative;
+    }
+
+    block {
+        
+    }
+
+    card {
+        /* margin: auto; */
+        /* width: 100%; */
+    }
+
+    box {
+        
     }
 
     block > section, card > section, box > section {
@@ -154,9 +167,18 @@
         display: -webkit-flex;
     }
 
+    ._hover {
+        background: red;
+    }
+
     column {
         flex-direction: column;
         flex-grow: 1;
+    }
+
+    card > column {
+        margin: auto;
+        width: 100%;
     }
 
     dropdown {
@@ -487,75 +509,76 @@
     @media {
         /*WIREFRAME*/
         body[buildable="true"] > header:empty, body[buildable="true"] block:empty, body[buildable="true"] footer:empty {
-            outline: 4px dashed #77777780;
+            outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
 
-        body[buildable="true"] > header card > :not(template):empty, body[buildable="true"] block card:not([focus]):not(:hover) > :not(template):empty, body[buildable="true"] > footer card > :not(template):empty {
-            outline: 4px dashed #77777780;
+        body[buildable="true"] > header card:has(> :not(template):empty), body[buildable="true"] block card:not([focus]):not(:hover):has(> :not(template):empty), body[buildable="true"] > footer card:has(> :not(template):empty) {
+            outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
 
-        body[buildable="true"] > footer card box > :not(template):empty, body[buildable="true"] > header card box > :not(template):empty, body[buildable="true"] card box > :not(template):empty {
-            outline: 4px dashed #77777780;
+        body[buildable="true"] > footer card box:has(> :not(template):empty), body[buildable="true"] > header card box:has(> :not(template):empty), body[buildable="true"] card box:has(> :not(template):empty) {
+            outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
     }
 
     @media screen {
         body[buildable="true"][wireframe="true"] > header, body[buildable="true"][wireframe="true"] block, body[buildable="true"][wireframe="true"] footer {
-            outline: 4px dashed #77777780;
+            outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
 
         body[buildable="true"][wireframe="true"] > header card, body[buildable="true"][wireframe="true"] block card, body[buildable="true"][wireframe="true"] > footer card {
-            outline: 4px dashed #77777780;
+            outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
 
         body[buildable="true"][wireframe="true"] > footer card box, body[buildable="true"][wireframe="true"] > header card box, body[buildable="true"][wireframe="true"] card box {
-            outline: 4px dashed #77777780;
+            outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
     }
 
     /*FOCUS*/
-    body[buildable="true"]:not([insertable]) > header:not([focus]) > :not(template):hover, body[buildable="true"]:not([insertable]) block:not([focus]) > :not(template):hover, body[buildable="true"]:not([insertable]) > footer:not([focus]) > :not(template):hover {
-        outline: 4px dashed #ff3b3080;
+    body[buildable="true"]:not([insertable]) > header:not([focus]):hover, body[buildable="true"]:not([insertable]) block:not([focus]):hover, body[buildable="true"]:not([insertable]) > footer:not([focus]):hover {
+        outline: 2px dashed #ff3b3080;
         outline-offset: 0px;
     }
 
-    body[buildable="true"]:not([insertable])[focus] > header[focus="header"] > :not(template), body[buildable="true"]:not([insertable])[focus] block[focus="block"] > :not(template), body[buildable="true"]:not([insertable])[focus] > footer[focus="footer"] > :not(template) {
-        outline: 4px solid #ff3b30;
+    body[buildable="true"]:not([insertable])[focus] > header[focus="header"], body[buildable="true"]:not([insertable])[focus] block[focus="block"], body[buildable="true"]:not([insertable])[focus] > footer[focus="footer"] {
+        outline: 2px solid #ff3b30;
         outline-offset: 0px;
     }
 
-    body[buildable="true"]:not([insertable]) > header card > :not(template):hover, body[buildable="true"]:not([insertable]) block:not([focus="box"]) card > :not(template):hover, body[buildable="true"]:not([insertable]):not([focus="box"]) > footer card > :not(template):hover {
-        outline: 4px dashed #32cd3280;
+    body[buildable="true"]:not([insertable]) > header card:hover, body[buildable="true"]:not([insertable]) block:not([focus="box"]) card:hover, body[buildable="true"]:not([insertable]):not([focus="box"]) > footer card:hover {
+        outline: 2px dashed #32cd3280;
         outline-offset: 0px;
     }
 
-    body[buildable="true"]:not([insertable])[focus] > header card[focus="card"] > :not(template), body[buildable="true"]:not([insertable])[focus] block card[focus="card"] > :not(template), body[buildable="true"]:not([insertable])[focus] > footer card[focus="card"] > :not(template) {
-        outline: 4px solid #32cd32;
+    body[buildable="true"]:not([insertable])[focus] > header card[focus="card"], body[buildable="true"]:not([insertable])[focus] block card[focus="card"], body[buildable="true"]:not([insertable])[focus] > footer card[focus="card"] {
+        outline: 2px solid #32cd32;
         outline-offset: 0px;
     }
 
-    body[buildable="true"]:not([insertable]) > footer card box > :not(template):hover, body[buildable="true"]:not([insertable]) > header card box > :not(template):hover, body[buildable="true"]:not([insertable]) card box > :not(template):hover {
-        outline: 4px dashed #52b9d680;
+    body[buildable="true"]:not([insertable]) > footer card box:hover, body[buildable="true"]:not([insertable]) > header card box:hover, body[buildable="true"]:not([insertable]) card box:hover {
+        outline: 2px dashed #52b9d680;
         outline-offset: 0px;
     }
 
-    body[buildable="true"]:not([insertable])[focus] > footer card box[focus="box"] > :not(template), body[buildable="true"]:not([insertable])[focus] > header card box[focus="box"] > :not(template), body[buildable="true"]:not([insertable])[focus] card box[focus="box"] > :not(template) {
-        outline: 4px solid #52b9d6;
+    body[buildable="true"]:not([insertable])[focus] > footer card box[focus="box"], body[buildable="true"]:not([insertable])[focus] > header card box[focus="box"], body[buildable="true"]:not([insertable])[focus] card box[focus="box"] {
+        outline: 2px solid #52b9d6;
         outline-offset: 0px;
     }
 
     /*ELEMENTS*/
-    body[buildable="true"] card > :not(backdrop):not(empty):not(template):empty {
+    body[buildable="true"] card:has( > :not(backdrop):not(empty):not(template):empty) {
         height: 50px;
+        width: 100%;
     }
 
-    body[buildable="true"] box > :not(backdrop):not(empty):not(template):empty {
+    body[buildable="true"] box:has(> :not(backdrop):not(empty):not(template):empty) {
         height: 50px;
         width: 50px;
     }

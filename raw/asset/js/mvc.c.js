@@ -341,11 +341,23 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 //css.setAttribute('href', 'raw/css/editor.css')
             }
 
+            iframe.contentWindow.document.body.setAttribute('buildable', true);
+
             var path = route.path;
             var dir = rout.ed.dir(path);
             dir = dir.splice(4, dir.length - 1);
             var href = "/dashboard/" + route.GOT[1] + "/build/er" + rout.ed.url(dir);
+
+            var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + href;
+            var data = await github.raw.git("/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main" + '/raw/pages/pages.json');
+            var json = data.find(o=>o.slug === rout.ed.url(dir))
+            console.log({
+                json
+            });
             //alert("controller.build.editor: " + href);
+
+            iframe.closest('pages').previousElementSibling.find('[placeholder="Page Name"]').textContent = json.title;
+            iframe.closest('pages').previousElementSibling.find('[placeholder="/page-name"]').textContent = json.slug;
 
         }
         ,
@@ -469,7 +481,57 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
         }
         ,
-        preview: ()=>{
+        preview: async function() {
+
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('pages');
+            const header = block.find('header');
+
+            const nav = document.body.find('body > main nav');
+            const transform = nav.dataset["960pxTransform"];
+            const blocks = iframe.closest('main nav + pages');
+
+            const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
+            builder.dataset.transform = "translateY(0)";
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+                //header.classList.remove('display-none');
+                builder.classList.add('border-top-left-radius-10px');
+                builder.classList.add('border-top-right-radius-10px');
+                builder.classList.add('margin-top-10px');
+                builder.classList.add('margin-x-20px');
+                builder.dataset.width = "calc(100% - 40px)";
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                //css.setAttribute('href', 'raw/css/editor.css')
+            }
+
+            iframe.contentWindow.document.body.removeAttribute('buildable');
+
+            var path = route.path;
+            var dir = rout.ed.dir(path);
+            dir = dir.splice(4, dir.length - 1);
+            var href = "/dashboard/" + route.GOT[1] + "/build/er" + rout.ed.url(dir);
+
+            var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + href;
+            var data = await github.raw.git("/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main" + '/raw/pages/pages.json');
+            var json = data.find(o=>o.slug === rout.ed.url(dir))
+            console.log({
+                json
+            });
+            //alert("controller.build.editor: " + href);
+
+            console.log(524, iframe.closest('pages').previousElementSibling);
+                if() {
+            var dock = iframe.closest('pages').previousElementSibling;
+            dock.find('[placeholder="Page Name"]').textContent = json.title;
+            dock.find('[placeholder="/page-name"]').textContent = json.slug;
+        },
+        previewer: ()=>{
 
             const iframe = byId('iframe-editor');
             const block = iframe.closest('pages');
@@ -648,6 +710,76 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             $(tabs).attr('data-display', 'none')
             tab.removeAttribute('data-display');
+
+            if (tab) {
+                if (element === "card") {
+                    var declarations = $(tab.all('[data-declaration]'));
+                    if (declarations.length > 0) {
+                        var rules = {};
+                        var classList = Array.from(ppp.focus.classList).concat(Array.from(ppp.focus.find('flex, column, row, section').classList));
+                        classList.forEach(function(c) {
+                            var split = c.split('-');
+                            var value = split.splice(split.length - 1)[0];
+                            var properties = [];
+                            split.forEach(function(s) {
+                                if (s.startsWith('dw') || s.startsWith('_')) {
+                                    split;
+                                } else {
+                                    properties.push(s);
+                                }
+                            });
+                            var property = properties.join('-');
+                            rules[property] = value;
+                            0 > 1 ? console.log(731, {
+                                c,
+                                split,
+                                property,
+                                value
+                            }) : null;
+                        });
+                        var d1 = Object.assign({}, ppp.focus.dataset);
+                        var d2 = Object.assign({}, ppp.focus.find('flex, column, row, section').dataset);
+                        var dataset = Object.assign(d1, d2);
+                        Object.assign(rules, dataset);
+                        console.log(718, {
+                            classList,
+                            dataset,
+                            rules
+                        });
+                        declarations.forEach(function(el) {
+                            var row = el.closest('[data-property]');
+                            if (row) {
+                                var property = row.dataset.property;
+                                var number = el.find('[data-value="value"], [data-value="number"]');
+                                if (number) {
+                                    var value = number.getAttribute('value');
+                                    var unit = el.find('[data-value="unit"]');
+                                    if (unit) {
+                                        value = value + unit.textContent;
+                                    }
+                                    var selector = "block";
+                                    var cssRule = selector + " {" + property + ": " + value + "}";
+                                    Object.entries(rules).forEach(function(rule) {
+                                        var k = rule[0];
+                                        var v = rule[1];
+                                        if (property === k) {
+                                            if (v === "auto") {
+                                                unit.textContent = v;
+                                                number.classList.add('display-none');
+                                            }
+                                            console.log(cssRule, {
+                                                rule,
+                                                k,
+                                                v
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            }
         },
 
         delete: async function(target) {
@@ -662,8 +794,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 confirm
             });
             if (confirm) {
-                var iframe = byId('iframe-editor');
-                var doc = iframe.contentWindow.document;
                 var focused = doc.body.all('[focus]');
                 var focus = focused[focused.length - 1];
                 var tagName = doc.body.getAttribute('focus');
@@ -685,6 +815,43 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 focus.remove();
                 parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
+            }
+        },
+
+        push: async function() {
+            var iframe = byId('iframe-editor');
+            var doc = iframe.contentWindow.document;
+            var vp = doc.body.find('[data-page][data-active="true"]');
+
+            var title = iframe.closest('pages').previousElementSibling.find('[placeholder="Page Name"]').textContent;
+            var path = vp.dataset.fetch;
+            var content = vp.innerHTML;
+            console.log(693, {
+                content
+            });
+
+            //PUSH
+            var params = {
+                message: 'Update "' + title + '" Page UI',
+                repo: GET[1],
+                owner: window.owner.login
+            };
+            var array = [{
+                content,
+                path
+            }];
+            try {
+                console.log(2452, 'controller.merch.update', "array", {
+                    array
+                });
+                await github.crud.update(params, array);
+                ("/dashboard/:get/build/preview/:dir").router();
+            } catch (e) {
+                modal.alert({
+                    body: "There was an error creating this product.",
+                    submit: "OK",
+                    title: "Catalog Error"
+                })
             }
         }
 

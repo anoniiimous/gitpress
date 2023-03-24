@@ -332,8 +332,8 @@ window.rout.ed.vars = async function(tabs) {
 
 window.rout.ed.history = [];
 
-window.rout.es = function getRoot(els) {
-    var els = $('pages[data-page]');
+window.rout.es = function getRoot() {
+    var els = $('[data-page]');
     var root = null;
     if (els.length > 0) {
         var arr = [];
@@ -342,6 +342,7 @@ window.rout.es = function getRoot(els) {
             arr.push(els[r].dataset.page);
             r++;
         } while (r < els.length);
+        arr = [...new Set(arr)];
         arr.sort();
         arr.reverse();
         window.paths.arr = arr;
@@ -354,9 +355,10 @@ window.rout.es = function getRoot(els) {
 
 window.rout.ing = (href,GOT,n)=>{
     var ed = null;
-    var pages = $(dom.body.all('page[data-page], pages[data-page]')).sort(function(a, b) {
+    var pages = $(dom.body.all('[data-page]')).sort(function(a, b) {
         return a.dataset.page.localeCompare(b.dataset.page);
     })
+    pages = [...new Set(pages)];
     var routes = pages.forEach(function(el) {
         var page = el.dataset.page;
         var dir = rout.ed.dir(href);

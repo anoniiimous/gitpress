@@ -230,6 +230,7 @@ String.prototype.stringExists = function(arr) {
     if (arr.length > 0) {
         var a = 0;
         do {
+            //console.log(233, bool, arr[a]);
             bool = text.indexOf(arr[a]) > -1 ? arr[a] : null;
             bool === null ? null : a = arr.length;
             a++;

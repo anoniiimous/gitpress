@@ -88,6 +88,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 var f = 0;
                 do {
                     var feed = feeds[f];
+                    feed.innerHTML = "";
 
                     var template = feed.nextElementSibling.content;
                     var limit = template.children.length;

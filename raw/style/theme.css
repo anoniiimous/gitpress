@@ -680,7 +680,7 @@
     }
 
     @media (max-width: 768px) {
-        [data-tablet-columns="1"] {
+        [data-768px-columns="1"], [data-tablet-columns="1"] {
             grid-template-columns: repeat(1, minmax(0, 1fr));
         }
     }
@@ -975,7 +975,7 @@
 
 /*FLEX FLOW*/
 @media screen {
-    .flex-flow-column-reverse {
+    .flex-flow-column-reverse, .flexFlow-columnReverse {
         flex-flow: column-reverse;
     }
 }
@@ -2470,6 +2470,10 @@
         transform: translateX(100%);
     }
 
+    [data-transform="translateY(0)"] {
+        transform: translateY(0);
+    }
+
     [data-transform="translateY(100%)"] {
         transform: translateY(calc(100%));
     }
@@ -2521,6 +2525,10 @@
 
 /*WIDTH*/
 @media screen {
+    .width-auto {
+        width: auto;    
+    }
+    
     .width-0 {
         width: 0;
     }

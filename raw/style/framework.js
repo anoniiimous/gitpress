@@ -329,6 +329,7 @@ window.tool.box.unit = function(target) {
         var input = text.closest('input + *').previousElementSibling;
         var onchange = input.getAttribute('onchange').split('(')[0].split('.');
         var method = window;
+        console.log({input, onchange});
 
         if (unit === "auto") {
             input.classList.add('display-none');
@@ -339,6 +340,37 @@ window.tool.box.unit = function(target) {
             method = method[o];
         });
         method(input);
+    }
+}
+window.tool.box.value = function(target) {
+    console.log(target);
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    var tagName = doc.body.getAttribute('focus');
+    var focused = win.$('[focus]');
+    var focus = focused[focused.length - 1];
+    var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
+    var value = target.value;
+    var attribute = target.closest('[data-property]').dataset.property;
+    var element = target.closest('[data-element]').dataset.element;
+    console.log(347, {
+        attribute,
+        element,
+        focus,
+        unit,
+        value
+    });
+    if(element === "wrapper") {
+        focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
+    }
+    if(element === "children") {
+        focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");        
+    }
+    if (unit === "auto") {
+        focus.style[attribute] = "auto";
+    } else {
+        focus.style[attribute] = value + unit;
     }
 }
 window.tool.box.width = function(target) {
