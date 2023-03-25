@@ -347,8 +347,12 @@ window.tool.box.css = function(tab) {
                         var k = rule[0];
                         var v = rule[1];
                         if (property === k) {
+                            console.log({
+                                v
+                            });
                             var value = v.cssValue();
                             console.log({
+                                k,
                                 unit,
                                 value,
                                 v
@@ -417,14 +421,15 @@ window.tool.box.unit = function(target) {
         var onchange = input.getAttribute('onchange').split('(')[0].split('.');
         var method = window;
         console.log({
+            button,
             input,
             onchange
         });
 
-        if (unit === "auto") {
-            input.classList.add('display-none');
-        } else {
+        if (button.dataset.dimension === "unit") {
             input.classList.remove('display-none');
+        } else {
+            input.classList.add('display-none');
         }
         onchange.forEach(function(o) {
             method = method[o];
@@ -433,35 +438,71 @@ window.tool.box.unit = function(target) {
     }
 }
 window.tool.box.value = function(target) {
-    console.log(target);
     var iframe = byId('iframe-editor');
     var win = iframe.contentWindow;
     var doc = win.document;
     var tagName = doc.body.getAttribute('focus');
     var focused = win.$('[focus]');
     var focus = focused[focused.length - 1];
-    var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
-    var value = target.value;
     var attribute = target.closest('[data-property]').dataset.property;
     var element = target.closest('[data-element]').dataset.element;
-    console.log(347, {
-        attribute,
-        element,
-        focus,
-        unit,
-        value
-    });
     if (element === "wrapper") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
     }
     if (element === "children") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");
     }
-    if (unit === "auto") {
-        focus.style[attribute] = "auto";
-    } else {
-        focus.style[attribute] = value + unit;
+
+    var value = null;
+    var declaration = target.closest('[data-declaration]').dataset.declaration;
+    if (declaration === "dimension") {
+        var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
+        value = target.classList.contains('display-none') ? unit : target.value + unit;
     }
+    if (declaration === "number") {
+        value = target.value;
+    }
+
+    if (declaration) {
+        var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
+        var formula = target.dataset.formula ? target.dataset.formula : null;
+        window.tool.box.style(focus, {
+            attribute,
+            value
+        }, {
+            rule,
+            formula
+        });
+    }
+}
+window.tool.box.style = function(focus, declaration, options) {
+
+    var pseudo = options ? options.pseudo: null;
+    var rule = options ? options.rule : null;
+    var formula = options ? options.formula : null;
+    
+    var attribute = declaration.attribute;
+    var value = formula ? formula.replace('{var}', declaration.value) : declaration.value;
+    focus.style[attribute] = value;
+
+    attribute = attribute.camelPhynate();
+    var className = [attribute, value].join('-');
+    var obj = {};
+    obj[className] = {
+        pseudo,
+        rule,
+        attribute,
+        value,
+    };
+
+    console.log(472, {
+        focus,
+        attribute,
+        value
+    }, obj);
+}
+window.tool.box.group = function(target) {
+    $(target.closest('box > row').nextElementSibling).toggleClass('display-none');
 }
 window.tool.box.width = function(target) {
     var iframe = byId('iframe-editor');

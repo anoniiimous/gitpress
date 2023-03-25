@@ -12,8 +12,8 @@
                 <pages class="flex-grow-1" data-page="/dashboard/*/build">
                     <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.build.html" data-page="/dashboard/*/build"></pages>
                     <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 flex-direction-column margin-x-20px margin-top-20px overflow-hidden position-fixed z-index-5" data-480px-margin-x="10px" data-480px-height="calc(100% - 10px)" data-480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-transform="translateY(calc(100% - 50px))" data-transition="0.3s" data-width="calc(100% - 40px)">
-                        <header class="align-items-center background-color-ccc display-flex flex-direction-row justify-content-space-between">
-                            <row class="justify-content-space-between width-100pct">
+                        <header class="align-items-center background-color-ccc display-flex flex-direction-column justify-content-space-between">
+                            <row class="justify-content-space-between width-100pct" tabindex="1">
                                 <card class="height-50px justify-content-center margin-0 width-auto">
                                     <row class="align-items-center">
                                         <box data-href="/dashboard/:get/build/er" data-page="/dashboard/*/build">
@@ -90,6 +90,41 @@
                                             </row>
                                         </box>
                                     </tool>
+                                </card>
+                            </row>
+                            <row class="align-items-center display-none justify-content-space-between width-100pct" tabindex="2">
+                                <card>
+                                    <row class="align-items-center">
+                                        <box>
+                                            <row class="align-items-center justify-content-center">
+                                                <ico data-height="50px" data-width="50px">
+                                                    <n class="gg-close"></n>
+                                                </ico>
+                                            </row>
+                                        </box>
+                                        <box>
+                                            <row class="align-items-center gap-5px justify-content-center">
+                                                <flex class="flex-direction-column">
+                                                    <cell class="font-size-13px" placeholder="Group"></cell>
+                                                    <cell class="font-weight-bolder" placeholder="Attribute"></cell>
+                                                </flex>
+                                                <ico data-height="10px" data-width="10px">
+                                                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                                </ico>
+                                            </row>
+                                        </box>
+                                    </row>
+                                </card>
+                                <card class="margin-x-5px" data-declaration>
+                                    <row class="align-items-center justify-content-center">
+                                        <ico data-height="20px" data-width="20px">
+                                            <n class="gg-math-minus"></n>
+                                        </ico>
+                                        <input class="border-1px-solid border-color-db border-radius-3px font-size-16px line-height-30px margin-x-5px padding-x-10px text-align-center width-20px" data-formula="repeat({var}, minmax(0, 1fr))" data-value="number" onchange="tool.box.value(event.target)" type="number" value="3">
+                                        <ico data-height="20px" data-width="20px">
+                                            <n class="gg-math-plus"></n>
+                                        </ico>
+                                    </row>
                                 </card>
                             </row>
                         </header>

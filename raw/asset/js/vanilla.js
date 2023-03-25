@@ -248,14 +248,24 @@ String.prototype.trim = function(ing, str) {
     }
     return str;
 }
-String.prototype.cssValue = function () {
-    v = this.toString();
-    if (typeof v === 'string' && v !== ""){
-        var split = v.match(/^([-.\d]+(?:\.\d+)?)(.*)$/);
-        return {'number':split[1].trim(),  'unit':split[2].trim()};
-    }
-    else{
-        return { 'number':v, 'unit': null }
+String.prototype.camelPhynate = function() {
+    var string = this.toString();
+    var replace = string.replace(/[A-Z]/g, m=>"-" + m.toLowerCase());
+    return replace;
+}
+String.prototype.cssValue = function() {
+    const v = this.toString();
+    var match = v.match(/^([-.\d]+(?:\.\d+)?)(.*)$/);
+    if (typeof v === 'string' && v !== "" && match) {
+        return {
+            'number': match[1].trim(),
+            'unit': match[2].trim()
+        }
+    } else {
+        return {
+            'number': v,
+            'unit': null
+        }
     }
 }
 String.prototype.pend = {
@@ -458,6 +468,29 @@ function ajax(url, settings) {
         );
     }
     );
+}
+
+function beautify(html) {
+
+    console.log(html);
+    var tab = '\t';
+    var result = '';
+    var indent = '';
+
+    html.split(/>\s*</).forEach(function(element) {
+        console.log(element);
+        if (element.match(/^\/\w/)) {
+            indent = indent.substring(tab.length);
+        }
+
+        result += indent + '<' + element + '>\r\n';
+
+        if (element.match(/^<?\w[^>]*[^\/]$/) && !element.startsWith("input")) {
+            indent += tab;
+        }
+    });
+
+    return result.substring(1, result.length - 3);
 }
 
 function fullscreen(elem) {

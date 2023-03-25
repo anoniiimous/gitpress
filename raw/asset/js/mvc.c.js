@@ -689,30 +689,49 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         read: async function(target) {},
 
         update: async function(target) {
+            var dock = target.closest('pages > header');
+            var toolset = dock.children[0];
+            var toolbar = dock.children[1];
+            $([toolset, toolbar]).toggleClass('display-none')
+
             var iframe = byId('iframe-editor');
             var doc = iframe.contentWindow.document;
             var element = doc.body.getAttribute('focus');
 
-            var html = await ajax('raw/asset/html/template/template.toolbox.update.html');
-            var ppp = await modal.popup(html);
+            if ("toolbar" === "toolbar") {
 
-            var focused = $(doc.body.all('[focus]'));
-            ppp.focus = focused[focused.length - 1];
+                var html = await ajax('raw/asset/html/tool/tool.bar.' + element + '.html');
+                var ppp = new DOMParser().parseFromString(html, "text/html");
+                var declarations = ppp.body.all('[data-declaration]');
+                console.log(705, ppp, {
+                    declarations
+                });
+                toolbar.find('[data-declaration]').innerHTML = declarations[2].innerHTML;
+                //declarations.forEach(function(declaration) { });
+            }
 
-            var box = ppp.find('text[data-before="' + element + '"]').closest('box');
-            box.classList.remove('border-bottom-1px-solid');
-            //console.log({ppp, focus: ppp.focus})
+            if ("toolbox" === "toolbox") {
 
-            var header = ppp.find('card header');
+                var html = await ajax('raw/asset/html/template/template.toolbox.update.html');
+                var ppp = await modal.popup(html);
 
-            var tabs = header.parentNode.all('card > column');
-            var tab = $(tabs)[box.index()];
+                var focused = $(doc.body.all('[focus]'));
+                ppp.focus = focused[focused.length - 1];
 
-            $(tabs).attr('data-display', 'none')
-            tab.removeAttribute('data-display');
+                var box = ppp.find('text[data-before="' + element + '"]').closest('box');
+                box.classList.remove('border-bottom-1px-solid');
+                //console.log({ppp, focus: ppp.focus})
 
-            if (tab) {
-                tool.box.css(tab);
+                var header = ppp.find('card header');
+
+                var tabs = header.parentNode.all('card > column');
+                var tab = $(tabs)[box.index()];
+
+                $(tabs).attr('data-display', 'none')
+                tab.removeAttribute('data-display');
+
+                if (tab) {//tool.box.css(tab);
+                }
             }
         },
 
