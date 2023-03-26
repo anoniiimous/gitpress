@@ -335,7 +335,8 @@ window.tool.box.css = function(tab) {
         declarations.forEach(function(el) {
             var row = el.closest('[data-property]');
             if (row) {
-                var property = row.dataset.property; //console.log({property});
+                var property = row.dataset.property;
+                //console.log({property});
                 var number = el.find('[data-value="value"], [data-value="number"]');
                 if (number) {
                     var value = number.getAttribute('value');
@@ -350,7 +351,7 @@ window.tool.box.css = function(tab) {
                     Object.entries(rules).forEach(function(rule) {
                         var k = rule[0];
                         var v = rule[1];
-                        console.log(property, {number, value, unit}, {k, v});
+                        //console.log(property, {number, value, unit}, {k, v});
                         if (property === k) {
                             var value = v.cssValue();
                             0 > 1 ? console.log({
@@ -365,7 +366,7 @@ window.tool.box.css = function(tab) {
                                     number && value.number ? number.value = value.number : null;
                                     unit && value.unit ? unit.textContent = value.unit : null;
                                 } else {
-                                    unit ? unit.textContent = value.number : null;                                    
+                                    unit ? unit.textContent = value.number : null;
                                 }
                             } else {
                                 unit && value.number ? unit.textContent = value.number : null;
@@ -528,16 +529,18 @@ window.tool.box.style = function(focus, declaration, options) {
     var pseudo = options ? options.pseudo : null;
     var rule = options ? options.rule : null;
     var formula = options ? options.formula : null;
-
     var attribute = attr = declaration.attribute;
     var value = formula ? formula.replace('{var}', declaration.value) : declaration.value;
-    focus.style[attribute] = value;
+
+    //INLINE STYLE
     0 > 1 ? console.log(520, {
         focus,
         attribute,
         value
     }) : null;
+    focus.style[attribute] = value;
 
+    //INLINE CLASS
     attribute = attribute.camelPhynate();
     var className = [attribute, value].join('-');
     var obj = {};
@@ -547,7 +550,6 @@ window.tool.box.style = function(focus, declaration, options) {
         attribute,
         value,
     };
-
     0 > 1 ? console.log(472, {
         focus,
         attribute,
@@ -576,6 +578,109 @@ window.tool.box.style = function(focus, declaration, options) {
         });
         focus.classList.add(className);
     }
+
+    //STYLE SHEETS
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    var head = doc.head;
+    var styles = head.all('link');
+    var sheet = 'style-' + attr;
+    0 > 1 ? console.log(586, {
+        head,
+        styles,
+        sheet
+    }) : null;
+
+    var styleExists = false;
+    var stylesheet = null;
+    var css = '';
+    if (styles.length > 0) {
+        styles.forEach(function(style) {
+            if (style.id === sheet) {
+                stylesheet = style;
+                styleExists = true;
+            }
+            0 > 1 ? console.log(599, {
+                style,
+                sheet,
+                id: style.id,
+                attr
+            }) : null;
+        });
+    }
+
+    var rules = null;
+    function CSSDone() {
+        var lnk = null;
+        var styleSheets = Array.from(doc.styleSheets);
+        //console.log(styleSheets);
+        styleSheets.length > 0 ? styleSheets.forEach(function(cssStyleSheet) {
+            var node = lnk = cssStyleSheet.ownerNode;
+            var id = node.id;
+            if (id === sheet) {
+                rules = cssStyleSheet.rules || cssStyleSheet.cssRules;
+            }
+        }) : null;
+        cssRules = Array.from(rules);
+        var find = cssRules.find(function(r) {
+            console.log(r.selectorText, className);
+            return r.selectorText === '.' + className;
+        });
+        var css = '';
+        cssRules.forEach(function(r) {
+            css += r.cssText;
+        });
+        var declaration = '.' + className + ' { ' + attr + ': ' + value + ' }';
+        find ? null : css += declaration;
+
+        console.log(618, 'cssLoaded', {
+            styleSheets: doc.styleSheets,
+            rules,
+            styleExists
+        }, {
+            selector,
+            property,
+            value
+        }, {
+            cssStyleSheet: stylesheet,
+            stylesheets: doc.styleSheets,
+            rules
+        }, {
+            stylesheet,
+            sheet,
+            attr
+        }, {
+            declaration,
+            find,
+            css,
+            cssRules
+        });
+        lnk.href = blob(css, 'text/css');
+        lnk.id = sheet;
+        lnk.rel = "stylesheet";
+        lnk.onload = function() {
+            console.log('CSS ReUpdated');
+        }
+    }
+    if (styleExists) {
+        CSSDone();
+    } else {
+        var selector = '.' + className;
+        var property = attr;
+        var declaration = selector + ' { ' + property + ": " + value + " }";
+        css = declaration;
+        //head.insertAdjacentHTML('beforeend', stylesheet.outerHTML);
+        var link = document.createElement('link');
+        link.href = blob(css, 'text/css');
+        link.id = sheet;
+        link.rel = "stylesheet";
+        link.onload = function() {
+            CSSDone();
+        }
+        doc.head.appendChild(link);
+    }
+
 }
 window.tool.box.group = function(target) {
     $(target.closest('box > row').nextElementSibling).toggleClass('display-none');
