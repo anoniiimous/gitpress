@@ -6,12 +6,12 @@
         <page class="-isauth background-color-f5 flex-grow-1 height-100pct min-height-100pct overflow-x-hidden width-100pct" data-fetch="raw/pages/page.dashboard.html" data-page="/dashboard"></page>
         <pages class="-noauth flex-grow-1 min-height-100pct width-100pct" data-fetch="raw/asset/html/template/template.login.html" data-page="/dashboard"></pages>
         <pages class="-isauth flex-grow-1 min-height-100pct overflow-hidden" data-page="/dashboard/*" data-transition="0.3s">
-            <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-320px z-index-5" data-960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" data-transition="0.3s"></nav>
+            <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-320px z-index-5" data-dw960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" data-transition="0.3s"></nav>
             <pages class="background-color-e2dcd8 flex-grow-1 z-index-6" data-page="/dashboard/*" data-transition="0.3s">
                 <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.html" data-page="/dashboard/*"></page>
                 <pages class="flex-grow-1" data-page="/dashboard/*/build">
                     <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.build.html" data-page="/dashboard/*/build"></pages>
-                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 flex-direction-column margin-x-20px margin-top-20px overflow-hidden position-fixed z-index-5" data-480px-margin-x="10px" data-480px-height="calc(100% - 10px)" data-480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-transform="translateY(calc(100% - 50px))" data-transition="0.3s" data-width="calc(100% - 40px)">
+                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 flex-direction-column margin-x-20px margin-top-20px overflow-hidden position-fixed z-index-5" data-dw480px-margin-x="10px" data-dw480px-height="calc(100% - 10px)" data-dw480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-transform="translateY(calc(100% - 50px))" data-transition="0.3s" data-width="calc(100% - 40px)">
                         <header class="align-items-center background-color-ccc display-flex flex-direction-column justify-content-space-between">
                             <row class="justify-content-space-between width-100pct" tabindex="1">
                                 <card class="height-50px justify-content-center margin-0 width-auto">
@@ -60,7 +60,7 @@
                                 </card>
                                 <card class="flex-direction-row font-weight-bolder margin-0 padding-x-10px width-auto">
                                     <row>
-                                        <box data-960px-display="flex" data-href="/dashboard/:get/build/preview" data-page="/dashboard/*/build">
+                                        <box data-dw960px-display="flex" data-href="/dashboard/:get/build/preview" data-page="/dashboard/*/build">
                                             <row>
                                                 <ico>
                                                     <n class="gg-eye"></n>
@@ -97,7 +97,13 @@
                                     <row class="align-items-center">
                                         <box>
                                             <row class="align-items-center justify-content-center">
-                                                <ico data-height="50px" data-width="50px">
+                                                <ico data-height="50px" data-tap="                      
+                    var dock = dom.body.find('tool').closest('pages > header');
+                    var toolset = dock.children[0];
+                    var toolbar = dock.children[1];
+                    $([toolset, toolbar]).toggleClass('display-none');
+                    modal.exit(event.target);
+" data-width="50px">
                                                     <n class="gg-close"></n>
                                                 </ico>
                                             </row>
@@ -128,8 +134,23 @@
                                 </card>
                             </row>
                         </header>
-                        <pages class="flex-1 position-relative">
+                        <block class="flex-1 position-relative">
                             <iframe class="background-color-fff height-100pct width-100pct" id="iframe-editor"></iframe>
+                            <tool class="background-color-ccc border-radius-50px bottom-0 display-none height-50px left-0 margin-auto right-0 position-absolute top-0 width-50px" data-page="/dashboard/*/build/er">
+                                <card>
+                                    <row>
+                                        <ico class="display-none" data-tap="controller.builder.update(event.target)">
+                                            <n class="gg-pen"></n>
+                                        </ico>
+                                        <ico data-tap="controller.builder.create(event.target)" data-transition="0.3s">
+                                            <n class="gg-add"></n>
+                                        </ico>
+                                        <ico class="display-none" data-tap="controller.builder.delete(event.target)">
+                                            <n class="gg-trash"></n>
+                                        </ico>
+                                    </row>
+                                </card>
+                            </tool>
                             <template id="focus-element">
                                 <focus class="box-sizing-border-box outline-4px-solid-52b9d6 position-absolute z-index-9">
                                     <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-height="5px" data-left="-8px" data-top="-8px" data-width="5px"></cell>
@@ -150,7 +171,7 @@
                                     </column>
                                 </insertable>
                             </template>
-                        </pages>
+                        </block>
                     </pages>
                 </pages>
                 <pages class="flex-grow-1" data-page="/dashboard/*/config">

@@ -5,17 +5,18 @@
         </header>
         <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="focus" data-property="width" tabindex="1">
             <text class="font-weight-bolder">Width</text>
-            <flex class="gap-5px" data-declaration>
-                <input class="border-1px-solid border-color-db border-radius-3px display-none text-align-center width-50px" data-value="number" onchange="tool.box.width(event.target)" type="number" value="960">
+            <flex class="gap-5px" data-declaration="dimension">
+                <input class="border-1px-solid border-color-db border-radius-3px display-none text-align-center width-50px" data-value="number" onchange="tool.box.value(event.target)" type="number" value="50">
                 <field class="position-relative">
                     <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
-                        <text data-value="unit">auto</text>
+                        <text data-value="unit">unset</text>
                     </row>
-                    <column class="background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" data-top="100%">
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" data-top="100%">
                         <text class="-hover-background-color-eb padding-x-20px">auto</text>
-                        <text class="-hover-background-color-eb padding-x-20px">px</text>
-                        <text class="-hover-background-color-eb padding-x-20px">vw</text>
-                        <text class="-hover-background-color-eb padding-x-20px">%</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">px</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">vw</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">%</text>
+                        <text class="-hover-background-color-eb padding-x-20px">unset</text>
                     </column>
                 </field>
             </flex>
@@ -27,18 +28,18 @@
         </header>
         <row class="gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="text-align" tabindex="2">
             <text class="font-weight-bolder">Text Align</text>
-            <flex class="gap-5px" data-declaration>
+            <flex class="gap-5px" data-declaration="string">
                 <field class="position-relative">
                     <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
-                        <text data-value="value" value="left">Left</text>
+                        <text data-value="value" value="left">left</text>
                         <ico class="color-777" data-height="20px" data-width="20px">
                             <n class="gg-chevron-down"></n>
                         </ico>
                     </row>
-                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
-                        <text class="-hover-background-color-eb padding-x-20px">Left</text>
-                        <text class="-hover-background-color-eb padding-x-20px">Center</text>
-                        <text class="-hover-background-color-eb padding-x-20px">Right</text>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.value(event.target)" data-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="left">left</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="center">center</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="right">right</text>
                     </column>
                 </field>
             </flex>
@@ -46,43 +47,101 @@
     </box>
     <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" tabindex="3">
         <header>
-            <text class="font-size-13px font-weight-bolder text-transform-uppercase">Display</text>
+            <text class="font-size-13px font-weight-bolder text-transform-uppercase">Layout</text>
         </header>
-        <row class="gap-5px justify-content-space-between padding-y-10px" data-element="focus" data-property="display" tabindex="3">
+        <row class="gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="display" tabindex="3">
             <text class="font-weight-bolder">Display</text>
             <flex class="gap-5px" data-declaration="select">
                 <field class="position-relative">
                     <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
-                        <text data-value="value" value="grid">Grid</text>
+                        <text data-value="value" value="unit">flex</text>
                         <ico class="color-777" data-height="20px" data-width="20px">
                             <n class="gg-chevron-down"></n>
                         </ico>
                     </row>
-                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
-                        <text class="-hover-background-color-eb padding-x-20px">Block</text>
-                        <text class="-hover-background-color-eb padding-x-20px">Flex</text>
-                        <text class="-hover-background-color-eb padding-x-20px">Grid</text>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.section(event.target)" data-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="block">block</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="flex">flex</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="grid">grid</text>
                     </column>
                 </field>
             </flex>
         </row>
-        <column>
+        <column data-tab="flex">
+            <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="flex-direction" tabindex="2">
+                <text class="font-weight-bolder">Flex Direction</text>
+                <flex class="gap-5px" data-declaration="string">
+                    <field class="position-relative">
+                        <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                            <text data-value="value">unset</text>
+                            <ico class="color-777" data-height="20px" data-width="20px">
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                        <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.value(event.target)" data-top="100%">
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="column">column</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="row">row</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="unset">unset</text>
+                        </column>
+                    </field>
+                </flex>
+            </row>
+            <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="justifyContent" tabindex="2">
+                <text class="font-weight-bolder">Justify Content</text>
+                <flex class="gap-5px" data-declaration="string">
+                    <field class="position-relative">
+                        <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                            <text data-value="value">Unset</text>
+                            <ico class="color-777" data-height="20px" data-width="20px">
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                        <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.value(event.target)" data-top="100%">
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="center">center</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="flex-start">flex-start</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="flex-end">flex-end</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="space-around">space-around</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="space-between">space-between</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="space-evenly">space-evenly</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="unset">unset</text>
+                        </column>
+                    </field>
+                </flex>
+            </row>
+            <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="gap" tabindex="4">
+                <text class="font-weight-bolder">Gap</text>
+                <flex class="gap-5px" data-declaration="dimension">
+                    <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" data-value="number" onchange="tool.box.value(event.target)" type="number" value="0">
+                    <field class="position-relative">
+                        <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
+                            <text data-value="unit">px</text>
+                        </row>
+                        <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" data-top="100%">
+                            <text class="-hover-background-color-eb padding-x-20px">px</text>
+                            <text class="-hover-background-color-eb padding-x-20px">vw</text>
+                            <text class="-hover-background-color-eb padding-x-20px">%</text>
+                        </column>
+                    </field>
+                </flex>
+            </row>
+        </column>
+        <column class="display-none" data-tab="grid">
             <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="gridTemplateColumns" tabindex="3">
                 <text class="font-weight-bolder">Columns</text>
                 <field data-declaration="number">
                     <ico data-height="20px" data-width="20px">
                         <n class="gg-math-minus"></n>
                     </ico>
-                    <input class="border-1px-solid border-color-db border-radius-3px font-size-16px line-height-30px margin-x-5px padding-x-10px text-align-center width-20px" data-formula="repeat({var}, minmax(0, 1fr))" data-value="number" onchange="tool.box.value(event.target)" type="number" value="3">
+                    <input class="border-1px-solid border-color-db border-radius-3px font-size-16px line-height-30px margin-x-5px padding-x-10px text-align-center width-20px" data-formula="repeat({var}, minmax(0, 1fr))" data-value="number" onchange="tool.box.value(event.target)" type="number" value="1">
                     <ico data-height="20px" data-width="20px">
                         <n class="gg-math-plus"></n>
                     </ico>
                 </field>
             </row>
             <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="gap" tabindex="4">
-                <text class="font-weight-bolder">Grid Gap</text>
+                <text class="font-weight-bolder">Gap</text>
                 <flex class="gap-5px" data-declaration="dimension">
-                    <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" data-value="number" onchange="tool.box.value(event.target)" type="number" value="20">
+                    <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" data-value="number" onchange="tool.box.value(event.target)" type="number" value="0">
                     <field class="position-relative">
                         <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                             <text data-value="unit">px</text>
@@ -300,50 +359,52 @@
         <header>
             <text class="font-size-13px font-weight-bolder text-transform-uppercase">Media</text>
         </header>
-        <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="5">
-            <text class="font-weight-bolder">Audio</text>
-            <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
-                <input type="checkbox">
-                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 border-radius-50pct box-sizing-border-box color-777 color-ddd" data-height="20px" data-width="20px">
-                    <n class="-checked-display-flex gg-check display-none"></n>
-                </ico>
-            </label>
+        <row class="gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="5">
+            <text class="font-weight-bolder">Format</text>
+            <row class="gap-5px">
+                <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
+                    <input type="checkbox">
+                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" data-height="30px" data-width="30px">
+                        <n class="--ggs-75pct gg-music"></n>
+                    </ico>
+                </label>
+                <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
+                    <input type="checkbox">
+                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" data-height="30px" data-width="30px">
+                        <n class="--ggs-75pct gg-file-document"></n>
+                    </ico>
+                </label>
+                <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
+                    <input type="checkbox">
+                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" data-height="30px" data-width="30px">
+                        <n class="--ggs-75pct gg-image"></n>
+                    </ico>
+                </label>
+                <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
+                    <input type="checkbox">
+                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" data-height="30px" data-width="30px">
+                        <n class="--ggs-75pct gg-film"></n>
+                    </ico>
+                </label>
+                <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
+                    <input type="checkbox">
+                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" data-height="30px" data-width="30px">
+                        <n class="--ggs-75pct gg-shopping-bag"></n>
+                    </ico>
+                </label>
+            </row>
         </row>
-        <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="6">
-            <text class="font-weight-bolder">Merch</text>
-            <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
-                <input type="checkbox">
-                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 border-radius-50pct box-sizing-border-box color-777 color-ddd" data-height="20px" data-width="20px">
-                    <n class="-checked-display-flex gg-check display-none"></n>
+        <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="limit" tabindex="3">
+            <text class="font-weight-bolder">Limit</text>
+            <field data-declaration="number">
+                <ico class="opacity-25pct" data-height="20px" data-width="20px">
+                    <n class="gg-math-minus"></n>
                 </ico>
-            </label>
-        </row>
-        <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="7">
-            <text class="font-weight-bolder">Pages</text>
-            <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
-                <input type="checkbox">
-                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 border-radius-50pct box-sizing-border-box color-777 color-ddd" data-height="20px" data-width="20px">
-                    <n class="-checked-display-flex gg-check display-none"></n>
+                <input class="border-1px-solid border-color-db border-radius-3px font-size-16px line-height-30px margin-x-5px padding-x-10px text-align-center width-20px" data-formula="repeat({var}, minmax(0, 1fr))" data-value="number" onchange="tool.box.value(event.target)" type="number" value="0">
+                <ico data-height="20px" data-width="20px">
+                    <n class="gg-math-plus"></n>
                 </ico>
-            </label>
-        </row>
-        <row class="border-bottom-1px-solid border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="8">
-            <text class="font-weight-bolder">Photo</text>
-            <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
-                <input type="checkbox">
-                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 border-radius-50pct box-sizing-border-box color-777 color-ddd" data-height="20px" data-width="20px">
-                    <n class="-checked-display-flex gg-check display-none"></n>
-                </ico>
-            </label>
-        </row>
-        <row class="border-color-ddd gap-5px justify-content-space-between line-height-30px padding-y-10px" tabindex="9">
-            <text class="font-weight-bolder">Video</text>
-            <label class='align-items-center display-flex gap-5px justify-content-center' data-height="30px">
-                <input type="checkbox">
-                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-777 border-radius-50pct box-sizing-border-box color-777 color-ddd" data-height="20px" data-width="20px">
-                    <n class="-checked-display-flex gg-check display-none"></n>
-                </ico>
-            </label>
+            </field>
         </row>
     </box>
     <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" data-display="none" tabindex="6">

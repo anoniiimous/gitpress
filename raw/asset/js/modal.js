@@ -234,6 +234,7 @@ window.modal = {
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);
                     }
+                    
                     var ico = event.target.closest('card > section > box ico');
                     if (ico) {
                         event.target.closest('box').remove();
@@ -241,6 +242,7 @@ window.modal = {
                             dropdown.find("[placeholder]").textContent = "";
                         }
                     }
+                    
                     var none = event.target.closest('card > row > box');
                     if (none) {
                         dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
@@ -259,7 +261,8 @@ window.modal = {
                         //alert(element.outerHTML);
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);
-                    } else {
+                    }
+                    else {
                         dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);

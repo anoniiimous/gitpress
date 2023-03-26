@@ -188,6 +188,7 @@
 
     row {
         flex-direction: row;
+        align-items: flex-start;
     }
 
     row[tabindex]:focus {
@@ -573,17 +574,35 @@
 
     /*ELEMENTS*/
     body[buildable="true"] card:has( > :not(backdrop):not(empty):not(template):empty) {
-        height: 50px;
-        width: 100%;
+        min-height: 50px;
+        min-width: 100%;
     }
 
     body[buildable="true"] box:has(> :not(backdrop):not(empty):not(template):empty) {
-        height: 50px;
-        width: 50px;
+        min-height: 50px;
+        min-width: 50px;
     }
 
     body[buildable="true"] box text:empty {
         min-height: 20px;
+    }
+
+    body[buildable="true"] box picture:empty {
+        height: 0;
+        min-width: 100%;
+        padding-top: 100%;
+        background-color: #f7f7f7;
+    }
+
+    body[buildable="true"] box video:empty {
+        height: 0;
+        min-width: 100%;
+        padding-top: 56.25%;
+        background-color: #f7f7f7;
+    }
+
+    body[buildable="true"] box audio:empty {
+        width: 100%;
     }
 
     /*UI*/

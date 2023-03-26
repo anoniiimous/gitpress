@@ -323,54 +323,61 @@ window.tool.box.css = function(tab) {
         });
         var d1 = Object.assign({}, ppp.focus.dataset);
         var d2 = Object.assign({}, ppp.focus.find('flex, column, row, section').dataset);
+        Object.entries(d1).forEach(function(entry) {});
         var dataset = Object.assign(d1, d2);
+        var vd = Object.entries(dataset);
         Object.assign(rules, dataset);
-        console.log(718, {
+        0 < 1 ? console.log(718, {
             classList,
             dataset,
             rules
-        });
+        }) : null;
         declarations.forEach(function(el) {
             var row = el.closest('[data-property]');
             if (row) {
-                var property = row.dataset.property;
+                var property = row.dataset.property; //console.log({property});
                 var number = el.find('[data-value="value"], [data-value="number"]');
                 if (number) {
                     var value = number.getAttribute('value');
+                    var formula = el.find('[data-formula]');
                     var unit = el.find('[data-value="unit"]');
                     if (unit) {
                         value = value + unit.textContent;
                     }
                     var selector = "block";
                     var cssRule = selector + " {" + property + ": " + value + "}";
+                    //console.log(350, cssRule);
                     Object.entries(rules).forEach(function(rule) {
                         var k = rule[0];
                         var v = rule[1];
+                        console.log(property, {number, value, unit}, {k, v});
                         if (property === k) {
-                            console.log({
-                                v
-                            });
                             var value = v.cssValue();
-                            console.log({
+                            0 > 1 ? console.log({
                                 k,
                                 unit,
                                 value,
                                 v
-                            });
-                            if (value && unit) {
-                                unit.textContent = value.unit;
-                                if (value.unit === null) {
-                                    number.classList.add('display-none');
+                            }) : null;
+                            if (value.number) {
+                                if (value.unit) {
+                                    number.classList.remove('display-none')
+                                    number && value.number ? number.value = value.number : null;
+                                    unit && value.unit ? unit.textContent = value.unit : null;
+                                } else {
+                                    unit ? unit.textContent = value.number : null;                                    
                                 }
+                            } else {
+                                unit && value.number ? unit.textContent = value.number : null;
+                                number ? number.classList.add('display-none') : null;
                             }
-                            number.value = value.number;
-                            console.log(cssRule, {
+                            0 > 1 ? console.log(cssRule, {
                                 unit,
                                 number,
                                 rule,
                                 k,
                                 v
-                            });
+                            }) : null;
                         }
                     });
                 }
@@ -379,7 +386,7 @@ window.tool.box.css = function(tab) {
     }
 
 }
-window.tool.box.element = function(target) {
+window.tool.box.element = async function(target) {
     var button = target.closest('[data-value]');
     if (button) {
         var iframe = byId('iframe-editor');
@@ -397,17 +404,45 @@ window.tool.box.element = function(target) {
             value
         });
 
-        if (value === "text") {
-            element = doc.createElement('text');
-            element.setAttribute('contenteditable', true);
-            element.setAttribute('placeholder', 'Write here...');
+        if (value) {
+            var html = await ajax('raw/asset/html/tool/tool.box.elements.html');
+            var parser = new DOMParser().parseFromString(html, "text/html");
+            var element = parser.body.firstElementChild.find(value);
 
             modal.exit(target);
 
             var wrapper = focusing.find('flex, column, row, section');
             wrapper.insertAdjacentHTML('beforeend', element.outerHTML)
             wrapper.lastElementChild.focus();
+
         }
+    }
+}
+window.tool.box.values = function(target) {
+    var button = target.closest('[data-tap] > [data-value]');
+    if (button) {
+        var unit = button.textContent;
+        var text = button.closest('[data-dropdown] + *').previousElementSibling.firstElementChild;
+        text.textContent = unit;
+
+        var input = text.closest('row > * > *').previousElementSibling;
+        var onchange = input.getAttribute('onchange').split('(')[0].split('.');
+        var method = window;
+        console.log({
+            button,
+            input,
+            onchange
+        });
+
+        if (button.dataset.dimension === "unit") {
+            input.classList.remove('display-none');
+        } else {
+            input.classList.add('display-none');
+        }
+        onchange.forEach(function(o) {
+            method = method[o];
+        });
+        method(input);
     }
 }
 window.tool.box.unit = function(target) {
@@ -417,14 +452,14 @@ window.tool.box.unit = function(target) {
         var text = button.closest('[data-dropdown] + *').previousElementSibling.firstElementChild;
         text.textContent = unit;
 
-        var input = text.closest('input + *').previousElementSibling;
+        var input = text.closest('row > * > *').previousElementSibling;
         var onchange = input.getAttribute('onchange').split('(')[0].split('.');
         var method = window;
-        console.log({
+        0 > 1 ? console.log({
             button,
             input,
             onchange
-        });
+        }) : null;
 
         if (button.dataset.dimension === "unit") {
             input.classList.remove('display-none');
@@ -457,13 +492,26 @@ window.tool.box.value = function(target) {
     var declaration = target.closest('[data-declaration]').dataset.declaration;
     if (declaration === "dimension") {
         var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
-        value = target.classList.contains('display-none') ? unit : target.value + unit;
+        if (unit) {
+            value = target.classList.contains('display-none') ? unit : target.value + unit;
+        }
     }
     if (declaration === "number") {
         value = target.value;
     }
+    if (declaration === "string") {
+        var selected = target.closest('[data-value]');
+        if (selected) {
+            value = selected.dataset.value;
+            target.closest('[data-tap]').previousElementSibling.firstElementChild.textContent = selected.textContent;
+        }
+    }
 
-    if (declaration) {
+    0 > 1 ? console.log({
+        declaration,
+        value
+    }) : null;
+    if (declaration && value) {
         var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
         var formula = target.dataset.formula ? target.dataset.formula : null;
         window.tool.box.style(focus, {
@@ -477,13 +525,18 @@ window.tool.box.value = function(target) {
 }
 window.tool.box.style = function(focus, declaration, options) {
 
-    var pseudo = options ? options.pseudo: null;
+    var pseudo = options ? options.pseudo : null;
     var rule = options ? options.rule : null;
     var formula = options ? options.formula : null;
-    
-    var attribute = declaration.attribute;
+
+    var attribute = attr = declaration.attribute;
     var value = formula ? formula.replace('{var}', declaration.value) : declaration.value;
     focus.style[attribute] = value;
+    0 > 1 ? console.log(520, {
+        focus,
+        attribute,
+        value
+    }) : null;
 
     attribute = attribute.camelPhynate();
     var className = [attribute, value].join('-');
@@ -495,14 +548,85 @@ window.tool.box.style = function(focus, declaration, options) {
         value,
     };
 
-    console.log(472, {
+    0 > 1 ? console.log(472, {
         focus,
         attribute,
         value
-    }, obj);
+    }, obj) : null;
+    if (formula) {
+        focus.dataset[attr] = value;
+    } else {
+        var classExists = false;
+        var classList = focus.classList;
+        classList.forEach(function(classVal) {
+            var cns1 = classVal.split('-');
+            var val1 = cns1.pop();
+            var cn1 = cns1.join('-')
+
+            var cns = className.split('-');
+            var val = cns.pop();
+            var cn = cns.join('-')
+            if (cn1 == cn) {
+                classExists = true;
+            }
+            0 > 1 ? console.log(557, className, cn, cn1) : null;
+            if (classExists) {
+                focus.classList.remove(classVal);
+            }
+        });
+        focus.classList.add(className);
+    }
 }
 window.tool.box.group = function(target) {
     $(target.closest('box > row').nextElementSibling).toggleClass('display-none');
+}
+window.tool.box.section = function(target) {
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    var tagName = doc.body.getAttribute('focus');
+    var focused = win.$('[focus]');
+    var focus = focused[focused.length - 1];
+    var element = target.closest('[data-element]').dataset.element;
+    if (element === "wrapper") {
+        focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
+    }
+    if (element === "children") {
+        focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");
+    }
+
+    var button = target.closest('[data-value]');
+    var value = button ? button.dataset.value : null;
+    if (value) {
+        target.closest('[data-tap]').previousElementSibling.firstElementChild.textContent = button.textContent;
+        target.closest('[data-tap]').previousElementSibling.firstElementChild.value = button.dataset.value;
+
+        var box = target.closest('box');
+        $(box.all('box > row ~ column')).addClass('display-none');
+
+        var attribute = target.closest('[data-property]').dataset.property;
+        var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
+        var formula = target.dataset.formula ? target.dataset.formula : null;
+        console.log(focus, {
+            attribute,
+            value
+        }, {
+            rule,
+            formula
+        });
+        window.tool.box.style(focus, {
+            attribute,
+            value
+        }, {
+            rule,
+            formula
+        });
+
+        var tab = value ? $(box.find('box > row ~ column[data-tab="' + value + '"]')) : null;
+        if (tab) {
+            tab.removeClass('display-none');
+        }
+    }
 }
 window.tool.box.width = function(target) {
     var iframe = byId('iframe-editor');

@@ -606,21 +606,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                     parent.insertAdjacentHTML('beforeend', el.outerHTML);
                     var elem = parent.lastElementChild;
-                    focus = elem.tagName.toLowerCase();
-                    console.log({
-                        focus,
-                        el,
-                        elem
-                    });
 
-                    $(doc.body.all('[focus]')).forEach(function(l) {
-                        l.removeAttribute('focus');
-                    });
-                    $(doc.body.all('box text[contenteditable]')).forEach(function(l) {
-                        l.removeAttribute('contenteditable');
-                    });
-                    $([doc.body]).attr('focus', focus);
-                    $([elem, elem.closest('block, footer, header')]).attr('focus', focus);
+                    if (0 > 1) {
+                        focus = elem.tagName.toLowerCase();
+                        console.log({
+                            focus,
+                            el,
+                            elem
+                        });
+
+                        $(doc.body.all('[focus]')).forEach(function(l) {
+                            l.removeAttribute('focus');
+                        });
+                        $(doc.body.all('box text[contenteditable]')).forEach(function(l) {
+                            l.removeAttribute('contenteditable');
+                        });
+                        $([doc.body]).attr('focus', focus);
+                        $([elem, elem.closest('block, footer, header')]).attr('focus', focus);
+                    }
 
                 }
 
@@ -702,18 +705,26 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 var html = await ajax('raw/asset/html/tool/tool.bar.' + element + '.html');
                 var ppp = new DOMParser().parseFromString(html, "text/html");
+
                 var declarations = ppp.body.all('[data-declaration]');
                 console.log(705, ppp, {
                     declarations
                 });
-                toolbar.find('[data-declaration]').innerHTML = declarations[2].innerHTML;
+
+                var card = toolbar.find('[data-declaration]');
+                card.dataset.property = declarations[3].closest('[data-property]').dataset.property;
+                card.innerHTML = declarations[3].outerHTML;
                 //declarations.forEach(function(declaration) { });
+
             }
 
             if ("toolbox" === "toolbox") {
 
                 var html = await ajax('raw/asset/html/template/template.toolbox.update.html');
                 var ppp = await modal.popup(html);
+
+                var html = await ajax('/raw/asset/html/tool/tool.bar.' + element + '.html');
+                var col = new DOMParser().parseFromString(html, "text/html");
 
                 var focused = $(doc.body.all('[focus]'));
                 ppp.focus = focused[focused.length - 1];
@@ -725,13 +736,21 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var header = ppp.find('card header');
 
                 var tabs = header.parentNode.all('card > column');
-                var tab = $(tabs)[box.index()];
-
                 $(tabs).attr('data-display', 'none')
-                tab.removeAttribute('data-display');
 
-                if (tab) {//tool.box.css(tab);
-                }
+                var fetching = ppp.all('[data-fetch]');
+                console.log(col.body, fetching);
+                fetching.length > 0 ? fetching.forEach(async function(column, index) {
+                    var html = await ajax(column.dataset.fetch);
+                    var parser = new DOMParser().parseFromString(html, "text/html");
+                    column.innerHTML = parser.body.firstElementChild.innerHTML;
+                    var tab = index === box.index() ? column : null;
+                    if (tab) {
+                        tab.removeAttribute('data-display');
+                        console.log(tab);
+                        tool.box.css(tab);
+                    }
+                }) : null;
             }
         },
 
@@ -766,8 +785,23 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var replace = doc.createElement(tagName);
                     focus.insertAdjacentHTML('beforebegin', replace.outerHTML);
                 }
+                var prev = focus.previousElementSibling;
+                var next = focus.nextElementSibling;
+                if (prev) {
+                    $([target.closest('body'), prev]).attr('focus', prev.tagName.toLowerCase());
+                } else {
+                    if (next) {
+                        $([target.closest('body'), next]).attr('focus', next.tagName.toLowerCase());
+                    } else {
+                        $([target.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase());
+                    }
+                }
+                console.log({
+                    prev,
+                    next
+                });
                 focus.remove();
-                parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
+                //parent ? $([parent.closest('body'), parent]).attr('focus', parent.tagName.toLowerCase()) : null;
             }
         },
 

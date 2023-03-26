@@ -1,0 +1,69 @@
+<column class="gap-10px overflow-x-hidden padding-20px" data-display="none" data-fetch="raw/asset/html/tool/tool.bar.block.html" data-tab="block" data-height="320px" data-width="320px">
+    <box class="display-flex flex-direction-column justify-content-space-between line-height-30px">
+        <header>
+            <text class="font-size-13px font-weight-bolder text-transform-uppercase">Size</text>
+        </header>
+        <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" tabindex="1">
+            <text class="font-weight-bolder">Height</text>
+            <flex class="gap-5px" data-element="focus" data-property="height">
+                <input class="border-1px-solid border-color-db border-radius-3px text-align-center width-50px" data-value="number" onchange="tool.box.value(event.target)" type="number" value="50">
+                <field class="position-relative" data-declaration>
+                    <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
+                        <text data-value="unit">px</text>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" data-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px">px</text>
+                        <text class="-hover-background-color-eb padding-x-20px">vw</text>
+                        <text class="-hover-background-color-eb padding-x-20px">%</text>
+                    </column>
+                </field>
+            </flex>
+        </row>
+    </box>
+    <box class="display-flex flex-direction-column justify-content-space-between line-height-30px">
+        <header>
+            <text class="font-size-13px font-weight-bolder text-transform-uppercase">Text</text>
+        </header>
+        <row class="gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="text-align" tabindex="2">
+            <text class="font-weight-bolder">Text Align</text>
+            <flex class="gap-5px" data-declaration>
+                <field class="position-relative">
+                    <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                        <text data-value="value" value="left">Left</text>
+                        <ico class="color-777" data-height="20px" data-width="20px">
+                            <n class="gg-chevron-down"></n>
+                        </ico>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px">Left</text>
+                        <text class="-hover-background-color-eb padding-x-20px">Center</text>
+                        <text class="-hover-background-color-eb padding-x-20px">Right</text>
+                    </column>
+                </field>
+            </flex>
+        </row>
+    </box>
+    <box class="display-flex flex-direction-column justify-content-space-between line-height-30px">
+        <header>
+            <text class="font-size-13px font-weight-bolder text-transform-uppercase">Flex</text>
+        </header>
+        <row class="gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="flex-direction" tabindex="2">
+            <text class="font-weight-bolder">Flex Direction</text>
+            <flex class="gap-5px" data-declaration>
+                <field class="position-relative">
+                    <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                        <text data-value="value">Column</text>
+                        <ico class="color-777" data-height="20px" data-width="20px">
+                            <n class="gg-chevron-down"></n>
+                        </ico>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-display="none" data-hidden="tap" data-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px">Default</text>
+                        <text class="-hover-background-color-eb padding-x-20px">Column</text>
+                        <text class="-hover-background-color-eb padding-x-20px">Row</text>
+                    </column>
+                </field>
+            </flex>
+        </row>
+    </box>
+</column>
