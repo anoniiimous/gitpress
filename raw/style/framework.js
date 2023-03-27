@@ -336,17 +336,24 @@ window.tool.box.css = function(tab) {
             var row = el.closest('[data-property]');
             if (row) {
                 var property = row.dataset.property;
-                //console.log({property});
                 var number = el.find('[data-value="value"], [data-value="number"]');
-                if (number) {
+                //console.log({property,el,number});
+                if (number && number.classList.contains('display-none')) {
                     var value = number.getAttribute('value');
                     var formula = el.find('[data-formula]');
                     var unit = el.find('[data-value="unit"]');
                     if (unit) {
-                        value = value + unit.textContent;
+                        value = unit.textContent;
                     }
                     var selector = "block";
                     var cssRule = selector + " {" + property + ": " + value + "}";
+                    var tab = el.closest('box').all('box > [data-tab="' + value + '"]');
+                    //console.log(tab, el.closest('box'));
+                    if (tab.length > 0) {
+                        console.log(tab, value);
+                        $(el.closest('box').all('box > [data-tab]')).removeClass('display-none');
+                        tab.classList.add('display-none')
+                    }
                     //console.log(350, cssRule);
                     Object.entries(rules).forEach(function(rule) {
                         var k = rule[0];
@@ -355,6 +362,59 @@ window.tool.box.css = function(tab) {
                         if (property === k) {
                             var value = v.cssValue();
                             0 > 1 ? console.log({
+                                k,
+                                unit,
+                                value,
+                                v
+                            }) : null;
+                            var tabs = el.closest('box');
+                            console.log(349, tabs);
+                            if (tabs.length > 0) {}
+                            if (value.number) {
+                                if (value.unit) {
+                                    number.classList.remove('display-none')
+                                    number && value.number ? number.value = value.number : null;
+                                    unit && value.unit ? unit.textContent = value.unit : null;
+                                } else {
+                                    unit ? unit.textContent = value.number : null;
+                                }
+                            } else {
+                                unit && value.number ? unit.textContent = value.number : null;
+                                number ? number.classList.add('display-none') : null;
+                            }
+                            0 > 1 ? console.log(cssRule, {
+                                unit,
+                                number,
+                                rule,
+                                k,
+                                v
+                            }) : null;
+                        }
+                    });
+                } else if (number && !number.classList.contains('display-none')) {
+                    var value = number.getAttribute('value');
+                    var formula = el.find('[data-formula]');
+                    var unit = el.find('[data-value="unit"], [data-value="value"]');
+                    if (unit) {
+                        value = value + unit.textContent;
+                    }
+                    var selector = "block";
+                    var cssRule = selector + " {" + property + ": " + value + "}";
+
+                    Object.entries(rules).forEach(function(rule) {
+                        var k = rule[0];
+                        var v = rule[1];
+                        0 > 1 ? console.log(property, {
+                            number,
+                            value,
+                            unit
+                        }, {
+                            k,
+                            v
+                        }) : null;
+                        if (property === k) {
+                            var value = v.cssValue();
+                            0 < 1 ? console.log(tab, {
                                 k,
                                 unit,
                                 value,
@@ -379,6 +439,13 @@ window.tool.box.css = function(tab) {
                                 k,
                                 v
                             }) : null;
+                            var tab = el.closest('box').all('column[data-tab="' + unit.textContent + '"]');
+                            console.log(cssRule, tab, el.closest('box'), value);
+                            if (tab && tab.length > 0) {
+                                console.log(tab, value);
+                                $(el.closest('box').all('box > [data-tab]')).addClass('display-none');
+                                $(tab).removeClass('display-none')
+                            }
                         }
                     });
                 }
