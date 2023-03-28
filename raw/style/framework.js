@@ -208,7 +208,7 @@ framework.on = async function(event) {
                 } else {
 
                     if (el === "box") {
-                        var media = selected.closest('[data-media]') ? selected.closest('[data-media]').dataset.media : null;
+                        var media = selected.closest('[media]') ? selected.closest('[media]').getAttribute('media') : null;
                         var id = selected.dataset.id;
                         if (media && !id) {
                             var json = is.json(media) ? JSON.parse(media) : false;
@@ -337,11 +337,15 @@ window.tool.box.css = function(tab) {
             if (row) {
                 var property = row.dataset.property;
                 var number = el.find('[data-value="value"], [data-value="number"]');
-                //console.log({property,el,number});
+                0 > 1 ? console.log({
+                    property,
+                    el,
+                    number
+                }) : null;
                 if (number && number.classList.contains('display-none')) {
                     var value = number.getAttribute('value');
                     var formula = el.find('[data-formula]');
-                    var unit = el.find('[data-value="unit"]');
+                    var unit = el.find('[data-value="number"], [data-value="unit"],  [data-value="value"]');
                     if (unit) {
                         value = unit.textContent;
                     }
@@ -361,7 +365,7 @@ window.tool.box.css = function(tab) {
                         //console.log(property, {number, value, unit}, {k, v});
                         if (property === k) {
                             var value = v.cssValue();
-                            0 > 1 ? console.log({
+                            0 < 1 ? console.log({
                                 k,
                                 unit,
                                 value,
@@ -376,7 +380,7 @@ window.tool.box.css = function(tab) {
                                     number && value.number ? number.value = value.number : null;
                                     unit && value.unit ? unit.textContent = value.unit : null;
                                 } else {
-                                    unit ? unit.textContent = value.number : null;
+                                    unit.getAttribute('type') === "number" ? unit.value = value.number : unit.textContent = value.number;
                                 }
                             } else {
                                 unit && value.number ? unit.textContent = value.number : null;
@@ -394,7 +398,7 @@ window.tool.box.css = function(tab) {
                 } else if (number && !number.classList.contains('display-none')) {
                     var value = number.getAttribute('value');
                     var formula = el.find('[data-formula]');
-                    var unit = el.find('[data-value="unit"], [data-value="value"]');
+                    var unit = el.find('[data-value="number"], [data-value="unit"],  [data-value="value"]');
                     if (unit) {
                         value = value + unit.textContent;
                     }
@@ -416,6 +420,7 @@ window.tool.box.css = function(tab) {
                             var value = v.cssValue();
                             0 < 1 ? console.log(tab, {
                                 k,
+                                number,
                                 unit,
                                 value,
                                 v
@@ -426,7 +431,13 @@ window.tool.box.css = function(tab) {
                                     number && value.number ? number.value = value.number : null;
                                     unit && value.unit ? unit.textContent = value.unit : null;
                                 } else {
-                                    unit ? unit.textContent = value.number : null;
+                                    console.log(429, unit, value, number.getAttribute('value'), value.number);
+                                    if (formula) {
+                                        var num = value.number;
+                                        unit.getAttribute('type') === "number" ? unit.setAttribute('value', num) : unit.textContent = num;                                        
+                                    } else {
+                                        unit.getAttribute('type') === "number" ? unit.value = value.number : unit.textContent = value.number;
+                                    }
                                 }
                             } else {
                                 unit && value.number ? unit.textContent = value.number : null;
@@ -439,7 +450,7 @@ window.tool.box.css = function(tab) {
                                 k,
                                 v
                             }) : null;
-                            var tab = el.closest('box').all('column[data-tab="' + unit.textContent + '"]');
+                            var tab = unit ? el.closest('box').all('column[data-tab="' + unit.textContent + '"]') : null;
                             console.log(cssRule, tab, el.closest('box'), value);
                             if (tab && tab.length > 0) {
                                 console.log(tab, value);
@@ -605,11 +616,11 @@ window.tool.box.style = function(focus, declaration, options) {
         attribute,
         value
     }) : null;
-    focus.style[attribute] = value;
+    //focus.style[attribute] = value;
 
     //INLINE CLASS
     attribute = attribute.camelPhynate();
-    var className = [attribute, value].join('-');
+    var className = [attribute, declaration.value].join('-');
     var obj = {};
     obj[className] = {
         pseudo,
@@ -623,28 +634,29 @@ window.tool.box.style = function(focus, declaration, options) {
         value
     }, obj) : null;
     if (formula) {
-        focus.dataset[attr] = value;
-    } else {
-        var classExists = false;
-        var classList = focus.classList;
-        classList.forEach(function(classVal) {
-            var cns1 = classVal.split('-');
-            var val1 = cns1.pop();
-            var cn1 = cns1.join('-')
-
-            var cns = className.split('-');
-            var val = cns.pop();
-            var cn = cns.join('-')
-            if (cn1 == cn) {
-                classExists = true;
-            }
-            0 > 1 ? console.log(557, className, cn, cn1) : null;
-            if (classExists) {
-                focus.classList.remove(classVal);
-            }
-        });
-        focus.classList.add(className);
+        focus.dataset[attr] = declaration.value;
     }
+    //else {
+    var classExists = false;
+    var classList = focus.classList;
+    classList.forEach(function(classVal) {
+        var cns1 = classVal.split('-');
+        var val1 = cns1.pop();
+        var cn1 = cns1.join('-')
+
+        var cns = className.split('-');
+        var val = cns.pop();
+        var cn = cns.join('-')
+        if (cn1 == cn) {
+            classExists = true;
+        }
+        0 > 1 ? console.log(557, className, cn, cn1) : null;
+        if (classExists) {
+            focus.classList.remove(classVal);
+        }
+    });
+    focus.classList.add(className);
+    //}
 
     //STYLE SHEETS
     var iframe = byId('iframe-editor');
@@ -698,7 +710,10 @@ window.tool.box.style = function(focus, declaration, options) {
         cssRules.forEach(function(r) {
             css += r.cssText;
         });
-        var declaration = '.' + className + ' { ' + attr + ': ' + value + ' }';
+        var declaration = '.' + className + ' { ' + attr.camelPhynate() + ': ' + value + ' }';
+        console.log({
+            declaration
+        });
         find ? null : css += declaration;
 
         console.log(618, 'cssLoaded', {
@@ -716,17 +731,18 @@ window.tool.box.style = function(focus, declaration, options) {
         }, {
             stylesheet,
             sheet,
-            attr
+            attr,
+            lnk
         }, {
             declaration,
             find,
             css,
             cssRules
         });
-        lnk.href = blob(css, 'text/css');
-        lnk.id = sheet;
-        lnk.rel = "stylesheet";
-        lnk.onload = function() {
+        stylesheet.href = blob(css, 'text/css');
+        stylesheet.id = sheet;
+        stylesheet.rel = "stylesheet";
+        stylesheet.onload = function() {
             console.log('CSS ReUpdated');
         }
     }

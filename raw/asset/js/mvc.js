@@ -83,7 +83,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             $(vp.all('[data-value="page.name"]')).html(vp.dataset.title);
 
             //MEDIA FEED
-            var feeds = vp.all('[data-media]');
+            var feeds = vp.all('[media]');
             if (feeds.length > 0) {
                 var f = 0;
                 do {
@@ -92,7 +92,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                     var template = feed.nextElementSibling.content;
                     var limit = template.children.length;
-                    var media = feed.dataset.media;
+                    var media = feed.getAttribute('media');
                     console.log(63, {
                         limit,
                         media
