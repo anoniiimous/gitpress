@@ -256,7 +256,7 @@ window.on.touch = {
     var target = event.target;
     //console.log('tap',{event,target});
 
-    target.closest('[data-ignore]') ? null : $("[data-hidden='tap']").attr('data-display', 'none');
+    target.closest('[data-ignore]') ? null : $("[data-hidden='tap']").attr('css-display', 'none');
 
     //EVENTS
     var el = target.closest(".block");
@@ -285,11 +285,11 @@ window.on.touch = {
 
     var elem = target.closest('[data-dropdown]');
     if (elem) {
-        if (elem.nextElementSibling.dataset.display === 'none') {
-            $("[data-hidden='tap']").attr('data-display', 'none');
-            elem.nextElementSibling['removeAttribute']('data-display', 'none');
+        if (elem.nextElementSibling.getAttribute("css-display") === 'none') {
+            $("[data-hidden='tap']").attr('css-display', 'none');
+            elem.nextElementSibling['removeAttribute']('css-display', 'none');
         } else {
-            elem.nextElementSibling['setAttribute']('data-display', 'none');
+            elem.nextElementSibling['setAttribute']('css-display', 'none');
         }
     }
 
@@ -525,7 +525,7 @@ window.on.focus.out.card = {
         if (value.length === 0) {
             target.className = "opacity-0";
             text.className = "color-bbb padding-x-20px";
-            text.removeAttribute('data-transform');
+            text.removeAttribute('css-transform');
 
         }
     }

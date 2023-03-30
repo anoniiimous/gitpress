@@ -3,9 +3,9 @@
         <row class="justify-content-space-between">
             <card>
                 <row class="gap-10px">
-                    <box class="display-nonre" data-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                    <box class="display-nonre" css-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
                         <section>
-                            <ico data-height="30px" data-width="30px">
+                            <ico css-height="30px" css-width="30px">
                                 <n class="gg-menu"></n>
                             </ico>
                         </section>
@@ -21,7 +21,7 @@
                 <row>
                     <box class="display-none line-height-30px" data-href="/dashboard/:get/merch/catalog/">
                         <row class="align-items-center justify-content-center">
-                            <ico data-height="30px" data-width="50px">
+                            <ico css-height="30px" css-width="50px">
                                 <n class="gg-tag"></n>
                             </ico>
                             <text class="font-size-14px font-weight-bolder">Add Item</text>
@@ -38,15 +38,15 @@
                     <box>
                         <label class="align-items-center display-flex justify-content-center">
                             <input onchange="controller.merch.select(event.target)" type="checkbox">
-                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box margin-15px" data-height="20px" data-width="20px">
+                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box margin-15px" css-height="20px" css-width="20px">
                                 <n class="-checked-display-flex display-none gg-check"></n>
                             </ico>
                         </label>
                     </box>
-                    <box data-width="calc(100% - 50px)">
+                    <box css-width="calc(100% - 50px)">
                         <row class="align-items-center">
                             <text class="display-block flex-1 font-size-16px font-weight-bolder line-height-50px overflow-hidden Rtext-overflow-ellipsis white-space-nowrap" placeholder="Title"></text>
-                            <ico data-display="none" data-height="30px" data-width="30px">
+                            <ico css-display="none" css-height="30px" css-width="30px">
                                 <n class="--ggs-50pct gg-pen"></n>
                             </ico>
                         </row>
@@ -58,27 +58,27 @@
                             </ico>
                         </section>
                     </box>
-                    <box data-display="none">
+                    <box css-display="none">
                         <row data-dropdown data-ignore>
                             <ico>
                                 <n class="gg-more-vertical-alt"></n>
                             </ico>
                         </row>
-                        <column class="align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px z-index-3" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                        <column class="align-items-flex-start background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-10px position-absolute right-5px z-index-3" css-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
                             <text class="align-items-center display-flex grid-gap-5px justify-content-center">
-                                <ico data-height="30px" data-width="30px">
+                                <ico css-height="30px" css-width="30px">
                                     <n class="gg-eye"></n>
                                 </ico>
                                 <span>Preview</span>
                             </text>
                             <text class="align-items-center display-flex grid-gap-5px justify-content-center">
-                                <ico data-height="30px" data-width="30px">
+                                <ico css-height="30px" css-width="30px">
                                     <n class="gg-tag"></n>
                                 </ico>
                                 <span>Update</span>
                             </text>
                             <text class="align-items-center display-flex grid-gap-5px justify-content-center" data-tap="controller.merch.delete([rout.ed.dir(event.target.closest('box').previousElementSibling.find('[data-href]').dataset.href).splice(4,5).join('/')])">
-                                <ico data-height="30px" data-width="30px">
+                                <ico css-height="30px" css-width="30px">
                                     <n class="gg-trash"></n>
                                 </ico>
                                 <span>Delete</span>
@@ -104,7 +104,7 @@
                 </section>
             </box>
         </column>
-        <footer class="bottom-10px left-0 margin-auto right-0 position-fixed width-100pct" data-display="none">
+        <footer class="bottom-10px left-0 margin-auto right-0 position-fixed width-100pct" css-display="none">
             <card class="background-color-fff border-radius-50px margin-auto">
                 <row>
                     <box class="display-none">
@@ -116,7 +116,7 @@
                     </box>
                     <box class="line-height-50px" data-tap="controller.merch.remove(event.target)">
                         <row class="align-items-center gap-5px justify-content-center padding-x-20px">
-                            <ico data-height="30px" data-width="20px">
+                            <ico css-height="30px" css-width="20px">
                                 <n class="gg-trash"></n>
                             </ico>
                             <text class="font-weight-bolder">Delete</text>

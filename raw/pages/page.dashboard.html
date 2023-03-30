@@ -21,7 +21,7 @@
     </block>
     <block class="-hd-margin-x-20px -isauth align-items-center flex-flow-column-reverse justify-content-space-between z-index-1">
         <column class="width-100pct" id="feed-dashboard"></column>
-        <flex class="-dw720px-flex-direction-column align-items-center full-state-adjacent flex-direction-row gap-10px justify-content-space-between margin-y-20px max-width-768px" data-width="calc(100% - 8vw)">
+        <flex class="-dw720px-flex-direction-column align-items-center full-state-adjacent flex-direction-row gap-10px justify-content-space-between margin-y-20px max-width-768px" css-width="calc(100% - 8vw)">
             <form class="background-color-fff border-radius-50px flex-grow-1 line-height-30px max-width-480px width-100pct">
                 <row>
                     <box>
@@ -45,15 +45,15 @@
                     </box>
                     <box class="background-color-09721d border-radius-50px color-fff flex-1 line-height-50px padding-x-10px position-relative">
                         <row class="align-items-center justify-content-center" data-dropdown data-ignore>
-                            <ico data-width="30px">
+                            <ico css-width="30px">
                                 <n class="gg-add"></n>
                             </ico>
                             <text class="padding-x-10px">New App</text>
-                            <ico class="display-none" data-width="20px">
+                            <ico class="display-none" css-width="20px">
                                 <n class="gg-chevron-down"></n>
                             </ico>
                         </row>
-                        <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder margin-auto padding-x-20px position-absolute right-0 width-160px" data-display="none" data-hidden="tap" data-hd-width="calc(100% - 40px)" data-top="calc(100% - 5px)">
+                        <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder margin-auto padding-x-20px position-absolute right-0 width-160px" css-display="none" data-hidden="tap" data-hd-width="calc(100% - 40px)" css-top="calc(100% - 5px)">
                             <text data-href="/new/">Create a project</text>
                             <text data-href="/new/import/">Import a repository</text>
                             <text data-href="/new/upload/">Upload a backup</text>
@@ -90,11 +90,11 @@
                     </box>
                     <box class="background-color-09721d border-radius-50px color-fff flex-1 height-50px line-height-50px padding-x-10px position-relative" data-href="/new/">
                         <row class="align-items-center justify-content-center">
-                            <ico data-width="30px">
+                            <ico css-width="30px">
                                 <n class="gg-add"></n>
                             </ico>
                             <text class="padding-x-10px">Create a project</text>
-                            <ico class="display-none" data-width="20px">
+                            <ico class="display-none" css-width="20px">
                                 <n class="gg-chevron-down"></n>
                             </ico>
                         </row>
@@ -109,11 +109,11 @@
                     </box>
                     <box class="background-color-09721d border-radius-50px color-fff flex-1 height-50px line-height-50px padding-x-10px position-relative" data-href="/new/import/">
                         <row class="align-items-center justify-content-center">
-                            <ico data-width="30px">
+                            <ico css-width="30px">
                                 <n class="gg-import"></n>
                             </ico>
                             <text class="padding-x-10px">Import a repository</text>
-                            <ico class="display-none" data-width="20px">
+                            <ico class="display-none" css-width="20px">
                                 <n class="gg-chevron-down"></n>
                             </ico>
                         </row>
@@ -128,11 +128,11 @@
                     </box>
                     <box class="background-color-09721d border-radius-50px color-fff flex-1 height-50px line-height-50px padding-x-10px position-relative" data-href="/new/upload/">
                         <row class="align-items-center justify-content-center">
-                            <ico data-width="30px">
+                            <ico css-width="30px">
                                 <n class="gg-software-upload"></n>
                             </ico>
                             <text class="padding-x-10px">Upload a backup</text>
-                            <ico class="display-none" data-width="20px">
+                            <ico class="display-none" css-width="20px">
                                 <n class="gg-chevron-down"></n>
                             </ico>
                         </row>
@@ -144,33 +144,33 @@
 </blocks>
 <template id="template-feed-dashboard">
     <card class="margin-bottom-1px margin-auto padding-y-10px width-100pct">
-        <row class="-hd-max-width-480px align-items-center flex-grow-1 margin-auto max-width-768px padding-x-4vw width-100pct" data-width="calc(100% - 8vw)">
-            <box data-width="64px">
+        <row class="-hd-max-width-480px align-items-center flex-grow-1 margin-auto max-width-768px padding-x-4vw width-100pct" css-width="calc(100% - 8vw)">
+            <box css-width="64px">
                 <row>
-                    <ico class="background-color-000 border-radius-15pct" data-height="64px" data-width="64px">
+                    <ico class="background-color-000 border-radius-15pct" css-height="64px" css-width="64px">
                         <n></n>
                         <n class="empty-state"></n>
                     </ico>
                 </row>
             </box>
-            <box class="flex-1 justify-content-space-between" data-width="calc(100% - 84px)">
+            <box class="flex-1 justify-content-space-between" css-width="calc(100% - 84px)">
                 <flex class="align-items-flex-start flex-1 flex-direction-column">
-                    <text class="font-weight-bolder margin-right-auto overflow-hidden padding-x-10px text-overflow-ellipsis white-space-nowrap" data-width="calc(100% - 40px)" placeholder="Project Name"></text>
+                    <text class="font-weight-bolder margin-right-auto overflow-hidden padding-x-10px text-overflow-ellipsis white-space-nowrap" css-width="calc(100% - 40px)" placeholder="Project Name"></text>
                     <text class="align-items-center color-777 font-size-13px line-height-20px padding-x-10px">
                         <span>Last pushed on</span>
                         <span placeholder="Date">Jan 1, 2023 (a month ago)</span>
                     </text>
-                    <text class="align-items-center color-777 font-size-13px font-weight-bolder line-height-20px padding-x-10px" data-display="none">
-                        <ico data-height="20px" data-width="20px">
+                    <text class="align-items-center color-777 font-size-13px font-weight-bolder line-height-20px padding-x-10px" css-display="none">
+                        <ico css-height="20px" css-width="20px">
                             <n class="--ggs-75pct gg-lock"></n>
                         </ico>
                         <span>Private</span>
                     </text>
                 </flex>
             </box>
-            <box class="color-777 margin-left-auto" data-width="20px">
+            <box class="color-777 margin-left-auto" css-width="20px">
                 <row>
-                    <ico data-height="20px" data-width="20px">
+                    <ico css-height="20px" css-width="20px">
                         <n class="gg-chevron-right"></n>
                     </ico>
                 </row>

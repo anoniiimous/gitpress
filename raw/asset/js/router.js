@@ -25,8 +25,11 @@ String.prototype.router = async function(params) {
             var pg = await ajax(path);
         }
         if (page.innerHTML === "") {
-            page.innerHTML = pg.replace(/>\s+</g,'><');
+            page.innerHTML = pg.replace(/>\s+</g, '><');
             //await ajax(page.dataset.fetch);
+            if (is.iframe) {
+                window.top.css.style.sheet(page);
+            }
         }
     }
 
@@ -198,7 +201,7 @@ window.rout.ed.bang = async(route)=>{
             var check = rs[i].closest('[data-fetch]') && rs[i].closest('[data-fetch]') === rs[i];
             if (route.page && route.page.includes(rs[i].dataset.page)) {
                 rs[i].dataset.active = true;
-                
+
                 //rs[i].dataset.fetch ? rs[i].innerHTML = await ajax(rs[i].dataset.fetch) : null;
 
                 var roots = rs[i].all('[data-page]');

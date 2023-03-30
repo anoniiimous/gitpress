@@ -10,21 +10,10 @@ window.onload = ()=>{
     init();
 }
 
-is.iframe ? null : window.onpopstate = (event)=>{
-    if (event.state) {
-        console.log(event.state);
-        var state = is.local(window.location.protocol) ? event.state.replace(/^#+/, '') : event.state;
-        event.state.length > 0 ? event.state.router() : null;
-    } else {
-        if (document.location) {//console.log({place});
-        }
-    }
-    //console.log(event, "location: " + document.location + ", state: " + JSON.stringify(state));
-}
-
 async function init() {
     console.log("Initializing...", {
-        iframe: is.iframe,
+        iframe: is.iframe
+    }, {
         head: window.document.head.outerHTML
     });
     //eruda.init();
@@ -35,10 +24,6 @@ async function init() {
     var html = ``;
     if (window.self === window.top) {
         html = await ajax('/raw/style/template.html');
-        console.log(35, {
-            html,
-            location
-        });
         html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
     } else {
         const user = await github.user.get();
@@ -48,7 +33,9 @@ async function init() {
         const path = '/raw/style/template.html';
         const resource = '/' + owner + '/' + repo + '/' + branch + path;
         try {
-            console.log(44, {
+            console.log(44, 'index.init.template', {
+                iframe: is.iframe
+            }, {
                 owner,
                 path,
                 repo
@@ -63,9 +50,7 @@ async function init() {
 
             try {
                 var pages = await github.raw.git('/' + owner + '/' + repo + '/' + branch + "/raw/pages/pages.json");
-                console.log(66, {
-                    pages
-                });
+                console.log(66, 'pages.json', pages);
                 if (pages && pages.length > 0) {
                     var main = dom.body.find('main');
                     var p = 0;
@@ -93,13 +78,13 @@ async function init() {
                 dom.body.find('body > footer').replaceWith(footer);
             }
 
-            console.log(48, {
+            0 > 1 ? console.log(48, {
                 doc,
                 html
             }, {
                 header,
                 footer
-            });
+            }) : null;
         } catch (e) {
             if (e.code === 404) {
                 modal.alert(e.code + ": " + e.message);
@@ -173,7 +158,6 @@ async function init() {
         }
     });
 
-    console.log('iframe', is.iframe);
     is.iframe ? null : window.addEventListener("message", (e)=>{
         var event = e.data[0]
         var data = e.data[1];
@@ -206,6 +190,18 @@ async function init() {
         }
     }
     )
+
+    is.iframe ? null : window.onpopstate = (event)=>{
+        if (event.state) {
+            console.log(event.state);
+            var state = is.local(window.location.protocol) ? event.state.replace(/^#+/, '') : event.state;
+            event.state.length > 0 ? event.state.router() : null;
+        } else {
+            if (document.location) {//console.log({place});
+            }
+        }
+        //console.log(event, "location: " + document.location + ", state: " + JSON.stringify(state));
+    }
 
     window.addEventListener("resize", window.on.resize)
 
@@ -259,6 +255,8 @@ async function init() {
     });
 
     console.log("...Initialized", {
+        iframe: is.iframe
+    }, {
         boot
     });
 }

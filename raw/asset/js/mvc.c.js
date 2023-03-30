@@ -267,138 +267,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     build: {
         boot: async(iframe)=>{
-            var vp = iframe.closest('pages');
-            var header = vp.find('header');
-            console.log(668, {
-                iframe,
-                vp,
-                header
-            });
-
-            const user = await github.user.get();
-            const owner = user.login;
-            const repo = route.GOT[1];
-
-            const error = {
-                document: (error)=>{
-                    console.log('error.build.document', {
-                        error
-                    });
-                }
-                ,
-                shell: (error)=>{
-                    console.log('error.build.shell', {
-                        error
-                    });
-                }
-            }
-
-            //DOCUMENT
-            var path = "/index.html";
-            var params = {
-                owner,
-                repo,
-                path
-            }
-            var data = await github.repos.contents(params, {})
-            const content = data.content;
-            const raw = atob(content);
-            console.log(695, {
-                data,
-                raw,
-                iframe
-            });
-            await controller.build.iframe(iframe, raw);
-            console.log(796, "iframe built");
-        }
-        ,
-        editor: async()=>{
-
-            const iframe = byId('iframe-editor');
-            const block = iframe.closest('pages');
-            const header = block.find('header');
-
-            const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
-            const blocks = iframe.closest('main nav + pages');
-
-            const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
-            builder.dataset.transform = "translateY(0)";
-
-            const win = iframe.contentWindow;
-            const head = win.document.head;
-            const body = win.document.body;
-
-            if (head.find) {
-                const css = head.find("#style-editor");
-                //header.classList.remove('display-none');
-                builder.classList.add('border-top-left-radius-10px');
-                builder.classList.add('border-top-right-radius-10px');
-                builder.classList.add('margin-top-10px');
-                builder.classList.add('margin-x-20px');
-                builder.dataset.width = "calc(100% - 40px)";
-                //block.find('builder-toolbar-preview').classList.add('display-none');
-                //css.setAttribute('href', 'raw/css/editor.css')
-            }
-
-            iframe.contentWindow.document.body.setAttribute('buildable', true);
-
-            var path = route.path;
-            var dir = rout.ed.dir(path);
-            dir = dir.splice(4, dir.length - 1);
-            var href = "/dashboard/" + route.GOT[1] + "/build/er" + rout.ed.url(dir);
-
-            var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + href;
-            var data = await github.raw.git("/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main" + '/raw/pages/pages.json');
-            var json = data.find(o=>o.slug === rout.ed.url(dir))
-            console.log({
-                json
-            });
-            //alert("controller.build.editor: " + href);
-
-            iframe.closest('pages').previousElementSibling.find('[placeholder="Page Name"]').textContent = json.title;
-            iframe.closest('pages').previousElementSibling.find('[placeholder="/page-name"]').textContent = json.slug;
-
-        }
-        ,
-        else: async()=>{
-
-            const iframe = byId('iframe-editor');
-            const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
-            const header = block.find('header');
-
-            const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
-            const blocks = block.closest('main nav + pages');
-            const toggle = 0 < 1;
-
-            nav.classList.remove('display-none');
-            //nav.dataset["960pxTransform"] = "translateX(0%)";
-
-            //blocks.classList.add('left-320px');
-            //blocks.dataset["960pxTransform"] = "0";
-
-            //block.dataset.transform = "translateY(100%)";
-            //block.dataset.height = "calc(100% - 10px)";
-            //block.dataset.width = "calc(100% - 260px)";
-
-            //const win = iframe.contentWindow;
-            //const head = win.document.head;
-            //const body = win.document.body;
-
-            if (iframe) {
-                const css = head.find("#style-editor");
-                header.classList.remove('display-none');
-                block.classList.add('border-top-left-radius-10px');
-                block.classList.add('border-top-right-radius-10px');
-                block.classList.add('margin-top-10px');
-                block.classList.add('margin-x-10px');
-                //block.find('builder-toolbar-preview').classList.add('display-none');
-                css.removeAttribute('href');
-            }
-        }
-        ,
-        iframe: (iframe)=>{
             return new Promise(async(resolve,reject)=>{
                 const user = await github.user.get();
                 const owner = user.login;
@@ -432,18 +300,92 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                     iframe.src = blob('<!DOCTYPE html>' + doc.documentElement.outerHTML, "text/html");
                     0 < 1 ? iframe.onload = ()=>{
-                        console.log(422, "controller.build.iframe iframe.onload", {
+                        var elems = {
                             iframe,
-                            head: iframe.contentWindow.document.head.outerHTML,
-                            body: iframe.contentWindow.document.body.outerHTML
-                        });
+                            head: iframe.contentWindow.document.head,
+                            body: iframe.contentWindow.document.body
+                        };
+                        console.log(422, "controller.build.iframe iframe.onload", elems);
+                        //window.top.css.style.sheet(elems.body);
                         iframe.contentWindow.document.body.setAttribute('buildable', true);
-                        resolve(iframe);
+                        resolve(elems.iframe);
                     }
                     : resolve(iframe);
                 } catch (e) {}
             }
             )
+        }
+        ,
+        editor: async()=>{
+
+            const iframe = byId('iframe-editor');
+            const block = iframe.closest('pages');
+            const header = block.find('header');
+
+            const nav = document.body.find('body > main nav');
+            const transform = nav.getAttribute("css-dw960px-transform");
+            const blocks = iframe.closest('main nav + pages');
+
+            const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
+            builder.setAttribute("css-transform", "translateY(0)");
+
+            const win = iframe.contentWindow;
+            const head = win.document.head;
+            const body = win.document.body;
+
+            if (head.find) {
+                const css = head.find("#style-editor");
+                //header.classList.remove('display-none');
+                builder.classList.add('border-top-left-radius-10px');
+                builder.classList.add('border-top-right-radius-10px');
+                builder.classList.add('margin-top-10px');
+                builder.classList.add('margin-x-20px');
+                builder.setAttribute("css-width", "calc(100% - 40px)");
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                //css.setAttribute('href', 'raw/css/editor.css')
+            }
+
+            iframe.contentWindow.document.body.setAttribute('buildable', true);
+
+            var path = route.path;
+            var dir = rout.ed.dir(path);
+            dir = dir.splice(4, dir.length - 1);
+            var href = "/dashboard/" + route.GOT[1] + "/build/er" + rout.ed.url(dir);
+
+            var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + href;
+            var data = await github.raw.git("/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main" + '/raw/pages/pages.json');
+            var json = data.find(o=>o.slug === rout.ed.url(dir))
+            0 > 1 ? console.log({
+                json
+            }) : null;
+            //alert("controller.build.editor: " + href);
+
+            //iframe.closest('pages').previousElementSibling.find('[placeholder="Page Name"]').textContent = json.title;
+            //iframe.closest('pages').previousElementSibling.find('[placeholder="/page-name"]').textContent = json.slug;
+
+        }
+        ,
+        else: async()=>{
+
+            const iframe = byId('iframe-editor');
+            const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
+            const header = block.find('header');
+
+            const nav = document.body.find('body > main nav');
+            const transform = nav.getAttribute("css-dw960px-transform");
+            const blocks = block.closest('main nav + pages');
+            const toggle = 0 < 1;
+
+            nav.classList.remove('display-none');
+
+            if (iframe) {
+                block.classList.add('border-top-left-radius-10px');
+                block.classList.add('border-top-right-radius-10px');
+                block.classList.add('margin-top-10px');
+                block.classList.add('margin-x-10px');
+                //block.find('builder-toolbar-preview').classList.add('display-none');
+                //css.removeAttribute('href');
+            }
         }
         ,
         index: async()=>{
@@ -454,18 +396,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
+            const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = block.closest('main nav + pages');
             const toggle = 0 < 1;
 
             nav.classList.remove('display-none');
-            //nav.dataset["960pxTransform"] = "translateX(0%)";
+            //nav.getAttribute("css-dw960px-transform") = "translateX(0%)";
 
             //blocks.classList.add('left-320px');
-            //blocks.dataset["960pxTransform"] = "0";
+            //blocks.getAttribute("css-dw960px-transform") = "0";
 
             const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
-            builder.dataset.transform = "translateY(calc(100% - 50px))";
+            builder.setAttribute("css-transform", "translateY(calc(100% - 50px))");
             //block.dataset.height = "calc(100% - 10px)";
             //block.dataset.width = "calc(100% - 260px)";
 
@@ -488,11 +430,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
+            const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = iframe.closest('main nav + pages');
 
             const builder = iframe.closest('pages[data-page="/dashboard/*/build"]');
-            builder.dataset.transform = "translateY(0)";
+            builder.setAttribute("css-transform", "translateY(0)");
 
             const win = iframe.contentWindow;
             const head = win.document.head;
@@ -538,13 +480,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const header = block.find('header');
 
             const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
+            const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = iframe.closest('main nav + pages');
             const toggle = nav.classList.contains('display-none');
 
-            block.removeAttribute('data-transform');
-            block.dataset.height = "100%";
-            block.dataset.width = "100%";
+            block.removeAttribute('css-transform');
+            block.setAttribute("css-height", "100%");
+            block.setAttribute("css-width", "100%");
 
             const win = iframe.contentWindow;
             const head = win.document.head;
@@ -641,12 +583,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             } else {
 
-                if (target.closest('ico').dataset.transform === "rotate(45deg)") {
+                if (target.closest('ico').getAttribute("css-tranform") === "rotate(45deg)") {
 
                     doc.body.removeAttribute('insertable');
 
                     $(doc.body.all('insertable')).remove();
-                    target.closest('ico').removeAttribute("data-transform");
+                    target.closest('ico').removeAttribute("css-transform");
 
                 } else {
 
@@ -681,7 +623,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
                     });
 
-                    target.closest('ico').dataset.transform = "rotate(45deg)";
+                    target.closest('ico').setAttribute("css-transform", "rotate(45deg)");
 
                 }
 
@@ -736,7 +678,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var header = ppp.find('card header');
 
                 var tabs = header.parentNode.all('card > column');
-                $(tabs).attr('data-display', 'none')
+                $(tabs).attr('css-display', 'none')
 
                 var fetching = ppp.all('[data-fetch]');
                 console.log(col.body, fetching);
@@ -746,7 +688,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     column.innerHTML = parser.body.firstElementChild.innerHTML;
                     var tab = index === box.index() ? column : null;
                     if (tab) {
-                        tab.removeAttribute('data-display');
+                        tab.removeAttribute('css-display');
                         console.log(tab);
                         tool.box.css(tab);
                     }
@@ -1049,12 +991,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var steps = target.closest('block').all('block > * > card');
                 if (button.className === "gg-chevron-left") {
                     if (index === 1) {
-                        step.dataset.display = "none";
-                        steps[index - 1].dataset.display = 'flex';
+                        step.setAttribute("css-display", "none")
+                        steps[index - 1].setAttribute("css-display", "flex");
                     }
                     if (index === 2) {
-                        step.dataset.display = "none";
-                        steps[index - 1].dataset.display = 'flex';
+                        step.setAttribute("css-display", "none")
+                        steps[index - 1].setAttribute("css-display", "flex");
                     }
                 }
                 if (button.className === "gg-chevron-right") {
@@ -1066,8 +1008,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 title: "Product Name"
                             });
                         } else {
-                            step.dataset.display = "none";
-                            steps[index + 1].dataset.display = 'flex';
+                            step.setAttribute("css-display", "none")
+                            steps[index + 1].setAttribute("css-display", "flex");
                         }
                     }
                     if (index === 1) {
@@ -1078,8 +1020,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 title: "Browse Node"
                             });
                         } else {
-                            step.dataset.display = "none";
-                            steps[index + 1].dataset.display = 'flex';
+                            step.setAttribute("css-display", "none")
+                            steps[index + 1].setAttribute("css-display", "flex");
                         }
                     }
                 }
@@ -1558,9 +1500,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var selected = column.all(':checked');
             var footer = column.parentNode.lastElementChild;
             if (selected.length > 0) {
-                footer.dataset.display = "flex";
+                footer.setAttribute("css-display", "flex")
             } else {
-                footer.dataset.display = "none";
+                footer.setAttribute("css-display", "none")
             }
             0 > 1 ? console.log({
                 column,
@@ -1855,9 +1797,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var selected = column.all(':checked');
             var footer = column.parentNode.lastElementChild;
             if (selected.length > 0) {
-                footer.dataset.display = "flex";
+                footer.setAttribute("css-display", "flex")
             } else {
-                footer.dataset.display = "none";
+                footer.setAttribute("css-display", "none")
             }
         }
         ,
@@ -2011,9 +1953,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var selected = column.all(':checked');
             var footer = column.parentNode.lastElementChild;
             if (selected.length > 0) {
-                footer.dataset.display = "flex";
+                footer.setAttribute("css-display", "flex")
             } else {
-                footer.dataset.display = "none";
+                footer.setAttribute("css-display", "none")
             }
             0 > 1 ? console.log({
                 column,
@@ -2033,9 +1975,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var selected = column.all(':checked');
             var footer = column.parentNode.lastElementChild;
             if (selected.length > 0) {
-                footer.dataset.display = "flex";
+                footer.setAttribute("css-display", "flex")
             } else {
-                footer.dataset.display = "none";
+                footer.setAttribute("css-display", "none")
             }
             console.log({
                 column,
@@ -2753,7 +2695,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         close: ()=>{
 
             const nav = dom.body.find('body > main nav');
-            nav.dataset["960pxTransform"] = "translateX(0%)";
+            nav.getAttribute("css-dw960px-transform") = "translateX(0%)";
             nav.firstElementChild.classList.rRemove('display-none');
 
         }
@@ -2762,7 +2704,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         open: ()=>{
 
             const nav = dom.body.find('body > nav');
-            nav.dataset["960pxTransform"] = "0";
+            nav.getAttribute("css-dw960px-transform") = "0";
             nav.firstElementChild.classList.remove('display-none');
 
         }
@@ -2774,16 +2716,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         card: target=>{
             var button = target.closest('ico');
             if (button && button.find('.gg-chevron-down')) {
-                $(target.closest('card').parentNode.all('card > row + column')).attr('data-display', 'none');
-                $(target.closest('nav > column').all('ico.transition-1s')).removeAttr('data-transform');
+                $(target.closest('card').parentNode.all('card > row + column')).attr('css-display', 'none');
+                $(target.closest('nav > column').all('ico.transition-1s')).removeAttr('css-transform');
 
                 var elem = target.closest('card > row');
-                if (elem.nextElementSibling.dataset.display === 'none') {
-                    elem.nextElementSibling['removeAttribute']('data-display', 'none');
-                    button.find('.gg-chevron-down').parentNode['setAttribute']('data-transform', 'rotate(180deg)');
+                if (elem.nextElementSibling.getAttribute("css-display") === 'none') {
+                    elem.nextElementSibling['removeAttribute']('css-display', 'none');
+                    button.find('.gg-chevron-down').parentNode['setAttribute']('css-transform', 'rotate(180deg)');
                 } else {
-                    elem.nextElementSibling['setAttribute']('data-display', 'none');
-                    button.find('.gg-chevron-down').parentNode['removeAttribute']('data-transform', 'none');
+                    elem.nextElementSibling['setAttribute']('css-display', 'none');
+                    button.find('.gg-chevron-down').parentNode['removeAttribute']('css-transform', 'none');
                 }
             }
         }
@@ -2792,14 +2734,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         close: ()=>{
 
             const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
+            const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = dom.body.find('main nav + pages');
 
-            nav.dataset["transform"] = "translateX(-100%)";
-            blocks.dataset["transform"] = "0";
+            nav.setAttribute("css-transform", "translateX(-100%)");
+            blocks.setAttribute("css-transform", "0");
 
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
-            blocks.dataset["960pxTransform"] = "0";
+            nav.getAttribute("css-dw960px-transform") = "translateX(-100%)";
+            blocks.getAttribute("css-dw960px-transform") = "0";
 
         }
         ,
@@ -2807,17 +2749,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         hide: ()=>{
 
             const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
+            const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = dom.body.find('main nav + pages');
 
-            nav.dataset["transform"] = "translateX(-100%)";
-            blocks.dataset["transform"] = "0";
+            nav.setAttribute("css-transform", "translateX(-100%)");
+            blocks.setAttribute("css-transform", "0");
 
-            nav.dataset["960pxTransform"] = "translateX(-100%)";
-            blocks.dataset["960pxTransform"] = "0";
+            nav.setAttribute("css-dw960px-transform", "translateX(-100%)");
+        blocks.setAttribute("css-dw960px-transform", "0");
 
-            blocks.dataset["left"] = "0";
-            blocks.dataset["960pxLeft"] = "0";
+            blocks.setAttribute("css-left", "0");
+            blocks.setAttribute("css-dw960px-left", "0");
 
         }
         ,
@@ -2825,26 +2767,26 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         toggle: (target)=>{
 
             const nav = document.body.find('body > main nav');
-            const transform = nav.dataset["960pxTransform"];
+            const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = dom.body.find('main nav + pages');
             const toggle = transform === "translateX(0)";
 
             if (toggle) {
-                nav.dataset["transform"] = "translateX(-100%)";
-                blocks.dataset["transform"] = "0";
-                blocks.dataset["left"] = "0";
+                nav.setAttribute("css-transform", "translateX(-100%)");
+                blocks.setAttribute("css-transform", "0");
+                blocks.setAttribute("css-left", "0");
 
-                nav.dataset["960pxTransform"] = "translateX(-100%)";
-                //blocks.dataset["960pxTransform"] = "0";
-                blocks.dataset["960pxLeft"] = "0";
+                nav.setAttribute("css-dw960px-transform", "translateX(-100%)");
+                //blocks.getAttribute("css-dw960px-transform") = "0";
+                blocks.setAttribute("css-960px-left", "0");
             } else {
-                nav.dataset["transform"] = "translateX(0)";
-                //blocks.dataset["transform"] = "translateX(320px)";
-                blocks.dataset["left"] = "320px";
+                nav.setAttribute("css-transform", "translateX(0)");
+                //blocks.dataset["css-transform"] = "translateX(320px)";
+                blocks.setAttribute("css-left", "320px");
 
-                nav.dataset["960pxTransform"] = "translateX(0)";
-                //blocks.dataset["960pxTransform"] = "translateX(320px)";
-                blocks.dataset["960pxLeft"] = "320px";
+                nav.setAttribute("css-dw960px-transform", "translateX(0)");
+                //blocks.getAttribute("css-dw960px-transform") = "translateX(320px)";
+                blocks.setAttribute("css-dw960px-left", "320px");
             }
 
         }
@@ -2874,7 +2816,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var el = target.closest('card').all('box')[1].find('text');
             var owner = el.dataset.owner;
             var repository = el.textContent;
-            var private = el.nextElementSibling.dataset.display === "flex";
+            var private = el.nextElementSibling.getAttribute("css-display") === "flex";
 
             var confirm = await modal.confirm({
                 body: "Are you sure you want to import this project?",
@@ -3256,9 +3198,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var selected = column.all(':checked');
             var footer = column.parentNode.lastElementChild;
             if (selected.length > 0) {
-                footer.dataset.display = "flex";
+                footer.setAttribute("css-display", "flex")
             } else {
-                footer.dataset.display = "none";
+                footer.setAttribute("css-display", "none")
             }
         }
         ,
@@ -3859,9 +3801,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var selected = column.all(':checked');
             var footer = column.parentNode.lastElementChild;
             if (selected.length > 0) {
-                footer.dataset.display = "flex";
+                footer.setAttribute("css-display", "flex")
             } else {
-                footer.dataset.display = "none";
+                footer.setAttribute("css-display", "none")
             }
             console.log({
                 column,
@@ -4121,18 +4063,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 if (button.className === "gg-chevron-left") {
                     if (index === 1) {
                         $(form.all('block > *')).addClass('display-none');
-                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                        $(form.all('form > header box flex')[0]).attr("data-height", "50px");
-                        $(form.all('form > header box flex')[0]).attr("data-width", "50px");
+                        $(form.all('form > header box flex')).attr("css-height", "30px");
+                        $(form.all('form > header box flex')).attr("css-width", "30px");
+                        $(form.all('form > header box flex')[0]).attr("css-height", "50px");
+                        $(form.all('form > header box flex')[0]).attr("css-width", "50px");
                         $(form.all('block > *')[0]).removeClass('display-none');
                     }
                     if (index === 2) {
                         $(form.all('block > *')).addClass('display-none');
-                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                        $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                        $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                        $(form.all('form > header box flex')).attr("css-height", "30px");
+                        $(form.all('form > header box flex')).attr("css-width", "30px");
+                        $(form.all('form > header box flex')[1]).attr("css-height", "50px");
+                        $(form.all('form > header box flex')[1]).attr("css-width", "50px");
                         $(form.all('block > *')[1]).removeClass('display-none');
 
                         var picture = steps[1].find('picture');
@@ -4147,10 +4089,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         if (title.value.length > 0) {
                             if (title.dataset.value === title.value) {
                                 $(form.all('block > *')).addClass('display-none');
-                                $(form.all('form > header box flex')).attr("data-height", "30px");
-                                $(form.all('form > header box flex')).attr("data-width", "30px");
-                                $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                                $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                $(form.all('form > header box flex')).attr("css-height", "30px");
+                                $(form.all('form > header box flex')).attr("css-width", "30px");
+                                $(form.all('form > header box flex')[1]).attr("css-height", "50px");
+                                $(form.all('form > header box flex')[1]).attr("css-width", "50px");
                                 $(form.all('block > *')[1]).removeClass('display-none');
                                 controller.setup.iro('#' + colors.random());
                             } else {
@@ -4206,10 +4148,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                     }).then(function() {
                                         step.find('input').dataset.value = title.value;
                                         $(form.all('block > *')).addClass('display-none');
-                                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                                        $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                                        $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                        $(form.all('form > header box flex')).attr("css-height", "30px");
+                                        $(form.all('form > header box flex')).attr("css-width", "30px");
+                                        $(form.all('form > header box flex')[1]).attr("css-height", "50px");
+                                        $(form.all('form > header box flex')[1]).attr("css-width", "50px");
                                         $(form.all('block > *')[1]).removeClass('display-none');
                                         controller.setup.iro('#' + colors.random());
                                     }) : null;
@@ -4233,10 +4175,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             }, ["Cancel", "Continue"]);
                         } else {
                             $(form.all('block > *')).addClass('display-none');
-                            $(form.all('form > header box flex')).attr("data-height", "30px");
-                            $(form.all('form > header box flex')).attr("data-width", "30px");
-                            $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                            $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                            $(form.all('form > header box flex')).attr("css-height", "30px");
+                            $(form.all('form > header box flex')).attr("css-width", "30px");
+                            $(form.all('form > header box flex')[1]).attr("css-height", "50px");
+                            $(form.all('form > header box flex')[1]).attr("css-width", "50px");
                             $(form.all('block > *')[1]).removeClass('display-none');
                         }
 
@@ -4301,10 +4243,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 dataType: "PUT"
                             }).then(function() {
                                 $(form.all('block > *')).addClass('display-none');
-                                $(form.all('form > header box flex')).attr("data-height", "30px");
-                                $(form.all('form > header box flex')).attr("data-width", "30px");
-                                $(form.all('form > header box flex')[2]).attr("data-height", "50px");
-                                $(form.all('form > header box flex')[2]).attr("data-width", "50px");
+                                $(form.all('form > header box flex')).attr("css-height", "30px");
+                                $(form.all('form > header box flex')).attr("css-width", "30px");
+                                $(form.all('form > header box flex')[2]).attr("css-height", "50px");
+                                $(form.all('form > header box flex')[2]).attr("css-width", "50px");
                                 $(form.all('block > *')[2]).removeClass('display-none');
                             }) : null;
                         }
@@ -4971,7 +4913,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         text ? a.innerHTML = text : a.innerHTML = ranger.getSelectionHTML();
                         blank ? a.target = "_blank" : null;
                         document.execCommand('insertHTML', false, a.outerHTML);
-                        target.closest('field > row').dataset.display = "none";
+                        target.closest('field > row').setAttribute("css-display", "none")
 
                         if (window.selected && window.range) {
                             window.selected = null;
@@ -4993,7 +4935,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var img = document.createElement('img');
                         img.src = href;
                         document.execCommand('insertHTML', false, img.outerHTML);
-                        target.closest('field > *').dataset.display = "none";
+                        target.closest('field > *').setAttribute("css-display", "none")
 
                         if (window.selected && window.range) {
                             window.selected = null;
@@ -5019,12 +4961,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         more: (target,button)=>{
             var menu = target.closest('box > header > flex').nextElementSibling;
             var value = menu.find('[data-more="' + button + '"]');
-            if (value.dataset.display) {
-                $(menu.all('[data-more]')).attr('data-display', 'none');
-                $(value).removeAttr('data-display');
+            if (value.getAttribute("css-display")) {
+                $(menu.all('[data-more]')).attr('css-display', 'none');
+                $(value).removeAttr('css-display');
             } else {
-                $(menu.all('[data-more]')).attr('data-display', 'none');
-                $(value).attr('data-display', 'none');
+                $(menu.all('[data-more]')).attr('css-display', 'none');
+                $(value).attr('css-display', 'none');
             }
         }
         ,
@@ -5048,7 +4990,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //console.log(img);
             document.activeElement === wysiwyg ? null : wysiwyg.focus()
             document.execCommand('insertHTML', false, img.outerHTML);
-            event.target.closest('field > *').dataset.display = "none";
+            event.target.closest('field > *').setAttribute("css-display", "none")
 
             if (window.selected && window.range) {
                 window.selected = null;
@@ -5069,7 +5011,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //console.log(img);
             document.activeElement === wysiwyg ? null : wysiwyg.focus()
             document.execCommand('insertHTML', false, html);
-            event.target.closest('field > *').dataset.display = "none";
+            event.target.closest('field > *').setAttribute("css-display", "none")
 
             if (window.selected && window.range) {
                 window.selected = null;
@@ -5206,8 +5148,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 $(target.closest('[data-tap]').children).removeClass('background-color-fff');
                 button.classList.add('background-color-fff');
 
-                $(target.closest('[data-tap]').nextElementSibling.children).attr('data-display', 'none');
-                target.closest('[data-tap]').nextElementSibling.children[index].setAttribute('data-display', 'flex');
+                $(target.closest('[data-tap]').nextElementSibling.children).attr('css-display', 'none');
+                target.closest('[data-tap]').nextElementSibling.children[index].setAttribute('css-display', 'flex');
             }
         }
         ,
@@ -5232,7 +5174,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //console.log(img);
             document.activeElement === wysiwyg ? null : wysiwyg.focus()
             document.execCommand('insertHTML', false, video.outerHTML);
-            event.target.closest('field > *').dataset.display = "none";
+            event.target.closest('field > *').setAttribute("css-display", "none")
 
             if (window.selected && window.range) {
                 window.selected = null;

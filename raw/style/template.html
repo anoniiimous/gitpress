@@ -5,13 +5,13 @@
     <pages class="background-color-e2dcd8 flex-grow-1 overflow-hidden" data-page="/dashboard">
         <page class="-isauth background-color-f5 flex-grow-1 height-100pct min-height-100pct overflow-x-hidden width-100pct" data-fetch="raw/pages/page.dashboard.html" data-page="/dashboard"></page>
         <pages class="-noauth flex-grow-1 min-height-100pct width-100pct" data-fetch="raw/asset/html/template/template.login.html" data-page="/dashboard"></pages>
-        <pages class="-isauth flex-grow-1 min-height-100pct overflow-hidden" data-page="/dashboard/*" data-transition="0.3s">
-            <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-320px z-index-5" data-dw960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" data-transition="0.3s"></nav>
-            <pages class="background-color-e2dcd8 flex-grow-1 z-index-6" data-page="/dashboard/*" data-transition="0.3s">
+        <pages class="-isauth flex-grow-1 min-height-100pct overflow-hidden" data-page="/dashboard/*" css-transition="0.3s">
+            <nav class="background-color-e2dcd8 color-000 font-size-14px height-100pct overflow-x-hidden position-fixed scrollbar-1 width-320px z-index-5" css-dw960px-transform="translateX(-100%)" data-fetch="raw/asset/html/template/template.dashboard.nav.html" css-transition="0.3s"></nav>
+            <pages class="background-color-e2dcd8 flex-grow-1 z-index-6" data-page="/dashboard/*" css-transition="0.3s">
                 <page class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.html" data-page="/dashboard/*"></page>
                 <pages class="flex-grow-1" data-page="/dashboard/*/build">
                     <pages class="flex-grow-1" data-fetch="raw/pages/page.dashboard.project.build.html" data-page="/dashboard/*/build"></pages>
-                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 flex-direction-column margin-x-20px margin-top-20px overflow-hidden position-fixed z-index-5" data-dw480px-margin-x="10px" data-dw480px-height="calc(100% - 10px)" data-dw480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" data-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-transform="translateY(calc(100% - 50px))" data-transition="0.3s" data-width="calc(100% - 40px)">
+                    <pages class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px bottom-0 box-shadow-0-1px-6px-0 display-flex flex-1 flex-direction-column margin-x-20px margin-top-20px overflow-hidden position-fixed z-index-5" css-dw480px-margin-x="10px" css-dw480px-height="calc(100% - 10px)" css-dw480px-width="calc(100% - 20px)" data-fetch="raw/pages/page.dashboard.project.build.er.html" css-height="calc(100% - 20px)" data-page="/dashboard/*/build" data-css-transform="translateY(calc(100% - 50px))" css-transition="0.3s" css-width="calc(100% - 40px)">
                         <header class="align-items-center background-color-ccc display-flex flex-direction-column justify-content-space-between">
                             <row class="justify-content-space-between width-100pct" tabindex="1">
                                 <card class="height-50px justify-content-center margin-0 width-auto">
@@ -41,10 +41,10 @@
                                             <row class="align-items-center justify-content-center" data-dropdown data-ignore>
                                                 <ico class="margin-left-5px">
                                                     <n class="gg-menu"></n>
-                                                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                                    <n class="--ggs-50pct gg-chevron-down" css-width="10px"></n>
                                                 </ico>
                                             </row>
-                                            <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-5px line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="fontName" data-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                            <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 left-5px line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="fontName" css-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
                                                 <text class="-hover-background-color-eb padding-x-20px" data-tap="controller.builder.push()">Save</text>
                                                 <text class="-hover-background-color-eb padding-x-20px" data-href="/dashboard/:get/build/preview">Preview</text>
                                                 <text class="-hover-background-color-eb color-ff3b30 padding-x-20px" data-href="/dashboard/:get/build">Discard Changes</text>
@@ -60,7 +60,7 @@
                                 </card>
                                 <card class="flex-direction-row font-weight-bolder margin-0 padding-x-10px width-auto">
                                     <row>
-                                        <box data-dw960px-display="flex" data-href="/dashboard/:get/build/preview" data-page="/dashboard/*/build">
+                                        <box css-dw960px-display="flex" data-href="/dashboard/:get/build/preview" data-page="/dashboard/*/build">
                                             <row>
                                                 <ico>
                                                     <n class="gg-eye"></n>
@@ -81,7 +81,7 @@
                                                 <ico class="display-none" data-tap="controller.builder.update(event.target)">
                                                     <n class="gg-pen"></n>
                                                 </ico>
-                                                <ico data-tap="controller.builder.create(event.target)" data-transition="0.3s">
+                                                <ico data-tap="controller.builder.create(event.target)" css-transition="0.3s">
                                                     <n class="gg-add"></n>
                                                 </ico>
                                                 <ico class="display-none" data-tap="controller.builder.delete(event.target)">
@@ -97,13 +97,13 @@
                                     <row class="align-items-center">
                                         <box>
                                             <row class="align-items-center justify-content-center">
-                                                <ico data-height="50px" data-tap="                      
+                                                <ico css-height="50px" data-tap="                      
                     var dock = dom.body.find('tool').closest('pages > header');
                     var toolset = dock.children[0];
                     var toolbar = dock.children[1];
                     $([toolset, toolbar]).toggleClass('display-none');
                     modal.exit(event.target);
-" data-width="50px">
+" css-width="50px">
                                                     <n class="gg-close"></n>
                                                 </ico>
                                             </row>
@@ -114,8 +114,8 @@
                                                     <cell class="font-size-13px" placeholder="Group"></cell>
                                                     <cell class="font-weight-bolder" placeholder="Attribute"></cell>
                                                 </flex>
-                                                <ico data-height="10px" data-width="10px">
-                                                    <n class="--ggs-50pct gg-chevron-down" data-width="10px"></n>
+                                                <ico css-height="10px" css-width="10px">
+                                                    <n class="--ggs-50pct gg-chevron-down" css-width="10px"></n>
                                                 </ico>
                                             </row>
                                         </box>
@@ -123,11 +123,11 @@
                                 </card>
                                 <card class="margin-x-5px" data-declaration>
                                     <row class="align-items-center justify-content-center">
-                                        <ico data-height="20px" data-width="20px">
+                                        <ico css-height="20px" css-width="20px">
                                             <n class="gg-math-minus"></n>
                                         </ico>
                                         <input class="border-1px-solid border-color-db border-radius-3px font-size-16px line-height-30px margin-x-5px padding-x-10px text-align-center width-20px" data-formula="repeat({var}, minmax(0, 1fr))" data-value="number" onchange="tool.box.value(event.target)" type="number" value="3">
-                                        <ico data-height="20px" data-width="20px">
+                                        <ico css-height="20px" css-width="20px">
                                             <n class="gg-math-plus"></n>
                                         </ico>
                                     </row>
@@ -142,7 +142,7 @@
                                         <ico class="display-none" data-tap="controller.builder.update(event.target)">
                                             <n class="gg-pen"></n>
                                         </ico>
-                                        <ico data-tap="controller.builder.create(event.target)" data-transition="0.3s">
+                                        <ico data-tap="controller.builder.create(event.target)" css-transition="0.3s">
                                             <n class="gg-add"></n>
                                         </ico>
                                         <ico class="display-none" data-tap="controller.builder.delete(event.target)">
@@ -153,14 +153,14 @@
                             </tool>
                             <template id="focus-element">
                                 <focus class="box-sizing-border-box outline-4px-solid-52b9d6 position-absolute z-index-9">
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-height="5px" data-left="-8px" data-top="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-height="5px" data-left="-8px" data-margin="auto" data-right="-8px" data-top="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-height="5px" data-right="-8px" data-top="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-left="-8px" data-margin="auto" data-top="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-right="-8px" data-margin="auto" data-top="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-left="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-left="-8px" data-margin="auto" data-right="-8px" data-width="5px"></cell>
-                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" data-height="5px" data-right="-8px" data-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" css-height="5px" data-left="-8px" data-top="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" css-height="5px" data-left="-8px" data-margin="auto" data-right="-8px" data-top="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" css-height="5px" data-right="-8px" data-top="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" css-height="5px" data-left="-8px" data-margin="auto" data-top="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" css-height="5px" data-right="-8px" data-margin="auto" data-top="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" css-height="5px" data-left="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" css-height="5px" data-left="-8px" data-margin="auto" data-right="-8px" css-width="5px"></cell>
+                                    <cell class="background-color-fff border-4px-solid border-color-52b9d6 display-block position-absolute" data-bottom="-8px" css-height="5px" data-right="-8px" css-width="5px"></cell>
                                 </focus>
                             </template>
                             <template id="framework-builder-insert">

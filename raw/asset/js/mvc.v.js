@@ -155,7 +155,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 //GET index.html
                                 try {
                                     var data = await github.repos.contents({
-                                        owner: user.login,
+                                        owner: window.owner.login,
                                         repo: GET[1],
                                         path: "/index.html"
                                     }, {
@@ -180,7 +180,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 //GET icon.svg
                                 try {
                                     var data = await github.repos.contents({
-                                        owner: user.login,
+                                        owner: window.owner.login,
                                         repo: GET[1],
                                         path: "/icon.svg"
                                     }, {
@@ -203,7 +203,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 //GET site.webmanifest
                                 try {
                                     var data = await github.repos.contents({
-                                        owner: user.login,
+                                        owner: window.owner.login,
                                         repo: GET[1],
                                         path: "/site.webmanifest"
                                     }, {
@@ -314,7 +314,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         const bb = (e)=>{}
 
                         github.repos.contents({
-                            owner: user.login,
+                            owner: window.owner.login,
                             path: "/site.webmanifest",
                             repo: GET[1]
                         }, {
@@ -365,7 +365,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }
                         }
                         cache.feed.dashboard.index ? github.repos.contents({
-                            owner: user.login,
+                            owner: window.owner.login,
                             repo: "db.dompad.io",
                             path: "/v1/apps/index.json"
                         }).then(p) : github.user.repos({
@@ -406,9 +406,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                             dom.body.classList.remove('overflow-hidden');
                             controller.build.index(iframe);
+                                            
                         }
-
-                        //alert(iframe.contentWindow.document.body.outerHTML);
+                                        
                         resolve(route);
                     } else {
 
@@ -476,7 +476,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var src = '';
                                         if (extension === 'svg') {
                                             var res = await github.repos.contents({
-                                                owner: user.login,
+                                                owner: window.owner.login,
                                                 repo: get[1],
                                                 path: '/raw/files/' + filename
                                             }, {
@@ -486,7 +486,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             src = 'data:image/svg+xml;base64,' + btoa(res);
                                         } else {
                                             src = await github.raw.blob({
-                                                owner: user.login,
+                                                owner: window.owner.login,
                                                 repo: get[1],
                                                 resource: '/raw/files/' + filename
                                             });
@@ -497,7 +497,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         img.src = '';
                                         img.src = src;
                                     } else {
-                                        var text = await github.raw.git("/" + user.login + "/" + get[1] + '/main/raw/files/' + filename);
+                                        var text = await github.raw.git("/" + window.owner.login + "/" + get[1] + '/main/raw/files/' + filename);
                                         console.log({
                                             text,
                                             json: is.json(text)
@@ -844,7 +844,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var vp = dom.body.find('page[data-page="/dashboard/*/media"]');
                             //alert("Attempting to fetch files");
                             github.repos.contents({
-                                owner: user.login,
+                                owner: window.owner.login,
                                 path: "/raw/media/media.json",
                                 repo: get[1]
                             }, {
@@ -879,7 +879,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             card.find('[placeholder="Title"]').textContent = title;
                                             card.find('[placeholder="Title"]').dataset.href = "/dashboard/:get/media/" + format + "/" + slug + "/";
                                             var src = 0 > 1 ? github.raw.blob({
-                                                owner: user.login,
+                                                owner: window.owner.login,
                                                 repo: get[1],
                                                 resource: "/raw/media/" + format + "/" + slug + "/image.jpg"
                                             }) : null;
@@ -965,7 +965,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     try {
                                         var slug = get[5] ? get[4] + "/" + get[5] : get[4];
                                         var res = window.ancestor = await github.repos.contents({
-                                            owner: user.login,
+                                            owner: window.owner.login,
                                             repo: get[1],
                                             path: "/raw/merch/" + get[4] + "/merch.json"
                                         }, {
@@ -1157,7 +1157,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
                                         try {
                                             var res = 0 > 1 ? await github.repos.contents({
-                                                owner: user.login,
+                                                owner: window.owner.login,
                                                 repo: get[1],
                                                 path: "/raw/merch/" + get[4] + "/" + attr.join('_') + "/merch.json"
                                             }, {
@@ -1364,7 +1364,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (slug) {
                                     var owner = await github.user.get();
                                     var json = await github.repos.contents({
-                                        owner: user.login,
+                                        owner: window.owner.login,
                                         repo: get[1],
                                         path: "raw/merch/catalog.json"
                                     }, {
@@ -1380,7 +1380,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             vp.find('block > footer').dataset.display = "none";
                             //alert("Attempting to fetch files");
                             github.repos.contents({
-                                owner: user.login,
+                                owner: window.owner.login,
                                 path: "/raw/merch/merch.json",
                                 repo: get[1]
                             }, {
@@ -1763,7 +1763,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 if (0 < 1) {
 
                                     github.repos.contents({
-                                        owner: user.login,
+                                        owner: window.owner.login,
                                         path: "/raw/posts/" + get[4] + "/index.html",
                                         repo: get[1]
                                     }, {

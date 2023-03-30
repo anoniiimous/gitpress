@@ -28,7 +28,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }, {
                 accept: "application/vnd.github.raw"
             });
-            console.log(webmanifest, {
+            console.log('webmanifest', 'iframe: ' + is.iframe, webmanifest, {
                 owner: window.parent.owner.login,
                 path: "site.webmanifest",
                 repo: window.parent.GET[1]
@@ -130,7 +130,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                 var post = ancestors[p];
                                 var elem = 0 < 1 ? template.children[p].cloneNode(true) : template.firstElementChild.cloneNode(true);
-                                console.log(132, post);
+                                //console.log(132, post);
 
                                 if (post) {
 
@@ -155,9 +155,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     var image = elem.find('picture img');
                                     if (is.iframe) {
-                                        console.log({
-                                            repo
-                                        });
                                         post.images[0] = await github.raw.blob({
                                             owner: window.parent.owner.login,
                                             repo: window.webmanifest.short_name,

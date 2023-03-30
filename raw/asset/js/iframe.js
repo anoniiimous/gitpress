@@ -147,14 +147,14 @@ framework.on = async function(event) {
 
                     var focused = $('[focus]');
 
-                    console.log(89, {
+                    0 > 1 ? console.log(89, {
                         elem,
                         target: event.target.closest('[focus]'),
                         focuser: focused.length > 0 ? focused[focused.length - 1] : null,
                         contains: focused.length > 0 ? focused[focused.length - 1].contains(elem) : null,
                         focus,
                         focused
-                    });
+                    }) : null;
 
                     if ((elem && $('[focus]').length === 0) || (elem && ((focused && focused[focused.length - 1].contains(elem)) || (sel && focused && focused[focused.length - 1].parentNode.contains(elem) && !focusing && element === elem.tagName.toLowerCase())))) {
 

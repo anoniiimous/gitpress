@@ -21,6 +21,41 @@
     }
 }
 
+/*EMPTY*/
+@media screen {
+    [data-empty]:empty:before {
+        content: attr(data-empty);
+    }
+
+    empty:empty, .empty:empty {
+        display: none;`
+    }
+    
+    :not(:empty) + empty, :not(:empty) + .empty-state, :not(:empty) + .empty-state-adjacent {
+        display: none;
+    }
+
+    :not(:empty):first-child ~ .empty-state-subsequent {
+        display: none;
+    }
+
+    :empty + .full-state, :empty + .full-state-adjacent {
+        display: none;
+    }
+
+    :empty:first-child ~ .full-state-subsequent {
+        display: none;
+    }
+
+    :empty:not(:hover) + .-hover-empty-state-adjacent, :empty:not(:hover) + .-hover-empty-state-adjacent:not(:hover) {
+        display: none;
+    }
+
+    :not(:empty):first-child:hover ~ .-hover-full-state-subsequent, :not(:empty):first-child ~ .-hover-full-state-subsequent:hover {
+        display: flex;
+    }
+}
+
 /*SHELL*/
 @media screen {
     html {
@@ -249,11 +284,11 @@
         justify-content: center;
     }
 
-    ico:not([data-height]) {
+    ico:not([css-height]) {
         height: 50px;
     }
 
-    ico:not([data-width]) {
+    ico:not([css-width]) {
         width: 50px;
     }
 

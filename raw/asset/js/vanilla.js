@@ -105,6 +105,12 @@ Array.prototype.removeAttribute = function(name) {
     return that;
 }
 
+Element.prototype.ownerWindow = function() {
+    var element = this;
+    var doc = this.ownerDocument;
+    var win = doc.defaultView || doc.parentWindow;
+    return win;
+}
 Element.prototype.textual = function() {
     var n = 0
       , a = [];
@@ -248,7 +254,14 @@ String.prototype.trim = function(ing, str) {
     }
     return str;
 }
-String.prototype.camelPhynate = function() {
+String.prototype.camelCase = String.prototype.toCamelCase = function() {
+    var string = this.toString();
+    var camel = string.replace(/-([a-z])/g, function(g) {
+        return g[1].toUpperCase();
+    });
+    return camel;
+}
+String.prototype.camelPhynate = String.prototype.camelPhenate = function() {
     var string = this.toString();
     var replace = string.replace(/[A-Z]/g, m=>"-" + m.toLowerCase());
     return replace;
@@ -279,6 +292,16 @@ String.prototype.pend = {
         return str;
     }
 }
+
+String.prototype.rfo = function(searchstr) {
+    var str = this.toString();
+	var index = str.indexOf(searchstr);
+	if (index === -1) {
+		return str;
+	}
+	return str.slice(0, index) + str.slice(index + searchstr.length);
+}
+
 window.all = function(str) {
     return document.querySelectorAll(str);
 }
