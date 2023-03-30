@@ -1,6 +1,6 @@
 <form class="background-color-fff display-block height-100pct overflow-x-hidden width-100pct" onsubmit="controller.setup.app(event)">
     <header class="line-height-50px position-fixed top-0 width-100pct z-index-5" data-fetch="raw/asset/html/template/template.header.html"></header>
-    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-120px margin-top-120px" data-min-height="calc(100vh - 240px)">
+    <block class="align-items-center justify-content-center margin-x-auto overflow-x-hidden margin-bottom-120px margin-top-120px" css-min-height="calc(100vh - 240px)">
         <column>
             <card></card>
             <card class="empty-state">
@@ -20,10 +20,10 @@
                             </picture>
                         </section>
                     </box>
-                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px margin-top-20px margin-bottom-20px" data-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
-                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" data-transform="translate3d(0,-50%,0)">Domain</text>
+                    <box class="border-1px-solid border-color-bbb border-radius-10px height-50px margin-top-20px margin-bottom-20px" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)">
+                        <text class="background-color-fff color-bbb height-18px line-height-18px margin-x-10px padding-x-10px position-absolute" css-transform="translate3d(0,-50%,0)">Domain</text>
                         <row class="height-100pct left-0 position-absolute right-0 top-0 width-100pct">
-                            <input class="flex-grow-1 padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
+                            <input class="flex-grow-1 height-50px padding-x-20px" onkeydown="on.key.down.setup.app(event)" onkeyup="on.key.up.setup.app(event)" type="text">
                             <input type="submit">
                         </row>
                     </box>
@@ -31,7 +31,7 @@
                 <footer class="bottom-0 display-flex flex-direction-row left-0 justify-content-space-between line-height-50px margin-auto position-fixed right-0 width-100pct">
                     <box class="padding-x-10px" data-href="/new/">
                         <row>
-                            <ico data-width="25px">
+                            <ico css-width="25px">
                                 <n class="gg-chevron-left"></n>
                             </ico>
                             <text>Exit</text>
@@ -40,7 +40,7 @@
                     <box class="opacity-50pct padding-x-10px" data-tap="controller.new.app(event.target)">
                         <row>
                             <text>Done</text>
-                            <ico data-width="25px">
+                            <ico css-width="25px">
                                 <n class="gg-chevron-right"></n>
                             </ico>
                         </row>

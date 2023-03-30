@@ -16,7 +16,7 @@
         outline: none;
     }
 
-    [tabindex]:has([data-dropdown] + :not([data-display="none"])) {
+    [tabindex]:has([data-dropdown] + :not([css-display="none"])) {
         z-index: 12345;
     }
 }

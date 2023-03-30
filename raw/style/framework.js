@@ -252,8 +252,8 @@ window.tool.set.tab = function(target) {
     var tab = $(tabs)[box.index()];
     console.log(tabs);
 
-    $(tabs).attr('data-display', 'none')
-    tab.removeAttribute('data-display');
+    $(tabs).attr('css-display', 'none')
+    tab.removeAttribute('css-display');
 
     var element = box.find('text').dataset.before;
     var parent = ppp.focus.closest(element);
@@ -613,11 +613,44 @@ window.tool.box.value = function(target) {
 }
 window.tool.box.style = async function(focus, declaration, options) {
 
+    declaration.value ? declaration.value = declaration.value.replace('%', 'pct') : null;
+    console.log(616, {focus, declaration, options});
     var pseudo = options ? options.pseudo : null;
     var rule = options ? options.rule : null;
     var formula = options ? options.formula : null;
     var attribute = attr = declaration.attribute;
-    var value = formula ? formula.replace('{var}', declaration.value) : declaration.value;
+    var value = formula ? formula.replace('{var}', declaration.value) : declaration.value.replace('%', 'pct');
+    console.log(616, {focus, declaration, options, value});
+
+    //STYLE SHEETS
+    var iframe = byId('iframe-editor');
+    var win = iframe.contentWindow;
+    var doc = win.document;
+    var head = doc.head;
+    var styles = head.all('link');
+    var sheet = 'sheet-' + attr;
+    0 > 1 ? console.log(586, {
+        head,
+        styles,
+        sheet
+    }) : null;
+
+    var styleExists = byId(sheet);
+    var stylesheet = null;
+    if (styles.length > 0) {
+        styles.forEach(function(style) {
+            if (style.id === sheet) {
+                stylesheet = style;
+                styleExists = true;
+            }
+            0 > 1 ? console.log(599, {
+                style,
+                sheet,
+                id: style.id,
+                attr
+            }) : null;
+        });
+    }
 
     //INLINE STYLE
     0 > 1 ? console.log(520, {
@@ -627,9 +660,9 @@ window.tool.box.style = async function(focus, declaration, options) {
     }) : null;
     //focus.style[attribute] = value;
 
-    //INLINE CLASS
+    //DATASET
     attribute = attribute.camelPhynate();
-    var className = [attribute, declaration.value].join('-');
+    var className = [attribute, declaration.value.replace('%', 'pct')].join('-');
     var obj = {};
     obj[className] = {
         pseudo,
@@ -637,14 +670,16 @@ window.tool.box.style = async function(focus, declaration, options) {
         attribute,
         value,
     };
-    0 > 1 ? console.log(472, {
+    0 < 1 ? console.log(472, {
         focus,
         attribute,
         value
     }, obj) : null;
     if (formula) {
-        focus.dataset[attr] = declaration.value;
+        focus.setAttribute('css-' + attribute, value);
     }
+
+    //INLINE CLASS
     //else {
     var classExists = false;
     var classList = focus.classList;
@@ -667,57 +702,20 @@ window.tool.box.style = async function(focus, declaration, options) {
     focus.classList.add(className);
     //}
 
-    //STYLE SHEETS
-    var iframe = byId('iframe-editor');
-    var win = iframe.contentWindow;
-    var doc = win.document;
-    var head = doc.head;
-    var styles = head.all('link');
-    var sheet = 'style-' + attr;
-    0 > 1 ? console.log(586, {
-        head,
-        styles,
-        sheet
-    }) : null;
-
-    var styleExists = false;
-    var stylesheet = null;
-    var css = '';
-    if (styles.length > 0) {
-        styles.forEach(function(style) {
-            if (style.id === sheet) {
-                stylesheet = style;
-                styleExists = true;
-            }
-            0 > 1 ? console.log(599, {
-                style,
-                sheet,
-                id: style.id,
-                attr
-            }) : null;
-        });
-    }
-
     var rules = null;
+    var type = formula ? 'css' : 'class';
+    var property = attr;
 
-    if (styleExists) {
-        await css.style.done(doc, className);
-    } else {
-        var selector = '.' + className;
-        var property = attr;
-        var declaration = selector + ' { ' + property + ": " + value + " }";
-        css = declaration;
-        //head.insertAdjacentHTML('beforeend', stylesheet.outerHTML);
-        var link = document.createElement('link');
-        link.href = blob(css, 'text/css');
-        link.id = sheet;
-        link.rel = "stylesheet";
-        link.onload = async function() {
-            await css.style.done(doc, className);
-        }
-        doc.head.appendChild(link);
-    }
-
+    console.log(702, {
+        styleExists
+    });
+    var decs = [{
+        type,
+        property: attribute,
+        value
+    }];
+    console.log(716, decs);
+    css.style.done(doc, className, decs);
 }
 window.tool.box.group = function(target) {
     $(target.closest('box > row').nextElementSibling).toggleClass('display-none');
@@ -815,8 +813,9 @@ window.css.style.declaration = function(c) {
     }) : null;
     return [property, value];
 }
-window.cssTexts = {};
+
 window.css.style.done = function(doc, rule, decs) {
+    doc.head.cssTexts ? null : doc.head.cssTexts = {};
     console.log(947, 'css.style.done', {
         decs
     });
@@ -848,7 +847,7 @@ window.css.style.done = function(doc, rule, decs) {
             }) : null;
             var sheet = 'sheet-' + attr;
             var style = doc.head.find('#' + sheet);
-            style = cssTexts[sheet];
+            style = doc.head.cssTexts[sheet];
             var declaration = "";
             var query = rule.property.startsWith('dw');
             //console.log(854, {query});
@@ -870,14 +869,14 @@ window.css.style.done = function(doc, rule, decs) {
                 id: byId(sheet)
             }) : null;
             if (style) {
-                cssTexts[sheet] ? cssTexts[sheet].push(declaration) : cssTexts[sheet] = [declaration];
+                doc.head.cssTexts[sheet] ? doc.head.cssTexts[sheet].push(declaration) : doc.head.cssTexts[sheet] = [declaration];
                 0 > 1 ? console.log(864, style.id, {
                     cssText,
-                    sheet: cssTexts[sheet],
-                    cssTexts
+                    sheet: doc.head.cssTexts[sheet],
+                    cssTexts: doc.head.cssTexts
                 }) : null;
             } else {
-                cssTexts[sheet] = [declaration];
+                doc.head.cssTexts[sheet] = [declaration];
                 0 > 1 ? console.log(891, {
                     query,
                     rule,
@@ -901,38 +900,54 @@ window.css.style.done = function(doc, rule, decs) {
                 styleSheets: doc.styleSheets,
                 rules,
             }, {
-                cssTexts,
+                cssTexts: doc.head.cssTexts,
                 stylesheet,
                 sheet
             }) : null;
         }
 
-        var entries = Object.entries(cssTexts);
+        var entries = Object.entries(doc.head.cssTexts);
         entries = Array.from(new Set(entries.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-        0 < 1 ? console.log(1065, 'cssTexts', {
-            cssTexts,
-            entries
+        0 < 1 ? console.log(1065, 'doc.head.cssTexts', {
+            head: doc.head,
+            cssTexts: doc.head.cssTexts,
+            entries,
+            decs
         }) : null;
         for (const entry of entries) {
             var id = entry[0];
             entry[1] = Array.from(new Set(entry[1].map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
             entry[1].reverse();
-            0 < 1 ? console.log(1071, {
-                entry: entry[1],
-                id,
-                href
-            }) : null;
             var href = entry[1].join(' ');
 
-            var link = document.createElement('link');
-            link.href = blob(href, 'text/css');
-            link.id = id;
-            link.onload = function() {
-                console.log(876, link.id);
-                //resolve(link);
+            var exists = decs.find(o=>'sheet-' + o.property === id);
+            if (exists) {
+
+                var link = doc.head.find('#' + id);
+                if (link) {
+                    0 < 1 ? console.log(1071, {
+                        entry: entry[1],
+                        link,
+                        id,
+                        href
+                    }) : null;
+                    link.href = blob(href, 'text/css');
+                    link.id = id;
+                    link.onload = function() {
+                        console.log(876, link.id);
+                        //resolve(link);
+                    }
+                    link.rel = "stylesheet";
+                    doc.head.appendChild(link);
+                } else {
+                    var link = document.createElement('link');
+                    link.href = blob(href, 'text/css');
+                    link.id = id;
+                    link.rel = "stylesheet";
+                    doc.head.appendChild(link);
+                }
             }
-            link.rel = "stylesheet";
-            doc.head.appendChild(link);
+
         }
     }
     );
@@ -1024,7 +1039,7 @@ window.css.style.sheet = async function(el) {
             }) : null;
 
             var styles = head.all('link');
-            var sheet = 'style-' + attr;
+            var sheet = 'sheet-' + attr;
             0 > 1 ? console.log(586, {
                 head,
                 styles,

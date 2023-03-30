@@ -263,10 +263,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
 
                                         $(form.all('block > *')).addClass('display-none');
-                                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                                        $(form.all('form > header box flex')[2]).attr("data-height", "50px");
-                                        $(form.all('form > header box flex')[2]).attr("data-width", "50px");
+                                        $(form.all('form > header box flex')).attr("css-height", "30px");
+                                        $(form.all('form > header box flex')).attr("css-width", "30px");
+                                        $(form.all('form > header box flex')[2]).attr("css-height", "50px");
+                                        $(form.all('form > header box flex')[2]).attr("css-width", "50px");
                                         $(form.all('block > *')[2]).removeClass('display-none');
 
                                         if (about) {
@@ -276,10 +276,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //alert("Step Two");
 
                                         $(form.all('block > *')).addClass('display-none');
-                                        $(form.all('form > header box flex')).attr("data-height", "30px");
-                                        $(form.all('form > header box flex')).attr("data-width", "30px");
-                                        $(form.all('form > header box flex')[1]).attr("data-height", "50px");
-                                        $(form.all('form > header box flex')[1]).attr("data-width", "50px");
+                                        $(form.all('form > header box flex')).attr("css-height", "30px");
+                                        $(form.all('form > header box flex')).attr("css-width", "30px");
+                                        $(form.all('form > header box flex')[1]).attr("css-height", "50px");
+                                        $(form.all('form > header box flex')[1]).attr("css-width", "50px");
                                         $(form.all('block > *')[1]).removeClass('display-none');
 
                                         var color = colors.random();
@@ -351,7 +351,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
 
-                                    //private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
+                                    //private === true ? template.find('.gg-lock').closest('text').setAttribute("css-display", "flex"); : null;
 
                                     template.find('text').dataset.owner = row.owner.login;
                                     template.find('text').dataset.repo = row.name;
@@ -434,7 +434,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     });
                                     var doc = new DOMParser().parseFromString(res, 'text/html');
                                     var head = doc.head;
-                                    block.removeAttribute('data-display');
+                                    block.removeAttribute('css-display');
                                     var template = block.find('template').content;
                                     var checkout = {
                                         cash: template.children[0],
@@ -452,7 +452,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     if (stripe_pk.content && stripe_uid.content) {
                                         var box = checkout.stripe.cloneNode(true);
                                         column.insertAdjacentHTML('beforeend', box.outerHTML);
-                                        vp.all('block')[1].all('card')[1].all('box')[0].dataset.display = "none";
+                                        vp.all('block')[1].all('card')[1].all('box')[0].setAttribute("css-display", "none");
                                     }
                                 } catch (e) {
                                     console.log(e);
@@ -793,7 +793,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         await controller.video.thumbs(video);
 
-                                        canvas.parentElement.dataset.display = "flex";
+                                        canvas.parentElement.setAttribute("css-display", "flex");
                                     } catch (e) {
                                         console.log(e);
                                     }
@@ -1004,7 +1004,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var footer = vp.find('form [data-after="Traits"]').closest('box').find('footer');
 
                                         footer.previousElementSibling.innerHTML = "";
-                                        vp.find('[data-after="Traits"]').closest('box').removeAttribute('data-display');
+                                        vp.find('[data-after="Traits"]').closest('box').removeAttribute('css-display');
 
                                         var d = 0;
                                         do {
@@ -1086,7 +1086,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             d++;
                                         } while (d < dimensions.length);
                                     } else {
-                                        vp.find('[data-after="Traits"]').closest('box').dataset.display = "none";
+                                        vp.find('[data-after="Traits"]').closest('box').setAttribute("css-display", "none");
                                     }
 
                                     //DESCENDANT
@@ -1195,7 +1195,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     //IMAGES
                                     var card = vp.find('form card');
                                     var section = card.find('box > section');
-                                    var columns = card.find('[data-columns]');
+                                    var columns = card.find('[css-columns]');
                                     section.innerHTML = "";
                                     columns.innerHTML = columns.lastElementChild.outerHTML;
                                     if (json && json.images && json.images.length > 0) {
@@ -1336,8 +1336,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     }
 
                                 } else {
-                                    //vp.find('form').removeAttribute('data-display');
-                                    //vp.find('error').dataset.display = "none";
+                                    //vp.find('form').removeAttribute('css-display');
+                                    //vp.find('error').setAttribute("css-display", "none");
 
                                     var json = await ajax("/raw/asset/json/categories.json");
                                     var categories = JSON.parse(json).merch;
@@ -1377,7 +1377,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         } else {
                             var feed = byId('feed-dashboard-merch');
                             var vp = dom.body.find('page[data-page="/dashboard/*/merch"]');
-                            vp.find('block > footer').dataset.display = "none";
+                            vp.find('block > footer').setAttribute("css-display", "none");
                             //alert("Attempting to fetch files");
                             github.repos.contents({
                                 owner: window.owner.login,
@@ -1836,8 +1836,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             vp.all('block[data-step]')[0].find('[data-goto="two"]').classList.add('opacity-50pct');
                             vp.all('block[data-step]')[0].find('[data-goto="two"]').dataset.disabled = "true";
                             vp.all('block[data-step]')[0].find('input[type="text"]').value = "";
-                            $(vp.all('form > header box flex')[0]).attr("data-height", "50px");
-                            $(vp.all('form > header box flex')[0]).attr("data-width", "50px");
+                            $(vp.all('form > header box flex')[0]).attr("css-height", "50px");
+                            $(vp.all('form > header box flex')[0]).attr("css-width", "50px");
                             $(vp.all('block[data-step]')).addClass('display-none');
                             $(vp.all('block[data-step]')[0]).removeClass('display-none');
                         }
@@ -1906,7 +1906,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var vp = dom.body.find('[data-page="' + route.page + '"]');
                             var iframe = vp.find('iframe');
                             iframe.name = "iframe-" + get[1];
-                            controller.templates.preview(iframe);
+                            //controller.templates.preview(iframe);
                         }
 
                     }
@@ -2011,7 +2011,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                 (Math.abs(x % 2) == 1) ? template.classList.add('background-color-fff') : null;
 
-                                private === true ? template.find('.gg-lock').closest('text').dataset.display = "flex" : null;
+                                private === true ? template.find('.gg-lock').closest('text').setAttribute("css-display", "flex") : null;
 
                                 template.find('text').dataset.owner = row.owner.login;
                                 template.find('text').dataset.repo = row.name;

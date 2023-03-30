@@ -3,9 +3,9 @@
         <row class="justify-content-space-between">
             <card>
                 <row class="gap-10px">
-                    <box class="display-nonre" data-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                    <box class="display-nonre" css-display960px-display="flex" data-tap="controller.nav.toggle(event.target)">
                         <section>
-                            <ico data-height="30px" data-width="30px">
+                            <ico css-height="30px" css-width="30px">
                                 <n class="gg-menu"></n>
                             </ico>
                         </section>
@@ -17,11 +17,11 @@
                     </box>
                 </row>
             </card>
-            <card data-display="none">
+            <card css-display="none">
                 <row>
                     <box class="display-none line-height-30px" data-href="/dashboard/:get/merch/catalog/">
                         <row class="align-items-center justify-content-center">
-                            <ico data-height="30px" data-width="50px">
+                            <ico css-height="30px" css-width="50px">
                                 <n class="gg-tag"></n>
                             </ico>
                             <text class="font-size-14px font-weight-bolder">Add Item</text>
@@ -57,7 +57,7 @@
                             <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/domains"></line>
                         </column>
                     </box>
-                    <box data-display="none">
+                    <box css-display="none">
                         <column class="gap-5px">
                             <text>Analytics</text>
                             <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/analytics"></line>
@@ -73,17 +73,17 @@
                 <column>
                     <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
                         <column class="width-480px">
-                            <text class="bolder font-size-24px padding-x-0" data-width="100%">Title</text>
+                            <text class="bolder font-size-24px padding-x-0" css-width="100%">Title</text>
                             <text class="font-size-13px margin-right text-align-left">Provide a unique name for your platform.</text>
                             <text class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px line-height-50px margin-top-20px padding-x-20px width-100pc-40px whitespace-nowrap scroll-y" contenteditable="true" onkeydown placeholder="My Project" type="text"></text>
                         </column>
                     </box>
                     <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
                         <column class="width-480px">
-                            <text class="bolder font-size-24px padding-x-0" data-width="100%">Logo</text>
+                            <text class="bolder font-size-24px padding-x-0" css-width="100%">Logo</text>
                             <text class="font-size-13px margin-right text-align-left width-100pc">Upload a logo for your application.</text>
-                            <ico data-file data-height="auto" data-width="100%">
-                                <n class="align-center width-100pc bg-white border-radius-50px direction-column justify-center margin-top-20px padding-y-20px shadow" data-display="flex" data-var="bg">Upload</n>
+                            <ico data-file css-height="auto" css-width="100%">
+                                <n class="align-center width-100pc bg-white border-radius-50px direction-column justify-center margin-top-20px padding-y-20px shadow" css-display="flex" data-var="bg">Upload</n>
                                 <input type="file" onchange="mvc.c.about.logo(event)">
                             </ico>
                         </column>
