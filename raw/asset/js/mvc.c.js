@@ -649,13 +649,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var ppp = new DOMParser().parseFromString(html, "text/html");
 
                 var declarations = ppp.body.all('[data-declaration]');
-                console.log(705, ppp, {
+                0 > 1 ? console.log(705, ppp, {
                     declarations
-                });
+                }) : null;
 
                 var card = toolbar.find('[data-declaration]');
-                card.dataset.property = declarations[3].closest('[data-property]').dataset.property;
-                card.innerHTML = declarations[3].outerHTML;
+                //card.dataset.property = declarations[3].closest('[data-property]').dataset.property;
+                //card.innerHTML = declarations[3].outerHTML;
                 //declarations.forEach(function(declaration) { });
 
             }
@@ -681,7 +681,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 $(tabs).attr('css-display', 'none')
 
                 var fetching = ppp.all('[data-fetch]');
-                console.log(col.body, fetching);
+                //console.log(col.body, fetching);
                 fetching.length > 0 ? fetching.forEach(async function(column, index) {
                     var html = await ajax(column.dataset.fetch);
                     var parser = new DOMParser().parseFromString(html, "text/html");
@@ -689,7 +689,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var tab = index === box.index() ? column : null;
                     if (tab) {
                         tab.removeAttribute('css-display');
-                        console.log(tab);
+                        //console.log(tab);
                         tool.box.css(tab);
                     }
                 }) : null;

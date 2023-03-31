@@ -21,6 +21,24 @@
                 </field>
             </flex>
         </row>
+        <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="focus" data-property="height" tabindex="1">
+            <text class="font-weight-bolder">Height</text>
+            <flex class="gap-5px" data-declaration="dimension">
+                <input class="border-1px-solid border-color-db border-radius-3px display-none text-align-center width-50px" data-value="number" onchange="tool.box.value(event.target)" type="number" value="50">
+                <field class="position-relative">
+                    <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
+                        <text data-value="unit">unset</text>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" css-display="none" data-hidden="tap" data-tap="tool.box.unit(event.target)" css-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px">auto</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">px</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">vw</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">%</text>
+                        <text class="-hover-background-color-eb padding-x-20px">unset</text>
+                    </column>
+                </field>
+            </flex>
+        </row>
     </box>
     <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" tabindex="2">
         <header>
@@ -28,7 +46,7 @@
         </header>
         <row class="gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="text-align" tabindex="2">
             <text class="font-weight-bolder">Text Align</text>
-            <flex class="gap-5px" data-declaration="string">
+            <flex class="gap-5px" data-declaration="value">
                 <field class="position-relative">
                     <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
                         <text data-value="value" value="left">left</text>
@@ -70,7 +88,7 @@
         <column data-tab="flex">
             <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="flex-direction" tabindex="2">
                 <text class="font-weight-bolder">Flex Direction</text>
-                <flex class="gap-5px" data-declaration="string">
+                <flex class="gap-5px" data-declaration="value">
                     <field class="position-relative">
                         <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
                             <text data-value="value">unset</text>
@@ -88,7 +106,7 @@
             </row>
             <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="justifyContent" tabindex="2">
                 <text class="font-weight-bolder">Justify Content</text>
-                <flex class="gap-5px" data-declaration="string">
+                <flex class="gap-5px" data-declaration="value">
                     <field class="position-relative">
                         <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
                             <text data-value="value">unset</text>
@@ -361,33 +379,33 @@
         </header>
         <row class="gap-5px justify-content-space-between line-height-30px padding-y-10px" data-element="wrapper" data-property="media" tabindex="5">
             <text class="font-weight-bolder">Format</text>
-            <row class="gap-5px" data-declaration="array">
+            <row class="gap-5px" data-declaration="checkbox">
                 <label class='align-items-center display-flex gap-5px justify-content-center' css-height="30px">
-                    <input name="audio" type="checkbox">
+                    <input name="audio" onchange="tool.box.value(event.target)" type="checkbox">
                     <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" css-height="30px" css-width="30px">
                         <n class="--ggs-75pct gg-music"></n>
                     </ico>
                 </label>
                 <label class='align-items-center display-flex gap-5px justify-content-center' css-height="30px">
-                    <input name="pages" type="checkbox">
+                    <input name="pages" onchange="tool.box.value(event.target)" type="checkbox">
                     <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" css-height="30px" css-width="30px">
                         <n class="--ggs-75pct gg-file-document"></n>
                     </ico>
                 </label>
                 <label class='align-items-center display-flex gap-5px justify-content-center' css-height="30px">
-                    <input name="photo" type="checkbox">
+                    <input name="photo" onchange="tool.box.value(event.target)" type="checkbox">
                     <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" css-height="30px" css-width="30px">
                         <n class="--ggs-75pct gg-image"></n>
                     </ico>
                 </label>
                 <label class='align-items-center display-flex gap-5px justify-content-center' css-height="30px">
-                    <input name="video" type="checkbox">
+                    <input name="video" onchange="tool.box.value(event.target)" type="checkbox">
                     <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" css-height="30px" css-width="30px">
                         <n class="--ggs-75pct gg-film"></n>
                     </ico>
                 </label>
                 <label class='align-items-center display-flex gap-5px justify-content-center' css-height="30px">
-                    <input name="merch" type="checkbox">
+                    <input name="merch" onchange="tool.box.value(event.target)" type="checkbox">
                     <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" css-height="30px" css-width="30px">
                         <n class="--ggs-75pct gg-shopping-bag"></n>
                     </ico>

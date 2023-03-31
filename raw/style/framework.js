@@ -301,174 +301,299 @@ window.tool.box.css = function(tab) {
     if (declarations.length > 0) {
         var rules = {};
         var classList = Array.from(ppp.focus.classList).concat(Array.from(ppp.focus.find('flex, column, row, section').classList));
-        classList.forEach(function(c) {
-            var split = c.split('-');
-            var value = split.splice(split.length - 1)[0];
-            var properties = [];
-            split.forEach(function(s) {
-                if (s.startsWith('dw') || s.startsWith('_')) {
-                    split;
-                } else {
-                    properties.push(s);
-                }
-            });
-            var property = properties.join('-');
-            rules[property] = value;
-            0 > 1 ? console.log(731, {
-                c,
-                split,
-                property,
-                value
-            }) : null;
-        });
-        var d1 = Object.assign({}, ppp.focus.dataset);
-        var d2 = Object.assign({}, ppp.focus.find('flex, column, row, section').dataset);
-        var d3 = Object.assign({}, ppp.focus.find('flex, column, row, section').attributes);
         var attrs = {};
-        for (const [i,a] of Object.entries(ppp.focus.find('flex, column, row, section').attributes)) {
-            console.log(329, a.name, a.value);
+        var a1 = Object.assign({}, ppp.focus.attributes);
+        var a2 = Object.assign({}, ppp.focus.find('flex, column, row, section').attributes);
+        var a3 = Object.assign(a1, a2);
+        for (const [i,a] of Object.entries(a3)) {
+            //console.log(329, a.name, a.value);
             var key = a.name;
             var value = a.value;
-            key.startsWith('data-') ? null : attrs[key] = value;
+            if (key.startsWith('css')) {
+                var camel = [];
+                var split = key.rfo('css-').split('-');
+                split.forEach(function(s) {
+                    if (s.startsWith('dw') || s.startsWith('_')) {
+                        //split;
+                        camel.push(s);
+                    } else {
+                        camel.push(s);
+                    }
+                });
+                key = camel.join('-').camelPhynate();
+                attrs[key] = value;
+            } else if (key.startsWith('class')) {
+                value.split(' ').forEach(function(c) {
+                    var split = c.split('-');
+                    var value = split.splice(split.length - 1)[0];
+                    var properties = [];
+                    split.forEach(function(s) {
+                        if (s.startsWith('dw') || s.startsWith('_')) {
+                            split;
+                        } else {
+                            properties.push(s);
+                        }
+                    });
+                    var property = properties.join('-');
+                    rules[property] = value;
+                    0 > 1 ? console.log(731, {
+                        c,
+                        split,
+                        property,
+                        value
+                    }) : null;
+                    attrs[property] = value;
+                });
+            } else {
+                attrs[key] = value;
+            }
+            //key.startsWith('css-') ? attrs[key] = value : null;
         }
-        ;var dataset = Object.assign(d1, d2);
-        //var attrs = Object.assign(d1, d3);
-        var vd = Object.entries(dataset);
-        Object.assign(rules, dataset);
+        var rules = attrs;
         0 < 1 ? console.log(718, {
-            attrs,
-            classList,
-            dataset,
+            a1,
+            a2,
+            a3,
             rules,
         }) : null;
         declarations.forEach(function(el) {
+            var declaration = el.dataset.declaration;
             var row = el.closest('[data-property]');
-            if (row) {
-                var property = row.dataset.property;
-                var number = el.find('[data-value="value"], [data-value="number"]');
-                0 > 1 ? console.log({
-                    property,
-                    el,
-                    number
+            if (0 < 1 && row) {
+                0 > 1 ? console.log(385, {
+                    declaration,
+                    row
                 }) : null;
-                if (number && number.classList.contains('display-none')) {
-                    var value = number.getAttribute('value');
-                    var formula = el.find('[data-formula]');
-                    var unit = el.find('[data-value="number"], [data-value="unit"],  [data-value="value"]');
-                    if (unit) {
-                        value = unit.textContent;
-                    }
-                    var selector = "block";
-                    var cssRule = selector + " {" + property + ": " + value + "}";
-                    var tab = el.closest('box').all('box > [data-tab="' + value + '"]');
-                    //console.log(tab, el.closest('box'));
-                    if (tab.length > 0) {
-                        console.log(tab, value);
-                        $(el.closest('box').all('box > [data-tab]')).removeClass('display-none');
-                        tab.classList.add('display-none')
-                    }
-                    //console.log(350, cssRule);
-                    Object.entries(rules).forEach(function(rule) {
-                        var k = rule[0];
-                        var v = rule[1];
-                        //console.log(property, {number, value, unit}, {k, v});
-                        if (property === k) {
-                            var value = v.cssValue();
-                            0 < 1 ? console.log({
-                                k,
-                                unit,
-                                value,
-                                v
-                            }) : null;
-                            var tabs = el.closest('box');
-                            console.log(349, tabs);
-                            if (tabs.length > 0) {}
-                            if (value.number) {
-                                if (value.unit) {
-                                    number.classList.remove('display-none')
-                                    number && value.number ? number.value = value.number : null;
-                                    unit && value.unit ? unit.textContent = value.unit : null;
-                                } else {
-                                    unit.getAttribute('type') === "number" ? unit.value = value.number : unit.textContent = value.number;
-                                }
-                            } else {
-                                unit && value.number ? unit.textContent = value.number : null;
-                                number ? number.classList.add('display-none') : null;
-                            }
-                            0 > 1 ? console.log(cssRule, {
-                                unit,
-                                number,
-                                rule,
-                                k,
-                                v
-                            }) : null;
+                var property = row.dataset.property;
+                var number = el.find('[data-value="array"], [data-value="value"], [data-value="number"]');
+                if (number) {
+                    var type = number.dataset.value;
+                    0 > 1 ? console.log(349, {
+                        el,
+                        row,
+                        property,
+                        el,
+                        number,
+                        type
+                    }) : null;
+                    if (number && number.classList.contains('display-none')) {
+                        var value = number.getAttribute('value');
+                        var formula = el.find('[data-formula]');
+                        var unit = el.find('[data-value="number"], [data-value="unit"],  [data-value="value"]');
+                        if (unit) {
+                            value = unit.textContent;
                         }
-                    });
-                } else if (number && !number.classList.contains('display-none')) {
-                    var value = number.getAttribute('value');
-                    var formula = el.find('[data-formula]');
-                    var unit = el.find('[data-value="number"], [data-value="unit"],  [data-value="value"]');
-                    if (unit) {
-                        value = value + unit.textContent;
-                    }
-                    var selector = "block";
-                    var cssRule = selector + " {" + property + ": " + value + "}";
-
-                    Object.entries(rules).forEach(function(rule) {
-                        var k = rule[0];
-                        var v = rule[1];
-                        0 > 1 ? console.log(property, {
-                            number,
-                            value,
-                            unit
-                        }, {
-                            k,
-                            v
-                        }) : null;
-                        if (property === k) {
-                            var value = v.cssValue();
-                            0 < 1 ? console.log(421, tab, {
-                                k,
+                        var selector = "block";
+                        var cssRule = selector + " {" + property + ": " + value + "}";
+                        var tab = el.closest('box').all('box > [data-tab="' + value + '"]');
+                        //console.log(tab, el.closest('box'));
+                        if (tab.length > 0) {
+                            console.log(tab, value);
+                            $(el.closest('box').all('box > [data-tab]')).removeClass('display-none');
+                            tab.classList.add('display-none')
+                        }
+                        //console.log(350, cssRule);
+                        Object.entries(rules).forEach(function(rule) {
+                            var k = rule[0];
+                            var v = rule[1];
+                            0 > 1 ? console.log(374, property, {
                                 number,
-                                unit,
                                 value,
+                                unit
+                            }, {
+                                k,
                                 v
                             }) : null;
-                            if (value.number) {
-                                if (value.unit) {
-                                    number.classList.remove('display-none')
-                                    number && value.number ? number.value = value.number : null;
-                                    unit && value.unit ? unit.textContent = value.unit : null;
-                                } else {
-                                    console.log(429, unit, value, number.getAttribute('value'), value.number);
-                                    if (formula) {
-                                        var num = value.number;
-                                        unit.getAttribute('type') === "number" ? unit.setAttribute('value', num) : unit.textContent = num;
+                            if (property === k) {
+                                var value = v.cssValue();
+                                0 < 1 ? console.log({
+                                    k,
+                                    unit,
+                                    value,
+                                    v
+                                }) : null;
+                                var tabs = el.closest('box');
+                                //console.log(384, tabs);
+                                if (tabs.length > 0) {}
+                                if (value.number) {
+                                    if (value.unit) {
+                                        number.classList.remove('display-none')
+                                        number && value.number ? number.value = value.number : null;
+                                        unit && value.unit ? unit.textContent = value.unit : null;
                                     } else {
                                         unit.getAttribute('type') === "number" ? unit.value = value.number : unit.textContent = value.number;
                                     }
+                                } else {
+                                    unit && value.number ? unit.textContent = value.number : null;
+                                    number ? number.classList.add('display-none') : null;
                                 }
-                            } else {
-                                unit && value.number ? unit.textContent = value.number : null;
-                                number ? number.classList.add('display-none') : null;
+                                0 < 1 ? console.log(398, cssRule, {
+                                    unit,
+                                    number,
+                                    rule,
+                                    k,
+                                    v
+                                }) : null;
                             }
-                            0 > 1 ? console.log(cssRule, {
-                                unit,
+                        });
+                    } else if (number && !number.classList.contains('display-none')) {
+                        var value = number.getAttribute('value');
+                        var formula = el.find('[data-formula]');
+                        var unit = el.find('[data-value="number"], [data-value="unit"],  [data-value="value"]');
+                        if (unit) {
+                            value = value + unit.textContent;
+                        }
+                        var selector = "block";
+                        var cssRule = selector + " {" + property + ": " + value + "}";
+
+                        Object.entries(rules).forEach(function(rule) {
+                            var k = rule[0];
+                            var v = rule[1];
+                            0 > 1 ? console.log(property, {
                                 number,
-                                rule,
+                                value,
+                                unit
+                            }, {
                                 k,
                                 v
                             }) : null;
-                            var tab = unit ? el.closest('box').all('column[data-tab="' + unit.textContent + '"]') : null;
-                            console.log(cssRule, tab, el.closest('box'), value);
-                            if (tab && tab.length > 0) {
-                                console.log(tab, value);
-                                $(el.closest('box').all('box > [data-tab]')).addClass('display-none');
-                                $(tab).removeClass('display-none')
+                            if (property === k) {
+                                var value = v.cssValue();
+                                0 > 1 ? console.log(421, tab, {
+                                    k,
+                                    number,
+                                    unit,
+                                    value,
+                                    v
+                                }) : null;
+                                if (value.number) {
+                                    if (value.unit) {
+                                        number.classList.remove('display-none')
+                                        number && value.number ? number.value = value.number : null;
+                                        unit && value.unit ? unit.textContent = value.unit : null;
+                                    } else {
+                                        //console.log(429, unit, value, number.getAttribute('value'), value.number);
+                                        if (formula) {
+                                            var num = value.number;
+                                            unit.getAttribute('type') === "number" ? unit.setAttribute('value', num) : unit.textContent = num;
+                                        } else {
+                                            unit.getAttribute('type') === "number" ? unit.value = value.number : unit.textContent = value.number;
+                                        }
+                                    }
+                                } else {
+                                    unit && value.number ? unit.textContent = value.number : null;
+                                    number ? number.classList.add('display-none') : null;
+                                }
+                                0 > 1 ? console.log(cssRule, {
+                                    unit,
+                                    number,
+                                    rule,
+                                    k,
+                                    v
+                                }) : null;
+                                var tab = unit ? el.closest('box').all('column[data-tab="' + unit.textContent + '"]') : null;
+                                //console.log(cssRule, tab, el.closest('box'), value);
+                                if (tab && tab.length > 0) {
+                                    //console.log(tab, value);
+                                    $(el.closest('box').all('box > [data-tab]')).addClass('display-none');
+                                    $(tab).removeClass('display-none')
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
+            }
+            if (row) {
+                var property = row.dataset.property.camelPhynate();
+                Object.entries(rules).forEach(function(rule) {
+                    var key = rule[0];
+                    var value = rule[1];
+                    0 > 1 ? console.log(537, {
+                        el,
+                        property,
+                        declaration
+                    }) : null;
+                    if (key === property) {
+                        0 < 1 ? console.log(517, {
+                            el,
+                            property,
+                            declaration
+                        }) : null;
+                        0 < 1 ? console.log(522, property, {
+                            key,
+                            value
+                        }) : null;
+                        if (declaration === "checkbox") {
+                            var checkboxes = el.all('input[type="checkbox"]');
+                            var json = is.json(value) ? JSON.parse(value) : [value];
+                            0 < 1 ? console.log(536, property, {
+                                json,
+                                checkboxes
+                            }) : null;
+                            checkboxes.forEach(function(checkbox) {
+                                var name = checkbox.name;
+                                if (json.includes(name)) {
+                                    checkbox.checked = true;
+                                }
+                            });
+                        }
+                        if (declaration === "dimension") {
+                            var dimension = value.cssValue();
+                            var number = el.find('input[type="number"]');
+                            if (number) {
+                                number.value = dimension.number;
+                            }
+                            var unit = el.find('[data-value="unit"]');
+                            if (unit) {
+                                unit.textContent = dimension.unit;
+                            }
+                            0 < 1 ? console.log(562, property, {
+                                dimension,
+                                number,
+                                unit
+                            }) : null;
+                        }
+                        if (declaration === "number") {
+                            var number = el.find('input[type="number"]');
+                            if (number) {
+                                String.prototype.formulate = function(formula) {
+                                    var variable = this.toString();
+                                    var v = variable;
+                                    formula.split('{var}').forEach(function(x) {
+                                        v = v.replace(x, '');
+                                        console.log(593, {
+                                            v,
+                                            x,
+                                            variable,
+                                            formula
+                                        });
+                                    });
+                                    var reg = variable.matchAll("{var}");
+                                    console.log({
+                                        variable,
+                                        formula,
+                                        v,
+                                        reg
+                                    });
+                                    return v;
+                                }
+                                var formula = number.dataset.formula;
+                                if (formula) {
+                                    value = value.formulate(formula);
+                                }
+                                number.value = value;
+                            }
+                            0 < 1 ? console.log(583, property, {
+                                formula,
+                                number,
+                                value
+                            }) : null;
+                        }
+                        if (declaration === "string") {
+                            el.find('input[type="text"]').value = value;
+                        }
+                    }
+                });
             }
         });
     }
@@ -578,6 +703,14 @@ window.tool.box.value = function(target) {
 
     var value = null;
     var declaration = target.closest('[data-declaration]').dataset.declaration;
+    var property = target.closest('[data-property]').dataset.property;
+    if (declaration === "checkbox") {
+        value = target.checked ? target.name : null;
+        console.log(695, {
+            property,
+            value
+        });
+    }
     if (declaration === "dimension") {
         var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
         if (unit) {
@@ -585,9 +718,13 @@ window.tool.box.value = function(target) {
         }
     }
     if (declaration === "number") {
-        value = target.value;
+        var formula = target.dataset.formula ? target.dataset.formula : null;
+        value = formula ? formula.replace('{var}', target.value) : target.value.replace('%', 'pct');
     }
     if (declaration === "string") {
+        value = target.value;
+    }
+    if (declaration === "value") {
         var selected = target.closest('[data-value]');
         if (selected) {
             value = selected.dataset.value;
@@ -595,13 +732,17 @@ window.tool.box.value = function(target) {
         }
     }
 
-    0 > 1 ? console.log({
-        declaration,
+    attribute = property.camelPhenate();
+    var supports = CSS.supports(attribute, value);
+    0 < 1 ? console.log(729, {
+        supports,
+        declaration
+    }, {
+        attribute,
         value
     }) : null;
-    if (declaration && value) {
+    if (supports) {
         var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
-        var formula = target.dataset.formula ? target.dataset.formula : null;
         window.tool.box.style(focus, {
             attribute,
             value
@@ -609,18 +750,44 @@ window.tool.box.value = function(target) {
             rule,
             formula
         });
+    } else {
+        if (property && value) {
+            focus.setAttribute(property, value);
+        } else {
+            focus.removeAttribute(property);
+        }
     }
 }
 window.tool.box.style = async function(focus, declaration, options) {
 
     declaration.value ? declaration.value = declaration.value.replace('%', 'pct') : null;
-    console.log(616, {focus, declaration, options});
+    console.log(616, {
+        focus,
+        declaration,
+        options
+    });
     var pseudo = options ? options.pseudo : null;
     var rule = options ? options.rule : null;
     var formula = options ? options.formula : null;
     var attribute = attr = declaration.attribute;
-    var value = formula ? formula.replace('{var}', declaration.value) : declaration.value.replace('%', 'pct');
-    console.log(616, {focus, declaration, options, value});
+    if (formula) {
+        var v = formula;
+        formula.split('{var}').forEach(function(x) {
+            v = v.replace(x, '');
+            console.log(593, {
+                v,
+                x,
+                formula
+            });
+        });
+    }
+    var value = v = formula ? v : declaration.value.replace('%', 'pct');
+    console.log(785, {
+        focus,
+        declaration,
+        options,
+        value
+    });
 
     //STYLE SHEETS
     var iframe = byId('iframe-editor');
@@ -653,7 +820,7 @@ window.tool.box.style = async function(focus, declaration, options) {
     }
 
     //INLINE STYLE
-    0 > 1 ? console.log(520, {
+    0 < 1 ? console.log(520, {
         focus,
         attribute,
         value
@@ -661,10 +828,11 @@ window.tool.box.style = async function(focus, declaration, options) {
     //focus.style[attribute] = value;
 
     //DATASET
-    attribute = attribute.camelPhynate();
-    var className = [attribute, declaration.value.replace('%', 'pct')].join('-');
+    attribute = attribute.camelPhenate();
+    var className = [declaration.attribute, declaration.value.replace('%', 'pct')].join('-');
     var obj = {};
     obj[className] = {
+        className,
         pseudo,
         rule,
         attribute,
@@ -676,8 +844,8 @@ window.tool.box.style = async function(focus, declaration, options) {
         value
     }, obj) : null;
     if (formula) {
-        focus.setAttribute('css-' + attribute, value);
-    }
+        focus.setAttribute('css-' + declaration.attribute, declaration.value);
+    } else {
 
     //INLINE CLASS
     //else {
@@ -701,6 +869,7 @@ window.tool.box.style = async function(focus, declaration, options) {
     });
     focus.classList.add(className);
     //}
+    }
 
     var rules = null;
     var type = formula ? 'css' : 'class';
@@ -711,8 +880,8 @@ window.tool.box.style = async function(focus, declaration, options) {
     });
     var decs = [{
         type,
-        property: attribute,
-        value
+        property: declaration.attribute,
+        value: declaration.value
     }];
     console.log(716, decs);
     css.style.done(doc, className, decs);
