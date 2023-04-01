@@ -46,7 +46,7 @@
         </header>
         <row class="gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="text-align" tabindex="2">
             <text class="font-weight-bolder">Text Align</text>
-            <flex class="gap-5px" data-declaration="value">
+            <flex class="gap-5px" data-declaration="select">
                 <field class="position-relative">
                     <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
                         <text data-value="value" value="left">left</text>
@@ -72,7 +72,7 @@
             <flex class="gap-5px" data-declaration="select">
                 <field class="position-relative">
                     <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
-                        <text data-value="value" value="value">flex</text>
+                        <text data-value="value" value="flex">flex</text>
                         <ico class="color-777" css-height="20px" css-width="20px">
                             <n class="gg-chevron-down"></n>
                         </ico>
@@ -85,7 +85,7 @@
                 </field>
             </flex>
         </row>
-        <column data-tab="flex">
+        <column class="display-none" data-tab="flex">
             <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="flex-direction" tabindex="2">
                 <text class="font-weight-bolder">Flex Direction</text>
                 <flex class="gap-5px" data-declaration="value">
@@ -379,7 +379,7 @@
         </header>
         <row class="gap-5px justify-content-space-between line-height-30px padding-y-10px" data-element="wrapper" data-property="media" tabindex="5">
             <text class="font-weight-bolder">Format</text>
-            <row class="gap-5px" data-declaration="checkbox">
+            <row class="gap-5px" data-declaration="array">
                 <label class='align-items-center display-flex gap-5px justify-content-center' css-height="30px">
                     <input name="audio" onchange="tool.box.value(event.target)" type="checkbox">
                     <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff border-2px-solid border-color-ccc border-radius-5px box-sizing-border-box color-777 color-ddd" css-height="30px" css-width="30px">
