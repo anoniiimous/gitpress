@@ -135,20 +135,42 @@ framework.on = async function(event) {
             var sel = element ? ':not(body)[focus="' + element + '"] ' + element + '' : null;
             var selected = sel ? event.target.closest(sel) : null;
             var focusing = sel && event.target.closest(sel) ? event.target.closest(sel).getAttribute('focus') : null;
-            console.log({
+            var mode = {
+                edit: buildable && !insertable,
+                plus: buildable && insertable,
+                view: !buildable && !insertable
+            }
+            var node = target.closest('box > * > *, card, block, body > header, body > footer');
+            var tool = window.top.byId('iframe-editor').parentNode.previousElementSibling;
+            var toolset = tool.find('[tabindex="1"]');
+            var toolbox = tool.find('[tabindex="2"]');
+            var toolbar = tool.find('[tabindex="3"]');
+            var elements = ["text", "picture", "video", "audio", "line", "embed"];
+            var nodeName = node.tagName.toLowerCase();
+            0 > 1 ? console.log({
                 el,
                 sel,
                 selected,
                 focusing
-            });
-            if (buildable && !insertable) {
-                var focus = target.closest('focus');
-                if (elem !== event.target.closest(':not(block):not(body > header):not(body > footer)[focus]')) {
+            }, {
+                mode,
+                buildable,
+                insertable
+            }) : null;
+
+            $(tool.all('header > *')).addClass('display-none');
+            if (mode.edit) {
+                var focus = target.closest('[focus]');
+                var withh = elem !== event.target.closest(':not(block):not(body > header):not(body > footer)[focus]');
+                //console.log({focus,withh}, {elem});
+                if (withh) {
 
                     var focused = $('[focus]');
+                    var inn = (elem && $('[focus]').length === 0) || (elem && ((focused && focused[focused.length - 1].contains(elem)) || (sel && focused && focused[focused.length - 1].parentNode.contains(elem) && !focusing && element === elem.tagName.toLowerCase())))
 
                     0 > 1 ? console.log(89, {
                         elem,
+                        inn,
                         target: event.target.closest('[focus]'),
                         focuser: focused.length > 0 ? focused[focused.length - 1] : null,
                         contains: focused.length > 0 ? focused[focused.length - 1].contains(elem) : null,
@@ -156,7 +178,7 @@ framework.on = async function(event) {
                         focused
                     }) : null;
 
-                    if ((elem && $('[focus]').length === 0) || (elem && ((focused && focused[focused.length - 1].contains(elem)) || (sel && focused && focused[focused.length - 1].parentNode.contains(elem) && !focusing && element === elem.tagName.toLowerCase())))) {
+                    if (inn) {
 
                         $('[focus]').forEach(function(el) {
                             el === elem ? null : el.removeAttribute('focus');
@@ -170,26 +192,30 @@ framework.on = async function(event) {
                         $([dom.body]).attr('focus', el);
                         $([elem, elem.closest('block, footer, header')]).attr('focus', el);
 
-                        if (focused === "true") {
-                        } else {
+                        if (focused === "true") {} else {
                             if (tagName === "box") {
                                 $(elem.all('text')).attr('contenteditable', true);
                             }
                         }
 
-                        console.log({
+                        0 < 1 ? (0 > 1 ? console.log({
                             focused,
                             tagName,
                             tool,
                             icons: $(tool.all('ico')),
                             array: Array.prototype
-                        });
+                        }) : console.log({
+                            focus: 'with',
+                            el
+                        })) : null;
 
                         $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
 
                     } else {
 
-                        console.log($('[focus]'));
+                        0 < 1 ? console.log({
+                            focus: 'without'
+                        }) : null;
 
                         $('[focus]').forEach(function(el) {
                             el.removeAttribute('focus');
@@ -201,26 +227,67 @@ framework.on = async function(event) {
                         $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
 
                     }
+                    toolset.classList.remove('display-none');
 
                 } else {
 
+                    var media = selected.closest('[media]') ? selected.closest('[media]').getAttribute('media') : null;
+                    0 < 1 ? console.log({
+                        focus: 'within',
+                        el,
+                        selected
+                    }, {
+                        media,
+                        node
+                    }) : null;
+
                     if (el === "box") {
-                        var media = selected.closest('[data-media]') ? selected.closest('[data-media]').dataset.media : null;
-                        var id = selected.dataset.id;
-                        if (media && !id) {
-                            var json = is.json(media) ? JSON.parse(media) : false;
-                            if (json) {
-                                console.log('mixed', media);
+                        if (media) {
+                            var id = selected.dataset.id;
+                            if (id) {
+                                toolset.classList.remove('display-none');
+                                console.log(id);
                             } else {
-                                var confirm = await window.top.modal.confirm({
-                                    body: "Do you want to save your changes before creating a new item?",
-                                    title: "Unsaved Changes"
-                                }, ["No", "Yes"]);
-                                if (confirm) {
-                                    '/dashboard/:get/merch/catalog'.router();
+                                var json = is.json(media) ? JSON.parse(media) : false;
+                                if (json) {
+                                    console.log('mixed', media);
+                                    toolset.classList.remove('display-none');
+                                } else {
+                                    toolset.classList.remove('display-none');
+                                    var confirm = await window.top.modal.confirm({
+                                        body: "Do you want to save your changes before creating a new item?",
+                                        title: "Unsaved Changes"
+                                    }, ["No", "Yes"]);
+                                    if (confirm) {
+                                        '/dashboard/:get/merch/catalog'.router();
+                                    }
                                 }
+                                console.log(media, json);
                             }
-                            console.log(media, json);
+                        } else {
+                            if (node) {
+                                if (elements.includes(nodeName)) {
+                                    if (nodeName === 'text') {}
+                                    if (nodeName === 'picture') {}
+                                    if (nodeName === 'video') {}
+                                    if (nodeName === 'audio') {}
+                                    if (nodeName === 'line') {}
+                                    if (nodeName === 'embed') {}
+                                    toolbar.classList.remove('display-none');
+                                    $(toolbar.children).addClass('display-none');
+                                    console.log(toolbar, nodeName);
+                                    toolbar.find('[tag="' + nodeName + '"]').classList.remove('display-none');
+                                } else {
+                                    toolset.classList.remove('display-none');
+                                }
+                                console.log({
+                                    toolset,
+                                    toolbox,
+                                    toolbar
+                                });
+                            } else {
+                                toolset.classList.remove('display-none');
+                            }
                         }
                     }
                 }

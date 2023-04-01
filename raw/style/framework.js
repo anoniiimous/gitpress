@@ -327,15 +327,15 @@ window.tool.box.css = function(tab) {
         var a3 = Object.assign(a1, a2);
         a3.class = c3.join(' ');
 
-        console.log({
+        0 > 1 ? console.log({
             a3
-        }, ppp.focus.find('flex, column, row, section').attributes, ppp.focus.attributes);
+        }, ppp.focus.find('flex, column, row, section').attributes, ppp.focus.attributes) : null;
         for (var [key,value] of Object.entries(a3)) {
             value = value.replace('pct', '%');
-            console.log(329, {
+            0 > 1 ? console.log(329, {
                 key,
                 value
-            });
+            }) : null;
             if (key.startsWith('css')) {
                 var camel = [];
                 var split = key.rfo('css-').split('-');
@@ -350,7 +350,7 @@ window.tool.box.css = function(tab) {
                 key = camel.join('-').camelPhynate();
                 attrs[key] = value;
             } else if (key.startsWith('class')) {
-                console.log(value);
+                //console.log(value);
                 value.split(' ').forEach(function(c) {
                     var split = c.split('-');
                     var value = split.splice(split.length - 1)[0];
@@ -364,7 +364,7 @@ window.tool.box.css = function(tab) {
                     });
                     var property = properties.join('-');
                     rules[property] = value;
-                    0 < 1 ? console.log(339, {
+                    0 > 1 ? console.log(339, {
                         c,
                         split,
                         property,
@@ -378,7 +378,7 @@ window.tool.box.css = function(tab) {
             //key.startsWith('css-') ? attrs[key] = value : null;
         }
         var rules = attrs;
-        0 < 1 ? console.log(718, {
+        0 > 1 ? console.log(718, {
             a1,
             a2,
             a3,
@@ -631,13 +631,13 @@ window.tool.box.value = function(target) {
         checked.forEach(function(k, v) {
             value.push(k.name);
         });
-        value = JSON.stringify(value);
+        value = value.length > 0 ? JSON.stringify(value) : null;
         //value = target.checked ? target.name : null;
-        console.log(695, {
+        0 > 1 ? console.log(695, {
             checked,
             property,
             value
-        });
+        }) : null;
     }
     if (declaration === "checkbox") {
         value = target.checked ? target.name : null;
@@ -673,7 +673,7 @@ window.tool.box.value = function(target) {
 
     attribute = property.camelPhenate();
     var supports = CSS.supports(attribute, value);
-    0 < 1 ? console.log(729, {
+    0 > 1 ? console.log(729, {
         supports,
         declaration
     }, {
