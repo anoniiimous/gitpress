@@ -298,38 +298,63 @@ window.tool.box.css = function(tab) {
     var element = doc.body.getAttribute('focus');
 
     var declarations = $(tab.all('[data-declaration]'));
+    console.log(304, {
+        ppp,
+        tab,
+        declarations
+    });
     if (declarations.length > 0) {
-        var rules = {};
-        var classList = Array.from(ppp.focus.classList).concat(Array.from(ppp.focus.find('flex, column, row, section').classList));
+        var focus = tab.node ? tab.node : ppp.focus;
+        var nodeName = focus.nodeName.toLowerCase();
+        console.log(308, {
+            focus
+        }, tab.closest('card'), tab.closest('card').node, focus.nodeName.toLowerCase(), ["header", "footer", "block", "card", "box"].includes(nodeName))
+
         var attrs = {};
+        var rules = {};
+        var classList = Array.from(focus.classList);
 
-        var e1 = {
-            focus: ppp.focus.find('flex, column, row, section').attributes,
-            wrapper: ppp.focus.find('flex, column, row, section').attributes
-        };
-
-        var c1 = Array.from(ppp.focus.classList);
-        var c2 = Array.from(ppp.focus.find('flex, column, row, section').classList);
-        var c3 = c1.concat(c2);
-
+        var c1 = Array.from(focus.classList);
         var a1 = {};
-        for (const [i,a] of Object.entries(ppp.focus.attributes)) {
+        var a2 = {};
+
+        for (const [i,a] of Object.entries(focus.attributes)) {
             var key = a.name;
             var value = a.value;
             a1[key] = value;
         }
-        var a2 = {};
-        for (const [i,a] of Object.entries(ppp.focus.find('flex, column, row, section').attributes)) {
-            var key = a.name;
-            var value = a.value;
-            a2[key] = value;
-        }
-        var a3 = Object.assign(a1, a2);
-        a3.class = c3.join(' ');
 
-        0 > 1 ? console.log({
+        if (["header", "footer", "block", "card", "box"].includes(nodeName)) {
+
+            classList.concat(Array.from(focus.find('flex, column, row, section').classList));
+            var e1 = {
+                focus: focus.find('flex, column, row, section').attributes,
+                wrapper: focus.find('flex, column, row, section').attributes
+            };
+
+            var c2 = Array.from(focus.find('flex, column, row, section').classList);
+            var c3 = c1.concat(c2);
+
+            for (const [i,a] of Object.entries(focus.find('flex, column, row, section').attributes)) {
+                var key = a.name;
+                var value = a.value;
+                a2[key] = value;
+            }
+
+            var a3 = Object.assign(a1, a2);
+            a3.class = c3.join(' ');
+
+        } else {
+
+            var a3 = a1;
+            var c3 = c1;
+            a3.class = c3.join(' ');
+
+        }
+
+        0 < 1 ? console.log(334, {
             a3
-        }, ppp.focus.find('flex, column, row, section').attributes, ppp.focus.attributes) : null;
+        }) : null;
         for (var [key,value] of Object.entries(a3)) {
             value = value.replace('pct', '%');
             0 > 1 ? console.log(329, {
@@ -378,11 +403,12 @@ window.tool.box.css = function(tab) {
             //key.startsWith('css-') ? attrs[key] = value : null;
         }
         var rules = attrs;
-        0 > 1 ? console.log(718, {
+        0 < 1 ? console.log(718, {
             a1,
             a2,
             a3,
             rules,
+            declarations
         }) : null;
         declarations.forEach(function(el) {
             var declaration = el.dataset.declaration;
@@ -392,7 +418,7 @@ window.tool.box.css = function(tab) {
                 Object.entries(rules).forEach(function(rule) {
                     var key = rule[0];
                     var value = rule[1];
-                    0 > 1 ? console.log(537, {
+                    0 < 1 ? console.log(537, {
                         el,
                         rules,
                         property,
@@ -579,7 +605,8 @@ window.tool.box.values = function(target) {
         method(input);
     }
 }
-window.tool.box.unit = function(target) {
+window.tool.box.unit = function(event) {
+    var target = event.target;
     var button = target.closest('[data-tap] > *');
     if (button) {
         var unit = button.textContent;
@@ -603,7 +630,7 @@ window.tool.box.unit = function(target) {
         onchange.forEach(function(o) {
             method = method[o];
         });
-        
+
         var event = new Event('change');
         //method(event);
         input.dispatchEvent(event);
@@ -611,6 +638,7 @@ window.tool.box.unit = function(target) {
 }
 window.tool.box.value = async function(event) {
     var target = event.target;
+    console.log(event, target);
     var iframe = byId('iframe-editor');
     var win = iframe.contentWindow;
     var doc = win.document;
@@ -690,12 +718,15 @@ window.tool.box.value = async function(event) {
 
     attribute = property.camelPhenate();
     var supports = CSS.supports(attribute, value);
-    0 > 1 ? console.log(729, {
+    0 < 1 ? console.log(729, {
         supports,
         declaration
     }, {
         attribute,
         value
+    }, {
+        file,
+        node
     }) : null;
     if (file && node) {
         var name = node.nodeName.toLowerCase();
@@ -715,15 +746,26 @@ window.tool.box.value = async function(event) {
         target.remove();
     } else {
         if (supports) {
+            var dttribute = target.closest('[data-attribute]') ? target.closest('[data-attribute]').dataset.attribute : null;
             var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
+            console.log(723, {
+                attribute,
+                value,
+                dttribute
+            });
             window.tool.box.style(focus, {
                 attribute,
                 value
             }, {
                 rule,
-                formula
+                formula,
+                dttribute
             });
         } else {
+            console.log(734, {
+                property,
+                value
+            });
             if (property && value) {
                 focus.setAttribute(property, value);
             } else {
@@ -803,6 +845,7 @@ window.tool.box.style = async function(focus, declaration, options) {
 
     //DATASET
     attribute = attribute.camelPhenate();
+    var dttribute = options ? options.dttribute : null;
     var className = [declaration.attribute, declaration.value.replace('%', 'pct')].join('-');
     var obj = {};
     obj[className] = {
@@ -817,10 +860,9 @@ window.tool.box.style = async function(focus, declaration, options) {
         attribute,
         value
     }, obj) : null;
-    if (formula) {
-        focus.setAttribute('css-' + declaration.attribute, declaration.value);
+    if (formula || dttribute) {
+        focus.setAttribute((dttribute ? dttribute + '-' : 'css-') + declaration.attribute, declaration.value);
     } else {
-
         //INLINE CLASS
         //else {
         var classExists = false;
@@ -846,7 +888,7 @@ window.tool.box.style = async function(focus, declaration, options) {
     }
 
     var rules = null;
-    var type = formula ? 'css' : 'class';
+    var type = formula || dttribute === 'css' ? 'css' : 'class';
     var property = attr;
 
     console.log(702, {
@@ -863,7 +905,8 @@ window.tool.box.style = async function(focus, declaration, options) {
 window.tool.box.group = function(target) {
     $(target.closest('box > row').nextElementSibling).toggleClass('display-none');
 }
-window.tool.box.section = function(target) {
+window.tool.box.section = function(event) {
+    var target = event.target;
     var iframe = byId('iframe-editor');
     var win = iframe.contentWindow;
     var doc = win.document;
@@ -1278,17 +1321,24 @@ async function toolbelt(mode, options) {
             var ppp = await window.top.modal.popup(html);
             var cards = ppp.all('card');
 
-            var fetching = ppp.all('[data-fetch]');
-            fetching.length > 0 ? fetching.forEach(async function(column, index) {
-                var html = await ajax(column.dataset.fetch);
-                var parser = new DOMParser().parseFromString(html, "text/html");
-                column.innerHTML = parser.body.firstElementChild.innerHTML;
-            }) : null;
-
             cards.forEach(function(card) {
                 if (card.dataset.tag === element) {
-                    card.node = node;
+                    card.node = card.closest('aside').focus = node;
                     card.removeAttribute('css-display');
+
+                    var fetching = card.all('[data-fetch]');
+                    console.log(1305, {
+                        fetching
+                    });
+                    fetching.length > 0 ? fetching.forEach(async function(column, index) {
+                        var html = await ajax(column.dataset.fetch);
+                        var parser = new DOMParser().parseFromString(html, "text/html");
+                        column.innerHTML = parser.body.firstElementChild.innerHTML;
+                        console.log(1309, {
+                            column
+                        });
+                        window.tool.box.css(column);
+                    }) : null;
                 }
             });
 
