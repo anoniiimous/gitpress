@@ -160,6 +160,7 @@
     box > * > picture {
         display: flex;
         display: -webkit-flex;
+        width: 100%;
     }
 
     blockquote {

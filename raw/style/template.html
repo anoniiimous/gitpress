@@ -134,22 +134,45 @@
                                 </card>
                             </row>
                             <row class="align-items-center display-none justify-content-space-between width-100pct" tabindex="3">
-                                <card class="display-none" tag="text">
-                                    <row>text</row>
+                                <card class="display-none flex-1 height-50px" tag="text">
+                                    <flex class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px display-flex justify-content-space-between position-relative" onmousedown="event.target.tagName.toLowerCase() === 'input' ? null : event.preventDefault()" onmouseup="event.target.tagName.toLowerCase() === 'input' ? null : event.preventDefault()">
+                                        <row>
+                                            <ico data-tap="controller.wysiwyg.more(event.target, 'text')">
+                                                <img class="width-18px" src="raw/asset/svg/more-text.svg">
+                                            </ico>
+                                            <ico data-tap="controller.wysiwyg.more(event.target, 'paragraph')">
+                                                <img class="width-18px" src="raw/asset/svg/more-paragraph.svg">
+                                            </ico>
+                                            <ico data-tap="controller.wysiwyg.more(event.target, 'rich')">
+                                                <img class="width-18px" src="raw/asset/svg/more-rich.svg">
+                                            </ico>
+                                        </row>
+                                        <row>
+                                            <ico data-command="undo">
+                                                <n class="gg-undo"></n>
+                                            </ico>
+                                            <ico data-command="redo">
+                                                <n class="gg-redo"></n>
+                                            </ico>
+                                            <ico data-tap="controller.wysiwyg.more(event.target, 'misc')">
+                                                <n class="gg-more-vertical-alt"></n>
+                                            </ico>
+                                        </row>
+                                    </flex>
                                 </card>
-                                <card class="display-none" tag="picture">
+                                <card class="display-none flex-1 height-50px" tag="picture">
                                     <row>picture</row>
                                 </card>
-                                <card class="display-none" tag="video">
+                                <card class="display-none flex-1 height-50px" tag="video">
                                     <row>video</row>
                                 </card>
-                                <card class="display-none" tag="audio">
+                                <card class="display-none flex-1 height-50px" tag="audio">
                                     <row>audio</row>
                                 </card>
-                                <card class="display-none" tag="line">
+                                <card class="display-none flex-1 height-50px" tag="line">
                                     <row>line</row>
                                 </card>
-                                <card class="display-none" tag="audio">
+                                <card class="display-none flex-1 height-50px" tag="audio">
                                     <row>audio</row>
                                 </card>
                             </row>

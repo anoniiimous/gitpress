@@ -227,7 +227,7 @@ framework.on = async function(event) {
                         $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
 
                     }
-                    toolset.classList.remove('display-none');
+                    window.top.toolbelt('set');
 
                 } else {
 
@@ -245,15 +245,17 @@ framework.on = async function(event) {
                         if (media) {
                             var id = selected.dataset.id;
                             if (id) {
-                                toolset.classList.remove('display-none');
+                                window.top.toolbelt('bar', {
+                                    element: node
+                                });
                                 console.log(id);
                             } else {
                                 var json = is.json(media) ? JSON.parse(media) : false;
                                 if (json) {
                                     console.log('mixed', media);
-                                    toolset.classList.remove('display-none');
+                                    window.top.toolbelt('set');
                                 } else {
-                                    toolset.classList.remove('display-none');
+                                    window.top.toolbelt('set');
                                     var confirm = await window.top.modal.confirm({
                                         body: "Do you want to save your changes before creating a new item?",
                                         title: "Unsaved Changes"
@@ -267,26 +269,14 @@ framework.on = async function(event) {
                         } else {
                             if (node) {
                                 if (elements.includes(nodeName)) {
-                                    if (nodeName === 'text') {}
-                                    if (nodeName === 'picture') {}
-                                    if (nodeName === 'video') {}
-                                    if (nodeName === 'audio') {}
-                                    if (nodeName === 'line') {}
-                                    if (nodeName === 'embed') {}
-                                    toolbar.classList.remove('display-none');
-                                    $(toolbar.children).addClass('display-none');
-                                    console.log(toolbar, nodeName);
-                                    toolbar.find('[tag="' + nodeName + '"]').classList.remove('display-none');
+                                    window.top.toolbelt('bar', {
+                                        element: node
+                                    });
                                 } else {
-                                    toolset.classList.remove('display-none');
+                                    window.top.toolbelt('set');
                                 }
-                                console.log({
-                                    toolset,
-                                    toolbox,
-                                    toolbar
-                                });
                             } else {
-                                toolset.classList.remove('display-none');
+                                window.top.toolbelt('set');
                             }
                         }
                     }

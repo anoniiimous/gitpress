@@ -606,7 +606,8 @@ window.tool.box.unit = function(target) {
         method(input);
     }
 }
-window.tool.box.value = function(target) {
+window.tool.box.value = async function(event) {
+    var target = event.target;
     var iframe = byId('iframe-editor');
     var win = iframe.contentWindow;
     var doc = win.document;
@@ -621,7 +622,16 @@ window.tool.box.value = function(target) {
     if (element === "children") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");
     }
+    if (element === "node") {
+        focus = target.closest('card').node;
+        console.log(626, {
+            element,
+            focus
+        });
+    }
 
+    var file = null;
+    var node = null;
     var value = null;
     var declaration = target.closest('[data-declaration]').dataset.declaration;
     var property = target.closest('[data-property]').dataset.property;
@@ -647,6 +657,10 @@ window.tool.box.value = function(target) {
         if (unit) {
             value = target.classList.contains('display-none') ? unit : target.value.replace('pct', '%') + unit;
         }
+    }
+    if (declaration === "file") {
+        file = target.files[0];
+        node = target.closest('card').node;
     }
     if (declaration === "number") {
         var formula = target.dataset.formula ? target.dataset.formula : null;
@@ -680,20 +694,38 @@ window.tool.box.value = function(target) {
         attribute,
         value
     }) : null;
-    if (supports) {
-        var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
-        window.tool.box.style(focus, {
-            attribute,
-            value
-        }, {
-            rule,
-            formula
+    if (file && node) {
+        var name = node.nodeName.toLowerCase();
+        console.log(695, {
+            file,
+            node,
+            name
         });
+        if (name === "picture") {
+            var img = document.createElement('img');
+            var file = await on.change.file(event);
+            var src = file.result;
+            img.src = src;
+            node.innerHTML = img.outerHTML;
+        }
+        target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
+        target.remove();
     } else {
-        if (property && value) {
-            focus.setAttribute(property, value);
+        if (supports) {
+            var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
+            window.tool.box.style(focus, {
+                attribute,
+                value
+            }, {
+                rule,
+                formula
+            });
         } else {
-            focus.removeAttribute(property);
+            if (property && value) {
+                focus.setAttribute(property, value);
+            } else {
+                focus.removeAttribute(property);
+            }
         }
     }
 }
@@ -1197,3 +1229,76 @@ window.css.style.sheet = async function(el) {
     });
 }
 ;
+
+async function toolbelt(mode, options) {
+    var tool = window.top.byId('iframe-editor').parentNode.previousElementSibling;
+    var toolset = tool.find('[tabindex="1"]');
+    var toolbox = tool.find('[tabindex="2"]');
+    var toolbar = tool.find('[tabindex="3"]');
+    var elements = ["text", "picture", "video", "audio", "line", "embed"];
+
+    if (mode) {
+
+        if (mode === "set") {
+            $(tool.all('[tabindex]')).addClass('display-none');
+            toolset.classList.remove('display-none');
+        }
+
+        if (mode === "box") {}
+
+        if (mode === "bar") {
+
+            console.log({
+                node,
+                nodeName,
+                options
+            });
+
+            var node = options.element;
+            var nodeName = element = node.tagName.toLowerCase();
+
+            if (nodeName === 'text') {}
+            if (nodeName === 'picture') {}
+            if (nodeName === 'video') {}
+            if (nodeName === 'audio') {}
+            if (nodeName === 'line') {}
+            if (nodeName === 'embed') {}
+
+            toolbar.classList.remove('display-none');
+            $(toolbar.children).addClass('display-none');
+            toolbar.find('[tag="' + nodeName + '"]').classList.remove('display-none');
+
+            var html = await ajax('raw/asset/html/tool/tool.box.element.html', {
+                cache: "reload"
+            });
+            var doc = new DOMParser().parseFromString(html, "text/html");
+            var ppp = await window.top.modal.popup(html);
+            var cards = ppp.all('card');
+
+            var fetching = ppp.all('[data-fetch]');
+            fetching.length > 0 ? fetching.forEach(async function(column, index) {
+                var html = await ajax(column.dataset.fetch);
+                var parser = new DOMParser().parseFromString(html, "text/html");
+                column.innerHTML = parser.body.firstElementChild.innerHTML;
+            }) : null;
+
+            cards.forEach(function(card) {
+                if (card.dataset.tag === element) {
+                    card.node = node;
+                    card.removeAttribute('css-display');
+                }
+            });
+
+            console.log({
+                toolset,
+                toolbox,
+                toolbar
+            }, {
+                html,
+                ppp,
+                cards
+            });
+        }
+
+    }
+}
