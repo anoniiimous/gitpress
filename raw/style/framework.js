@@ -603,7 +603,10 @@ window.tool.box.unit = function(target) {
         onchange.forEach(function(o) {
             method = method[o];
         });
-        method(input);
+        
+        var event = new Event('change');
+        //method(event);
+        input.dispatchEvent(event);
     }
 }
 window.tool.box.value = async function(event) {
