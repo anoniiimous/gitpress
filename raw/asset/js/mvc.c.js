@@ -470,8 +470,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             console.log(524, iframe.closest('pages').previousElementSibling);
 
             var dock = iframe.closest('pages').previousElementSibling;
-            dock.find('[placeholder="Page Name"]').textContent = json.title;
-            dock.find('[placeholder="/page-name"]').textContent = json.slug;
+            //dock.find('[placeholder="Page Name"]').textContent = json.title;
+            //dock.find('[placeholder="/page-name"]').textContent = json.slug;
         },
         previewer: ()=>{
 

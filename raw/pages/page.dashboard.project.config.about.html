@@ -1,0 +1,76 @@
+<form class="flex-direction-column flex-grow-1 margin-auto max-width-100pct width-640px">
+    <card class="background-color-fff border-radius-10px margin-10px overflow-hidden">
+        <header class="background-color-ccc line-height-50px padding-x-20px">
+            <span class="font-weight-bolder">General</span>
+        </header>
+        <flex class="-dw720px-flex-direction-column align-items-center flex-1 full-state-adjacent flex-direction-row gap-10px justify-content-space-between margin-20px">
+            <box class="-hd-width-100pct border-1px-solid box-sizing-border-box border-color-bbb border-radius-50px display-flex flex-1">
+                <section>
+                    <input class="flex-grow-1 height-50px padding-x-20px" placeholder="Shortname" type="text">
+                </section>
+            </box>
+            <box class="-hd-width-100pct background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative" css-max-width="calc(100% - 40px)">
+                <row class="align-items-center justify-content-center">
+                    <ico css-width="30px">
+                        <n class="gg-add"></n>
+                    </ico>
+                    <text class="padding-left-5px">Rename</text>
+                </row>
+            </box>
+        </flex>
+        <column>
+            <box class="margin-20px">
+                <row class="align-items-flex-start gap-10px">
+                    <label class="align-items-center display-flex justify-content-center">
+                        <input type="checkbox">
+                        <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                            <n class="-checked-display-flex display-none gg-check"></n>
+                        </ico>
+                    </label>
+                    <column>
+                        <text class="font-weight-bolder">Set as Template</text>
+                        <text>Allow this project to be used as a template for other users to select as a starting point.</text>
+                    </column>
+                </row>
+            </box>
+        </column>
+    </card>
+    <card class="background-color-fff border-radius-10px margin-10px overflow-hidden">
+        <header class="background-color-ccc line-height-50px padding-x-20px">
+            <span class="font-weight-bolder">Danger Zone</span>
+        </header>
+        <column>
+            <box>
+                <row class="align-items-center justify-content-space-between padding-20px">
+                    <text class="display-flex flex-1 flex-direction-column margin-right-20px">
+                        <text class="font-weight-bolder">Change repository visibility</text>
+                        <text>
+                            This repository is currently <data>private</data>
+                            .
+                                
+                        
+                        </text>
+                    </text>
+                    <box class="background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative">
+                        <row class="align-items-center justify-content-center">
+                            <text class="padding-left-5px">Change visibility</text>
+                        </row>
+                    </box>
+                </row>
+            </box>
+            <box class="border-top-1px-solid border-color-ddd">
+                <row class="align-items-center justify-content-space-between padding-20px">
+                    <text class="display-flex flex-1 flex-direction-column margin-right-20px">
+                        <text class="font-weight-bolder">Delete this project</text>
+                        <text>Once you delete a project, there is no going back. Please be certain.</text>
+                    </text>
+                    <box class="background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative">
+                        <row class="align-items-center justify-content-center">
+                            <text class="padding-left-5px">Delete this project</text>
+                        </row>
+                    </box>
+                </row>
+            </box>
+        </column>
+    </card>
+</form>

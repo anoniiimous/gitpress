@@ -28,9 +28,9 @@
     }
 
     empty:empty, .empty:empty {
-        display: none;`
-    }
-    
+        display: none;
+        ` }
+
     :not(:empty) + empty, :not(:empty) + .empty-state, :not(:empty) + .empty-state-adjacent {
         display: none;
     }
@@ -58,15 +58,22 @@
 
 /*SHELL*/
 @media screen {
+    html, body {
+        /* min-height: 100%; */
+    }
+    html, body, main, page, pages, blocks {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+    
     html {
         height: 100%;
         width: 100%;
     }
 
     body {
-        background-color: #fff;
         font-family: Arial;
-        min-height: 100%;
         margin: 0;
         width: 100%;
     }
@@ -111,7 +118,6 @@
     }
 
     block {
-        
     }
 
     card {
@@ -119,7 +125,6 @@
     }
 
     box {
-        
     }
 
     block > section, card > section, box > section {
@@ -155,6 +160,12 @@
         z-index: 0;
         width: 100%;
         height: 100%;
+    }
+
+    box > * > clip {
+        display: flex;
+        display: -webkit-flex;
+        width: 100%;
     }
 
     box > * > picture {
@@ -231,6 +242,38 @@
         z-index: 123456;
     }
 
+    embedded {
+        display: flex;
+        width: 100%;
+    }
+
+    embedded:empty {
+        height: 0;
+        padding-top: 100%;
+        background: #f7f7f7;
+    }
+
+    embedded > * {
+        display: flex;
+        width: 100%;
+    }
+
+    sound {
+        display: flex;
+        width: 100%;
+    }
+
+    sound:empty {
+        height: 0;
+        padding-top: 50px;
+        background: #f7f7f7;
+    }
+
+    sound > * {
+        display: flex;
+        width: 100%;
+    }
+
     figure {
         margin: unset;
     }
@@ -245,6 +288,20 @@
 
     line {
         display: flex;
+        /* margin-bottom: 5px; */
+        /* margin-top: 5px; */
+    }
+
+    line:not([css-background-color]) {
+        /* background-color: #333; */
+    }
+
+    line:not([css-height]) {
+        height: 2px;
+    }
+
+    line:not([css-width]) {
+        width: 100%;
     }
 
     main {
@@ -252,6 +309,7 @@
         /* display: -webkit-flex; */
         display: inherit;
         width: 100%;
+        /* min-height: 100%; */
         /* height: 100%; */
         /* overflow: visible; */
         position: relative;
@@ -299,6 +357,7 @@
 
     iframe {
         border: 0;
+        background: #fff;
     }
 
     input {
@@ -623,17 +682,25 @@
         min-height: 20px;
     }
 
-    body[buildable="true"] box picture:empty {
+    body[buildable="true"] box picture:empty, body[buildable="true"] box picture:has(img:not([src])) {
         height: 0;
         min-width: 100%;
         padding-top: 100%;
         background-color: #f7f7f7;
     }
 
-    body[buildable="true"] box video:empty {
+    body[buildable="true"] box clip:empty {
         height: 0;
         min-width: 100%;
         padding-top: 56.25%;
+        background-color: #f7f7f7;
+    }
+
+    body[buildable="true"] box video:empty {
+        /* height: 0; */
+        /* min-width: 100%; */
+        /* padding-top: 56.25%; */
+        width: 100%;
         background-color: #f7f7f7;
     }
 

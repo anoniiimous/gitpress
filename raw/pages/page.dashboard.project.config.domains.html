@@ -1,132 +1,22 @@
-<blocks>
-    <header class="-dw480px-padding-10px display-flex flex-direction-column gap-10px padding-20px">
-        <row class="justify-content-space-between">
-            <card>
-                <row class="gap-10px">
-                    <box class="display-nonre" css-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
-                        <section>
-                            <ico css-height="30px" css-width="30px">
-                                <n class="gg-menu"></n>
-                            </ico>
-                        </section>
-                    </box>
-                    <box>
-                        <section>
-                            <text class="font-size-24px font-weight-bolder">Config</text>
-                        </section>
-                    </box>
-                </row>
-            </card>
-            <card css-display="none">
-                <row>
-                    <box class="display-none line-height-30px" data-href="/dashboard/:get/merch/catalog/">
+<form>
+    <card class="background-color-fff border-radius-10px margin-10px overflow-hidden">
+        <header class="background-color-ccc line-height-50px padding-x-20px">
+            <span class="font-weight-bolder">Branch</span>
+        </header>
+        <column>
+            <box class="border-top-1px-solid border-color-ddd">
+                <row class="align-items-center justify-content-space-between padding-20px">
+                    <text class="display-flex flex-1 flex-direction-column margin-right-20px">
+                        <text class="font-weight-bolder">Delete this project</text>
+                        <text>Once you delete a project, there is no going back. Please be certain.</text>
+                    </text>
+                    <box class="background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative">
                         <row class="align-items-center justify-content-center">
-                            <ico css-height="30px" css-width="50px">
-                                <n class="gg-tag"></n>
-                            </ico>
-                            <text class="font-size-14px font-weight-bolder">Add Item</text>
+                            <text class="padding-left-5px">Delete this project</text>
                         </row>
                     </box>
                 </row>
-            </card>
-        </row>
-        <row>
-            <card class="font-weight-bolder padding-y-20px">
-                <row class="gap-10px">
-                    <box data-href="/dashboard/:get/config">
-                        <column class="gap-5px">
-                            <text>About</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config"></line>
-                        </column>
-                    </box>
-                    <box data-href="/dashboard/:get/config/branding">
-                        <column class="gap-5px">
-                            <text>Branding</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/branding"></line>
-                        </column>
-                    </box>
-                    <box data-href="/dashboard/:get/config/checkout">
-                        <column class="gap-5px">
-                            <text>Checkout</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/checkout"></line>
-                        </column>
-                    </box>
-                    <box data-href="/dashboard/:get/config/domains">
-                        <column class="gap-5px">
-                            <text>Domains</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/domains"></line>
-                        </column>
-                    </box>
-                    <box css-display="none">
-                        <column class="gap-5px">
-                            <text>Analytics</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/analytics"></line>
-                        </column>
-                    </box>
-                </row>
-            </card>
-        </row>
-    </header>
-    <block data-page="/dashboard/*/config">
-        <form class="flex-direction-column flex-grow-1 margin-auto width-100pct">
-            <card class="margin-20px">
-                <column>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px padding-x-0" css-width="100%">Title</text>
-                            <text class="font-size-13px margin-right text-align-left">Provide a unique name for your platform.</text>
-                            <text class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px line-height-50px margin-top-20px padding-x-20px width-100pc-40px whitespace-nowrap scroll-y" contenteditable="true" onkeydown placeholder="My Project" type="text"></text>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px padding-x-0" css-width="100%">Logo</text>
-                            <text class="font-size-13px margin-right text-align-left width-100pc">Upload a logo for your application.</text>
-                            <ico data-file css-height="auto" css-width="100%">
-                                <n class="align-center width-100pc bg-white border-radius-50px direction-column justify-center margin-top-20px padding-y-20px shadow" css-display="flex" data-var="bg">Upload</n>
-                                <input type="file" onchange="mvc.c.about.logo(event)">
-                            </ico>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0 width-100pc">Shortname</text>
-                            <text class="font-size-13px margin-right text-align-left">The default subdomain for your hosted app.</text>
-                            <text class="fg-r-after border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px line-height-50px padding-x-20px whitespace-nowrap margin-top-20px width-100pc-40px whitespace-nowrap scroll-y" contenteditable="true" data-max-width="100%" onkeydown placeholder="example" data-after=".web.app" type="text"></text>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0 width-100pc">Theme</text>
-                            <text class="font-size-13px margin-right text-align-left">Change the theme color of your brand.</text>
-                            <div class="font-size-18px margin-top-20px width-100pc" data-iro></div>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0">Description</text>
-                            <text class="font-size-13px margin-right">A snippet optimized for search engines details.</text>
-                            <textarea class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px margin-top-20px padding-10px text-align-left width-100pc" contenteditable="true" onkeydown placeholder="Provide a short summary." data-after=".spriii.app" type="text" data-max-width="100%" rows="3"></textarea>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0 margin-right">Keywords</text>
-                            <text class="font-size-13px margin-right">Select as many categories related to your web app.</text>
-                            <textarea class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px margin-top-20px padding-10px text-align-left width-100pc" contenteditable="true" onkeydown placeholder="Insert up to 20 related tags." data-after=".spriii.app" type="text" data-max-width="100%" rows="3"></textarea>
-                        </column>
-                    </box>
-                </column>
-            </card>
-        </form>
-    </block>
-    <block data-page="/dashboard/*/config/branding">
-        <form></form>
-    </block>
-    <block data-page="/dashboard/*/config/checkout">
-        <form></form>
-    </block>
-    <block data-page="/dashboard/*/config/domains">
-        <form></form>
-    </block>
-</blocks>
+            </box>
+        </column>
+    </card>
+</form>

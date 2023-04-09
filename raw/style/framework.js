@@ -135,11 +135,11 @@ framework.on = async function(event) {
             var sel = element ? ':not(body)[focus="' + element + '"] ' + element + '' : null;
             var selected = sel ? event.target.closest(sel) : null;
             var focusing = sel && event.target.closest(sel) ? event.target.closest(sel).getAttribute('focus') : null;
-            console.log({
+            0 > 1 ? console.log({
                 sel,
                 selected,
                 focusing
-            });
+            }) : null;
             if (buildable && !insertable) {
                 var focus = target.closest('focus');
                 if (elem !== event.target.closest(':not(block):not(body > header):not(body > footer)[focus]')) {
@@ -403,7 +403,7 @@ window.tool.box.css = function(tab) {
             //key.startsWith('css-') ? attrs[key] = value : null;
         }
         var rules = attrs;
-        0 < 1 ? console.log(718, {
+        0 > 1 ? console.log(718, {
             a1,
             a2,
             a3,
@@ -418,7 +418,7 @@ window.tool.box.css = function(tab) {
                 Object.entries(rules).forEach(function(rule) {
                     var key = rule[0];
                     var value = rule[1];
-                    0 < 1 ? console.log(537, {
+                    0 > 1 ? console.log(537, {
                         el,
                         rules,
                         property,
@@ -426,7 +426,7 @@ window.tool.box.css = function(tab) {
                     }) : null;
 
                     if (key === property) {
-                        0 < 1 ? console.log(517, {
+                        0 > 1 ? console.log(517, {
                             el,
                             property,
                             declaration
@@ -529,10 +529,10 @@ window.tool.box.css = function(tab) {
                             }) : null;
                         }
                         if (declaration === "select") {
-                            console.log(621, {
+                            0 > 1 ? console.log(621, {
                                 key,
                                 value
-                            });
+                            }) : null;
                             el.find('[data-value="value"]').textContent = value;
                             el.find('[data-value="value"]').setAttribute('value', value);
                         }
@@ -565,16 +565,20 @@ window.tool.box.element = async function(target) {
         });
 
         if (value) {
-            var html = await ajax('raw/asset/html/tool/tool.box.elements.html');
+            var html = await ajax('raw/asset/html/tool/tool.box.elements.html', {
+                cache: "reload"
+            });
             var parser = new DOMParser().parseFromString(html, "text/html");
             var element = parser.body.firstElementChild.find(value);
+            console.log({
+                element
+            });
 
             modal.exit(target);
 
             var wrapper = focusing.find('flex, column, row, section');
             wrapper.insertAdjacentHTML('beforeend', element.outerHTML)
             wrapper.lastElementChild.focus();
-
         }
     }
 }
@@ -655,9 +659,19 @@ window.tool.box.value = async function(event) {
     }
     if (element === "node") {
         focus = target.closest('card').node;
+        var nodeName = focus.nodeName.toLowerCase();
+        if (["picture"].includes(nodeName) && attribute === "src") {
+            focus = focus.find('img');
+        }
+        if (["clip"].includes(nodeName) && attribute === "src") {
+            focus = focus.find('video');
+        }
         console.log(626, {
+            attribute,
             element,
-            focus
+            focus,
+            nodeName,
+            tagName
         });
     }
 
@@ -742,6 +756,21 @@ window.tool.box.value = async function(event) {
             img.src = src;
             node.innerHTML = img.outerHTML;
         }
+        if (name === "clip") {
+            var vid = document.createElement('video');
+            var file = await on.change.file(event);
+            var src = file.result;
+            vid.controls = true;
+            vid.src = src;
+            node.innerHTML = vid.outerHTML;
+        }
+        if (name === "sound") {
+            var wave = document.createElement('sound');
+            var file = await on.change.file(event);
+            var src = file.result;
+            wave.src = src;
+            node.innerHTML = img.outerHTML;
+        }
         target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
         target.remove();
     } else {
@@ -766,12 +795,34 @@ window.tool.box.value = async function(event) {
                 property,
                 value
             });
-            if (property && value) {
-                focus.setAttribute(property, value);
+            if (["innerHTML"].includes(property)) {
+                focus[property] = value;
             } else {
-                focus.removeAttribute(property);
+                if (property && value) {
+                    focus.setAttribute(property, value);
+                } else {
+                    focus.removeAttribute(property);
+                }
             }
         }
+    }
+
+    var funxtion = target.closest('[data-function]')
+    if (funxtion) {
+        var declaration = {
+            property,
+            value
+        };
+        var fu = funxtion.dataset.function;
+        //console.log(funxtion.dataset.function);
+        var f = window;
+        fu.split('.').forEach(function(k, v) {
+            f = f[k];
+        });
+        f(focus, declaration);
+        //var x = eval(funxtion.dataset.function);
+        //typeof x === "function" ? x(declaration) : null;
+        //console.log(585, "Running function");
     }
 }
 window.tool.box.style = async function(focus, declaration, options) {
@@ -902,11 +953,13 @@ window.tool.box.style = async function(focus, declaration, options) {
     console.log(716, decs);
     css.style.done(doc, className, decs);
 }
-window.tool.box.group = function(target) {
+window.tool.box.group = function(event) {
+    var target = event.target;
     $(target.closest('box > row').nextElementSibling).toggleClass('display-none');
 }
 window.tool.box.section = function(event) {
     var target = event.target;
+    console.log(target);
     var iframe = byId('iframe-editor');
     var win = iframe.contentWindow;
     var doc = win.document;
@@ -1281,9 +1334,14 @@ async function toolbelt(mode, options) {
     var toolset = tool.find('[tabindex="1"]');
     var toolbox = tool.find('[tabindex="2"]');
     var toolbar = tool.find('[tabindex="3"]');
-    var elements = ["text", "picture", "video", "audio", "line", "embed"];
+    var elements = ["text", "picture", "video", "audio", "line", "embed", "embedded", "sound"];
+
+    var tools = window.top.byId('iframe-editor').nextElementSibling;
 
     if (mode) {
+
+        $(tools.all('[data-mode]')).addClass('display-none');
+        tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
 
         if (mode === "set") {
             $(tool.all('[tabindex]')).addClass('display-none');
@@ -1354,4 +1412,75 @@ async function toolbelt(mode, options) {
         }
 
     }
+}
+
+function toolset(mode, options) {
+
+    var tools = window.top.byId('iframe-editor').nextElementSibling;
+
+    if (mode) {
+
+        $(tools.all('[data-mode]')).addClass('display-none');
+        tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
+
+    }
+    
+}
+
+window.tool.function = {};
+window.tool.function.media = async function(focus, declaration) {
+
+    var value = declaration.value;
+    var json = JSON.parse(value);
+
+    var feed = null;
+    var template = null;
+    var tagname = focus.tagName.toLowerCase();
+    if (["block", "card", "box"].includes(focus.parentNode.tagName.toLowerCase())) {
+        feed = focus;
+        focus = focus.parentNode;
+    } else {
+        var sel = tagname + ' > column, ' + tagname + ' > flex, ' + tagname + ' > row, ' + tagname + ' > section';
+        feed = focus.find(sel);
+    }
+
+    if (focus.find('template')) {
+        template = focus.find('template');
+    } else {
+        template = document.createElement('template');
+        focus.insertAdjacentHTML('afterend', template.outerHTML);
+    }
+
+    template = focus.find('template');
+    console.log({
+        json,
+        focus
+    });
+    $(feed.all('[placeholder]')).html('');
+    $(feed.all('[src]')).removeAttr('src');
+    template.innerHTML = feed.innerHTML;
+
+    if (json && json.length > 0) {
+        console.log(587, {
+            focus,
+            declaration
+        }, {
+            sel,
+            tagname
+        }, {
+            feed,
+            content: template.content,
+            template
+        });
+
+        var property = declaration.property;
+        var value = declaration.value;
+        var win = focus.ownerWindow();
+        var html = await win.model.feed.media(feed);
+        console.log(1421, focus, feed);
+        feed.innerHTML = html;
+    } else {
+        console.log("nothing");
+    }
+
 }

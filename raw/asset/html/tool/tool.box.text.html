@@ -120,6 +120,26 @@
     </box>
     <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" tabindex="2">
         <header>
+            <text class="font-size-13px font-weight-bolder text-transform-uppercase">Line Style</text>
+        </header>
+        <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="line-height" tabindex="1">
+            <text class="font-weight-bolder">Line Height</text>
+            <flex class="gap-5px" data-declaration="dimension">
+                <input class="border-1px-solid border-color-db border-radius-3px display-none text-align-center width-50px" data-value="number" onchange="tool.box.value(event)" type="number" value="50">
+                <field class="position-relative">
+                    <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
+                        <text data-value="unit">auto</text>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto z-index-5" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" css-display="none" data-hidden="tap" data-tap="tool.box.unit(event)" css-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px">auto</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-dimension="unit">px</text>
+                    </column>
+                </field>
+            </flex>
+        </row>
+    </box>
+    <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" tabindex="2">
+        <header>
             <text class="font-size-13px font-weight-bolder text-transform-uppercase">Text</text>
         </header>
         <row class="gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="text-align" tabindex="2">
@@ -140,6 +160,25 @@
                 </field>
             </flex>
         </row>
+        <row class="gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="text-transform" tabindex="2">
+            <text class="font-weight-bolder">Text Transform</text>
+            <flex class="gap-5px" data-declaration="select">
+                <field class="position-relative">
+                    <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                        <text data-value="value" value="left">unset</text>
+                        <ico class="color-777" css-height="20px" css-width="20px">
+                            <n class="gg-chevron-down"></n>
+                        </ico>
+                    </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" css-display="none" data-hidden="tap" data-tap="tool.box.value(event)" css-top="100%">
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="capitalize">capitalize</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="lowercase">lowercase</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="upercase">uppercase</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-value="unset">unset</text>
+                    </column>
+                </field>
+            </flex>
+        </row>
     </box>
     <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" tabindex="4">
         <header>
@@ -148,7 +187,7 @@
         <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="margin" tabindex="3">
             <text class="align-items-center display-flex font-weight-bolder gap-5px line-height-20px">
                 <span>Margin</span>
-                <ico class="color-777" css-height="20px" data-tap="tool.box.group(event.target)" css-width="20px">
+                <ico class="color-777" css-height="20px" data-tap="tool.box.group(event)" css-width="20px">
                     <n class="gg-chevron-down"></n>
                 </ico>
             </text>
@@ -168,7 +207,7 @@
                 </field>
             </flex>
         </row>
-        <column class="display-none">
+        <column class="display-none" tabindex="3">
             <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="marginTop" tabindex="3">
                 <text class="font-weight-bolder">Margin Top</text>
                 <flex class="gap-5px" data-declaration="dimension">
@@ -245,7 +284,7 @@
         <row class="border-top-1px-solid border-color-ddd flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="padding" tabindex="3">
             <text class="align-items-center display-flex font-weight-bolder gap-5px line-height-20px">
                 <span>Padding</span>
-                <ico class="color-777" css-height="20px" data-tap="tool.box.group(event.target)" css-width="20px">
+                <ico class="color-777" css-height="20px" data-tap="tool.box.group(event)" css-width="20px">
                     <n class="gg-chevron-down"></n>
                 </ico>
             </text>

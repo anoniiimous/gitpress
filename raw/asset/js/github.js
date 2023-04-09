@@ -140,6 +140,37 @@ window.github = {
             );
         }
         ,
+        res: async(params)=>{
+            return new Promise((resolve,reject)=>{
+                fetch("https://api.github.com/repos/" + params.owner + "/" + params.repo + "/contents" + params.resource, {
+                    cache: "reload",
+                    headers: {
+                        Accept: "application/vnd.github.raw",
+                        Authorization: "token " + localStorage.githubAccessToken
+                    }
+                }).then(async(response)=>{
+                    if (response.status === 404) {
+                        var res = await response.json();
+                        var json = {
+                            json: res,
+                            error: new Error(response.status)
+                        }
+                        throw json;
+                    } else {
+                        return response.text();
+                    }
+                }
+                ).then((blob)=>{
+                    resolve(URL.createObjectURL(blob));
+                }
+                ).catch((e)=>{
+                    reject(e.json)
+                }
+                );
+            }
+            );
+        }
+        ,
         git: async(resource)=>{
             var r = rout.ed.dir(resource);
             var repo = r[1];
@@ -634,7 +665,7 @@ window.github = {
                         }
                         const accessToken = localStorage.githubAccessToken;
                         accessToken ? settings.headers = {
-                            Accept: "application/vnd.github+json",
+                            Accept: settings.accept ? settings.accept : "application/vnd.github+json",
                             Authorization: "token " + accessToken,
                             'If-None-Match': ''
                         } : null;

@@ -3,9 +3,9 @@
         <row class="justify-content-space-between">
             <card>
                 <row class="gap-10px">
-                    <box class="display-noner" data-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                    <box class="display-noner" css-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
                         <section>
-                            <ico data-height="30px" data-width="30px">
+                            <ico css-height="30px" css-width="30px">
                                 <n class="gg-menu"></n>
                             </ico>
                         </section>
@@ -21,7 +21,7 @@
                 <row>
                     <box class="line-height-30px" data-href="/dashboard/:get/media/">
                         <row class="align-items-center justify-content-center">
-                            <ico data-height="30px" data-width="30px">
+                            <ico css-height="30px" css-width="30px">
                                 <n class="gg-cloud"></n>
                             </ico>
                             <text class="font-size-14px font-weight-bolder">All Media</text>
@@ -33,7 +33,7 @@
     </header>
     <block class="-dw480px-margin-10px grid-gap-20px margin-20px">
         <form class="display-flex flex-direction-column gap-20px" onsubmit="controller.video.create(event)">
-            <card class="grid-gap-20px margin-auto max-width-100pct width-1280px" data-dw1320px-width="960px">
+            <card class="grid-gap-20px margin-auto max-width-100pct width-1280px" css-dw1320px-width="960px">
                 <column class="gap-5px">
                     <box class="-dw1320px-height-0 -dw1320px-padding-top-56pt25pct background-color-000 border-1px-solid border-radius-20px height-480px overflow-hidden width-100pct">
                         <figure class="height-100pct position-absolute top-0 width-100pct" data-value="video.src"></figure>
@@ -45,13 +45,13 @@
                         </column>
                         <column class="-hover-full-state-subsequent display-none flex-direction-column height-100pct justify-content-center position-absolute top-0 width-100pct">
                             <canvas class="display-none"></canvas>
-                            <ico class="background-color-ff3b30 border-radius-50px color-fff v position-absolute right-5px top-5px" data-height="30px" data-tap="controller.video.clear(event.target)" data-width="30px">
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff v position-absolute right-5px top-5px" css-height="30px" data-tap="controller.video.clear(event.target)" css-width="30px">
                                 <n class="gg-close"></n>
                             </ico>
                             <footer class="bottom-0 color-fff display-flex flex-1 flex-direction-column position-absolute width-100pct" data-tap="controller.controls.video(event)">
                                 <column class="gap-5px margin-20px">
                                     <row class="height-30px line-height-30px">
-                                        <ico data-element="video.play" data-height="30px" data-width="30px">
+                                        <ico data-element="video.play" css-height="30px" css-width="30px">
                                             <n class="gg-play-button"></n>
                                         </ico>
                                         <row class="gap-5px margin-right-auto" data-element="video.time">
@@ -72,24 +72,24 @@
                     </box>
                 </column>
             </card>
-            <card class="-dw1320px-flex-direction-column flex-1 flex-direction-row grid-gap-20px margin-auto max-width-100pct width-1280px" data-dw1320px-width="960px">
+            <card class="-dw1320px-flex-direction-column flex-1 flex-direction-row grid-gap-20px margin-auto max-width-100pct width-1280px" css-dw1320px-width="960px">
                 <column class="flex-1 gap-20px">
                     <box class="background-color-fff border-radius-10px gap-0px">
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase">Thumbnail</text>
                         </header>
-                        <column class="align-items-center gap-5px justify-content-space-between padding-10px" data-dw640px-columns="2" data-columns="4" data-tap="controller.video.poster(event.target)">
+                        <column class="align-items-center gap-5px justify-content-space-between padding-10px" css-dw640px-columns="2" css-columns="4" data-tap="controller.video.poster(event.target)">
                             <figure class="box-sizing-border-box position-relative">
                                 <picture class="display-block height-0 padding-top-56pt25pct width-100pct" data-value="video.poster"></picture>
                                 <label class="align-items-center border-1px-dashed border-color-777 border-radius-20px box-sizing-border-box display-flex empty-state flex-direction-column gap-5px height-100pct left-0 justify-content-center position-absolute top-0 width-100pct">
-                                    <ico data-height="20px" data-width="20px">
+                                    <ico css-height="20px" css-width="20px">
                                         <n class="gg-software-upload"></n>
                                     </ico>
                                     <text class="font-size-13px">Upload Image</text>
                                     <input accept="image/jpeg" onchange="controller.video.thumbnail(event)" type="file">
                                 </label>
-                                <label class="-hover-full-state-subsequent align-items-center background-color-000 border-radius-50pct box-sizing-border-box color-fff display-none flex-direction-column gap-5px right-0 justify-content-center margin-5px position-absolute top-0" data-height="36px" data-width="36px">
-                                    <ico data-height="20px" data-width="20px">
+                                <label class="-hover-full-state-subsequent align-items-center background-color-000 border-radius-50pct box-sizing-border-box color-fff display-none flex-direction-column gap-5px right-0 justify-content-center margin-5px position-absolute top-0" css-height="36px" css-width="36px">
+                                    <ico css-height="20px" css-width="20px">
                                         <n class="gg-software-upload"></n>
                                     </ico>
                                     <input accept="image/jpeg" onchange="controller.video.thumbnail(event)" type="file">
@@ -128,7 +128,7 @@
                         </header>
                         <flex class="flex-wrap-wrap gap-10px padding-10px" data-value="video.tags">
                             <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
+                                <ico css-height="20px" css-width="20px">
                                     <n class="gg-hashtag"></n>
                                 </ico>
                                 <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
@@ -136,11 +136,11 @@
                         </flex>
                         <template>
                             <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
+                                <ico css-height="20px" css-width="20px">
                                     <n class="gg-hashtag"></n>
                                 </ico>
                                 <span></span>
-                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
+                                <ico class="color-ff3b30" css-height="20px" data-tap="event.target.closest('text').remove()" css-width="20px">
                                     <n class="gg-close"></n>
                                 </ico>
                             </text>
@@ -149,7 +149,7 @@
                 </column>
                 <section class="-dw1320px-width-100pct width-320px">
                     <box class="width-100pct">
-                        <flex class="gap-10px" data-dw480px-columns="1" data-dw640px-columns="2" data-dw1320px-columns="4" data-columns="1">
+                        <flex class="gap-10px" css-dw480px-columns="1" css-dw640px-columns="2" css-dw1320px-columns="4" css-columns="1">
                             <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.media.delete([rout.ed.dir(route.path).splice(4,5).join('/')])">Delete</text>
                             <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-video">
                                 <text>Post It</text>

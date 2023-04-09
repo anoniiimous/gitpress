@@ -1,281 +1,211 @@
-<blocks>
-    <header class="-dw480px-padding-10px display-flex flex-direction-column gap-10px padding-20px">
-        <row class="justify-content-space-between">
-            <card>
-                <row class="gap-10px">
-                    <box class="display-nonre" css-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
-                        <section>
-                            <ico css-height="30px" css-width="30px">
-                                <n class="gg-menu"></n>
-                            </ico>
-                        </section>
-                    </box>
-                    <box>
-                        <section>
-                            <text class="font-size-24px font-weight-bolder">Config</text>
-                        </section>
-                    </box>
-                </row>
-            </card>
-            <card css-display="none">
-                <row>
-                    <box class="display-none line-height-30px" data-href="/dashboard/:get/merch/catalog/">
-                        <row class="align-items-center justify-content-center">
-                            <ico css-height="30px" css-width="50px">
-                                <n class="gg-tag"></n>
-                            </ico>
-                            <text class="font-size-14px font-weight-bolder">Add Item</text>
-                        </row>
-                    </box>
-                </row>
-            </card>
-        </row>
-        <row>
-            <card class="font-weight-bolder padding-y-20px">
-                <row class="gap-10px">
-                    <box data-href="/dashboard/:get/config">
-                        <column class="gap-5px">
-                            <text>About</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config"></line>
+<block class="margin-x-20px" css-display="none">
+    <flex class="-dw960px-flex-direction-column gap-20px">
+        <card class="-dw960px-width-100pct width-320px">
+            <section>
+                <box>
+                    <column>
+                        <text class="font-weight-bolder line-height-50px">Current payment methods</text>
+                        <text>These are the payment methods that you have set up in your store. If enabled, they are available for your customers to choose from at checkout.</text>
+                    </column>
+                </box>
+            </section>
+        </card>
+        <card class="flex-1">
+            <column class="gap-20px"></column>
+            <template>
+                <box class="background-color-fff border-radius-10px padding-20px" data-value="checkout.cash">
+                    <row class="align-items-center">
+                        <ico>
+                            <n class="gg-dollar"></n>
+                        </ico>
+                        <column class="margin-right-auto">
+                            <text class="font-weight-bolder">Pay by cash</text>
+                            <text>Manual Payment &#8212;Settings</text>
                         </column>
-                    </box>
-                    <box data-href="/dashboard/:get/config/branding">
-                        <column class="gap-5px">
-                            <text>Branding</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/branding"></line>
-                        </column>
-                    </box>
-                    <box data-href="/dashboard/:get/config/checkout">
-                        <column class="gap-5px">
-                            <text>Checkout</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/checkout"></line>
-                        </column>
-                    </box>
-                    <box data-href="/dashboard/:get/config/domains">
-                        <column class="gap-5px">
-                            <text>Domains</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/domains"></line>
-                        </column>
-                    </box>
-                    <box css-display="none">
-                        <column class="gap-5px">
-                            <text>Analytics</text>
-                            <line class="border-bottom-3px-solid width-100pct" data-page="/dashboard/*/config/analytics"></line>
-                        </column>
-                    </box>
-                </row>
-            </card>
-        </row>
-    </header>
-    <block class="margin-x-20px" css-display="none">
-        <flex class="-dw960px-flex-direction-column gap-20px">
-            <card class="-dw960px-width-100pct width-320px">
-                <section>
-                    <box>
-                        <column>
-                            <text class="font-weight-bolder line-height-50px">Current payment methods</text>
-                            <text>These are the payment methods that you have set up in your store. If enabled, they are available for your customers to choose from at checkout.</text>
-                        </column>
-                    </box>
-                </section>
-            </card>
-            <card class="flex-1">
-                <column class="gap-20px"></column>
-                <template>
-                    <box class="background-color-fff border-radius-10px padding-20px" data-value="checkout.cash">
-                        <row class="align-items-center">
-                            <ico>
-                                <n class="gg-dollar"></n>
-                            </ico>
-                            <column class="margin-right-auto">
-                                <text class="font-weight-bolder">Pay by cash</text>
-                                <text>Manual Payment &#8212;Settings</text>
-                            </column>
-                            <field>
-                                <row class="align-items-center justify-content-center" data-dropdown data-ignore>
-                                    <text class="font-size-14px font-weight-bolder" css-display="none">Actions</text>
-                                    <ico>
-                                        <n class="gg-more-alt"></n>
+                        <field>
+                            <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                                <text class="font-size-14px font-weight-bolder" css-display="none">Actions</text>
+                                <ico>
+                                    <n class="gg-more-alt"></n>
+                                </ico>
+                            </row>
+                            <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" css-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
+                                <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
+                                    <ico css-height="30px" css-width="30px">
+                                        <n class="gg-music"></n>
                                     </ico>
+                                    <text>Edit</text>
                                 </row>
-                                <column class="-hd-width-100pct- background-color-ccc border-radius-10px box-shadow-0-1px-6px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" css-display="none" data-hidden="tap" data-top="calc(100% - 5px)">
-                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/audio">
-                                        <ico css-height="30px" css-width="30px">
-                                            <n class="gg-music"></n>
-                                        </ico>
-                                        <text>Edit</text>
-                                    </row>
-                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
-                                        <ico css-height="30px" css-width="30px">
-                                            <n class="gg-image"></n>
-                                        </ico>
-                                        <text>Remove</text>
-                                    </row>
-                                </column>
-                            </field>
-                        </row>
-                    </box>
-                    <box class="background-color-fff border-radius-10px padding-20px" data-value="checkout.stripe">
-                        <flex class="-dw768px-align-items-flex-start -dw768px-flex-direction-column align-items-center flex-direction-row gap-10px">
-                            <ico css-dw768px-display="none">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="55" height="23" viewBox="0 0 55 23" focusable="false">
-                                    <path fill="#6772E5" fill-rule="evenodd" d="M54.07,11.62 C54.07,7.78 52.21,4.75 48.65,4.75 C45.08,4.75 42.91,7.78 42.91,11.6 C42.91,16.12 45.47,18.41 49.12,18.41 C50.91,18.41 52.26,18 53.28,17.44 L53.28,14.42 C52.26,14.94 51.09,15.25 49.6,15.25 C48.14,15.25 46.85,14.73 46.68,12.97 L54.02,12.97 C54.03,12.77 54.07,11.98 54.07,11.62 L54.07,11.62 Z M46.64,10.2 C46.64,8.51 47.68,7.8 48.62,7.8 C49.54,7.8 50.52,8.51 50.52,10.2 L46.64,10.2 L46.64,10.2 Z M37.11,4.75 C35.64,4.75 34.69,5.44 34.17,5.93 L33.97,5 L30.67,5 L30.67,22.51 L34.42,21.71 L34.43,17.47 C34.97,17.86 35.77,18.42 37.08,18.42 C39.76,18.42 42.22,16.26 42.22,11.5 C42.22,7.12 39.74,4.75 37.11,4.75 L37.11,4.75 Z M36.21,15.1 C35.33,15.1 34.81,14.78 34.44,14.39 L34.42,8.82 C34.81,8.39 35.35,8.08 36.21,8.08 C37.58,8.08 38.53,9.62 38.53,11.58 C38.53,13.59 37.6,15.1 36.21,15.1 L36.21,15.1 Z M25.5,3.85 L29.27,3.05 L29.27,0 L25.5,0.8 M25.5,5 L29.26,5 L29.26,18.15 L25.5,18.15 L25.5,5 Z M21.47,6.11 L21.23,5 L17.99,5 L17.99,18.15 L21.74,18.15 L21.74,9.24 C22.63,8.08 24.12,8.3 24.6,8.45 L24.6,5 C24.1,4.82 22.35,4.49 21.47,6.11 L21.47,6.11 Z M13.95,1.74 L10.29,2.52 L10.27,14.55 C10.27,16.77 11.94,18.41 14.17,18.41 C15.4,18.41 16.3,18.19 16.8,17.91 L16.8,14.86 C16.32,15.05 13.95,15.74 13.95,13.53 L13.95,8.2 L16.8,8.2 L16.8,5 L13.95,5 L13.95,1.74 Z M3.79,8.81 C3.79,8.22 4.28,8 5.06,8 C6.2,8 7.65,8.35 8.79,8.97 L8.79,5.44 C7.55,4.94 6.31,4.75 5.06,4.75 C2.03,4.75 0,6.34 0,8.99 C0,13.14 5.7,12.47 5.7,14.26 C5.7,14.95 5.1,15.18 4.26,15.18 C3.02,15.18 1.41,14.67 0.16,13.98 L0.16,17.56 C1.55,18.16 2.97,18.41 4.26,18.41 C7.38,18.41 9.53,16.87 9.53,14.17 C9.53,9.7 3.79,10.5 3.79,8.81 L3.79,8.81 Z"></path>
-                                </svg>
-                            </ico>
-                            <column class="gap-10px margin-right-auto">
-                                <text class="font-weight-bolder">Stripe</text>
-                                <text>Stripe is connected.</text>
-                            </column>
-                            <field class="display-inline-flex position-relative z-index-5" css-display="inline-flex">
-                                <row class="align-items-center border-1px-solid border-color-777 border-radius-5px height-36px justify-content-center padding-x-20px" data-dropdown data-ignore>
-                                    <text class="font-size-14px">Actions</text>
-                                    <ico css-height="20px" css-width="20px">
-                                        <n class="gg-chevron-down"></n>
+                                <row class="align-items-center gap-5px" data-href="/dashboard/:get/media/photo/">
+                                    <ico css-height="30px" css-width="30px">
+                                        <n class="gg-image"></n>
                                     </ico>
+                                    <text>Remove</text>
                                 </row>
-                                <column class="-dw768px-left-0 -dw768px-right-unset background-color-fff border-1px-solid border-color-ddd border-radius-5px color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" css-display="none" data-hidden="tap" data-top="calc(100% + 5px)">
-                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/config/checkout/stripe">
-                                        <ico css-height="30px" css-width="30px">
-                                            <n class="gg-pen"></n>
-                                        </ico>
-                                        <text>Edit</text>
-                                    </row>
-                                    <row class="align-items-center gap-5px" data-href="/dashboard/:get/config/checkout/sort">
-                                        <ico css-height="30px" css-width="30px">
-                                            <n class="gg-view-list"></n>
-                                        </ico>
-                                        <text>Sort</text>
-                                    </row>
-                                    <row class="align-items-center gap-5px" data-tap="controller.checkout.remove(event.target)">
-                                        <ico css-height="30px" css-width="30px">
-                                            <n class="gg-close"></n>
-                                        </ico>
-                                        <text>Remove</text>
-                                    </row>
-                                </column>
-                            </field>
-                            <label class="-dw768px-position-absolute -dw768px-margin-20px -dw768px-right-20px -dw768px-top-20px align-items-center display-inline-flex justify-content-space-between">
-                                <input class="opacity-0 height-0 width-0" onchange="controller.checkout.toggle(event)" type="checkbox">
-                                <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
-                                    <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
+                            </column>
+                        </field>
+                    </row>
+                </box>
+                <box class="background-color-fff border-radius-10px padding-20px" data-value="checkout.stripe">
+                    <flex class="-dw768px-align-items-flex-start -dw768px-flex-direction-column align-items-center flex-direction-row gap-10px">
+                        <ico css-dw768px-display="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="55" height="23" viewBox="0 0 55 23" focusable="false">
+                                <path fill="#6772E5" fill-rule="evenodd" d="M54.07,11.62 C54.07,7.78 52.21,4.75 48.65,4.75 C45.08,4.75 42.91,7.78 42.91,11.6 C42.91,16.12 45.47,18.41 49.12,18.41 C50.91,18.41 52.26,18 53.28,17.44 L53.28,14.42 C52.26,14.94 51.09,15.25 49.6,15.25 C48.14,15.25 46.85,14.73 46.68,12.97 L54.02,12.97 C54.03,12.77 54.07,11.98 54.07,11.62 L54.07,11.62 Z M46.64,10.2 C46.64,8.51 47.68,7.8 48.62,7.8 C49.54,7.8 50.52,8.51 50.52,10.2 L46.64,10.2 L46.64,10.2 Z M37.11,4.75 C35.64,4.75 34.69,5.44 34.17,5.93 L33.97,5 L30.67,5 L30.67,22.51 L34.42,21.71 L34.43,17.47 C34.97,17.86 35.77,18.42 37.08,18.42 C39.76,18.42 42.22,16.26 42.22,11.5 C42.22,7.12 39.74,4.75 37.11,4.75 L37.11,4.75 Z M36.21,15.1 C35.33,15.1 34.81,14.78 34.44,14.39 L34.42,8.82 C34.81,8.39 35.35,8.08 36.21,8.08 C37.58,8.08 38.53,9.62 38.53,11.58 C38.53,13.59 37.6,15.1 36.21,15.1 L36.21,15.1 Z M25.5,3.85 L29.27,3.05 L29.27,0 L25.5,0.8 M25.5,5 L29.26,5 L29.26,18.15 L25.5,18.15 L25.5,5 Z M21.47,6.11 L21.23,5 L17.99,5 L17.99,18.15 L21.74,18.15 L21.74,9.24 C22.63,8.08 24.12,8.3 24.6,8.45 L24.6,5 C24.1,4.82 22.35,4.49 21.47,6.11 L21.47,6.11 Z M13.95,1.74 L10.29,2.52 L10.27,14.55 C10.27,16.77 11.94,18.41 14.17,18.41 C15.4,18.41 16.3,18.19 16.8,17.91 L16.8,14.86 C16.32,15.05 13.95,15.74 13.95,13.53 L13.95,8.2 L16.8,8.2 L16.8,5 L13.95,5 L13.95,1.74 Z M3.79,8.81 C3.79,8.22 4.28,8 5.06,8 C6.2,8 7.65,8.35 8.79,8.97 L8.79,5.44 C7.55,4.94 6.31,4.75 5.06,4.75 C2.03,4.75 0,6.34 0,8.99 C0,13.14 5.7,12.47 5.7,14.26 C5.7,14.95 5.1,15.18 4.26,15.18 C3.02,15.18 1.41,14.67 0.16,13.98 L0.16,17.56 C1.55,18.16 2.97,18.41 4.26,18.41 C7.38,18.41 9.53,16.87 9.53,14.17 C9.53,9.7 3.79,10.5 3.79,8.81 L3.79,8.81 Z"></path>
+                            </svg>
+                        </ico>
+                        <column class="gap-10px margin-right-auto">
+                            <text class="font-weight-bolder">Stripe</text>
+                            <text>Stripe is connected.</text>
+                        </column>
+                        <field class="display-inline-flex position-relative z-index-5" css-display="inline-flex">
+                            <row class="align-items-center border-1px-solid border-color-777 border-radius-5px height-36px justify-content-center padding-x-20px" data-dropdown data-ignore>
+                                <text class="font-size-14px">Actions</text>
+                                <ico css-height="20px" css-width="20px">
+                                    <n class="gg-chevron-down"></n>
+                                </ico>
+                            </row>
+                            <column class="-dw768px-left-0 -dw768px-right-unset background-color-fff border-1px-solid border-color-ddd border-radius-5px color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-auto" css-display="none" data-hidden="tap" data-top="calc(100% + 5px)">
+                                <row class="align-items-center gap-5px" data-href="/dashboard/:get/config/checkout/stripe">
+                                    <ico css-height="30px" css-width="30px">
+                                        <n class="gg-pen"></n>
+                                    </ico>
+                                    <text>Edit</text>
                                 </row>
-                            </label>
+                                <row class="align-items-center gap-5px" data-href="/dashboard/:get/config/checkout/sort">
+                                    <ico css-height="30px" css-width="30px">
+                                        <n class="gg-view-list"></n>
+                                    </ico>
+                                    <text>Sort</text>
+                                </row>
+                                <row class="align-items-center gap-5px" data-tap="controller.checkout.remove(event.target)">
+                                    <ico css-height="30px" css-width="30px">
+                                        <n class="gg-close"></n>
+                                    </ico>
+                                    <text>Remove</text>
+                                </row>
+                            </column>
+                        </field>
+                        <label class="-dw768px-position-absolute -dw768px-margin-20px -dw768px-right-20px -dw768px-top-20px align-items-center display-inline-flex justify-content-space-between">
+                            <input class="opacity-0 height-0 width-0" onchange="controller.checkout.toggle(event)" type="checkbox">
+                            <row class="background-color-ddd -checked-background-color-32cd32 box-sizing-border-box border-radius-50px color-ddd height-30px padding-3px position-relative transition-1s width-60px">
+                                <flex class="background-color-fff border-radius-50px height-24px margin-3px transition-1s -checked-translateX-30px width-24px"></flex>
+                            </row>
+                        </label>
+                    </flex>
+                </box>
+            </template>
+        </card>
+    </flex>
+</block>
+<block class="margin-y-50px margin-x-20px">
+    <flex class="-dw960px-flex-direction-column gap-20px">
+        <card class="-dw960px-width-100pct width-320px">
+            <section>
+                <box>
+                    <column>
+                        <text class="font-weight-bolder line-height-50px">Add new payment methods</text>
+                        <text>Choose a payment provider from our list or set up your own manual payment methods to get paid for your online orders.</text>
+                    </column>
+                </box>
+            </section>
+        </card>
+        <card class="flex-1">
+            <column class="gap-20px">
+                <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                    <header>
+                        <text class="display-flex font-weight-bolder font-size-18px">Stripe</text>
+                    </header>
+                    <column class="gap-20px">
+                        <text class="display-flex">Stripe is the easiest way to accept major international credit or debit cards and Apple Pay. You don't need a merchant account, so you can start accpeting payments today.</text>
+                        <text>Click "Connect with Stripe", create a free Stripe account in a few minutes and start processing payments immediately. By enabling payments throogh Stripe, you will be accepting Stripe Services Agreement. Please refer to the list of Prohibited Businesses before registering and opening a Stripe account.</text>
+                    </column>
+                    <footer>
+                        <a class="background-color-0096c7 border-radius-5px color-fff padding-x-20px padding-y-10px" data-tap="controller.connect.stripe(event.target)" data-value="stripe.connect">Connect and Enable</a>
+                    </footer>
+                </box>
+                <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                    <header>
+                        <text class="display-flex font-weight-bolder font-size-18px">Manual</text>
+                    </header>
+                    <column>
+                        <text class="display-flex">Not ready to accept online payments yet? Add cash on delivery, phone orders, or check to receive payments outside of your store’s online checkout.</text>
+                    </column>
+                    <footer>
+                        <flex class="align-items-center border-1px-solid border-color-ddd border-radius-5px gap-10px padding-x-20px padding-y-10px">
+                            <ico css-height="20px" css-width="20px">
+                                <n class="gg-math-plus"></n>
+                            </ico>
+                            <text>Add Manual Payment Payment</text>
                         </flex>
-                    </box>
-                </template>
-            </card>
-        </flex>
-    </block>
-    <block class="margin-y-50px margin-x-20px">
-        <flex class="-dw960px-flex-direction-column gap-20px">
-            <card class="-dw960px-width-100pct width-320px">
-                <section>
-                    <box>
-                        <column>
-                            <text class="font-weight-bolder line-height-50px">Add new payment methods</text>
-                            <text>Choose a payment provider from our list or set up your own manual payment methods to get paid for your online orders.</text>
-                        </column>
-                    </box>
-                </section>
-            </card>
-            <card class="flex-1">
-                <column class="gap-20px">
-                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
-                        <header>
-                            <text class="display-flex font-weight-bolder font-size-18px">Stripe</text>
-                        </header>
-                        <column class="gap-20px">
-                            <text class="display-flex">Stripe is the easiest way to accept major international credit or debit cards and Apple Pay. You don't need a merchant account, so you can start accpeting payments today.</text>
-                            <text>Click "Connect with Stripe", create a free Stripe account in a few minutes and start processing payments immediately. By enabling payments throogh Stripe, you will be accepting Stripe Services Agreement. Please refer to the list of Prohibited Businesses before registering and opening a Stripe account.</text>
-                        </column>
-                        <footer>
-                            <a class="background-color-0096c7 border-radius-5px color-fff padding-x-20px padding-y-10px" data-tap="controller.connect.stripe(event.target)" data-value="stripe.connect">Connect and Enable</a>
-                        </footer>
-                    </box>
-                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
-                        <header>
-                            <text class="display-flex font-weight-bolder font-size-18px">Manual</text>
-                        </header>
-                        <column>
-                            <text class="display-flex">Not ready to accept online payments yet? Add cash on delivery, phone orders, or check to receive payments outside of your store’s online checkout.</text>
-                        </column>
-                        <footer>
-                            <flex class="align-items-center border-1px-solid border-color-ddd border-radius-5px gap-10px padding-x-20px padding-y-10px">
-                                <ico css-height="20px" css-width="20px">
-                                    <n class="gg-math-plus"></n>
-                                </ico>
-                                <text>Add Manual Payment Payment</text>
-                            </flex>
-                        </footer>
-                    </box>
-                </column>
-            </card>
-        </flex>
-    </block>
-    <block class="margin-x-20px margin-y-50px">
-        <flex class="-dw960px-flex-direction-column gap-20px">
-            <card class="-dw960px-width-100pct width-320px">
-                <section>
-                    <box>
-                        <column class="gap-20px">
-                            <text class="font-weight-bolder">Add new shipping method or delivery method</text>
-                            <text>Select how you'll be getting your products to customers. Add local delivery, curbside and drive-through pickup, or enable shipping with the most popular carriers.</text>
-                        </column>
-                    </box>
-                </section>
-            </card>
-            <card class="flex-1">
-                <column class="gap-20px">
-                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
-                        <header>
-                            <text class="display-flex font-weight-bolder font-size-18px">Shipping</text>
-                        </header>
-                        <column>
-                            <text class="display-flex">Ship within your country or internationally. Enable automatic shipping rates from carriers or use your own custom rates if your product requires special shipping fees.</text>
-                        </column>
-                        <footer>
-                            <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
-                                <ico css-height="20px" css-width="20px">
-                                    <n class="gg-math-plus"></n>
-                                </ico>
-                                <text>Add Shipping</text>
-                            </flex>
-                        </footer>
-                    </box>
-                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
-                        <header>
-                            <text class="display-flex font-weight-bolder font-size-18px">Local Delivery</text>
-                        </header>
-                        <column>
-                            <text class="display-flex">Deliver orders yourself in city and suburbs or outsource delivery to the services you trust. Set when, where, and under which conditions you deliver.</text>
-                        </column>
-                        <footer>
-                            <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
-                                <ico css-height="20px" css-width="20px">
-                                    <n class="gg-math-plus"></n>
-                                </ico>
-                                <text>Add Delivery</text>
-                            </flex>
-                        </footer>
-                    </box>
-                    <box class="background-color-fff border-radius-10px gap-20px padding-20px">
-                        <header>
-                            <text class="display-flex font-weight-bolder font-size-18px">Self Pickup</text>
-                        </header>
-                        <column>
-                            <text class="display-flex">Add a curbside, drive-through, or in-store pickup. Specify your business hours, the pickup location, and add a brief instruction on how the pickup works for customers.</text>
-                        </column>
-                        <footer>
-                            <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
-                                <ico css-height="20px" css-width="20px">
-                                    <n class="gg-math-plus"></n>
-                                </ico>
-                                <text>Add Pickup</text>
-                            </flex>
-                        </footer>
-                    </box>
-                </column>
-            </card>
-        </flex>
-    </block>
-</blocks>
+                    </footer>
+                </box>
+            </column>
+        </card>
+    </flex>
+</block>
+<block class="margin-x-20px margin-y-50px">
+    <flex class="-dw960px-flex-direction-column gap-20px">
+        <card class="-dw960px-width-100pct width-320px">
+            <section>
+                <box>
+                    <column class="gap-20px">
+                        <text class="font-weight-bolder">Add new shipping method or delivery method</text>
+                        <text>Select how you'll be getting your products to customers. Add local delivery, curbside and drive-through pickup, or enable shipping with the most popular carriers.</text>
+                    </column>
+                </box>
+            </section>
+        </card>
+        <card class="flex-1">
+            <column class="gap-20px">
+                <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                    <header>
+                        <text class="display-flex font-weight-bolder font-size-18px">Shipping</text>
+                    </header>
+                    <column>
+                        <text class="display-flex">Ship within your country or internationally. Enable automatic shipping rates from carriers or use your own custom rates if your product requires special shipping fees.</text>
+                    </column>
+                    <footer>
+                        <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
+                            <ico css-height="20px" css-width="20px">
+                                <n class="gg-math-plus"></n>
+                            </ico>
+                            <text>Add Shipping</text>
+                        </flex>
+                    </footer>
+                </box>
+                <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                    <header>
+                        <text class="display-flex font-weight-bolder font-size-18px">Local Delivery</text>
+                    </header>
+                    <column>
+                        <text class="display-flex">Deliver orders yourself in city and suburbs or outsource delivery to the services you trust. Set when, where, and under which conditions you deliver.</text>
+                    </column>
+                    <footer>
+                        <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
+                            <ico css-height="20px" css-width="20px">
+                                <n class="gg-math-plus"></n>
+                            </ico>
+                            <text>Add Delivery</text>
+                        </flex>
+                    </footer>
+                </box>
+                <box class="background-color-fff border-radius-10px gap-20px padding-20px">
+                    <header>
+                        <text class="display-flex font-weight-bolder font-size-18px">Self Pickup</text>
+                    </header>
+                    <column>
+                        <text class="display-flex">Add a curbside, drive-through, or in-store pickup. Specify your business hours, the pickup location, and add a brief instruction on how the pickup works for customers.</text>
+                    </column>
+                    <footer>
+                        <flex class="align-items-center background-color-0096c7 border-radius-5px gap-10px color-fff padding-x-20px padding-y-10px">
+                            <ico css-height="20px" css-width="20px">
+                                <n class="gg-math-plus"></n>
+                            </ico>
+                            <text>Add Pickup</text>
+                        </flex>
+                    </footer>
+                </box>
+            </column>
+        </card>
+    </flex>
+</block>

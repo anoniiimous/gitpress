@@ -145,7 +145,7 @@ framework.on = async function(event) {
             var toolset = tool.find('[tabindex="1"]');
             var toolbox = tool.find('[tabindex="2"]');
             var toolbar = tool.find('[tabindex="3"]');
-            var elements = ["text", "picture", "video", "audio", "line", "embed"];
+            var elements = ["clip", "text", "picture", "video", "audio", "line", "embed", "embedded", "sound"];
             var nodeName = node.tagName.toLowerCase();
             0 > 1 ? console.log({
                 el,
@@ -267,6 +267,7 @@ framework.on = async function(event) {
                                 console.log(media, json);
                             }
                         } else {
+                            console.log({node})
                             if (node) {
                                 if (elements.includes(nodeName)) {
                                     window.top.toolbelt('bar', {

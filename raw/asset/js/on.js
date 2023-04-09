@@ -452,7 +452,7 @@ window.on.touch = {
         window[library.dataset.api][library.dataset.method][library.dataset.resource](target);
     }
 
-    framework && framework.on ? framework.on(event) : null;
+    window.framework && framework.on ? framework.on(event) : null;
 }
 );
 
@@ -782,7 +782,7 @@ window.on["resize"] = function(event) {
         } while (i < as.length);
     }
 
-    if (dom.body.find('[data-active="true"] sound')) {
+    if (dom.body.find('[data-active="true"] sound wave')) {
         wavesurfer.drawer.fireEvent('redraw');
     }
 }

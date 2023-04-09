@@ -12,19 +12,36 @@ window.onload = ()=>{
 
 async function init() {
     console.log("Initializing...", {
-        iframe: is.iframe
+        iframe: is.iframe(window)
     }, {
         head: window.document.head.outerHTML
     });
     //eruda.init();
 
-    window.loaded = is.iframe;
+    window.loaded = is.iframe(window);
 
     //SHELL
     var html = ``;
     if (window.self === window.top) {
         html = await ajax('/raw/style/template.html');
         html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
+
+        const fetching = 0 > 1 ? dom.body.all(':not(page):not(pages)[data-fetch]') : dom.body.all(':not([data-page])[data-fetch]');
+        //console.log(fetching);
+        if (fetching.length > 0) {
+            var f = 0;
+            do {
+                //console.log(34, fetching[f]);
+                if (fetching[f].innerHTML === "") {
+                    //alert(fetching[f].outerHTML);
+                    fetching[f].innerHTML = await ajax(fetching[f].dataset.fetch);
+                }
+                f++;
+            } while (f < fetching.length);
+        }
+        //dom.body.all('[data-page][data-fetch]').forEach(a=>console.log(1234, a.outerHTML))
+        
+
     } else {
         const user = await github.user.get();
         const owner = user.login;
@@ -245,17 +262,17 @@ async function init() {
 
     //ROUTE
     var go = false;
-    window.boot.router().then(function() {
+    0 < 1 ? window.boot.router().then(function() {
         go = true;
         if (window.self !== window.top) {
             var vp = dom.body.find('[data-fetch][data-page="' + route.page + '"]');
             var empty = dom.body.find('main').lastElementChild.content.firstElementChild.cloneNode(true);
             vp.find('blocks').insertAdjacentHTML('afterend', empty.outerHTML);
         }
-    });
+    }) : null;
 
     console.log("...Initialized", {
-        iframe: is.iframe
+        iframe: is.iframe(window)
     }, {
         boot
     });

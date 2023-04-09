@@ -17,7 +17,7 @@ String.prototype.router = async function(params) {
         vp
     }) : null;
     if (page) {
-        if (is.iframe) {
+        if (is.iframe(window)) {
             var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
             var pg = atob((await github.raw.path(path)).content);
         } else {
@@ -27,79 +27,39 @@ String.prototype.router = async function(params) {
         if (page.innerHTML === "") {
             page.innerHTML = pg.replace(/>\s+</g, '><');
             //await ajax(page.dataset.fetch);
-            if (is.iframe) {
+            if (is.iframe(window)) {
                 window.top.css.style.sheet(page);
             }
         }
     }
 
-    const fetching3 = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]:empty');
-    if (fetching3.length > 0) {
-        var ff = 0;
-        do {
-            if (fetching3[ff].innerHTML === "") {
-                fetching3[ff].innerHTML = await ajax(fetching3[ff].dataset.fetch);
-            }
-            ff++;
-        } while (ff < fetching3.length);
-    }
-    if (vp) {
-        if (vp.innerHTML === "" && vp.dataset.fetch) {
-            if (is.iframe) {
-                var path = "/" + window.parent + "/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
-                var pg = atob((await github.raw.path(path)).content);
-            } else {
-                var path = vp.dataset.fetch;
-                var pg = await ajax(path);
-            }
-            vp.innerHTML = pg;
-            console.log("router.js 33", path, vp, vp.dataset.fetch);
-        }
-        const fetching2 = vp.all('[data-fetch]');
-        if (fetching2.length > 0) {
-            var ff = 0;
-            do {
-                if (fetching2[ff].innerHTML === "") {
-                    fetching2[ff].innerHTML = await ajax(fetching2[ff].dataset.fetch);
-                }
-                f++;
-            } while (fetching2.length < 0);
-        }
-    }
-
-    const fetching = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]');
-    if (fetching.length > 0) {
-        var f = 0;
-        do {
-            if (fetching[f].innerHTML === "") {
-                fetching[f].innerHTML = await ajax(fetching[f].dataset.fetch);
-            }
-            f++;
-        } while (fetching.length < 0);
-    }
-
-    const fetching4 = dom.body.all('[data-fetch]:not(page[data-page]):not(pages[data-page])');
-    if (fetching4.length > 0) {
-        var f = 0;
-        do {
-            //console.log(fetching[f]);
-            if (fetching4[f].innerHTML === "") {
-                fetching4[f].innerHTML = await ajax(fetching4[f].dataset.fetch);
-                fetching4[f].dataset.active = true;
-            }
-            f++;
-        } while (fetching4.length < 0);
-    }
+    await viewPage(vp);
+    route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
+    //console.log(route);
 
     var go = async function(resolve, reject) {
         //console.log('String.prototype.router', route);
         if (route) {
             var pop = params ? params.pop : null;
 
-            await rout.ed.bang(route);
+            //console.log(45, dom.body.all('[data-page]'));
+            //console.log('String.prototype.router', route, goto, route.page);
+            route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
+            //console.log('String.prototype.router', route, goto, route.page);
+            //console.log(49, vp.outerHTML, {vpb: vp.all('[data-page]'), dbp: dom.body.all('[data-page]')});
+            await rout.ed.bang(route, goto);
+            
+            //await rout.ed.bang(route);
             window.view ? await view(route) : null;
             //route = window.view ? await view(route).then(rout.ed.bang(route)) : await rout.ed.bang(route);
 
+            //console.log(54, vp, {vpb: vp.all('[data-page]'), dbp: dom.body.all('[data-page]')});
+            //console.log('String.prototype.router', route, vp, goto, route.page);
+            route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
+            //console.log('String.prototype.router', route, vp, goto, route.page);
+            //console.log(58, dom.body.all('[data-page]'));
+            await rout.ed.bang(route);
+            
             var path = route.path;
             window.GET = rout.ed.dir(path);
 
@@ -119,6 +79,14 @@ String.prototype.router = async function(params) {
                 history.pushState(link, '', link);
             }
 
+            //await viewPage(vp);
+
+            //console.log('String.prototype.router', route, goto, route.page);
+            route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
+            //console.log('String.prototype.router', route, goto, route.page);
+            await rout.ed.bang(route);
+
+            //console.log('String.prototype.router', route, goto, route.page);
             resolve(route);
         } else {
             const e = {
@@ -161,6 +129,9 @@ window.rout.e = state=>{
         root,
         search
     };
+    0 > 1 ? console.log(164, {
+        data
+    }) : null;
     return data;
 }
 
@@ -193,6 +164,8 @@ window.rout.ed.bang = async(route)=>{
     $('page[data-page="' + route.page + '"]').attr("data-uri", route.path);
 
     //dom.body.find('[data-page="' + route.page + '"]').setAttribute("data-active", true);
+
+    //console.log(150, {route});
 
     var rs = $('pages[data-page]');
     if (rs.length > 0) {
@@ -337,6 +310,7 @@ window.rout.ed.history = [];
 
 window.rout.es = function getRoot() {
     var els = $('[data-page]');
+    //els.forEach(d => console.log(d.dataset.page))
     var root = null;
     if (els.length > 0) {
         var arr = [];
@@ -359,9 +333,12 @@ window.rout.es = function getRoot() {
 window.rout.ing = (href,GOT,n)=>{
     var ed = null;
     var pages = $(dom.body.all('[data-page]')).sort(function(a, b) {
-        return a.dataset.page.localeCompare(b.dataset.page);
+        //console.log(334, {a:a.dataset.page,b:b.dataset.page});
+        var bool = a.dataset.page.localeCompare(b.dataset.page);
+        return bool
     })
     pages = [...new Set(pages)];
+    //console.log(338, {pages})
     var routes = pages.forEach(function(el) {
         var page = el.dataset.page;
         var dir = rout.ed.dir(href);
@@ -396,4 +373,66 @@ window.rout.ing = (href,GOT,n)=>{
     });
     //console.log(338, ed);
     return ed;
+}
+
+async function viewPage(vp) {
+
+    const fetching3 = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]:empty');
+    if (fetching3.length > 0) {
+        var ff = 0;
+        do {
+            if (fetching3[ff].innerHTML === "") {
+                fetching3[ff].innerHTML = await ajax(fetching3[ff].dataset.fetch);
+            }
+            ff++;
+        } while (ff < fetching3.length);
+    }
+    if (vp) {
+        if (vp.innerHTML === "" && vp.dataset.fetch) {
+            if (is.iframe(window)) {
+                var path = "/" + window.parent + "/" + window.parent.GET[1] + "/main/" + vp.dataset.fetch;
+                var pg = atob((await github.raw.path(path)).content);
+            } else {
+                var path = vp.dataset.fetch;
+                var pg = await ajax(path);
+            }
+            vp.innerHTML = pg;
+            console.log("router.js 33", path, vp, vp.dataset.fetch);
+        }
+        const fetching2 = vp.all('[data-fetch]');
+        //console.log(fetching2);
+        if (fetching2.length > 0) {
+            var ff = 0;
+            do {
+                if (fetching2[ff].innerHTML === "") {
+                    fetching2[ff].innerHTML = await ajax(fetching2[ff].dataset.fetch);
+                }
+                ff++;
+            } while (ff < fetching2.length);
+        }
+    }
+
+    const fetching = dom.body.all('[data-fetch][data-page="' + rout.es() + '"]');
+    if (fetching.length > 0) {
+        var f = 0;
+        do {
+            if (fetching[f].innerHTML === "") {
+                fetching[f].innerHTML = await ajax(fetching[f].dataset.fetch);
+            }
+            f++;
+        } while (fetching.length < 0);
+    }
+
+    const fetching4 = dom.body.all('[data-fetch]:not(page[data-page]):not(pages[data-page])');
+    if (fetching4.length > 0) {
+        var f = 0;
+        do {
+            //console.log(fetching[f]);
+            if (fetching4[f].innerHTML === "") {
+                fetching4[f].innerHTML = await ajax(fetching4[f].dataset.fetch);
+                fetching4[f].dataset.active = true;
+            }
+            f++;
+        } while (fetching4.length < 0);
+    }
 }

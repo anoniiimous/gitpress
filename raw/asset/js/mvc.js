@@ -6,6 +6,222 @@ window.mvc.m ? null : (window.mvc.m = model = {
             console.log('model.error.image', e);
             e.remove();
         }
+    },
+    feed: {
+        media: async function mediaFeed(feed) {
+
+            var htmls = [];
+            var html = '';
+
+            var win = feed.ownerWindow();
+            //feed.innerHTML = "";
+
+            console.log(861, feed);
+            var template = feed.nextElementSibling.content;
+            var limit = template.children.length;
+            var media = feed.getAttribute('media');
+            var json = is.json(media) ? JSON.parse(media) : [media];
+            console.log(63, {
+                json,
+                limit,
+                media,
+                win
+            });
+
+            if (json.length === 1) {
+                media = json[0];
+                console.log(878, media);
+                if (media === "merch") {
+                    //var json = await ajax('raw/posts/posts.json')
+                    var posts = [];
+                    if (win.self !== win.top) {
+                        var user = await github.user.get();
+                        posts = await github.repos.contents({
+                            owner: user.login,
+                            path: '/raw/merch/merch.json',
+                            repo: window.parent.GET[1]
+                        }, {
+                            accept: "application/vnd.github.raw"
+                        });
+                        console.log(890, {
+                            posts,
+                            template
+                        });
+                    } else {
+                        try {
+                            var res = await ajax('raw/merch/merch.json')
+                            posts = JSON.parse(res);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+
+                    var ancestors = posts.filter(row=>rout.ed.dir(row.slug).length === 1);
+
+                    if (ancestors.length > 0) {
+
+                        var p = 0;
+                        var html = "";
+
+                        do {
+
+                            var post = ancestors[p];
+
+                            0 > 1 ? console.log(70, {
+                                template
+                            }) : null;
+                            var elem = 0 < 1 ? template.children[p].cloneNode(true) : template.firstElementChild.cloneNode(true);
+                            0 > 1 ? console.log(132, {
+                                post,
+                                elem
+                            }) : null;
+
+                            if (post && elem) {
+
+                                var descendants = posts.filter(function(row) {
+                                    var dir = rout.ed.dir(row.slug);
+                                    return dir.length > 1 && dir[0] === post.slug
+                                });
+
+                                0 < 1 ? console.log(57, {
+                                    post,
+                                    descendants,
+                                    posts
+                                }) : null;
+
+                                elem.dataset.display = "flex";
+                                elem.dataset.href = "/shop/merch/" + post.slug;
+
+                                if (win.self !== win.top && dom.body.getAttribute('buildable')) {
+                                    //console.log(178, 'buildable', p);
+                                    elem.dataset.id = Crypto.uid.create(1);
+                                }
+
+                                var image = elem.find('picture img');
+                                console.log(94, {
+                                    elem,
+                                    image
+                                });
+                                if (win.self !== win.top && image) {
+                                    var obj = {
+                                        owner: window.parent.owner.login,
+                                        repo: window.webmanifest.short_name,
+                                        resource: post.images[0]
+                                    };
+                                    image.src = await github.raw.blob(obj);
+                                    console.log(101, {
+                                        obj,
+                                        src: image.src
+                                    });
+                                }
+                                //image && post.images ? image.src = post.images[0] : null;
+
+                                var date = elem.find('[placeholder="Date"]');
+                                date && post.date ? date.textContent = post.date : null;
+
+                                var title = elem.find('[placeholder="Title"]');
+                                title && post.title ? title.textContent = post.title : null
+
+                                var description = elem.find('[placeholder="Description"]');
+                                description && post.description ? description.textContent = post.description : null;
+
+                                var pricing = elem.find('[placeholder="$0.00"]');
+                                if (pricing && post.pricing) {}
+
+                                html += elem.outerHTML;
+
+                                //feed.insertAdjacentHTML('beforeend', elem.outerHTML);
+
+                            } else {
+
+                                if (win.self !== win.top && dom.body.getAttribute('buildable')) {
+                                    //console.log(178, 'buildable', p)
+                                    html += elem.outerHTML;
+                                    //feed.insertAdjacentHTML('beforeend', elem.outerHTML);
+                                }
+
+                            }
+                            //console.log(p);
+
+                            p++;
+
+                        } while (p < limit);
+
+                        //feed.innerHTML = html;
+
+                    }
+
+                    htmls.push(html);
+
+                    0 > 1 ? console.log(115, {
+                        feed,
+                        media,
+                        posts
+                    }) : null;
+                }
+
+                if (media === "pages") {
+                    //var json = await ajax('raw/posts/posts.json')
+                    var posts = [];
+                    if (is.iframe) {
+                        var user = await github.user.get();
+                        posts = await github.repos.contents({
+                            owner: user.login,
+                            path: '/raw/posts/posts.json',
+                            repo: window.parent.GET[1]
+                        }, {
+                            accept: "application/vnd.github.raw"
+                        });
+                    } else {
+                        posts = JSON.parse(await ajax('raw/posts/posts.json'));
+                    }
+
+                    if (posts.length > 0) {
+
+                        var p = 0;
+                        var html = "";
+
+                        do {
+
+                            var post = posts[p];
+                            var elem = 0 < 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+
+                            var date = elem.find('[placeholder="Date"]');
+                            var title = elem.find('[placeholder="Title"]');
+                            var description = elem.find('[placeholder="Description"]');
+                            var picture = elem.find('picture');
+
+                            console.log(57, {
+                                title,
+                                post
+                            });
+
+                            date ? date.textContent = post.date ? date.textContent = post.date : date.remove() : null;
+                            title.textContent = post.title;
+                            description.textContent = post.description;
+                            post.image ? picture.find('img').dataset.src = post.image : null;
+
+                            //html += elem.outerHTML;
+
+                            p++;
+
+                        } while (p < limit);
+
+                        //feed.innerHTML = html;
+
+                    }
+
+                    console.log(37, {
+                        feed,
+                        media,
+                        posts
+                    });
+                }
+            }
+
+            console.log(htmls);
+            return html;
+        }
     }
 });
 
@@ -20,7 +236,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         window.GET = window.GET ? GET : rout.ed.dir(dom.body.dataset.path);
 
         window.manifest = {};
-        if (is.iframe) {
+        console.log
+        if (is.iframe(window)) {
             window.webmanifest = await github.repos.contents({
                 owner: window.parent.owner.login,
                 path: "site.webmanifest",
@@ -34,14 +251,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 repo: window.parent.GET[1]
             });
         } else {
-            window.webmanifest = JSON.parse(await ajax('/site.webmanifest'));
-            //console.log(webmanifest);
-            dom.body.find('[data-value="webmanifest.name"]').textContent = webmanifest.name;
-
-            var repo = webmanifest.short_name;
+            var json = await ajax('/site.webmanifest');
+            if (json) {
+                window.webmanifest = JSON.parse(json);
+                //console.log(webmanifest);
+                var name = dom.body.find('[data-value="webmanifest.name"]');
+                name ? name.textContent = webmanifest.name : null;
+                //var repo = webmanifest.short_name;
+            }
         }
 
-        $(dom.body.all('aside')).remove();
+        $(dom.body.all('body > aside')).remove();
 
         var page = route.page;
         var vp = dom.body.find('[data-page="' + page + '"]');
@@ -85,184 +305,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             //MEDIA FEED
             var feeds = vp.all('[media]');
             if (feeds.length > 0) {
-                var f = 0;
-                do {
-                    var feed = feeds[f];
+                feeds.forEach(async function(feed) {
                     feed.innerHTML = "";
-
-                    var template = feed.nextElementSibling.content;
-                    var limit = template.children.length;
-                    var media = feed.getAttribute('media');
-                    console.log(63, {
-                        limit,
-                        media
+                    var html = await model.feed.media(feed);
+                    console.log(91, {
+                        html
                     });
-
-                    if (media === "merch") {
-                        //var json = await ajax('raw/posts/posts.json')
-                        var posts = [];
-                        if (is.iframe) {
-                            var user = await github.user.get();
-                            posts = await github.repos.contents({
-                                owner: user.login,
-                                path: '/raw/merch/merch.json',
-                                repo: window.parent.GET[1]
-                            }, {
-                                accept: "application/vnd.github.raw"
-                            });
-                        } else {
-                            try {
-                                var res = await ajax('raw/merch/merch.json')
-                                posts = JSON.parse(res);
-                            } catch (e) {
-                                console.log(e);
-                            }
-                        }
-
-                        var ancestors = posts.filter(row=>rout.ed.dir(row.slug).length === 1);
-
-                        if (ancestors.length > 0) {
-
-                            var p = 0;
-                            var html = "";
-
-                            do {
-
-                                var post = ancestors[p];
-                                var elem = 0 < 1 ? template.children[p].cloneNode(true) : template.firstElementChild.cloneNode(true);
-                                //console.log(132, post);
-
-                                if (post) {
-
-                                    var descendants = posts.filter(function(row) {
-                                        var dir = rout.ed.dir(row.slug);
-                                        return dir.length > 1 && dir[0] === post.slug
-                                    });
-
-                                    0 > 1 ? console.log(57, {
-                                        post,
-                                        descendants,
-                                        posts
-                                    }) : null;
-
-                                    elem.dataset.display = "flex";
-                                    elem.dataset.href = "/shop/merch/" + post.slug;
-
-                                    if (is.iframe && dom.body.getAttribute('buildable')) {
-                                        //console.log(178, 'buildable', p);
-                                        elem.dataset.id = Crypto.uid.create(1);
-                                    }
-
-                                    var image = elem.find('picture img');
-                                    if (is.iframe) {
-                                        post.images[0] = await github.raw.blob({
-                                            owner: window.parent.owner.login,
-                                            repo: window.webmanifest.short_name,
-                                            resource: post.images[0]
-                                        });
-                                    }
-                                    image && post.images ? image.src = post.images[0] : null;
-
-                                    var date = elem.find('[placeholder="Date"]');
-                                    date && post.date ? date.textContent = post.date : null;
-
-                                    var title = elem.find('[placeholder="Title"]');
-                                    title && post.title ? title.textContent = post.title : null
-
-                                    var description = elem.find('[placeholder="Description"]');
-                                    description && post.description ? description.textContent = post.description : null;
-
-                                    var pricing = elem.find('[placeholder="$0.00"]');
-                                    if (pricing && post.pricing) {}
-
-                                    //html += elem.outerHTML;
-
-                                    feed.insertAdjacentHTML('beforeend', elem.outerHTML);
-                                    
-                                } else {
-
-                                    if (is.iframe && dom.body.getAttribute('buildable')) {
-                                        //console.log(178, 'buildable', p);
-                                        feed.insertAdjacentHTML('beforeend', elem.outerHTML);
-                                    }
-
-                                }
-                                //console.log(p);
-
-                                p++;
-
-                            } while (p < limit);
-
-                            //feed.innerHTML = html;
-
-                        }
-
-                        0 > 1 ? console.log(115, {
-                            feed,
-                            media,
-                            posts
-                        }) : null;
-                    }
-
-                    if (media === "pages") {
-                        //var json = await ajax('raw/posts/posts.json')
-                        var posts = [];
-                        if (is.iframe) {
-                            var user = await github.user.get();
-                            posts = await github.repos.contents({
-                                owner: user.login,
-                                path: '/raw/posts/posts.json',
-                                repo: window.parent.GET[1]
-                            }, {
-                                accept: "application/vnd.github.raw"
-                            });
-                        } else {
-                            posts = JSON.parse(await ajax('raw/posts/posts.json'));
-                        }
-
-                        if (posts.length > 0) {
-
-                            var p = 0;
-                            var html = "";
-
-                            do {
-
-                                var post = posts[p];
-                                var elem = 0 < 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
-
-                                var date = elem.find('[placeholder="Date"]');
-                                var title = elem.find('[placeholder="Title"]');
-                                var description = elem.find('[placeholder="Description"]');
-                                var picture = elem.find('picture');
-
-                                console.log(57, {
-                                    title,
-                                    post
-                                });
-
-                                date ? date.textContent = post.date ? date.textContent = post.date : date.remove() : null;
-                                title.textContent = post.title;
-                                description.textContent = post.description;
-                                post.image ? picture.find('img').dataset.src = post.image : null;
-
-                                //html += elem.outerHTML;
-
-                                p++;
-
-                            } while (p < limit);
-
-                            //feed.innerHTML = html;
-
-                        }
-
-                        console.log(37, {
-                            feed,
-                            media,
-                            posts
-                        });
-                    }
-                    f++;
-                } while (f < feeds.length)
+                    feed.innerHTML = html;
+                })
             }
 
             //MERCH PRODUCT
@@ -810,6 +860,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                 }
             }
+        }
+
+        if (window.framework) {
+
+            if (framework.view) {
+                await framework.view(route);
+            }
+
         }
 
         resolve(route);

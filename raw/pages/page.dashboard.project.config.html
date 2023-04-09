@@ -67,66 +67,8 @@
             </card>
         </row>
     </header>
-    <block data-page="/dashboard/*/config">
-        <form class="flex-direction-column flex-grow-1 margin-auto width-100pct">
-            <card class="margin-20px">
-                <column>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px padding-x-0" css-width="100%">Title</text>
-                            <text class="font-size-13px margin-right text-align-left">Provide a unique name for your platform.</text>
-                            <text class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px line-height-50px margin-top-20px padding-x-20px width-100pc-40px whitespace-nowrap scroll-y" contenteditable="true" onkeydown placeholder="My Project" type="text"></text>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px padding-x-0" css-width="100%">Logo</text>
-                            <text class="font-size-13px margin-right text-align-left width-100pc">Upload a logo for your application.</text>
-                            <ico data-file css-height="auto" css-width="100%">
-                                <n class="align-center width-100pc bg-white border-radius-50px direction-column justify-center margin-top-20px padding-y-20px shadow" css-display="flex" data-var="bg">Upload</n>
-                                <input type="file" onchange="mvc.c.about.logo(event)">
-                            </ico>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0 width-100pc">Shortname</text>
-                            <text class="font-size-13px margin-right text-align-left">The default subdomain for your hosted app.</text>
-                            <text class="fg-r-after border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px line-height-50px padding-x-20px whitespace-nowrap margin-top-20px width-100pc-40px whitespace-nowrap scroll-y" contenteditable="true" data-max-width="100%" onkeydown placeholder="example" data-after=".web.app" type="text"></text>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0 width-100pc">Theme</text>
-                            <text class="font-size-13px margin-right text-align-left">Change the theme color of your brand.</text>
-                            <div class="font-size-18px margin-top-20px width-100pc" data-iro></div>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0">Description</text>
-                            <text class="font-size-13px margin-right">A snippet optimized for search engines details.</text>
-                            <textarea class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px margin-top-20px padding-10px text-align-left width-100pc" contenteditable="true" onkeydown placeholder="Provide a short summary." data-after=".spriii.app" type="text" data-max-width="100%" rows="3"></textarea>
-                        </column>
-                    </box>
-                    <box class="background-color-fff border-radius-5px margin-y-20px padding-20px">
-                        <column class="width-480px">
-                            <text class="bolder font-size-24px margin-right padding-x-0 margin-right">Keywords</text>
-                            <text class="font-size-13px margin-right">Select as many categories related to your web app.</text>
-                            <textarea class="border-1px-solid border-color border-radius-10px border-color-bbb font-size-18px margin-top-20px padding-10px text-align-left width-100pc" contenteditable="true" onkeydown placeholder="Insert up to 20 related tags." data-after=".spriii.app" type="text" data-max-width="100%" rows="3"></textarea>
-                        </column>
-                    </box>
-                </column>
-            </card>
-        </form>
-    </block>
-    <block data-page="/dashboard/*/config/branding">
-        <form></form>
-    </block>
-    <block data-page="/dashboard/*/config/checkout">
-        <form></form>
-    </block>
-    <block data-page="/dashboard/*/config/domains">
-        <form></form>
-    </block>
+    <block data-fetch="raw/pages/page.dashboard.project.config.about.html" css-max-width="100%" data-page="/dashboard/*/config"></block>
+    <block data-fetch="raw/pages/page.dashboard.project.config.branding.html" data-page="/dashboard/*/config/branding"></block>
+    <block data-fetch="raw/pages/page.dashboard.project.config.checkout.html" data-page="/dashboard/*/config/checkout"></block>
+    <block data-fetch="raw/pages/page.dashboard.project.config.domains.html" data-page="/dashboard/*/config/domains"></block>
 </blocks>

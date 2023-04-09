@@ -401,14 +401,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             } else {
                                 controller.build.else(iframe);
                             }
-                                            
+
                         } else {
 
                             dom.body.classList.remove('overflow-hidden');
                             controller.build.index(iframe);
-                                            
+
                         }
-                                        
+
                         resolve(route);
                     } else {
 
@@ -418,9 +418,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (get[2] === "config") {
                         if (get.length === 4) {
                             if (get[3] === "checkout") {
-                                var vp = dom.body.find('page[data-page="' + route.page + '"]');
+                                var vp = dom.body.find('block[data-page="' + route.page + '"]');
 
                                 var block = vp.find('block');
+                                0 > 1 ? console.log(424, route.page, {
+                                    route,
+                                    vp,
+                                    block
+                                }) : null;
                                 var column = block.all('card')[1].find('column');
                                 column.innerHTML = "";
 
@@ -444,10 +449,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     var stripe_pk = head.find('meta[name="stripe_publishable_key"]');
                                     var stripe_uid = head.find('meta[name="stripe_user_id"]');
 
-                                    console.log(153, {
+                                    0 > 1 ? console.log(153, {
                                         head: head.outerHTML,
                                         res
-                                    });
+                                    }) : null;
 
                                     if (stripe_pk.content && stripe_uid.content) {
                                         var box = checkout.stripe.cloneNode(true);
