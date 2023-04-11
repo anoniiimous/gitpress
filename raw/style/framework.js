@@ -123,7 +123,7 @@ framework.on = async function(event) {
     //console.log(is.iframe, event);
     var touch = event.touch;
     if (touch === "tap") {
-        if (is.iframe) {
+        if (is.iframe(window)) {
             var target = event.target;
             var buildable = dom.body.getAttribute('buildable') === "true";
             var insertable = dom.body.getAttribute('insertable') === "true";

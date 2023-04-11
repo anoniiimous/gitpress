@@ -101,6 +101,10 @@
         background-color: #ddd;
     }
 
+    .background-color-eeeeee {
+        background-color: #eeeeee;
+    }
+
     .background-color-e9e9f3 {
         background-color: #e9e9f3;
     }
@@ -430,6 +434,14 @@
 
     .border-radius-50px {
         border-radius: 50px;
+    }
+
+    .border-top-left-radius-5px {
+        border-top-left-radius: 5px;
+    }
+
+    .border-top-right-radius-5px {
+        border-top-right-radius: 5px;
     }
 
     .border-top-left-radius-10px {
@@ -908,11 +920,11 @@
 }
 
 @media screen {
-    .flex-direction-column {
+    .flex-direction-column, [css-flex-direction="column"] {
         flex-direction: column;
     }
 
-    .flex-direction-row {
+    .flex-direction-row, [css-flex-direction="row"] {
         flex-direction: row;
     }
 
@@ -958,6 +970,16 @@
         }
 
         .-dw720px-flex-direction-row, .-hd-flex-direction-row {
+            flex-direction: row;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .-dw640px-flex-direction-column, [css-dw640px-flex-direction="column"] {
+            flex-direction: column;
+        }
+
+        .-dw640px-flex-direction-row {
             flex-direction: row;
         }
     }
@@ -1688,8 +1710,24 @@
             margin-left: 0;
         }
 
+        [css-dw640px-margin-right="0"] {
+            margin-right: 0;
+        }
+
+        [css-dw640px-margin-top="20px"] {
+            margin-top: 20px;
+        }
+
+        [css-dw640px-margin-top="10px"] {
+            margin-top: 10px;
+        }
+
         [css-dw640px-margin="0"] {
             margin: 0;
+        }
+
+        .-dw640px-margin-auto, [css-dw640px-margin="auto"] {
+            margin: auto;
         }
     }
 
@@ -1918,7 +1956,7 @@
         opacity: 25%;
     }
     
-    .opacity-50pct {
+    .opacity-50pct, [css-opacity="50%"] {
         opacity: 50%;
     }
 
@@ -2904,6 +2942,10 @@
     @media (max-width: 640px) {
         [css-dw640px-width="100%"] {
             width: 100%;
+        }
+        
+        [css-dw640px-width="calc(100% - 40px)"] {
+            width: calc(100% - 40px);
         }
     }
 

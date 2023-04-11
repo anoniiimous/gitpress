@@ -2771,21 +2771,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             const blocks = dom.body.find('main nav + pages');
             const toggle = transform === "translateX(0)";
 
-            if (toggle) {
+            if (toggle) {                    
                 nav.setAttribute("css-transform", "translateX(-100%)");
-                blocks.setAttribute("css-transform", "0");
-                blocks.setAttribute("css-left", "0");
-
                 nav.setAttribute("css-dw960px-transform", "translateX(-100%)");
-                //blocks.getAttribute("css-dw960px-transform") = "0";
-                blocks.setAttribute("css-960px-left", "0");
+                    
+                blocks.setAttribute("css-left", "0");
+                blocks.setAttribute("css-dw960px-left", "0");
             } else {
                 nav.setAttribute("css-transform", "translateX(0)");
-                //blocks.dataset["css-transform"] = "translateX(320px)";
-                blocks.setAttribute("css-left", "320px");
-
                 nav.setAttribute("css-dw960px-transform", "translateX(0)");
-                //blocks.getAttribute("css-dw960px-transform") = "translateX(320px)";
+                    
+                blocks.setAttribute("css-left", "320px");
                 blocks.setAttribute("css-dw960px-left", "320px");
             }
 
