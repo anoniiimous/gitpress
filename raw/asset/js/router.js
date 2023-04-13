@@ -48,7 +48,7 @@ String.prototype.router = async function(params) {
             //console.log('String.prototype.router', route, goto, route.page);
             //console.log(49, vp.outerHTML, {vpb: vp.all('[data-page]'), dbp: dom.body.all('[data-page]')});
             await rout.ed.bang(route, goto);
-            
+
             //await rout.ed.bang(route);
             window.view ? await view(route) : null;
             //route = window.view ? await view(route).then(rout.ed.bang(route)) : await rout.ed.bang(route);
@@ -59,7 +59,7 @@ String.prototype.router = async function(params) {
             //console.log('String.prototype.router', route, vp, goto, route.page);
             //console.log(58, dom.body.all('[data-page]'));
             await rout.ed.bang(route);
-            
+
             var path = route.path;
             window.GET = rout.ed.dir(path);
 
@@ -332,15 +332,27 @@ window.rout.es = function getRoot() {
 
 window.rout.ing = (href,GOT,n)=>{
     var ed = null;
+    var pgs = []
     var pages = $(dom.body.all('[data-page]')).sort(function(a, b) {
         //console.log(334, {a:a.dataset.page,b:b.dataset.page});
         var bool = a.dataset.page.localeCompare(b.dataset.page);
+        if (bool) {
+            pgs.push(a.dataset.page);
+        }
         return bool
     })
+    pgs = [...new Set(pgs)];
+    pgs.sort(function(a, b) {
+        return b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
+    });
+    0 > 1 ? console.log(338, {
+        pgs,
+        pages
+    }) : null;
     pages = [...new Set(pages)];
-    //console.log(338, {pages})
-    var routes = pages.forEach(function(el) {
-        var page = el.dataset.page;
+    var stop = false;
+    var routes = pgs.forEach(function(el) {
+        var page = el;
         var dir = rout.ed.dir(href);
         var is = 0;
         var bools = [];
@@ -358,8 +370,8 @@ window.rout.ing = (href,GOT,n)=>{
             is++;
         });
         check = is <= dir.length && truth(bools);
-        //check ? console.log(page, bools, {is, dir}) : null;
         if (check) {
+            //check ? console.log(page, bools, {is, dir}) : null;
             0 > 1 ? console.log(318, check, {
                 bools,
                 dir
@@ -368,10 +380,15 @@ window.rout.ing = (href,GOT,n)=>{
                 page
             }) : null;
             ed = page;
+            if (ed.endsWith('*') && !ed.startsWith('/*')) {
+                stop = true;
+                //console.log(377, stop, ed, truth(bools), bools);
+                //return false;
+            }
             //return check;
         }
     });
-    //console.log(338, ed);
+    //console.log(385, ed);
     return ed;
 }
 

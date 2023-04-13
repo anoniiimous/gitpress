@@ -295,11 +295,11 @@ String.prototype.pend = {
 
 String.prototype.rfo = function(searchstr) {
     var str = this.toString();
-	var index = str.indexOf(searchstr);
-	if (index === -1) {
-		return str;
-	}
-	return str.slice(0, index) + str.slice(index + searchstr.length);
+    var index = str.indexOf(searchstr);
+    if (index === -1) {
+        return str;
+    }
+    return str.slice(0, index) + str.slice(index + searchstr.length);
 }
 
 window.all = function(str) {
@@ -411,7 +411,7 @@ window.$ = e=>{
 window.tld = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 1];
 window.domain = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 2];
 window.is = {
-    iframe: (win) => (win.self !== win.top),
+    iframe: (win)=>(win.self !== win.top),
     ip: /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]),
     json: str=>{
         try {

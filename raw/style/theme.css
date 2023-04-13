@@ -26,6 +26,12 @@
         }
     }
 
+    @media (max-width: 640px) {
+        .-dw640px-align-items-unset, [css-dw640px-align-items="unset"] {
+            align-items: unset;
+        }
+    }
+
     @media (max-width: 480px) {
         .-mobile-align-items-self-start {
             align-items: self-start;
@@ -44,6 +50,17 @@
 @media screen {
     .backdrop-blur-10px, .backdrop-filter-blur-10px {
         backdrop-filter: blur(10px);
+    }
+}
+
+/*BACKGROUND*/
+@media screen {
+    [css-background="linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 25%) repeat scroll 0 0"] {
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 25%) repeat scroll 0 0;
+    }
+    
+    [css-background="linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(53, 54, 53, 1) 25%) repeat scroll 0 0"] {
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(53 54 58) 25%) repeat scroll 0 0;
     }
 }
 
@@ -69,8 +86,16 @@
         background-color: #1f1f1f;
     }
 
+    .background-color-202124 {
+        background-color: #202124;
+    }
+
     .background-color-32cd32 {
         background-color: #32cd32;
+    }
+
+    .background-color-35363a {
+        background-color: #35363a;
     }
 
     .background-color-333 {
@@ -99,6 +124,10 @@
 
     .background-color-ddd {
         background-color: #ddd;
+    }
+
+    .background-color-dee1e6 {
+        background-color: #dee1e6;
     }
 
     .background-color-eeeeee {
@@ -326,6 +355,10 @@
         border-bottom: 5px solid;
     }
 
+    .border-bottom-6px-solid {
+        border-bottom: 6px solid;
+    }
+
     .border-left-1px-solid {
         border-left: 1px solid;
     }
@@ -351,6 +384,10 @@
                
     .border-color-333 {
         border-color: #333;
+    }
+
+    .border-color-35363a {
+        border-color: #35363a;
     }
 
     .border-color-52b9d6 {
@@ -392,6 +429,14 @@
 
 /*BORDER RADIUS*/
 @media screen {
+    .border-bottom-left-radius-10px {
+        border-bottom-left-radius: 10px;
+    }
+
+    .border-bottom-right-radius-10px {
+        border-bottom-right-radius: 10px;
+    }
+    
     .border-radius-15pct {
         border-radius: 15%;
     }
@@ -477,6 +522,10 @@
 @media screen {
     .box-shadow-0-0-0-1px {
         box-shadow: 0 0 0 1px;
+    }
+    
+    .box-shadow-0-0-0-1px-ddd {
+        box-shadow: 0 0 0 1px #ddd;
     }
 
     .box-shadow-0-1px-6px-0, [css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)"] {
@@ -566,6 +615,10 @@
 
     .color-ccc {
         color: #ccc;
+    }
+
+    .color-ddd {
+        color: #ddd;
     }
 
     .color-fff {
@@ -1252,8 +1305,8 @@
         height: 5px;
     }
 
-    .height-5px, [css-height="5px"] {
-        height: 5px;
+    .height-6px, [css-height="6px"] {
+        height: 6px;
     }
 
     .height-10px, [css-height="10px"] {
@@ -1284,6 +1337,10 @@
         height: 38px;
     }
 
+    .height-44px, [css-height="44px"] {
+        height: 44px;
+    }
+
     .height-50px, [css-height="50px"] {
         height: 50px;
     }
@@ -1302,6 +1359,10 @@
 
     .height-120px, [css-height="120px"] {
         height: 120px;
+    }
+
+    .height-150px, [css-height="150px"] {
+        height: 150px;
     }
 
     .height-160px, [css-height="160px"] {
@@ -1546,6 +1607,10 @@
 
     .margin-right-20px {
         margin-right: 20px;
+    }
+
+    .margin-top-1px {
+        margin-top: 1px;
     }
 
     .margin-top-20px {
@@ -2613,6 +2678,10 @@
 
     .width-24px, [css-width="24px"] {
         width: 24px;
+    }
+
+    .width-44px, [css-width="44px"] {
+        width: 44px;
     }
 
     .width-60px, [css-width="60px"] {

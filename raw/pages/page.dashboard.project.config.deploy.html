@@ -1,4 +1,4 @@
-<column>
+<row>
     <card class="margin-20px margin-bottom-50px">
         <header class="line-height-50px">
             <text class="align-items-center display-flex gap-10px">
@@ -12,12 +12,40 @@
             <text>GitHub Pages is designed to host your personal, organization, or project pages from a GitHub repository.</text>
         </column>
     </card>
+</row>
+<column github-private-display="true" css-display="none">
+    <card class="background-color-fff border-radius-10px margin-20px">
+        <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
+            <span class="font-weight-bolder">Upgrade</span>
+        </header>
+        <column class="padding-20px">
+            <box class="gap-5px">
+                <header>
+                    <text class="font-weight-bolder">Upgrade or make this repository public to enable pages.</text>
+                </header>
+                <column>
+                    <text>
+                        <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+                        <span>is designed to host your personal, organization, or project pages from a GitHub repository.</span>
+                    </text>
+                </column>
+                <footer class="margin-top-10px">
+                    <text class="background-color-ddd border-radius-10px font-weight-bolder height-50px line-height-50px padding-x-20px" data-tap="github.href.upgrade()">Upgrade</text>
+                    <text class="border-radius-10px color-005cc8 height-50px line-height-50px padding-x-20px">
+                        <a href="https://docs.github.com/github/working-with-github-pages/about-github-pages" target="_blank">Learn More</a>
+                    </text>
+                </footer>
+            </box>
+        </column>
+    </card>
+</column>
+<column github-private-display="false" css-display="none">
     <card class="background-color-fff border-radius-10px margin-20px" css-display="none" tabindex="1">
-        <header class="background-color-ccc border-top-left-radius-5px border-top-right-radius-5px line-height-50px padding-x-20px">
+        <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
             <span class="font-weight-bolder">Source</span>
         </header>
         <flex class="padding-20px">
-            <box class="background-color-ddd border-radius-5px display-inline-flex margin-right-5px" css-dw640px-margin-right="0" css-dw640px-margin-top="20px" tabindex="1">
+            <box class="background-color-ddd border-radius-10px display-inline-flex margin-right-5px" css-dw640px-margin-right="0" css-dw640px-margin-top="20px" tabindex="1">
                 <flex class="align-items-center font-weight-bolder gap-5px justify-content-center padding-x-20px" data-dropdown data-ignore>
                     <text>Deploy from a branch</text>
                     <ico css-width="20px">
@@ -42,22 +70,22 @@
         </flex>
     </card>
     <card class="background-color-fff border-radius-10px margin-20px">
-        <header class="background-color-ccc border-top-left-radius-5px border-top-right-radius-5px line-height-50px padding-x-20px">
+        <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
             <span class="font-weight-bolder">Branch</span>
         </header>
         <flex class="padding-20px" css-dw640px-flex-direction="column">
             <box class="flex-1 margin-right-20px">
                 <column class="justify-content-center">
                     <text>GitHub Pages is currently disabled. Select a source below to enable GitHub Pages for this repository.</text>
-                    <text css-display="none" ]>
-                        Your GitHub Pages site is currently being built from the <span css-display="none" data-after="folder in the" data-value="folder"></span>
+                    <text css-display="none">
+                        <span>Your GitHub Pages site is currently being built from the</span>
+                        <span css-display="none" data-after="folder in the" data-value="folder"></span>
                         <span data-value="branch">main</span>
-                        branch.                    
-                    
+                        <span>branch.</span>
                     </text>
                 </column>
             </box>
-            <box class="background-color-ddd border-radius-5px display-inline-flex margin-right-5px" css-dw640px-margin-right="0" css-dw640px-margin-top="20px" css-max-width="calc(100% - 40px)" tabindex="1">
+            <box class="background-color-ddd border-radius-10px display-inline-flex margin-right-5px" css-dw640px-margin-right="0" css-dw640px-margin-top="20px" css-max-width="100%" tabindex="1">
                 <flex class="align-items-center font-weight-bolder gap-5px justify-content-center padding-x-20px" data-dropdown data-ignore>
                     <ico css-display="none" css-width="20px">
                         <n class="gg-git-branch"></n>
@@ -82,7 +110,7 @@
                     </text>
                 </column>
             </box>
-            <box class="background-color-ddd border-radius-5px display-inline-flex height-50px" css-display="none" css-dw640px-margin-top="10px" css-max-width="calc(100% - 40px)" tabindex="2">
+            <box class="background-color-ddd border-radius-10px display-inline-flex height-50px" css-display="none" css-dw640px-margin-top="10px" css-max-width="100%" tabindex="2">
                 <flex class="align-items-center display-flex font-weight-bolder gap-5px justify-content-center padding-x-20px" data-dropdown data-ignore>
                     <ico css-width="20px">
                         <n class="gg-folder"></n>
@@ -107,7 +135,7 @@
                     </text>
                 </column>
             </box>
-            <box class="background-color-ddd border-radius-5px display-inline-flex height-50px" css-dw640px-margin-top="10px" css-max-width="calc(100% - 40px)" tabindex="2">
+            <box class="background-color-ddd border-radius-10px display-inline-flex height-50px" css-dw640px-margin-top="10px" css-max-width="100%" tabindex="2">
                 <flex class="align-items-center display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px">
                     <text>Save</text>
                 </flex>
@@ -115,11 +143,11 @@
         </flex>
     </card>
     <card class="background-color-fff border-radius-10px margin-20px">
-        <header class="background-color-ccc border-top-left-radius-5px border-top-right-radius-5px line-height-50px padding-x-20px">
+        <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
             <span class="font-weight-bolder">Custom Domain</span>
         </header>
         <flex class="gap-20px padding-20px" css-flex-direction="column">
-            <box class="flex-1 gap-10px margin-right-20px">
+            <box class="flex-1 gap-10px">
                 <header class="justify-content-center">
                     <text>
                         Custom domains allow you to serve your site from a domain other than <span placeholder="shortname.github.io."></span>
@@ -127,10 +155,10 @@
                 </header>
                 <flex class="align-items-center gap-5px" css-dw640px-flex-direction="column">
                     <input class="border-1px-solid border-color-ddd line-height-36px" css-dw640px-width="100%" type="text">
-                    <text class="background-color-ddd border-radius-5px display-inline-flex height-36px" css-dw640px-width="100%">
+                    <text class="background-color-ddd border-radius-10px display-inline-flex height-36px" css-dw640px-width="100%">
                         <span class="align-items-center display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px">Save</span>
                     </text>
-                    <text class="border-1px-solid border-color-ddd border-radius-5px display-inline-flex height-36px" css-dw640px-width="100%" css-opacity="50%">
+                    <text class="border-1px-solid border-color-ddd border-radius-10px display-inline-flex height-36px" css-dw640px-width="100%" css-opacity="50%">
                         <span class="align-items-center color-ff3b30 display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px">Remove</span>
                     </text>
                 </flex>
@@ -145,7 +173,11 @@
                     </label>
                     <column>
                         <text class="font-weight-bolder">Enforce HTTPS</text>
-                        <text class="color-777 font-size-13px">— Required for your site because you are using the default domain (<data placeholder="shortname.github.io"></data>)</text>
+                        <text class="color-777 font-size-13px">
+                            <span>— Required for your site because you are using the default domain (</span>
+                            <data placeholder="shortname.github.io"></data>
+                            <span>)</span>
+                        </text>
                         <text class="color-777 font-size-13px margin-top-20px">HTTPS provides a layer of encryption that prevents others from snooping on or tampering with traffic to your site.
 When HTTPS is enforced, your site will only be served over HTTPS. Learn more.</text>
                     </column>

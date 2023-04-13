@@ -95,6 +95,10 @@
     a {
         text-decoration: none;
     }
+    
+    a:-webkit-any-link {
+        color: #005cc8;
+    }
 
     wysiwyg a[href] {
         text-decoration: underline;
@@ -171,7 +175,7 @@
     box > * > picture {
         display: flex;
         display: -webkit-flex;
-        width: 100%;
+        /* width: 100%; */
     }
 
     blockquote {
@@ -219,12 +223,13 @@
 
     column {
         flex-direction: column;
-        flex-grow: 1;
+        /* flex-grow: 1; */
     }
 
     card > column {
-        margin: auto;
-        width: 100%;
+        /* margin: auto; */
+        /* width: 100%; */
+        /* flex: 1; */
     }
 
     dropdown {

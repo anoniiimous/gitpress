@@ -1,5 +1,5 @@
-<form class="flex-direction-column flex-grow-1 margin-auto max-width-100pct width-640px">
-    <card class="background-color-fff border-radius-10px margin-10px overflow-hidden">
+<form class="display-flex flex-direction-column flex-grow-1 gap-20px margin-auto max-width-100pct width-640px">
+    <card class="background-color-fff border-radius-10px overflow-hidden">
         <header class="background-color-ccc line-height-50px padding-x-20px">
             <span class="font-weight-bolder">General</span>
         </header>
@@ -9,8 +9,8 @@
                     <input class="flex-grow-1 height-50px padding-x-20px" placeholder="Shortname" type="text">
                 </section>
             </box>
-            <box class="-hd-width-100pct background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative" css-max-width="calc(100% - 40px)">
-                <row class="align-items-center justify-content-center">
+            <box class="-hd-width-100pct background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative" css-max-width="calc(100% - 40px)">
+                <row class="align-items-center justify-content-center  opacity-50pct">
                     <ico css-width="30px">
                         <n class="gg-add"></n>
                     </ico>
@@ -35,13 +35,13 @@
             </box>
         </column>
     </card>
-    <card class="background-color-fff border-radius-10px margin-10px overflow-hidden">
+    <card class="background-color-fff border-radius-10px overflow-hidden">
         <header class="background-color-ccc line-height-50px padding-x-20px">
             <span class="font-weight-bolder">Danger Zone</span>
         </header>
         <column>
             <box>
-                <row class="align-items-center justify-content-space-between padding-20px">
+                <flex class="align-items-center flex-1 gap-10px justify-content-space-between padding-20px" css-dw640px-align-items="unset" css-dw640px-flex-direction="column">
                     <text class="display-flex flex-1 flex-direction-column margin-right-20px">
                         <text class="font-weight-bolder">Change repository visibility</text>
                         <text>
@@ -50,25 +50,25 @@
                             <span>.</span>
                         </text>
                     </text>
-                    <box class="background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative">
+                    <box class="background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative">
                         <row class="align-items-center justify-content-center">
                             <text class="padding-left-5px">Change visibility</text>
                         </row>
                     </box>
-                </row>
+                </flex>
             </box>
             <box class="border-top-1px-solid border-color-ddd">
-                <row class="align-items-center justify-content-space-between padding-20px">
+                <flex class="align-items-center flex-1 gap-10px justify-content-space-between padding-20px" css-dw640px-align-items="unset" css-dw640px-flex-direction="column">
                     <text class="display-flex flex-1 flex-direction-column margin-right-20px">
                         <text class="font-weight-bolder">Delete this project</text>
                         <text>Once you delete a project, there is no going back. Please be certain.</text>
                     </text>
-                    <box class="background-color-09721d border-radius-50px color-fff line-height-50px opacity-50pct padding-x-20px position-relative">
+                    <box class="background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative">
                         <row class="align-items-center justify-content-center">
                             <text class="padding-left-5px">Delete this project</text>
                         </row>
                     </box>
-                </row>
+                </flex>
             </box>
         </column>
     </card>

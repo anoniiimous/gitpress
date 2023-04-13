@@ -101,6 +101,21 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             if (root === "dashboard") {
                 0 < 1 ? controller.nav.hide() : controller.nav.close();
                 if (get.length > 1) {
+
+                    var repository = await github.repos.get({
+                        owner: window.owner.login,
+                        repo: get[1]
+                    }, {
+                        accept: "application/vnd.github.raw",
+                        cache: "reload"
+                    });
+                    console.log({
+                        repository
+                    });
+                    if (repository.private) {
+                        dom.body.find('[data-page="/dashboard/*"]').setAttribute('github-repo-private', repository.private);
+                    }
+
                     const user = await github.user.get();
 
                     var project = dom.body.find('main nav').find('[placeholder="Project Name"]');
@@ -417,8 +432,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                     if (get[2] === "config") {
                         if (get.length === 4) {
+                            var vp = dom.body.find('block[data-page="' + route.page + '"]');
                             if (get[3] === "checkout") {
-                                var vp = dom.body.find('block[data-page="' + route.page + '"]');
 
                                 var block = vp.find('block');
                                 0 > 1 ? console.log(424, route.page, {
@@ -461,6 +476,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     }
                                 } catch (e) {
                                     console.log(e);
+                                }
+                            }
+                            if (get[3] === "deploy") {
+                                var columns = vp.all('[github-private-display]');
+                                $(columns).attr('css-display', 'none');
+                                if (repository.private === true) {
+                                    vp.find('[github-private-display="true"]').setAttribute('css-display', 'flex');
                                 }
                             }
                         }
