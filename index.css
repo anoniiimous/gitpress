@@ -19,6 +19,16 @@
     [tabindex]:has([data-dropdown] + :not([css-display="none"])) {
         z-index: 12345;
     }
+
+    ::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #005cc8;
+        cursor: pointer;
+    }
 }
 
 /*EMPTY*/
@@ -367,6 +377,7 @@
 
     input {
         border: 0;
+        margin: 0;
         -webkit-appearance: none;
     }
 
