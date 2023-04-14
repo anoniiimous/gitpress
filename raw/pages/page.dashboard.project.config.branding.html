@@ -236,9 +236,13 @@
                         </row>
                     </column>
                     <flex class="gap-20px" css-display="none" data-tab="2">
-                        <row class="align-items-flex-start gap-10px width-240px">
+                        <column class="align-items-flex-start gap-10px width-240px">
                             <text class="font-size-14px line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
-                        </row>
+                            <label class="background-color-005cc8 border-radius-5px color-fff font-size-14px line-height-36px padding-x-10px">
+                                <input type="file">
+                                <span>Pick picture for iOS</span>
+                            </label>
+                        </column>
                         <flex class="align-items-flex-start flex-1 gap-10px">
                             <row class="flex-1 gap-5px">
                                 <label class="align-items-center display-flex justify-content-center">
@@ -360,12 +364,43 @@
                         </row>
                     </column>
                     <flex class="gap-20px" css-display="none" data-tab="2">
-                        <row class="align-items-flex-start gap-10px">
-                            <text class="line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
-                        </row>
-                        <row class="align-items-flex-start gap-10px">
-                            <text>Master Picture</text>
-                        </row>
+                        <column class="align-items-flex-start gap-10px width-240px">
+                            <text class="font-size-14px line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
+                            <label class="background-color-005cc8 border-radius-5px color-fff font-size-14px line-height-36px padding-x-10px">
+                                <input type="file">
+                                <span>Pick picture for Android Chrome</span>
+                            </label>
+                        </column>
+                        <flex class="align-items-flex-start flex-1 gap-10px">
+                            <row class="flex-1 gap-5px">
+                                <label class="align-items-center display-flex justify-content-center">
+                                    <input name="radio-iOSWebClip-picture" type="radio">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                        <n class="-checked-display-flex display-none gg-check"></n>
+                                    </ico>
+                                </label>
+                                <column class="gap-5px justify-content-center line-height-20px">
+                                    <text class="line-height-20px">Master Picture</text>
+                                    <picture class="background-color-666666" css-background-image="linear-gradient(45deg, #999999 25%, transparent 25%), linear-gradient(-45deg, #999999 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #999999 75%), linear-gradient(-45deg, transparent 75%, #999999 75%)" css-background-position="0 0, 0 10px, 10px -10px, -10px 0px" css-background-size="20px 20px" css-height="130px" css-width="130px">
+                                        <img>
+                                    </picture>
+                                </column>
+                            </row>
+                            <row class="flex-1 gap-5px" css-display="none">
+                                <label class="align-items-center display-flex justify-content-center">
+                                    <input name="radio-iOSWebClip-picture" type="radio">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                        <n class="-checked-display-flex display-none gg-check"></n>
+                                    </ico>
+                                </label>
+                                <column class="gap-5px justify-content-center line-height-20px">
+                                    <text class="line-height-20px">Dedicated Picture</text>
+                                    <picture class="background-color-666666" css-background-image="linear-gradient(45deg, #999999 25%, transparent 25%), linear-gradient(-45deg, #999999 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #999999 75%), linear-gradient(-45deg, transparent 75%, #999999 75%)" css-background-position="0 0, 0 10px, 10px -10px, -10px 0px" css-background-size="20px 20px" css-height="130px" css-width="130px">
+                                        <img>
+                                    </picture>
+                                </column>
+                            </row>
+                        </flex>
                     </flex>
                 </box>
             </flex>
@@ -454,12 +489,43 @@
                         </row>
                     </column>
                     <flex class="gap-20px" css-display="none" data-tab="2">
-                        <row class="align-items-flex-start gap-10px">
-                            <text class="line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
-                        </row>
-                        <row class="align-items-flex-start gap-10px">
-                            <text>Master Picture</text>
-                        </row>
+                        <column class="align-items-flex-start gap-10px width-240px">
+                            <text class="font-size-14px line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
+                            <label class="background-color-005cc8 border-radius-5px color-fff font-size-14px line-height-36px padding-x-10px">
+                                <input type="file">
+                                <span>Pick picture for Windows</span>
+                            </label>
+                        </column>
+                        <flex class="align-items-flex-start flex-1 gap-10px">
+                            <row class="flex-1 gap-5px">
+                                <label class="align-items-center display-flex justify-content-center">
+                                    <input name="radio-iOSWebClip-picture" type="radio">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                        <n class="-checked-display-flex display-none gg-check"></n>
+                                    </ico>
+                                </label>
+                                <column class="gap-5px justify-content-center line-height-20px">
+                                    <text class="line-height-20px">Master Picture</text>
+                                    <picture class="background-color-666666" css-background-image="linear-gradient(45deg, #999999 25%, transparent 25%), linear-gradient(-45deg, #999999 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #999999 75%), linear-gradient(-45deg, transparent 75%, #999999 75%)" css-background-position="0 0, 0 10px, 10px -10px, -10px 0px" css-background-size="20px 20px" css-height="130px" css-width="130px">
+                                        <img>
+                                    </picture>
+                                </column>
+                            </row>
+                            <row class="flex-1 gap-5px" css-display="none">
+                                <label class="align-items-center display-flex justify-content-center">
+                                    <input name="radio-iOSWebClip-picture" type="radio">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                        <n class="-checked-display-flex display-none gg-check"></n>
+                                    </ico>
+                                </label>
+                                <column class="gap-5px justify-content-center line-height-20px">
+                                    <text class="line-height-20px">Dedicated Picture</text>
+                                    <picture class="background-color-666666" css-background-image="linear-gradient(45deg, #999999 25%, transparent 25%), linear-gradient(-45deg, #999999 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #999999 75%), linear-gradient(-45deg, transparent 75%, #999999 75%)" css-background-position="0 0, 0 10px, 10px -10px, -10px 0px" css-background-size="20px 20px" css-height="130px" css-width="130px">
+                                        <img>
+                                    </picture>
+                                </column>
+                            </row>
+                        </flex>
                     </flex>
                 </box>
             </flex>
@@ -541,12 +607,43 @@
                         </row>
                     </column>
                     <flex class="gap-20px" css-display="none" data-tab="2">
-                        <row class="align-items-flex-start gap-10px">
-                            <text class="line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
-                        </row>
-                        <row class="align-items-flex-start gap-10px">
-                            <text>Master Picture</text>
-                        </row>
+                        <column class="align-items-flex-start gap-10px width-240px">
+                            <text class="font-size-14px line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
+                            <label class="background-color-005cc8 border-radius-5px color-fff font-size-14px line-height-36px padding-x-10px">
+                                <input type="file">
+                                <span>Pick picture for Safari pinned tab</span>
+                            </label>
+                        </column>
+                        <flex class="align-items-flex-start flex-1 gap-10px">
+                            <row class="flex-1 gap-5px">
+                                <label class="align-items-center display-flex justify-content-center">
+                                    <input name="radio-iOSWebClip-picture" type="radio">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                        <n class="-checked-display-flex display-none gg-check"></n>
+                                    </ico>
+                                </label>
+                                <column class="gap-5px justify-content-center line-height-20px">
+                                    <text class="line-height-20px">Master Picture</text>
+                                    <picture class="background-color-666666" css-background-image="linear-gradient(45deg, #999999 25%, transparent 25%), linear-gradient(-45deg, #999999 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #999999 75%), linear-gradient(-45deg, transparent 75%, #999999 75%)" css-background-position="0 0, 0 10px, 10px -10px, -10px 0px" css-background-size="20px 20px" css-height="130px" css-width="130px">
+                                        <img>
+                                    </picture>
+                                </column>
+                            </row>
+                            <row class="flex-1 gap-5px" css-display="none">
+                                <label class="align-items-center display-flex justify-content-center">
+                                    <input name="radio-iOSWebClip-picture" type="radio">
+                                    <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                        <n class="-checked-display-flex display-none gg-check"></n>
+                                    </ico>
+                                </label>
+                                <column class="gap-5px justify-content-center line-height-20px">
+                                    <text class="line-height-20px">Dedicated Picture</text>
+                                    <picture class="background-color-666666" css-background-image="linear-gradient(45deg, #999999 25%, transparent 25%), linear-gradient(-45deg, #999999 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #999999 75%), linear-gradient(-45deg, transparent 75%, #999999 75%)" css-background-position="0 0, 0 10px, 10px -10px, -10px 0px" css-background-size="20px 20px" css-height="130px" css-width="130px">
+                                        <img>
+                                    </picture>
+                                </column>
+                            </row>
+                        </flex>
                     </flex>
                 </box>
             </flex>

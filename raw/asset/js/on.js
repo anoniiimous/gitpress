@@ -450,8 +450,9 @@ window.on.touch = {
     if (el) {
         var tabs = byId(el.dataset.tabs);
         var index = target.closest('[data-tabs] > *').index();
-        $(tabs.all('[data-tab]')).attr('css-display', 'none');
-        tabs.all('[data-tab]')[index].setAttribute('css-display', 'flex');
+        $(tabs.all('[data-tab], line')).attr('css-display', 'none');
+        tabs.all('[data-tab]')[index].setAttribute('css-display', 'flex')
+        tabs.all('line')[index].setAttribute('css-display', 'flex');
     }
 
     var library = target.closest("[data-api]");
