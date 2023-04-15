@@ -4026,7 +4026,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             byId('color-data-hex') ? byId('color-data-hex').all('text')[1].find('span').textContent = color : null;
 
             if (el.innerHTML === "") {
-                var icon = byId('new-app-icon');
+                var icon = el.find('svg');
                 var width = el.clientWidth - 0;
                 var box = 1 < 0;
                 console.log("controller.setup.iro");
@@ -4053,15 +4053,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     sliderSize: 30
                 });
                 picker.on("color:change", function(color) {
-                    var icon = byId('new-app-icon');
+                    var icon = byId(el.dataset.iro);
                     var hexString = color.hexString;
                     var rgb = color.rgba;
                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
                     var hsl = color.hsla;
                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                    //byId("color-data-hex").all('text')[1].find('span').textContent = hexString;
-                    //byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString;
-                    //byId("color-data-hsl").all('text')[1].find('span').textContent = hslString;
+                    var colors = event.srcElement && event.srcElement.closest('color') ? event.srcElement.closest('color').nextElementSibling : null;
+                    if(colors) {
+                        colors.find("#color-data-hex").all('text')[1].find('span').textContent = hexString;
+                        colors.find("#color-data-rgb").all('text')[1].find('span').textContent = rgbString;
+                        colors.find("#color-data-hsl").all('text')[1].find('span').textContent = hslString;
+                    }
                     icon.find('rect').setAttribute('fill', hexString);
                     //icon.style.backgroundColor = hexString;
                     //icon.style.color = colors.contrast(hexString);
@@ -4132,12 +4135,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var target = event.target;
             var value = target.value;
             var foreignObject = target.closest('box').parentNode.firstElementChild.find('foreignObject');
-            console.log("controller.setup.scale", {
+            0 > 1 ? console.log("controller.setup.scale", {
                 event,
                 foreignObject,
                 target,
                 value
-            });
+            }) : null;
             foreignObject.setAttribute('height', value + '%');
             foreignObject.setAttribute('width', value + '%');
             foreignObject.style.transform = "translate(calc((100% - " + value + "%)/2), calc((100% - " + value + "%)/2))";
