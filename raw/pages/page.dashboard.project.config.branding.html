@@ -1,4 +1,4 @@
-<form class="margin-auto max-width-1280px">
+<form class="-dw720px-max-width-480px -dw960px-max-width-720px -dw1280px-max-width-960px margin-auto max-width-1280px width-100pct">
     <card class="background-color-fff border-radius-10px margin-20px overflow-hidden">
         <header class="background-color-ccc padding-x-20px">
             <box>
@@ -7,9 +7,67 @@
                 </header>
             </box>
         </header>
+        <flex class="-dw640px-flex-direction-column gap-20px padding-20px" css-columns="2" css-dw720px-columns="1">
+            <box class="flex-1">
+                <column>
+                    <picture class="background-color-000 border-radius-15pct height-0 padding-top-100pct width-100pct"></picture>
+                </column>
+            </box>
+            <box class="flex-1 flex-direction-column gap-20px justify-content-space-between">
+                <row class="gap-20px">
+                    <label class="align-items-center border-1px-solid border-color-ddd border-radius-50px display-flex flex-1 gap-5px line-height-50px justify-content-center">
+                        <input type="file">
+                        <ico css-height="20px" css-width="20px">
+                            <n class="gg-software-upload"></n>
+                        </ico>
+                        <span>Import</span>
+                    </label>
+                    <label class="align-items-center border-1px-solid border-color-ddd border-radius-50px display-flex flex-1 gap-5px line-height-50px justify-content-center">
+                        <ico css-height="20px" css-width="20px">
+                            <n class="gg-software-download"></n>
+                        </ico>
+                        <span>Export</span>
+                    </label>
+                </row>
+                <column class="gap-20px">
+                    <text class="display-flex color-777 font-weight-bolder justify-content-space-between">
+                        <span class="text-transform-capitalize" data-before="size"></span>
+                        <span data-after="%">69</span>
+                    </text>
+                    <input class="-webkit-slider-thumb-border-2px-solid-000 -webkit-appearance-none border-radius-50px height-30px" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" onchange="controller.setup.scale(event)" type="range" min="1" max="100" value="69">
+                    <color data-iro="iro-dashboard-config-branding"></color>
+                    <row class="display-flex flex-direction-row justify-content-space-between">
+                        <column id="color-data-hex" data-tap="controller.setup.background(event.target)">
+                            <text class="color-bbb font-weight-bolder">HEX</text>
+                            <text class="border-bottom-1px-solid border-color-bbb align-items-center display-flex flex-direction-row">
+                                <span data-before="">#518fed</span>
+                                <ico css-height="20px" css-width="20px">
+                                    <n class="--ggs-50pct gg-pen"></n>
+                                </ico>
+                            </text>
+                        </column>
+                        <column id="color-data-rgb">
+                            <text class="color-bbb font-weight-bolder">RGB</text>
+                            <text>
+                                <span>81,143,237</span>
+                            </text>
+                        </column>
+                        <column id="color-data-hsl">
+                            <text class="color-bbb font-weight-bolder">HSL</text>
+                            <text>
+                                <span>216,81%,62%</span>
+                            </text>
+                        </column>
+                    </row>
+                </column>
+            </box>   
+        </flex>
         <column class="gap-20px padding-20px" css-display="none"></column>
-        <column class="gap-5px margin-auto padding-y-20px">
-            <text class="background-color-005cc8 border-radius-5px color-fff font-weight-bolder line-height-50px padding-x-36px text-align-center">Select your Favicon image</text>
+        <column class="gap-5px margin-auto padding-y-20px" css-display="none">
+            <label class="background-color-005cc8 border-radius-5px color-fff font-weight-bolder line-height-50px padding-x-36px text-align-center">
+                <input type="file">
+                <text>Select Favicon Image</text>
+            </label>
             <text class="display-flex flex-direction-column font-size-12px">
                 <span>Submit an image (PNG, JPG, SVG...), at least 70x70.</span>
                 <span>Your image should be 260x260 or more for optimal results.</span>

@@ -1993,9 +1993,19 @@
         max-width: calc(100vw - 40px);
     }
 
+    @media (max-width: 1280px) {        
+        .-dw1280px-max-width-960px, [css-dw1280px-max-width="960px"] {
+            max-width: 960px;
+        }
+    }
+
     @media (max-width: 960px) {
         .-dw960px-max-width-100pct, [css-dw960px-max-width="100%"] {
             max-width: 100%;
+        }
+
+        .-dw960px-max-width-720px, [css-dw960px-max-width="720px"] {
+            max-width: 720px;
         }
 
         .-dw960px-max-width-640px, [css-dw960px-max-width="640px"] {
@@ -2014,6 +2024,10 @@
     }
 
     @media (max-width: 720px) {
+        .-dw720px-max-width-480px, [css-dw720px-max-width="480px"] {
+            max-width: 480px;
+        }
+        
         .-hd-max-width-480px {
             max-width: 480px;
         }

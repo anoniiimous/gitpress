@@ -3920,19 +3920,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         }
         ,
 
-        iro: (color)=>{
+        iro: (color, sel)=>{
+            sel = sel ? sel : "iro-setup-about-brand";
+            var el = byId(sel);
+            el.innerHTML = "";
             //picture.find('rect').fill = color; 
             var icon = byId('new-app-icon');
             //icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);
 
-            byId('color-data-hex').all('text')[1].find('span').textContent = color;
+            byId('color-data-hex') ? byId('color-data-hex').all('text')[1].find('span').textContent = color : null;
 
-            var sel = "iro-setup-about-brand";
-            var el = byId(sel);
-            el.innerHTML = "";
             if (el.innerHTML === "") {
                 var icon = byId('new-app-icon');
-                var width = el.clientWidth - 51;
+                var width = el.clientWidth - 0;
                 var box = 1 < 0;
                 console.log("controller.setup.iro");
                 window.picker = new iro.ColorPicker("#" + sel,{
@@ -3983,17 +3983,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
                     var hsl = color.hsla;
                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                    byId("color-data-hex").all('text')[1].find('span').textContent = hexString;
-                    byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString;
-                    byId("color-data-hsl").all('text')[1].find('span').textContent = hslString;
-                    icon.find('rect').setAttribute('fill', hexString);
+                    byId("color-data-hex") ? byId("color-data-hex").all('text')[1].find('span').textContent = hexString : null;
+                    byId("color-data-rgb") ? byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString : null;
+                    byId("color-data-hsl") ? byId("color-data-hsl").all('text')[1].find('span').textContent = hslString : null;
+                    icon ? icon.find('rect').setAttribute('fill', hexString) : null;
                     //icon.style.backgroundColor = hexString;
                     //icon.style.color = colors.contrast(hexString);
                 }
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
+                        size = el.clientWidth;
                     picker.resize(size);
-                    var img = icon.find('picture img');
+                    var img = icon ? icon.find('picture img') : null;
                     if (img) {
                         if (img.clientWidth > img.clientHeight) {
                             //icon.find('picture img').style.width = (size * 0.69) + 'px';
@@ -4005,7 +4006,102 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         //icon.find('picture img').style.height = (size * 1) + 'px';
                         //icon.find('picture img').style.width = (size * 1) + 'px';
                     } else {
-                        img = icon.find('picture foreignObject');
+                        img = icon ? icon.find('picture foreignObject') : null;
+                    }
+                }
+            }
+        }
+        ,
+
+        colorPicker: (el, options)=>{
+                console.log(el);
+            el.innerHTML = "";
+                
+            var id = el.dataset.iro;
+            var color = options && options.color ? options.color : '#ffffff';
+                
+            //picture.find('rect').fill = color; 
+            //icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);                
+
+            byId('color-data-hex') ? byId('color-data-hex').all('text')[1].find('span').textContent = color : null;
+
+            if (el.innerHTML === "") {
+                var icon = byId('new-app-icon');
+                var width = el.clientWidth - 0;
+                var box = 1 < 0;
+                console.log("controller.setup.iro");
+                window.picker = new iro.ColorPicker(el, {
+                    color,
+                    layout: [{
+                        component: iro.ui.Slider,
+                        options: {
+                            sliderType: 'hue'
+                        }
+                    }, {
+                        component: iro.ui.Slider,
+                        options: {
+                            sliderType: 'saturation'
+                        }
+                    }, {
+                        component: iro.ui.Slider,
+                        options: {
+                            sliderType: 'value'
+                        }
+                    }],
+                    layoutDirection: "vertical",
+                    margin: 20,
+                    sliderSize: 30
+                });
+                picker.on("color:change", function(color) {
+                    var icon = byId('new-app-icon');
+                    var hexString = color.hexString;
+                    var rgb = color.rgba;
+                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                    var hsl = color.hsla;
+                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                    //byId("color-data-hex").all('text')[1].find('span').textContent = hexString;
+                    //byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString;
+                    //byId("color-data-hsl").all('text')[1].find('span').textContent = hslString;
+                    icon.find('rect').setAttribute('fill', hexString);
+                    //icon.style.backgroundColor = hexString;
+                    //icon.style.color = colors.contrast(hexString);
+                    //icon.dataset.contrast = icon.style.color;
+                });
+                picker.on("mount", colorPicker);
+                window.addEventListener("resize", reSize)
+                function colorPicker(e) {
+                    //console.log(e);
+                    reSize();
+                    var color = e.color;
+                    var hexString = color.hexString;
+                    var rgb = color.rgba;
+                    var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
+                    var hsl = color.hsla;
+                    var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
+                    byId("color-data-hex") ? byId("color-data-hex").all('text')[1].find('span').textContent = hexString : null;
+                    byId("color-data-rgb") ? byId("color-data-rgb").all('text')[1].find('span').textContent = rgbString : null;
+                    byId("color-data-hsl") ? byId("color-data-hsl").all('text')[1].find('span').textContent = hslString : null;
+                    icon ? icon.find('rect').setAttribute('fill', hexString) : null;
+                    //icon.style.backgroundColor = hexString;
+                    //icon.style.color = colors.contrast(hexString);
+                }
+                function reSize() {
+                    var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
+                        size = el.clientWidth;
+                    picker.resize(size);
+                    var img = icon ? icon.find('picture img') : null;
+                    if (img) {
+                        if (img.clientWidth > img.clientHeight) {
+                            //icon.find('picture img').style.width = (size * 0.69) + 'px';
+                            img.style.width = "69%";
+                        } else {
+                            //icon.find('picture img').style.height = (size * 0.69) + 'px';
+                            img.style.height = "69%";
+                        }
+                        //icon.find('picture img').style.height = (size * 1) + 'px';
+                        //icon.find('picture img').style.width = (size * 1) + 'px';
+                    } else {
+                        img = icon ? icon.find('picture foreignObject') : null;
                     }
                 }
             }
