@@ -435,8 +435,29 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var vp = dom.body.find('block[data-page="' + route.page + '"]');
                             if (get[3] === "branding") {
                                 controller.setup.colorPicker(vp.find('[data-iro]'), {
-                                                    color: "#ff3b30"
+                                    color: "#ff3b30"
                                 });
+                                try {
+                                    var res = await github.repos.contents({
+                                        owner: window.owner.login,
+                                        repo: get[1],
+                                        path: 'icon.svg'
+                                    }, {
+                                        accept: 'application/vnd.github.raw'
+                                    });
+                                    var doc = new DOMParser().parseFromString(res, 'image/svg+xml').documentElement;
+                                    var rect = doc.find('rect');
+                                    var bg = rect.getAttribute('fill');
+                                    var foreignObject = doc.find('foreignObject');
+                                    rect.removeAttribute('rx');
+                                    doc.setAttribute('class', 'border-radius-15pct box-shadow-0-1px-6px-0 height-100pct position-absolute top-0 width-100pct');
+                                    console.log(svg)
+                                    var svg = vp.find('card > header + * picture svg');
+                                    svg.find('rect').setAttribute('fill', bg);
+                                    svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
+                                } catch (e) {
+                                    console.log('error', e);
+                                }
                             }
                             if (get[3] === "checkout") {
 
