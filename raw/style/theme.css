@@ -3187,6 +3187,10 @@
         [css-dw480px-width="calc(100% - 20px)"] {
             width: calc(100% - 20px);
         }
+        
+        .-dw480px-width-auto {
+            width: auto;
+        }
     }
 
     .-webkitSliderThumb-height-20px::-webkit-slider-thumb {
