@@ -341,11 +341,12 @@ window.rout.ing = (href,GOT,n)=>{
         }
         return bool
     })
-    pgs = [...new Set(pgs)];
-    pgs.sort();
+    pgs = [...new Set(pgs)];    
     0 > 1 ? pgs.sort(function(a, b) {
-        return b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
-    }) : null;
+        var bool = b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
+        console.log(347, {a, b});
+        return bool;
+    }) : pgs.sort();
     0 < 1 ? console.log(338, {
         pgs,
         pages
