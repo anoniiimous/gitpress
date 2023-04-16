@@ -371,7 +371,7 @@ window.rout.ing = (href,GOT,n)=>{
         });
         check = is <= dir.length && truth(bools);
         if (check) {
-            //check ? console.log(page, bools, {is, dir}) : null;
+            check ? console.log(373, page, bools, {is, dir}) : null;
             0 > 1 ? console.log(318, check, {
                 bools,
                 dir
