@@ -55,6 +55,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
             const roots = ["dashboard", "design", "developer", "marketplace", "new"];
             if (roots.indexOf(root) === -1) {
+                alert(root);
                 if (get.length > 1) {
                     const owner = root;
                     const repo = get[1];
@@ -103,6 +104,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
             if (root === "dashboard") {
+                console.log(root, get[1]);
                 0 < 1 ? controller.nav.hide() : controller.nav.close();
                 if (get.length > 1) {
 
