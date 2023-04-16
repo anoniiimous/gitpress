@@ -349,7 +349,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }
                     resolve(route);
                 } else {
-
+                    console.log(352, github.oauth.verify());
+                    window.owner = await github.user.get();
                     if (github.oauth.verify()) {
                         var params = {};
                         const user = await github.user.get();
