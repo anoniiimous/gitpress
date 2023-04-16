@@ -345,7 +345,7 @@ window.rout.ing = (href,GOT,n)=>{
     pgs.sort(function(a, b) {
         return b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
     });
-    0 > 1 ? console.log(338, {
+    0 < 1 ? console.log(338, {
         pgs,
         pages
     }) : null;
