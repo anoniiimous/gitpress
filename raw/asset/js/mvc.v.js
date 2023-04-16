@@ -19,7 +19,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }) : null;
         }
 
-        0 > 1 ? console.log(22, {
+        0 < 1 ? console.log(22, {
             route
         }) : null;
 
