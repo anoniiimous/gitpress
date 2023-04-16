@@ -16,7 +16,7 @@ async function init() {
     }, {
         head: window.document.head.outerHTML
     });
-    //eruda.init();
+    eruda ? eruda.init() : null;
 
     window.loaded = is.iframe(window);
 
