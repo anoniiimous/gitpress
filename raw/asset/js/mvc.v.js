@@ -19,6 +19,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }) : null;
         }
 
+        0 > 1 ? console.log(22, {
+            route
+        }) : null;
+
         if (search) {
             var params = Object.fromEntries(new URLSearchParams(search));
             var keys = Object.keys(params);
