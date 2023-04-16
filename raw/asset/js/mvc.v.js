@@ -104,7 +104,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
             if (root === "dashboard") {
-                console.log(root, get[1]);
+                console.log(107, root, get);
                 0 < 1 ? controller.nav.hide() : controller.nav.close();
                 if (get.length > 1) {
 
