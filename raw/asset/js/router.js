@@ -342,6 +342,7 @@ window.rout.ing = (href,GOT,n)=>{
         return bool
     })
     pgs = [...new Set(pgs)];
+    pgs.sort();
     pgs.sort(function(a, b) {
         return b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
     });
