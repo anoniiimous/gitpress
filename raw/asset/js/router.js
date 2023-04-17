@@ -124,10 +124,10 @@ window.rout.e = state=>{
         pgs = [...new Set(pgs)];
         0 < 1 ? pgs.sort(function(a, b) {
             var bool = b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
-            console.log(347, {
+            0 > 1 ? console.log(347, {
                 a,
                 b
-            });
+            }) : null;
             return bool;
         }) : pgs.sort();
         var n = 0;
@@ -351,9 +351,8 @@ window.rout.es = function getRoot() {
 
 window.rout.ing = (pgs,href,GOT,n)=>{
     var ed = null;
-    0 > 1 ? console.log(338, {
-        pgs,
-        pages
+    0 < 1 ? console.log(338, {
+        pgs
     }) : null;
     //pages = [...new Set(pages)];
     var stop = false;
