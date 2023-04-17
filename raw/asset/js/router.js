@@ -111,10 +111,28 @@ window.rout.e = state=>{
     const search = state.split('?').length > 1 ? "?" + state.split('?')[1].split('#')[0] : "";
 
     if (GOT.length > 0) {
+        var pgs = [];
         var pages = $(dom.body.all('[data-page]'));
+        pages.sort(function(a, b) {
+            //console.log(334, {a:a.dataset.page,b:b.dataset.page});
+            var bool = a.dataset.page.localeCompare(b.dataset.page);
+            if (bool) {
+                pgs.push(a.dataset.page);
+            }
+            return bool
+        })
+        pgs = [...new Set(pgs)];
+        0 < 1 ? pgs.sort(function(a, b) {
+            var bool = b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
+            console.log(347, {
+                a,
+                b
+            });
+            return bool;
+        }) : pgs.sort();
         var n = 0;
         do {
-            page = window.rout.ing(pages, state, GOT, n);
+            page = window.rout.ing(pgs, state, GOT, n);
             //console.log(148, n, state, page);
             if (page)
                 break;
@@ -331,23 +349,8 @@ window.rout.es = function getRoot() {
     return root;
 }
 
-window.rout.ing = (pages,href,GOT,n)=>{
+window.rout.ing = (pgs,href,GOT,n)=>{
     var ed = null;
-    var pgs = [];
-    pages.sort(function(a, b) {
-        //console.log(334, {a:a.dataset.page,b:b.dataset.page});
-        var bool = a.dataset.page.localeCompare(b.dataset.page);
-        if (bool) {
-            pgs.push(a.dataset.page);
-        }
-        return bool
-    })
-    pgs = [...new Set(pgs)];    
-    0 < 1 ? pgs.sort(function(a, b) {
-        var bool = b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
-        console.log(347, {a, b});
-        return bool;
-    }) : pgs.sort();
     0 > 1 ? console.log(338, {
         pgs,
         pages
