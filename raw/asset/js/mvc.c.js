@@ -346,6 +346,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
 
             iframe.contentWindow.document.body.setAttribute('buildable', true);
+            iframe.contentWindow.document.body.setAttribute('wireframe', true);
 
             var path = route.path;
             var dir = rout.ed.dir(path);
@@ -379,6 +380,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.classList.remove('display-none');
 
             if (iframe) {
+
+                iframe.contentWindow.document.body.removeAttribute('buildable');
+                iframe.contentWindow.document.body.removeAttribute('wireframe');
+                    
                 block.classList.add('border-top-left-radius-10px');
                 block.classList.add('border-top-right-radius-10px');
                 block.classList.add('margin-top-10px');
@@ -453,6 +458,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
 
             iframe.contentWindow.document.body.removeAttribute('buildable');
+            iframe.contentWindow.document.body.setAttribute('wireframe', true);
 
             var path = route.path;
             var dir = rout.ed.dir(path);
