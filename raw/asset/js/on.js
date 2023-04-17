@@ -448,11 +448,19 @@ window.on.touch = {
 
     var el = target.closest("[data-tabs]");
     if (el) {
+        //console.log(el);
         var tabs = byId(el.dataset.tabs);
-        var index = target.closest('[data-tabs] > *').index();
-        $(tabs.all('[data-tab], line')).attr('css-display', 'none');
-        tabs.all('[data-tab]')[index].setAttribute('css-display', 'flex')
-        tabs.all('line')[index].setAttribute('css-display', 'flex');
+        //console.log(454, index);
+        if (target.closest('[data-tabs] > *')) {
+            var index = target.closest('[data-tabs] > *').index();
+            //console.log(456, tabs);
+            
+            $(tabs.all('[data-tab]')).attr('css-display', 'none');
+            tabs.all('[data-tab]')[index].setAttribute('css-display', 'flex');
+
+            $(el.all('line')).attr('css-display', 'none');
+            el.all('line')[index].setAttribute('css-display', 'flex');
+        }
     }
 
     var library = target.closest("[data-api]");

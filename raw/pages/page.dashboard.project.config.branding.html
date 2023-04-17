@@ -351,18 +351,38 @@
                 </row>
             </box>
             <flex class="-dw720px-flex-direction-column gap-20px">
-                <box class="height-264px width-222px">
-                    <column class="gap-20px flex-1">
-                        <picture class="border-1px-solid border-color-ddd flex-1">
+                <box class="gap-10px height-264px width-222px">
+                    <column class="gap-20px flex-1" id="tabs-branding-windowsMetro-preview">
+                        <picture class="border-1px-solid border-color-ddd flex-1" data-tab="1">
                             <img src="raw/asset/png/android-home-screen.png">
                         </picture>
-                        <picture class="border-1px-solid border-color-ddd flex-1" css-display="none">
+                        <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="2">
                             <img src="raw/asset/png/android-switcher.png">
                         </picture>
-                        <picture class="border-1px-solid border-color-ddd flex-1" css-display="none">
+                        <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="3">
                             <img src="raw/asset/png/android-splash.png">
                         </picture>
                     </column>
+                    <footer class="display-flex gap-10px justify-content-center" data-tabs="tabs-branding-windowsMetro-preview">
+                        <box>
+                            <column class="gap-5px">
+                                <text class="padding-x-5px">Home</text>
+                                <line class="border-bottom-3px-solid width-100pct"></line>
+                            </column>
+                        </box>
+                        <box>
+                            <column class="gap-5px">
+                                <text class="padding-x-5px">Switcher</text>
+                                <line class="border-bottom-3px-solid width-100pct" css-display="none"></line>
+                            </column>
+                        </box>
+                        <box>
+                            <column class="gap-5px">
+                                <text class="padding-x-5px">Splash</text>
+                                <line class="border-bottom-3px-solid width-100pct" css-display="none"></line>
+                            </column>
+                        </box>
+                    </footer>
                 </box>
                 <box class="flex-1 gap-10px" id="tabs-branding-androidChrome">
                     <header class="display-flex gap-10px" data-tabs="tabs-branding-androidChrome">

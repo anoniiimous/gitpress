@@ -2304,6 +2304,11 @@
         padding-top: calc(100% - 50px);
     }
 
+    .padding-x-5px {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
     .padding-x-10px {
         padding-left: 10px;
         padding-right: 10px;
