@@ -111,10 +111,11 @@ window.rout.e = state=>{
     const search = state.split('?').length > 1 ? "?" + state.split('?')[1].split('#')[0] : "";
 
     if (GOT.length > 0) {
+        var pages = $(dom.body.all('[data-page]'));
         var n = 0;
         do {
-            page = window.rout.ing(state, GOT, n);
-            console.log(148, n, state, page);
+            page = window.rout.ing(pages, state, GOT, n);
+            //console.log(148, n, state, page);
             if (page)
                 break;
             n++;
@@ -330,10 +331,10 @@ window.rout.es = function getRoot() {
     return root;
 }
 
-window.rout.ing = (href,GOT,n)=>{
+window.rout.ing = (pages,href,GOT,n)=>{
     var ed = null;
-    var pgs = []
-    var pages = $(dom.body.all('[data-page]')).sort(function(a, b) {
+    var pgs = [];
+    pages.sort(function(a, b) {
         //console.log(334, {a:a.dataset.page,b:b.dataset.page});
         var bool = a.dataset.page.localeCompare(b.dataset.page);
         if (bool) {
@@ -347,11 +348,11 @@ window.rout.ing = (href,GOT,n)=>{
         console.log(347, {a, b});
         return bool;
     }) : pgs.sort();
-    0 < 1 ? console.log(338, {
+    0 > 1 ? console.log(338, {
         pgs,
         pages
     }) : null;
-    pages = [...new Set(pages)];
+    //pages = [...new Set(pages)];
     var stop = false;
     var routes = pgs.forEach(function(el) {
         var page = el;
@@ -373,7 +374,7 @@ window.rout.ing = (href,GOT,n)=>{
         });
         check = is <= dir.length && truth(bools);
         if (check) {
-            check ? console.log(373, page, bools, {is, dir}) : null;
+            //check ? console.log(373, page, bools, {is, dir}) : null;
             0 > 1 ? console.log(318, check, {
                 bools,
                 dir
