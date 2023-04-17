@@ -5,7 +5,7 @@ String.prototype.router = async function(params) {
     var tabs = await rout.ed.vars(rout.ed.dir(url.hash ? url.hash.split('#')[1] : uri));
     var goto = rout.ed.url(tabs);
     var route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-    console.log(8, uri, url, route);
+    //console.log(8, uri, url, route);
 
     var pages = dom.body.find('pages[data-page="' + rout.es() + '"]');
     var page = dom.body.find('page[data-page="' + route.page + '"]');
@@ -130,10 +130,10 @@ window.rout.e = state=>{
             }) : null;
             return bool;
         }) : pgs.sort();
-        console.log(124, {
+        0 > 1 ? console.log(124, {
             pages,
             pgs
-        });
+        }) : null;
         var n = 0;
         do {
             page = window.rout.ing(pgs, state, GOT, n);
@@ -355,7 +355,7 @@ window.rout.es = function getRoot() {
 
 window.rout.ing = (pgs,href,GOT,n)=>{
     var ed = null;
-    0 < 1 ? console.log(338, {
+    0 > 1 ? console.log(338, {
         pgs
     }) : null;
     //pages = [...new Set(pages)];
