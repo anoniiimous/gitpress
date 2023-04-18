@@ -822,6 +822,35 @@ window.github = {
             }
             );
         }
+        ,
+        update: (params, settings)=>{
+            return new Promise((resolve,reject)=>{
+                const owner = params["owner"];
+                const repo = params["repo"];
+                const url = github.endpoint + "/repos/" + owner + "/" + repo;
+                const data = settings.data;
+                const dataType = settings.dataType;
+                const a = (d)=>{
+                    const data = JSON.parse(d);
+                    resolve(data);
+                }
+                const b = (error)=>{
+                    console.log(error);
+                    reject(error);
+                }
+                const accessToken = localStorage.githubAccessToken;
+                accessToken ? settings.headers = {
+                    Accept: "application/vnd.github+json",
+                    Authorization: "token " + accessToken
+                } : null;
+                console.log({
+                    settings
+                });
+                ajax(url, settings).then(a).catch(b);
+            }
+            );
+
+        }
     },
     search: {
         code: (query)=>{
@@ -840,6 +869,7 @@ window.github = {
                 }
                 const settings = {};
                 settings.cache = "reload";
+                settings.dataType = "PATCH";
                 const accessToken = localStorage.githubAccessToken;
                 accessToken ? settings.headers = {
                     Accept: "application/vnd.github+json",

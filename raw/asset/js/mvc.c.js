@@ -2,7 +2,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     audio: {
 
-        cover: async(event)=>{
+        cover: async (event) => {
             var input = event.target.closest('label').find('input');
             var figure = input.closest('box').find('figure');
             var b64 = await on.change.file(event);
@@ -24,10 +24,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 input.insertAdjacentHTML('beforebegin', input.outerHTML);
                 input.remove();
             }
-        }
-        ,
+        },
 
-        create: async()=>{
+        create: async () => {
 
             event.preventDefault();
             var form = event.target;
@@ -108,8 +107,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
                 //AUDIO
@@ -139,8 +138,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
                 var canvas = form.find('canvas');
@@ -177,18 +176,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 "/dashboard/:get/media/".router()
             }
-        }
-        ,
+        },
 
-        remove: target=>{
+        remove: target => {
             if (window.wavesurfer) {
                 window.wavesurfer.destroy();
             }
             target.closest('column').firstElementChild.innerHTML = "";
-        }
-        ,
+        },
 
-        track: async(event)=>{
+        track: async (event) => {
             var input = event.target.closest('label').find('input');
             var file = await on.change.file(event);
             s
@@ -218,7 +215,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     blog: {
 
-        render: (iframe,json)=>{
+        render: (iframe, json) => {
 
             const theme = json["theme_color"];
 
@@ -235,7 +232,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             const settings = {}
 
-            github.repos.contents(params, settings).then(data=>{
+            github.repos.contents(params, settings).then(data => {
                 const content = data.content;
                 const raw = atob(content);
                 console.log(282, {
@@ -253,21 +250,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 const vp = dom.body.find('[data-page="/*/*"]');
                 iframe.contentWindow.document.body.innerHTML = body.innerHTML;
-            }
-            ).catch(async(error)=>{
+            }).catch(async (error) => {
                 console.log("43.error", {
                     error
                 });
-            }
-            );
+            });
 
         }
 
     },
 
     build: {
-        boot: async(iframe)=>{
-            return new Promise(async(resolve,reject)=>{
+        boot: async (iframe) => {
+            return new Promise(async (resolve, reject) => {
                 const user = await github.user.get();
                 const owner = user.login;
                 const repo = route.GOT[1];
@@ -299,24 +294,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }) : null;
 
                     iframe.src = blob('<!DOCTYPE html>' + doc.documentElement.outerHTML, "text/html");
-                    0 < 1 ? iframe.onload = ()=>{
-                        var elems = {
-                            iframe,
-                            head: iframe.contentWindow.document.head,
-                            body: iframe.contentWindow.document.body
-                        };
-                        console.log(422, "controller.build.iframe iframe.onload", elems);
-                        //window.top.css.style.sheet(elems.body);
-                        iframe.contentWindow.document.body.setAttribute('buildable', true);
-                        resolve(elems.iframe);
-                    }
-                    : resolve(iframe);
+                    0 < 1 ? iframe.onload = () => {
+                            var elems = {
+                                iframe,
+                                head: iframe.contentWindow.document.head,
+                                body: iframe.contentWindow.document.body
+                            };
+                            console.log(422, "controller.build.iframe iframe.onload", elems);
+                            //window.top.css.style.sheet(elems.body);
+                            iframe.contentWindow.document.body.setAttribute('buildable', true);
+                            resolve(elems.iframe);
+                        } :
+                        resolve(iframe);
                 } catch (e) {}
-            }
-            )
-        }
-        ,
-        editor: async()=>{
+            })
+        },
+        editor: async () => {
 
             const iframe = byId('iframe-editor');
             const block = iframe.closest('pages');
@@ -355,7 +348,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + href;
             var data = await github.raw.git("/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main" + '/raw/pages/pages.json');
-            var json = data.find(o=>o.slug === rout.ed.url(dir))
+            var json = data.find(o => o.slug === rout.ed.url(dir))
             0 > 1 ? console.log({
                 json
             }) : null;
@@ -364,9 +357,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //iframe.closest('pages').previousElementSibling.find('[placeholder="Page Name"]').textContent = json.title;
             //iframe.closest('pages').previousElementSibling.find('[placeholder="/page-name"]').textContent = json.slug;
 
-        }
-        ,
-        else: async()=>{
+        },
+        else: async () => {
 
             const iframe = byId('iframe-editor');
             const block = dom.body.find('[data-page="/dashboard/*/build/er"]');
@@ -383,7 +375,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 iframe.contentWindow.document.body.removeAttribute('buildable');
                 iframe.contentWindow.document.body.removeAttribute('wireframe');
-                    
+
                 block.classList.add('border-top-left-radius-10px');
                 block.classList.add('border-top-right-radius-10px');
                 block.classList.add('margin-top-10px');
@@ -391,9 +383,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 //block.find('builder-toolbar-preview').classList.add('display-none');
                 //css.removeAttribute('href');
             }
-        }
-        ,
-        index: async()=>{
+        },
+        index: async () => {
 
             const iframe = byId('iframe-editor');
             const block = dom.body.find('[data-page="/dashboard/*/build"]');
@@ -426,8 +417,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 //block.find('builder-toolbar-preview').classList.add('display-none');
                 css.removeAttribute('href')
             }
-        }
-        ,
+        },
         preview: async function() {
 
             const iframe = byId('iframe-editor');
@@ -467,7 +457,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             var path = "/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main/" + href;
             var data = await github.raw.git("/" + window.parent.owner.login + "/" + window.parent.GET[1] + "/main" + '/raw/pages/pages.json');
-            var json = data.find(o=>o.slug === rout.ed.url(dir))
+            var json = data.find(o => o.slug === rout.ed.url(dir))
             console.log({
                 json
             });
@@ -479,7 +469,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             //dock.find('[placeholder="Page Name"]').textContent = json.title;
             //dock.find('[placeholder="/page-name"]').textContent = json.slug;
         },
-        previewer: ()=>{
+        previewer: () => {
 
             const iframe = byId('iframe-editor');
             const block = iframe.closest('pages');
@@ -794,7 +784,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     catalog: {
 
-        attribute: async(target)=>{
+        attribute: async (target) => {
             var attribute = target.find('input');
             var variations = target.nextElementSibling;
             if (attribute.value.length > 0) {
@@ -802,10 +792,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 variations.classList.add('opacity-50pct');
             }
-        }
-        ,
+        },
 
-        category: async(target)=>{
+        category: async (target) => {
             var dropdown = await modal.dropdown(target.closest('dropdown'), {
                 other: false
             });
@@ -817,10 +806,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 button.classList.add('opacity-50pct')
             }
-        }
-        ,
+        },
 
-        create: async(event)=>{
+        create: async (event) => {
             event.preventDefault();
 
             var form = event.target;
@@ -880,8 +868,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var j = [];
                 var json = [row];
             }
-            rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-            var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+            rows = Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+            var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
             var str1 = JSON.stringify(rows, null, 4);
 
             //PUSH
@@ -910,10 +898,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     title: "Catalog Error"
                 })
             }
-        }
-        ,
+        },
 
-        parent: async(event)=>{
+        parent: async (event) => {
             event.preventDefault();
             var form = event.target;
             var value = form.find('[type="text"]').value;
@@ -954,8 +941,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
 
                 inc ? alert("This item already exists.") : github.repos.contents({
                     owner: user.login,
@@ -968,26 +955,23 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         sha
                     }),
                     dataType: "PUT"
-                }).then(()=>{
+                }).then(() => {
                     "/dashboard/:get/merch/".router()
                     event.target.closest('form').find('[type="submit"]').setAttribute('disabled', true);
                     event.target.closest('form').find('[data-submit]').classList.add('opacity-50pct');
-                }
-                ).catch(e=>{
+                }).catch(e => {
                     console.log(e);
                     0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
                         body: "There was an error creating this page.",
                         submit: "OK",
                         title: "Error"
                     })) : null;
-                }
-                );
+                });
 
             }
-        }
-        ,
+        },
 
-        step: (target)=>{
+        step: (target) => {
             var form = target.closest('form');
             var step = target.closest('block > * > card');
             var index = step.index();
@@ -1033,17 +1017,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
             }
 
-        }
-        ,
+        },
 
-        variation: async(target)=>{
+        variation: async (target) => {
             var footer = target.closest('footer');
             var template = footer.find('template').content.firstElementChild.cloneNode(true);
             footer.insertAdjacentHTML('beforebegin', template.outerHTML);
-        }
-        ,
+        },
 
-        variations: async(target)=>{
+        variations: async (target) => {
             if (target.classList.contains('opacity-50pct')) {
                 modal.alert({
                     body: "You must select an attribute before creating values for your variations.",
@@ -1061,17 +1043,77 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     variations
                 });
             }
-        }
-        ,
+        },
 
     },
 
     checkout: {
-        toggle: (event)=>{}
+        toggle: (event) => {}
+    },
+
+    config: {
+
+        shortname: async function(event) {
+
+            event.preventDefault();
+            var form = event.target;
+            var submit = form.find('[data-submit]');
+            var disabled = submit.parentNode.classList.contains('opacity-50pct');
+            if (disabled === false) {
+                var name = form.find('input[type="text"]').value;
+                var update = await github.repos.update({
+                    owner: window.owner.login,
+                    repo: GET[1]
+                }, {
+                    data: JSON.stringify({
+                        name
+                    }),
+                    dataType: "PATCH"
+                });
+                console.log(1074, {
+                    update,
+                    name
+                });
+                ("/dashboard/" + name + "/config").router();
+            }
+
+        },
+
+        template: async (event) => {
+
+            var checkbox = event.target;
+            var checked = checkbox.checked;
+            console.log(1082, {
+                checkbox,
+                checked
+            });
+
+            var ico = checkbox.closest('label').nextElementSibling.find('ico');
+            ico.firstElementChild.setAttribute('css-display', 'flex');
+            ico.lastElementChild.setAttribute('css-display', 'none');
+
+            github.repos.update({
+                owner: window.owner.login,
+                repo: GET[1]
+            }, {
+                data: JSON.stringify({
+                    is_template: checked
+                }),
+                dataType: "PATCH"
+            }).then(update => {
+                console.log(1074, {
+                    update
+                });
+                ico.firstElementChild.setAttribute('css-display', 'none');
+                ico.lastElementChild.setAttribute('css-display', 'flex');
+            })
+
+        }
+
     },
 
     connect: {
-        stripe: target=>{
+        stripe: target => {
             var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
             var state = 'stripe_' + Crypto.uid.create(1);
             localStorage.redirect_uri = route.path;
@@ -1081,7 +1123,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     controls: {
 
-        audio: event=>{
+        audio: event => {
             var node = event.target;
             var target = node.closest('[data-element]');
             if (target) {
@@ -1097,10 +1139,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
             }
-        }
-        ,
+        },
 
-        video: event=>{
+        video: event => {
             var node = event.target;
             var target = node.closest('[data-element]');
             if (target) {
@@ -1129,7 +1170,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     design: {
 
-        install: async(target)=>{
+        install: async (target) => {
             var user = await github.user.get();
             var card = target.closest('card');
             var theme = card.find('box text').textContent;
@@ -1171,8 +1212,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 sha: references.object.sha
                             });
                             var array = trees.tree;
-                            array = array.filter(branch=>(branch.path !== "raw/files" && branch.path !== "raw/pages" && branch.path !== "raw/style"))
-                            array = array.filter(branch=>(branch.path.startsWith('raw/files') || branch.path.startsWith('raw/pages') || branch.path.startsWith('raw/style')))
+                            array = array.filter(branch => (branch.path !== "raw/files" && branch.path !== "raw/pages" && branch.path !== "raw/style"))
+                            array = array.filter(branch => (branch.path.startsWith('raw/files') || branch.path.startsWith('raw/pages') || branch.path.startsWith('raw/style')))
                             if (array.length > 0) {
                                 var t = 0;
                                 do {
@@ -1220,10 +1261,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         content: row.content
                                     }),
                                     dataType: "POST"
-                                }).catch(error=>{
+                                }).catch(error => {
                                     console.log(2504, 'github.database.blobs', error);
-                                }
-                                );
+                                });
                                 tree[b] = {
                                     path: row.path,
                                     mode: "100644",
@@ -1259,20 +1299,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     files: {
 
-        cancel: ()=>{
+        cancel: () => {
             dom.body.find('[data-page="/dashboard/*/files/file/"]').innerHTML = "";
             ("/dashboard/:get/files/").router();
-        }
-        ,
+        },
 
-        clear: target=>{
+        clear: target => {
             var form = target.closest('form');
             form.find('[type="file"]').closest('label').innerHTML = form.find('[type="file"]').closest('label').innerHTML;
             form.children[1].find('column').innerHTML = "";
-        }
-        ,
+        },
 
-        delete: async(slugs)=>{
+        delete: async (slugs) => {
             //console.log(2443, slugs);
 
             try {
@@ -1342,10 +1380,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 ('/dashboard/:get/files/').router();
             }
-        }
-        ,
+        },
 
-        deselect: target=>{
+        deselect: target => {
             var box = target.closest('box');
             var name = box.find('[placeholder="filename.ext"]').textContent;
             var input = box.closest('form').children[0].find('[type="file"]');
@@ -1362,10 +1399,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 box.remove();
             }
-        }
-        ,
+        },
 
-        download: (target)=>{
+        download: (target) => {
             var src = null;
             var element = target.closest('header').nextElementSibling.find('card > column > :not(.display-none)');
             if (element.find('img')) {
@@ -1381,16 +1417,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             console.log(src);
             src ? download(src) : null;
-        }
-        ,
+        },
 
-        file: ()=>{
+        file: () => {
             dom.body.find('[data-page="/dashboard/*/files/file/"]').innerHTML = "";
             ("/dashboard/:get/files/file/").router();
-        }
-        ,
+        },
 
-        onchange: async(event)=>{
+        onchange: async (event) => {
             const input = event.target;
             const label = input.closest('[data-file]');
             const select = input.closest('card');
@@ -1410,7 +1444,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 file
             });
 
-            on.change.file(event).then(async(result)=>{
+            on.change.file(event).then(async (result) => {
                 const user = await github.user.get();
 
                 var params = {};
@@ -1420,17 +1454,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 var settings = {};
                 settings.data = JSON.stringify({
-                    content: result.result.split('base64,')[1],
-                    message: "Create " + file.name
-                }),
-                settings.dataType = "PUT";
+                        content: result.result.split('base64,')[1],
+                        message: "Create " + file.name
+                    }),
+                    settings.dataType = "PUT";
 
                 console.log({
                     params,
                     settings
                 });
 
-                const aa = (e)=>{
+                const aa = (e) => {
                     //('/dashboard/' + GET[1] + '/files/').router();
                     select.classList.add('display-none');
                     metadata.classList.remove('display-none');
@@ -1440,7 +1474,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     load.find('er').removeAttribute('style');
                 }
 
-                const bb = (e)=>{
+                const bb = (e) => {
                     //('/dashboard/' + GET[1] + '/files/').router();
                     //select.classList.add('display-none');
                     //metadata.classList.remove('display-none');
@@ -1451,13 +1485,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
 
                 github.repos.contents(params, settings).then(aa).catch(bb);
-            }
-            );
+            });
 
-        }
-        ,
+        },
 
-        multiple: async(event)=>{
+        multiple: async (event) => {
 
             var target = window.select = event.target;
             var form = target.closest('form');
@@ -1466,7 +1498,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             target.fileList ? null : target.fileList = [];
             Array.from(target.files).forEach(function(file) {
-                var exists = target.fileList.some(row=>file.name === row.name);
+                var exists = target.fileList.some(row => file.name === row.name);
                 exists ? null : target.fileList.push(file);
             });
 
@@ -1481,10 +1513,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (f < target.fileList.length);
             }
 
-        }
-        ,
+        },
 
-        remove: target=>{
+        remove: target => {
             var column = target.closest('block').find('column');
             var checked = column.all(':checked');
             if (checked.length > 0) {
@@ -1497,10 +1528,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (c < checked.length);
                 controller.files.delete(slugs);
             }
-        }
-        ,
+        },
 
-        select: async(target)=>{
+        select: async (target) => {
             var column = target.closest('column')
             var row = target.closest('card');
             var selected = column.all(':checked');
@@ -1516,10 +1546,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 row,
                 selected
             }) : null;
-        }
-        ,
+        },
 
-        selecting: e=>{
+        selecting: e => {
             console.log({
                 e
             });
@@ -1529,10 +1558,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var percentLoaded = Math.round((e.loaded / e.total) * 100);
             load.classList.remove('display-none');
             loader.style.width = percentLoaded + "%";
-        }
-        ,
+        },
 
-        upload: async(event)=>{
+        upload: async (event) => {
 
             event.preventDefault();
 
@@ -1542,9 +1570,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             window.files = [];
             //console.log(1165, input.fileList, input.fileList.length);
             if (input.fileList.length > 0) {
-                var f = 0
-                  , ff = 0;
-                ;do {
+                var f = 0,
+                    ff = 0;;
+                do {
                     var reader = new FileReader();
                     reader.onloadend = (function(file) {
                         return function(evt) {
@@ -1557,8 +1585,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             }
                             ff++;
                         }
-                    }
-                    )(input.fileList[f])
+                    })(input.fileList[f])
                     reader.readAsDataURL(input.fileList[f]);
                     //console.log(f, file);
                     f++;
@@ -1616,7 +1643,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     media: {
-        delete: async(slugs)=>{
+        delete: async (slugs) => {
             //console.log(2443, slugs);
 
             try {
@@ -1658,7 +1685,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 cache: "reload"
                             });
                             tables[format] = json.filter(function(row) {
-                                var exists = formats[format].some(f=>JSON.stringify(f) === JSON.stringify(row));
+                                var exists = formats[format].some(f => JSON.stringify(f) === JSON.stringify(row));
                                 0 > 1 ? console.log(1190, {
                                     format: formats[format],
                                     row,
@@ -1737,10 +1764,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 ('/dashboard/:get/media/').router();
             }
-        }
-        ,
+        },
 
-        import: async(b64)=>{
+        import: async (b64) => {
             var split = b64.result.split(';base64,')
             var mime = split[0].split(':')[1];
             var type = mime.split('/')[0]
@@ -1778,10 +1804,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
                 //});
             }
-        }
-        ,
+        },
 
-        remove: target=>{
+        remove: target => {
             var column = target.closest('block').find('column');
             var checked = column.all(':checked');
             if (checked.length > 0) {
@@ -1794,10 +1819,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (c < checked.length);
                 controller.media.delete(slugs);
             }
-        }
-        ,
+        },
 
-        select: async(target)=>{
+        select: async (target) => {
             var column = target.closest('column')
             var row = target.closest('card');
             var selected = column.all(':checked');
@@ -1807,10 +1831,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 footer.setAttribute("css-display", "none")
             }
-        }
-        ,
+        },
 
-        tags: event=>{
+        tags: event => {
             var target = event.target;
 
             var keywords = target.closest('box').find('flex').all('text');
@@ -1846,7 +1869,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     merch: {
 
-        delete: async(slugs)=>{
+        delete: async (slugs) => {
             //console.log(2443, slugs);
 
             try {
@@ -1864,14 +1887,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var all = [];
                     res.forEach(function(obj) {
                         //console.log('posts', slugs, obj.slug, !slugs.includes(obj.slug));
-                        slugs.forEach((row)=>{
+                        slugs.forEach((row) => {
                             if (rout.ed.dir(row).length === 1 && row === rout.ed.dir(obj.slug)[0]) {
                                 //console.log(1187, 'delete', row, obj.slug, obj);
                                 deleted.push(obj);
                             }
                             all.push(obj)
-                        }
-                        )
+                        })
                     });
                     deleted = [...new Set(deleted)];
                     all = [...new Set(all)];
@@ -1934,10 +1956,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 ('/dashboard/:get/merch/').router();
             }
-        }
-        ,
+        },
 
-        remove: target=>{
+        remove: target => {
             var column = target.closest('block').find('column');
             var checked = column.all(':checked');
             if (checked.length > 0) {
@@ -1950,10 +1971,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (c < checked.length);
                 controller.merch.delete(slugs);
             }
-        }
-        ,
+        },
 
-        select: async(target)=>{
+        select: async (target) => {
             var column = target.closest('column')
             var row = target.closest('card');
             var selected = column.all(':checked');
@@ -1975,7 +1995,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     product: {
 
-        select: async(target)=>{
+        select: async (target) => {
             var column = target.closest('column')
             var row = target.closest('card');
             var selected = column.all(':checked');
@@ -1991,10 +2011,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 row,
                 selected
             });
-        }
-        ,
+        },
 
-        attribute: async(target)=>{
+        attribute: async (target) => {
             var attribute = target.find('input');
             var variations = target.nextElementSibling;
             if (attribute.value.length > 0) {
@@ -2002,10 +2021,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 variations.classList.add('opacity-50pct');
             }
-        }
-        ,
+        },
 
-        attributes: async(target)=>{
+        attributes: async (target) => {
             var attributes = await modal.dropdown(target);
             var variations = target.nextElementSibling;
             console.log(attributes, variations, target.find('[placeholder]').textContent);
@@ -2014,28 +2032,25 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 variations.classList.add('opacity-50pct');
             }
-        }
-        ,
+        },
 
-        browsenode: async(target)=>{
+        browsenode: async (target) => {
             var dropdown = await modal.dropdown(target.closest('dropdown'), {
                 other: true
             });
             var step = target.closest('card');
             var category = step.find('[placeholder]').textContent;
-        }
-        ,
+        },
 
-        category: async(target)=>{
+        category: async (target) => {
             var dropdown = await modal.dropdown(target.closest('dropdown'), {
                 other: true
             });
             var step = target.closest('card');
             var category = step.find('[placeholder]').textContent;
-        }
-        ,
+        },
 
-        create: async(event)=>{
+        create: async (event) => {
             event.preventDefault();
 
             var form = event.target;
@@ -2231,8 +2246,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                    var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                     var str = JSON.stringify(rows, null, 4);
 
                     try {
@@ -2262,9 +2277,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
                     //console.log(1225, exists, rows);
-                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                     var str0 = JSON.stringify(rows, null, 4);
 
                     var str1 = JSON.stringify(row, null, 4);
@@ -2295,8 +2310,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                    var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                     var str = JSON.stringify(rows, null, 4);
 
                     try {
@@ -2325,8 +2340,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var j = [];
                         var json = [row];
                     }
-                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                    var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                    rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                    var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                     var str0 = JSON.stringify(rows, null, 4);
                 }
 
@@ -2395,10 +2410,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     title: "Validation Error"
                 })
             }
-        }
-        ,
+        },
 
-        delete: async(slug)=>{
+        delete: async (slug) => {
             console.log(slug);
             var dir = rout.ed.dir(slug);
             console.log(dir);
@@ -2490,16 +2504,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 url.router();
             }
-        }
-        ,
+        },
 
-        details: target=>{
+        details: target => {
             var template = target.closest('footer').find('template').content.firstElementChild.cloneNode(true);
             target.closest('box').find('column').insertAdjacentHTML('beforeend', template.outerHTML);
-        }
-        ,
+        },
 
-        matrix: target=>{
+        matrix: target => {
             var dimensions = [];
             var traits = target.closest('box').all('column');
             var t = 0;
@@ -2525,10 +2537,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             console.log(1984, {
                 dimensions
             });
-        }
-        ,
+        },
 
-        features: event=>{
+        features: event => {
             on.key.up.auto.size(event.target)
             if (event.keyCode === 8) {
                 var target = event.target;
@@ -2554,10 +2565,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 input.focus();
 
             }
-        }
-        ,
+        },
 
-        quantity: target=>{
+        quantity: target => {
             var button = target.closest('row').find('input');
             var ico = target.closest('ico');
             if (button && ico) {
@@ -2571,18 +2581,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     button.value = parseInt(button.value) - 1;
                 }
             }
-        }
-        ,
+        },
 
-        ring: (target)=>{
+        ring: (target) => {
             var index = target.closest('box').index();
             var card = target.closest('card');
             var section = card.find('box > section');
             section.style.transform = "translateX(-" + index + "00%)";
-        }
-        ,
+        },
 
-        thumb: async(event)=>{
+        thumb: async (event) => {
             var target = event.target;
             var card = target.closest('card');
             var section = card.find('box > section');
@@ -2602,10 +2610,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             picture.appendChild(img);
             section.appendChild(picture);
             section.style.transform = "translateX(-" + section.lastElementChild.index() + "00%)";
-        }
-        ,
+        },
 
-        traits: async(target)=>{
+        traits: async (target) => {
             var attributes = target.previousElementSibling;
             var variations = await modal.dropdown(target, {
                 other: false,
@@ -2651,17 +2658,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 route.path === url ? null : url.router();
 
             }
-        }
-        ,
+        },
 
-        variation: async(target)=>{
+        variation: async (target) => {
             var footer = target.closest('footer');
             var template = footer.find('template').content.firstElementChild.cloneNode(true);
             footer.insertAdjacentHTML('beforebegin', template.outerHTML);
-        }
-        ,
+        },
 
-        variations: async(target)=>{
+        variations: async (target) => {
             if (target.classList.contains('opacity-50pct')) {
                 modal.alert({
                     body: "You must select an attribute before creating values for your variations.",
@@ -2679,10 +2684,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     variations
                 });
             }
-        }
-        ,
+        },
 
-        pinky: (target)=>{
+        pinky: (target) => {
             var box = target.closest('box');
             var row = box.firstElementChild;
             var card = target.closest('card');
@@ -2698,16 +2702,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     menu: {
 
-        close: ()=>{
+        close: () => {
 
             const nav = dom.body.find('body > main nav');
             nav.getAttribute("css-dw960px-transform") = "translateX(0%)";
             nav.firstElementChild.classList.rRemove('display-none');
 
-        }
-        ,
+        },
 
-        open: ()=>{
+        open: () => {
 
             const nav = dom.body.find('body > nav');
             nav.getAttribute("css-dw960px-transform") = "0";
@@ -2719,7 +2722,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     nav: {
 
-        card: target=>{
+        card: target => {
             var button = target.closest('ico');
             if (button && button.find('.gg-chevron-down')) {
                 $(target.closest('card').parentNode.all('card > row + column')).attr('css-display', 'none');
@@ -2734,10 +2737,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     button.find('.gg-chevron-down').parentNode['removeAttribute']('css-transform', 'none');
                 }
             }
-        }
-        ,
+        },
 
-        close: ()=>{
+        close: () => {
 
             const nav = document.body.find('body > main nav');
             const transform = nav.getAttribute("css-dw960px-transform");
@@ -2749,10 +2751,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             nav.getAttribute("css-dw960px-transform") = "translateX(-100%)";
             blocks.getAttribute("css-dw960px-transform") = "0";
 
-        }
-        ,
+        },
 
-        hide: ()=>{
+        hide: () => {
 
             const nav = document.body.find('body > main nav');
             const transform = nav.getAttribute("css-dw960px-transform");
@@ -2762,31 +2763,30 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             blocks.setAttribute("css-transform", "0");
 
             nav.setAttribute("css-dw960px-transform", "translateX(-100%)");
-        blocks.setAttribute("css-dw960px-transform", "0");
+            blocks.setAttribute("css-dw960px-transform", "0");
 
             blocks.setAttribute("css-left", "0");
             blocks.setAttribute("css-dw960px-left", "0");
 
-        }
-        ,
+        },
 
-        toggle: (target)=>{
+        toggle: (target) => {
 
             const nav = document.body.find('body > main nav');
             const transform = nav.getAttribute("css-dw960px-transform");
             const blocks = dom.body.find('main nav + pages');
             const toggle = transform === "translateX(0)";
 
-            if (toggle) {                    
+            if (toggle) {
                 nav.setAttribute("css-transform", "translateX(-100%)");
                 nav.setAttribute("css-dw960px-transform", "translateX(-100%)");
-                    
+
                 blocks.setAttribute("css-left", "0");
                 blocks.setAttribute("css-dw960px-left", "0");
             } else {
                 nav.setAttribute("css-transform", "translateX(0)");
                 nav.setAttribute("css-dw960px-transform", "translateX(0)");
-                    
+
                 blocks.setAttribute("css-left", "320px");
                 blocks.setAttribute("css-dw960px-left", "320px");
             }
@@ -2796,7 +2796,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     new: {
-        app: async(target)=>{
+        app: async (target) => {
             var form = target.closest('form');
             var title = form.find('input').value;
             if (title.length > 0) {
@@ -2808,10 +2808,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     title: "New App"
                 });
             }
-        }
-        ,
+        },
 
-        import: async(target)=>{
+        import: async (target) => {
 
             const user = await github.user.get();
 
@@ -2853,8 +2852,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.find(item=>item.name === repository);
+                rows = Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.find(item => item.name === repository);
                 var str = JSON.stringify(rows, null, 4);
 
                 inc ? alert("This project already exists.") : 0 < 1 ? github.repos.contents({
@@ -2868,18 +2867,16 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         sha
                     }),
                     dataType: "PUT"
-                }).then(()=>{
+                }).then(() => {
                     ("/dashboard/" + repository + "/").router()
-                }
-                ).catch(e=>{
+                }).catch(e => {
                     console.log(e);
                     0 > 1 ? "/dashboard/:get/merch/".router().then(modal.alert({
                         body: "There was an error creating this page.",
                         submit: "OK",
                         title: "Error"
                     })) : null;
-                }
-                ) : null;
+                }) : null;
             }
         }
 
@@ -2887,7 +2884,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     pages: {
 
-        create: async(event)=>{
+        create: async (event) => {
 
             event.preventDefault();
 
@@ -2985,8 +2982,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
                 if (exists === true && GET.length === 4) {
@@ -3050,10 +3047,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 alert("You must supply a title.");
             }
-        }
-        ,
+        },
 
-        delete: async(slugs)=>{
+        delete: async (slugs) => {
             console.log(2443, slugs);
 
             try {
@@ -3068,7 +3064,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 if (res.length > 0) {
                     var pages = res.filter(function(obj) {
                         var dir = rout.ed.dir(obj.page);
-                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(dir));
+                        var exists = slugs.some(e => JSON.stringify(e) === JSON.stringify(dir));
                         console.log('posts', {
                             slugs,
                             obj,
@@ -3080,7 +3076,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
                     var deleted = res.filter(function(obj) {
                         var dir = rout.ed.dir(obj.page);
-                        var exists = slugs.some(e=>JSON.stringify(e) === JSON.stringify(dir));
+                        var exists = slugs.some(e => JSON.stringify(e) === JSON.stringify(dir));
                         console.log('posts', {
                             slugs,
                             obj,
@@ -3154,8 +3150,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 ('/dashboard/:get/pages/').router();
             }
-        }
-        ,
+        },
 
         image: async function(event) {
             var input = event.target;
@@ -3176,7 +3171,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             console.log(event, file);
         },
 
-        remove: target=>{
+        remove: target => {
             var column = target.closest('block').find('column');
             var checked = column.all(':checked');
             if (checked.length > 0) {
@@ -3191,10 +3186,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (c < checked.length);
                 controller.pages.delete(slugs);
             }
-        }
-        ,
+        },
 
-        select: async(target)=>{
+        select: async (target) => {
             var column = target.closest('column')
             var row = target.closest('card');
             var selected = column.all(':checked');
@@ -3204,10 +3198,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             } else {
                 footer.setAttribute("css-display", "none")
             }
-        }
-        ,
+        },
 
-        seo: target=>{
+        seo: target => {
             var characters = target.value.length;
             var maxlength = parseInt(target.closest('box').find('[data-maxlength]').dataset.maxlength);
             on.key.up.auto.size(event.target);
@@ -3221,10 +3214,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var el = target.closest('form').find('[data-value="pages.' + value + '"]');
                 social.textContent = preview.textContent = (el ? el : target).value;
             }
-        }
-        ,
+        },
 
-        title: event=>{
+        title: event => {
             if (event.type === "keydown") {
                 if (event.keyCode === 13) {
                     event.preventDefault();
@@ -3240,16 +3232,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     photo: {
 
-        clear: target=>{
+        clear: target => {
             var box = target.closest('box');
             box.firstElementChild.innerHTML = '';
             var input = box.find('input');
             input.insertAdjacentHTML('beforebegin', input.outerHTML);
             input.remove();
-        }
-        ,
+        },
 
-        create: async(event)=>{
+        create: async (event) => {
             event.preventDefault();
             var form = event.target;
             var description = form.find("textarea").value;
@@ -3316,8 +3307,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
                 //PHOTO
@@ -3347,8 +3338,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
                 //PUSH
@@ -3375,10 +3366,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 console.log(2452, 'controller.photo.update', "array", {
                     array
                 });
-                github.crud.update(params, array).then(()=>{
+                github.crud.update(params, array).then(() => {
                     "/dashboard/:get/media/".router()
-                }
-                )
+                })
             }
         }
 
@@ -3386,7 +3376,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     posts: {
 
-        create: async(event)=>{
+        create: async (event) => {
             event.preventDefault();
 
             var form = event.target;
@@ -3459,8 +3449,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
                 var str = await ajax('raw/asset/html/template/template.post.html');
@@ -3507,10 +3497,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
 
             }
-        }
-        ,
+        },
 
-        delete: async(slugs)=>{
+        delete: async (slugs) => {
             //console.log(2443, slugs);
 
             try {
@@ -3585,10 +3574,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 await github.crud.update(params, array);
                 ('/dashboard/:get/posts/').router();
             }
-        }
-        ,
+        },
 
-        read: async()=>{
+        read: async () => {
 
             var user = await github.user.get();
             var feed = byId('feed-dashboard-posts');
@@ -3600,7 +3588,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 repo: GET[1]
             }, {
                 accept: "application/vnd.github.raw"
-            }).then(data=>{
+            }).then(data => {
                 //var data = JSON.parse(atob(d.content));
                 if (data) {
                     0 > 1 ? console.log(84, {
@@ -3628,13 +3616,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
 
-            }
-            )
+            })
 
-        }
-        ,
+        },
 
-        update: async(event)=>{
+        update: async (event) => {
             event.preventDefault();
 
             var form = event.target;
@@ -3663,13 +3649,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     accept: "application/vnd.github.raw"
                 });
                 var j = json;
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 inc ? null : json.push(row);
             } catch (e) {
                 var j = [];
                 var json = [row];
             }
-            rows = Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
+            rows = Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
             console.log(2452, 'controller.posts.update', "json", {
                 data,
                 inc,
@@ -3708,10 +3694,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 array
             });
             await github.crud.update(params, array);
-        }
-        ,
+        },
 
-        reader: async(shortname)=>{
+        reader: async (shortname) => {
 
             const user = await github.user.get();
             const owner = user.login;
@@ -3724,7 +3709,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
             const settings = {}
 
-            github.repos.contents(params, settings).then(data=>{
+            github.repos.contents(params, settings).then(data => {
                 const content = data.content;
                 const raw = atob(content);
                 const json = JSON.parse(raw);
@@ -3757,18 +3742,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } else {
                     vp.all('card')[1].find('box').classList.add('display-none');
                 }
-            }
-            ).catch(async(error)=>{
+            }).catch(async (error) => {
                 console.log("43.error", {
                     error
                 });
-            }
-            );
+            });
 
-        }
-        ,
+        },
 
-        remove: target=>{
+        remove: target => {
             var column = target.closest('block').find('column');
             var checked = column.all(':checked');
             if (checked.length > 0) {
@@ -3781,10 +3763,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 } while (c < checked.length);
                 controller.posts.delete(slugs);
             }
-        }
-        ,
+        },
 
-        image: async(event)=>{
+        image: async (event) => {
             var reader = await on.change.file(event);
             var card = event.target.closest('card');
             var img = document.createElement('img');
@@ -3794,10 +3775,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             console.log({
                 reader
             });
-        }
-        ,
+        },
 
-        select: async(target)=>{
+        select: async (target) => {
             var column = target.closest('column')
             var row = target.closest('card');
             var selected = column.all(':checked');
@@ -3819,7 +3799,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     setup: {
 
-        app: async(event)=>{
+        app: async (event) => {
 
             event.preventDefault();
             const form = event.target;
@@ -3852,7 +3832,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
                 var html = await ajax("raw/html/template/template.loader.new.app.html");
                 steps[0].find('card').innerHTML = html;
-                var s = async(data)=>{
+                var s = async (data) => {
                     steps[0].find('card').innerHTML = "";
                     var confirm = 1 < 0 ? await modal.confirm({
                         body: "Do you want to create a logo or skip this wizard?",
@@ -3870,15 +3850,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         href.router();
                     }
                 }
-                var ss = ()=>{
+                var ss = () => {
                     steps[0].find('card').innerHTML = "";
                 }
                 1 > 0 ? github.repos.generate(params, settings).then(s).catch(ss) : null;
             }
-        }
-        ,
+        },
 
-        background: async(target)=>{
+        background: async (target) => {
             var button = target.closest('column').find('span');
             var prompt = await modal.prompt({
                 body: 'Enter a background color value.',
@@ -3896,37 +3875,33 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 button.textContent = prompt;
                 controller.setup.iro(prompt)
             }
-        }
-        ,
+        },
 
-        icon: data=>{
+        icon: data => {
 
             //var files = event.target.files
-            ImageTracer.imageToSVG(data.result, (svgstr)=>{
+            ImageTracer.imageToSVG(data.result, (svgstr) => {
                 //console.log(svgstr);
                 byId('new-app-icon').find('foreignObject').innerHTML = svgstr;
                 var svg = byId('new-app-icon').find('foreignObject').firstElementChild;
                 svg.classList.add('height-100pct');
                 svg.classList.add('width-100pct');
-            }
-            , {
+            }, {
                 viewbox: true
             })
 
-        }
-        ,
+        },
 
-        ico: (el)=>{
+        ico: (el) => {
             var elem = el.find('picture').firstElementChild;
             var xml = new XMLSerializer().serializeToString(elem);
             return obj = {
                 download: GET[1] + ".svg",
                 href: "data:image/svg;base64," + btoa(xml)
             };
-        }
-        ,
+        },
 
-        iro: (color, sel)=>{
+        iro: (color, sel) => {
             sel = sel ? sel : "iro-setup-about-brand";
             var el = byId(sel);
             el.innerHTML = "";
@@ -3941,7 +3916,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var width = el.clientWidth - 0;
                 var box = 1 < 0;
                 console.log("controller.setup.iro");
-                window.picker = new iro.ColorPicker("#" + sel,{
+                window.picker = new iro.ColorPicker("#" + sel, {
                     color,
                     layout: [{
                         component: iro.ui.Slider,
@@ -3980,6 +3955,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
                 picker.on("mount", colorPicker);
                 window.addEventListener("resize", reSize)
+
                 function colorPicker(e) {
                     //console.log(e);
                     reSize();
@@ -3996,9 +3972,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //icon.style.backgroundColor = hexString;
                     //icon.style.color = colors.contrast(hexString);
                 }
+
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
-                        size = el.clientWidth;
+                    size = el.clientWidth;
                     picker.resize(size);
                     var img = icon ? icon.find('picture img') : null;
                     if (img) {
@@ -4016,16 +3993,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
             }
-        }
-        ,
+        },
 
-        colorPicker: (el, options)=>{
-                console.log(el);
+        colorPicker: (el, options) => {
+            console.log(el);
             el.innerHTML = "";
-                
+
             var id = el.dataset.iro;
             var color = options && options.color ? options.color : '#ffffff';
-                
+
             //picture.find('rect').fill = color; 
             //icon.find('n').textContent = icon.closest('form').find('block').children[1].find('input').value.charAt(0);                
 
@@ -4066,7 +4042,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var hsl = color.hsla;
                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
                     var colors = event.srcElement && event.srcElement.closest('color') ? event.srcElement.closest('color').nextElementSibling : null;
-                    if(colors) {
+                    if (colors) {
                         colors.find("#color-data-hex").all('text')[1].find('span').textContent = hexString;
                         colors.find("#color-data-rgb").all('text')[1].find('span').textContent = rgbString;
                         colors.find("#color-data-hsl").all('text')[1].find('span').textContent = hslString;
@@ -4078,6 +4054,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 });
                 picker.on("mount", colorPicker);
                 window.addEventListener("resize", reSize)
+
                 function colorPicker(e) {
                     //console.log(e);
                     reSize();
@@ -4094,9 +4071,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //icon.style.backgroundColor = hexString;
                     //icon.style.color = colors.contrast(hexString);
                 }
+
                 function reSize() {
                     var size = dom.body.clientWidth > 570 ? 480 : dom.body.clientWidth - 90;
-                        size = el.clientWidth;
+                    size = el.clientWidth;
                     picker.resize(size);
                     var img = icon ? icon.find('picture img') : null;
                     if (img) {
@@ -4114,12 +4092,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
             }
-        }
-        ,
+        },
 
-        load: (target)=>{
+        load: (target) => {
             var button = target.closest('box > *').find('ico n');
-            if (button.className === "gg-software-upload") {//alert('Import File');
+            if (button.className === "gg-software-upload") { //alert('Import File');
             }
             if (button.className === "gg-software-download") {
                 (async function() {
@@ -4131,13 +4108,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var icon = controller.setup.ico(target.closest('box').previousElementSibling);
                         download(icon);
                     }
-                }
-                )()
+                })()
             }
-        }
-        ,
+        },
 
-        scale: (event)=>{
+        scale: (event) => {
             var target = event.target;
             var value = target.value;
             var foreignObject = target.closest('box').parentNode.firstElementChild.find('foreignObject');
@@ -4151,10 +4126,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             foreignObject.setAttribute('width', value + '%');
             foreignObject.style.transform = "translate(calc((100% - " + value + "%)/2), calc((100% - " + value + "%)/2))";
             target.previousElementSibling.lastElementChild.textContent = value;
-        }
-        ,
+        },
 
-        step: async(target)=>{
+        step: async (target) => {
             var form = target.closest('form');
             var step = target.closest('block > *');
             var index = step.index();
@@ -4207,7 +4181,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                     path: "/index.html"
                                 }, {
                                     cache: "reload"
-                                }).then(async(data)=>{
+                                }).then(async (data) => {
                                     var raw = data.content;
                                     var sha = data.sha;
                                     var content = atob(raw);
@@ -4256,8 +4230,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         $(form.all('block > *')[1]).removeClass('display-none');
                                         controller.setup.iro('#' + colors.random());
                                     }) : null;
-                                }
-                                );
+                                });
                             }
                         } else {
                             modal.alert({
@@ -4293,7 +4266,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             path: "/icon.svg"
                         }, {
                             cache: "reload"
-                        }).then(async(data)=>{
+                        }).then(async (data) => {
                             var raw = data.content;
                             var sha = data.sha;
                             var content = atob(raw);
@@ -4309,14 +4282,12 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                 steps
                             });
                             createIcon(file, sha);
-                        }
-                        ).catch(()=>{
+                        }).catch(() => {
                             console.log(1792, {
                                 file
                             });
                             createIcon(file);
-                        }
-                        )
+                        })
 
                         async function createIcon(icon, sha) {
                             console.log(1749, {
@@ -4369,7 +4340,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                     path: "/site.webmanifest"
                                 }, {
                                     cache: "reload"
-                                }).then(async(data)=>{
+                                }).then(async (data) => {
                                     var raw = data.content;
                                     var sha = data.sha;
                                     var content = atob(raw);
@@ -4415,8 +4386,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         });
                                         window.location.pathname.router();
                                     }) : null;
-                                }
-                                );
+                                });
 
                             }
                         } else {
@@ -4429,10 +4399,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     }
                 }
             }
-        }
-        ,
+        },
 
-        webmanifest: async(event)=>{
+        webmanifest: async (event) => {
             event.preventDefault();
             const form = event.target;
             const steps = form.all('block > column');
@@ -4476,7 +4445,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     video: {
 
-        clear: target=>{
+        clear: target => {
             var box = target.closest('box');
             box.firstElementChild.innerHTML = '';
             var input = box.find('input');
@@ -4484,10 +4453,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             input.remove();
             var thumbnails = $(box.closest('form').all('card')[1].all('box')[0].all('figure picture'));
             thumbnails.html('');
-        }
-        ,
+        },
 
-        create: async(event)=>{
+        create: async (event) => {
 
             event.preventDefault();
             var form = event.target;
@@ -4558,8 +4526,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str1 = JSON.stringify(rows, null, 4);
 
                 //VIDEO
@@ -4589,8 +4557,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var j = [];
                     var json = [row];
                 }
-                rows = 0 > 1 ? json : Array.from(new Set(json.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-                var inc = j.some(item=>(JSON.stringify(item) === JSON.stringify(row)));
+                rows = 0 > 1 ? json : Array.from(new Set(json.map(e => JSON.stringify(e)))).map(e => JSON.parse(e));
+                var inc = j.some(item => (JSON.stringify(item) === JSON.stringify(row)));
                 var str2 = JSON.stringify(rows, null, 4);
 
                 var canvas = form.find('canvas');
@@ -4638,10 +4606,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 "/dashboard/:get/media/".router();
             }
 
-        }
-        ,
+        },
 
-        ontimeupdate: event=>{
+        ontimeupdate: event => {
             var video = event.target;
             var elapsed = video.currentTime;
             var duration = video.duration;
@@ -4650,6 +4617,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             seeker.find('line').style.width = width + '%';
             var time = video.closest('box').find('[data-element="video.time"]').all('span')[0].textContent = format(elapsed);
             var time = video.closest('box').find('[data-element="video.time"]').all('span')[2].textContent = format(duration);
+
             function format(s) {
                 var m = Math.floor(s / 60);
                 m = (m >= 10) ? m : "0" + m;
@@ -4657,16 +4625,14 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 s = (s >= 10) ? s : "0" + s;
                 return m + ":" + s;
             }
-        }
-        ,
+        },
 
-        poster: target=>{
+        poster: target => {
             $(target.closest('column').all('img')).removeClass('outline-4px-solid').removeClass('outline-color-005cc8').removeClass('outline-offset-minus-2px');
             target.closest('img') ? $(target.closest('img')).addClass('outline-4px-solid').addClass('outline-color-005cc8').addClass('outline-offset-minus-2px') : null;
-        }
-        ,
+        },
 
-        thumbs: (video)=>{
+        thumbs: (video) => {
 
             return new Promise(async function(resolve, reject) {
 
@@ -4684,6 +4650,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     this.currentTime = i;
                 });
                 video.addEventListener('seeked', seeking, true);
+
                 function seeking() {
                     var x = thumbs.length > 1 ? (this.duration / (thumbs.length + 1)) * t : (this.duration / thumbs.length + 1);
                     generateThumbnail(i);
@@ -4701,6 +4668,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         resolve(this);
                     }
                 }
+
                 function generateThumbnail(i) {
                     canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
                     var img = document.createElement('img');
@@ -4711,13 +4679,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     t++;
                 }
 
-            }
-            );
+            });
 
-        }
-        ,
+        },
 
-        thumbnail: async(event)=>{
+        thumbnail: async (event) => {
 
             var target = event.target;
             var file = await on.change.file(event);
@@ -4732,7 +4698,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     wysiwyg: {
 
-        caret: (node,pos)=>{
+        caret: (node, pos) => {
 
             var sel = document.getSelection();
             let range = new Range();
@@ -4741,10 +4707,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             sel.removeAllRanges();
             sel.addRange(range);
 
-        }
-        ,
+        },
 
-        command: (target)=>{
+        command: (target) => {
             const wysiwyg = target.closest('box').find('[contenteditable]');
             var button = target.closest('[data-command]');
             const command = button ? button.dataset.command : null;
@@ -5056,10 +5021,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             }
 
-        }
-        ,
+        },
 
-        more: (target,button)=>{
+        more: (target, button) => {
             var menu = target.closest('box > header > flex').nextElementSibling;
             var value = menu.find('[data-more="' + button + '"]');
             if (value.getAttribute("css-display")) {
@@ -5069,8 +5033,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 $(menu.all('[data-more]')).attr('css-display', 'none');
                 $(value).attr('css-display', 'none');
             }
-        }
-        ,
+        },
 
         image: async function(event) {
             var wysiwyg = event.target.closest('box').find('wysiwyg');
@@ -5120,30 +5083,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             }
         },
 
-        node: event=>{
+        node: event => {
             var sel = window.getSelection();
             var node = sel.focusNode && sel.focusNode.nodeType === 3 ? sel.focusNode.parentNode : sel.focusNode;
             return node;
-        }
-        ,
+        },
 
-        onkeydown: event=>{
+        onkeydown: event => {
 
             var wysiwyg = event.target;
 
-        }
-        ,
+        },
 
-        onkeyup: event=>{
+        onkeyup: event => {
 
             var wysiwyg = event.target.closest('wysiwyg');
             wysiwyg.innerHTML === "" ? wysiwyg.innerHTML = "<p><br></p>" : null;
             wysiwyg.firstElementChild.focus();
 
-        }
-        ,
+        },
 
-        onmouseup: wysiwyg=>{
+        onmouseup: wysiwyg => {
             //console.log('onmouseup');
 
             var wysiwyg = event.target;
@@ -5174,8 +5134,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 indent.classList.remove('opacity-50pct');
                 outdent.classList.add('opacity-50pct');
             }
-        }
-        ,
+        },
 
         onpaste: function(e) {
 
@@ -5210,8 +5169,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             range = document.getSelection().getRangeAt(0);
             var pasted = document.createElement('p');
             pasted.innerHTML = doc.body.innerHTML;
-            if (node.parentElement === wysiwyg) {//node.parentElement.innerHTML = "";
-            //range.selectNode(wysiwyg);
+            if (node.parentElement === wysiwyg) { //node.parentElement.innerHTML = "";
+                //range.selectNode(wysiwyg);
             }
             //range.insertNode(pasted);
             //insertHtmlAfterSelection(pasted.outerHTML);
@@ -5228,7 +5187,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     range.deleteContents();
                     var div = document.createElement("div");
                     div.innerHTML = html;
-                    var frag = document.createDocumentFragment(), child;
+                    var frag = document.createDocumentFragment(),
+                        child;
                     while ((child = div.firstChild)) {
                         frag.appendChild(child);
                     }
@@ -5241,7 +5201,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         },
 
-        tab: target=>{
+        tab: target => {
             var button = target.closest('[data-tap] > [data-tab]');
             if (button) {
                 var index = button.index();
@@ -5252,8 +5212,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 $(target.closest('[data-tap]').nextElementSibling.children).attr('css-display', 'none');
                 target.closest('[data-tap]').nextElementSibling.children[index].setAttribute('css-display', 'flex');
             }
-        }
-        ,
+        },
 
         video: async function(event) {
             var wysiwyg = event.target.closest('box').find('wysiwyg');

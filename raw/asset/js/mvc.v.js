@@ -438,8 +438,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                     }
                     if (get[2] === "config") {
-                        if (get.length === 4) {
-                            var vp = dom.body.find('block[data-page="' + route.page + '"]');
+                        var vp = dom.body.find('block[data-page="' + route.page + '"]');
+                        if (get.length > 3) {
+
                             if (get[3] === "branding") {
                                 controller.setup.colorPicker(vp.find('[data-iro]'), {
                                     color: "#ff3b30"
@@ -518,6 +519,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     vp.find('[github-private-display="true"]').setAttribute('css-display', 'flex');
                                 }
                             }
+
+                        } else {
+                            var cards = vp.all('card');
+                            var general = cards[0];
+                            general.find('input[placeholder="Shortname"]').value = repository.name;
+                            general.find('input[placeholder="Shortname"]').closest('box').nextElementSibling.firstElementChild.classList.remove('opacity-50pct');
+                            general.find('input[type="checkbox"]').checked = repository.is_template;
+                            var danger = cards[1];
+                            danger.find('data[name="visibility"]').textContent = repository.private === true ? 'private' : 'public';
                         }
                     }
                     if (get[2] === "files") {
