@@ -549,10 +549,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 on.key.up.auto.size(details.find('[name="description"]'));
 
                                 if (webmanifest.categories) {
-                                    var template = details.all('box')[3].find('tempate').content.firstElementChild;
+                                    var template = details.all('box')[2].find('template').content.firstElementChild;
                                     webmanifest.categories.forEach(function(category) {
                                         var box = template.cloneNode(true);
-                                        details.all('box')[3].find('box > flex > row').insertAdjacentHTML('beforebegin', box.outerHTML);
+                                        box.find('span').textContent = category;
+                                        details.all('box')[2].find('box > flex > row').insertAdjacentHTML('beforebegin', box.outerHTML);
                                     })
                                 }
                             }
