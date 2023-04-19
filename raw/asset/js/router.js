@@ -130,7 +130,7 @@ window.rout.e = state=>{
             }) : null;
             return bool;
         }) : pgs.sort();
-        0 > 1 ? console.log(124, {
+        0 < 1 ? console.log(124, {
             pages,
             pgs
         }) : null;
