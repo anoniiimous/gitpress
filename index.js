@@ -16,7 +16,7 @@ async function init() {
     }, {
         head: window.document.head.outerHTML
     });
-    window.eruda ? eruda.init() : null;
+    window.eruda && is.mobile() ? eruda.init() : null;
 
     window.loaded = is.iframe(window);
 

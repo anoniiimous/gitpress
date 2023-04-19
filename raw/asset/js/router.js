@@ -117,24 +117,26 @@ window.rout.e = state=>{
             //console.log(334, {a:a.dataset.page,b:b.dataset.page});
             //var bool = a.dataset.page.localeCompare(b.dataset.page);
             //if (bool) {
-                if(!pgs.includes(a.dataset.page)) {
-                    console.log(121, a.dataset.page);
-                    pgs.push(a.dataset.page);
-                }
+            if (!pgs.includes(a.dataset.page)) {
+                //console.log(121, a.dataset.page);
+                pgs.push(a.dataset.page);
+            }
             //}
             //return bool
         })
         //pgs = [...new Set(pgs)];
         pgs.sort();
-        console.log(126, "1.2.1", {pgs});
-        0 > 1 ? pgs.sort(function(a, b) {       
+        console.log(126, "1.2.1", {
+            pgs
+        });
+        0 > 1 ? pgs.sort(function(a, b) {
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
             var bool = b.endsWith('*') && al === bl ? -1 : 1;
             //bool = 1;
             0 > 1 ? console.log(347, {
                 bool,
-                ew: b.endsWith('*'),                                
+                ew: b.endsWith('*'),
             }, {
                 a,
                 b
@@ -142,13 +144,12 @@ window.rout.e = state=>{
             return bool;
         }) : null;
         0 < 1 ? console.log(124, {
-            pages,
             pgs
         }) : null;
         var n = 0;
         do {
             page = window.rout.ing(pgs, state, GOT, n);
-            //console.log(148, n, state, page);
+            console.log(148, n, state, page);
             if (page)
                 break;
             n++;
@@ -366,12 +367,13 @@ window.rout.es = function getRoot() {
 
 window.rout.ing = (pgs,href,GOT,n)=>{
     var ed = null;
+    var checked = [];
     0 > 1 ? console.log(338, {
         pgs
     }) : null;
     //pages = [...new Set(pages)];
     var stop = false;
-    var routes = pgs.forEach(function(el) {
+    var routes = pgs.forEach(function(el, index) {
         var page = el;
         var dir = rout.ed.dir(href);
         var is = 0;
@@ -392,14 +394,30 @@ window.rout.ing = (pgs,href,GOT,n)=>{
         check = is <= dir.length && truth(bools);
         if (check) {
             //check ? console.log(373, page, bools, {is, dir}) : null;
-            0 > 1 ? console.log(318, check, {
+            var last = checked.length > 0 ? checked[checked.length - 1] : null;
+            0 < 1 ? console.log(318, check, {
                 bools,
                 dir
+            }, {
+                checked,
+                last
             }, {
                 is,
                 page
             }) : null;
-            ed = page;
+            if (last) {
+                var drl = rout.ed.dir(last);
+                var bl = drl.length === dir.length && last.endsWith('*');
+                if (bl) {
+                    ed = last;
+                } else {
+                    ed = page;
+                }
+                checked.push(page);
+            } else {
+                ed = page;
+                checked.push(page);
+            }
             if (ed.endsWith('*') && !ed.startsWith('/*')) {
                 stop = true;
                 //console.log(377, stop, ed, truth(bools), bools);
@@ -408,7 +426,12 @@ window.rout.ing = (pgs,href,GOT,n)=>{
             //return check;
         }
     });
-    //console.log(385, ed);
+    var l = checked[checked.length - 1];
+    console.log(385, {
+        ed,
+        checked,
+        l
+    });
     return ed;
 }
 
