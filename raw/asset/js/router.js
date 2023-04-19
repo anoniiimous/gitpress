@@ -126,8 +126,8 @@ window.rout.e = state=>{
         })
         //pgs = [...new Set(pgs)];
         pgs.sort();
-        console.log(126, "1.2.0", {pgs});
-        0 < 1 ? pgs.sort(function(a, b) {       
+        console.log(126, "1.2.1", {pgs});
+        0 > 1 ? pgs.sort(function(a, b) {       
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
             var bool = b.endsWith('*') && al === bl ? -1 : 1;
@@ -140,7 +140,7 @@ window.rout.e = state=>{
                 b
             }) : null;
             return bool;
-        }) : pgs.sort();
+        }) : null;
         0 < 1 ? console.log(124, {
             pages,
             pgs
