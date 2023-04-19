@@ -112,7 +112,7 @@ window.rout.e = state=>{
 
     if (GOT.length > 0) {
         var pgs = [];
-        var pages = $(dom.body.all('[data-page]'));
+        var pages = $('[data-page]');
         pages.forEach(function(a) {
             //console.log(334, {a:a.dataset.page,b:b.dataset.page});
             //var bool = a.dataset.page.localeCompare(b.dataset.page);
@@ -126,7 +126,7 @@ window.rout.e = state=>{
         })
         //pgs = [...new Set(pgs)];
         pgs.sort();
-        console.log(126, "1.2", {pgs});
+        console.log(126, "1.2.0", {pgs});
         0 < 1 ? pgs.sort(function(a, b) {       
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
