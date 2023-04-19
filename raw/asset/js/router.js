@@ -126,7 +126,7 @@ window.rout.e = state=>{
         })
         //pgs = [...new Set(pgs)];
         pgs.sort();
-        console.log(126, "1.2.1", {
+        console.log(126, "1.2.3", {
             pgs
         });
         0 > 1 ? pgs.sort(function(a, b) {
