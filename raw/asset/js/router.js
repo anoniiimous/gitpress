@@ -122,6 +122,8 @@ window.rout.e = state=>{
             //return bool
         })
         pgs = [...new Set(pgs)];
+        pgs.sort();
+        console.log(126, {pgs});
         0 < 1 ? pgs.sort(function(a, b) {       
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
