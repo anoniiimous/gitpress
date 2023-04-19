@@ -1394,10 +1394,6 @@
         height: 24px;
     }
 
-    .height-30px, [css-height="30px"] {
-        height: 30px;
-    }
-
     .height-32px, [css-height="32px"] {
         height: 32px;
     }

@@ -195,14 +195,35 @@ window.modal = {
     dropdown: async(dropdown,settings,ppp=document.createElement('aside'))=>{
         return new Promise(async(resolve,reject)=>{
 
+            console.log(settings)
             var multi = settings && settings.multi;
             var other = settings && settings.other;
+            var rows = settings && settings.rows ? settings.rows : null;
 
             var innerHTML = await ajax('raw/asset/html/modal/modal.dropdown.html');
             var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
 
             html.find('[placeholder="Title"]').textContent = settings && settings.title ? settings.title : dropdown.find('[placeholder]').getAttribute('placeholder');
-            html.find('card > section').innerHTML = dropdown.children[1].innerHTML;
+            if (rows) {
+                console.log({
+                    html,
+                    rows
+                });
+                var template = html.find('template').content.firstElementChild;
+                var htm = "";
+                rows.forEach(function(row) {
+                    var box = template.cloneNode(true);
+                    box.find('span').dataset.after = row;
+                    htm += box.outerHTML;
+                })
+                console.log({
+                    html,
+                    rows
+                });
+                html.find('card > section').innerHTML = htm;
+            } else {
+                html.find('card > section').innerHTML = dropdown.children[1].innerHTML;
+            }
 
             if (other === false) {
                 html.find('form').dataset.display = "none";
@@ -232,9 +253,9 @@ window.modal = {
                         dropdown.find("[placeholder]").textContent = box.find('span').dataset.after;
                         dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         modal.exit(event.target);
-                        resolve(ppp.find('card > section').children);
+                        resolve(box.find('span').dataset.after);
                     }
-                    
+
                     var ico = event.target.closest('card > section > box ico');
                     if (ico) {
                         event.target.closest('box').remove();
@@ -242,13 +263,13 @@ window.modal = {
                             dropdown.find("[placeholder]").textContent = "";
                         }
                     }
-                    
+
                     var none = event.target.closest('card > row > box');
                     if (none) {
                         dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         dropdown.find("[placeholder]").textContent = "";
                         modal.exit(event.target);
-                        resolve(ppp.find('card > section').children);
+                        resolve();
                     }
                 } else {
                     if (multi) {
@@ -261,8 +282,7 @@ window.modal = {
                         //alert(element.outerHTML);
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);
-                    }
-                    else {
+                    } else {
                         dropdown.children[1].innerHTML = ppp.find('card > section').innerHTML;
                         modal.exit(event.target);
                         resolve(ppp.find('card > section').children);

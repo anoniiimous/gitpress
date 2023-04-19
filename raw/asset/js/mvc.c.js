@@ -1053,6 +1053,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     config: {
 
+        category: async (target) => {
+            var categories = await ajax('raw/asset/json/category.json');
+            var dropdown = target.closest('dropdown')
+            var category = await modal.dropdown(dropdown, {
+                other: true,
+                rows: JSON.parse(categories)
+            });
+        },
+            
         delete: async function() {
             var confirm = await modal.confirm({
                 body: "Are you sure you want to delete this project",
@@ -1072,6 +1081,64 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     '/dashboard/'.router();
                 });
             }
+        },
+
+        details: async function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var name = form.find('[name="name"]').value;
+            var description = form.find('[name="description"]').value;
+            var categories = [];
+            form.find('[name="categories"]').all('text').forEach(function(text) {
+                var category = text.find('span').textContent;
+                categories.push(category);
+            });
+            categories.sort();
+            console.log({
+                name,
+                description,
+                categories
+            });
+                
+            var json = await github.repos.contents({
+                owner: window.owner.login,
+                repo: GET[1],
+                path: "/site.webmanifest"
+            }, {
+                accept: "application/vnd.github.json"
+            });
+            var webmanifest = JSON.parse(atob(json.content));
+            console.log({
+                json,
+                webmanifest
+            });
+            name ? webmanifest.name = name : null;
+            description ? webmanifest.description = description : null;
+            categories.length > 0 ? webmanifest.categories = categories : null;
+                
+            var update = 0 < 1 ? await github.repos.contents({
+                owner: window.owner.login,
+                repo: GET[1],
+                path: "/site.webmanifest"
+            }, {
+                data: JSON.stringify({
+                    message: "Update Webmanifest",
+                    content: btoa(JSON.stringify(webmanifest, null, 4)),
+                    sha: json.sha
+                }),
+                dataType: "PUT"
+            }) : github.crud.update({
+                message: "Update Webmanifest",
+                repo: GET[1],
+                owner: owner.login
+            }, [{
+                content: webmanifest,
+                path: "site.webmanifest"
+            }]);
+            console.log({
+                update,
+                webmanifest
+            });
         },
 
         shortname: async function(event) {

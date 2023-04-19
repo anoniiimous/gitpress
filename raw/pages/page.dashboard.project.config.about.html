@@ -44,6 +44,50 @@
     </card>
     <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px overflow-hidden">
         <header class="background-color-ccc line-height-50px padding-x-20px">
+            <span class="font-weight-bolder">Details</span>
+        </header>
+        <form class="align-items-center full-state-adjacent gap-10px margin-20px" onsubmit="controller.config.details(event)">
+            <box class="-hd-width-100pct border-1px-solid box-sizing-border-box border-color-bbb border-radius-50px display-flex flex-1">
+                <section>
+                    <input class="flex-grow-1 height-40px padding-x-20px" name="name" placeholder="Name" type="text">
+                </section>
+            </box>
+            <box class="-hd-width-100pct border-1px-solid box-sizing-border-box border-color-bbb border-radius-20px display-flex margin-top-10px overflow-hidden padding-20px">
+                <section>
+                    <textarea class="flex-1 font-size-16px width-100pct" name="description" placeholder="Enter a detailed description."></textarea>
+                </section>
+            </box>
+            <box class="background-color-fff border-radius-10px gap-0px margin-top-10px">
+                <flex class="flex-wrap-wrap gap-10px" name="categories" data-value="video.tags">
+                    <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px">
+                        <ico css-height="20px" css-width="20px">
+                            <n class="gg-hashtag"></n>
+                        </ico>
+                        <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
+                    </row>
+                </flex>
+                <template>
+                    <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px">
+                        <ico css-height="20px" css-width="20px">
+                            <n class="gg-hashtag"></n>
+                        </ico>
+                        <span></span>
+                        <ico class="color-ff3b30" css-height="20px" data-tap="event.target.closest('text').remove()" css-width="20px">
+                            <n class="gg-close"></n>
+                        </ico>
+                    </text>
+                </template>
+            </box>
+            <box class="background-color-777 border-radius-50px color-fff line-height-50px margin-top-10px padding-x-20px position-relative" data-submit>
+                <row class="align-items-center justify-content-center">
+                    <input type="submit">
+                    <text class="padding-left-5px">Update Information</text>
+                </row>
+            </box>
+        </form>
+    </card>
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px overflow-hidden">
+        <header class="background-color-ccc line-height-50px padding-x-20px">
             <span class="font-weight-bolder">Danger Zone</span>
         </header>
         <column>

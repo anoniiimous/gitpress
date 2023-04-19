@@ -517,10 +517,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 $(columns).attr('css-display', 'none');
                                 if (repository.private === true) {
                                     vp.find('[github-private-display="true"]').setAttribute('css-display', 'flex');
-                                    vp.find('[github-private-display="false"]').setAttribute('css-display', 'none');  
+                                    vp.find('[github-private-display="false"]').setAttribute('css-display', 'none');
                                 } else {
                                     vp.find('[github-private-display="true"]').setAttribute('css-display', 'none');
-                                    vp.find('[github-private-display="false"]').setAttribute('css-display', 'flex');                                                    
+                                    vp.find('[github-private-display="false"]').setAttribute('css-display', 'flex');
                                 }
                             }
 
@@ -530,7 +530,34 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             general.find('input[placeholder="Shortname"]').value = repository.name;
                             general.find('input[placeholder="Shortname"]').closest('box').nextElementSibling.firstElementChild.classList.remove('opacity-50pct');
                             general.find('input[type="checkbox"]').checked = repository.is_template;
-                            var danger = cards[1];
+
+                            var details = cards[1];
+                            var webmanifest = await github.repos.contents({
+                                owner: window.owner.login,
+                                repo: get[1],
+                                path: "/site.webmanifest"
+                            }, {
+                                accept: "application/vnd.github.raw"
+                            })
+                            console.log({
+                                webmanifest
+                            });
+                            if (webmanifest) {
+                                webmanifest.name ? details.find('[name="name"]').value = webmanifest.name : null;
+
+                                webmanifest.description ? details.find('[name="description"]').value = webmanifest.description : null;
+                                on.key.up.auto.size(details.find('[name="description"]'));
+
+                                if (webmanifest.categories) {
+                                    var template = details.all('box')[3].find('tempate').content.firstElementChild;
+                                    webmanifest.categories.forEach(function(category) {
+                                        var box = template.cloneNode(true);
+                                        details.all('box')[3].find('box > flex > row').insertAdjacentHTML('beforebegin', box.outerHTML);
+                                    })
+                                }
+                            }
+
+                            var danger = cards[2];
                             danger.find('data[name="visibility"]').textContent = repository.private === true ? 'private' : 'public';
                         }
                     }

@@ -2,9 +2,9 @@
     <row class="justify-content-space-between">
         <card>
             <row class="gap-10px">
-                <box class="display-noner" data-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
+                <box class="display-noner" css-dw960px-display="flex" data-tap="controller.nav.toggle(event.target)">
                     <section>
-                        <ico data-height="30px" data-width="30px">
+                        <ico css-height="30px" css-width="30px">
                             <n class="gg-menu"></n>
                         </ico>
                     </section>
@@ -20,7 +20,7 @@
             <row class="gap-20px">
                 <box class="line-height-30px" data-href="/dashboard/:get/merch/">
                     <row class="align-items-center justify-content-center">
-                        <ico data-height="30px" data-width="30px">
+                        <ico css-height="30px" css-width="30px">
                             <n class="gg-view-list"></n>
                         </ico>
                         <text class="font-size-14px font-weight-bolder">Browse Catalog</text>
@@ -31,23 +31,23 @@
     </row>
 </header>
 <form onsubmit="controller.product.create(event)">
-    <block class="-dw480px-margin-x-auto -dw520px-margin-x-20px -dw768px-width-480px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px margin-x-auto" data-dw480px-max-width="calc(100% - 20px)" data-max-width="calc(100% - 40px)" data-width="1280px">
-        <flex class="-dw960px-gap-50px display-flex gap-20px max-width-100pct width-1280px" data-dw960px-flex-direction="column">
+    <block class="-dw480px-margin-x-auto -dw520px-margin-x-20px -dw768px-width-480px -dw960px-flex-direction-column -dw960px-grid-gap-50px -dw960px-margin-x-auto -dw960px-width-640px flex-direction-row grid-gap-20px justify-content-center margin-20px margin-x-auto" css-dw480px-max-width="calc(100% - 20px)" data-max-width="calc(100% - 40px)" css-width="1280px">
+        <flex class="-dw960px-gap-50px display-flex gap-20px max-width-100pct width-1280px" css-dw960px-flex-direction="column">
             <card class="-dw480px-gap-10px -dw960px-width-100pct gap-10px width-320px">
                 <section>
                     <box class="background-color-fff border-radius-20px overflow-hidden padding-top-100pct width-100pct">
                         <section class="height-100pct position-absolute top-0 white-space-nowrap width-100pct"></section>
                         <section class="full-state height-100pct position-absolute top-0 width-100pct">
-                            <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" data-height="30px" data-tap="controller.product.pinky(event.target)" data-width="30px">
+                            <ico class="background-color-ff3b30 border-radius-50px color-fff position-absolute right-5px top-5px" css-height="30px" data-tap="controller.product.pinky(event.target)" css-width="30px">
                                 <n class="gg-close"></n>
                             </ico>
                         </section>
                     </box>
                 </section>
-                <row class="gap-10px" data-dw480px-columns="4" data-dw960px-columns="6" data-columns="4">
+                <row class="gap-10px" css-dw480px-columns="4" css-dw960px-columns="6" css-columns="4">
                     <box class="background-color-fff border-radius-20px overflow-hidden">
                         <label class="align-items-center height-0 justify-content-center padding-top-100pct position-relative top-0 width-100pct" for="file-dashboard-merch-catalog">
-                            <ico class="position-absolute top-0" data-height="100%" data-width="100%">
+                            <ico class="position-absolute top-0" css-height="100%" css-width="100%">
                                 <n class="gg-math-plus"></n>
                             </ico>
                             <input accept="image/jpeg,image/png" id="file-dashboard-merch-catalog" onchange="controller.product.thumb(event)" type="file">
@@ -60,7 +60,7 @@
                     </box>
                 </template>
             </card>
-            <card class="flex-1 flex-direction-row grid-gap-20px" data-dw1320px-flex-direction="column" data-dw1320px-grid-gap="50px">
+            <card class="flex-1 flex-direction-row grid-gap-20px" css-dw1320px-flex-direction="column" css-dw1320px-grid-gap="50px">
                 <column class="flex-1 gap-50px">
                     <box class="background-color-fff border-radius-10px gap-0px overflow-hidden">
                         <header class="background-color-ccc">
@@ -70,16 +70,16 @@
                             <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex flex-unset height-36px justify-content-center line-height-36px">
                                 <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.product.category(event.target.closest('dropdown'))">
                                     <text class="flex-1" placeholder="Value"></text>
-                                    <ico data-height="30px" data-width="30px">
+                                    <ico css-height="30px" css-width="30px">
                                         <n class="gg-chevron-down"></n>
                                     </ico>
                                 </row>
-                                <group data-display="none"></group>
+                                <group css-display="none"></group>
                                 <template>
                                     <box class="flex-1">
                                         <row class="align-items-center justify-content-center width-100pct">
                                             <text class="align-items-center display-flex flex-1">
-                                                <ico class="border-2px-solid border-color-ccc border-radius-50px" data-height="20px" data-width="20px"></ico>
+                                                <ico class="border-2px-solid border-color-ccc border-radius-50px" css-height="20px" css-width="20px"></ico>
                                                 <span class="display-flex flex-1 height-36px line-height-36px padding-x-10px"></span>
                                             </text>
                                         </row>
@@ -96,26 +96,26 @@
                             <input class="font-size-18px height-36px line-height-36px margin-10px" type="text" placeholder="Enter a title">
                         </column>
                     </box>
-                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden" data-display="none">
+                    <box class="background-color-fff border-radius-10px gap-0px overflow-hidden" css-display="none">
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Traits"></text>
                         </header>
                         <column class="gap-10px margin-10px"></column>
                         <footer class="flex-direction-column grid-gap-5px">
                             <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-href="/dashboard/:get/merch/catalog/:get/" data-pages="/dashboard/*/merch/catalog/*/*/">
-                                <ico data-height="20px" data-width="30px">
+                                <ico css-height="20px" css-width="30px">
                                     <n class="gg-eraser"></n>
                                 </ico>
                                 <span>Clear Options</span>
                             </text>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.product.variation(event.target)">
-                                <ico data-height="20px" data-width="30px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" css-display="none" data-tap="controller.product.variation(event.target)">
+                                <ico css-height="20px" css-width="30px">
                                     <n class="gg-add"></n>
                                 </ico>
                                 <span>Add Variation</span>
                             </text>
-                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" data-display="none" data-tap="controller.product.matrix(event.target)">
-                                <ico data-height="20px" data-width="30px">
+                            <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px text-align-center width-100pct" css-display="none" data-tap="controller.product.matrix(event.target)">
+                                <ico css-height="20px" css-width="30px">
                                     <n class="gg-software-upload"></n>
                                 </ico>
                                 <span>Save Theme</span>
@@ -130,16 +130,16 @@
                                     <dropdown class="align-items-center border-1px-solid border-radius-50px display-flex height-36px justify-content-center line-height-36px width-50pct">
                                         <row class="align-items-center justify-content-center padding-x-10px width-100pct" data-tap="controller.product.traits(event.target.closest('dropdown'))">
                                             <text class="flex-1" placeholder="Value"></text>
-                                            <ico data-height="30px" data-width="30px">
+                                            <ico css-height="30px" css-width="30px">
                                                 <n class="gg-chevron-down"></n>
                                             </ico>
                                         </row>
-                                        <group data-display="none"></group>
+                                        <group css-display="none"></group>
                                         <template>
                                             <box class="flex-1">
                                                 <row class="align-items-center justify-content-center width-100pct">
                                                     <text class="align-items-center display-flex flex-1">
-                                                        <ico class="border-2px-solid border-color-ccc border-radius-50px" data-height="20px" data-width="20px"></ico>
+                                                        <ico class="border-2px-solid border-color-ccc border-radius-50px" css-height="20px" css-width="20px"></ico>
                                                         <span class="display-flex flex-1 height-36px line-height-36px padding-x-10px"></span>
                                                     </text>
                                                 </row>
@@ -164,7 +164,7 @@
                         </header>
                         <flex class="flex-wrap-wrap gap-10px padding-10px">
                             <row class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
+                                <ico css-height="20px" css-width="20px">
                                     <n class="gg-hashtag"></n>
                                 </ico>
                                 <span contenteditable="true" onkeydown="on.key.down.prevent.tags(event)" onkeyup="controller.media.tags(event)" placeholder="Add Tag"></span>
@@ -172,11 +172,11 @@
                         </flex>
                         <template>
                             <text class="align-items-center border-bottom-1px-solid display-inline-flex gap-5px justify-content-center line-height-36px padding-x-10px">
-                                <ico data-height="20px" data-width="20px">
+                                <ico css-height="20px" css-width="20px">
                                     <n class="gg-hashtag"></n>
                                 </ico>
                                 <span></span>
-                                <ico class="color-ff3b30" data-height="20px" data-tap="event.target.closest('text').remove()" data-width="20px">
+                                <ico class="color-ff3b30" css-height="20px" data-tap="event.target.closest('text').remove()" css-width="20px">
                                     <n class="gg-close"></n>
                                 </ico>
                             </text>
@@ -189,7 +189,7 @@
                         <column></column>
                         <footer class="flex-direction-column grid-gap-5px">
                             <text class="align-items-center border-1px-solid border-radius-50px display-flex flex-1 font-size-18px font-weight-bolder gap-5px height-36px justify-content-center line-height-36px margin-10px text-align-center" data-tap="controller.product.details(event.target)">
-                                <ico data-height="20px" data-width="30px">
+                                <ico css-height="20px" css-width="30px">
                                     <n class="gg-eraser"></n>
                                 </ico>
                                 <span>Add New Detail</span>
@@ -197,15 +197,15 @@
                             <template>
                                 <column class="border-bottom-1px-solid border-color-ddd gap-10px padding-10px">
                                     <row class="display-flex gap-10px">
-                                        <field class="display-flex" data-width="calc((100% - 10px)/2)" data-widths="calc((100% - 50px)/2)">
+                                        <field class="display-flex" css-width="calc((100% - 10px)/2)" css-widths="calc((100% - 50px)/2)">
                                             <textarea class="border-1px-solid border-color-ddd flex-1 border-radius-5px font-size-16px font-weight-bolder overflow-hidden padding-5px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Name" type="text"></textarea>
                                         </field>
-                                        <field class="display-flex" data-width="calc((100% - 10px)/2)" data-widths="calc((100% - 50px)/2)">
+                                        <field class="display-flex" css-width="calc((100% - 10px)/2)" css-widths="calc((100% - 50px)/2)">
                                             <textarea class="border-1px-solid border-color-ddd flex-1 border-radius-5px font-size-16px overflow-hidden padding-5px" onkeyup="on.key.up.auto.size(event.target)" placeholder="Value" type="text"></textarea>
                                         </field>
                                     </row>
                                     <row class="color-ff3b30 gap-5px justify-content-flex-end line-height-20px" data-tap="event.target.closest('column').remove()">
-                                        <ico class="color-ff3b30" data-height="20px" data-width="20px">
+                                        <ico class="color-ff3b30" css-height="20px" css-width="20px">
                                             <n class="gg-close"></n>
                                         </ico>
                                         <span>Delete</span>
@@ -221,8 +221,8 @@
                         <column class="align-items-center display-flex gap-10px margin-10px"></column>
                         <template>
                             <text class="display-flex gap-5px overflow-hidden padding-bottom-5px text-align-left width-100pct">
-                                <ico class="border-2px-solid border-color-ccc border-radius-50pct box-sizing-border-box" data-height="20px" data-width="20px">
-                                    <n class="background-color-000 border-radius-50pct height-5px width-5px" data-display="none"></n>
+                                <ico class="border-2px-solid border-color-ccc border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                    <n class="background-color-000 border-radius-50pct height-5px width-5px" css-display="none"></n>
                                 </ico>
                                 <textarea class="display-flex flex-1 flex-wrap-wrap font-size-16px height-20px line-height-20px overflow-hidden" onkeydown="on.key.down.prevent.enter(event)" onkeyup="controller.product.features(event)" placeholder="Enter a new product feature about this item."></textarea>
                             </text>
@@ -234,23 +234,23 @@
                         <header class="background-color-ccc">
                             <text class="font-weight-bolder line-height-50px padding-10px text-transform-uppercase" data-after="Pricing"></text>
                         </header>
-                        <flex class="flex-direction-row gap-10px margin-10px" data-dw480px-columns="1" data-dw1320px-columns="2" data-columns="1">
+                        <flex class="flex-direction-row gap-10px margin-10px" css-dw480px-columns="1" css-dw1320px-columns="2" css-columns="1">
                             <column class="gap-5px">
                                 <header class="font-size-13px">List Price</header>
                                 <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center overflow-hidden">
-                                    <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                    <ico class="align-items-center display-flex font-weight-bolder justify-content-center" css-height="36px" css-width="36px">
                                         <n class="gg-dollar"></n>
                                     </ico>
-                                    <input class="flex-1 font-size-18px height-36px" data-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
+                                    <input class="flex-1 font-size-18px height-36px" css-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
                                 </row>
                             </column>
-                            <column class="gap-5px">
+                            <column class="gap-5px">R
                                 <header class="font-size-13px">Sale Price</header>
                                 <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center overflow-hidden">
-                                    <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                    <ico class="align-items-center display-flex font-weight-bolder justify-content-center" css-height="36px" css-width="36px">
                                         <n class="gg-dollar"></n>
                                     </ico>
-                                    <input class="flex-1 font-size-18px height-36px" data-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
+                                    <input class="flex-1 font-size-18px height-36px" css-width="calc(100% - 50px)" placeholder="0.00" step=".01" type="number">
                                 </row>
                             </column>
                         </flex>
@@ -261,18 +261,18 @@
                         </header>
                         <flex class="flex-direction-row gap-10px margin-10px">
                             <row class="align-items-center border-1px-solid border-radius-5px display-flex justify-content-center margin-auto overflow-hidden" data-tap="controller.product.quantity(event.target)">
-                                <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                <ico class="align-items-center display-flex font-weight-bolder justify-content-center" css-height="36px" css-width="36px">
                                     <n class="gg-chevron-up"></n>
                                 </ico>
-                                <input class="flex-1 font-size-18px height-36px text-align-center" data-width="120px" min="0" placeholder="0" step="1" type="number">
-                                <ico class="align-items-center display-flex font-weight-bolder justify-content-center" data-height="36px" data-width="36px">
+                                <input class="flex-1 font-size-18px height-36px text-align-center" css-width="120px" min="0" placeholder="0" step="1" type="number">
+                                <ico class="align-items-center display-flex font-weight-bolder justify-content-center" css-height="36px" css-width="36px">
                                     <n class="gg-chevron-down"></n>
                                 </ico>
                             </row>
                         </flex>
                     </box>
                     <box class="width-100pct">
-                        <flex class="gap-10px" data-dw480px-columns="1" data-dw640px-columns="2" data-dw1320px-columns="4" data-columns="1">
+                        <flex class="gap-10px" css-dw480px-columns="1" css-dw640px-columns="2" css-dw1320px-columns="4" css-columns="1">
                             <text class="background-color-ff3b30 border-radius-50px color-fff font-size-18px height-36px line-height-36px text-align-center" data-tap="controller.product.delete(rout.ed.dir(route.path).splice(4,2).join('/'))">Delete</text>
                             <label class="background-color-fff border-radius-50px color-000 font-size-18px height-36px line-height-36px text-align-center" for="submit-dashboard-media-photo">
                                 <text>Post It</text>
