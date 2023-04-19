@@ -129,6 +129,9 @@ window.rout.e = state=>{
             0 > 1 ? console.log(347, bool, {
                 a,
                 b
+            }, {
+                al,
+                bl
             }) : null;
             return bool;
         }) : pgs.sort();
