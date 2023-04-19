@@ -122,8 +122,10 @@ window.rout.e = state=>{
             //return bool
         })
         pgs = [...new Set(pgs)];
-        0 < 1 ? pgs.sort(function(a, b) {
-            var bool = b.endsWith('*') && rout.ed.dir(a).length === rout.ed.dir(b).length ? -1 : 1;
+        0 < 1 ? pgs.sort(function(a, b) {       
+            var al = a.split('/').length - 1;
+            var bl = b.split('/').length - 1;
+            var bool = b.endsWith('*') && al === bl ? -1 : 1;
             0 > 1 ? console.log(347, bool, {
                 a,
                 b
