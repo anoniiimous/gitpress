@@ -113,11 +113,14 @@ window.rout.e = state=>{
     if (GOT.length > 0) {
         var pgs = [];
         var pages = $(dom.body.all('[data-page]'));
-        pages.forEach(function(a, b) {
+        pages.forEach(function(a) {
             //console.log(334, {a:a.dataset.page,b:b.dataset.page});
             //var bool = a.dataset.page.localeCompare(b.dataset.page);
             //if (bool) {
-                pgs.includes(a.dataset.page) ? null : pgs.push(a.dataset.page);
+                if(!pgs.includes(a.dataset.page)) {
+                    console.log(121, a.dataset.page);
+                    pgs.push(a.dataset.page);
+                }
             //}
             //return bool
         })
@@ -129,15 +132,12 @@ window.rout.e = state=>{
             var bl = b.split('/').length - 1;
             var bool = b.endsWith('*') && al === bl ? -1 : 1;
             //bool = 1;
-            0 < 1 ? console.log(347, {
+            0 > 1 ? console.log(347, {
                 bool,
                 ew: b.endsWith('*'),                                
             }, {
                 a,
                 b
-            }, {
-                al,
-                bl
             }) : null;
             return bool;
         }) : pgs.sort();
