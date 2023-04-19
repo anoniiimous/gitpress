@@ -539,9 +539,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             }, {
                                 accept: "application/vnd.github.raw"
                             })
-                            console.log({
+                            0 > 1 ? console.log({
                                 webmanifest
-                            });
+                            }) : null;
                             if (webmanifest) {
                                 webmanifest.name ? details.find('[name="name"]').value = webmanifest.name : null;
 
