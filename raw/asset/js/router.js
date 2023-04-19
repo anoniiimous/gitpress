@@ -126,7 +126,8 @@ window.rout.e = state=>{
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
             var bool = b.endsWith('*') && al === bl ? -1 : 1;
-            0 < 1 ? console.log(347, bool, {
+            bool = 1;
+            0 > 1 ? console.log(347, bool, {
                 a,
                 b
             }, {
