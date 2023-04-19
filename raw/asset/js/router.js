@@ -117,13 +117,13 @@ window.rout.e = state=>{
             //console.log(334, {a:a.dataset.page,b:b.dataset.page});
             //var bool = a.dataset.page.localeCompare(b.dataset.page);
             //if (bool) {
-                pgs.push(a.dataset.page);
+                pgs.includes(a.dataset.page) ? null : pgs.push(a.dataset.page);
             //}
             //return bool
         })
-        pgs = [...new Set(pgs)];
+        //pgs = [...new Set(pgs)];
         pgs.sort();
-        console.log(126, {pgs});
+        console.log(126, 1, {pgs});
         0 < 1 ? pgs.sort(function(a, b) {       
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
