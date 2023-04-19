@@ -51,7 +51,7 @@ window.github = {
         config: {
             client_id: 0 > 1 ? "Iv1.cbe275c17b8db02d" : "d100ccbc44112f0d5a92",
             redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
-            scope: "user,public_repo,repo"
+            scope: "delete_repo,user,public_repo,repo"
         },
         login: (target)=>{
             var client_id = github.oauth.client_id[location.host];
@@ -729,41 +729,36 @@ window.github = {
             );
         }
         ,
-        delete: (target)=>{
-            console.log(target);
-            const box = target.closest('box');
-            const owner = box.find('text').dataset.owner;
-            const repo = box.find('text').dataset.repo;
-            const name = box.find('text').textContent;
-            if (confirm("Are you sure you wnat to delete the project entitled " + name + "?")) {
-                return new Promise((resolve,reject)=>{
-                    const url = github.endpoint + "/repos/" + owner + "/" + repo;
-                    const dataType = "DELETE";
-                    const a = (d)=>{
-                        box.remove();
-                        console.log(d);
-                        resolve(d);
-                    }
-                    const b = (error)=>{
-                        console.log(error);
-                        alert(error.message.message);
-                        reject(error);
-                    }
-                    const settings = {
-                        dataType
-                    };
-                    const accessToken = localStorage.githubAccessToken;
-                    accessToken ? settings.headers = {
-                        Accept: "application/vnd.github+json",
-                        Authorization: "token " + accessToken
-                    } : null;
-                    console.log({
-                        settings
-                    });
-                    ajax(url, settings).then(a).catch(b);
+        delete: async(params)=>{
+            const owner = params.owner;
+            const repo = params.repo;
+            console.log({owner, repo});
+            return new Promise((resolve,reject)=>{
+                const url = github.endpoint + "/repos/" + owner + "/" + repo;
+                const dataType = "DELETE";
+                const a = (d)=>{
+                    console.log(d);
+                    resolve(d);
                 }
-                );
+                const b = (error)=>{
+                    console.log(error);
+                    alert(error.message.message);
+                    reject(error);
+                }
+                const settings = {
+                    dataType
+                };
+                const accessToken = localStorage.githubAccessToken;
+                accessToken ? settings.headers = {
+                    Accept: "application/vnd.github+json",
+                    Authorization: "token " + accessToken
+                } : null;
+                console.log({
+                    settings
+                });
+                ajax(url, settings).then(a).catch(b);
             }
+            );
         }
         ,
         generate: (params,settings)=>{
@@ -823,7 +818,7 @@ window.github = {
             );
         }
         ,
-        update: (params, settings)=>{
+        update: (params,settings)=>{
             return new Promise((resolve,reject)=>{
                 const owner = params["owner"];
                 const repo = params["repo"];

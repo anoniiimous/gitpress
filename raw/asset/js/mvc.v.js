@@ -517,6 +517,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 $(columns).attr('css-display', 'none');
                                 if (repository.private === true) {
                                     vp.find('[github-private-display="true"]').setAttribute('css-display', 'flex');
+                                    vp.find('[github-private-display="false"]').setAttribute('css-display', 'none');  
+                                } else {
+                                    vp.find('[github-private-display="true"]').setAttribute('css-display', 'none');
+                                    vp.find('[github-private-display="false"]').setAttribute('css-display', 'flex');                                                    
                                 }
                             }
 

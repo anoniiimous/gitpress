@@ -1053,6 +1053,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     config: {
 
+        delete: async function() {
+            var confirm = await modal.confirm({
+                body: "Are you sure you want to delete this project",
+                title: "Delete Project"
+            }, ["No", "Yes"]);
+            if(confirm) {
+                console.log(window.owner.login, GET[1]);
+                github.repos.delete({
+                    owner: window.owner.login,
+                    repo: GET[1]
+                }, {
+                    dataType: "DELETE"
+                }).then(data => {
+                    0 < 1 ? console.log(1074, {
+                        data
+                    }) : null;
+                    '/dashboard/'.router();
+                });
+            }
+        },
+
         shortname: async function(event) {
 
             event.preventDefault();
@@ -1108,6 +1129,35 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 ico.lastElementChild.setAttribute('css-display', 'flex');
             })
 
+        },
+
+        visibility: async(target) => {
+            var repository = await github.repos.get({
+                owner: window.owner.login,
+                repo: GET[1]
+            });
+            //console.log({repository});
+            var visibility = repository.private ? 'public' : 'private';
+            var confirm = await modal.confirm({
+                body: "Are you sure you want to make this project " + visibility,
+                title: "Change Visibility"
+            }, ["No", "Yes"]);
+            if(confirm) {
+                github.repos.update({
+                    owner: window.owner.login,
+                    repo: GET[1]
+                }, {
+                    data: JSON.stringify({
+                        visibility
+                    }),
+                    dataType: "PATCH"
+                }).then(update => {
+                    0 > 1 ? console.log(1074, {
+                        update
+                    }) : null;
+                    target.closest('box').previousElementSibling.find('[name="visibility"]').textContent = visibility;
+                });
+            }
         }
 
     },

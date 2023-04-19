@@ -57,7 +57,7 @@
                             <span>.</span>
                         </text>
                     </text>
-                    <box class="background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative">
+                    <box class="background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative" data-tap="controller.config.visibility(event.target)">
                         <row class="align-items-center justify-content-center">
                             <text class="padding-left-5px">Change visibility</text>
                         </row>
@@ -70,7 +70,7 @@
                         <text class="font-weight-bolder">Delete this project</text>
                         <text>Once you delete a project, there is no going back. Please be certain.</text>
                     </text>
-                    <box class="background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative">
+                    <box class="background-color-777 border-radius-50px color-fff line-height-50px padding-x-20px position-relative" data-tap="controller.config.delete()">
                         <row class="align-items-center justify-content-center">
                             <text class="padding-left-5px">Delete this project</text>
                         </row>
