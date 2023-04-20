@@ -427,7 +427,7 @@ window.rout.ing = (pgs,href,GOT,n)=>{
 
             if (last) {
                 var drl = rout.ed.dir(last);
-                if (drl.length === dir.length && last.endsWith('*')) {
+                if (drl.length === dir.length && last.endsWith('*') && drl[0] === dir[0]) {
                     ed = last;
                     checked.push(last);
                     //console.log(318, 'last', last);
@@ -451,7 +451,7 @@ window.rout.ing = (pgs,href,GOT,n)=>{
         }
     });
     var l = checked[checked.length - 1];
-    0 > 1 ? console.log(385, {
+    0 < 1 ? console.log(385, {
         ed,
         checked,
         l
