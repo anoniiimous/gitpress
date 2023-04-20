@@ -47,7 +47,8 @@ String.prototype.router = async function(params) {
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
             //console.log('String.prototype.router', route, goto, route.page);
             //console.log(49, vp.outerHTML, {vpb: vp.all('[data-page]'), dbp: dom.body.all('[data-page]')});
-            await rout.ed.bang(route, goto);
+            
+            ///await rout.ed.bang(route, goto);
 
             //await rout.ed.bang(route);
             window.view ? await view(route) : null;
@@ -58,7 +59,7 @@ String.prototype.router = async function(params) {
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
             //console.log('String.prototype.router', route, vp, goto, route.page);
             //console.log(58, dom.body.all('[data-page]'));
-            await rout.ed.bang(route);
+            ///await rout.ed.bang(route);
 
             var path = route.path;
             window.GET = rout.ed.dir(path);
@@ -174,7 +175,10 @@ window.rout.ed = {};
 window.rout.ed.bang = async(route)=>{
 
     var page = dom.body.find('page[data-page="' + route.page + '"]');
-    0 > 1 ? console.log(177, {
+    var pages = dom.body.find('pages[data-page="' + route.page + '"]');
+    var vp = page ? page : pages;
+    0 < 1 ? console.log(177, {
+        route,
         page
     }) : null;
     
@@ -185,10 +189,9 @@ window.rout.ed.bang = async(route)=>{
     $('[data-path]').removeAttr("data-active");
 
     var page = dom.body.find('page[data-page="' + route.page + '"]');
-    if (page && page.closest('main')) {
+    if (vp && vp.closest('main')) {
         //$('pages[data-page]').removeAttr("data-active");
-        console.log($('page[data-page][data-active="true"]'));
-        $('page[data-page][data-active="true"]').removeAttr("data-active");
+        $('page[data-page][data-active]').removeAttr("data-active");
     } else {
         $('body > page[data-page]').removeAttr("data-active");
         $('body > pages[data-page]').removeAttr("data-active");
@@ -260,12 +263,6 @@ window.rout.ed.bang = async(route)=>{
                         }
                         r++;
                     } while (r < roots.length);
-
-                    $(rs[i].all('[data-page="' + p + '"]')).forEach(function(ps) {
-                        if (!ps.getAttribute('data-active')) {
-                            //ps.setAttribute("data-active", true);
-                        }
-                    })
                 } 
             } else {   
                 //console.log(0, 'deactivate', rs[i].dataset.page);
