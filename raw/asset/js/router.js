@@ -126,9 +126,9 @@ window.rout.e = state=>{
         })
         //pgs = [...new Set(pgs)];
         pgs.sort();
-        console.log(126, "1.2.3", {
+        0 > 1 ? console.log(126, "1.2.3", {
             pgs
-        });
+        }) : null;
         0 > 1 ? pgs.sort(function(a, b) {
             var al = a.split('/').length - 1;
             var bl = b.split('/').length - 1;
@@ -143,13 +143,13 @@ window.rout.e = state=>{
             }) : null;
             return bool;
         }) : null;
-        0 < 1 ? console.log(124, {
+        0 > 1 ? console.log(124, {
             pgs
         }) : null;
         var n = 0;
         do {
             page = window.rout.ing(pgs, state, GOT, n);
-            console.log(148, n, state, page);
+            //console.log(148, n, state, page);
             if (page)
                 break;
             n++;
@@ -206,9 +206,21 @@ window.rout.ed.bang = async(route)=>{
     if (rs.length > 0) {
         var i = 0;
         do {
-            var check = rs[i].closest('[data-fetch]') && rs[i].closest('[data-fetch]') === rs[i];
-            if (route.page && route.page.includes(rs[i].dataset.page)) {
+            var check = route.page && 
+                (
+                    route.page.includes(rs[i].dataset.page) ||
+                    (
+                        rout.ed.dir(route.page).length === rout.ed.dir(rs[i].dataset.page).length && rs[i].dataset.page.endsWith('*')
+                    )
+                );
+            console.log(210, route.page, rs[i].dataset.page, check);
+            if (check) {
                 rs[i].dataset.active = true;
+                //console.log(route.page, rs[i].dataset.page);
+                0 > 1 ? console.log(212, {
+                    rs,
+                    i: rs[i]
+                }) : null;
 
                 //rs[i].dataset.fetch ? rs[i].innerHTML = await ajax(rs[i].dataset.fetch) : null;
 
@@ -245,6 +257,9 @@ window.rout.ed.bang = async(route)=>{
                         }
                         r++;
                     } while (r < roots.length);
+                    console.log(248, {
+                        ps
+                    });
                     var ps = $(rs[i].all('[data-page="' + p + '"]'));
                     ps.attr("data-active", true);
                 }
@@ -395,9 +410,11 @@ window.rout.ing = (pgs,href,GOT,n)=>{
         if (check) {
             //check ? console.log(373, page, bools, {is, dir}) : null;
             var last = checked.length > 0 ? checked[checked.length - 1] : null;
-            0 < 1 ? console.log(318, check, {
+            var drl = last ? rout.ed.dir(last) : null;
+            0 > 1 ? console.log(318, check, {
                 bools,
-                dir
+                dir,
+                drl
             }, {
                 checked,
                 last
@@ -405,19 +422,24 @@ window.rout.ing = (pgs,href,GOT,n)=>{
                 is,
                 page
             }) : null;
+
             if (last) {
                 var drl = rout.ed.dir(last);
-                var bl = drl.length === dir.length && last.endsWith('*');
-                if (bl) {
+                if (drl.length === dir.length && last.endsWith('*')) {
                     ed = last;
+                    checked.push(last);
+                    //console.log(318, 'last', last);
                 } else {
                     ed = page;
+                    checked.push(page);
+                    //console.log(318, 'page 2', page);
                 }
-                checked.push(page);
             } else {
                 ed = page;
                 checked.push(page);
+                //console.log(318, 'page 1', page);
             }
+
             if (ed.endsWith('*') && !ed.startsWith('/*')) {
                 stop = true;
                 //console.log(377, stop, ed, truth(bools), bools);
@@ -427,11 +449,11 @@ window.rout.ing = (pgs,href,GOT,n)=>{
         }
     });
     var l = checked[checked.length - 1];
-    console.log(385, {
+    0 > 1 ? console.log(385, {
         ed,
         checked,
         l
-    });
+    }) : null;
     return ed;
 }
 
