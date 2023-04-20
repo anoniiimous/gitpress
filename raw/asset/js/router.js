@@ -172,18 +172,21 @@ window.rout.e = state=>{
 
 window.rout.ed = {};
 window.rout.ed.bang = async(route)=>{
-    var pages = dom.body.find('[data-page="' + rout.es() + '"]');
-    var page = dom.body.find('page[data-page="' + route.page + '"]');
-    var vp = page ? page : pages;
 
+    var page = dom.body.find('page[data-page="' + route.page + '"]');
+    0 > 1 ? console.log(177, {
+        page
+    }) : null;
+    
     $('[data-hide]').attr("data-active", true);
-    $('pages').removeAttr("data-active");
+    //$('pages').removeAttr("data-active");
     //$(':not(pages)[data-pages]').removeAttr("data-active");
     $(':not(page):not(pages)[data-page]').removeAttr("data-active");
     $('[data-path]').removeAttr("data-active");
 
-    if (vp && vp.closest('main')) {
-        $('pages[data-page]').removeAttr("data-active");
+    var page = dom.body.find('page[data-page="' + route.page + '"]');
+    if (page && page.closest('main')) {
+        //$('pages[data-page]').removeAttr("data-active");
         $('page[data-page]').removeAttr("data-active");
     } else {
         $('body > page[data-page]').removeAttr("data-active");
@@ -206,16 +209,12 @@ window.rout.ed.bang = async(route)=>{
     if (rs.length > 0) {
         var i = 0;
         do {
-            var check = route.page && 
-                (
-                    route.page.includes(rs[i].dataset.page) ||
-                    (
-                        rout.ed.dir(route.page).length === rout.ed.dir(rs[i].dataset.page).length && rs[i].dataset.page.endsWith('*')
-                    )
-                );
-            console.log(210, route.page, rs[i].dataset.page, check);
+            var check = route.page && (route.page.includes(rs[i].dataset.page) || (rout.ed.dir(route.page).length === rout.ed.dir(rs[i].dataset.page).length && rs[i].dataset.page.endsWith('*')));
+            //console.log(210, route.page, rs[i].dataset.page, check);
             if (check) {
-                rs[i].dataset.active = true;
+                if(!rs[i].getAttribute('data-active')) {
+                    rs[i].dataset.active = true;
+                }
                 //console.log(route.page, rs[i].dataset.page);
                 0 > 1 ? console.log(212, {
                     rs,
@@ -257,12 +256,15 @@ window.rout.ed.bang = async(route)=>{
                         }
                         r++;
                     } while (r < roots.length);
-                    console.log(248, {
-                        ps
-                    });
-                    var ps = $(rs[i].all('[data-page="' + p + '"]'));
-                    ps.attr("data-active", true);
+
+                    $(rs[i].all('[data-page="' + p + '"]')).forEach(function(ps) {
+                        if (!ps.getAttribute('data-active')) {
+                            //ps.setAttribute("data-active", true);
+                        }
+                    })
                 }
+            } else {                
+                rs[i].removeAttribute('data-active');
             }
             i++;
         } while (i < rs.length)
@@ -512,7 +514,7 @@ async function viewPage(vp) {
             //console.log(fetching[f]);
             if (fetching4[f].innerHTML === "") {
                 fetching4[f].innerHTML = await ajax(fetching4[f].dataset.fetch);
-                fetching4[f].dataset.active = true;
+                //fetching4[f].dataset.active = true;
             }
             f++;
         } while (fetching4.length < 0);

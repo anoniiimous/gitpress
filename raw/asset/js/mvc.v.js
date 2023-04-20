@@ -19,7 +19,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }) : null;
         }
 
-        0 < 1 ? console.log(22, {
+        0 < 1 ? console.log(22, 'mvc.v', {
             route
         }) : null;
 
@@ -114,10 +114,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     }, {
                         accept: "application/vnd.github.raw",
                         cache: "reload"
-                    });
-                    console.log({
-                        repository
-                    });
+                    });                                    
                     if (repository.private) {
                         dom.body.find('[data-page="/dashboard/*"]').setAttribute('github-repo-private', repository.private);
                     }

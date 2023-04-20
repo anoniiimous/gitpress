@@ -518,7 +518,7 @@
         opacity: 0.5;
     }
 
-    [data-hide]:not([data-active="true"]), [data-page]:not([data-active="true"]):not(.-active), [data-pages]:not([data-active="true"]):not(.-active), [data-path]:not([data-active="true"]):not(.-active) {
+    body [data-hide]:not([data-active="true"]), body [data-page]:not([data-active="true"]):not(.-active), body [data-pages]:not([data-active="true"]):not(.-active), body [data-path]:not([data-active="true"]):not(.-active) {
         display: none;
     }
 }
