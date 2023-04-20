@@ -187,13 +187,16 @@ window.rout.ed.bang = async(route)=>{
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     if (page && page.closest('main')) {
         //$('pages[data-page]').removeAttr("data-active");
-        $('page[data-page]').removeAttr("data-active");
+        console.log($('page[data-page][data-active="true"]'));
+        $('page[data-page][data-active="true"]').removeAttr("data-active");
     } else {
         $('body > page[data-page]').removeAttr("data-active");
         $('body > pages[data-page]').removeAttr("data-active");
         $('body > :not(main) page[data-page]').removeAttr("data-active");
         $('body > :not(main) pages[data-page]').removeAttr("data-active");
     }
+
+    //console.log({page:route.page});
 
     $('[data-hide="' + route.page + '"]').attr("data-active", false);
     $('[data-page="' + route.page + '"]').attr("data-active", true);
@@ -212,6 +215,7 @@ window.rout.ed.bang = async(route)=>{
             var check = route.page && (route.page.includes(rs[i].dataset.page) || (rout.ed.dir(route.page).length === rout.ed.dir(rs[i].dataset.page).length && rs[i].dataset.page.endsWith('*')));
             //console.log(210, route.page, rs[i].dataset.page, check);
             if (check) {
+                //console.log(1, 'activate', rs[i].dataset.page);
                 if(!rs[i].getAttribute('data-active')) {
                     rs[i].dataset.active = true;
                 }
@@ -262,8 +266,9 @@ window.rout.ed.bang = async(route)=>{
                             //ps.setAttribute("data-active", true);
                         }
                     })
-                }
-            } else {                
+                } 
+            } else {   
+                //console.log(0, 'deactivate', rs[i].dataset.page);
                 rs[i].removeAttribute('data-active');
             }
             i++;
@@ -451,7 +456,7 @@ window.rout.ing = (pgs,href,GOT,n)=>{
         }
     });
     var l = checked[checked.length - 1];
-    0 < 1 ? console.log(385, {
+    0 > 1 ? console.log(385, {
         ed,
         checked,
         l
