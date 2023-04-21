@@ -106,7 +106,7 @@
         text-decoration: none;
     }
     
-    a:-webkit-any-link {
+    :-webkit-any-link {
         color: #005cc8;
     }
 
@@ -432,6 +432,7 @@
     page, pages {
         display: inherit;
         position: relative;
+        overflow: hidden;
     }
 
     pre {

@@ -41,24 +41,15 @@ String.prototype.router = async function(params) {
         //console.log('String.prototype.router', route);
         if (route) {
             var pop = params ? params.pop : null;
-
-            //console.log(45, dom.body.all('[data-page]'));
-            //console.log('String.prototype.router', route, goto, route.page);
-            route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-            //console.log('String.prototype.router', route, goto, route.page);
-            //console.log(49, vp.outerHTML, {vpb: vp.all('[data-page]'), dbp: dom.body.all('[data-page]')});
             
-            ///await rout.ed.bang(route, goto);
-
-            //await rout.ed.bang(route);
-            window.view ? await view(route) : null;
-            //route = window.view ? await view(route).then(rout.ed.bang(route)) : await rout.ed.bang(route);
-
-            //console.log(54, vp, {vpb: vp.all('[data-page]'), dbp: dom.body.all('[data-page]')});
-            //console.log('String.prototype.router', route, vp, goto, route.page);
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-            //console.log('String.prototype.router', route, vp, goto, route.page);
-            //console.log(58, dom.body.all('[data-page]'));
+            
+            await rout.ed.bang(route, goto);
+            
+            window.view ? await view(route) : null;
+            
+            route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
+
             ///await rout.ed.bang(route);
 
             var path = route.path;
@@ -78,16 +69,13 @@ String.prototype.router = async function(params) {
                 }) : null;
                 document.body.dataset.path = route.path;
                 history.pushState(link, '', link);
+                
             }
 
             //await viewPage(vp);
-
-            //console.log('String.prototype.router', route, goto, route.page);
+            
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-            //console.log('String.prototype.router', route, goto, route.page);
-            await rout.ed.bang(route);
-
-            //console.log('String.prototype.router', route, goto, route.page);
+            
             resolve(route);
         } else {
             const e = {

@@ -1,5 +1,5 @@
 <row>
-    <card class="margin-20px margin-bottom-50px">
+    <card class="-dw480px-margin-10px margin-20px margin-bottom-50px">
         <header class="line-height-50px">
             <text class="align-items-center display-flex gap-10px">
                 <ico css-height="20px" css-width="20px">
@@ -40,11 +40,46 @@
     </card>
 </column>
 <column github-private-display="false" css-display="none">
-    <card class="background-color-fff border-radius-10px margin-20px" css-display="none" tabindex="1">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px padding-20px" css-display="none" tabindex="1">
+        <flex class="align-items-flex-start justify-content-space-between gap-10px" css-dw640px-flex-direction="column">
+            <box class="font-size-13px">
+                <column>
+                    <text class="font-weight-bolder">
+                        <span>Your site is live at</span>
+                        <span class="color-005cc8" data-value="url"></span>
+                    </text>
+                    <text class="color-777">
+                        <span>Last</span>
+                        <span>deployed</span>
+                        <span>by</span>
+                        <span class="color-005cc8">anoniiimous</span>
+                        <span data-value="time" placeholder="0 minutes ago"></span>
+                    </text>
+                </column>
+            </box>
+            <box>
+                <flex class="align-items-center gap-10px justify-content-center">
+                    <a class="align-items-center background-color-ddd border-1px-solid border-color-ccc border-radius-5px color-000 display-flex font-size-13px font-weight-bolder justify-content-center height-30px line-height-30px padding-x-10px" data-value="url" target="_blank">
+                        <ico css-height="20px" css-width="20px">
+                            <n class="gg-link"></n>
+                        </ico>
+                        <span>Visit Site</span>
+                    </a>
+                    <text class="align-items-center background-color-ddd border-1px-solid border-color-ccc border-radius-5px display-flex font-size-13px font-weight-bolder justify-content-center height-30px line-height-30px" css-height="30px" css-width="30px">
+                        <ico css-height="20px" css-width="20px">
+                            <n class="gg-more-alt"></n>
+                        </ico>
+                        <span></span>
+                    </text>
+                </flex>
+            </box>
+        </flex>
+    </card>
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px">
         <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
-            <span class="font-weight-bolder">Source</span>
+            <span class="font-weight-bolder">Branch</span>
         </header>
-        <flex class="padding-20px">
+        <flex class="padding-20px" css-display="none">
             <box class="background-color-ddd border-radius-10px display-inline-flex margin-right-5px" css-dw640px-margin-right="0" css-dw640px-margin-top="20px" tabindex="1">
                 <flex class="align-items-center font-weight-bolder gap-5px justify-content-center padding-x-20px" data-dropdown data-ignore>
                     <text>Deploy from a branch</text>
@@ -68,12 +103,7 @@
                 </column>
             </box>
         </flex>
-    </card>
-    <card class="background-color-fff border-radius-10px margin-20px">
-        <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
-            <span class="font-weight-bolder">Branch</span>
-        </header>
-        <flex class="padding-20px" css-dw640px-flex-direction="column">
+        <form class="display-flex padding-20px" css-dw640px-flex-direction="column" onsubmit="controller.config.deploy(event)">
             <box class="flex-1 margin-right-20px">
                 <column class="justify-content-center">
                     <text>GitHub Pages is currently disabled. Select a source below to enable GitHub Pages for this repository.</text>
@@ -95,18 +125,18 @@
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </flex>
-                <column class="background-color-eeeeee border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-160px" css-display="none" data-hidden="tap" css-top="calc(100% - 5px)" css-dw640px-width="calc(100% - 40px)">
+                <column class="background-color-eeeeee border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-160px" css-display="none" data-hidden="tap" css-top="calc(100% - 5px)" css-dw640px-width="calc(100% - 40px)" data-tap="controller.config.branch(event.target)">
                     <text class="display-flex">
                         <ico>
                             <n class="gg-check" css-display="none"></n>
                         </ico>
-                        <span>main</span>
+                        <span data-after="main"></span>
                     </text>
                     <text class="display-flex">
                         <ico>
                             <n class="gg-check"></n>
                         </ico>
-                        <span>None</span>
+                        <span class="text-transform-capitalize">None</span>
                     </text>
                 </column>
             </box>
@@ -115,34 +145,35 @@
                     <ico css-width="20px">
                         <n class="gg-folder"></n>
                     </ico>
-                    <text>New App</text>
+                    <text value="/">/ (root)</text>
                     <ico css-width="20px">
                         <n class="gg-chevron-down"></n>
                     </ico>
                 </flex>
-                <column class="background-color-eeeeee border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-160px" css-display="none" data-hidden="tap" css-top="calc(100% - 5px)" css-dw640px-width="calc(100% - 40px)">
+                <column class="background-color-eeeeee border-radius-10px box-shadow-0-6px-1px-0 color-000 font-weight-bolder line-height-50px margin-auto padding-x-20px position-absolute right-0 width-160px" css-display="none" data-hidden="tap" css-top="calc(100% - 5px)" css-dw640px-width="calc(100% - 40px)" data-tap="controller.config.path(event.target)">
                     <text class="display-flex">
                         <ico>
                             <n class="gg-check"></n>
                         </ico>
-                        <span>/(root)</span>
+                        <span value="/">/ (root)</span>
                     </text>
                     <text class="display-flex">
                         <ico>
                             <n class="gg-check" css-display="none"></n>
                         </ico>
-                        <span>/docs</span>
+                        <span value="/docs">/docs</span>
                     </text>
                 </column>
             </box>
-            <box class="background-color-ddd border-radius-10px display-inline-flex height-50px" css-dw640px-margin-top="10px" css-max-width="100%" tabindex="2">
+            <box class="background-color-ddd border-radius-10px display-inline-flex height-50px" css-dw640px-margin-top="10px" css-max-width="100%" data-submit>
                 <flex class="align-items-center display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px">
+                    <input type="submit">
                     <text>Save</text>
                 </flex>
             </box>
-        </flex>
+        </form>
     </card>
-    <card class="background-color-fff border-radius-10px margin-20px">
+    <card class="-dw480px-margin-10px background-color-fff border-radius-10px margin-20px" css-display="none">
         <header class="background-color-ccc border-top-left-radius-10px border-top-right-radius-10px line-height-50px padding-x-20px">
             <span class="font-weight-bolder">Custom Domain</span>
         </header>
@@ -150,18 +181,19 @@
             <box class="flex-1 gap-10px">
                 <header class="justify-content-center">
                     <text>
-                        Custom domains allow you to serve your site from a domain other than <span placeholder="shortname.github.io."></span>
+                        Custom domains allow you to serve your site from a domain other than <span data-value="domain" placeholder="shortname.github.io."></span>
                     </text>
                 </header>
-                <flex class="align-items-center gap-5px" css-dw640px-flex-direction="column">
-                    <input class="border-1px-solid border-color-ddd line-height-36px" css-dw640px-width="100%" type="text">
-                    <text class="background-color-ddd border-radius-10px display-inline-flex height-36px" css-dw640px-width="100%">
-                        <span class="align-items-center display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px">Save</span>
+                <form class="align-items-center display-flex gap-5px" css-dw640px-flex-direction="column" onsubmit="controller.config.domain(event)">
+                    <input class="border-1px-solid border-color-ddd border-radius-10px line-height-36px padding-x-10px" css-dw640px-width="calc(100% - 20px)" onkeyup="controller.config.cname(event)" type="text">
+                    <text class="background-color-ddd border-radius-10px display-inline-flex height-36px" css-dw640px-width="100%" data-submit>
+                        <input type="submit">
+                        <span class="align-items-center display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px" css-opacity="50%">Save</span>
                     </text>
-                    <text class="border-1px-solid border-color-ddd border-radius-10px display-inline-flex height-36px" css-dw640px-width="100%" css-opacity="50%">
-                        <span class="align-items-center color-ff3b30 display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px">Remove</span>
+                    <text class="border-1px-solid border-color-ddd border-radius-10px display-inline-flex height-36px" css-dw640px-width="100%" data-tap="controller.config.io(event.target)">
+                        <span class="align-items-center color-ff3b30 display-flex font-weight-bolder gap-5px justify-content-center margin-auto padding-x-20px" css-opacity="50%">Remove</span>
                     </text>
-                </flex>
+                </form>
             </box>
             <box>
                 <row class="align-items-flex-start gap-10px">
@@ -173,10 +205,18 @@
                     </label>
                     <column>
                         <text class="font-weight-bolder">Enforce HTTPS</text>
-                        <text class="color-777 font-size-13px">
-                            <span>— Required for your site because you are using the default domain (</span>
-                            <data placeholder="shortname.github.io"></data>
-                            <span>)</span>
+                        <text data-cname class="color-777 font-size-0" css-display="none">
+                            <span class="font-size-13px">— Required for your site because you are using the default domain (</span>
+                            <data class="font-size-13px" data-value="domain" placeholder="shortname.github.io"></data>
+                            <span class="font-size-13px">)</span>
+                        </text>
+                        <text data-https-enforced="false" class="color-777 font-size-0" css-display="none">
+                            <span class="font-size-13px">— Unavailable for your site because your domain is not properly configured to support HTTPS </span>
+                            <span class="display-inline-flex flex-wrap-wrap font-size-0">
+                                <data class="display-inline-flex flex-wrap-wrap font-size-13px">(</data>
+                                <data class="color-005cc8 display-inline-flex flex-wrap-wrap font-size-13px" data-value="domain" placeholder="shortname.github.io"></data>
+                                <data class="display-inline-flex flex-wrap-wrap font-size-13px">)</data>
+                            </span>
                         </text>
                         <text class="color-777 font-size-13px margin-top-20px">HTTPS provides a layer of encryption that prevents others from snooping on or tampering with traffic to your site.
 When HTTPS is enforced, your site will only be served over HTTPS. Learn more.</text>

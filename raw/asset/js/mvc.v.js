@@ -472,6 +472,62 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         vp.find('[github-private-display="true"]').setAttribute('css-display', 'none');
                                         vp.find('[github-private-display="false"]').setAttribute('css-display', 'flex');
                                     }
+
+                                    var public = dom.body.find('[github-private-display="false"]');
+
+                                    //DATA
+                                    var pages = null;
+                                    try {
+                                        pages = await github.pages.crud({
+                                            owner: window.owner.login,
+                                            repo: get[1]
+                                        });
+                                        console.log(1136, 'controller.config.deploy', {
+                                            pages
+                                        });
+
+                                        var source = pages.source;
+
+                                        //DEPLOYMENT
+                                        var deployment = public.all('card')[0];
+                                        deployment.removeAttribute('css-display');
+                                        deployment.find('span[data-value="url"]').textContent = pages.cname ? pages.cname : pages.html_url;
+                                        deployment.find('a[data-value="url"]').href = pages.cname ? pages.cname : pages.html_url;
+                                                        
+                                        //BRANCH
+                                        var branch = public.all('card')[1];
+                                        if (source.branch) {
+                                            branch.all('form box')[1].find('text').textContent = source.branch;
+                                            branch.all('form box')[1].find('ico').removeAttribute('css-display');
+
+                                            branch.all('form box')[2].removeAttribute('css-display');
+                                            branch.all('form box')[2].find('text').textContent = branch.all('form box')[2].find('box > column > text span[value="' + source.path + '"]').textContent;
+                                        }
+
+                                        //DOMAIN
+                                        var domain = public.all('card')[2];
+                                        if (source.branch) {
+                                            domain.removeAttribute('css-display');
+                                            if (pages.cname) {
+                                                domain.all('box')[0].find('input').dataset.cname = pages.cname;
+                                                domain.all('box')[0].find('input').value = pages.cname;
+                                                domain.all('box')[0].find('box > form').children[2].firstElementChild.removeAttribute('css-opacity');
+                                                $(domain.all('box')[1].all('[data-value="domain"]')).html(pages.cname);
+                                            }
+                                            domain.all('box')[1].find('[type="checkbox"]').checked = pages.https_enforced;
+                                            if (pages.https_enforced) {
+                                                domain.all('box')[1].find('[data-https-enforced="false"]').setAttribute('css-display', 'none');
+                                                domain.all('box')[1].find('[data-cname]').removeAttribute('css-display');
+                                            } else {
+                                                domain.all('box')[1].find('[data-https-enforced="false"]').removeAttribute('css-display');
+                                                domain.all('box')[1].find('[data-cname]').setAttribute('css-display', 'none');
+                                            }
+                                        }
+
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+
                                     resolve(route);
                                 }
 
@@ -501,6 +557,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     if (webmanifest.categories) {
                                         var template = details.all('box')[2].find('template').content.firstElementChild;
+                                        $(details.all('box')[2].all('box > flex > text')).remove();
                                         webmanifest.categories.forEach(function(category) {
                                             var box = template.cloneNode(true);
                                             box.find('span').textContent = category;

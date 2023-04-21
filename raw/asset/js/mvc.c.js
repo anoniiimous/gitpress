@@ -1053,6 +1053,29 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     config: {
 
+        branch: async(target) => {
+            var button = target.closest('[data-tap] > text');
+            if(button) {
+                var span = button.find('span');
+                var box = span.closest('box').nextElementSibling;
+                var branch = '';
+                var text = '';
+                if(span.dataset.after) {
+                    branch = text = span.dataset.after;
+                    box.removeAttribute('css-display');
+                } else {
+                    text = 'None';
+                    box.setAttribute('css-display', 'none');
+                }
+                $(button.parentNode.all('ico n')).attr('css-display', 'none');
+                button.find('ico n').removeAttribute('css-display');
+                var value = button.closest('column').previousElementSibling;
+                branch.length > 0 ? value.find('ico').removeAttribute('css-display') : value.find('ico').setAttribute('css-display', 'none');
+                value.find('text').textContent = text;
+            }
+                    
+        },
+
         category: async (target) => {
             var categories = await ajax('raw/asset/json/category.json');
             var dropdown = target.closest('dropdown')
@@ -1060,6 +1083,22 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 other: true,
                 rows: JSON.parse(categories)
             });
+        },
+
+        cname: async function(event) {
+
+            var input = event.target;
+            var value = input.value;
+            if(value.length > 0) {
+                if(input.dataset.cname === value) {
+                    input.nextElementSibling.find('span').setAttribute('css-opacity', '50%');
+                } else {
+                    input.nextElementSibling.find('span').removeAttribute('css-opacity');                                
+                }
+            } else {
+                input.nextElementSibling.find('span').setAttribute('css-opacity', '50%');
+            }
+                            
         },
             
         delete: async function() {
@@ -1079,6 +1118,39 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         data
                     }) : null;
                     '/dashboard/'.router();
+                });
+            }
+        },
+
+        deploy: async (event) => {
+            event.preventDefault();
+            var form = event.target;
+            var branch = "";
+            var path = "";
+            if(!form.all('box')[2].getAttribute('css-display')) {
+                branch = form.all('box')[1].find('text').textContent;
+                path = form.all('box')[2].find('text').getAttribute('value');
+            }
+            console.log({
+                branch,
+                path
+            });
+            if(branch && path) {
+                var create = await github.pages.crud({
+                    owner: window.owner.login,
+                    repo: GET[1]
+                }, {
+                    data: JSON.stringify({
+                        build_type: "legacy",
+                        source: {
+                            branch,
+                            path
+                        }
+                    }),
+                    dataType: "POST"
+                });
+                console.log(1136, 'controller.config.deploy', {
+                    create
                 });
             }
         },
@@ -1139,6 +1211,74 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 update,
                 webmanifest
             });
+        },
+
+        domain: async(event) => {
+                    
+            event.preventDefault();
+            var form = event.target;
+            var submit = form.find('input[type="submit"]');
+            if(!submit.nextElementSibling.getAttribute('css-opacity')) {
+                var input = form.find('input[type="text"]');
+                var value = input.value;
+                if(value.length > 0) {
+                    try {
+                        var update = await github.pages.crud({
+                            owner: window.owner.login,
+                            repo: GET[1]
+                        }, {
+                            data: JSON.stringify({
+                                cname: value
+                            }),
+                            dataType: "PUT"
+                        });
+                        console.log(1233, 'controller.config.deploy', {
+                            update
+                        });        
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+                    
+        },
+
+        io: async(target) => {
+            try {
+                var remove = await github.pages.crud({
+                    owner: window.owner.login,
+                    repo: GET[1]
+                }, {
+                    data: JSON.stringify({
+                        cname: null
+                    }),
+                    dataType: "PUT"
+                });
+                console.log(1136, 'controller.config.deploy', {
+                    remove
+                });          
+            } catch(e) {
+                console.log(e);
+            }
+                    
+            var form = target.closest('form');
+            var input = form.find('input[type="text"]');
+            input.value = '';
+        },
+
+        path: async(target) => {
+            var button = target.closest('[data-tap] > text');
+            if(button) {
+                var span = button.find('span');
+                if(span) {
+                    var path = span.textContent;
+                    span.closest('column').previousElementSibling.find('text').setAttribute('value', span.getAttribute('value'));
+                    span.closest('column').previousElementSibling.find('text').textContent = path;
+                }
+                $(button.parentNode.all('ico n')).attr('css-display', 'none');
+                button.find('ico n').removeAttribute('css-display');
+            }
+                    
         },
 
         shortname: async function(event) {
