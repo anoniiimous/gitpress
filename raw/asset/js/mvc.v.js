@@ -392,6 +392,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         color: "#ff3b30"
                                     });
                                     try {
+
                                         var res = await github.repos.contents({
                                             owner: window.owner.login,
                                             repo: get[1],
@@ -405,10 +406,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var foreignObject = doc.find('foreignObject');
                                         rect.removeAttribute('rx');
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
-                                        console.log(svg)
+                                        //console.log(svg);
+                                                        
                                         var svg = vp.find('card > header + * picture svg');
+                                        var svgstr = foreignObject.outerHTML;
+                                                        
                                         svg.find('rect').setAttribute('fill', bg);
                                         svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
+
+                                        $(vp.all('[data-value="favicon"]')).html(svgstr);
+                                        console.log(vp.all('[data-value="favicon"]'));
+
                                     } catch (e) {
                                         console.log('error', e);
                                     }
@@ -493,7 +501,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         deployment.removeAttribute('css-display');
                                         deployment.find('span[data-value="url"]').textContent = pages.cname ? pages.cname : pages.html_url;
                                         deployment.find('a[data-value="url"]').href = pages.cname ? pages.cname : pages.html_url;
-                                                        
+
                                         //BRANCH
                                         var branch = public.all('card')[1];
                                         if (source.branch) {

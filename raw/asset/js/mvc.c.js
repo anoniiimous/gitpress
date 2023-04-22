@@ -1282,7 +1282,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         },
 
         rebrand: async(event) => {
+                    
             var target = event.target;
+            var vp = target.closest('[data-page]');
             var data = await on.change.file(event);
             var brand = target.closest('box').previousElementSibling;
             var foreignObject = brand.find('foreignObject');
@@ -1291,12 +1293,15 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             ImageTracer.imageToSVG(data.result, (svgstr) => {
                 //console.log(svgstr);
                 foreignObject.innerHTML = svgstr;
+                $(foreignObject).innerHTML = svgstr;
                 var svg = foreignObject.firstElementChild;
                 svg.classList.add('height-100pct');
                 svg.classList.add('width-100pct');
+                $(vp.all('[data-value="favicon"]')).html(svgstr);
             }, {
                 viewbox: true
-            })                    
+            });
+                    
         },
 
         shortname: async function(event) {

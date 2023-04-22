@@ -104,7 +104,7 @@
                                 </ico>
                                 <row class="align-items-center background-color-fff border-top-left-radius-10px border-top-right-radius-10px gap-5px justify-content-center padding-x-10px position-relative z-index-2" css-height="44px">
                                     <ico class="background-color-ddd position-relative z-index-1" css-height="20px" css-width="20px">
-                                        <img data-value="favicon">
+                                        <svg data-value="favicon"></svg>
                                     </ico>
                                     <text class="-dw480px-width-auto -dw720px-width-120px -dw960px-width-auto -dw1280px-width-30px font-size-14px overflow-hidden position-relative white-space-nowrap z-index-1">
                                         <span>Lorem Ipsum</span>
@@ -128,7 +128,7 @@
                                 </ico>
                                 <row class="align-items-center background-color-35363a border-top-left-radius-10px border-top-right-radius-10px gap-5px justify-content-center padding-x-10px position-relative z-index-2" css-height="44px">
                                     <ico class="background-color-ddd position-relative z-index-1" css-height="20px" css-width="20px">
-                                        <img data-value="favicon">
+                                        <svg data-value="favicon"></svg>
                                     </ico>
                                     <text class="-dw480px-width-auto -dw720px-width-120px -dw960px-width-auto -dw1280px-width-30px font-size-14px overflow-hidden position-relative white-space-nowrap z-index-1">
                                         <span>Lorem Ipsum</span>
@@ -155,7 +155,7 @@
                                 <column class="flex-1 gap-10px justify-content-center margin-0px padding-20px">
                                     <row class="align-items-center gap-5px margin-bottom-3px">
                                         <ico class="background-color-ddd position-relative z-index-1" css-height="16px" css-width="16px">
-                                            <img data-value="favicon">
+                                            <svg data-value="favicon"></svg>
                                         </ico>
                                         <text class="font-size-12px" placeholder="example.com"></text>
                                     </row>
@@ -172,7 +172,7 @@
                                 <column class="border-radius-10px flex-1 gap-10px justify-content-center margin-10px" css-box-shadow="rgba(32, 33, 36, 0.28) 0px 1px 6px">
                                     <row class="align-items-center gap-5px margin-bottom-3px padding-x-20px">
                                         <ico class="background-color-ddd position-relative z-index-1" css-height="16px" css-width="16px">
-                                            <img data-value="favicon">
+                                            <svg data-value="favicon"></svg>
                                         </ico>
                                         <text class="font-size-12px" placeholder="https://example.com"></text>
                                     </row>
@@ -247,6 +247,9 @@
                         <picture class="border-1px-solid border-color-ddd flex-1">
                             <img src="raw/asset/png/ios-home-screen.png">
                         </picture>
+                        <flex class="height-50px left-0 margin-auto right-0 top-90px position-absolute" atyle="top:100px">
+                            <svg data-value="favicon"></svg>
+                        </flex>
                     </column>
                 </box>
                 <box class="flex-1 gap-10px" id="tabs-branding-iosWebClip">
@@ -353,14 +356,17 @@
             <flex class="-dw720px-flex-direction-column gap-20px">
                 <box class="gap-10px height-264px width-222px">
                     <column class="gap-20px flex-1" id="tabs-branding-windowsMetro-preview">
-                        <picture class="border-1px-solid border-color-ddd flex-1" data-tab="1">
+                        <picture class="border-1px-solid border-color-ddd border-radius-15pct flex-1 position-relative" data-tab="1">
                             <img src="raw/asset/png/android-home-screen.png">
+                            <svg class="border-radius-15pct height-50px left-0 margin-auto right-0 top-100px position-absolute width-50px" data-value="favicon"></svg>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="2">
                             <img src="raw/asset/png/android-switcher.png">
+                            <svg class="height-50px left-0 margin-auto right-0 top-90px position-absolute" data-value="favicon"></svg>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="3">
                             <img src="raw/asset/png/android-splash.png">
+                            <svg class="height-50px left-0 margin-auto right-0 top-90px position-absolute" data-value="favicon"></svg>
                         </picture>
                     </column>
                     <footer class="display-flex gap-10px justify-content-center" data-tabs="tabs-branding-windowsMetro-preview">
@@ -510,6 +516,7 @@
                         <picture>
                             <img src="/raw/asset/png/windows8-home-screen.png">
                         </picture>
+                        <svg class="position-absolute width-100pct" data-value="favicon"></svg>
                     </flex>
                 </box>
                 <box class="flex-1 gap-10px" id="tabs-branding-windowsMetro">
