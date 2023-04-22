@@ -20,13 +20,13 @@
             <box class="flex-1 flex-direction-column gap-20px justify-content-space-between">
                 <row class="gap-20px">
                     <label class="align-items-center border-1px-solid border-color-ddd border-radius-50px display-flex flex-1 gap-5px line-height-50px justify-content-center">
-                        <input type="file">
+                        <input onchange="controller.config.rebrand(event)" type="file">
                         <ico css-height="20px" css-width="20px">
                             <n class="gg-software-upload"></n>
                         </ico>
                         <span>Import</span>
                     </label>
-                    <label class="align-items-center border-1px-solid border-color-ddd border-radius-50px display-flex flex-1 gap-5px line-height-50px justify-content-center">
+                    <label class="align-items-center border-1px-solid border-color-ddd border-radius-50px display-flex flex-1 gap-5px line-height-50px justify-content-center" data-tap="controller.config.unbrand(event.target)">
                         <ico css-height="20px" css-width="20px">
                             <n class="gg-software-download"></n>
                         </ico>

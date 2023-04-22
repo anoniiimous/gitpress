@@ -1281,6 +1281,24 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     
         },
 
+        rebrand: async(event) => {
+            var target = event.target;
+            var data = await on.change.file(event);
+            var brand = target.closest('box').previousElementSibling;
+            var foreignObject = brand.find('foreignObject');
+            console.log(1286, data);
+                    
+            ImageTracer.imageToSVG(data.result, (svgstr) => {
+                //console.log(svgstr);
+                foreignObject.innerHTML = svgstr;
+                var svg = foreignObject.firstElementChild;
+                svg.classList.add('height-100pct');
+                svg.classList.add('width-100pct');
+            }, {
+                viewbox: true
+            })                    
+        },
+
         shortname: async function(event) {
 
             event.preventDefault();
@@ -1336,6 +1354,13 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 ico.lastElementChild.setAttribute('css-display', 'flex');
             })
 
+        },
+
+        unbrand: (target) => {
+            console.log(1346, target);
+            var brand = target.closest('box').previousElementSibling;
+            var svg = brand.find('foreignObject svg');
+            svg.remove();
         },
 
         visibility: async(target) => {
