@@ -512,11 +512,13 @@
             </box>
             <flex class="-dw720px-flex-direction-column gap-20px">
                 <box class="border-1px-solid border-color-ddd height-222px width-222px">
-                    <flex class="gap-20px flex-1">
+                    <flex class="gap-20px flex-1 position-relative">
                         <picture>
                             <img src="/raw/asset/png/windows8-home-screen.png">
                         </picture>
-                        <svg class="position-absolute width-100pct" data-value="favicon"></svg>
+                        <picture class="bottom-0 height-101px margin-7px position-absolute right-0 width-101px" style="background-color:#da532c">
+                            <svg class="width-100pct" data-value="favicon"></svg>
+                        </picture>
                     </flex>
                 </box>
                 <box class="flex-1 gap-10px" id="tabs-branding-windowsMetro">
@@ -631,16 +633,25 @@
                 <box class="height-300px width-222px">
                     <column class="gap-20px flex-1">
                         <text>Pinned tab - No focus</text>
-                        <picture class="border-1px-solid border-color-ddd flex-1">
+                        <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-no-focus.png">
+                            <picture class="bottom-0 height-50px left-0 margin-auto position-absolute right-0 top-0 width-50px">
+                                <svg class="height-100pct width-100pct" data-value="favicon"></svg>
+                            </picture>
                         </picture>
                         <text>Pinned tab - Focus</text>
-                        <picture class="border-1px-solid border-color-ddd flex-1">
+                        <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-focus.png">
+                            <picture class="bottom-0 height-50px left-0 margin-auto position-absolute right-0 top-0 width-50px">
+                                <svg class="height-100pct width-100pct" data-value="favicon"></svg>
+                            </picture>
                         </picture>
                         <text>Touch Bar</text>
-                        <picture class="border-1px-solid border-color-ddd flex-1">
+                        <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-touch-bar.png">
+                            <picture class="align-items-center background-color-5bbad5 border-radius-5px bottom-0 color-fff display-flex height-40px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-80px">
+                                <svg class="height-40px width-40px" data-value="favicon"></svg>
+                            </picture>
                         </picture>
                     </column>
                 </box>

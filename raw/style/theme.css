@@ -118,6 +118,10 @@
         background-color: #333;
     }
 
+    .background-color-5bbad5 {
+        background-color: #5bbad5;
+    }
+
     .background-color-603cba {
         background-color: #603cba;
     }
@@ -670,6 +674,10 @@
         color: #333;
     }
 
+    .color-5bbad5 {
+        color: #5bbad5;
+    }
+
     .color-777 {
         color: #777;
     }
@@ -692,6 +700,10 @@
 
     .color-fff {
         color: #fff;
+    }
+
+    .color-fff path {
+        fill: #fff;
     }
 
     .color-ff3b30 {
@@ -1640,6 +1652,14 @@
 
     .margin-5px {
         margin: 5px;
+    }
+
+    .margin-7px {
+        margin: 7px;
+    }
+
+    .margin-8px {
+        margin: 8px;
     }
 
     .margin-10px {
@@ -2834,6 +2854,10 @@
         width: 24px;
     }
 
+    .width-40px, [css-width="40px"] {
+        width: 40px;
+    }
+
     .width-44px, [css-width="44px"] {
         width: 44px;
     }
@@ -3002,8 +3026,16 @@
         width: 70px;
     }
 
+    .width-80px, [css-width="80px"] {
+        width: 80px;
+    }
+
     .width-100px, [css-width="100px"] {
         width: 100px;
+    }
+
+    .width-101px, [css-width="101px"] {
+        width: 101px;
     }
 
     .width-120px {
