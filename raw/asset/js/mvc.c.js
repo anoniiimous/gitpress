@@ -1295,8 +1295,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 foreignObject.innerHTML = svgstr;
                 $(foreignObject).innerHTML = svgstr;
                 var svg = foreignObject.firstElementChild;
-                svg.classList.add('height-100pct');
-                svg.classList.add('width-100pct');
+                svg.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
                 $(vp.all('[data-value="favicon"]')).html(svgstr);
             }, {
                 viewbox: true

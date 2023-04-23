@@ -401,21 +401,26 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             accept: 'application/vnd.github.raw'
                                         });
                                         var doc = new DOMParser().parseFromString(res, 'image/svg+xml').documentElement;
+                                                        
+                                        var foreignObject = doc.find('foreignObject');
+                                        foreignObject.setAttribute('class', 'position-relative');
+                                        foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
+                                                        
                                         var rect = doc.find('rect');
                                         var bg = rect.getAttribute('fill');
-                                        var foreignObject = doc.find('foreignObject');
                                         rect.removeAttribute('rx');
+                                                        
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(svg);
-                                                        
+
                                         var svg = vp.find('card > header + * picture svg');
-                                        var svgstr = foreignObject.outerHTML;
-                                                        
+
                                         svg.find('rect').setAttribute('fill', bg);
                                         svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
 
+                                        var svgstr = foreignObject.outerHTML;
                                         $(vp.all('[data-value="favicon"]')).html(svgstr);
-                                        console.log(vp.all('[data-value="favicon"]'));
+                                        //console.log(vp.all('[data-value="favicon"]'));
 
                                     } catch (e) {
                                         console.log('error', e);
