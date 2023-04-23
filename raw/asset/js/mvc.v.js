@@ -405,6 +405,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var foreignObject = doc.find('foreignObject');
                                         foreignObject.setAttribute('class', 'position-relative');
                                         foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
+                                        foreignObject.firstElementChild.setAttribute('height', '100%');
+                                        foreignObject.firstElementChild.setAttribute('width', '100%');
                                                         
                                         var rect = doc.find('rect');
                                         var bg = rect.getAttribute('fill');
