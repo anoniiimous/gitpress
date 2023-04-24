@@ -421,7 +421,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //console.log(svg);
 
                                         var svg = vp.find('card > header + * picture svg');
-                                        svg.innerHTML = svgstr;
+                                        svg.find('rect').insertAdjacentHTML('afterbegin', svgstr);
                                         console.log(svg.parentElement, svg.parentElement.clientWidth, svg.firstElementChild.firstElementChild, svg.firstElementChild.firstElementChild.clientWidth);
                                         var x = (svg.clientWidth - svg.firstElementChild.clientWidth) / 2;
                                         var y = (svg.clientHeight - svg.firstElementChild.clientWidth) / 2;
