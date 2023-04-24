@@ -439,8 +439,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var y = (el.clientHeight - el.firstElementChild.clientHeight) / 2;
                                             el.firstElementChild.setAttribute('x', x);
                                             el.firstElementChild.setAttribute('y', y);
-                                            el.firstElementChild.setAttribute('height', (el.clientWidth * 1));
-                                            el.firstElementChild.setAttribute('width', (el.clientWidth * 1));
+                                            el.firstElementChild.setAttribute('height', (el.parentElement.clientWidth * 1));
+                                            el.firstElementChild.setAttribute('width', (el.parentElement.clientWidth * 1));
                                         }) : null;
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);  
                                         //$(vp.all('[data-value="favicon"]')).html(svgstr);
