@@ -432,6 +432,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         svg.parentElement.style.color = colors.contrast('#' + bg);
                                         $(svg.all('path')).attr('fill', colors.contrast('#' + bg));
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
+                                        var w = 570 * 0.69;
+                                        var h = 570 * 0.69;
                                         svg.find('svg').setAttribute('viewbox', '0 0 ' + w + ' ' + h);
 
                                         //svg.find('rect').setAttribute('fill', bg);
