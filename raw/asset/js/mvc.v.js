@@ -403,16 +403,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var doc = new DOMParser().parseFromString(res, 'image/svg+xml').documentElement;
                                         var svg = vp.find('card > header + * picture svg');
                                         var foreignObject = doc.find('foreignObject');
-                                                        
+
                                         foreignObject.setAttribute('class', 'position-relative');
                                         foreignObject.setAttribute('height', (svg.clientWidth * 0.69) + 'px');
                                         foreignObject.setAttribute('width', (svg.clientWidth * 0.69) + 'px');
                                         foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
                                         foreignObject.removeAttribute('class');
+                                        foreignObject.removeAttribute('data-fetch');
                                         foreignObject.removeAttribute('style');
                                         foreignObject.removeAttribute('x');
                                         foreignObject.removeAttribute('y');
-                                                        
+
                                         var svgstr = foreignObject.outerHTML;
                                         var rect = doc.find('rect');
                                         var bg = rect.getAttribute('fill');
