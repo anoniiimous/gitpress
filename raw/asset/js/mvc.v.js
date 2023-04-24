@@ -421,12 +421,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //console.log(svg);
 
                                         var svg = vp.find('card > header + * picture svg');
-                                        svg.find('rect').insertAdjacentHTML('afterbegin', svgstr);
-                                        console.log(svg.parentElement, svg.parentElement.clientWidth, svg.firstElementChild.firstElementChild, svg.firstElementChild.firstElementChild.clientWidth);
-                                        var x = (svg.clientWidth - svg.firstElementChild.clientWidth) / 2;
-                                        var y = (svg.clientHeight - svg.firstElementChild.clientWidth) / 2;
-                                        svg.firstElementChild.setAttribute('x', x);
-                                        svg.firstElementChild.setAttribute('y', y);
+                                        svg.insertAdjacentHTML('beforeend', svgstr);
+                                        console.log(svg.parentElement, svg.parentElement.clientWidth, svg.lastElementChild, svg.lastElementChild.clientWidth);
+                                        var x = (svg.clientWidth - svg.lastElementChild.clientWidth) / 2;
+                                        var y = (svg.clientHeight - svg.lastElementChild.clientWidth) / 2;
+                                        svg.lastElementChild.setAttribute('x', x);
+                                        svg.lastElementChild.setAttribute('y', y);
+                                        svg.parentElement.style.color = colors.contrast('#' + bg);
+                                        $(svg.all('path')).attr('fill', colors.contrast('#' + bg));
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
 
                                         //svg.find('rect').setAttribute('fill', bg);
