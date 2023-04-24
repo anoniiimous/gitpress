@@ -401,28 +401,27 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             accept: 'application/vnd.github.raw'
                                         });
                                         var doc = new DOMParser().parseFromString(res, 'image/svg+xml').documentElement;
-                                                        
+                                        var svg = vp.find('card > header + * picture svg');
                                         var foreignObject = doc.find('foreignObject');
-                                        foreignObject.setAttribute('class', 'position-relative');
-                                        foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
-                                        foreignObject.firstElementChild.setAttribute('height', '100%');
-                                        foreignObject.firstElementChild.setAttribute('width', '100%');
-                                        foreignObject.removeAttribute('class');           
-                                        foreignObject.removeAttribute('style');          
-                                        foreignObject.removeAttribute('x');          
-                                        foreignObject.removeAttribute('y');                           
-                                        var svgstr = foreignObject.outerHTML;
                                                         
+                                        foreignObject.setAttribute('class', 'position-relative');
+                                        foreignObject.setAttribute('height', (svg.clientWidth * 0.69) + 'px');
+                                        foreignObject.setAttribute('width', (svg.clientWidth * 0.69) + 'px');
+                                        foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
+                                        foreignObject.removeAttribute('class');
+                                        foreignObject.removeAttribute('style');
+                                        foreignObject.removeAttribute('x');
+                                        foreignObject.removeAttribute('y');
+                                                        
+                                        var svgstr = foreignObject.outerHTML;
                                         var rect = doc.find('rect');
                                         var bg = rect.getAttribute('fill');
                                         rect.removeAttribute('rx');
-                                                        
+
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(svg);
-
-                                        var svg = vp.find('card > header + * picture svg');
                                         svg.insertAdjacentHTML('beforeend', svgstr);
-                                        console.log(svg.parentElement, svg.parentElement.clientWidth, svg.lastElementChild, svg.lastElementChild.clientWidth);
+                                        console.log('1.0', svg.parentElement.clientWidth, svg.lastElementChild, svg.lastElementChild.clientWidth);
                                         var x = (svg.clientWidth - svg.lastElementChild.clientWidth) / 2;
                                         var y = (svg.clientHeight - svg.lastElementChild.clientWidth) / 2;
                                         svg.lastElementChild.setAttribute('x', x);
