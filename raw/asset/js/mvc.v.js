@@ -420,7 +420,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         svg.find('rect').setAttribute('fill', bg);
                                         svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
 
-                                        var svgstr = foreignObject.outerHTML;
+                                        var svgstr = foreignObject.innerHTML;
                                         $(vp.all('[data-value="favicon"]')).html(svgstr);
                                         //console.log(vp.all('[data-value="favicon"]'));
 
