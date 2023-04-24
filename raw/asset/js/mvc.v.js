@@ -405,8 +405,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var foreignObject = doc.find('foreignObject');
 
                                         foreignObject.setAttribute('class', 'position-relative');
-                                        //foreignObject.setAttribute('height', (570 * 0.69));
-                                        //foreignObject.setAttribute('width', (svg.clientWidth * 0.69));
+                                        foreignObject.setAttribute('height', (svg.clientWidth * 1));
+                                        foreignObject.setAttribute('width', (svg.clientWidth * 1));
                                         foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
                                         foreignObject.removeAttribute('class');
                                         foreignObject.removeAttribute('data-fetch');
