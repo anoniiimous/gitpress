@@ -421,7 +421,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(svg);
                                         svg.insertAdjacentHTML('beforeend', svgstr);
-                                        console.log('1.0', svg.parentElement.clientWidth, svg.lastElementChild, svg.lastElementChild.clientWidth);
+                                        console.log('1.0.1', svg, svg.lastElementChild);
                                         var x = (svg.clientWidth - svg.lastElementChild.clientWidth) / 2;
                                         var y = (svg.clientHeight - svg.lastElementChild.clientWidth) / 2;
                                         svg.lastElementChild.setAttribute('x', x);
