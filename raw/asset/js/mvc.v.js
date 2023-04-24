@@ -402,6 +402,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         });
                                         var doc = new DOMParser().parseFromString(res, 'image/svg+xml').documentElement;
                                         var svg = vp.find('card > header + * picture svg');
+                                        var pic = svg.parentElement;
                                         var foreignObject = doc.find('foreignObject');
 
                                         foreignObject.setAttribute('class', 'position-relative');
@@ -422,6 +423,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(svg);
                                         svg.insertAdjacentHTML('beforeend', svgstr);
+                                        svg.setAttribute('viewbox', '0 0 570px 570px');
                                         console.log('1.0.1', svg, svg.lastElementChild);
                                         var x = (svg.clientWidth - svg.lastElementChild.clientWidth) / 2;
                                         var y = (svg.clientHeight - svg.lastElementChild.clientWidth) / 2;
@@ -430,6 +432,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         svg.parentElement.style.color = colors.contrast('#' + bg);
                                         $(svg.all('path')).attr('fill', colors.contrast('#' + bg));
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
+                                        svg.find('svg').setAttribute('viewbox', '0 0 ' + w + ' ' + h);
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
