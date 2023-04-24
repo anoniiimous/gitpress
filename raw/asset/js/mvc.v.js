@@ -423,7 +423,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(svg);
                                         svg.insertAdjacentHTML('beforeend', svgstr);
-                                        svg.setAttribute('viewbox', '0 0 570 570');
+                                        svg.setAttribute('viewBox', '0 0 570 570');
                                         console.log('1.0.1', svg, svg.lastElementChild);
                                         var x = (svg.clientWidth - svg.lastElementChild.clientWidth) / 2;
                                         var y = (svg.clientHeight - svg.lastElementChild.clientWidth) / 2;
@@ -434,7 +434,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
                                         var w = 570 * 0.69;
                                         var h = 570 * 0.69;
-                                        svg.find('svg').setAttribute('viewbox', '0 0 ' + w + ' ' + h);
+                                        svg.find('svg').setAttribute('viewBox', '0 0 ' + w + ' ' + h);
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
