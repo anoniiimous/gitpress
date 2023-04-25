@@ -409,8 +409,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var h = Math.round(s * 0.69);
                                         var x = (s - w) / 2;
                                         var y = (s - w) / 2;
-                                        console.log({x,y});
-                                                        
+                                        console.log({
+                                            x,
+                                            y
+                                        });
+
                                         foreignObject.setAttribute('class', 'position-relative');
                                         foreignObject.setAttribute('height', (w * 1));
                                         foreignObject.setAttribute('width', (w * 1));
@@ -445,14 +448,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
-                                        0 < 1 ? vp.all('[data-value="favicon"]').forEach(function(el) {
+                                        0 < 1 ? vp.all('[data-value="favicon"]').forEach(function(el,index) {
+                                            var width = Math.round(s * 0.69);
+                                            var height = Math.round(s * 0.69);
+                                            var x = (s - width) / 2;
+                                            var y = (s - height) / 2;
                                             el.innerHTML = svgstr;
-                                            var x = (el.clientWidth - el.firstElementChild.clientWidth) / 2;
-                                            var y = (el.clientHeight - el.firstElementChild.clientHeight) / 2;
-                                            el.firstElementChild.setAttribute('x', x);
-                                            el.firstElementChild.setAttribute('y', y);
-                                            el.firstElementChild.setAttribute('height', (el.parentElement.clientWidth * 1));
-                                            el.firstElementChild.setAttribute('width', (el.parentElement.clientWidth * 1));
+                                            el.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
+                                            var foreignObject = el.firstElementChild;
+                                            foreignObject.setAttribute('height', (height * 1));
+                                            foreignObject.setAttribute('width', (width * 1));
+                                            foreignObject.setAttribute('x', x);
+                                            foreignObject.setAttribute('y', y);
+                                            var ico = el.find('svg');
+                                            ico.removeAttribute('class');
+                                            ico.setAttribute('height', height);
+                                            ico.setAttribute('width', width);
                                         }) : null;
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);  
                                         //$(vp.all('[data-value="favicon"]')).html(svgstr);
