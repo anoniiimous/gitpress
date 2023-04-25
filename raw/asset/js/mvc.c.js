@@ -4402,15 +4402,27 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var target = event.target;
             var value = target.value;
             var foreignObject = target.closest('box').parentNode.firstElementChild.find('foreignObject');
-            0 > 1 ? console.log("controller.setup.scale", {
-                event,
+            var svg = foreignObject.find('svg');
+            var wh = svg.closest('picture > svg').getAttribute('viewBox').split(' ');
+            var height = wh[wh.length - 1];
+            var width = wh[wh.length - 2];
+            0 < 1 ? console.log("controller.setup.scale", {
                 foreignObject,
-                target,
-                value
+                value,
+                height,
+                        h: (value/100)
             }) : null;
-            foreignObject.setAttribute('height', value + '%');
-            foreignObject.setAttribute('width', value + '%');
-            foreignObject.style.transform = "translate(calc((100% - " + value + "%)/2), calc((100% - " + value + "%)/2))";
+            var w = Math.round(height * (value/100));
+            var h = Math.round(height * (value/100));
+            var x = (width - w) / 2;
+            var y = (height - h) / 2;
+            foreignObject.setAttribute('x', x);
+            foreignObject.setAttribute('y', y);
+            foreignObject.setAttribute('height', h);
+            foreignObject.setAttribute('width', w);
+            svg.setAttribute('height', Math.round(height * (value/100)));
+            svg.setAttribute('width', Math.round(width * (value/100)));
+            //svg.style.transform = "translate(calc((100% - " + value + "%)/2), calc((100% - " + value + "%)/2))";
             target.previousElementSibling.lastElementChild.textContent = value;
         },
 
