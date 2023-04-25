@@ -404,16 +404,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var svg = vp.find('card > header + * picture svg');
                                         var pic = svg.parentElement;
                                         var foreignObject = doc.find('foreignObject');
-
+                                        var s = 570;
+                                        var w = Math.round(s * 0.69);
+                                        var h = Math.round(s * 0.69);
+                                        var x = (s - w) / 2;
+                                        var y = (s - w) / 2;
+                                        console.log({x,y});
+                                                        
                                         foreignObject.setAttribute('class', 'position-relative');
-                                        foreignObject.setAttribute('height', (svg.clientWidth * 1));
-                                        foreignObject.setAttribute('width', (svg.clientWidth * 1));
+                                        foreignObject.setAttribute('height', (w * 1));
+                                        foreignObject.setAttribute('width', (w * 1));
+                                        foreignObject.setAttribute('x', x);
+                                        foreignObject.setAttribute('y', y);
                                         foreignObject.firstElementChild.setAttribute('class', 'height-100pct position-absolute top-0 width-100pct');
                                         foreignObject.removeAttribute('class');
                                         foreignObject.removeAttribute('data-fetch');
                                         foreignObject.removeAttribute('style');
-                                        foreignObject.removeAttribute('x');
-                                        foreignObject.removeAttribute('y');
 
                                         var svgstr = foreignObject.outerHTML;
                                         var rect = doc.find('rect');
@@ -423,18 +429,19 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(svg);
                                         svg.insertAdjacentHTML('beforeend', svgstr);
-                                        svg.setAttribute('viewBox', '0 0 570 570');
+                                        svg.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
                                         console.log('1.0.1', svg, svg.lastElementChild);
-                                        var x = (svg.clientWidth - svg.lastElementChild.clientWidth) / 2;
-                                        var y = (svg.clientHeight - svg.lastElementChild.clientWidth) / 2;
-                                        svg.lastElementChild.setAttribute('x', x);
-                                        svg.lastElementChild.setAttribute('y', y);
+                                        //svg.lastElementChild.setAttribute('x', 0);
+                                        //svg.lastElementChild.setAttribute('y', 0);
                                         svg.parentElement.style.color = colors.contrast('#' + bg);
                                         $(svg.all('path')).attr('fill', colors.contrast('#' + bg));
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
-                                        var w = 570 * 0.69;
-                                        var h = 570 * 0.69;
-                                        svg.find('svg').setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+
+                                        //svg.find('svg').setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+                                        var ico = svg.find('svg');
+                                        ico.removeAttribute('class');
+                                        ico.setAttribute('height', w);
+                                        ico.setAttribute('width', w);
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
