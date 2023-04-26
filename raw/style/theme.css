@@ -1434,6 +1434,10 @@
         height: 50px;
     }
 
+    .height-57px, [css-height="57px"] {
+        height: 57px;
+    }
+
     .height-64px, [css-height="64px"] {
         height: 64px;
     }
@@ -3016,6 +3020,10 @@
 
     .width-50px, [css-width="50px"] {
         width: 50px;
+    }
+
+    .width-57px, [css-width="57px"] {
+        width: 57px;
     }
 
     .width-64px, [css-width="64px"] {
