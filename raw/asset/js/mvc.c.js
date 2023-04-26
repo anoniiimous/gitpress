@@ -1363,8 +1363,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         unbrand: (target) => {
             console.log(1346, target);
             var brand = target.closest('box').previousElementSibling;
-            var svg = brand.find('foreignObject svg');
-            svg.remove();
+            var svg = brand.find('svg');
+            var icon = controller.setup.ico(svg);
+            console.log(icon);
+            download(icon);
         },
 
         visibility: async(target) => {
@@ -4179,8 +4181,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         },
 
         ico: (el) => {
-            var elem = el.find('picture').firstElementChild;
-            var xml = new XMLSerializer().serializeToString(elem);
+            var xml = new XMLSerializer().serializeToString(el);
             return obj = {
                 download: GET[1] + ".svg",
                 href: "data:image/svg;base64," + btoa(xml)
@@ -4406,11 +4407,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var wh = svg.closest('picture > svg').getAttribute('viewBox').split(' ');
             var height = wh[wh.length - 1];
             var width = wh[wh.length - 2];
-            0 < 1 ? console.log("controller.setup.scale", {
+            0 > 1 ? console.log("controller.setup.scale", {
                 foreignObject,
                 value,
                 height,
-                        h: (value/100)
+                h: (value/100)
             }) : null;
             var w = Math.round(height * (value/100));
             var h = Math.round(height * (value/100));
