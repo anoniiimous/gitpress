@@ -118,6 +118,76 @@ framework.builder.insert = function(target) {
         }
     }
 }
+framework.branding = {};
+framework.branding.themeColor = event=>{
+    var target = event.target;
+    var value = target.value;
+    var card = target.closest('card');
+    var themes = card.all('[data-theme-color]');
+    console.log({
+        themes
+    });
+    themes.forEach(function(theme) {
+        var ground = theme.dataset.themeColor;
+        var isHex = is.hex(value);
+        if (ground === "foreground") {
+            var color = theme.getAttribute('css-color');
+            if (!color) {
+                color = theme.getAttribute('disabled-css-color');
+            }
+            console.log(138, {
+                color
+            });
+        }
+        if (ground === "background") {
+            var bg = theme.getAttribute('css-background-color');
+            if (!bg) {
+                bg = theme.getAttribute('disabled-css-background-color');
+            }
+            console.log(141, {
+                bg
+            });
+        }
+        if (value.length === 0) {
+            if (ground === "foreground") {
+                theme.setAttribute('disabled-css-color', color);
+                theme.removeAttribute('css-color');
+            }
+            if (ground === "background") {
+                theme.setAttribute('disabled-css-background-color', bg);
+                theme.removeAttribute('css-background-color');
+            }
+        }
+        if (ground === "background") {
+            if (value.length > 0) {
+                if (isHex) {
+                    theme.style.backgroundColor = value;
+                    theme.setAttribute('fill', value);
+                }
+            } else {
+                theme.style.backgroundColor = bg;
+                theme.setAttribute('fill', bg);
+            }
+        }
+        if (ground === "foreground") {
+            console.log('color', {
+                value,
+                color
+            });
+            if (value.length > 0) {
+                if (isHex) {
+                    $(theme.all('svg [fill]')).attr('fill', value);
+                }
+            } else {
+                $(theme.all('svg [fill]')).attr('fill', color);
+            }
+            console.log('color', {
+                color
+            });
+        }
+    });
+}
+;
 
 framework.on = async function(event) {
     //console.log(is.iframe, event);
@@ -1424,7 +1494,7 @@ function toolset(mode, options) {
         tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
 
     }
-    
+
 }
 
 window.tool.function = {};

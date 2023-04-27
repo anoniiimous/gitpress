@@ -118,7 +118,7 @@
         background-color: #333;
     }
 
-    .background-color-5bbad5 {
+    .background-color-5bbad5, [css-background-color="#5bbad5"] {
         background-color: #5bbad5;
     }
 
@@ -674,7 +674,7 @@
         color: #333;
     }
 
-    .color-5bbad5, .color-5bbad5 svg path:not([fill]), [css-color="#5bbad5"], [css-color="#5bbad5"] svg path:not([fill]), [css-color="#5bbad5"] svg path:not([fill=""]) {
+    .color-5bbad5, .color-5bbad5 svg :not([fill]), [css-color="#5bbad5"], [css-color="#5bbad5"] svg :not([fill]), [css-color="#5bbad5"] svg:has(path[fill]) path[fill] {
         fill: #5bbad5;
         color: #5bbad5;
     }
@@ -691,6 +691,11 @@
         color: #ccc;
     }
 
+    .color-dadada, [css-color="#dadada"], [css-color="#dadada"] svg :not([fill=""]) {
+        color: #dadada;
+        fill: #dadada;
+    }
+
     .color-ddd {
         color: #ddd;
     }
@@ -703,11 +708,11 @@
         color: #fbfbfb;
     }
 
-    .color-fff, .color-fff path:not([fill]), [css-color="#fff"], [css-color="#fff"] path:not([fill]), [css-color="#fff"] path:not([fill=""]) {
+    .color-fff, .color-fff :not([fill]), [css-color="#fff"], [css-color="#fff"] :not([fill]), [css-color="#fff"] :not([fill=""]) {
         fill: #fff;
     }
 
-    .color-ffffff, .color-ffffff path:not([fill]), [css-color="#ffffff"], [css-color="#ffffff"] path:not([fill]), [css-color="#ffffff"] path:not([fill=""]) {
+    .color-ffffff, .color-ffffff :not([fill]), [css-color="#ffffff"], [css-color="#ffffff"] :not([fill]), [css-color="#ffffff"] :not([fill=""]) {
         fill: #ffffff;
     }
 

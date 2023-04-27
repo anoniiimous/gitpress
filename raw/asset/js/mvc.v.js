@@ -455,7 +455,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var x = (s - width) / 2;
                                             var y = (s - height) / 2;
                                             var rect = el.find('rect');
-                                            var bg = rect.getAttribute('fill');                
+                                            var bg = rect ? rect.getAttribute('fill') : null;
                                             rect ? rect.insertAdjacentHTML('afterend', svgstr) : el.innerHTML = svgstr;
                                             el.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
                                             var foreignObject = el.find('foreignObject');
