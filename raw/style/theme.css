@@ -1016,6 +1016,22 @@
         left: -8px;
     }
 
+    .left-29px, [css-left="29px"] {
+        left: 29px;
+    }
+
+    .left-46px, [css-left="46px"] {
+        left: 46px;
+    }
+
+    .left-89px, [css-left="89px"] {
+        left: 89px;
+    }
+
+    .left-90px, [css-left="90px"] {
+        left: 90px;
+    }
+
     .left-320px, [css-left="320px"] {
         left: 320px;
     }
@@ -1196,6 +1212,10 @@
 @media screen {
     .font-size-0, font[size="0"] {
         font-size: 0;
+    }
+
+    .font-size-6px, font[size="6px"] {
+        font-size: 6px;
     }
 
     .font-size-8px, font[size="8px"] {
@@ -1398,6 +1418,10 @@
         height: 10px;
     }
 
+    .height-12px, [css-height="12px"] {
+        height: 12px;
+    }
+
     .height-16px, [css-height="16px"] {
         height: 16px;
     }
@@ -1428,6 +1452,10 @@
 
     .height-44px, [css-height="44px"] {
         height: 44px;
+    }
+
+    .height-45px, [css-height="45px"] {
+        height: 45px;
     }
 
     .height-50px, [css-height="50px"] {
@@ -1600,6 +1628,10 @@
 
 /*LINE HEIGHT*/
 @media screen {
+    .line-height-12px {
+        line-height: 12px;
+    }
+    
     .line-height-20px {
         line-height: 20px;
     }
@@ -2586,6 +2618,22 @@
         top: 100px;
     }
 
+    .top-104px {
+        top: 104px;
+    }
+
+    .top-105px {
+        top: 105px;
+    }
+
+    .top-133px, [css-top="133px"] {
+        top: 133px;
+    }
+
+    .top-135px, [css-top="135px"] {
+        top: 135px;
+    }
+
     .top-minus-5px {
         top: -5px
     }
@@ -2846,6 +2894,10 @@
         width: 10px;
     }
 
+    .width-12px, [css-width="12px"] {
+        width: 12px;
+    }
+
     .width-16px, [css-width="16px"] {
         width: 16px;
     }
@@ -2864,6 +2916,10 @@
 
     .width-44px, [css-width="44px"] {
         width: 44px;
+    }
+
+    .width-45px, [css-width="45px"] {
+        width: 45px;
     }
 
     .width-60px, [css-width="60px"] {

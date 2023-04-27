@@ -430,14 +430,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         rect.removeAttribute('rx');
 
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
-                                        //console.log(svg);
+                                        console.log(432, svg);
+                                        svg.find('rect').setAttribute('fill', bg)
                                         svg.insertAdjacentHTML('beforeend', svgstr);
                                         svg.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
                                         console.log('1.0.1', svg, svg.lastElementChild);
                                         //svg.lastElementChild.setAttribute('x', 0);
                                         //svg.lastElementChild.setAttribute('y', 0);
                                         svg.parentElement.style.color = colors.contrast('#' + bg);
-                                        $(svg.all('path')).attr('fill', colors.contrast('#' + bg));
+                                        $(svg.all('path')).attr('fill', '#' + bg);
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
 
                                         //svg.find('svg').setAttribute('viewBox', '0 0 ' + w + ' ' + h);
@@ -448,14 +449,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
-                                        0 < 1 ? vp.all('[data-value="favicon"]').forEach(function(el,index) {
-                                            var width = Math.round(s * 0.69);
-                                            var height = Math.round(s * 0.69);
+                                        0 < 1 ? vp.all('[data-value="favicon"]').forEach(function(el, index) {
+                                            var width = Math.round(s * 1);
+                                            var height = Math.round(s * 1);
                                             var x = (s - width) / 2;
                                             var y = (s - height) / 2;
-                                            el.innerHTML = svgstr;
+                                            var rect = el.find('rect');
+                                            var bg = rect.getAttribute('fill');                
+                                            rect ? rect.insertAdjacentHTML('afterend', svgstr) : el.innerHTML = svgstr;
                                             el.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
-                                            var foreignObject = el.firstElementChild;
+                                            var foreignObject = el.find('foreignObject');
                                             foreignObject.setAttribute('height', (height * 1));
                                             foreignObject.setAttribute('width', (width * 1));
                                             foreignObject.setAttribute('x', x);

@@ -11,8 +11,8 @@
             <box class="flex-1">
                 <flex class="border-1px-solid border-color-ddd border-radius-15pct height-0 overflow-hidden padding-top-100pct position-relative width-100pct" id="iro-dashboard-config-branding">
                     <picture class="height-100pct position-absolute top-0 width-100pct">
-                        <svg height="100%" width="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" >
-                            <rect height="100%" rx="15%" width="100%" fill="#000000"/>
+                        <svg height="100%" width="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <rect fill="transparent" height="100%" rx="15%" width="100%">
                         </svg>
                     </picture>
                 </flex>
@@ -103,8 +103,10 @@
                                     <n class="gg-close"></n>
                                 </ico>
                                 <row class="align-items-center background-color-fff border-top-left-radius-10px border-top-right-radius-10px gap-5px justify-content-center padding-x-10px position-relative z-index-2" css-height="44px">
-                                    <ico class="background-color-ddd position-relative z-index-1" css-height="20px" css-width="20px">
-                                        <svg data-value="favicon" height="100%" width="100%"></svg>
+                                    <ico class="position-relative z-index-1" css-height="20px" css-width="20px">
+                                        <svg data-value="favicon" height="100%" width="100%">
+                                            <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                        </svg>
                                     </ico>
                                     <text class="-dw480px-width-auto -dw720px-width-120px -dw960px-width-auto -dw1280px-width-30px font-size-14px overflow-hidden position-relative white-space-nowrap z-index-1">
                                         <span>Lorem Ipsum</span>
@@ -127,8 +129,10 @@
                                     <n class="gg-close"></n>
                                 </ico>
                                 <row class="align-items-center background-color-35363a border-top-left-radius-10px border-top-right-radius-10px gap-5px justify-content-center padding-x-10px position-relative z-index-2" css-height="44px">
-                                    <ico class="background-color-ddd position-relative z-index-1" css-height="20px" css-width="20px">
-                                        <svg data-value="favicon" height="100%" width="100%"></svg>
+                                    <ico class="position-relative z-index-1" css-height="20px" css-width="20px">
+                                        <svg data-value="favicon" height="100%" width="100%">
+                                            <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                        </svg>
                                     </ico>
                                     <text class="-dw480px-width-auto -dw720px-width-120px -dw960px-width-auto -dw1280px-width-30px color-fff font-size-14px overflow-hidden position-relative white-space-nowrap z-index-1">
                                         <span>Lorem Ipsum</span>
@@ -154,8 +158,10 @@
                             <cell class="background-color-fff border-1px-solid border-color-ddd display-flex height-150px justify-content-center outline position-relative">
                                 <column class="flex-1 gap-10px justify-content-center margin-0px padding-20px">
                                     <row class="align-items-center gap-5px margin-bottom-3px">
-                                        <ico class="background-color-ddd position-relative z-index-1" css-height="16px" css-width="16px">
-                                            <svg data-value="favicon" height="100%" width="100%"></svg>
+                                        <ico class="position-relative z-index-1" css-height="16px" css-width="16px">
+                                            <svg data-value="favicon" height="100%" width="100%">
+                                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                            </svg>
                                         </ico>
                                         <text class="font-size-12px" placeholder="example.com"></text>
                                     </row>
@@ -171,8 +177,10 @@
                             <cell class="background-color-fff border-1px-solid border-color-ddd color-000 display-flex height-150px justify-content-center position-relative" css-font-family="Times New Roman">
                                 <column class="border-radius-10px flex-1 gap-10px justify-content-center margin-10px" css-box-shadow="rgba(32, 33, 36, 0.28) 0px 1px 6px">
                                     <row class="align-items-center gap-5px margin-bottom-3px padding-x-20px">
-                                        <ico class="background-color-ddd position-relative z-index-1" css-height="16px" css-width="16px">
-                                            <svg data-value="favicon" height="100%" width="100%"></svg>
+                                        <ico class="position-relative z-index-1" css-height="16px" css-width="16px">
+                                            <svg data-value="favicon" height="100%" width="100%">
+                                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                            </svg>
                                         </ico>
                                         <text class="font-size-12px" placeholder="https://example.com"></text>
                                     </row>
@@ -193,7 +201,7 @@
                 <box class="border-top-1px-solid border-color-ddd flex-1 gap-10px padding-top-20px">
                     <row class="align-items-flex-start gap-10px">
                         <label class="align-items-center display-flex justify-content-center">
-                            <input name="branding-desktop" type="radio">
+                            <input checked name="branding-desktop" onchange="controller.branding.browser(event)" type="radio" value="default">
                             <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                 <n class="-checked-display-flex display-none gg-check"></n>
                             </ico>
@@ -204,7 +212,7 @@
                     </row>
                     <row class="align-items-flex-start gap-10px">
                         <label class="align-items-center display-flex justify-content-center">
-                            <input name="branding-desktop" type="radio">
+                            <input name="branding-desktop" onchange="controller.branding.browser(event)" type="radio" value="custom">
                             <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                 <n class="-checked-display-flex display-none gg-check"></n>
                             </ico>
@@ -218,11 +226,11 @@
                                 </row>
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Border Radius</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" type="range" min="0" max="100" step="5" value="50">
+                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-borderRadius" type="range" min="0" max="285" step="14.25" value="128.25">
                                 </row>
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Image Size</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" type="range" min="0" max="100" step="5" value="50">
+                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-imageSize" type="range" min="285" max="570" step="71.25" value="427.5">
                                 </row>
                             </flex>
                         </column>
@@ -248,7 +256,9 @@
                             <img src="raw/asset/png/ios-home-screen.png">
                         </picture>
                         <flex class="height-57px left-0 margin-auto position-absolute right-0 top-90px width-57px">
-                            <svg data-value="favicon" height="100%" width="100%"></svg>
+                            <svg data-value="favicon" height="100%" width="100%">
+                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                            </svg>
                         </flex>
                     </column>
                 </box>
@@ -273,7 +283,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-iOSWebClip" type="radio">
+                                <input checked name="radio-iOSWebClip" onchange="controller.branding.ios(event)" type="radio" value="default">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -282,7 +292,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-iOSWebClip" type="radio">
+                                <input name="radio-iOSWebClip" onchange="controller.branding.ios(event)" type="radio" value="background">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -295,7 +305,7 @@
                                 </row>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">Margin Size (for a 57x57 icon)</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" type="range" min="0" max="100" step="5" value="50">
+                                    <input class="background-color-ddd border-radius-10px height-10px" type="range" min="0" max="15" step="1" value="4">
                                 </row>
                             </column>
                         </row>
@@ -357,16 +367,23 @@
                 <box class="gap-10px width-222px">
                     <column class="gap-20px flex-1" id="tabs-branding-windowsMetro-preview">
                         <picture class="border-1px-solid border-color-ddd border-radius-15pct flex-1 position-relative" data-tab="1">
-                            <img src="raw/asset/png/android-home-screen.png">
-                            <svg class="border-radius-15pct height-50px left-0 margin-auto right-0 top-100px position-absolute width-50px" data-value="favicon"></svg>
+                            <img class="width-222px" src="raw/asset/png/android-home-screen.png">
+                            <svg class="border-radius-15pct height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
+                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                            </svg>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="2">
-                            <img src="raw/asset/png/android-switcher.png">
-                            <svg class="height-50px left-0 margin-auto right-0 top-90px position-absolute" data-value="favicon"></svg>
+                            <img class="width-222px" src="raw/asset/png/android-switcher.png">
+                            <svg class="border-radius-15pct height-12px left-29px margin-auto top-133px position-absolute width-12px" data-value="favicon">
+                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                            </svg>
+                            <text class="border-radius-15pct font-size-6px height-12px left-46px line-height-12px margin-auto top-133px position-absolute" css-font-family='"Helvetica Neue",Helvetica,Arial,sans-serif' placeholder="Chrome"></text>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="3">
-                            <img src="raw/asset/png/android-splash.png">
-                            <svg class="height-50px left-0 margin-auto right-0 top-90px position-absolute" data-value="favicon"></svg>
+                            <img class="width-222px" src="raw/asset/png/android-splash.png">
+                            <svg class="border-radius-15pct height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
+                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                            </svg>
                         </picture>
                     </column>
                     <footer class="display-flex gap-10px justify-content-center" data-tabs="tabs-branding-windowsMetro-preview">
@@ -411,7 +428,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-androidChrome" type="radio">
+                                <input checked name="radio-androidChrome" type="radio">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -517,7 +534,9 @@
                             <img src="/raw/asset/png/windows8-home-screen.png">
                         </picture>
                         <picture class="bottom-0 height-101px margin-7px position-absolute right-0 width-101px" style="background-color:#da532c">
-                            <svg class="width-100pct" data-value="favicon"></svg>
+                            <svg class="width-100pct" data-value="favicon">
+                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                            </svg>
                         </picture>
                     </flex>
                 </box>
@@ -555,7 +574,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-windowsMetro" type="radio">
+                                <input checked name="radio-windowsMetro" type="radio">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -636,21 +655,27 @@
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-no-focus.png">
                             <picture class="bottom-0 height-50px left-0 margin-auto position-absolute right-0 top-0 width-50px">
-                                <svg class="height-100pct width-100pct" data-value="favicon"></svg>
+                                <svg class="height-100pct width-100pct" data-value="favicon">
+                                    <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                </svg>
                             </picture>
                         </picture>
                         <text>Pinned tab - Focus</text>
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-focus.png">
                             <picture class="bottom-0 height-50px left-0 margin-auto position-absolute right-0 top-0 width-50px">
-                                <svg class="height-100pct width-100pct" data-value="favicon"></svg>
+                                <svg class="height-100pct width-100pct" data-value="favicon">
+                                    <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                </svg>
                             </picture>
                         </picture>
                         <text>Touch Bar</text>
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-touch-bar.png">
                             <picture class="align-items-center background-color-5bbad5 border-radius-5px bottom-0 color-fff display-flex height-36px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-80px">
-                                <svg class="height-36px width-36px" data-value="favicon"></svg>
+                                <svg class="height-36px width-36px" data-value="favicon">
+                                    <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                </svg>
                             </picture>
                         </picture>
                     </column>
@@ -676,7 +701,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-macOSSafari" type="radio">
+                                <input checked name="radio-macOSSafari" type="radio">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>

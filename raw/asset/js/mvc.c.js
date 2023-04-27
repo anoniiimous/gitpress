@@ -260,6 +260,55 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    branding: {
+
+        browser: (event) => {
+            var target = event.target;
+            var value = target.value;
+            var svg = target.closest('card').find('svg');
+            var rect = svg.find('rect');
+            var icon = svg.find('svg');
+                    
+            var vb = svg.getAttribute('viewBox').split(' ');
+            var w = vb[vb.length - 2];
+            var h = vb[vb.length - 1];
+            if(value === 'default') {
+                $(target.closest('card').all('rect')).attr('fill', 'transparent')
+                $(target.closest('card').all('foreignObject, svg')).attr('height', h + "px").attr('width', w + "px")
+                $(target.closest('card').all('foreignObject')).attr('x', 0).attr('y', 0);
+            }
+            if(value === 'custom') {
+                var row = target.closest('row');                                
+                var hw = row.find('[name="browser-imageSize"]').value;
+                var x = (w - hw) / 2;
+                var y = (h - hw) / 2;
+                var fill = row.find('[type="text"]').value;
+                var rx = row.find('[name="browser-borderRadius"]').value;
+                $(target.closest('card').all('rect')).attr('fill', fill)
+                $(target.closest('card').all('rect')).attr('rx', rx + "px")
+                $(target.closest('card').all('foreignObject, svg')).attr('height', hw + "px").attr('width', hw + "px")
+                $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
+            }            
+        },
+                
+        ios: (event) => {
+            var target = event.target;
+            var value = target.value;
+            var svg = target.closest('card').find('svg');
+            var rect = svg.find('rect');
+            var icon = svg.find('svg');
+            if(value === 'default') {
+                rect.setAttribute('fill', '#000');
+            }
+            if(value === 'background') {
+                var fill = target.closest('row').find('[type="text"]').value;
+                console.log(rect, fill);
+                rect.setAttribute('fill', fill)
+            }
+        }
+                        
+    },
+
     build: {
         boot: async (iframe) => {
             return new Promise(async (resolve, reject) => {
