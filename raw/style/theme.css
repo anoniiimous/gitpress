@@ -674,7 +674,8 @@
         color: #333;
     }
 
-    .color-5bbad5 {
+    .color-5bbad5, .color-5bbad5 svg path:not([fill]), [css-color="#5bbad5"], [css-color="#5bbad5"] svg path:not([fill]), [css-color="#5bbad5"] svg path:not([fill=""]) {
+        fill: #5bbad5;
         color: #5bbad5;
     }
 
@@ -698,12 +699,16 @@
         color: #eee;
     }
 
-    .color-fff {
-        color: #fff;
+    .color-fbfbfb {
+        color: #fbfbfb;
     }
 
-    .color-fff path {
+    .color-fff, .color-fff path:not([fill]), [css-color="#fff"], [css-color="#fff"] path:not([fill]), [css-color="#fff"] path:not([fill=""]) {
         fill: #fff;
+    }
+
+    .color-ffffff, .color-ffffff path:not([fill]), [css-color="#ffffff"], [css-color="#ffffff"] path:not([fill]), [css-color="#ffffff"] path:not([fill=""]) {
+        fill: #ffffff;
     }
 
     .color-ff3b30 {
@@ -1206,6 +1211,10 @@
     .font-family-verdana, [css-font-family="Verdana"] {
         font-family: Verdana;
     }
+
+    [css-font-family="Tahoma, Verdana, Arial"] {
+        font-family: Tahoma, Verdana, Arial;
+    }
 }
 
 /*FONT SIZE*/
@@ -1438,8 +1447,20 @@
         height: 24px;
     }
 
+    .height-28px, [css-height="28px"] {
+        height: 28px;
+    }
+
     .height-32px, [css-height="32px"] {
         height: 32px;
+    }
+
+    .height-34px, [css-height="34px"] {
+        height: 34px;
+    }
+
+    .height-36px, [css-height="36px"] {
+        height: 36px;
     }
 
     .height-38px, [css-height="38px"] {
@@ -2572,6 +2593,12 @@
 }
 
 @media screen {
+    [css-text-shadow="0px 1px 2px #273638"] {
+        text-shadow: 0px 1px 2px #273638;
+    }
+}
+
+@media screen {
     .text-transform-capitalize {
         text-transform: capitalize;
     }
@@ -2632,6 +2659,10 @@
 
     .top-135px, [css-top="135px"] {
         top: 135px;
+    }
+
+    .top-153px, [css-top="153px"] {
+        top: 153px;
     }
 
     .top-minus-5px {
@@ -3060,6 +3091,10 @@
 
     .width-20px {
         width: 20px;
+    }
+
+    .width-28px, [css-width="28px"] {
+        width: 28px;
     }
 
     .width-30px, [css-width="30px"] {

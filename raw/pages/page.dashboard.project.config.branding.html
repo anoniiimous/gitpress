@@ -257,7 +257,7 @@
                         </picture>
                         <flex class="height-57px left-0 margin-auto position-absolute right-0 top-90px width-57px">
                             <svg data-value="favicon" height="100%" width="100%">
-                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                <rect fill="#000" height="100%" rx="15%" width="100%">
                             </svg>
                         </flex>
                     </column>
@@ -369,20 +369,21 @@
                         <picture class="border-1px-solid border-color-ddd border-radius-15pct flex-1 position-relative" data-tab="1">
                             <img class="width-222px" src="raw/asset/png/android-home-screen.png">
                             <svg class="border-radius-15pct height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
-                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                <rect fill="transparent" height="100%" width="100%">
                             </svg>
+                            <text class="border-radius-15pct color-fbfbfb font-size-9px height-24px left-90px margin-auto position-absolute text-align-center top-153px width-45px" css-font-family="Tahoma, Verdana, Arial" css-text-shadow="0px 1px 2px #273638">My App</text>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="2">
                             <img class="width-222px" src="raw/asset/png/android-switcher.png">
                             <svg class="border-radius-15pct height-12px left-29px margin-auto top-133px position-absolute width-12px" data-value="favicon">
-                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                <rect fill="transparent" height="100%" width="100%">
                             </svg>
                             <text class="border-radius-15pct font-size-6px height-12px left-46px line-height-12px margin-auto top-133px position-absolute" css-font-family='"Helvetica Neue",Helvetica,Arial,sans-serif' placeholder="Chrome"></text>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="3">
                             <img class="width-222px" src="raw/asset/png/android-splash.png">
                             <svg class="border-radius-15pct height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
-                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                <rect fill="transparent" height="100%" width="100%">
                             </svg>
                         </picture>
                     </column>
@@ -428,7 +429,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input checked name="radio-androidChrome" type="radio">
+                                <input checked name="radio-androidChrome" onchange="controller.branding.android(event)" type="radio" value="default">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -437,7 +438,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-androidChrome" type="radio">
+                                <input name="radio-androidChrome" onchange="controller.branding.android(event)" type="radio" value="custom">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -446,17 +447,17 @@
                                 <text class="line-height-20px">Add a solid, plain background to fill the transparent regions.</text>
                                 <row class="align-items-center gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px">Background Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" type="text" value="#333333">
+                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" type="text" value="#ffffff">
                                 </row>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">Margin Size (for a 96x96 icon)</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" type="range" min="0" max="100" step="5" value="50">
+                                    <input class="background-color-ddd border-radius-10px height-10px" name="android-marginSize" type="range" min="0" max="237.5" step="11.875" value="95">
                                 </row>
                             </column>
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-androidChrome" type="radio">
+                                <input name="radio-androidChrome" onchange="controller.branding.android(event)" type="radio" value="shadow">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -534,7 +535,7 @@
                             <img src="/raw/asset/png/windows8-home-screen.png">
                         </picture>
                         <picture class="bottom-0 height-101px margin-7px position-absolute right-0 width-101px" style="background-color:#da532c">
-                            <svg class="width-100pct" data-value="favicon">
+                            <svg class="height-50pct margin-auto width-50pct" data-value="favicon">
                                 <rect fill="transparent" height="100%" rx="15%" width="100%">
                             </svg>
                         </picture>
@@ -561,20 +562,20 @@
                             <text class="margin-top-10px">Use this color (preferably, choose one suggested for the Windows Metro UI):</text>
                             <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box margin-top-5px padding-x-10px padding-y-5px width-100px" type="text" value="#da532c">
                         </column>
-                        <row class="flex-wrap-wrap gap-5px line-height-36px">
-                            <text class="background-color-00aba9 border-radius-50px color-fff padding-x-10px">Teal</text>
-                            <text class="background-color-2b5797 border-radius-50px color-fff padding-x-10px">Dark Blue</text>
-                            <text class="background-color-9f00a7 border-radius-50px color-fff padding-x-10px">Light Purple</text>
-                            <text class="background-color-603cba border-radius-50px color-fff padding-x-10px">Dark Purple</text>
-                            <text class="background-color-b91d47 border-radius-50px color-fff padding-x-10px">Dark Red</text>
-                            <text class="background-color-da532c border-radius-50px color-fff padding-x-10px">Dark Orange</text>
-                            <text class="background-color-ffc40d border-radius-50px color-fff padding-x-10px">Yellow</text>
-                            <text class="background-color-00a300 border-radius-50px color-fff padding-x-10px">Green</text>
-                            <text class="background-color-2d89ef border-radius-50px color-fff padding-x-10px">Blue</text>
+                        <row class="flex-wrap-wrap gap-5px line-height-36px" data-tap="controller.branding.windows(event)">
+                            <text class="background-color-00aba9 border-radius-50px color-fff padding-x-10px" css-background-color="#00aba9" type="color">Teal</text>
+                            <text class="background-color-2b5797 border-radius-50px color-fff padding-x-10px" css-background-color="#2b5797" type="color">Dark Blue</text>
+                            <text class="background-color-9f00a7 border-radius-50px color-fff padding-x-10px" css-background-color="#9f00a7" type="color">Light Purple</text>
+                            <text class="background-color-603cba border-radius-50px color-fff padding-x-10px" css-background-color="#603cba" type="color">Dark Purple</text>
+                            <text class="background-color-b91d47 border-radius-50px color-fff padding-x-10px" css-background-color="#b91d47" type="color">Dark Red</text>
+                            <text class="background-color-da532c border-radius-50px color-fff padding-x-10px" css-background-color="#da532c" type="color">Dark Orange</text>
+                            <text class="background-color-ffc40d border-radius-50px color-fff padding-x-10px" css-background-color="#ffc40d" type="color">Yellow</text>
+                            <text class="background-color-00a300 border-radius-50px color-fff padding-x-10px" css-background-color="#00a300" type="color">Green</text>
+                            <text class="background-color-2d89ef border-radius-50px color-fff padding-x-10px" css-background-color="#2d89ef" type="color">Blue</text>
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input checked name="radio-windowsMetro" type="radio">
+                                <input checked name="radio-windowsMetro" onchange="controller.branding.windows(event)" type="radio" value="default">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -585,7 +586,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-windowsMetro" type="radio">
+                                <input name="radio-windowsMetro" onchange="controller.branding.windows(event)" type="radio" value="white">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -654,18 +655,42 @@
                         <text>Pinned tab - No focus</text>
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-no-focus.png">
-                            <picture class="bottom-0 height-50px left-0 margin-auto position-absolute right-0 top-0 width-50px">
-                                <svg class="height-100pct width-100pct" data-value="favicon">
-                                    <rect fill="transparent" height="100%" rx="15%" width="100%">
+                            <picture class="align-items-center bottom-0 display-flex height-50px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-50px">
+                                <svg class="height-34px width-34px" data-value="favicon">
+                                    <rect fill="transparent" height="100%" rx="15%" width="100%"></rect>
+                                </svg>
+                                <svg class="height-34px width-34px" css-display="none" viewBox="0 0 570 570">
+                                    <rect fill="#7b7b7b" height="100%" rx="15%" width="100%"></rect>
+                                    <foreignObject height="285" width="285" x="142.5" y="142.5">
+                                        <svg viewBox="0 0 286 280" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="#c3c3c3" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 0 0 L 94.5 0 L 95 1.5 L 0.5 278 L 0 0 Z "></path>
+                                            <path fill="#c3c3c3" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 191 0 L 286 0 L 286 277.5 L 285 277.5 L 191 0 Z "></path>
+                                            <path fill="#c3c3c3" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 142 33 Q 145 31.8 144 35.5 L 189 169 L 97.5 169 L 97 166.5 L 142 33 Z "></path>
+                                            <path fill="#c3c3c3" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 77 224 L 208.5 224 L 209 226.5 L 227 280 L 59.5 280 L 59 277.5 L 77 224 Z "></path>
+                                            <path fill="#c3c3c3" stroke="rgb(0,0,0)" stroke-width="1" opacity="1" d="M 96 0 L 189.5 0 L 190 1.5 L 192 4.5 L 285 280 L 228.5 280 L 228 278.5 L 210 225.5 L 208.5 224 L 77.5 224 L 76 225.5 L 58 280 L 1.5 280 L 1 278.5 L 96 0 Z M 142 31 L 96 167 L 97 169 L 190 169 L 144 34 Q 145 30 142 31 Z "></path>
+                                        </svg>
+                                    </foreignObject>
                                 </svg>
                             </picture>
                         </picture>
                         <text>Pinned tab - Focus</text>
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-focus.png">
-                            <picture class="bottom-0 height-50px left-0 margin-auto position-absolute right-0 top-0 width-50px">
-                                <svg class="height-100pct width-100pct" data-value="favicon">
+                            <picture class="align-items-center bottom-0 display-flex height-50px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-50px">
+                                <svg class="height-34px width-34px" css-color="#5bbad5" data-value="favicon">
                                     <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                </svg>
+                                <svg class="height-34px width-34px" css-display="none" viewBox="0 0 570 570">
+                                    <rect fill="#5bbad5" height="100%" rx="15%" width="100%"></rect>
+                                    <foreignObject height="285" width="285" x="142.5" y="142.5">
+                                        <svg viewBox="0 0 286 280" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="#dadada" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 0 0 L 94.5 0 L 95 1.5 L 0.5 278 L 0 0 Z "></path>
+                                            <path fill="#dadada" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 191 0 L 286 0 L 286 277.5 L 285 277.5 L 191 0 Z "></path>
+                                            <path fill="#dadada" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 142 33 Q 145 31.8 144 35.5 L 189 169 L 97.5 169 L 97 166.5 L 142 33 Z "></path>
+                                            <path fill="#dadada" stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 77 224 L 208.5 224 L 209 226.5 L 227 280 L 59.5 280 L 59 277.5 L 77 224 Z "></path>
+                                            <path fill="#dadada" stroke="rgb(0,0,0)" stroke-width="1" opacity="1" d="M 96 0 L 189.5 0 L 190 1.5 L 192 4.5 L 285 280 L 228.5 280 L 228 278.5 L 210 225.5 L 208.5 224 L 77.5 224 L 76 225.5 L 58 280 L 1.5 280 L 1 278.5 L 96 0 Z M 142 31 L 96 167 L 97 169 L 190 169 L 144 34 Q 145 30 142 31 Z "></path>
+                                        </svg>
+                                    </foreignObject>
                                 </svg>
                             </picture>
                         </picture>
@@ -673,8 +698,19 @@
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-touch-bar.png">
                             <picture class="align-items-center background-color-5bbad5 border-radius-5px bottom-0 color-fff display-flex height-36px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-80px">
-                                <svg class="height-36px width-36px" data-value="favicon">
+                                <svg class="height-28px width-28px" css-color="#ffffff" data-value="favicon">
                                     <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                </svg>
+                                <svg class="height-28px width-28px" css-color="#ffffff" css-display="none" viewBox="0 0 570 570">
+                                    <foreignObject height="570" width="570" x="0" y="0">
+                                        <svg viewBox="0 0 286 280" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 0 0 L 94.5 0 L 95 1.5 L 0.5 278 L 0 0 Z "></path>
+                                            <path stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 191 0 L 286 0 L 286 277.5 L 285 277.5 L 191 0 Z "></path>
+                                            <path stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 142 33 Q 145 31.8 144 35.5 L 189 169 L 97.5 169 L 97 166.5 L 142 33 Z "></path>
+                                            <path stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 77 224 L 208.5 224 L 209 226.5 L 227 280 L 59.5 280 L 59 277.5 L 77 224 Z "></path>
+                                            <path stroke="rgb(0,0,0)" stroke-width="1" opacity="1" d="M 96 0 L 189.5 0 L 190 1.5 L 192 4.5 L 285 280 L 228.5 280 L 228 278.5 L 210 225.5 L 208.5 224 L 77.5 224 L 76 225.5 L 58 280 L 1.5 280 L 1 278.5 L 96 0 Z M 142 31 L 96 167 L 97 169 L 190 169 L 144 34 Q 145 30 142 31 Z "></path>
+                                        </svg>
+                                    </foreignObject>
                                 </svg>
                             </picture>
                         </picture>
@@ -701,14 +737,14 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input checked name="radio-macOSSafari" type="radio">
+                                <input checked name="radio-macOSSafari" onchange="controller.branding.safari(event)" type="radio" value="default">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
                             </label>
                             <text class="line-height-20px">Use a silhouette of the original image. Works well with pictures with significant transparent regions.</text>
                         </row>
-                        <row class="align-items-flex-start gap-10px">
+                        <row class="align-items-flex-start gap-10px" css-display="none">
                             <label class="align-items-center display-flex justify-content-center">
                                 <input name="radio-macOSSafari" type="radio">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
@@ -725,7 +761,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-macOSSafari" type="radio">
+                                <input name="radio-macOSSafari" onchange="controller.branding.safari(event)" type="radio" value="character">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>

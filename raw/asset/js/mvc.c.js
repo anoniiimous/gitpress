@@ -261,7 +261,45 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     branding: {
-
+                
+        android: (event) => {
+            var target = event.target;
+            var value = target.value;
+            var svg = target.closest('card').find('svg');
+            var rect = svg.find('rect');
+            var icon = svg.find('svg');
+                    
+            var vb = svg.getAttribute('viewBox').split(' ');
+            var w = vb[vb.length - 2];
+            var h = vb[vb.length - 1];
+            if(value === 'default') {
+                rect.setAttribute('fill', 'transparent')
+                $(target.closest('card').all('foreignObject, svg')).attr('height', h + "px").attr('width', w + "px")
+                $(target.closest('card').all('foreignObject')).attr('x', 0).attr('y', 0);
+            }
+            if(value === 'custom') {
+                var row = target.closest('row');                                
+                var ms = w - (row.find('[name="android-marginSize"]').value);                        
+                var hw = (w - ms) / 2;
+                var x = hw;
+                var y = hw;
+                var fill = row.find('[type="text"]').value;
+                $(target.closest('card').all('rect')).attr('fill', fill)
+                $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
+                $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
+            }
+            if(value === 'shadow') {
+                var fill = target.closest('row').find('[type="text"]').value;                                
+                var ms = w - 83.125;                        
+                var hw = (w - ms) / 2;
+                var x = hw;
+                var y = hw;
+                rect.setAttribute('fill', 'transparent')
+                $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
+                $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
+            }
+        },
+                
         browser: (event) => {
             var target = event.target;
             var value = target.value;
@@ -305,7 +343,62 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 console.log(rect, fill);
                 rect.setAttribute('fill', fill)
             }
-        }
+        },
+                
+        safari: (event) => {
+            var target = event.target.closest('[type]');
+                    
+            if(target) {
+                var type = target.getAttribute('type');
+                var value = target.getAttribute('value');
+                var svg = target.closest('card').find('svg');
+                var svgs = target.closest('card').all('picture > svg:first-child');
+                        
+                if(value === 'default') {
+                    var color = target.closest('column').find('[type="text"]').value; console.log(color);
+                    $(svgs[1].all('path')).attr('fill', color);
+                    svgs[1].nextElementSibling.find('rect').setAttribute('fill', color);
+                    svgs[2].closest('picture').style.backgroundColor = color;
+                        
+                    $(svgs).removeAttr('css-display', 'none');
+                    svgs.forEach(el => {
+                        el.nextElementSibling.setAttribute('css-display', 'none');
+                    });
+                }
+                if(value === 'character') {
+                    svgs.forEach(el => {
+                        el.nextElementSibling.removeAttribute('css-display', 'none');
+                    });                        
+                    $(svgs).attr('css-display', 'none');
+                    //$(svg.all('path')).attr('fill', 'white');
+                }
+            }
+        },
+                
+        windows: (event) => {
+            var target = event.target.closest('[type]');
+                    
+            if(target) {
+                var type = target.getAttribute('type');
+                var value = target.getAttribute('value');
+                var svg = target.closest('card').find('svg');
+                      
+                if(type === "color") {
+                     var bg = target.getAttribute('css-background-color');
+                     svg.closest('picture').style.backgroundColor = bg;
+                     target.closest('row').previousElementSibling.find('[type="text"]').value = bg;
+                }
+                        
+                if(type === "radio") {
+                    if(value === 'default') {
+                        $(svg.all('path')).removeAttr('fill');
+                    }
+                    if(value === 'white') {
+                        $(svg.all('path')).attr('fill', 'white');
+                    }
+                }
+            }
+        },
                         
     },
 
