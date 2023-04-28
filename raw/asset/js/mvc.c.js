@@ -273,7 +273,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var w = vb[vb.length - 2];
             var h = vb[vb.length - 1];
             if(value === 'default') {
-                rect.setAttribute('fill', 'transparent')
+                $(target.closest('card').all('rect')).attr('fill', 'transparent')
                 $(target.closest('card').all('foreignObject, svg')).attr('height', h + "px").attr('width', w + "px")
                 $(target.closest('card').all('foreignObject')).attr('x', 0).attr('y', 0);
             }
@@ -284,17 +284,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var x = hw;
                 var y = hw;
                 var fill = row.find('[type="text"]').value;
+                $(target.closest('card').find('[name="radio-androidChrome"][value="custom"]').closest('row').all('input:not([type="radio"])')).removeAttr('disabled')
                 $(target.closest('card').all('rect')).attr('fill', fill)
                 $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
                 $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
+            } else {
+                $(target.closest('card').find('[name="radio-androidChrome"][value="custom"]').closest('row').all('input:not([type="radio"])')).attr('disabled', true);
             }
-            if(value === 'shadow') {
-                var fill = target.closest('row').find('[type="text"]').value;                                
+            if(value === 'shadow') {                              
                 var ms = w - 83.125;                        
                 var hw = (w - ms) / 2;
                 var x = hw;
                 var y = hw;
-                rect.setAttribute('fill', 'transparent')
+                $(target.closest('card').all('rect')).attr('fill', 'transparent')
                 $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
                 $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
             }
@@ -326,7 +328,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 $(target.closest('card').all('rect')).attr('rx', rx + "px")
                 $(target.closest('card').all('foreignObject, svg')).attr('height', hw + "px").attr('width', hw + "px")
                 $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
-            }            
+            }
         },
                 
         ios: (event) => {
@@ -335,6 +337,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var svg = target.closest('card').find('svg');
             var rect = svg.find('rect');
             var icon = svg.find('svg');
+                    
+            var vb = svg.getAttribute('viewBox').split(' ');
+            var w = vb[vb.length - 2];
+            var h = vb[vb.length - 1];
             if(value === 'default') {
                 rect.setAttribute('fill', '#000');
             }
@@ -342,6 +348,19 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var fill = target.closest('row').find('[type="text"]').value;
                 console.log(rect, fill);
                 rect.setAttribute('fill', fill)
+                    
+                var row = target.closest('row');                                
+                var ms = w - (row.find('[type="range"]').value);                        
+                var hw = (w - ms) / 2;
+                var x = hw;
+                var y = hw;
+                var fill = row.find('[type="text"]').value;
+
+                console.log({w,h,ms,hw,x,y});
+                $(target.closest('card').find('[value="background"]').closest('row').all('input:not([type="radio"])')).removeAttr('disabled')
+                $(target.closest('card').all('rect')).attr('fill', fill)
+                $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
+                $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
             }
         },
                 

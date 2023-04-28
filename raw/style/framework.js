@@ -119,16 +119,23 @@ framework.builder.insert = function(target) {
     }
 }
 framework.branding = {};
-framework.branding.themeColor = event=>{
+framework.branding.appName = event=>{
     var target = event.target;
     var value = target.value;
     var card = target.closest('card');
-    var themes = card.all('[data-theme-color]');
+    var names = card.all('[data-value="app-name"]');
+    $(names).html(value);
+}
+framework.branding.backgroundColor = event=>{
+    var target = event.target;
+    var value = target.value;
+    var card = target.closest('card');
+    var themes = card.all('[data-background-color]');
     console.log({
         themes
     });
     themes.forEach(function(theme) {
-        var ground = theme.dataset.themeColor;
+        var ground = theme.dataset.backgroundColor;
         var isHex = is.hex(value);
         if (ground === "foreground") {
             var color = theme.getAttribute('css-color');
@@ -187,7 +194,130 @@ framework.branding.themeColor = event=>{
         }
     });
 }
-;
+framework.branding.borderRadius = event=>{
+    var target = event.target;
+    var value = target.value;
+    var svg = target.closest('card').find('svg');
+    var rect = svg.find('rect');
+    var icon = svg.find('svg');
+
+    var vb = svg.getAttribute('viewBox').split(' ');
+    var w = vb[vb.length - 2];
+    var h = vb[vb.length - 1];
+
+    var row = target.closest('row');
+    var rx = row.find('[name="browser-borderRadius"]').value;
+    $(target.closest('card').all('rect')).attr('rx', rx + "px");
+}
+framework.branding.imageSize = event=>{
+    var target = event.target;
+    var value = target.value;
+    var svg = target.closest('card').find('svg');
+
+    var vb = svg.getAttribute('viewBox').split(' ');
+    var w = vb[vb.length - 2];
+    var h = vb[vb.length - 1];
+
+    var row = target.closest('row');
+    var hw = value;
+    var x = (w - hw) / 2;
+    var y = (h - hw) / 2;
+    $(target.closest('card').all('foreignObject, svg')).attr('height', hw + "px").attr('width', hw + "px")
+    $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
+}
+framework.branding.themeColor = event=>{
+    var target = event.target;
+    var value = target.value;
+    var card = target.closest('card');
+    var themes = card.all('[data-theme-color]');
+    console.log({
+        themes
+    });
+    themes.forEach(function(theme) {
+        var ground = theme.dataset.themeColor;
+        var isHex = is.hex(value);
+        if (ground === "foreground") {
+            var color = theme.getAttribute('css-color');
+            if (!color) {
+                color = theme.getAttribute('disabled-css-color');
+            }
+            console.log(138, {
+                color
+            });
+        }
+        if (ground === "background") {
+            var bg = theme.getAttribute('css-background-color');
+            if (!bg) {
+                bg = theme.getAttribute('disabled-css-background-color');
+            }
+            console.log(141, {
+                bg
+            });
+        }
+        if (value.length === 0) {
+            if (ground === "foreground") {
+                theme.setAttribute('disabled-css-color', color);
+                theme.removeAttribute('css-color');
+            }
+            if (ground === "background") {
+                theme.setAttribute('disabled-css-background-color', bg);
+                theme.removeAttribute('css-background-color');
+            }
+        }
+        if (ground === "background") {
+            if (value.length > 0) {
+                if (isHex) {
+                    theme.style.backgroundColor = value;
+                    theme.setAttribute('fill', value);
+                    theme.style.color = colors.contrast(value)
+                }
+            } else {
+                theme.style.backgroundColor = bg;
+                theme.setAttribute('fill', bg);
+                theme.style.color = colors.contrast(bg)
+            }
+        }
+        if (ground === "foreground") {
+            console.log('color', {
+                value,
+                color
+            });
+            if (value.length > 0) {
+                if (isHex) {
+                    $(theme.all('svg [fill]')).attr('fill', value);
+                }
+            } else {
+                $(theme.all('svg [fill]')).attr('fill', color);
+            }
+            console.log('color', {
+                color
+            });
+        }
+    });
+}
+framework.branding.marginSize = event=>{
+    var target = event.target;
+    var value = target.value;
+    var svg = target.closest('card').find('svg');
+    var rect = svg.find('rect');
+    var icon = svg.find('svg');
+
+    var vb = svg.getAttribute('viewBox').split(' ');
+    var w = vb[vb.length - 2];
+    var h = vb[vb.length - 1];
+    var row = target.closest('row');
+
+    var ms = w - (value);
+    var hw = (w - ms) / 2;
+    var x = hw;
+    var y = hw;
+    //var fill = row.parentElement.nextElementSibling.find('[type="text"]').value;
+
+    //$(target.closest('card').find('[name="radio-androidChrome"][value="custom"]').closest('row').all('input:not([type="radio"])')).removeAttr('disabled')
+    //$(target.closest('card').all('rect')).attr('fill', fill)
+    $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
+    $(target.closest('card').all('foreignObject')).attr('x', x).attr('y', y);
+}
 
 framework.on = async function(event) {
     //console.log(is.iframe, event);

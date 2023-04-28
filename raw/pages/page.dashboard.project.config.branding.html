@@ -105,7 +105,7 @@
                                 <row class="align-items-center background-color-fff border-top-left-radius-10px border-top-right-radius-10px gap-5px justify-content-center padding-x-10px position-relative z-index-2" css-height="44px">
                                     <ico class="position-relative z-index-1" css-height="20px" css-width="20px">
                                         <svg data-value="favicon" height="100%" width="100%">
-                                            <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                            <rect css-background-color="#333" data-background-color="background" fill="transparent" height="100%" rx="15%" width="100%">
                                         </svg>
                                     </ico>
                                     <text class="-dw480px-width-auto -dw720px-width-120px -dw960px-width-auto -dw1280px-width-30px font-size-14px overflow-hidden position-relative white-space-nowrap z-index-1">
@@ -131,7 +131,7 @@
                                 <row class="align-items-center background-color-35363a border-top-left-radius-10px border-top-right-radius-10px gap-5px justify-content-center padding-x-10px position-relative z-index-2" css-height="44px">
                                     <ico class="position-relative z-index-1" css-height="20px" css-width="20px">
                                         <svg data-value="favicon" height="100%" width="100%">
-                                            <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                            <rect css-background-color="#333" data-background-color="background" fill="transparent" height="100%" rx="15%" width="100%">
                                         </svg>
                                     </ico>
                                     <text class="-dw480px-width-auto -dw720px-width-120px -dw960px-width-auto -dw1280px-width-30px color-fff font-size-14px overflow-hidden position-relative white-space-nowrap z-index-1">
@@ -160,7 +160,7 @@
                                     <row class="align-items-center gap-5px margin-bottom-3px">
                                         <ico class="position-relative z-index-1" css-height="16px" css-width="16px">
                                             <svg data-value="favicon" height="100%" width="100%">
-                                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                                <rect css-background-color="#333" data-background-color="background" fill="transparent" height="100%" rx="15%" width="100%">
                                             </svg>
                                         </ico>
                                         <text class="font-size-12px" placeholder="example.com"></text>
@@ -179,7 +179,7 @@
                                     <row class="align-items-center gap-5px margin-bottom-3px padding-x-20px">
                                         <ico class="position-relative z-index-1" css-height="16px" css-width="16px">
                                             <svg data-value="favicon" height="100%" width="100%">
-                                                <rect fill="transparent" height="100%" rx="15%" width="100%">
+                                                <rect css-background-color="#333" data-background-color="background" fill="transparent" height="100%" rx="15%" width="100%">
                                             </svg>
                                         </ico>
                                         <text class="font-size-12px" placeholder="https://example.com"></text>
@@ -222,15 +222,15 @@
                             <flex class="-dw480px-flex-direction-column align-items-flex-start flex-wrap-wrap gap-20px line-height-36px">
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Background Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" type="text" value="#333333">
+                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" oninput="framework.branding.backgroundColor(event)" type="text" value="#333333">
                                 </row>
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Border Radius</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-borderRadius" type="range" min="0" max="285" step="14.25" value="128.25">
+                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-borderRadius" oninput="framework.branding.borderRadius(event)" type="range" min="0" max="285" step="14.25" value="128.25">
                                 </row>
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Image Size</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-imageSize" type="range" min="285" max="570" step="71.25" value="427.5">
+                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-imageSize" oninput="framework.branding.imageSize(event)" type="range" min="285" max="570" step="71.25" value="427.5">
                                 </row>
                             </flex>
                         </column>
@@ -256,8 +256,8 @@
                             <img src="raw/asset/png/ios-home-screen.png">
                         </picture>
                         <flex class="height-57px left-0 margin-auto position-absolute right-0 top-90px width-57px">
-                            <svg data-value="favicon" height="100%" width="100%">
-                                <rect fill="#000" height="100%" rx="15%" width="100%">
+                            <svg class="height-57px width-57px" data-value="favicon" height="100%" viewBox="0 0 570 570" width="100%">
+                                <rect css-background-color="#333333" data-background-color="background" fill="#000" height="100%" rx="15%" width="100%">
                             </svg>
                         </flex>
                     </column>
@@ -301,11 +301,11 @@
                                 <text class="line-height-20px">Add a solid, plain background to fill the transparent regions.</text>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Background Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" type="text" value="#333333">
+                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" oninput="framework.branding.backgroundColor(event)" type="text" value="#333333">
                                 </row>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">Margin Size (for a 57x57 icon)</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" type="range" min="0" max="15" step="1" value="4">
+                                    <input class="background-color-ddd border-radius-10px height-10px" min="0" max="237.5" oninput="framework.branding.marginSize(event)" step="11.875" value="95" type="range">
                                 </row>
                             </column>
                         </row>
@@ -363,28 +363,31 @@
                     <text>Add to Homescreen is a also a feature of Android Chrome. Your visitors can mix their natives apps and web bookmarks.</text>
                 </row>
             </box>
-            <flex class="-dw720px-flex-direction-column gap-20px">
+            <flex class="-dw720px-flex-direction-column align-items-flex-start gap-20px">
                 <box class="gap-10px width-222px">
                     <column class="gap-20px flex-1" id="tabs-branding-windowsMetro-preview">
                         <picture class="border-1px-solid border-color-ddd border-radius-15pct flex-1 position-relative" data-tab="1">
                             <img class="width-222px" src="raw/asset/png/android-home-screen.png">
                             <svg class="border-radius-15pct height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
-                                <rect fill="transparent" height="100%" width="100%">
+                                <rect fill="transparent" css-background-color="#da532c" data-background-color="background" height="100%" width="100%">
                             </svg>
-                            <text class="border-radius-15pct color-fbfbfb font-size-9px height-24px left-90px margin-auto position-absolute text-align-center top-153px width-45px" css-font-family="Tahoma, Verdana, Arial" css-text-shadow="0px 1px 2px #273638">My App</text>
+                            <text class="border-radius-15pct color-fbfbfb font-size-9px height-24px left-90px margin-auto position-absolute text-align-center top-153px width-45px" css-font-family="Tahoma, Verdana, Arial" css-text-shadow="0px 1px 2px #273638" data-value="app-name"></text>
                         </picture>
                         <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="2">
                             <img class="width-222px" src="raw/asset/png/android-switcher.png">
-                            <svg class="border-radius-15pct height-12px left-29px margin-auto top-133px position-absolute width-12px" data-value="favicon">
-                                <rect fill="transparent" height="100%" width="100%">
-                            </svg>
-                            <text class="border-radius-15pct font-size-6px height-12px left-46px line-height-12px margin-auto top-133px position-absolute" css-font-family='"Helvetica Neue",Helvetica,Arial,sans-serif' placeholder="Chrome"></text>
+                            <line class="left-24px position-absolute top-130px" css-background-color="#ffffff" css-height="19px" css-width="178px" data-theme-color="background">
+                                <picture class="border-radius-15pct bottom-0 height-12px left-5px margin-auto top-0 position-absolute width-12px">
+                                    <img class="position-absolute" src="raw/asset/png/android_theme_icon_standalone.png">
+                                </picture>
+                                <text class="bottom-0 font-size-6px height-12px left-22px line-height-12px margin-auto top-0 position-absolute" css-font-family='"Helvetica Neue",Helvetica,Arial,sans-serif' placeholder="Chrome"></text>
+                            </line>
                         </picture>
-                        <picture class="border-1px-solid border-color-ddd flex-1" css-display="none" data-tab="3">
+                        <picture class="border-1px-solid border-color-ddd flex-1" css-background-color="#ffffff" css-display="none" data-tab="3" data-theme-color="background">
                             <img class="width-222px" src="raw/asset/png/android-splash.png">
-                            <svg class="border-radius-15pct height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
-                                <rect fill="transparent" height="100%" width="100%">
+                            <svg class="height-45px left-90px margin-auto top-105px position-absolute width-45px" data-value="favicon">
+                                <rect fill="transparent" css-background-color="#ffffff" data-background-color="background" height="100%" width="100%">
                             </svg>
+                            <text class="border-radius-15pct font-size-16px height-24px margin-auto position-absolute text-align-center top-220px width-224px" css-font-family='"Helvetica Neue",Helvetica,Arial,sans-serif' data-value="app-name"></text>
                         </picture>
                     </column>
                     <footer class="display-flex gap-10px justify-content-center" data-tabs="tabs-branding-windowsMetro-preview">
@@ -447,11 +450,11 @@
                                 <text class="line-height-20px">Add a solid, plain background to fill the transparent regions.</text>
                                 <row class="align-items-center gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px">Background Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" type="text" value="#ffffff">
+                                    <input class="-disabled-background-color-eee border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" disabled onkeyup="framework.branding.backgroundColor(event)" type="text" value="#ffffff">
                                 </row>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">Margin Size (for a 96x96 icon)</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" name="android-marginSize" type="range" min="0" max="237.5" step="11.875" value="95">
+                                    <input class="background-color-ddd border-radius-10px height-10px" disabled name="android-marginSize" oninput="framework.branding.marginSize(event)" type="range" min="0" max="237.5" step="11.875" value="95">
                                 </row>
                             </column>
                         </row>
@@ -464,13 +467,17 @@
                             </label>
                             <column class="align-items-flex-start gap-10px">
                                 <text class="line-height-20px">Apply a slight drop shadow, similar to official Google apps (Gmail, Play Store, YouTube...).</text>
+                            </column>
+                        </row>
+                        <row class="align-items-flex-start gap-10px">
+                            <column class="align-items-flex-start gap-10px">
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">App Name</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" placeholder="My App" type="text">
+                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" onkeyup="framework.branding.appName(event)" placeholder="My App" type="text">
                                 </row>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">Theme Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" type="text" value="#ffffff">
+                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" onkeyup="framework.branding.themeColor(event)" type="text" value="#ffffff">
                                 </row>
                             </column>
                         </row>
@@ -534,7 +541,7 @@
                         <picture>
                             <img src="/raw/asset/png/windows8-home-screen.png">
                         </picture>
-                        <picture class="bottom-0 height-101px margin-7px position-absolute right-0 width-101px" style="background-color:#da532c">
+                        <picture class="bottom-0 height-101px margin-7px position-absolute right-0 width-101px" css-background-color="#da532c" data-background-color="background">
                             <svg class="height-50pct margin-auto width-50pct" data-value="favicon">
                                 <rect fill="transparent" height="100%" rx="15%" width="100%">
                             </svg>
@@ -560,9 +567,9 @@
                         <column>
                             <text>Transparent pictures make better tiles. Look at the sample on the left and check that your tile looks good. You can also choose the background of the tile.</text>
                             <text class="margin-top-10px">Use this color (preferably, choose one suggested for the Windows Metro UI):</text>
-                            <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box margin-top-5px padding-x-10px padding-y-5px width-100px" type="text" value="#da532c">
+                            <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box margin-top-5px padding-x-10px padding-y-5px width-100px" onkeyup="framework.branding.backgroundColor(event)" type="text" value="#da532c">
                         </column>
-                        <row class="flex-wrap-wrap gap-5px line-height-36px" data-tap="controller.branding.windows(event)">
+                        <row class="color-fff flex-wrap-wrap gap-5px line-height-36px" data-tap="controller.branding.windows(event)">
                             <text class="background-color-00aba9 border-radius-50px color-fff padding-x-10px" css-background-color="#00aba9" type="color">Teal</text>
                             <text class="background-color-2b5797 border-radius-50px color-fff padding-x-10px" css-background-color="#2b5797" type="color">Dark Blue</text>
                             <text class="background-color-9f00a7 border-radius-50px color-fff padding-x-10px" css-background-color="#9f00a7" type="color">Light Purple</text>
@@ -677,9 +684,9 @@
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-focus.png">
                             <picture class="align-items-center bottom-0 display-flex height-50px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-50px">
-                                <svg class="height-34px width-34px" css-color="#5bbad5" data-theme-color="foreground" data-value="favicon"></svg>
+                                <svg class="height-34px width-34px" css-color="#5bbad5" data-background-color="foreground" data-value="favicon"></svg>
                                 <svg class="height-34px width-34px" css-color="#dadada" css-display="none" viewBox="0 0 570 570">
-                                    <rect css-background-color="#5bbad5" data-theme-color="background" fill="#5bbad5" height="100%" rx="15%" width="100%"></rect>
+                                    <rect css-background-color="#5bbad5" data-background-color="background" fill="#5bbad5" height="100%" rx="15%" width="100%"></rect>
                                     <foreignObject height="285" width="285" x="142.5" y="142.5">
                                         <svg viewBox="0 0 286 280" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <path stroke="rgb(0,0,0)" stroke-width="1" opacity="0" d="M 0 0 L 94.5 0 L 95 1.5 L 0.5 278 L 0 0 Z "></path>
@@ -695,7 +702,7 @@
                         <text>Touch Bar</text>
                         <picture class="border-1px-solid border-color-ddd flex-1 position-relative">
                             <img src="/raw/asset/png/safari-touch-bar.png">
-                            <picture class="align-items-center background-color-5bbad5 border-radius-5px bottom-0 color-fff display-flex height-36px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-80px" css-background-color="#5bbad5" data-theme-color="background">
+                            <picture class="align-items-center background-color-5bbad5 border-radius-5px bottom-0 color-fff display-flex height-36px justify-content-center left-0 margin-auto position-absolute right-0 top-0 width-80px" css-background-color="#5bbad5" data-background-color="background">
                                 <svg class="height-28px width-28px" css-color="#ffffff" data-value="favicon"></svg>
                                 <svg class="height-28px width-28px" css-color="#ffffff" css-display="none" viewBox="0 0 570 570">
                                     <foreignObject height="570" width="570" x="0" y="0">
@@ -766,7 +773,7 @@
                         </row>
                         <row class="align-items-center flex-wrap-wrap gap-5px line-height-20px">
                             <text class="font-size-14px white-space-nowrap">Theme Color</text>
-                            <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" onkeyup="framework.branding.themeColor(event)" type="text" value="#5bbad5">
+                            <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" onkeyup="framework.branding.backgroundColor(event)" type="text" value="#5bbad5">
                         </row>
                     </column>
                     <flex class="gap-20px" css-display="none" data-tab="2">
