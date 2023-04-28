@@ -222,15 +222,15 @@
                             <flex class="-dw480px-flex-direction-column align-items-flex-start flex-wrap-wrap gap-20px line-height-36px">
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Background Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" oninput="framework.branding.backgroundColor(event)" type="text" value="#333333">
+                                    <input class="-disabled-background-color-eee border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" disabled oninput="framework.branding.backgroundColor(event)" type="text" value="#333333">
                                 </row>
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Border Radius</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-borderRadius" oninput="framework.branding.borderRadius(event)" type="range" min="0" max="285" step="14.25" value="128.25">
+                                    <input class="background-color-ddd border-radius-10px height-10px" disabled name="browser-borderRadius" oninput="framework.branding.borderRadius(event)" type="range" min="0" max="285" step="14.25" value="128.25">
                                 </row>
                                 <row class="align-items-center flex-wrap-wrap gap-5px justify-content-center line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Image Size</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" name="browser-imageSize" oninput="framework.branding.imageSize(event)" type="range" min="285" max="570" step="71.25" value="427.5">
+                                    <input class="background-color-ddd border-radius-10px height-10px" disabled name="browser-imageSize" oninput="framework.branding.imageSize(event)" type="range" min="285" max="570" step="71.25" value="427.5">
                                 </row>
                             </flex>
                         </column>
@@ -301,11 +301,11 @@
                                 <text class="line-height-20px">Add a solid, plain background to fill the transparent regions.</text>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px white-space-nowrap">Background Color</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" oninput="framework.branding.backgroundColor(event)" type="text" value="#333333">
+                                    <input class="-disabled-background-color-eee border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-100px" disabled oninput="framework.branding.backgroundColor(event)" type="text" value="#333333">
                                 </row>
                                 <row class="flex-wrap-wrap gap-5px line-height-20px">
                                     <text class="font-size-14px">Margin Size (for a 57x57 icon)</text>
-                                    <input class="background-color-ddd border-radius-10px height-10px" min="0" max="237.5" oninput="framework.branding.marginSize(event)" step="11.875" value="95" type="range">
+                                    <input class="background-color-ddd border-radius-10px height-10px" disabled min="0" max="237.5" oninput="framework.branding.marginSize(event)" step="11.875" type="range" value="95">
                                 </row>
                             </column>
                         </row>
@@ -421,6 +421,12 @@
                         </box>
                         <box>
                             <column class="gap-5px">
+                                <text>Options</text>
+                                <line class="border-bottom-3px-solid width-100pct" css-display="none"></line>
+                            </column>
+                        </box>
+                        <box>
+                            <column class="gap-5px">
                                 <text>Dedicated Picture</text>
                                 <line class="border-bottom-3px-solid width-100pct" css-display="none"></line>
                             </column>
@@ -482,7 +488,79 @@
                             </column>
                         </row>
                     </column>
-                    <flex class="gap-20px" css-display="none" data-tab="2">
+                    <column class="gap-20px" css-display="none" data-tab="2">
+                        <row>
+                            <text>Android Chrome M39 introduces a manifest that helps you refine the behavior of the Add to Homescreen link</text>
+                        </row>
+                        <row class="align-items-flex-start gap-10px">
+                            <label class="align-items-center display-flex justify-content-center">
+                                <input name="radio-androidChrome-options" type="radio" value="default">
+                                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                    <n class="-checked-display-flex display-none gg-check"></n>
+                                </ico>
+                            </label>
+                            <text class="line-height-20px">Browser. In this mode, when the user clicks the link, Android Chrome behaves as if the page was opened like any regular web site.</text>
+                        </row>
+                        <row class="align-items-flex-start gap-10px">
+                            <label class="align-items-center display-flex justify-content-center">
+                                <input checked name="radio-androidChrome-options" type="radio" value="shadow">
+                                <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                    <n class="-checked-display-flex display-none gg-check"></n>
+                                </ico>
+                            </label>
+                            <column class="align-items-flex-start gap-10px">
+                                <text class="line-height-20px">Standalone. In this mode, Android Chrome gives a little more "native" style to the opened page. In particular, it lets you enforce the start URL and screen orientation. It also remove the navigation bar and gives your web site its own tab in the task switcher.</text>
+                            </column>
+                        </row>
+                        <row class="align-items-flex-start gap-10px">
+                            <column class="align-items-flex-start gap-10px">
+                                <column class="flex-wrap-wrap gap-10px line-height-20px">
+                                    <text class="font-size-14px font-weight-bolder">Start URL</text>
+                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" onkeyup="framework.branding.appName(event)" placeholder="http://example.com" type="text">
+                                    <text>Typically, your homepage. Use this field to override the URL of the bookmarked page.</text>
+                                </column>
+                            </column>
+                        </row>
+                        <row class="align-items-flex-start gap-10px">
+                            <column class="align-items-flex-start gap-10px">
+                                <text class="font-size-14px font-weight-bolder">Orientation</text>
+                                <column class="flex-wrap-wrap gap-10px line-height-20px">
+                                    <row class="align-items-flex-start gap-10px">
+                                        <label class="align-items-center display-flex justify-content-center">
+                                            <input checked name="radio-androidChrome-orientation" type="radio" value="default">
+                                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                                <n class="-checked-display-flex display-none gg-check"></n>
+                                            </ico>
+                                        </label>
+                                        <text class="line-height-20px">Not specified. Android Chrome will behave as it usually does when the user rotates his/her device.</text>
+                                    </row>
+                                    <row class="align-items-flex-start gap-10px">
+                                        <label class="align-items-center display-flex justify-content-center">
+                                            <input checked name="radio-androidChrome-orientation" type="radio" value="portrait">
+                                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                                <n class="-checked-display-flex display-none gg-check"></n>
+                                            </ico>
+                                        </label>
+                                        <column class="align-items-flex-start gap-10px">
+                                            <text class="line-height-20px">Force screen orientation to Portrait.</text>
+                                        </column>
+                                    </row>
+                                    <row class="align-items-flex-start gap-10px">
+                                        <label class="align-items-center display-flex justify-content-center">
+                                            <input name="radio-androidChrome-orientation" type="radio" value="landscape">
+                                            <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
+                                                <n class="-checked-display-flex display-none gg-check"></n>
+                                            </ico>
+                                        </label>
+                                        <column class="align-items-flex-start gap-10px">
+                                            <text class="line-height-20px">Force screen orientation to Landscape.</text>
+                                        </column>
+                                    </row>
+                                </column>
+                            </column>
+                        </row>
+                    </column>
+                    <flex class="gap-20px" css-display="none" data-tab="3">
                         <column class="align-items-flex-start gap-10px width-240px">
                             <text class="font-size-14px line-height-20px">If your master picture does not fit Windows well, you can submit a picture designed especially for Windows.</text>
                             <label class="background-color-005cc8 border-radius-5px color-fff font-size-14px line-height-36px padding-x-10px">

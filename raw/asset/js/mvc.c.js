@@ -305,6 +305,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         browser: (event) => {
             var target = event.target;
             var value = target.value;
+            var row = target.closest('row');
             var svg = target.closest('card').find('svg');
             var rect = svg.find('rect');
             var icon = svg.find('svg');
@@ -313,17 +314,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var w = vb[vb.length - 2];
             var h = vb[vb.length - 1];
             if(value === 'default') {
+                $(target.closest('card').find('[value="custom"]').closest('row').all('input:not([type="radio"])')).attr('disabled', true)
                 $(target.closest('card').all('rect')).attr('fill', 'transparent')
                 $(target.closest('card').all('foreignObject, svg')).attr('height', h + "px").attr('width', w + "px")
                 $(target.closest('card').all('foreignObject')).attr('x', 0).attr('y', 0);
             }
-            if(value === 'custom') {
-                var row = target.closest('row');                                
+            if(value === 'custom') {                                
                 var hw = row.find('[name="browser-imageSize"]').value;
                 var x = (w - hw) / 2;
                 var y = (h - hw) / 2;
                 var fill = row.find('[type="text"]').value;
                 var rx = row.find('[name="browser-borderRadius"]').value;
+                $(row.all('input:not([type="radio"])')).removeAttr('disabled')
                 $(target.closest('card').all('rect')).attr('fill', fill)
                 $(target.closest('card').all('rect')).attr('rx', rx + "px")
                 $(target.closest('card').all('foreignObject, svg')).attr('height', hw + "px").attr('width', hw + "px")
@@ -343,10 +345,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
             var h = vb[vb.length - 1];
             if(value === 'default') {
                 rect.setAttribute('fill', '#000');
+                $(target.closest('card').find('[value="background"]').closest('row').all('input:not([type="radio"])')).attr('disabled', true)
             }
             if(value === 'background') {
                 var fill = target.closest('row').find('[type="text"]').value;
-                console.log(rect, fill);
                 rect.setAttribute('fill', fill)
                     
                 var row = target.closest('row');                                
@@ -355,8 +357,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var x = hw;
                 var y = hw;
                 var fill = row.find('[type="text"]').value;
-
-                console.log({w,h,ms,hw,x,y});
+                    
                 $(target.closest('card').find('[value="background"]').closest('row').all('input:not([type="radio"])')).removeAttr('disabled')
                 $(target.closest('card').all('rect')).attr('fill', fill)
                 $(target.closest('card').all('foreignObject, svg')).attr('height', ms + "px").attr('width', ms + "px")
