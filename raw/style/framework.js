@@ -209,6 +209,27 @@ framework.branding.borderRadius = event=>{
     var rx = row.find('[name="browser-borderRadius"]').value;
     $(target.closest('card').all('rect')).attr('rx', rx + "px");
 }
+framework.branding.dedicatedPicture = async function(event) {
+    var target = event.target;
+    var row = target.closest('column').nextElementSibling.lastElementChild;
+    var svg = row.find('svg');
+    var file = await on.change.file(event);
+    ImageTracer.imageToSVG(file.result, (svgstr)=>{
+        svg.find('foreignObject').innerHTML = svgstr;
+        row.removeAttribute('css-display');        
+    }
+    , {
+        viewbox: true
+    });
+}
+framework.branding.icon = function(event) {
+    var target = event.target;
+    var row = target.closest('row');
+    var svg = row.find('svg');
+    var icon = svg.find('foreignObject svg');
+    var foreignObjects = target.closest('box').previousElementSibling.all('picture > svg:first-child foreignObject');
+    $(foreignObjects).html(icon.outerHTML)
+}
 framework.branding.imageSize = event=>{
     var target = event.target;
     var value = target.value;

@@ -372,7 +372,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 var type = target.getAttribute('type');
                 var value = target.getAttribute('value');
                 var svg = target.closest('card').find('svg');
-                var svgs = target.closest('card').all('picture > svg:first-child');
+                var svgs = target.closest('box').previousElementSibling.all('picture > svg:first-child');
                         
                 if(value === 'default') {
                     var color = target.closest('column').find('[type="text"]').value; console.log(color);
