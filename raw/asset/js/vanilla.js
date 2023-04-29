@@ -534,6 +534,10 @@ function convert(svg, options) {
     if (options.size) {
         var width = options.size.width;
         var height = options.size.height;
+        
+        var vb = svg.getAttribute('viewBox').split(' ');
+        var width = vb[vb.length - 2];
+        var height = vb[vb.length - 1];
     } else {
         var vb = svg.getAttribute('viewBox').split(' ');
         var width = vb[vb.length - 2];

@@ -318,7 +318,128 @@ framework.branding.download = async function(target) {
         zip
     });
 }
-framework.branding.generate = async function(event) {
+framework.branding.generate = async function(target) {
+    var form = target.closest('form');
+    var cards = form.all('card');
+    var zip = {};
+
+    var desktop = cards[1];
+    var faviconICO = desktop.find('card > column > flex > box svg');
+    zip["favicon-16x16.png"] = convert(faviconICO, {
+        mimeType: "image/png",
+        size: {
+            height: 16,
+            width: 16
+        }
+    });
+    zip["favicon-32x32.png"] = convert(faviconICO, {
+        mimeType: "image/png",
+        size: {
+            height: 32,
+            width: 32
+        }
+    });
+    zip["favicon.ico"] = convert(faviconICO, {
+        mimeType: "image/x-icon",
+        size: {
+            height: 16,
+            width: 16
+        }
+    });
+
+    var ios = cards[2];
+    var appleTouchIconPNG = ios.find('card > column > flex > box svg');
+    zip["apple-touch-icon.png"] = convert(appleTouchIconPNG, {
+        mimeType: "image/png"
+    });
+
+    var chrome = cards[3];
+    var androidChromePNG = chrome.find('card > column > flex > box svg');
+    zip["android-chrome-192x192.png"] = convert(androidChromePNG, {
+        mimeType: "image/png",
+        size: {
+            height: 192,
+            width: 192
+        }
+    });
+    zip["android-chrome-512x512.png"] = convert(androidChromePNG, {
+        mimeType: "image/png",
+        size: {
+            height: 512,
+            width: 512
+        }
+    });
+
+    var metro = cards[4];
+    var xml = await ajax('raw/asset/xml/browserconfig.xml');
+    var browserconfigXML = new DOMParser().parseFromString(xml, 'text/xml');
+    var color = metro.find('card > column > flex > box svg rect').getAttribute('fill');
+    browserconfigXML.getElementsByTagName("TileColor")[0].textContent = color;
+    zip["browserconfig.xml"] = new XMLSerializer().serializeToString(browserconfigXML);
+    var mstile150x150PNG = metro.find('card > column > flex > box svg').cloneNode(true);
+    mstile150x150PNG.find('rect').remove();
+    zip["mstile-150x150.png"] = convert(mstile150x150PNG, {
+        mimeType: "image/png",
+        size: {
+            height: 32,
+            width: 32
+        }
+    });
+
+    var safari = cards[5];
+    if (safari.find('[name="radio-macOSSafari"][value="default"]').checked) {
+        var safariPinnedTabSVG = safari.find('box picture > svg:not([css-display]) foreignObject svg');
+        zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
+    }
+
+    var siteWEBMANIFEST = window.database.dashboard[GET[1]];
+    siteWEBMANIFEST.icons = [{
+        src: "/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png"
+    }, {
+        src: "/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png"
+    }];
+    siteWEBMANIFEST.background_color = siteWEBMANIFEST.background_color,
+    siteWEBMANIFEST.theme_color = siteWEBMANIFEST.theme_color;
+    siteWEBMANIFEST.display = "standalone";
+    zip["site.webmanifest"] = JSON.stringify(siteWEBMANIFEST, null, 4);
+
+    console.log(245, {
+        zip
+    });
+
+    //PUSH
+    var params = {
+        message: "Generate Favicons",
+        repo: GET[1],
+        owner: window.owner.login
+    };
+    var array = [];
+    Object.values(zip).forEach(function(content, index) {
+        var path = Object.keys(zip)[index];
+        var file = {
+            path
+        };
+        if (content.startsWith('data:')) {
+            file.content = content.split(';base64,')[1];
+            file.type = "base64";
+        } else {
+            file.content = content;
+        }
+        array.push(file);
+    });
+    console.log(2452, 'controller.posts.update', "array", {
+        array
+    });
+    try {
+        await github.crud.update(params, array);
+    } catch (e) {
+        console.log(e);
+        alert('There was an error generating favicons.');
+    }
 }
 framework.branding.icon = function(event) {
     var target = event.target;
