@@ -531,13 +531,13 @@ function convert(svg, options) {
 
     var canvas = document.createElement("canvas");
 
-    if (options.size) {
+    if (options.sizer) {
         var width = options.size.width;
         var height = options.size.height;
         
-        var vb = svg.getAttribute('viewBox').split(' ');
-        var width = vb[vb.length - 2];
-        var height = vb[vb.length - 1];
+        //var vb = svg.getAttribute('viewBox').split(' ');
+        //var width = vb[vb.length - 2];
+        //var height = vb[vb.length - 1];
     } else {
         var vb = svg.getAttribute('viewBox').split(' ');
         var width = vb[vb.length - 2];

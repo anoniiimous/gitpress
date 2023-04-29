@@ -285,8 +285,8 @@ framework.branding.download = async function(target) {
     zip["mstile-150x150.png"] = convert(mstile150x150PNG, {
         mimeType: "image/png",
         size: {
-            height: 32,
-            width: 32
+            height: 150,
+            width: 150
         }
     });
 
@@ -409,6 +409,8 @@ framework.branding.generate = async function(target) {
 
     console.log(245, {
         zip
+    }, {
+        appleTouchIconPNG
     });
 
     //PUSH
