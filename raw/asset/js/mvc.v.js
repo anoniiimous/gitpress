@@ -403,8 +403,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var doc = new DOMParser().parseFromString(res, 'image/svg+xml').documentElement;
                                         var svg = vp.find('card > header + * picture svg');
                                         var pic = svg.parentElement;
-                                        var foreignObject = doc.find('foreignObject');
-                                        var s = 570;
+                                        var foreignObject = fobj = doc.find('foreignObject');
+                                        console.log(foreignObject);
+                                        var fo = svg.find('foreignObject');
+                                        if (fo) {
+                                            var vb = fo.getAttribute('viewBox').split(' ');
+                                            var s = vb[vb.length - 1];
+                                        } else {
+                                            var s = 570;
+                                        }
                                         var w = Math.round(s * 0.69);
                                         var h = Math.round(s * 0.69);
                                         var x = (s - w) / 2;
@@ -430,22 +437,24 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         rect.removeAttribute('rx');
 
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
-                                        console.log(432, svg);
-                                        svg.find('rect').setAttribute('fill', bg)
-                                        svg.insertAdjacentHTML('beforeend', svgstr);
-                                        svg.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
-                                        console.log('1.0.1', svg, svg.lastElementChild);
-                                        //svg.lastElementChild.setAttribute('x', 0);
-                                        //svg.lastElementChild.setAttribute('y', 0);
-                                        svg.parentElement.style.color = colors.contrast('#' + bg);
-                                        $(svg.all('path')).attr('fill', '#' + bg);
-                                        //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
+                                        //console.log(432, svg);
+                                        if (!svg.find('foreignObject')) {
+                                            svg.find('rect').setAttribute('fill', bg)
+                                            svg.insertAdjacentHTML('beforeend', svgstr);
+                                            svg.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
+                                            console.log('1.0.1', svg, svg.lastElementChild);
+                                            //svg.lastElementChild.setAttribute('x', 0);
+                                            //svg.lastElementChild.setAttribute('y', 0);
+                                            svg.parentElement.style.color = colors.contrast('#' + bg);
+                                            $(svg.all('path')).attr('fill', '#' + bg);
+                                            //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);
 
-                                        //svg.find('svg').setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-                                        var ico = svg.find('svg');
-                                        ico.removeAttribute('class');
-                                        ico.setAttribute('height', w);
-                                        ico.setAttribute('width', w);
+                                            //svg.find('svg').setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+                                            var ico = svg.find('svg');
+                                            ico.removeAttribute('class');
+                                            ico.setAttribute('height', w);
+                                            ico.setAttribute('width', w);
+                                        }
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
@@ -456,22 +465,52 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var y = (s - height) / 2;
                                             var rect = el.find('rect');
                                             var bg = rect ? rect.getAttribute('fill') : null;
-                                            rect ? rect.insertAdjacentHTML('afterend', svgstr) : el.innerHTML = svgstr;
+                                            0 > 1 ? console.log(el.find('foreignObject'), {
+                                                rect,
+                                                fobj
+                                            }) : null;
+                                            el.find('foreignObject') ? (el.find('foreignObject').innerHTML = fobj.innerHTML) : (rect ? rect.insertAdjacentHTML('afterend', svgstr) : el.innerHTML = svgstr);
                                             el.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
                                             var foreignObject = el.find('foreignObject');
-                                            foreignObject.setAttribute('height', (height * 1));
-                                            foreignObject.setAttribute('width', (width * 1));
-                                            foreignObject.setAttribute('x', x);
-                                            foreignObject.setAttribute('y', y);
+                                            var fh = foreignObject.getAttribute('height');
+                                            var fw = foreignObject.getAttribute('width');
+                                            if (fh) {
+                                                //foreignObject.setAttribute('height', (height * 1));
+                                                //foreignObject.find('svg') ? foreignObject.find('svg').setAttribute('height', fh) : null;
+                                            } else {
+                                                foreignObject.setAttribute('height', (height * 1));
+                                            }
+                                            if (fw) {
+                                                //foreignObject.setAttribute('width', (width * 1));
+                                                //foreignObject.find('svg') ? foreignObject.find('svg').setAttribute('width', fw) : null;
+                                            } else {
+                                                foreignObject.setAttribute('width', (width * 1));
+                                            }
+                                            foreignObject.getAttribute('x') ? null : foreignObject.setAttribute('x', x);
+                                            foreignObject.getAttribute('y') ? null : foreignObject.setAttribute('y', y);
                                             var ico = el.find('svg');
                                             ico.removeAttribute('class');
                                             ico.setAttribute('height', height);
                                             ico.setAttribute('width', width);
+                                            if (fh) {
+                                                ico.setAttribute('height', ico.parentElement.getAttribute('height'));
+                                                0 > 1 ? console.log({
+                                                    ico,
+                                                    pe: ico.parentElement.getAttribute('height')
+                                                }) : null;
+                                            }
+                                            if (fw) {
+                                                ico.setAttribute('width', ico.parentElement.getAttribute('width'));
+                                                0 > 1 ? console.log({
+                                                    ico,
+                                                    pe: ico.parentElement.getAttribute('width')
+                                                }) : null;
+                                            }
                                         }) : null;
+
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);  
                                         //$(vp.all('[data-value="favicon"]')).html(svgstr);
                                         //console.log(vp.all('[data-value="favicon"]'));
-
                                     } catch (e) {
                                         console.log('error', e);
                                     }

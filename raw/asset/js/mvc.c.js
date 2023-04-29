@@ -405,7 +405,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                       
                 if(type === "color") {
                      var bg = target.getAttribute('css-background-color');
-                     svg.closest('picture').style.backgroundColor = bg;
+                     //svg.closest('picture').style.backgroundColor = bg;
+                     svg.find('rect').setAttribute('fill', bg);
                      target.closest('row').previousElementSibling.find('[type="text"]').value = bg;
                 }
                         

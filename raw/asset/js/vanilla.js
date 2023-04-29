@@ -411,10 +411,11 @@ window.$ = e=>{
 window.tld = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 1];
 window.domain = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 2];
 window.is = {
-    hex: (color) => {
+    hex: (color)=>{
         var reg = /^#([0-9a-f]{3}){1,2}$/i;
         return reg.test(color);
-    },
+    }
+    ,
     iframe: (win)=>(win.self !== win.top),
     ip: /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(window.location.host.split(':')[0]),
     json: str=>{
@@ -518,6 +519,33 @@ function beautify(html) {
     });
 
     return result.substring(1, result.length - 3);
+}
+
+function convert(svg, options) {
+
+    img = new Image(),
+    serializer = new XMLSerializer(),
+    svgStr = serializer.serializeToString(svg);
+
+    img.src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
+
+    var canvas = document.createElement("canvas");
+
+    if (options.size) {
+        var width = options.size.width;
+        var height = options.size.height;
+    } else {
+        var vb = svg.getAttribute('viewBox').split(' ');
+        var width = vb[vb.length - 2];
+        var height = vb[vb.length - 1];
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+    var imgURL = canvas.toDataURL(options.mimeType);
+    return imgURL;
 }
 
 function fullscreen(elem) {
