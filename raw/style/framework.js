@@ -293,6 +293,7 @@ framework.branding.generate = async function(target) {
     browserconfigXML.getElementsByTagName("TileColor")[0].textContent = color;
     zip["browserconfig.xml"] = new XMLSerializer().serializeToString(browserconfigXML);
     var mstile150x150PNG = metro.find('card > column > flex > box svg').cloneNode(true);
+    var TileColor = mstile150x150PNG.find('rect').getAttribute('fill')
     zip["mstile.svg"] = mstile150x150PNG.outerHTML;
     mstile150x150PNG.find('rect').remove();
     zip["mstile-150x150.png"] = await convert(mstile150x150PNG, {
@@ -343,6 +344,8 @@ framework.branding.generate = async function(target) {
     var manifestLINK = document.createElement('link');
     var safariPinnedTabLINk = document.createElement('link');
     var msApplicationTileColorMETA = document.createElement('meta');
+    msApplicationTileColorMETA.setAttribute('name', 'msapplication-TileColor');
+    msApplicationTileColorMETA.setAttribute('content', TileColor);
     var themeColorMETA = document.createElement('meta');
     var content = await github.repos.contents({
         owner: window.owner.login,
