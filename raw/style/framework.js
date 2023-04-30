@@ -393,7 +393,7 @@ framework.branding.generate = async function(target) {
         array
     });
     try {
-        //await github.crud.update(params, array);
+        await github.crud.update(params, array);
     } catch (e) {
         console.log(e);
         alert('There was an error generating favicons.');
