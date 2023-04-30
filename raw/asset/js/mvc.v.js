@@ -460,7 +460,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                         //svg.find('rect').setAttribute('fill', bg);
                                         //svg.find('rect').insertAdjacentHTML('afterend', foreignObject.outerHTML);
-                                        0 < 1 ? vp.all('[data-value="favicon"]').forEach(function(el, index) {
+                                        0 > 1 ? vp.all('[data-value="favicon"]').forEach(function(el, index) {
                                             var width = Math.round(s * 1);
                                             var height = Math.round(s * 1);
                                             var x = (s - width) / 2;
@@ -476,15 +476,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             var foreignObject = el.find('foreignObject');
                                             var fh = foreignObject.getAttribute('height');
                                             var fw = foreignObject.getAttribute('width');
-                                            if (fh) {
-                                                //foreignObject.setAttribute('height', (height * 1));
-                                                //foreignObject.find('svg') ? foreignObject.find('svg').setAttribute('height', fh) : null;
+                                            if (fh) {//foreignObject.setAttribute('height', (height * 1));
+                                            //foreignObject.find('svg') ? foreignObject.find('svg').setAttribute('height', fh) : null;
                                             } else {
                                                 foreignObject.setAttribute('height', (height * 1));
                                             }
-                                            if (fw) {
-                                                //foreignObject.setAttribute('width', (width * 1));
-                                                //foreignObject.find('svg') ? foreignObject.find('svg').setAttribute('width', fw) : null;
+                                            if (fw) {//foreignObject.setAttribute('width', (width * 1));
+                                            //foreignObject.find('svg') ? foreignObject.find('svg').setAttribute('width', fw) : null;
                                             } else {
                                                 foreignObject.setAttribute('width', (width * 1));
                                             }
@@ -513,6 +511,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         //console.log(svg.clientWidth, svg.firstElementChild, svg.firstElementChild.clientWidth);  
                                         //$(vp.all('[data-value="favicon"]')).html(svgstr);
                                         //console.log(vp.all('[data-value="favicon"]'));
+
+                                        0 < 1 ? vp.all('[data-favicon]').forEach(async function(el, index) {
+                                            var raw = await github.repos.contents({
+                                                owner: window.owner.login,
+                                                path: el.dataset.favicon,
+                                                repo: GET[1]
+                                            }, {
+                                                accept: 'application/vnd.github.raw'
+                                            });
+                                            var svg = new DOMParser().parseFromString(raw, 'text/xml').documentElement;
+                                            //console.log(el, el.dataset.favicon);
+                                            svg.getAttribute('height') ? el.setAttribute('height', svg.getAttribute('height')) : null;
+                                            svg.getAttribute('viewBox') ? el.setAttribute('viewBox', svg.getAttribute('viewBox')) : null;
+                                            svg.getAttribute('width') ? el.setAttribute('width', svg.getAttribute('width')) : null;
+                                            0 > 1 ? el.replaceWith(svg) : el.innerHTML = svg.innerHTML;
+                                        }) : null;
                                     } catch (e) {
                                         console.log('error', e);
                                     }

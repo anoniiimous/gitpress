@@ -168,10 +168,10 @@ framework.branding.backgroundColor = event=>{
             }
         }
         if (ground === "foreground") {
-            console.log('color', {
+            0 > 1 ? console.log('color', {
                 value,
                 color
-            });
+            }) : null;
             if (value.length > 0) {
                 if (isHex) {
                     $(theme.all('svg [fill]')).attr('fill', value);
@@ -179,9 +179,9 @@ framework.branding.backgroundColor = event=>{
             } else {
                 $(theme.all('svg [fill]')).attr('fill', color);
             }
-            console.log('color', {
+            0 > 1 ? console.log('color', {
                 color
-            });
+            }) : null;
         }
     });
 }
@@ -225,102 +225,6 @@ framework.branding.display = (event)=>{
         $(row.all('input:not([type="radio"])')).removeAttr('disabled');
     }
 }
-framework.branding.download = async function(target) {
-    var form = target.closest('form');
-    var cards = form.all('card');
-    var zip = {};
-
-    var desktop = cards[1];
-    var faviconICO = desktop.find('card > column > flex > box svg');
-    zip["favicon-16x16.png"] = await convert(faviconICO, {
-        mimeType: "image/png",
-        size: {
-            height: 16,
-            width: 16
-        }
-    });
-    zip["favicon-32x32.png"] = await convert(faviconICO, {
-        mimeType: "image/png",
-        size: {
-            height: 32,
-            width: 32
-        }
-    });
-    zip["favicon.ico"] = await convert(faviconICO, {
-        mimeType: "image/x-icon",
-        size: {
-            height: 16,
-            width: 16
-        }
-    });
-
-    var ios = cards[2];
-    var appleTouchIconPNG = ios.find('card > column > flex > box svg');
-    zip["apple-touch-icon.png"] = await convert(appleTouchIconPNG, {
-        mimeType: "image/png"
-    });
-
-    var chrome = cards[3];
-    var androidChromePNG = chrome.find('card > column > flex > box svg');
-    zip["android-chrome-192x192.png"] = await convert(androidChromePNG, {
-        mimeType: "image/png",
-        size: {
-            height: 192,
-            width: 192
-        }
-    });
-    zip["android-chrome-512x512.png"] = await convert(androidChromePNG, {
-        mimeType: "image/png",
-        size: {
-            height: 512,
-            width: 512
-        }
-    });
-
-    var metro = cards[4];
-    var xml = await ajax('raw/asset/xml/browserconfig.xml');
-    var browserconfigXML = new DOMParser().parseFromString(xml, 'text/xml');
-    var color = metro.find('card > column > flex > box svg rect').getAttribute('fill');
-    browserconfigXML.getElementsByTagName("TileColor")[0].textContent = color;
-    zip["browserconfig.xml"] = new XMLSerializer().serializeToString(browserconfigXML);
-    var mstile150x150PNG = metro.find('card > column > flex > box svg').cloneNode(true);
-    mstile150x150PNG.find('rect').remove();
-    zip["mstile-150x150.png"] = await convert(mstile150x150PNG, {
-        mimeType: "image/png",
-        size: {
-            height: 150,
-            width: 150
-        }
-    });
-
-    var safari = cards[5];
-    if (safari.find('[name="radio-macOSSafari"][value="default"]').checked) {
-        var safariPinnedTabSVG = safari.find('box picture > svg:not([css-display]) foreignObject svg');
-        zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
-    }
-
-    var siteWEBMANIFEST = {
-        name: "",
-        short_name: "",
-        icons: [{
-            src: "/android-chrome-192x192.png",
-            sizes: "192x192",
-            type: "image/png"
-        }, {
-            src: "/android-chrome-512x512.png",
-            sizes: "512x512",
-            type: "image/png"
-        }],
-        theme_color: "#ffffff",
-        background_color: "#ffffff",
-        display: "standalone"
-    };
-    zip["site.webmanifest"] = JSON.stringify(siteWEBMANIFEST);
-
-    console.log(245, {
-        zip
-    });
-}
 framework.branding.generate = async function(target) {
     var form = target.closest('form');
     var cards = form.all('card');
@@ -332,6 +236,7 @@ framework.branding.generate = async function(target) {
 
     var desktop = cards[1];
     var faviconICO = desktop.find('card > column > flex > box svg');
+    zip["favicon.svg"] = faviconICO.outerHTML;
     zip["favicon-16x16.png"] = await convert(faviconICO, {
         mimeType: "image/png",
         size: {
@@ -356,12 +261,14 @@ framework.branding.generate = async function(target) {
 
     var ios = cards[2];
     var appleTouchIconPNG = ios.find('card > column > flex > box svg');
+    zip["apple-touch-icon.svg"] = appleTouchIconPNG.outerHTML;
     zip["apple-touch-icon.png"] = await convert(appleTouchIconPNG, {
         mimeType: "image/png"
     });
 
     var chrome = cards[3];
     var androidChromePNG = chrome.find('card > column > flex > box svg');
+    zip["android-chrome.svg"] = androidChromePNG.outerHTML;
     zip["android-chrome-192x192.png"] = await convert(androidChromePNG, {
         mimeType: "image/png",
         size: {
@@ -384,6 +291,7 @@ framework.branding.generate = async function(target) {
     browserconfigXML.getElementsByTagName("TileColor")[0].textContent = color;
     zip["browserconfig.xml"] = new XMLSerializer().serializeToString(browserconfigXML);
     var mstile150x150PNG = metro.find('card > column > flex > box svg').cloneNode(true);
+    zip["mstile.svg"] = mstile150x150PNG.outerHTML;
     mstile150x150PNG.find('rect').remove();
     zip["mstile-150x150.png"] = await convert(mstile150x150PNG, {
         mimeType: "image/png",
@@ -394,10 +302,10 @@ framework.branding.generate = async function(target) {
     });
 
     var safari = cards[5];
-    if (safari.find('[name="radio-macOSSafari"][value="default"]').checked) {
+    //if (safari.find('[name="radio-macOSSafari"][value="default"]').checked) {
         var safariPinnedTabSVG = safari.find('box picture > svg:not([css-display]) foreignObject svg');
         zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
-    }
+    //}
 
     var siteWEBMANIFEST = await github.repos.contents({
         owner: window.owner.login,
