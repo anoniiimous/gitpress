@@ -366,7 +366,7 @@ framework.branding.generate = async function(target) {
 
     console.log(245, {
         zip,
-        head: html
+        head: html.outerHTML
     });
 
     //PUSH
