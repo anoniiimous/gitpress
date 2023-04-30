@@ -351,7 +351,7 @@ framework.branding.generate = async function(target) {
     }, {
         accept: 'application/vnd.github.raw'
     });
-    var html = new DOMParser().parseFromString(content, 'text/html');
+    var html = new DOMParser().parseFromString(content, 'text/html').documentElement;
     console.log(245, {
         zip,
         html
