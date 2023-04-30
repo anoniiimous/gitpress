@@ -356,13 +356,13 @@ framework.branding.generate = async function(target) {
         zip,
         html
     });
-    html.find('link[href="/apple-touch-icon.png"]') ? html.head.appendChild(appleTouchIconLINK) : null;
-    html.find('link[href="/favicon-32x32.png"]') ? html.head.appendChild(favicon32x32LINK) : null
-    html.find('link[href="/favicon-16x16.png"]') ? html.head.appendChild(favicon16x16LINK) : null;
-    html.find('link[href="/site.webmanifest"]') ? html.head.appendChild(manifestLINK) : null;
-    html.find('link[href="/safari-pinned-tab.svg"]') ? html.head.appendChild(safariPinnedTabLINK) : null
-    html.find('meta[name="msapplication-TileColor"]') ? html.head.appendChild(msApplicationTileColorMETA) : null;
-    html.find('meta[name="theme-color"]') ? html.head.appendChild(themeColorMETA) : null;
+    html.find('link[href="/apple-touch-icon.png"]') ? html.find('head').appendChild(appleTouchIconLINK) : null;
+    html.find('link[href="/favicon-32x32.png"]') ? html.find('head').appendChild(favicon32x32LINK) : null
+    html.find('link[href="/favicon-16x16.png"]') ? html.find('head').appendChild(favicon16x16LINK) : null;
+    html.find('link[href="/site.webmanifest"]') ? html.find('head').appendChild(manifestLINK) : null;
+    html.find('link[href="/safari-pinned-tab.svg"]') ? html.find('head').appendChild(safariPinnedTabLINK) : null
+    html.find('meta[name="msapplication-TileColor"]') ? html.find('head').appendChild(msApplicationTileColorMETA) : null;
+    html.find('meta[name="theme-color"]') ? html.find('head').appendChild(themeColorMETA) : null;
 
     console.log(245, {
         zip,
