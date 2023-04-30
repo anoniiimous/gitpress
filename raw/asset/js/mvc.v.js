@@ -442,7 +442,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             svg.find('rect').setAttribute('fill', bg)
                                             svg.insertAdjacentHTML('beforeend', svgstr);
                                             svg.setAttribute('viewBox', '0 0 ' + s + ' ' + s);
-                                            console.log('1.0.1', svg, svg.lastElementChild);
+                                            //console.log('1.0.1', svg, svg.lastElementChild);
                                             //svg.lastElementChild.setAttribute('x', 0);
                                             //svg.lastElementChild.setAttribute('y', 0);
                                             svg.parentElement.style.color = colors.contrast('#' + bg);

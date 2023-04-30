@@ -522,34 +522,39 @@ function beautify(html) {
 }
 
 function convert(svg, options) {
+    return new Promise((resolve,reject)=>{
+        img = new Image(),
+        serializer = new XMLSerializer(),
+        svgStr = serializer.serializeToString(svg);
 
-    img = new Image(),
-    serializer = new XMLSerializer(),
-    svgStr = serializer.serializeToString(svg);
+        img.src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
+        img.onload = function() {
+            //context.drawImage(resizedImageObj, 30, 10, 200, 150);
+            var canvas = document.createElement("canvas");
 
-    img.src = 'data:image/svg+xml;base64,' + window.btoa(svgStr);
+            if (options.size) {
+                var width = options.size.width;
+                var height = options.size.height;
 
-    var canvas = document.createElement("canvas");
+                //var vb = svg.getAttribute('viewBox').split(' ');
+                //var width = vb[vb.length - 2];
+                //var height = vb[vb.length - 1];
+            } else {
+                var vb = svg.getAttribute('viewBox').split(' ');
+                var width = parseInt(vb[vb.length - 2]);
+                var height = parseInt(vb[vb.length - 1]);
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            canvas.getContext("2d").drawImage(img, 0, 0, width, height);
 
-    if (options.sizer) {
-        var width = options.size.width;
-        var height = options.size.height;
-        
-        //var vb = svg.getAttribute('viewBox').split(' ');
-        //var width = vb[vb.length - 2];
-        //var height = vb[vb.length - 1];
-    } else {
-        var vb = svg.getAttribute('viewBox').split(' ');
-        var width = vb[vb.length - 2];
-        var height = vb[vb.length - 1];
+            var imgURL = canvas.toDataURL(options.mimeType);
+            resolve(imgURL);
+            //return imgURL;
+        }
     }
-
-    canvas.width = width;
-    canvas.height = height;
-    canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-
-    var imgURL = canvas.toDataURL(options.mimeType);
-    return imgURL;
+    )
 }
 
 function fullscreen(elem) {

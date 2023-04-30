@@ -131,9 +131,6 @@ framework.branding.backgroundColor = event=>{
     var value = target.value;
     var card = target.closest('card');
     var themes = card.all('[data-background-color]');
-    console.log({
-        themes
-    });
     themes.forEach(function(theme) {
         var ground = theme.dataset.backgroundColor;
         var isHex = is.hex(value);
@@ -229,21 +226,21 @@ framework.branding.download = async function(target) {
 
     var desktop = cards[1];
     var faviconICO = desktop.find('card > column > flex > box svg');
-    zip["favicon-16x16.png"] = convert(faviconICO, {
+    zip["favicon-16x16.png"] = await convert(faviconICO, {
         mimeType: "image/png",
         size: {
             height: 16,
             width: 16
         }
     });
-    zip["favicon-32x32.png"] = convert(faviconICO, {
+    zip["favicon-32x32.png"] = await convert(faviconICO, {
         mimeType: "image/png",
         size: {
             height: 32,
             width: 32
         }
     });
-    zip["favicon.ico"] = convert(faviconICO, {
+    zip["favicon.ico"] = await convert(faviconICO, {
         mimeType: "image/x-icon",
         size: {
             height: 16,
@@ -253,20 +250,20 @@ framework.branding.download = async function(target) {
 
     var ios = cards[2];
     var appleTouchIconPNG = ios.find('card > column > flex > box svg');
-    zip["apple-touch-icon.png"] = convert(appleTouchIconPNG, {
+    zip["apple-touch-icon.png"] = await convert(appleTouchIconPNG, {
         mimeType: "image/png"
     });
 
     var chrome = cards[3];
     var androidChromePNG = chrome.find('card > column > flex > box svg');
-    zip["android-chrome-192x192.png"] = convert(androidChromePNG, {
+    zip["android-chrome-192x192.png"] = await convert(androidChromePNG, {
         mimeType: "image/png",
         size: {
             height: 192,
             width: 192
         }
     });
-    zip["android-chrome-512x512.png"] = convert(androidChromePNG, {
+    zip["android-chrome-512x512.png"] = await convert(androidChromePNG, {
         mimeType: "image/png",
         size: {
             height: 512,
@@ -282,7 +279,7 @@ framework.branding.download = async function(target) {
     zip["browserconfig.xml"] = new XMLSerializer().serializeToString(browserconfigXML);
     var mstile150x150PNG = metro.find('card > column > flex > box svg').cloneNode(true);
     mstile150x150PNG.find('rect').remove();
-    zip["mstile-150x150.png"] = convert(mstile150x150PNG, {
+    zip["mstile-150x150.png"] = await convert(mstile150x150PNG, {
         mimeType: "image/png",
         size: {
             height: 150,
@@ -323,23 +320,27 @@ framework.branding.generate = async function(target) {
     var cards = form.all('card');
     var zip = {};
 
+    var icon = cards[0];
+    var iconSVG = icon.find('card > flex > box svg');
+    zip["icon.svg"] = iconSVG.outerHTML;
+
     var desktop = cards[1];
     var faviconICO = desktop.find('card > column > flex > box svg');
-    zip["favicon-16x16.png"] = convert(faviconICO, {
+    zip["favicon-16x16.png"] = await convert(faviconICO, {
         mimeType: "image/png",
         size: {
             height: 16,
             width: 16
         }
     });
-    zip["favicon-32x32.png"] = convert(faviconICO, {
+    zip["favicon-32x32.png"] = await convert(faviconICO, {
         mimeType: "image/png",
         size: {
             height: 32,
             width: 32
         }
     });
-    zip["favicon.ico"] = convert(faviconICO, {
+    zip["favicon.ico"] = await convert(faviconICO, {
         mimeType: "image/x-icon",
         size: {
             height: 16,
@@ -349,20 +350,20 @@ framework.branding.generate = async function(target) {
 
     var ios = cards[2];
     var appleTouchIconPNG = ios.find('card > column > flex > box svg');
-    zip["apple-touch-icon.png"] = convert(appleTouchIconPNG, {
+    zip["apple-touch-icon.png"] = await convert(appleTouchIconPNG, {
         mimeType: "image/png"
     });
 
     var chrome = cards[3];
     var androidChromePNG = chrome.find('card > column > flex > box svg');
-    zip["android-chrome-192x192.png"] = convert(androidChromePNG, {
+    zip["android-chrome-192x192.png"] = await convert(androidChromePNG, {
         mimeType: "image/png",
         size: {
             height: 192,
             width: 192
         }
     });
-    zip["android-chrome-512x512.png"] = convert(androidChromePNG, {
+    zip["android-chrome-512x512.png"] = await convert(androidChromePNG, {
         mimeType: "image/png",
         size: {
             height: 512,
@@ -378,11 +379,11 @@ framework.branding.generate = async function(target) {
     zip["browserconfig.xml"] = new XMLSerializer().serializeToString(browserconfigXML);
     var mstile150x150PNG = metro.find('card > column > flex > box svg').cloneNode(true);
     mstile150x150PNG.find('rect').remove();
-    zip["mstile-150x150.png"] = convert(mstile150x150PNG, {
+    zip["mstile-150x150.png"] = await convert(mstile150x150PNG, {
         mimeType: "image/png",
         size: {
-            height: 32,
-            width: 32
+            height: 150,
+            width: 150
         }
     });
 
@@ -392,7 +393,16 @@ framework.branding.generate = async function(target) {
         zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
     }
 
-    var siteWEBMANIFEST = window.database.dashboard[GET[1]];
+    var siteWEBMANIFEST = await github.repos.contents({
+        owner: window.owner.login,
+        path: 'site.webmanifest',
+        repo: GET[1]
+    }, {
+        accept: 'application/vnd.github.raw'
+    });
+    var color = chrome.all('card > column > flex > box')[1].find('[name="android-chrome-themeColor"]').value;
+    var display = chrome.all('card > column > flex > box')[1].find('[name="radio-androidChrome-options"]:checked').value;
+    //console.log({siteWEBMANIFEST, display, color});
     siteWEBMANIFEST.icons = [{
         src: "/android-chrome-192x192.png",
         sizes: "192x192",
@@ -402,15 +412,13 @@ framework.branding.generate = async function(target) {
         sizes: "512x512",
         type: "image/png"
     }];
-    siteWEBMANIFEST.background_color = siteWEBMANIFEST.background_color,
-    siteWEBMANIFEST.theme_color = siteWEBMANIFEST.theme_color;
-    siteWEBMANIFEST.display = "standalone";
+    siteWEBMANIFEST.background_color = color,
+    siteWEBMANIFEST.theme_color = color;
+    siteWEBMANIFEST.display = display;
     zip["site.webmanifest"] = JSON.stringify(siteWEBMANIFEST, null, 4);
 
     console.log(245, {
         zip
-    }, {
-        appleTouchIconPNG
     });
 
     //PUSH
@@ -472,9 +480,6 @@ framework.branding.themeColor = event=>{
     var value = target.value;
     var card = target.closest('card');
     var themes = card.all('[data-theme-color]');
-    console.log({
-        themes
-    });
     themes.forEach(function(theme) {
         var ground = theme.dataset.themeColor;
         var isHex = is.hex(value);
@@ -483,18 +488,12 @@ framework.branding.themeColor = event=>{
             if (!color) {
                 color = theme.getAttribute('disabled-css-color');
             }
-            console.log(138, {
-                color
-            });
         }
         if (ground === "background") {
             var bg = theme.getAttribute('css-background-color');
             if (!bg) {
                 bg = theme.getAttribute('disabled-css-background-color');
             }
-            console.log(141, {
-                bg
-            });
         }
         if (value.length === 0) {
             if (ground === "foreground") {
