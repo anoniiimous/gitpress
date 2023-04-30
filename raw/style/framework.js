@@ -354,7 +354,7 @@ framework.branding.generate = async function(target) {
     var html = new DOMParser().parseFromString(content, 'text/html');
     console.log(245, {
         zip,
-        head: head
+        html
     });
     html.find('link[href="/apple-touch-icon.png"]') ? html.head.appendChild(appleTouchIconLINK) : null;
     html.find('link[href="/favicon-32x32.png"]') ? html.head.appendChild(favicon32x32LINK) : null
