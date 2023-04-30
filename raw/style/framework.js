@@ -217,7 +217,7 @@ framework.branding.display = (event)=>{
     var target = event.target;
     var value = target.value;
     var row = target.closest('row');
-    
+
     if (value === 'browser') {
         $(target.closest('card').find('[value="custom"]').closest('row').all('input:not([type="radio"])')).attr('disabled', true);
     }
@@ -228,7 +228,9 @@ framework.branding.display = (event)=>{
 framework.branding.generate = async function(target) {
     var form = target.closest('form');
     var cards = form.all('card');
+
     var zip = {};
+    var head = [];
 
     var icon = cards[0];
     var iconSVG = icon.find('card > flex > box svg');
@@ -237,18 +239,18 @@ framework.branding.generate = async function(target) {
     var desktop = cards[1];
     var faviconICO = desktop.find('card > column > flex > box svg');
     zip["favicon.svg"] = faviconICO.outerHTML;
-    zip["favicon-16x16.png"] = await convert(faviconICO, {
-        mimeType: "image/png",
-        size: {
-            height: 16,
-            width: 16
-        }
-    });
     zip["favicon-32x32.png"] = await convert(faviconICO, {
         mimeType: "image/png",
         size: {
             height: 32,
             width: 32
+        }
+    });
+    zip["favicon-16x16.png"] = await convert(faviconICO, {
+        mimeType: "image/png",
+        size: {
+            height: 16,
+            width: 16
         }
     });
     zip["favicon.ico"] = await convert(faviconICO, {
@@ -303,8 +305,8 @@ framework.branding.generate = async function(target) {
 
     var safari = cards[5];
     //if (safari.find('[name="radio-macOSSafari"][value="default"]').checked) {
-        var safariPinnedTabSVG = safari.find('box picture > svg:not([css-display]) foreignObject svg');
-        zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
+    var safariPinnedTabSVG = safari.find('box picture > svg:not([css-display]) foreignObject svg');
+    zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
     //}
 
     var siteWEBMANIFEST = await github.repos.contents({
@@ -335,8 +337,36 @@ framework.branding.generate = async function(target) {
     start_url.length > 0 ? siteWEBMANIFEST.start_url = start_url : null;
     zip["site.webmanifest"] = JSON.stringify(siteWEBMANIFEST, null, 4);
 
+    var appleTouchIconLINK = document.createElement('link');
+    var favicon32x32LINK = document.createElement('link');
+    var favicon16x16LINK = document.createElement('link');
+    var manifestLINK = document.createElement('link');
+    var safariPinnedTabLINk = document.createElement('link');
+    var msApplicationTileColorMETA = document.createElement('meta');
+    var themeColorMETA = document.createElement('meta');
+    var content = await github.repos.contents({
+        owner: window.owner.login,
+        path: 'index.html',
+        repo: GET[1]
+    }, {
+        accept: 'application/vnd.github.raw'
+    });
+    var html = new DOMParser().parseFromString(content, 'text/html');
     console.log(245, {
-        zip
+        zip,
+        head: head
+    });
+    html.find('link[href="/apple-touch-icon.png"]') ? html.head.appendChild(appleTouchIconLINK) : null;
+    html.find('link[href="/favicon-32x32.png"]') ? html.head.appendChild(favicon32x32LINK) : null
+    html.find('link[href="/favicon-16x16.png"]') ? html.head.appendChild(favicon16x16LINK) : null;
+    html.find('link[href="/site.webmanifest"]') ? html.head.appendChild(manifestLINK) : null;
+    html.find('link[href="/safari-pinned-tab.svg"]') ? html.head.appendChild(safariPinnedTabLINK) : null
+    html.find('meta[name="msapplication-TileColor"]') ? html.head.appendChild(msApplicationTileColorMETA) : null;
+    html.find('meta[name="theme-color"]') ? html.head.appendChild(themeColorMETA) : null;
+
+    console.log(245, {
+        zip,
+        head: html
     });
 
     //PUSH
@@ -363,7 +393,7 @@ framework.branding.generate = async function(target) {
         array
     });
     try {
-        await github.crud.update(params, array);
+        //await github.crud.update(params, array);
     } catch (e) {
         console.log(e);
         alert('There was an error generating favicons.');
