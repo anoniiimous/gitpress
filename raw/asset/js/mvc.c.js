@@ -4491,15 +4491,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var rgbString = rgb.r + "," + rgb.g + "," + rgb.b;
                     var hsl = color.hsla;
                     var hslString = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
-                    var colors = event.srcElement && event.srcElement.closest('color') ? event.srcElement.closest('color').nextElementSibling : null;
-                    if (colors) {
-                        colors.find("#color-data-hex").all('text')[1].find('span').textContent = hexString;
-                        colors.find("#color-data-rgb").all('text')[1].find('span').textContent = rgbString;
-                        colors.find("#color-data-hsl").all('text')[1].find('span').textContent = hslString;
+                    var iro = event.srcElement && event.srcElement.closest('color') ? event.srcElement.closest('color').nextElementSibling : null;
+                    if (iro) {
+                        iro.find("#color-data-hex").all('text')[1].find('span').textContent = hexString;
+                        iro.find("#color-data-rgb").all('text')[1].find('span').textContent = rgbString;
+                        iro.find("#color-data-hsl").all('text')[1].find('span').textContent = hslString;
                     }
                     icon.find('rect').setAttribute('fill', hexString);
                     //icon.style.backgroundColor = hexString;
-                    //icon.style.color = colors.contrast(hexString);
+                    var fg = colors.contrast(hexString);
+                    console.log({icon, hexString, fg})
+                    icon.setAttribute('css-color', fg);
+                    $(icon.all('path')).attr('fill', fg)
                     //icon.dataset.contrast = icon.style.color;
                 });
                 picker.on("mount", colorPicker);

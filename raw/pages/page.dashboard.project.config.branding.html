@@ -502,7 +502,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input name="radio-androidChrome-options" type="radio" value="browser">
+                                <input name="radio-androidChrome-options" onchange="framework.branding.display(event)" type="radio" value="browser">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -511,7 +511,7 @@
                         </row>
                         <row class="align-items-flex-start gap-10px">
                             <label class="align-items-center display-flex justify-content-center">
-                                <input checked name="radio-androidChrome-options" type="radio" value="standalone">
+                                <input checked name="radio-androidChrome-options" onchange="framework.branding.display(event)" type="radio" value="standalone">
                                 <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                     <n class="-checked-display-flex display-none gg-check"></n>
                                 </ico>
@@ -524,7 +524,7 @@
                             <column class="align-items-flex-start gap-10px">
                                 <column class="flex-wrap-wrap gap-10px line-height-20px">
                                     <text class="font-size-14px font-weight-bolder">Start URL</text>
-                                    <input class="border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" onkeyup="framework.branding.appName(event)" placeholder="http://example.com" type="text">
+                                    <input class="-disabled-background-color-eee border-1px-solid border-color-ddd border-radius-3px box-sizing-border-box padding-x-10px padding-y-5px width-200px" disabled name="text-androidChrome-startUrl" onkeyup="framework.branding.appName(event)" placeholder="http://example.com" type="text">
                                     <text>Typically, your homepage. Use this field to override the URL of the bookmarked page.</text>
                                 </column>
                             </column>
@@ -535,7 +535,7 @@
                                 <column class="flex-wrap-wrap gap-10px line-height-20px">
                                     <row class="align-items-flex-start gap-10px">
                                         <label class="align-items-center display-flex justify-content-center">
-                                            <input checked name="radio-androidChrome-orientation" type="radio" value="default">
+                                            <input checked disabled name="radio-androidChrome-orientation" type="radio" value="default">
                                             <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                                 <n class="-checked-display-flex display-none gg-check"></n>
                                             </ico>
@@ -544,7 +544,7 @@
                                     </row>
                                     <row class="align-items-flex-start gap-10px">
                                         <label class="align-items-center display-flex justify-content-center">
-                                            <input checked name="radio-androidChrome-orientation" type="radio" value="portrait">
+                                            <input disabled name="radio-androidChrome-orientation" type="radio" value="portrait">
                                             <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                                 <n class="-checked-display-flex display-none gg-check"></n>
                                             </ico>
@@ -555,7 +555,7 @@
                                     </row>
                                     <row class="align-items-flex-start gap-10px">
                                         <label class="align-items-center display-flex justify-content-center">
-                                            <input name="radio-androidChrome-orientation" type="radio" value="landscape">
+                                            <input disabled name="radio-androidChrome-orientation" type="radio" value="landscape">
                                             <ico class="-checked-background-color-005cc8 -checked-border-color-005cc8 -checked-color-fff background-color-transparent border-2px-solid border-color-000 border-radius-50pct box-sizing-border-box" css-height="20px" css-width="20px">
                                                 <n class="-checked-display-flex display-none gg-check"></n>
                                             </ico>

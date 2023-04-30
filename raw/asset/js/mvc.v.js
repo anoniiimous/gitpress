@@ -404,6 +404,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var svg = vp.find('card > header + * picture svg');
                                         var pic = svg.parentElement;
                                         var foreignObject = fobj = doc.find('foreignObject');
+                                        $(foreignObject.all('path')).removeAttr('fill');
                                         console.log(foreignObject);
                                         var fo = svg.find('foreignObject');
                                         if (fo) {
@@ -435,6 +436,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var rect = doc.find('rect');
                                         var bg = rect.getAttribute('fill');
                                         rect.removeAttribute('rx');
+                                        svg.setAttribute('css-color', colors.contrast(bg));
 
                                         //doc.setAttribute('class', 'border-1px-solid border-color-ddd border-radius-15pct box-shadow-0px-1px-6px-0px height-100pct position-absolute top-0 width-100pct');
                                         //console.log(432, svg);

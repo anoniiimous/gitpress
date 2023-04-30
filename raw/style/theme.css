@@ -725,7 +725,7 @@
         fill: #fff;
     }
 
-    .color-ffffff, .color-ffffff :not([fill]), [css-color="#ffffff"], [css-color="#ffffff"] :not([fill]), [css-color="#ffffff"] :not([fill=""]) {
+    .color-ffffff, .color-ffffff path:not([fill]), [css-color="#ffffff"], [css-color="#ffffff"] path:not([fill]), [css-color="#ffffff"] path:not([fill=""]) {
         fill: #ffffff;
     }
 

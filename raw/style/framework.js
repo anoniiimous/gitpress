@@ -139,18 +139,12 @@ framework.branding.backgroundColor = event=>{
             if (!color) {
                 color = theme.getAttribute('disabled-css-color');
             }
-            console.log(138, {
-                color
-            });
         }
         if (ground === "background") {
             var bg = theme.getAttribute('css-background-color');
             if (!bg) {
                 bg = theme.getAttribute('disabled-css-background-color');
             }
-            console.log(141, {
-                bg
-            });
         }
         if (value.length === 0) {
             if (ground === "foreground") {
@@ -218,6 +212,18 @@ framework.branding.dedicatedPicture = async function(event) {
     , {
         viewbox: true
     });
+}
+framework.branding.display = (event)=>{
+    var target = event.target;
+    var value = target.value;
+    var row = target.closest('row');
+    
+    if (value === 'browser') {
+        $(target.closest('card').find('[value="custom"]').closest('row').all('input:not([type="radio"])')).attr('disabled', true);
+    }
+    if (value === 'standalone') {
+        $(row.all('input:not([type="radio"])')).removeAttr('disabled');
+    }
 }
 framework.branding.download = async function(target) {
     var form = target.closest('form');
@@ -402,6 +408,8 @@ framework.branding.generate = async function(target) {
     });
     var color = chrome.all('card > column > flex > box')[1].find('[name="android-chrome-themeColor"]').value;
     var display = chrome.all('card > column > flex > box')[1].find('[name="radio-androidChrome-options"]:checked').value;
+    var orientation = chrome.all('card > column > flex > box')[1].find('[name="radio-androidChrome-orientation"]:checked').value;
+    var start_url = chrome.all('card > column > flex > box')[1].find('[name="text-androidChrome-startUrl"]').value;
     //console.log({siteWEBMANIFEST, display, color});
     siteWEBMANIFEST.icons = [{
         src: "/android-chrome-192x192.png",
@@ -415,6 +423,8 @@ framework.branding.generate = async function(target) {
     siteWEBMANIFEST.background_color = color,
     siteWEBMANIFEST.theme_color = color;
     siteWEBMANIFEST.display = display;
+    orientation ? siteWEBMANIFEST.orientation = orientation : null;
+    start_url.length > 0 ? siteWEBMANIFEST.start_url = start_url : null;
     zip["site.webmanifest"] = JSON.stringify(siteWEBMANIFEST, null, 4);
 
     console.log(245, {

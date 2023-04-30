@@ -385,7 +385,7 @@
         opacity: 0.5;
     }
 
-    input[type="text"][disabled] {
+    input[type="text"][disabled], input[type="checkbox"][disabled] + *, input[type="radio"][disabled] + * {
         cursor: not-allowed;
         opacity: 0.5;
     }
