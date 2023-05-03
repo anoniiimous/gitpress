@@ -2164,14 +2164,26 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 } while (x < data.length);
                             }
                         }
-                        cache.feed.dashboard.index ? github.repos.contents({
+                        0 > 1 ? github.repos.contents({
+                            //cache.feed.dashboard.index
                             owner: window.owner.login,
                             repo: "db.dompad.io",
                             path: "/v1/apps/index.json"
                         }).then(p) : github.user.repos({
+                            username: window.owner.login,
+                            query: JSON.stringify({
+                                direction: 'desc',
+                                sort: "pushed",
+                            })
+                        }, {
+                            data: JSON.stringify({
+                                direction: 'desc',
+                                sort: "updated"
+                            }),
                             query: {
-                                per_page: 25,
-                                sort: "created"
+                                direction: 'desc',
+                                sort: "updated",
+                                per_page: 25
                             }
                         }).then(p);
                     }

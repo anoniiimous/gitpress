@@ -992,8 +992,9 @@ window.github = {
             console.log(params, settings);
             if (settings.dataType) {
                 if (settings.dataType === "POST") {
-                    return new Promise((resolve,reject)=>{
-                        const url = github.endpoint + "/user/repos";
+                    return new Promise((resolve,reject)=>{   
+                        const sort = params.sort;
+                        const url = github.endpoint + "/users/" + username + "/repos" + params.query;
                         const data = settings.data;
                         const dataType = settings.dataType;
                         const a = (d)=>{
@@ -1026,7 +1027,7 @@ window.github = {
                 return new Promise((resolve,reject)=>{
                     console.log(params.query);
                     const query = params.query ? "?" + new URLSearchParams(params.query).toString() : "";
-                    const url = github.endpoint + "/user/repos" + query;
+                    const url = github.endpoint + "/users/" + params.username + "/repos" + query;
                     const a = (d)=>{
                         const data = JSON.parse(d);
                         resolve(data);
