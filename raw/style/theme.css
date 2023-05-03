@@ -687,8 +687,8 @@
     }
 
     .color-5bbad5, .color-5bbad5 svg :not([fill]), [css-color="#5bbad5"], [css-color="#5bbad5"] svg :not([fill]), [css-color="#5bbad5"] svg:has(path[fill]) path[fill] {
-        fill: #5bbad5;
-        color: #5bbad5;
+        /* fill: #5bbad5; */
+        /* color: #5bbad5; */
     }
 
     .color-777 {

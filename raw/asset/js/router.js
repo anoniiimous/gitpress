@@ -41,13 +41,13 @@ String.prototype.router = async function(params) {
         //console.log('String.prototype.router', route);
         if (route) {
             var pop = params ? params.pop : null;
-            
+
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-            
+
             await rout.ed.bang(route, goto);
-            
+
             window.view ? await view(route) : null;
-            
+
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
 
             ///await rout.ed.bang(route);
@@ -69,13 +69,13 @@ String.prototype.router = async function(params) {
                 }) : null;
                 document.body.dataset.path = route.path;
                 history.pushState(link, '', link);
-                
+
             }
 
             //await viewPage(vp);
-            
+
             route = window.paths = window.route = rout.e(url.hash ? url.hash.split('#')[1] : goto + url.search + url.hash);
-            
+
             resolve(route);
         } else {
             const e = {
@@ -166,10 +166,11 @@ window.rout.ed.bang = async(route)=>{
     var pages = dom.body.find('pages[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
     0 < 1 ? console.log(177, {
+        vp,
         route,
         page
     }) : null;
-    
+
     $('[data-hide]').attr("data-active", true);
     //$('pages').removeAttr("data-active");
     //$(':not(pages)[data-pages]').removeAttr("data-active");
@@ -177,14 +178,18 @@ window.rout.ed.bang = async(route)=>{
     $('[data-path]').removeAttr("data-active");
 
     var page = dom.body.find('page[data-page="' + route.page + '"]');
-    if (vp && vp.closest('main')) {
-        //$('pages[data-page]').removeAttr("data-active");
-        $('page[data-page][data-active]').removeAttr("data-active");
+    if (vp) {
+        if (vp.closest('main')) {
+            //$('pages[data-page]').removeAttr("data-active");
+            $('page[data-page][data-active]').removeAttr("data-active");
+        } else {
+            $('body > page[data-page]').removeAttr("data-active");
+            $('body > pages[data-page]').removeAttr("data-active");
+            $('body > :not(main) page[data-page]').removeAttr("data-active");
+            $('body > :not(main) pages[data-page]').removeAttr("data-active");
+        }
     } else {
-        $('body > page[data-page]').removeAttr("data-active");
-        $('body > pages[data-page]').removeAttr("data-active");
-        $('body > :not(main) page[data-page]').removeAttr("data-active");
-        $('body > :not(main) pages[data-page]').removeAttr("data-active");
+        $('page[data-page][data-active]').removeAttr("data-active");
     }
 
     //console.log({page:route.page});
@@ -206,8 +211,8 @@ window.rout.ed.bang = async(route)=>{
             var check = route.page && (route.page.includes(rs[i].dataset.page) || (rout.ed.dir(route.page).length === rout.ed.dir(rs[i].dataset.page).length && rs[i].dataset.page.endsWith('*')));
             //console.log(210, route.page, rs[i].dataset.page, check);
             if (check) {
-                //console.log(1, 'activate', rs[i].dataset.page);
-                if(!rs[i].getAttribute('data-active')) {
+                //console.log(1, 'activate', rs[i].dataset.page, rs[i]);
+                if (!rs[i].getAttribute('data-active')) {
                     rs[i].dataset.active = true;
                 }
                 //console.log(route.page, rs[i].dataset.page);
@@ -251,8 +256,8 @@ window.rout.ed.bang = async(route)=>{
                         }
                         r++;
                     } while (r < roots.length);
-                } 
-            } else {   
+                }
+            } else {
                 //console.log(0, 'deactivate', rs[i].dataset.page);
                 rs[i].removeAttribute('data-active');
             }

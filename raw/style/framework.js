@@ -161,10 +161,12 @@ framework.branding.backgroundColor = event=>{
                 if (isHex) {
                     theme.style.backgroundColor = value;
                     theme.setAttribute('fill', value);
+                    $(theme.all('svg [fill]')).attr('fill', value);
                 }
             } else {
                 theme.style.backgroundColor = bg;
                 theme.setAttribute('fill', bg);
+                $(theme.all('svg [fill]')).attr('fill', bg);
             }
         }
         if (ground === "foreground") {
@@ -306,8 +308,13 @@ framework.branding.generate = async function(target) {
 
     var safari = cards[5];
     //if (safari.find('[name="radio-macOSSafari"][value="default"]').checked) {
-    var safariPinnedTabSVG = safari.find('box picture > svg:not([css-display]) foreignObject svg');
+    var safariPinnedTabSVG = safari.all('box > column > picture')[0].find('picture > svg:not([css-display]) foreignObject svg');
+    var safariPinnedTabFocusSVG = safari.all('box > column > picture')[1].find('picture > svg:not([css-display]) foreignObject svg');
+    var safariPinnedTabTouchBarSVG = safari.all('box > column > picture')[2].find('picture > svg:not([css-display])');
+    var safariPinnedTabColor = safariPinnedTabTouchBarSVG.find('rect').getAttribute('fill');
     zip["safari-pinned-tab.svg"] = safariPinnedTabSVG.outerHTML;
+    zip["safari-pinned-tab-focus.svg"] = safariPinnedTabFocusSVG.outerHTML;
+    zip["safari-pinned-tab-touch-bar.svg"] = safariPinnedTabTouchBarSVG.outerHTML;
     //}
 
     var siteWEBMANIFEST = await github.repos.contents({
@@ -339,14 +346,32 @@ framework.branding.generate = async function(target) {
     zip["site.webmanifest"] = JSON.stringify(siteWEBMANIFEST, null, 4);
 
     var appleTouchIconLINK = document.createElement('link');
+    appleTouchIconLINK.setAttribute('rel', 'apple-touch-icon');
+    appleTouchIconLINK.setAttribute('sizes', '180x180');
+    appleTouchIconLINK.setAttribute('href', '/apple-touch-icon.png');
     var favicon32x32LINK = document.createElement('link');
+    favicon32x32LINK.setAttribute('rel', 'icon');
+    favicon32x32LINK.setAttribute('type', 'image/png');
+    favicon32x32LINK.setAttribute('sizes', '32x32');
+    favicon32x32LINK.setAttribute('href', '/favicon-32x32.png');
     var favicon16x16LINK = document.createElement('link');
+    favicon16x16LINK.setAttribute('rel', 'icon');
+    favicon16x16LINK.setAttribute('type', 'image/png');
+    favicon16x16LINK.setAttribute('sizes', '16x16');
+    favicon16x16LINK.setAttribute('href', '/favicon-16x16.png');
     var manifestLINK = document.createElement('link');
-    var safariPinnedTabLINk = document.createElement('link');
+    manifestLINK.setAttribute('rel', 'manifest');
+    manifestLINK.setAttribute('href', '/site.webmanifest');
+    var safariPinnedTabLINK = document.createElement('link');
+    safariPinnedTabLINK.setAttribute('rel', 'mask-icon');
+    safariPinnedTabLINK.setAttribute('href', '/safari-pinned-tab.svg');
+    safariPinnedTabLINK.setAttribute('color', safariPinnedTabColor);
     var msApplicationTileColorMETA = document.createElement('meta');
     msApplicationTileColorMETA.setAttribute('name', 'msapplication-TileColor');
     msApplicationTileColorMETA.setAttribute('content', TileColor);
     var themeColorMETA = document.createElement('meta');
+    themeColorMETA.setAttribute('name', 'theme-color');
+    themeColorMETA.setAttribute('content', color);
     var content = await github.repos.contents({
         owner: window.owner.login,
         path: 'index.html',
@@ -355,22 +380,24 @@ framework.branding.generate = async function(target) {
         accept: 'application/vnd.github.raw'
     });
     var html = new DOMParser().parseFromString(content, 'text/html').documentElement;
-    console.log(245, {
+    var head = html.find('head');
+    0 > 1 ? console.log(245, {
         zip,
-        html
-    });
-    html.find('link[href="/apple-touch-icon.png"]') ? html.find('head').appendChild(appleTouchIconLINK) : null;
-    html.find('link[href="/favicon-32x32.png"]') ? html.find('head').appendChild(favicon32x32LINK) : null
-    html.find('link[href="/favicon-16x16.png"]') ? html.find('head').appendChild(favicon16x16LINK) : null;
-    html.find('link[href="/site.webmanifest"]') ? html.find('head').appendChild(manifestLINK) : null;
-    html.find('link[href="/safari-pinned-tab.svg"]') ? html.find('head').appendChild(safariPinnedTabLINK) : null
-    html.find('meta[name="msapplication-TileColor"]') ? html.find('head').appendChild(msApplicationTileColorMETA) : null;
-    html.find('meta[name="theme-color"]') ? html.find('head').appendChild(themeColorMETA) : null;
-
-    console.log(245, {
+        html,
+        head: head.outerHTML
+    }) : null;
+    html.find('head').find('link[href="/apple-touch-icon.png"]') ? html.find('head').find('link[href="/apple-touch-icon.png"]').replaceWith(appleTouchIconLINK) : html.find('head').appendChild(appleTouchIconLINK);
+    html.find('head').find('link[href="/favicon-32x32.png"]') ? html.find('head').find('link[href="/favicon-32x32.png"]').replaceWith(favicon32x32LINK) : html.find('head').appendChild(favicon32x32LINK);
+    html.find('head').find('link[href="/favicon-16x16.png"]') ? html.find('head').find('link[href="/favicon-16x16.png"]').replaceWith(favicon16x16LINK) : html.find('head').appendChild(favicon16x16LINK);
+    html.find('head').find('link[href="/site.webmanifest"]') ? html.find('head').find('link[href="/site.webmanifest"]').replaceWith(manifestLINK) : html.find('head').appendChild(manifestLINK);
+    html.find('head').find('link[href="/safari-pinned-tab.svg"]') ? html.find('head').find('link[href="/safari-pinned-tab.svg"]').replaceWith(safariPinnedTabLINK) : html.find('head').appendChild(safariPinnedTabLINK);
+    html.find('head').find('meta[name="msapplication-TileColor"]') ? html.find('head').find('meta[name="msapplication-TileColor"]').replaceWith(msApplicationTileColorMETA) : html.find('head').appendChild(msApplicationTileColorMETA);
+    html.find('head').find('meta[name="theme-color"]') ? html.find('head').find('meta[name="theme-color"]').replaceWith(themeColorMETA) : html.find('head').appendChild(themeColorMETA);
+    0 > 1 ? console.log(245, {
         zip,
         head: html.outerHTML
-    });
+    }) : null;
+    zip["index.html"] = html.outerHTML;
 
     //PUSH
     var params = {
