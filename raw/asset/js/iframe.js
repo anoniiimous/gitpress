@@ -198,6 +198,13 @@ framework.on = async function(event) {
                             }
                         }
 
+                        var mode = "";
+                        if(["block", "card", "box"].includes(nodeName)) {
+                            mode = 'bar';
+                        } else {
+                            mode = 'box';
+                        }
+                        
                         0 < 1 ? (0 > 1 ? console.log({
                             focused,
                             tagName,
@@ -206,10 +213,16 @@ framework.on = async function(event) {
                             array: Array.prototype
                         }) : console.log({
                             focus: 'with',
-                            el
+                            el,
+                            mode,
+                            node,
+                            nodeName
                         })) : null;
+                        window.top.toolbelt(mode, {
+                            element: node
+                        });
 
-                        $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
+                        //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
 
                     } else {
 
@@ -225,9 +238,12 @@ framework.on = async function(event) {
                         });
 
                         $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
+                        
+                        window.top.toolbelt('tip', {
+                            element: node
+                        });
 
                     }
-                    window.top.toolbelt('set');
 
                 } else {
 

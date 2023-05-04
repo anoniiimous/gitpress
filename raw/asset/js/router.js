@@ -165,7 +165,7 @@ window.rout.ed.bang = async(route)=>{
     var page = dom.body.find('page[data-page="' + route.page + '"]');
     var pages = dom.body.find('pages[data-page="' + route.page + '"]');
     var vp = page ? page : pages;
-    0 < 1 ? console.log(177, {
+    0 > 1 ? console.log(177, {
         vp,
         route,
         page

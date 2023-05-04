@@ -16,21 +16,21 @@ window.mvc.m ? null : (window.mvc.m = model = {
             var win = feed.ownerWindow();
             //feed.innerHTML = "";
 
-            console.log(861, feed);
+            //console.log(861, feed);
             var template = feed.nextElementSibling.content;
             var limit = template.children.length;
             var media = feed.getAttribute('media');
             var json = is.json(media) ? JSON.parse(media) : [media];
-            console.log(63, {
+            0 > 1 ? console.log(63, {
                 json,
                 limit,
                 media,
                 win
-            });
+            }) : null;
 
             if (json.length === 1) {
                 media = json[0];
-                console.log(878, media);
+                //console.log(878, media);
                 if (media === "merch") {
                     //var json = await ajax('raw/posts/posts.json')
                     var posts = [];
@@ -43,10 +43,10 @@ window.mvc.m ? null : (window.mvc.m = model = {
                         }, {
                             accept: "application/vnd.github.raw"
                         });
-                        console.log(890, {
+                        0 > 1 ? console.log(890, {
                             posts,
                             template
-                        });
+                        }) : null;
                     } else {
                         try {
                             var res = await ajax('raw/merch/merch.json')
@@ -83,7 +83,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                     return dir.length > 1 && dir[0] === post.slug
                                 });
 
-                                0 < 1 ? console.log(57, {
+                                0 > 1 ? console.log(57, {
                                     post,
                                     descendants,
                                     posts
@@ -98,10 +98,10 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                 }
 
                                 var image = elem.find('picture img');
-                                console.log(94, {
+                                0 > 1 ? console.log(94, {
                                     elem,
                                     image
-                                });
+                                }) : null;
                                 if (win.self !== win.top && image) {
                                     var obj = {
                                         owner: window.parent.owner.login,
@@ -109,10 +109,10 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                         resource: post.images[0]
                                     };
                                     image.src = await github.raw.blob(obj);
-                                    console.log(101, {
+                                    0 > 1 ? console.log(101, {
                                         obj,
                                         src: image.src
-                                    });
+                                    }) : null;
                                 }
                                 //image && post.images ? image.src = post.images[0] : null;
 
@@ -219,7 +219,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                 }
             }
 
-            console.log(htmls);
+            //console.log(htmls);
             return html;
         }
     }
@@ -308,9 +308,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 feeds.forEach(async function(feed) {
                     feed.innerHTML = "";
                     var html = await model.feed.media(feed);
-                    console.log(91, {
+                    0 > 2 ? console.log(91, {
                         html
-                    });
+                    }) : null;
                     feed.innerHTML = html;
                 })
             }

@@ -1474,9 +1474,9 @@ window.css.style.declaration = function(c) {
 
 window.css.style.done = function(doc, rule, decs) {
     doc.head.cssTexts ? null : doc.head.cssTexts = {};
-    console.log(947, 'css.style.done', {
+    0 > 1 ? console.log(947, 'css.style.done', {
         decs
-    });
+    }) : null;
     return new Promise(function(resolve, reject) {
         for (const rule of decs) {
             var type = rule.type;
@@ -1566,7 +1566,7 @@ window.css.style.done = function(doc, rule, decs) {
 
         var entries = Object.entries(doc.head.cssTexts);
         entries = Array.from(new Set(entries.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-        0 < 1 ? console.log(1065, 'doc.head.cssTexts', {
+        0 > 1 ? console.log(1065, 'doc.head.cssTexts', {
             head: doc.head,
             cssTexts: doc.head.cssTexts,
             entries,
@@ -1759,26 +1759,29 @@ async function toolbelt(mode, options) {
 
     if (mode) {
 
-        $(tools.all('[data-mode]')).addClass('display-none');
-        tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
+        console.log(tools, mode);
+        $(tools.all('[data-mode]')).attr('css-display', 'none');
+        tools.find('[data-mode="' + mode + '"]').removeAttribute('css-display');
 
-        if (mode === "set") {
+        if (mode === "tip") {
+            tools.setAttribute('css-height', '50px');
+            tools.setAttribute('css-width', '50px');
             $(tool.all('[tabindex]')).addClass('display-none');
             toolset.classList.remove('display-none');
         }
 
-        if (mode === "box") {}
+        if (mode === "box") {
+                        
+            tools.setAttribute('css-height', '320px');
+            tools.setAttribute('css-width', '320px');
 
-        if (mode === "bar") {
-
+            var node = options.element;
+            var nodeName = element = node.tagName.toLowerCase();
             console.log({
                 node,
                 nodeName,
                 options
             });
-
-            var node = options.element;
-            var nodeName = element = node.tagName.toLowerCase();
 
             if (nodeName === 'text') {}
             if (nodeName === 'picture') {}
@@ -1789,35 +1792,98 @@ async function toolbelt(mode, options) {
 
             toolbar.classList.remove('display-none');
             $(toolbar.children).addClass('display-none');
-            toolbar.find('[tag="' + nodeName + '"]').classList.remove('display-none');
+            nodeName && toolbar.find('[tag="' + nodeName + '"]') ? toolbar.find('[tag="' + nodeName + '"]').classList.remove('display-none') : null;
 
-            var html = await ajax('raw/asset/html/tool/tool.box.element.html', {
-                cache: "reload"
-            });
-            var doc = new DOMParser().parseFromString(html, "text/html");
-            var ppp = await window.top.modal.popup(html);
-            var cards = ppp.all('card');
-
-            cards.forEach(function(card) {
-                if (card.dataset.tag === element) {
-                    card.node = card.closest('aside').focus = node;
-                    card.removeAttribute('css-display');
-
-                    var fetching = card.all('[data-fetch]');
-                    console.log(1305, {
-                        fetching
-                    });
-                    fetching.length > 0 ? fetching.forEach(async function(column, index) {
-                        var html = await ajax(column.dataset.fetch);
-                        var parser = new DOMParser().parseFromString(html, "text/html");
-                        column.innerHTML = parser.body.firstElementChild.innerHTML;
-                        console.log(1309, {
-                            column
+            if(0 > 1) {
+                var html = await ajax('raw/asset/html/tool/tool.box.element.html', {
+                    cache: "reload"
+                });
+                var doc = new DOMParser().parseFromString(html, "text/html");
+                var ppp = await window.top.modal.popup(html);
+                var cards = ppp.all('card');
+    
+                cards.forEach(function(card) {
+                    if (card.dataset.tag === element) {
+                        card.node = card.closest('aside').focus = node;
+                        card.removeAttribute('css-display');
+    
+                        var fetching = card.all('[data-fetch]');
+                        console.log(1305, {
+                            fetching
                         });
-                        window.tool.box.css(column);
-                    }) : null;
-                }
+                        fetching.length > 0 ? fetching.forEach(async function(column, index) {
+                            var html = await ajax(column.dataset.fetch);
+                            var parser = new DOMParser().parseFromString(html, "text/html");
+                            column.innerHTML = parser.body.firstElementChild.innerHTML;
+                            console.log(1309, {
+                                column
+                            });
+                            window.tool.box.css(column);
+                        }) : null;
+                    }
+                });
+            }
+
+            0 > 2 ? console.log({
+                toolset,
+                toolbox,
+                toolbar
+            }, {
+                html,
+                ppp,
+                cards
+            }) : null;
+        }
+
+        if (mode === "bar") {
+                        
+            tools.setAttribute('css-height', '50px');
+            tools.setAttribute('css-width', '150px');
+
+            var node = options.element;
+            var nodeName = element = node.tagName.toLowerCase();
+            console.log({
+                node,
+                nodeName,
+                options
             });
+
+            if (nodeName === 'text') {}
+            if (nodeName === 'picture') {}
+            if (nodeName === 'video') {}
+            if (nodeName === 'audio') {}
+            if (nodeName === 'line') {}
+            if (nodeName === 'embed') {}
+            
+            if(0 > 1) {
+                var html = await ajax('raw/asset/html/tool/tool.box.element.html', {
+                    cache: "reload"
+                });
+                var doc = new DOMParser().parseFromString(html, "text/html");
+                var ppp = await window.top.modal.popup(html);
+                var cards = ppp.all('card');
+    
+                cards.forEach(function(card) {
+                    if (card.dataset.tag === element) {
+                        card.node = card.closest('aside').focus = node;
+                        card.removeAttribute('css-display');
+    
+                        var fetching = card.all('[data-fetch]');
+                        console.log(1305, {
+                            fetching
+                        });
+                        fetching.length > 0 ? fetching.forEach(async function(column, index) {
+                            var html = await ajax(column.dataset.fetch);
+                            var parser = new DOMParser().parseFromString(html, "text/html");
+                            column.innerHTML = parser.body.firstElementChild.innerHTML;
+                            console.log(1309, {
+                                column
+                            });
+                            window.tool.box.css(column);
+                        }) : null;
+                    }
+                });
+            }
 
             console.log({
                 toolset,

@@ -122,6 +122,7 @@
         /* min-height: 100%; */
         width: 100%;
         display: block;
+        margin: 0;
     }
 
     block, box, card {
@@ -737,6 +738,7 @@
     /*UI*/
     body[buildable] block, body[buildable] > header, body[buildable] > footer {
         transition: 0.3s transform;
+        margin: 2px 0;
     }
 
     body:not([insertable]) insertable {

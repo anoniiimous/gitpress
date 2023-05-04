@@ -2999,6 +2999,10 @@
         width: 130px;
     }
 
+    .width-150px, [css-width="150px"] {
+        width: 150px;
+    }
+
     .width-160px, [css-width="160px"] {
         width: 160px;
     }
