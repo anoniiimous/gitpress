@@ -158,7 +158,7 @@ framework.on = async function(event) {
                 insertable
             }) : null;
 
-            $(tool.all('header > *')).addClass('display-none');
+            //$(tool.all('header > *')).addClass('display-none');
             if (mode.edit) {
                 var focus = target.closest('[focus]');
                 var withh = elem !== event.target.closest(':not(block):not(body > header):not(body > footer)[focus]');
@@ -198,13 +198,8 @@ framework.on = async function(event) {
                             }
                         }
 
-                        var mode = "";
-                        if(["block", "card", "box"].includes(nodeName)) {
-                            mode = 'bar';
-                        } else {
-                            mode = 'box';
-                        }
-                        
+                        var mode = "bar";
+
                         0 < 1 ? (0 > 1 ? console.log({
                             focused,
                             tagName,
@@ -218,9 +213,7 @@ framework.on = async function(event) {
                             node,
                             nodeName
                         })) : null;
-                        window.top.toolbelt(mode, {
-                            element: node
-                        });
+                        window.top.toolbelt(mode);
 
                         //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
 
@@ -237,8 +230,8 @@ framework.on = async function(event) {
                             el.removeAttribute('contenteditable');
                         });
 
-                        $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
-                        
+                        //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
+
                         window.top.toolbelt('tip', {
                             element: node
                         });
@@ -261,10 +254,13 @@ framework.on = async function(event) {
                         if (media) {
                             var id = selected.dataset.id;
                             if (id) {
-                                window.top.toolbelt('bar', {
+                                0  > 1 ? window.top.toolbelt('bar', {
+                                    element: node
+                                }) : null;
+                                console.log(id);
+                                window.top.toolbelt('box', {
                                     element: node
                                 });
-                                console.log(id);
                             } else {
                                 var json = is.json(media) ? JSON.parse(media) : false;
                                 if (json) {
@@ -283,10 +279,12 @@ framework.on = async function(event) {
                                 console.log(media, json);
                             }
                         } else {
-                            console.log({node})
+                            console.log({
+                                node
+                            })
                             if (node) {
                                 if (elements.includes(nodeName)) {
-                                    window.top.toolbelt('bar', {
+                                    window.top.toolbelt('box', {
                                         element: node
                                     });
                                 } else {

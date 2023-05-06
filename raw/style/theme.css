@@ -202,7 +202,7 @@
         background-color: #ffc40d;
     }
 
-    .background-color-fff, [css-background-color="#ffffff"] {
+    .background-color-fff, .background-color-ffffff, [css-background-color="#ffffff"] {
         background-color: #fff;
     }
 
@@ -2167,7 +2167,7 @@
         min-height: 38px;
     }
 
-    .min-height-50px {
+    .min-height-50px, [css-min-height="50px"] {
         min-height: 50px;
     }
 

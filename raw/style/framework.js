@@ -607,7 +607,7 @@ framework.on = async function(event) {
                             array: Array.prototype
                         });
 
-                        $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
+                        //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
 
                     } else {
 
@@ -620,7 +620,7 @@ framework.on = async function(event) {
                             el.removeAttribute('contenteditable');
                         });
 
-                        $(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
+                        //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.find('.gg-add') ? null : o.classList.add('display-none'));
 
                     }
 
@@ -1766,62 +1766,73 @@ async function toolbelt(mode, options) {
         if (mode === "tip") {
             tools.setAttribute('css-height', '50px');
             tools.setAttribute('css-width', '50px');
-            $(tool.all('[tabindex]')).addClass('display-none');
-            toolset.classList.remove('display-none');
+            //$(tool.all('[tabindex]')).addClass('display-none');
+            //toolset.classList.remove('display-none');
         }
 
         if (mode === "box") {
-                        
-            tools.setAttribute('css-height', '320px');
+              
+            tools.setAttribute('css-height', 'auto');          
+            tools.setAttribute('css-min-height', '50px');
             tools.setAttribute('css-width', '320px');
 
-            var node = options.element;
-            var nodeName = element = node.tagName.toLowerCase();
-            console.log({
-                node,
-                nodeName,
-                options
-            });
+            if(options && options.element) {
 
-            if (nodeName === 'text') {}
-            if (nodeName === 'picture') {}
-            if (nodeName === 'video') {}
-            if (nodeName === 'audio') {}
-            if (nodeName === 'line') {}
-            if (nodeName === 'embed') {}
-
-            toolbar.classList.remove('display-none');
-            $(toolbar.children).addClass('display-none');
-            nodeName && toolbar.find('[tag="' + nodeName + '"]') ? toolbar.find('[tag="' + nodeName + '"]').classList.remove('display-none') : null;
-
-            if(0 > 1) {
-                var html = await ajax('raw/asset/html/tool/tool.box.element.html', {
-                    cache: "reload"
+                var node = options.element;
+                var nodeName = element = node.tagName.toLowerCase();
+                console.log({
+                    node,
+                    nodeName,
+                    options
                 });
+
+                var html = '';    
+                if (nodeName === 'text') {
+                    html = await ajax('raw/asset/html/tool/tool.box.text.html', {
+                        cache: "reload"
+                    });
+                }
+                if (nodeName === 'picture') {
+                    html = await ajax('raw/asset/html/tool/tool.box.picture.html', {
+                        cache: "reload"
+                    });
+                }
+                if (nodeName === 'video') {
+                    html = await ajax('raw/asset/html/tool/tool.box.video.html', {
+                        cache: "reload"
+                    });                }
+                if (nodeName === 'audio') {
+                    html = await ajax('raw/asset/html/tool/tool.box.audio.html', {
+                        cache: "reload"
+                    });
+                }
+                if (nodeName === 'line') {
+                    html = await ajax('raw/asset/html/tool/tool.box.element.html', {
+                        cache: "reload"
+                    });
+                }
+                if (nodeName === 'embed') {
+                    html = await ajax('raw/asset/html/tool/tool.box.element.html', {
+                        cache: "reload"
+                    });
+                }
+                
                 var doc = new DOMParser().parseFromString(html, "text/html");
-                var ppp = await window.top.modal.popup(html);
-                var cards = ppp.all('card');
-    
-                cards.forEach(function(card) {
-                    if (card.dataset.tag === element) {
-                        card.node = card.closest('aside').focus = node;
-                        card.removeAttribute('css-display');
-    
-                        var fetching = card.all('[data-fetch]');
-                        console.log(1305, {
-                            fetching
-                        });
-                        fetching.length > 0 ? fetching.forEach(async function(column, index) {
-                            var html = await ajax(column.dataset.fetch);
-                            var parser = new DOMParser().parseFromString(html, "text/html");
-                            column.innerHTML = parser.body.firstElementChild.innerHTML;
-                            console.log(1309, {
-                                column
-                            });
-                            window.tool.box.css(column);
-                        }) : null;
-                    }
-                });
+                var card = tools.find('[data-mode="' + mode + '"]');
+                card.innerHTML = doc.body.innerHTML;
+                //var ppp = await window.top.modal.popup(html);
+                //var cards = ppp.all('card');
+                    
+                //0 > 1 ? cards.forEach(function(card) {
+                    //alert(card);
+                    //if (card.dataset.tag === element) {
+                        //card.node = card.closest('aside').focus = node;
+                        card.node = node;
+                        card.removeAttribute('css-display')                        
+                        window.tool.box.css(card);
+                    //}
+                //}) : null;
+                
             }
 
             0 > 2 ? console.log({
@@ -1840,13 +1851,16 @@ async function toolbelt(mode, options) {
             tools.setAttribute('css-height', '50px');
             tools.setAttribute('css-width', '150px');
 
-            var node = options.element;
-            var nodeName = element = node.tagName.toLowerCase();
-            console.log({
-                node,
-                nodeName,
-                options
-            });
+
+            if(options && options.element) {
+                var node = options.element;
+                var nodeName = element = node.tagName.toLowerCase();
+                console.log({
+                    node,
+                    nodeName,
+                    options
+                });
+            }
 
             if (nodeName === 'text') {}
             if (nodeName === 'picture') {}
@@ -1905,8 +1919,8 @@ function toolset(mode, options) {
 
     if (mode) {
 
-        $(tools.all('[data-mode]')).addClass('display-none');
-        tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
+        //$(tools.all('[data-mode]')).addClass('display-none');
+        //tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
 
     }
 
