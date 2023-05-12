@@ -1564,6 +1564,36 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     connect: {
+        remove: async(gateway) => {
+            try {
+                var res = await github.repos.contents({
+                    owner: window.owner.login,
+                    repo: GET[1],
+                    path: 'index.html'
+                }, {
+                    accept: 'application/vnd.github.raw'
+                });
+                var doc = new DOMParser().parseFromString(res, 'text/html');
+                var head = doc.head;
+
+                var stripe_pk = head.find('meta[name="stripe_publishable_key"]');
+                var stripe_uid = head.find('meta[name="stripe_user_id"]');
+
+                0 > 1 ? console.log(153, {
+                    head: head.outerHTML,
+                    res
+                }) : null;
+
+                if (stripe_pk.content && stripe_uid.content) {
+                    console.log(1588, gateway, {
+                        pk: stripe_pk.content,
+                        uid: stripe_uid.content
+                    });
+                }
+            } catch (e) {
+                console.log(1594, e, gateway);
+            }
+        },
         stripe: target => {
             var redirect_uri = window.location.protocol + '//' + global.domains.subdomain + '.' + global.domains.domain + '.' + global.domains.tld;
             var state = 'stripe_' + Crypto.uid.create(1);

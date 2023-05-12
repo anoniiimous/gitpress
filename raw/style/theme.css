@@ -2574,6 +2574,10 @@
         right: 5px;
     }
 
+    [css-right="-5px"] {
+        right: -5px;
+    }
+
     [css-right="-8px"] {
         right: -8px;
     }
