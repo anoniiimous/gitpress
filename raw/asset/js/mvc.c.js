@@ -1564,32 +1564,41 @@ window.mvc.c ? null : (window.mvc.c = controller = {
     },
 
     connect: {
-        remove: async(gateway) => {
+        remove: async(target) => {
+            var gateway = target.closest('[data-value]').dataset.value.split('.')[1];
+                
             try {
-                var res = await github.repos.contents({
+                    
+                var file = await github.repos.contents({
                     owner: window.owner.login,
                     repo: GET[1],
-                    path: 'index.html'
-                }, {
-                    accept: 'application/vnd.github.raw'
+                    path: '/raw/asset/json/stripe.json'
                 });
-                var doc = new DOMParser().parseFromString(res, 'text/html');
-                var head = doc.head;
+                    
+                var remove = await github.repos.contents({
+                    owner: window.owner.login,
+                    path: "raw/asset/json/stripe.json",
+                    repo: GET[1]
+                }, {
+                    data: JSON.stringify({
+                        message: "Remove Stripe Gateway",
+                        sha: file.sha
+                    }),
+                    dataType: "DELETE"
+                });
+                    
+                console.log(1599, remove);
 
-                var stripe_pk = head.find('meta[name="stripe_publishable_key"]');
-                var stripe_uid = head.find('meta[name="stripe_user_id"]');
-
-                0 > 1 ? console.log(153, {
-                    head: head.outerHTML,
-                    res
-                }) : null;
-
-                if (stripe_pk.content && stripe_uid.content) {
-                    console.log(1588, gateway, {
-                        pk: stripe_pk.content,
-                        uid: stripe_uid.content
-                    });
+                var box = target.closest('box');
+                var column = box.parentNode;
+                box.remove();
+                var methods = column.children;
+                console.log(methods, methods.length);
+                if(methods.length === 0) {
+                    column.closest('block').setAttribute('css-display', 'none');
+                    column.closest('block').nextElementSibling.find('[data-value="stripe.connect"]').closest('box').removeAttribute('css-display');
                 }
+                    
             } catch (e) {
                 console.log(1594, e, gateway);
             }

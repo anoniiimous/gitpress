@@ -545,37 +545,39 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     column.innerHTML = "";
 
                                     try {
-                                        var res = await github.repos.contents({
+
+                                        var json = await github.repos.contents({
                                             owner: window.owner.login,
                                             repo: get[1],
-                                            path: 'index.html'
+                                            path: '/raw/asset/json/stripe.json'
                                         }, {
                                             accept: 'application/vnd.github.raw'
                                         });
-                                        var doc = new DOMParser().parseFromString(res, 'text/html');
-                                        var head = doc.head;
-                                        block.removeAttribute('css-display');
-                                        var template = block.find('template').content;
-                                        var checkout = {
-                                            cash: template.children[0],
-                                            stripe: template.children[1]
-                                        };
 
-                                        var stripe_pk = head.find('meta[name="stripe_publishable_key"]');
-                                        var stripe_uid = head.find('meta[name="stripe_user_id"]');
+                                        var stripe_pk = json.stripe_publishable_key;
+                                        var stripe_uid = json.stripe_user_id;
 
-                                        0 > 1 ? console.log(153, {
-                                            head: head.outerHTML,
-                                            res
-                                        }) : null;
+                                        console.log(557, {
+                                            stripe_pk,
+                                            stripe_uid
+                                        });
 
-                                        if (stripe_pk.content && stripe_uid.content) {
+                                        if (stripe_pk && stripe_uid) {
+                                            block.removeAttribute('css-display');
+                                            var template = block.find('template').content;
+                                            var checkout = {
+                                                cash: template.children[0],
+                                                stripe: template.children[1]
+                                            };
                                             var box = checkout.stripe.cloneNode(true);
                                             column.insertAdjacentHTML('beforeend', box.outerHTML);
                                             vp.all('block')[1].all('card')[1].all('box')[0].setAttribute("css-display", "none");
                                         }
+
                                     } catch (e) {
+
                                         console.log(e);
+
                                     }
 
                                     resolve(route);

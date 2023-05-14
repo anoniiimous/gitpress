@@ -29,7 +29,9 @@ window.stripe = {
                             //client_id: stripe.config.client_id.test,
                             grant_type: 'authorization_code',
                             livemode: stripe.config.livemode,
-                            code: params.code
+                            code: params.code,
+                            repo: window.owner.login + '/' + GET[1],
+                            githubAccessToken: localStorage.githubAccessToken
                         }),
                         mode: "cors"
                     }) : null;
@@ -106,6 +108,12 @@ window.stripe = {
                         var array = [{
                             content: doc.documentElement.outerHTML,
                             path: "index.html"
+                        }, {
+                            content: JSON.stringify({
+                                "stripe_publishable_key": data.stripe_publishable_key,
+                                "stripe_user_id": data.stripe_user_id
+                            }, null, 4),
+                            path: "raw/asset/json/stripe.json"
                         }];
                         await github.crud.update(params, array);
                     }
