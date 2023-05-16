@@ -544,7 +544,7 @@ function convert(svg, options) {
                 var width = parseInt(vb[vb.length - 2]);
                 var height = parseInt(vb[vb.length - 1]);
             }
-            
+
             canvas.width = width;
             canvas.height = height;
             canvas.getContext("2d").drawImage(img, 0, 0, width, height);
@@ -568,7 +568,19 @@ function fullscreen(elem) {
         elem.msRequestFullscreen();
     }
 }
-
+function toQueryString(obj) {
+    let getPairs = (obj,keys=[])=>Object.entries(obj).reduce((pairs,[key,value])=>{
+        if (typeof value === 'object')
+            pairs.push(...getPairs(value, [...keys, key]));
+        else
+            pairs.push([[...keys, key], value]);
+        return pairs;
+    }
+    , []);
+    let x = getPairs(obj).map(([[key0,...keysRest],value])=>`${key0}${keysRest.map(a=>`[${a}]`).join('')}=${value}`).join('&');
+    console.log(x);
+    return x;
+}
 function truth(obj) {
     for (var o in obj)
         if (!obj[o])
