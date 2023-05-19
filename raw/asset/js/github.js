@@ -44,13 +44,14 @@ window.github = {
         }
         ,
         client_id: {
+            "100.115.92.14:8080": "8f48243dba09dd64030b",
             "dompad.io": "1a41e41b2b371e7a1a5b",
             "dompad.pages.dev": "fdeadaa98b35c6df688c",
             "dompad.github.tld": 0 < 1 ? "d100ccbc44112f0d5a92" : "Iv1.cbe275c17b8db02d"
         },
         config: {
             client_id: 0 > 1 ? "Iv1.cbe275c17b8db02d" : "d100ccbc44112f0d5a92",
-            redirect_uri: window.location.protocol + "//" + window.location.host + "/dashboard/",
+            redirect_uri: window.location.protocol + "//" + window.location.host,// + "/dashboard/",
             scope: "delete_repo,user,public_repo,repo"
         },
         login: (target)=>{

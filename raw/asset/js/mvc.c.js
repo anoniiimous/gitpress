@@ -2132,6 +2132,18 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
     },
 
+    login: {
+        token: target => {
+            var input = target.closest('ico').previousElementSibling;
+            var token = input.value;
+            console.log(token);
+            if (token) {
+                localStorage.setItem('githubAccessToken', token);
+                'dashboard'.router();
+            }
+        }      
+    },
+
     media: {
         delete: async (slugs) => {
             //console.log(2443, slugs);

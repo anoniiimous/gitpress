@@ -16,10 +16,12 @@
         <link href="raw/asset/css/gg.css" rel="stylesheet">
         <link href="raw/style/theme.css" rel="stylesheet">
         <script>
+            let base;
             if (window.self === window.top) {
+                base = document.head.querySelector("base");
                 window.boot = window.location.pathname + window.location.search + window.location.hash;
             } else {
-                const base = document.createElement("base");
+                base = document.createElement("base");
                 base.href = window.parent.location.protocol + "//" + window.parent.location.host;
                 document.head.appendChild(base);
                 var pathname = window.parent.location.pathname;
