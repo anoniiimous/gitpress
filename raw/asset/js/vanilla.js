@@ -444,7 +444,7 @@ function ajax(url, settings) {
     var dir = window.location.href.split(url);
     if (!RegExp('^(?:[a-z]+:)?//', 'i').test(url)) {
         if (window.hub) {
-            url = base.href + url;
+            url = base.href + (url.startsWith('/') ? url.slice(1) : url);
         }
     }
     return new Promise((resolve,reject)=>{

@@ -31,12 +31,13 @@
                         </row>
                     </box>
                     <box class="border-bottom-1px-solid">
-                        <row class="align-items-center display-flex flex-direction-row justify-content-center">
-                            <input class="flex-1" placeholder="Enter Access Token" type="text">
+                        <form class="align-items-center display-flex flex-direction-row justify-content-center">
+                            <input class="flex-1" onkeyup placeholder="Enter Access Token" type="text">
                             <ico data-tap="controller.login.token(event.target)">
+                                <input type="submit">
                                 <n class="gg-chevron-right"></n>
                             </ico>
-                        </row>
+                        </form>
                     </box>
                 </column>
             </card>

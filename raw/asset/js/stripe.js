@@ -75,6 +75,7 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
+                    console.log(78, token);
                     var secret = 0 < 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
@@ -170,6 +171,7 @@ window.stripe = {
                                 path: "raw/asset/json/stripe.json"
                             }];
                             await github.crud.update(params, array);
+                            resolve(access_token);
                         }
 
                     }
