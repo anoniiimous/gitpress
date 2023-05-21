@@ -10,13 +10,15 @@ window.stripe = {
         state: 'stripe_' + Crypto.uid.create(1)
     },
     secret: {
-        find: async(params) => {
+        find: async(params)=>{
             console.log(params);
-        },
-        list: async(params) => {
+        }
+        ,
+        list: async(params)=>{
             console.log(params);
-        },
-        set: async(settings) => {
+        }
+        ,
+        set: async(settings)=>{
             return new Promise(async function(resolve, reject) {
 
                 console.log(32, settings);
@@ -55,13 +57,13 @@ window.stripe = {
             test: "ca_NRq8a1hzM0GsHoetep99NkT0mCmBzLKH"
         },
         authorize: async(params)=>{
-            var state = params.state;
-
-            var href = localStorage.getItem('redirect_uri');
-            //var href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id="'' + stripe.config.client_id.test + "&scope=read_write";
-            //window.location = "https://connect.stripe.com/connect/default/oauth/test?scope=read_write&code=" + params.code;
-            if (href && 0 < 1) {
-                href.router().then(async function() {
+            return new Promise(async(resolve,reject)=>{
+                var state = params.state;
+                var href = localStorage.getItem('redirect_uri');
+                console.log(63, href, rout.ed.dir(href)[1]);
+                //var href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id="'' + stripe.config.client_id.test + "&scope=read_write";
+                //window.location = "https://connect.stripe.com/connect/default/oauth/test?scope=read_write&code=" + params.code;
+                if (href && 0 < 1) {
                     localStorage.removeItem('redirect_uri');
                     var token = 0 < 1 ? await stripe.oauth.token({
                         dataType: "POST",
@@ -70,13 +72,13 @@ window.stripe = {
                             grant_type: 'authorization_code',
                             livemode: stripe.config.livemode,
                             code: params.code,
-                            repo: window.owner.login + '/' + GET[1],
+                            repo: window.owner.login + '/' + rout.ed.dir(href)[1],
                             githubAccessToken: localStorage.githubAccessToken
                         }),
                         mode: "cors"
                     }) : null;
                     console.log(78, token);
-                    var secret = 0 < 1 ? await stripe.secret.set({
+                    var secret = 0 > 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
                             name: 'repository',
@@ -88,10 +90,17 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
-                });
-            } else {
-                localStorage.removeItem('redirect_uri')
+                    href.router().then(async function() {
+                        resolve({
+                            token,
+                            secret
+                        });
+                    });
+                } else {
+                    localStorage.removeItem('redirect_uri')
+                }
             }
+            );
         }
         ,
         token: async(settings)=>{
@@ -113,10 +122,14 @@ window.stripe = {
                     if (data.error) {
                         throw Error(JSON.stringify(data));
                     } else {
-
+                        var d = JSON.parse(settings.data);
+                        var repo = d.repo;
+                        var owner = repo.split('/')[0];
+                        var name = repo.split('/')[1];
+                        console.log({d,repo,owner,name});
                         var html = await github.repos.contents({
                             owner: window.owner.login,
-                            repo: GET[1],
+                            repo: name,
                             path: '/index.html'
                         }, {
                             accept: 'application/vnd.github.raw'
@@ -157,8 +170,8 @@ window.stripe = {
                         if (access_token) {
                             var params = {
                                 message: 'Update Client-side Stripe Publishable Key',
-                                repo: GET[1],
-                                owner: window.owner.login
+                                repo: name,
+                                owner: owner
                             };
                             var array = [{
                                 content: doc.documentElement.outerHTML,
