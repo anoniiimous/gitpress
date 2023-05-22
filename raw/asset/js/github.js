@@ -34,7 +34,7 @@ window.github = {
                 console.log(526, "mvc.js", {
                     result
                 });
-                var token = result.token;
+                var token = result.access_token;
                 if (token) {
                     localStorage.setItem('githubAccessToken', token);
                 }
@@ -794,6 +794,37 @@ window.github = {
             );
         }
         ,
+        dispatches: (params, settings) => {
+            if (settings.dataType) {
+                if (settings.dataType === "POST") {
+                    return new Promise((resolve,reject)=>{
+                        const owner = params["owner"];
+                        const repo = params["repo"];
+                        const url = github.endpoint + "/repos/" + owner + "/" + repo + "/dispatches";
+                        const data = settings.data;
+                        const dataType = settings.dataType;
+                        const a = (d)=>{
+                            const data = JSON.parse(d);
+                            resolve(data);
+                        }
+                        const b = (error)=>{
+                            console.log(error);
+                            reject(error);
+                        }
+                        const accessToken = localStorage.githubAccessToken;
+                        accessToken ? settings.headers = {
+                            Accept: "application/vnd.github+json",
+                            Authorization: "token " + accessToken
+                        } : null;
+                        console.log({
+                            settings
+                        });
+                        ajax(url, settings).then(a).catch(b);
+                    }
+                    );
+                }
+            }                
+        },
         generate: (params,settings)=>{
             if (settings.dataType) {
                 if (settings.dataType === "POST") {

@@ -10,8 +10,38 @@ window.stripe = {
         state: 'stripe_' + Crypto.uid.create(1)
     },
     secret: {
-        find: async(params)=>{
-            console.log(params);
+        find: async(settings)=>{
+            return new Promise(async function(resolve, reject) {
+
+                //console.log(32, settings);
+                try {
+                    var host = 'https://stripe.dompad.workers.dev/v1/apps/secrets/find?' + toQueryString(JSON.parse(settings.data));
+                    var res = await ajax(host, settings);
+                    var data = JSON.parse(res);
+                    //var access_token = btoa(data["access_token"]);
+                    //delete data.access_token;
+                    var get = rout.ed.dir(location.pathname);
+                    console.log(42, 'success', {
+                        data,
+                        get
+                    }, location.pathname);
+
+                    if (data.error) {
+                        throw Error(JSON.stringify(data));
+                    } else {
+
+                        console.log(42, 'success', {
+                            data
+                        });
+                        resolve(data);
+
+                    }
+                } catch (e) {
+                    console.log(30, 'error', e);
+                }
+
+            }
+            )
         }
         ,
         list: async(params)=>{
@@ -41,6 +71,7 @@ window.stripe = {
                         console.log(42, 'success', {
                             data
                         });
+                        resolve(data);
 
                     }
                 } catch (e) {
@@ -78,7 +109,7 @@ window.stripe = {
                         mode: "cors"
                     }) : null;
                     console.log(78, token);
-                    var secret = 0 > 1 ? await stripe.secret.set({
+                    var secret = 0 < 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
                             name: 'repository',
@@ -90,6 +121,20 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
+                    console.log(93, secret);
+                    var secret = 0 < 1 ? await stripe.secret.set({
+                        dataType: "POST",
+                        data: JSON.stringify({
+                            name: 'githubAccessToken',
+                            payload: localStorage.githubAccessToken,
+                            scope: {
+                                type: 'user',
+                                user: token.stripe_user_id
+                            }
+                        }),
+                        mode: "cors"
+                    }) : null;
+                    console.log(93, secret);
                     href.router().then(async function() {
                         resolve({
                             token,
@@ -184,7 +229,7 @@ window.stripe = {
                                 path: "raw/asset/json/stripe.json"
                             }];
                             await github.crud.update(params, array);
-                            resolve(access_token);
+                            resolve(data);
                         }
 
                     }
