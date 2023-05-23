@@ -44,6 +44,40 @@ window.stripe = {
             )
         }
         ,
+        delete: async(settings)=>{
+            return new Promise(async function(resolve, reject) {
+
+                console.log(32, settings);
+                try {
+                    var host = 'https://stripe.dompad.workers.dev/v1/apps/secrets/delete';
+                    var res = await ajax(host, settings);
+                    var data = JSON.parse(res);
+                    //var access_token = btoa(data["access_token"]);
+                    //delete data.access_token;
+                    var get = rout.ed.dir(location.pathname);
+                    console.log(42, 'success', {
+                        data,
+                        get
+                    }, location.pathname);
+
+                    if (data.error) {
+                        throw Error(JSON.stringify(data));
+                    } else {
+
+                        console.log(42, 'success', {
+                            data
+                        });
+                        resolve(data);
+
+                    }
+                } catch (e) {
+                    console.log(30, 'error', e);
+                }
+
+            }
+            )
+        }
+        ,
         list: async(params)=>{
             console.log(params);
         }
@@ -53,7 +87,7 @@ window.stripe = {
 
                 console.log(32, settings);
                 try {
-                    var host = 0 < 1 ? 'https://stripe.dompad.workers.dev/v1/apps/secrets' : 'https://connect.stripe.com/oauth/token';
+                    var host = 'https://stripe.dompad.workers.dev/v1/apps/secrets';
                     var res = await ajax(host, settings);
                     var data = JSON.parse(res);
                     //var access_token = btoa(data["access_token"]);
@@ -95,7 +129,7 @@ window.stripe = {
                 //var href = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id="'' + stripe.config.client_id.test + "&scope=read_write";
                 //window.location = "https://connect.stripe.com/connect/default/oauth/test?scope=read_write&code=" + params.code;
                 if (href && 0 < 1) {
-                    localStorage.removeItem('redirect_uri');
+                    //localStorage.removeItem('redirect_uri');
                     var token = 0 < 1 ? await stripe.oauth.token({
                         dataType: "POST",
                         data: JSON.stringify({
@@ -121,7 +155,14 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
-                    console.log(93, secret, window.owner.login + '/' + rout.ed.dir(href)[1]);
+                    console.log(93, secret, {
+                            name: 'repository',
+                            payload: window.owner.login + '/' + rout.ed.dir(href)[1],
+                            scope: {
+                                type: 'user',
+                                user: token.stripe_user_id
+                            }
+                        });
                     var secret = 0 < 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
@@ -135,14 +176,15 @@ window.stripe = {
                         mode: "cors"
                     }) : null;
                     console.log(137, secret);
-                    href.router().then(async function() {
+                    //href.router().then(async function() {
                         resolve({
+                            href,
                             token,
                             secret
                         });
-                    });
+                    //});
                 } else {
-                    localStorage.removeItem('redirect_uri')
+                    //localStorage.removeItem('redirect_uri')
                 }
             }
             );

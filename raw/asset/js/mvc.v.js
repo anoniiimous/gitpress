@@ -1,5 +1,6 @@
 window.mvc.v ? null : (window.mvc.v = view = function(route) {
     return new Promise(async function(resolve, reject) {
+                        
         var page = route.page;
         var path = route.path;
         var search = route.search;
@@ -23,8 +24,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             route
         }) : null;
 
-        if (search) {
-            var params = Object.fromEntries(new URLSearchParams(search));
+        if (route.search) {
+            var params = Object.fromEntries(new URLSearchParams(route.search));
             var keys = Object.keys(params);
             if (keys.length > 0) {
                 console.log(params);
@@ -35,7 +36,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             await github.oauth.authorize(params);
                         }
                         if (state === 'stripe') {
-                            await stripe.oauth.authorize(params);
+                            var href = localStorage.getItem('redirect_uri');
+                            var credentials = await stripe.oauth.authorize(params);
+                            route = rout.e(href);
+                            console.log(38, {credentials, href});
                         }
                     }
                     //route.search = "";
@@ -384,6 +388,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                         }
                         if (get[2] === "config") {
+                            console.log(391, route);
                             var vp = dom.body.find('block[data-page="' + route.page + '"]');
                             if (get.length > 3) {
 
