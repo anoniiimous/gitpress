@@ -113,7 +113,7 @@ window.stripe = {
                         dataType: "POST",
                         data: JSON.stringify({
                             name: 'repository',
-                            payload: window.owner.login + '/' + GET[1],
+                            payload: window.owner.login + '/' + rout.ed.dir(href)[1],
                             scope: {
                                 type: 'user',
                                 user: token.stripe_user_id
@@ -121,7 +121,7 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
-                    console.log(93, secret);
+                    console.log(93, secret, window.owner.login + '/' + rout.ed.dir(href)[1]);
                     var secret = 0 < 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
@@ -134,7 +134,7 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
-                    console.log(93, secret);
+                    console.log(137, secret);
                     href.router().then(async function() {
                         resolve({
                             token,
