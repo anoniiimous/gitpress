@@ -142,7 +142,7 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
-                    console.log(78, token);
+                    //console.log(78, token);
                     var secret = 0 < 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
@@ -155,14 +155,14 @@ window.stripe = {
                         }),
                         mode: "cors"
                     }) : null;
-                    console.log(93, secret, {
-                            name: 'repository',
-                            payload: window.owner.login + '/' + rout.ed.dir(href)[1],
-                            scope: {
-                                type: 'user',
-                                user: token.stripe_user_id
-                            }
-                        });
+                    0 > 1 ? console.log(93, secret, {
+                        name: 'repository',
+                        payload: window.owner.login + '/' + rout.ed.dir(href)[1],
+                        scope: {
+                            type: 'user',
+                            user: token.stripe_user_id
+                        }
+                    }) : null;
                     var secret = 0 < 1 ? await stripe.secret.set({
                         dataType: "POST",
                         data: JSON.stringify({
