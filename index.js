@@ -51,7 +51,7 @@ async function init() {
         const resource = '/' + owner + '/' + repo + '/' + branch + path;
         try {
             console.log(44, 'index.init.template', {
-                iframe: is.iframe
+                iframe: is.iframe(window)
             }, {
                 owner,
                 path,
@@ -161,7 +161,7 @@ async function init() {
         //console.log(e.type);
     });
 
-    is.iframe ? document.addEventListener("keyup", function(e) {
+    is.iframe(window) ? document.addEventListener("keyup", function(e) {
         if (e.key === "Escape") {
             if (window.parent.route.page === "/dashboard/*/build/preview/") {
                 window.parent.dom.body.find('[data-href="/dashboard/:get/build/"]').click()
@@ -175,10 +175,10 @@ async function init() {
         }
     });
 
-    is.iframe ? null : window.addEventListener("message", (e)=>{
+    is.iframe(window) ? null : window.addEventListener("message", (e)=>{
         var event = e.data[0]
         var data = e.data[1];
-        if (is.iframe === false) {
+        if (is.iframe(window)=== false) {
             if (event === "router") {
                 var page = route.page;
                 var path = route.path;
@@ -192,7 +192,7 @@ async function init() {
                 }
 
                 if (href) {
-                    console.log(window.location, is.iframe, {
+                    console.log(window.location, is.iframe(window), {
                         path,
                         slug,
                         href
@@ -208,7 +208,7 @@ async function init() {
     }
     )
 
-    is.iframe ? null : window.onpopstate = (event)=>{
+    is.iframe(window) ? null : window.onpopstate = (event)=>{
         if (event.state) {
             console.log(event.state);
             var state = is.local(window.location.protocol) ? event.state.replace(/^#+/, '') : event.state;
