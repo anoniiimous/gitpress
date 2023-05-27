@@ -411,6 +411,10 @@ window.$ = e=>{
 window.tld = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 1];
 window.domain = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 2];
 window.is = {
+    email: (email)=>{
+        return email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+    }
+    ,
     hex: (color)=>{
         var reg = /^#([0-9a-f]{3}){1,2}$/i;
         return reg.test(color);

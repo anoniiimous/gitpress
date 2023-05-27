@@ -696,7 +696,7 @@
     }
 
     /*ELEMENTS*/
-    body[buildable="true"] card:has( > :not(backdrop):not(empty):not(template):empty) {
+    body[buildable="true"] card:has(card > :not(backdrop):not(empty):not(template):empty) {
         min-height: 50px;
         min-width: 100%;
     }

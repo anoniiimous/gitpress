@@ -729,25 +729,36 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 var cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : null;
                 if (cart && cart.length > 0) {
                     var template = vp.find('block template');
-                        
+
                     var products = JSON.parse(await ajax('/raw/merch/merch.json'));
-                        
+
                     var order = [];
                     var c = 0;
-                    console.log(110, cart, products)  
+                    console.log(110, cart, products)
                     do {
                         var row = cart[c];
-                        console.log(109, 'row', row)  
-                        try {
+                        console.log(109, 'row', row)
+                        try 
+                        {
+                            var product = products.find(o=>o.slug === row.slug);
+                                
+                            var el = template.content.firstElementChild.cloneNode(true);
+                            el.dataset.slug = row.slug
+                            el.dataset.href = row.href;
+                            el.find('picture img').src = product.images[0];
+                            el.find('[placeholder="Title"]').textContent = product.title;
+                            el.find('[type="number"]').setAttribute('value', product.quantity);
+                            el.find('[placeholder="$0.00"]').textContent = '$' + product.pricing.ListPrice;
+                            column.insertAdjacentHTML('beforeend', el.outerHTML);
+                                
                             //var parent = directorize(row.slug)[0];   
                             console.log(112, 'product', row.slug)
-                            var product = products.find(o=>o.slug === row.slug);
                             console.log(573, 'product', product);
                             order.push({
                                 pricing: product.pricing,
                                 quantity: row.quantity
                             });
-                            
+
                         } catch (e) {
                             console.log(381, {
                                 e
@@ -755,7 +766,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         c++;
                     } while (c < cart.length);
-        
+
                     console.log(128, 'order', order);
                     var subtotal = order.length > 1 ? order.reduce(function(a, b) {
                         var aa = a.pricing.ListPrice * 100 * a.quantity;
@@ -767,7 +778,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         order
                     });
                     var subtotal = (subtotal / 100).toFixed(2);
-                        
+
                     vp.find('[data-value="checkout.subtotal"]').textContent = "$" + subtotal;
 
                     //PAYMENT INTENT
@@ -786,7 +797,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 options = {
                                     stripeAccount: stripe_uid.content
                                 };
-                                
+
                                 var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
                                     data: JSON.stringify({
                                         merch: {
@@ -803,15 +814,15 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     livemode,
                                     stripe_pk: stripe_pk.content,
                                     options
-                                }) : null;
+                                }, res) : null;
                                 window.stripe ? null : window.stripe = Stripe(stripe_pk.content, options);
                             }
                         }
                         if (window.stripe) {
-                            //console.log('stripe.payment_intent', res.client_secret);
-                            vp.find('input[name="payment_intent_client_secret"]').value = res.client_secret;
+                            console.log(822, 'stripe.payment_intent', res.payment_intent.client_secret);
+                            vp.find('input[name="payment_intent_client_secret"]').value = res.payment_intent.client_secret;
                             window.elements = stripe.elements({
-                                clientSecret: res.client_secret
+                                clientSecret: res.payment_intent.client_secret
                             });
 
                             var styles = {
