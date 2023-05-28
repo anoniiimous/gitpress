@@ -777,9 +777,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         subtotal,
                         order
                     });
-                    var subtotal = (subtotal / 100).toFixed(2);
+                    var price = (subtotal / 100).toFixed(2);
 
-                    vp.find('[data-value="checkout.subtotal"]').textContent = "$" + subtotal;
+                    vp.find('[data-value="checkout.subtotal"]').textContent = "$" + price;
 
                     //PAYMENT INTENT
                     try {
