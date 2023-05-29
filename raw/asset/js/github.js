@@ -995,7 +995,7 @@ window.github = {
         }
     },
     user: {
-        get: (prams)=>{
+        get: (params)=>{
             return new Promise((resolve,reject)=>{
                 const url = github.endpoint + "/user";
                 const a = (d)=>{
@@ -1470,6 +1470,8 @@ window.github.crud.update = async(params,array)=>{
         console.log("references", {
             refs
         });
+
+        return refs;
     }
 
 }

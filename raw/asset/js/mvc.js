@@ -236,7 +236,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
         window.GET = window.GET ? GET : rout.ed.dir(dom.body.dataset.path);
 
         window.manifest = {};
-        console.log
         if (is.iframe(window)) {
             window.webmanifest = await github.repos.contents({
                 owner: window.parent.owner.login,
