@@ -113,6 +113,8 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                         obj,
                                         src: image.src
                                     }) : null;
+                                } else {
+                                    image.src = post.images[0];                          
                                 }
                                 //image && post.images ? image.src = post.images[0] : null;
 
@@ -359,6 +361,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 var attr = [];
                 var variant = false;
                 var dimensions = json && json.dimensions;
+                console.log(364, {json, box, dimensions});
                 if (dimensions && dimensions.length > 0) {
                     var template = box.lastElementChild;
 
@@ -600,11 +603,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 var pricing = $(merch.all('[data-value="post.pricing"]'));
                 if (json.pricing) {
                     pricing ? pricing.html("$" + json.pricing.ListPrice) : null;
-                    //console.log(pricing); 
+                    //console.log(pricing);
                 } else {
                     prices.sort((a,b)=>a.ListPrice - b.ListPrice);
                     pricing ? pricing.html("$" + prices[0].ListPrice + " &#8211; " + "$" + prices[prices.length - 1].ListPrice) : null;
-                    //console.log(pricing);                
+                    //console.log(pricing);
                 }
 
                 //DESCRIPTION
@@ -719,7 +722,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }
 
             //CHECKOUT     
-            var vp = dom.body.find('[data-view="checkout"]');
+            var vp = dom.body.find('[data-active="true"] [data-view="checkout"]');
             if (vp) {
                 var form = vp.find('form');
                 var column = vp.find('block column');
