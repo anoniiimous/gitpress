@@ -289,6 +289,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }
 
             //PLACEHOLDERS
+            var el = $(dom.body.all('[data-value="cart.quantity"]'));
+            if (el.length > 0) {
+                var cart = localStorage.getItem('cart');
+                if (cart) {
+                    var json = JSON.parse(cart);
+                    var quantity = json.length > 1 ? json.reduce(function(a, b) {
+                        return a.quantity + b.quantity
+                    }) : (json.length === 1 ? json[0].quantity.toString() : null);
+                    quantity ? el.html(quantity > 99 ? '99+' : quantity.toString()) : null;
+                }
+            }
             $(vp.all('[data-value="page.name"]')).html(vp.dataset.title);
 
             //MEDIA FEED
@@ -646,24 +657,27 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     details.closest('box').classList.add('display-none');
                 }
 
-                //MAX
-                var el = merch.find('[data-value="post.max"]');
-                if (el) {
-                    console.log(652, el, json.quantity);
-                    el.setAttribute('max', json.quantity);
-                }
-
                 //QUANTITY
                 var el = merch.find('[data-value="post.quantity"]');
+                if (json.quantity) {
+                    if (el) {
+                        console.log(652, el, json.quantity);
+                        el.setAttribute('max', json.quantity);
+                    }
+                }
+
+                //STOCK
+                var el = merch.find('[data-value="post.stock"]');
                 if (el) {
                     console.log(652, el, json.quantity);
                     el.textContent = json.quantity;
                 }
 
                 //CHECKOUT
+                console.log(json.quantity);
                 var checkout = merch.find('[type="submit"]').closest('box');
                 var quantity = merch.find('[data-value="post.quantity"]').closest('box');
-                if (descendants.length === 0 || (descendant && attr && dimensions && attr.length === Object.keys(dimensions).length)) {
+                if ((descendants.length === 0 || (descendant && attr && dimensions && attr.length === Object.keys(dimensions).length)) && (json.quantity && json.quantity > 0)) {
                     checkout.classList.remove('display-none');
                     quantity.classList.remove('display-none');
                 } else {
@@ -760,7 +774,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             el.dataset.href = row.href;
                             el.find('picture img').src = product.images[0];
                             el.find('[placeholder="Title"]').textContent = product.title;
-                            el.find('[type="number"]').setAttribute('value', product.quantity);
+                            el.find('[type="number"]').setAttribute('value', row.quantity);
                             el.find('[placeholder="$0.00"]').textContent = '$' + product.pricing.ListPrice;
                             column.insertAdjacentHTML('beforeend', el.outerHTML);
 
@@ -1035,7 +1049,7 @@ controller.product.cart = event=>{
     var href = route.path;
     var slug = dir.splice(form.closest('[data-merch]').dataset.merch).join('/');
     var quantity = parseInt(form.find('[data-value="post.quantity"]').value);
-    0 > 1 ? console.log("controller.product.cart", {
+    0 < 1 ? console.log("controller.product.cart", {
         href,
         slug,
         quantity
