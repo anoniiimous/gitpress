@@ -1,6 +1,6 @@
 window.mvc.v ? null : (window.mvc.v = view = function(route) {
     return new Promise(async function(resolve, reject) {
-                        
+
         var page = route.page;
         var path = route.path;
         var search = route.search;
@@ -39,7 +39,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             var href = localStorage.getItem('redirect_uri');
                             var credentials = await stripe.oauth.authorize(params);
                             route = rout.e(href);
-                            console.log(38, {credentials, href});
+                            console.log(38, {
+                                credentials,
+                                href
+                            });
                         }
                     }
                     //route.search = "";
@@ -1595,6 +1598,32 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             } while (c < categories.length)
                                         }
                                     }
+                                } else if (get[3] === "orders") {
+                                    var vp = dom.body.find('pages[data-page="/dashboard/*/merch/orders"]');
+
+                                    var orders = await github.repos.contents({
+                                        owner: window.owner.login,
+                                        path: "/v1/invoices/" + "apple" + "/invoices.json",
+                                        repo: 'db.dompad.io'
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    });
+                                    console.log(1606, orders);
+
+                                    var feed = vp.find('[data-value="feed.orders"]');
+                                    var template = feed.nextElementSibling
+                                    feed.innerHTML = "";
+                                    orders.forEach(function(order) {
+                                        var row = template.content.firstElementChild.cloneNode(true);
+                                        row.find('[data-value="order.id"]').textContent = order.id;
+                                        row.find('[data-value="order.created"]').textContent = order.id;
+                                        row.find('[data-value="order.customer"]').textContent = order.id;
+                                        row.find('[data-value="order.fulfillment"]').textContent = order.id;
+                                        row.find('[data-value="order.total"]').textContent = "$" + (order.amount_due / 100).toFixed(2);
+                                        row.find('[data-value="order.status"]').textContent = order.id;
+                                        row.find('[data-value="order.updated"]').textContent = order.id;
+                                        feed.insertAdjacentHTML('beforeend', row.outerHTML);
+                                    });
                                 } else if (get[3] === "product") {
                                     var vp = dom.body.find('pages[data-page="/dashboard/*/merch/product"]');
                                     var slug = get[4];
@@ -1635,9 +1664,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             do {
                                                 var row = data[d];
                                                 var slug = row.slug;
+                                                var quantity = row.quantity;
+                                                console.log(slug, quantity);
                                                 if (rout.ed.dir(slug).length === 1) {
+                                                    var stock = data.map(item=>item.quantity && item.slug.startsWith(slug) ? item.quantity : 0).reduce((acc,amount)=>acc + amount);
                                                     var title = row.title;
                                                     var card = byId('template-feed-dashboard-merch').content.firstElementChild.cloneNode(true);
+                                                    card.find('[data-value="product.stock"]').textContent = stock;
                                                     card.find('[placeholder="Title"]').textContent = title;
                                                     card.find('[placeholder="Title"]').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
                                                     card.find('.gg-tag').closest('text').dataset.href = "/dashboard/:get/merch/catalog/" + slug + "/";
@@ -1651,7 +1684,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                             vp.all('header card')[1].find('box').classList.add('display-none');
                                         }
                                     }
-
                                 }
                                 )
                             }

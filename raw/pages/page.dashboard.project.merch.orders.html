@@ -59,7 +59,7 @@
             </card>
         </row>
     </block>
-    <block class="margin-20px max-width-1280px" data-width="calc(100% - 40px)">
+    <block class="margin-20px" css-width="calc(100% - 40px)">
         <header>
             <card class="line-height-50px">
                 <row>
@@ -87,7 +87,38 @@
             </card>
         </header>
         <section>
-            <card class="background-color-fff border-radius-10px flex-direction-row overflow-hidden">
+            <card class="background-color-fff border-radius-10px overflow-hidden">
+                <header class="background-color-ccc display-flex font-weight-bolder height-50px line-height-50px">
+                    <box class="padding-x-10px">
+                        <row>
+                            <input type="checkbox">
+                            <text class="padding-x-10px" style="width:160px">Order ID</text>
+                            <text class="padding-x-10px" style="width:160px">Created</text>
+                            <text class="padding-x-10px" style="width:160px">Customer</text>
+                            <text class="padding-x-10px" style="width:160px">Fulfillment</text>
+                            <text class="padding-x-10px" style="width:160px">Total</text>
+                            <text class="padding-x-10px" style="width:160px">Status</text>
+                            <text class="padding-x-10px" style="width:160px">Updated</text>
+                        </row>
+                    </box>
+                </header>
+                <column class="display-flex font-weight-bolder" data-value="feed.orders"></column>
+                <template>
+                    <box class="height-50px line-height-50px padding-x-10px">
+                        <row>
+                            <input type="checkbox">
+                            <text class="padding-x-10px" data-value="order.id" style="width:160px"></text>
+                            <text class="padding-x-10px" data-value="order.created" style="width:160px"></text>
+                            <text class="padding-x-10px" data-value="order.customer" style="width:160px"></text>
+                            <text class="padding-x-10px" data-value="order.fulfillment" style="width:160px"></text>
+                            <text class="padding-x-10px" data-value="order.total" style="width:160px"></text>
+                            <text class="padding-x-10px" data-value="order.status" style="width:160px"></text>
+                            <text class="padding-x-10px" data-value="order.updated" style="width:160px"></text>
+                        </row>
+                    </box>
+                </template>
+            </card>
+            <card class="background-color-fff border-radius-10px flex-direction-row overflow-hidden" css-display="none">
                 <column>
                     <box>
                         <header class="background-color-ccc display-flex font-weight-bolder height-50px line-height-50px padding-x-10px">

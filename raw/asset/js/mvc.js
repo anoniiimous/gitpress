@@ -114,7 +114,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                         src: image.src
                                     }) : null;
                                 } else {
-                                    image.src = post.images[0];                          
+                                    image.src = post.images[0];
                                 }
                                 //image && post.images ? image.src = post.images[0] : null;
 
@@ -289,18 +289,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }
 
             //PLACEHOLDERS
-            var el = $(dom.body.all('[data-value="cart.quantity"]'));
-            if (el.length > 0) {
-                var cart = localStorage.getItem('cart');
-                if (cart) {
-                    var json = JSON.parse(cart);
-                    var quantity = json.length > 1 ? json.reduce(function(a, b) {
-                        return a.quantity + b.quantity
-                    }) : (json.length === 1 ? json[0].quantity.toString() : null);
-                    quantity ? el.html(quantity > 99 ? '99+' : quantity.toString()) : null;
-                }
-            }
-
             $(vp.all('[data-value="page.name"]')).html(vp.dataset.title);
 
             //MEDIA FEED
@@ -326,7 +314,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                 var d = await ajax("/raw/merch/" + parent + "/merch.json");
                 var data = JSON.parse(d);
-                //console.log(201, slug, data, "/raw/merch/" + parent + "/merch.json");
+                console.log(201, slug, data, "/raw/merch/" + parent + "/merch.json");
 
                 //ANCESTOR
                 try {
@@ -361,7 +349,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 var attr = [];
                 var variant = false;
                 var dimensions = json && json.dimensions;
-                console.log(364, {json, box, dimensions});
+                console.log(364, {
+                    json,
+                    box,
+                    dimensions
+                });
                 if (dimensions && dimensions.length > 0) {
                     var template = box.lastElementChild;
 
@@ -448,8 +440,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         d++;
                     } while (d < dimensions.length);
+                    //alert(true);
                 } else {
                     box.dataset.display = "none";
+                    //alert(false);
                 }
 
                 //DESCENDANT
@@ -536,7 +530,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }) : window.ancestor.find(row=>row.slug === slug);
                         //res ? null : res = json;
 
-                        0 > 1 ? console.log(474, {
+                        0 < 1 ? console.log(474, "/raw/merch/" + parent + "/" + attr.join('_') + "/merch.json", {
+                            ancestor,
                             descendant,
                             slug,
                             res,
@@ -578,7 +573,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     price ? prices.push(price) : null;
                 });
 
-                0 > 1 ? console.log({
+                0 < 1 ? console.log({
                     data,
                     json,
                     slug,
@@ -620,7 +615,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                 //DETAILS
                 var details = merch.find('[data-value="post.details"]').closest('box');
-                if (json.details) {
+                console.log(627, json);
+                if (json.details && Object.keys(json.details).length > 0) {
                     //console.log(json.details);
                     var keys = Object.keys(json.details);
                     var column = details.find('[data-value="post.details"]').closest('box').find('column');
@@ -650,6 +646,20 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     details.closest('box').classList.add('display-none');
                 }
 
+                //MAX
+                var el = merch.find('[data-value="post.max"]');
+                if (el) {
+                    console.log(652, el, json.quantity);
+                    el.setAttribute('max', json.quantity);
+                }
+
+                //QUANTITY
+                var el = merch.find('[data-value="post.quantity"]');
+                if (el) {
+                    console.log(652, el, json.quantity);
+                    el.textContent = json.quantity;
+                }
+
                 //CHECKOUT
                 var checkout = merch.find('[type="submit"]').closest('box');
                 var quantity = merch.find('[data-value="post.quantity"]').closest('box');
@@ -663,7 +673,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
             }
 
             //CART        
-            var vp = dom.body.find('[data-view="cart"]');
+            var vp = dom.body.find('[data-active="true"] [data-view="cart"]') ? dom.body.find('[data-active="true"] [data-view="cart"]').closest("[data-active='true']") : null;
             if (vp) {
                 var column = vp.find('block column');
                 column.innerHTML = "";
@@ -673,6 +683,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     var template = vp.find('block template');
                     var order = [];
                     var c = 0;
+                    console.log(683, cart, vp);
                     do {
                         var row = cart[c];
                         try {
@@ -704,6 +715,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 e
                             });
                         }
+                        console.log(c);
                         c++;
                     } while (c < cart.length);
 
@@ -721,8 +733,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
             }
 
-            //CHECKOUT     
-            var vp = dom.body.find('[data-active="true"] [data-view="checkout"]');
+            //CHECKOUT
+            var vp = dom.body.find('[data-active="true"] [data-view="checkout"]') ? dom.body.find('[data-active="true"] [data-view="checkout"]').closest("[data-active='true']") : null;
             if (vp) {
                 var form = vp.find('form');
                 var column = vp.find('block column');
@@ -740,10 +752,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     do {
                         var row = cart[c];
                         console.log(109, 'row', row)
-                        try 
-                        {
+                        try {
                             var product = products.find(o=>o.slug === row.slug);
-                                
+
                             var el = template.content.firstElementChild.cloneNode(true);
                             el.dataset.slug = row.slug
                             el.dataset.href = row.href;
@@ -752,7 +763,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             el.find('[type="number"]').setAttribute('value', product.quantity);
                             el.find('[placeholder="$0.00"]').textContent = '$' + product.pricing.ListPrice;
                             column.insertAdjacentHTML('beforeend', el.outerHTML);
-                                
+
                             //var parent = directorize(row.slug)[0];   
                             console.log(112, 'product', row.slug)
                             console.log(573, 'product', product);
@@ -784,47 +795,60 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     vp.find('[data-value="checkout.subtotal"]').textContent = "$" + price;
 
                     //PAYMENT INTENT
-                    try {
+                    var stripe_pk = document.head.find('meta[name="stripe_publishable_key"]');
+                    var config = {
+                        live: "pk_live_51MgwRSGknMg4Op7wZctEC7wRMIayH6gdWrOKqCxaX8TIwxvEyadOJMHTPuXs3WKfF2B0205sxKuIUleG8QCWYH2r00ir81SA2X",
+                        test: "pk_test_51MgwRSGknMg4Op7wXGxVQMnETp4FPKTS3VRJ6msnCl9j0QChLfp8tf9jGeyWbNlK3y9qsDunBERqgk20Llq8JeXZ00LWxzFhXh"
+                    }
+                    var livemode = stripe_pk.content.split('_')[1] === 'live';
+                    var options = null;
+                    var stripe_uid = document.head.find('meta[name="stripe_user_id"]');
+                    if (stripe_uid) {
+                        options = {
+                            stripeAccount: stripe_uid.content
+                        };
+                    }
+                    if (!localStorage.payment_intent) {
+                        try {
+                            if (stripe_pk) {
+                                if (stripe_uid) {
 
-                        var stripe_pk = document.head.find('meta[name="stripe_publishable_key"]');
-                        if (stripe_pk) {
-                            var config = {
-                                live: "pk_live_51MgwRSGknMg4Op7wZctEC7wRMIayH6gdWrOKqCxaX8TIwxvEyadOJMHTPuXs3WKfF2B0205sxKuIUleG8QCWYH2r00ir81SA2X",
-                                test: "pk_test_51MgwRSGknMg4Op7wXGxVQMnETp4FPKTS3VRJ6msnCl9j0QChLfp8tf9jGeyWbNlK3y9qsDunBERqgk20Llq8JeXZ00LWxzFhXh"
+                                    var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
+                                        data: JSON.stringify({
+                                            merch: {
+                                                cart,
+                                                subtotal
+                                            },
+                                            stripe_user_id: stripe_uid.content
+                                        }),
+                                        dataType: 'POST',
+                                        mode: "cors"
+                                    });
+                                    var res = JSON.parse(json);
+                                    var payment_intent = {
+                                        client_secret: res.payment_intent.client_secret,
+                                        id: res.payment_intent.id,
+                                    };
+                                    localStorage.setItem("payment_intent", JSON.stringify(payment_intent));
+                                    0 < 1 ? console.log(802, 'v1/checkout', {
+                                        livemode,
+                                        stripe_pk: stripe_pk.content,
+                                        options
+                                    }, res) : null;
+                                }
                             }
-                            var livemode = stripe_pk.content.split('_')[1] === 'live';
-                            var options = null;
-                            var stripe_uid = document.head.find('meta[name="stripe_user_id"]');
-                            if (stripe_uid) {
-                                options = {
-                                    stripeAccount: stripe_uid.content
-                                };
-
-                                var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
-                                    data: JSON.stringify({
-                                        merch: {
-                                            cart,
-                                            subtotal
-                                        },
-                                        stripe_user_id: stripe_uid.content
-                                    }),
-                                    dataType: 'POST',
-                                    mode: "cors"
-                                });
-                                var res = JSON.parse(json);
-                                0 < 1 ? console.log(802, 'v1/checkout', {
-                                    livemode,
-                                    stripe_pk: stripe_pk.content,
-                                    options
-                                }, res) : null;
-                                window.stripe ? null : window.stripe = Stripe(stripe_pk.content, options);
-                            }
+                        } catch (e) {
+                            console.log(686, 'error', e);
                         }
+                    }
+                    if (localStorage.payment_intent) {
+                        var payment_intent = JSON.parse(localStorage.payment_intent);
+                        window.stripe ? null : window.stripe = Stripe(stripe_pk.content, options);
                         if (window.stripe) {
-                            console.log(822, 'stripe.payment_intent', res.payment_intent.client_secret);
-                            vp.find('input[name="payment_intent_client_secret"]').value = res.payment_intent.client_secret;
+                            console.log(822, 'stripe.payment_intent', payment_intent.client_secret);
+                            vp.find('input[name="payment_intent_client_secret"]').value = payment_intent.client_secret;
                             window.elements = stripe.elements({
-                                clientSecret: res.payment_intent.client_secret
+                                clientSecret: payment_intent.client_secret
                             });
 
                             var styles = {
@@ -868,8 +892,6 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             });
                             cardCvc.mount(vp.find('[data-value="checkout.cardCvc"]'));
                         }
-                    } catch (e) {
-                        console.log(686, 'error', e);
                     }
                 }
             }
@@ -1035,7 +1057,7 @@ controller.product.quantity = target=>{
         var up = ico.find('.gg-chevron-up');
         var down = ico.find('.gg-chevron-down');
         button.value = button.value === '' ? 0 : button.value;
-        if (up) {
+        if (up && parseInt(button.value) < parseInt(button.max)) {
             button.value = parseInt(button.value) + 1;
         }
         if (down && button.value > 0) {
