@@ -800,7 +800,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         var bb = b.pricing.ListPrice * 100 * b.quantity;
                         return aa + bb;
                     }) : order[0].pricing.ListPrice * 100 * order[0].quantity;
-                    console.log({
+                    console.log(803, {
                         subtotal,
                         order
                     });
@@ -826,7 +826,13 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         try {
                             if (stripe_pk) {
                                 if (stripe_uid) {
-                                    payment_intent = await generatePaymentIntent();
+                                    payment_intent = await generatePaymentIntent("POST", {
+                                        merch: {
+                                            cart,
+                                            subtotal
+                                        },
+                                        stripe_user_id: stripe_uid.content
+                                    });
                                     0 < 1 ? console.log(802, 'v1/checkout', {
                                         livemode,
                                         stripe_pk: stripe_pk.content,
@@ -860,9 +866,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         );
                         var cart_secret = [];
                         line_items.forEach(item=>{
-                            var product = {    
+                            var product = {
                                 slug: item.metadata.slug,
-                                quantity: item.metadata.quantity             
+                                quantity: item.metadata.quantity
                             };
                             cart_secret.push(product);
                         }
@@ -874,12 +880,34 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             compare_objects
                         });
                         if (result.paymentIntent.status === "succeeded") {
-                            payment_intent = await generatePaymentIntent();
+                            payment_intent = await generatePaymentIntent("POST", {
+                                merch: {
+                                    cart,
+                                    subtotal
+                                },
+                                stripe_user_id: stripe_uid.content
+                            });
                             console.log(864, payment_intent);
                             var result = await stripe.retrievePaymentIntent(payment_intent.client_secret, {
                                 expand: ['metadata'],
                             });
                             console.log(866, result);
+                        } else {
+                            if (compare_objects === false) {
+                                payment_intent = await generatePaymentIntent("PUT", {
+                                    payment_intent_id: payment_intent.id,
+                                    merch: {
+                                        cart: cart_client,
+                                        subtotal
+                                    },
+                                    stripe_user_id: stripe_uid.content
+                                });
+                                console.log(864, payment_intent);
+                                var result = await stripe.retrievePaymentIntent(payment_intent.client_secret, {
+                                    expand: ['metadata'],
+                                });
+                                console.log(866, result);
+                            }
                         }
                         if (window.stripe) {
                             console.log(822, 'stripe.payment_intent', payment_intent.client_secret);
@@ -930,16 +958,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             cardCvc.mount(vp.find('[data-value="checkout.cardCvc"]'));
                         }
                     }
-                    async function generatePaymentIntent() {
-                        var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
-                            data: JSON.stringify({
-                                merch: {
-                                    cart,
-                                    subtotal
-                                },
-                                stripe_user_id: stripe_uid.content
-                            }),
-                            dataType: 'POST',
+                    async function generatePaymentIntent(dataType, options) {
+                        console.log(955, {
+                            dataType,
+                            options
+                        });
+                        var json = await ajax('https://api.dompad.workers.dev/v1/checkout' + (dataType === "PUT" ? "/update" : ""), {
+                            data: JSON.stringify(options),
+                            dataType: "POST",
                             mode: "cors"
                         });
                         var res = JSON.parse(json);
