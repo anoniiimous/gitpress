@@ -572,6 +572,11 @@ function fullscreen(elem) {
         elem.msRequestFullscreen();
     }
 }
+
+function compareObjects(a, b) {
+    return JSON.stringify(a.sort((a,b) => (a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0))) === JSON.stringify(b.sort((a,b) => (a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0)))
+}
+
 function toQueryString(obj) {
     let getPairs = (obj,keys=[])=>Object.entries(obj).reduce((pairs,[key,value])=>{
         if (typeof value === 'object')

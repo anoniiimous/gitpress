@@ -826,24 +826,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         try {
                             if (stripe_pk) {
                                 if (stripe_uid) {
-
-                                    var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
-                                        data: JSON.stringify({
-                                            merch: {
-                                                cart,
-                                                subtotal
-                                            },
-                                            stripe_user_id: stripe_uid.content
-                                        }),
-                                        dataType: 'POST',
-                                        mode: "cors"
-                                    });
-                                    var res = JSON.parse(json);
-                                    var payment_intent = {
-                                        client_secret: res.payment_intent.client_secret,
-                                        id: res.payment_intent.id,
-                                    };
-                                    localStorage.setItem("payment_intent", JSON.stringify(payment_intent));
+                                    payment_intent = await generatePaymentIntent();
                                     0 < 1 ? console.log(802, 'v1/checkout', {
                                         livemode,
                                         stripe_pk: stripe_pk.content,
@@ -856,8 +839,48 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                     }
                     if (localStorage.payment_intent) {
-                        var payment_intent = JSON.parse(localStorage.payment_intent);
                         window.stripe ? null : window.stripe = Stripe(stripe_pk.content, options);
+                        var payment_intent = JSON.parse(localStorage.payment_intent);
+                        var result = await stripe.retrievePaymentIntent(payment_intent.client_secret);
+                        console.log(862, result);
+                        var invoice = JSON.parse(localStorage.invoice);
+                        var line_items = invoice.lines.data;
+                        console.log(848, {
+                            line_items,
+                            cart
+                        });
+                        var cart_client = [];
+                        cart.forEach(item=>{
+                            var product = {
+                                slug: item.slug,
+                                quantity: item.quantity
+                            };
+                            cart_client.push(product);
+                        }
+                        );
+                        var cart_secret = [];
+                        line_items.forEach(item=>{
+                            var product = {    
+                                slug: item.metadata.slug,
+                                quantity: item.metadata.quantity             
+                            };
+                            cart_secret.push(product);
+                        }
+                        );
+                        var compare_objects = compareObjects(cart_client, cart_secret);
+                        console.log(868, {
+                            cart_client,
+                            cart_secret,
+                            compare_objects
+                        });
+                        if (result.paymentIntent.status === "succeeded") {
+                            payment_intent = await generatePaymentIntent();
+                            console.log(864, payment_intent);
+                            var result = await stripe.retrievePaymentIntent(payment_intent.client_secret, {
+                                expand: ['metadata'],
+                            });
+                            console.log(866, result);
+                        }
                         if (window.stripe) {
                             console.log(822, 'stripe.payment_intent', payment_intent.client_secret);
                             vp.find('input[name="payment_intent_client_secret"]').value = payment_intent.client_secret;
@@ -906,6 +929,32 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             });
                             cardCvc.mount(vp.find('[data-value="checkout.cardCvc"]'));
                         }
+                    }
+                    async function generatePaymentIntent() {
+                        var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
+                            data: JSON.stringify({
+                                merch: {
+                                    cart,
+                                    subtotal
+                                },
+                                stripe_user_id: stripe_uid.content
+                            }),
+                            dataType: 'POST',
+                            mode: "cors"
+                        });
+                        var res = JSON.parse(json);
+                        var payment_intent = {
+                            client_secret: res.payment_intent.client_secret,
+                            id: res.payment_intent.id,
+                        };
+                        localStorage.setItem("invoice", JSON.stringify(res.invoice));
+                        localStorage.setItem("payment_intent", JSON.stringify(res.payment_intent));
+                        return payment_intent;
+                        0 < 1 ? console.log(802, 'v1/checkout', {
+                            livemode,
+                            stripe_pk: stripe_pk.content,
+                            options
+                        }, res) : null;
                     }
                 }
             }
