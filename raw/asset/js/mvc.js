@@ -963,9 +963,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             dataType,
                             options
                         });
-                        var json = await ajax('https://api.dompad.workers.dev/v1/checkout' + (dataType === "PUT" ? "/update" : ""), {
+                        var json = await ajax('https://api.dompad.workers.dev/v1/checkout', {
                             data: JSON.stringify(options),
-                            dataType: "POST",
+                            dataType,
                             mode: "cors"
                         });
                         var res = JSON.parse(json);
