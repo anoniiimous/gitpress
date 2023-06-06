@@ -1608,6 +1608,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     }, {
                                         accept: "application/vnd.github.raw"
                                     });
+                                    orders = orders.filter(o => o.created).sort((a,b) => b.created - a.created);
                                     console.log(1606, orders);
 
                                     var feed = vp.find('[data-value="feed.orders"]');
@@ -1616,7 +1617,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     orders.forEach(function(order) {
                                         var row = template.content.firstElementChild.cloneNode(true);
                                         row.find('[data-value="order.id"]').textContent = order.id;
-                                        row.find('[data-value="order.created"]').textContent = order.id;
+                                        row.find('[data-value="order.created"]').textContent = mvc.m.time.date(order.created);
                                         row.find('[data-value="order.customer"]').textContent = order.id;
                                         row.find('[data-value="order.fulfillment"]').textContent = order.id;
                                         row.find('[data-value="order.total"]').textContent = "$" + (order.amount_due / 100).toFixed(2);
