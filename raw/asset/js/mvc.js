@@ -825,7 +825,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     if (!localStorage.payment_intent) {
                         try {
                             if (stripe_pk) {
-                                if (stripe_uid) {
+                                if (0 < 1 && stripe_uid) {
                                     payment_intent = await generatePaymentIntent("POST", {
                                         merch: {
                                             cart,
@@ -849,10 +849,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         var payment_intent = JSON.parse(localStorage.payment_intent);
                         var result = await stripe.retrievePaymentIntent(payment_intent.client_secret);
                         console.log(862, result);
-                        var invoice = JSON.parse(localStorage.invoice);
-                        var line_items = invoice.lines.data;
+                        //var invoice = JSON.parse(localStorage.invoice);
+                        //var line_items = invoice.lines.data;
                         console.log(848, {
-                            line_items,
+                            //line_items,
                             cart
                         });
                         var cart_client = [];
@@ -865,19 +865,19 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                         }
                         );
                         var cart_secret = [];
-                        line_items.forEach(item=>{
+                        0 > 1 ? line_items.forEach(item=>{
                             var product = {
                                 slug: item.metadata.slug,
                                 quantity: item.metadata.quantity
                             };
                             cart_secret.push(product);
                         }
-                        );
-                        var compare_objects = compareObjects(cart_client, cart_secret);
+                        ) : null;
+                        //var compare_objects = compareObjects(cart_client, cart_secret);
                         console.log(868, {
                             cart_client,
-                            cart_secret,
-                            compare_objects
+                            //cart_secret,
+                            //compare_objects
                         });
                         if (result.paymentIntent.status === "succeeded") {
                             payment_intent = await generatePaymentIntent("POST", {
@@ -893,7 +893,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             });
                             console.log(866, result);
                         } else {
-                            if (compare_objects === false) {
+                            if (0 > 1) {
+                                //compare_objects === false) {
                                 payment_intent = await generatePaymentIntent("PUT", {
                                     payment_intent_id: payment_intent.id,
                                     merch: {
@@ -973,7 +974,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             client_secret: res.payment_intent.client_secret,
                             id: res.payment_intent.id,
                         };
-                        localStorage.setItem("invoice", JSON.stringify(res.invoice));
+                        //localStorage.setItem("invoice", JSON.stringify(res.invoice));
                         localStorage.setItem("payment_intent", JSON.stringify(res.payment_intent));
                         return payment_intent;
                         0 < 1 ? console.log(802, 'v1/checkout', {
@@ -1017,7 +1018,7 @@ controller.cart.delete = slug=>{
         window.location.pathname.router();
     }
 }
-controller.cart.order = event=>{
+controller.cart.order = async(event)=>{
     event.preventDefault();
     var form = event.target;
     var clientSecret = form.find('input[name="payment_intent_client_secret"]').value;
@@ -1066,11 +1067,71 @@ controller.cart.order = event=>{
         fields.contact.email ? billing_details.email = contact.find('[placeholder="Email Address"]').value : fields.contact.email;
         billing_details.name = payment.find('[placeholder="First Name"]').value + " " + payment.find('[placeholder="Last Name"]').value;
         fields.contact.phone ? billing_details.phone = contact.find('[placeholder="Phone Number"]') : null;
+
         console.log(803, billing_details);
 
         var card = window.elements.getElement('cardNumber');
 
-        0 < 1 ? stripe.confirmCardPayment(clientSecret, {
+        var cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : null;
+        if (cart && cart.length > 0) {
+
+            var products = JSON.parse(await ajax('/raw/merch/merch.json'));
+
+            var order = [];
+            var c = 0;
+            console.log(110, cart, products)
+            do {
+                var row = cart[c];
+                try {
+                    var product = products.find(o=>o.slug === row.slug);
+
+                    var ListPrice = product.pricing.ListPrice;
+                    //ListPrice = ListPrice.contains('.') ? ListPrice.toFixed(2);
+
+                    //console.log(112, 'product', row.slug)
+                    //console.log(573, 'product', product);
+                    order.push({
+                        pricing: product.pricing,
+                        quantity: row.quantity,
+                        slug: product.slug
+                    });
+
+                } catch (e) {
+                    console.log(381, {
+                        e
+                    });
+                }
+                c++;
+            } while (c < cart.length);
+
+            console.log(128, 'order', order);
+            var subtotal = order.length > 1 ? order.reduce(function(a, b) {
+                var aa = a.pricing.ListPrice * 100 * a.quantity;
+                var bb = b.pricing.ListPrice * 100 * b.quantity;
+                return aa + bb;
+            }) : order[0].pricing.ListPrice * 100 * order[0].quantity;
+            console.log(803, {
+                subtotal,
+                order
+            });
+            var price = (subtotal / 100).toFixed(2);
+        }
+
+        var payment_intent = JSON.parse(localStorage.payment_intent);
+
+        var cart_client = [];
+        cart.forEach(item=>{
+            var product = {
+                slug: item.slug,
+                quantity: item.quantity
+            };
+            cart_client.push(product);
+        }
+        );
+
+        var stripe_uid = document.head.find('meta[name="stripe_user_id"]');
+
+        0 > 1 ? stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card,
                 billing_details
@@ -1092,7 +1153,26 @@ controller.cart.order = event=>{
                     // post-payment actions.
                 }
             }
-        }) : null;
+        }) : ajax("https://api.dompad.workers.dev/v1/order", {
+            data: JSON.stringify({
+                payment_intent_id: payment_intent.id,
+                merch: {
+                    cart: cart_client,
+                    subtotal
+                },
+                stripe_user_id: stripe_uid.content,
+                order,
+                payload: {
+                    clientSecret,
+                    billing_details
+                }
+            }),
+            dataType: "POST"
+        }).then(function(result) {
+            console.log(774, {
+                result
+            });
+        });
     }
 }
 controller.cart.update = obj=>{

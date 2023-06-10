@@ -794,9 +794,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
         update: async function(target) {
             var dock = target.closest('pages > header');
-            var toolset = dock.children[0];
-            var toolbar = dock.children[1];
-            $([toolset, toolbar]).toggleClass('display-none')
+            //var toolset = dock.children[0];
+            //var toolbar = dock.children[1];
+            //$([toolset, toolbar]).toggleClass('display-none')
 
             var iframe = byId('iframe-editor');
             var doc = iframe.contentWindow.document;

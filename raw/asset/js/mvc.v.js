@@ -1603,12 +1603,12 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     var orders = await github.repos.contents({
                                         owner: window.owner.login,
-                                        path: "/v1/invoices/" + "apple" + "/invoices.json",
+                                        path: "/v1/orders/" + get[1] + "/invoices.json",
                                         repo: 'db.dompad.io'
                                     }, {
                                         accept: "application/vnd.github.raw"
                                     });
-                                    orders = orders.filter(o => o.created).sort((a,b) => b.created - a.created);
+                                    orders = orders.filter(o => o.created ? o.created : null).sort((a,b) => b.created - a.created);
                                     console.log(1606, orders);
 
                                     var feed = vp.find('[data-value="feed.orders"]');
