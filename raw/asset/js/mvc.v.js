@@ -1603,7 +1603,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
                                     var orders = await github.repos.contents({
                                         owner: window.owner.login,
-                                        path: "/v1/orders/" + get[1] + "/invoices.json",
+                                        path: "/v1/orders/" + get[1] + "/orders.json",
                                         repo: 'db.dompad.io'
                                     }, {
                                         accept: "application/vnd.github.raw"
@@ -2204,7 +2204,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                 } while (x < data.length);
                             }
                         }
-                        0 > 1 ? github.repos.contents({
+                        0 < 1 ? github.repos.contents({
                             //cache.feed.dashboard.index
                             owner: window.owner.login,
                             repo: "db.dompad.io",
@@ -2323,11 +2323,14 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     console.log(settings);
                     const user = await github.user.get();
                     //github.search.code(query).then(data=>{
-                    github.user.repos({
+                    github.repos.user({
                         query: {
+                            affiliation: 'owner,collaborator,organization_member',
                             per_page: 25,
-                            sort: "created"
-                        }
+                            sort: "created",
+                            visibility: 'private'
+                        },
+                        username: window.owner.login
                     }).then(data=>{
                         console.log(596, {
                             data

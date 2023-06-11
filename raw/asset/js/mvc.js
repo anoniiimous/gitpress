@@ -1172,6 +1172,8 @@ controller.cart.order = async(event)=>{
             console.log(774, {
                 result
             });
+            localStorage.removeItem('cart');
+            ('/cart/checkout/order').router();
         });
     }
 }

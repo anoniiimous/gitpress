@@ -759,6 +759,31 @@ window.github = {
             );
         }
         ,
+        user: (params, settings)=>{
+            console.log(params, settings);
+            var settings = settings ? settings : {};
+            return new Promise((resolve,reject)=>{
+                const query = params.query ? "?" + new URLSearchParams(params.query).toString() : "";
+                console.log(query);
+                const a = (d)=>{
+                    const data = JSON.parse(d);
+                    resolve(data);
+                }
+                const b = (error)=>{
+                    console.log(error);
+                    reject(error);
+                }
+                const accessToken = localStorage.githubAccessToken;
+                accessToken ? settings.headers = {
+                    Accept: "application/vnd.github.v3+json",
+                    Authorization: "token " + accessToken
+                } : null;
+                const url = github.endpoint + "/user/repos" + query;
+                ajax(url, settings).then(a).catch(b);
+            }
+            );
+        }
+        ,
         delete: async(params)=>{
             const owner = params.owner;
             const repo = params.repo;
@@ -1057,7 +1082,7 @@ window.github = {
                 }
             } else {
                 return new Promise((resolve,reject)=>{
-                    console.log(params.query);
+                    console.log(params);
                     const query = params.query ? "?" + new URLSearchParams(params.query).toString() : "";
                     const url = github.endpoint + "/users/" + params.username + "/repos" + query;
                     const a = (d)=>{
