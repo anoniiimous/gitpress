@@ -1163,6 +1163,7 @@ controller.cart.order = async(event)=>{
                 stripe_user_id: stripe_uid.content,
                 order,
                 payload: {
+                    card,
                     clientSecret,
                     billing_details
                 }
