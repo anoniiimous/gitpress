@@ -970,6 +970,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                             mode: "cors"
                         });
                         var res = JSON.parse(json);
+                        console.log(973, {
+                            res
+                        });
                         var payment_intent = {
                             client_secret: res.payment_intent.client_secret,
                             id: res.payment_intent.id,
@@ -1131,51 +1134,64 @@ controller.cart.order = async(event)=>{
 
         var stripe_uid = document.head.find('meta[name="stripe_user_id"]');
 
-        0 > 1 ? stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
+        try {
+            const pm = await stripe.createPaymentMethod({
                 card,
-                billing_details
-            }
-        }).then(function(result) {
-            if (result.error) {
-                // Show error to your customer (for example, insufficient funds)
-                console.log(result.error.message);
-            } else {
-                // The payment has been processed!
-                if (result.paymentIntent.status === 'succeeded') {
-                    console.log(774, result);
-                    localStorage.removeItem('cart');
-                    ('/cart/checkout/order').router();
-                    // Show a success message to your customer
-                    // There's a risk of the customer closing the window before callback
-                    // execution. Set up a webhook or plugin to listen for the
-                    // payment_intent.succeeded event that handles any business critical
-                    // post-payment actions.
-                }
-            }
-        }) : ajax("https://api.dompad.workers.dev/v1/order", {
-            data: JSON.stringify({
-                payment_intent_id: payment_intent.id,
-                merch: {
-                    cart: cart_client,
-                    subtotal
+                billing_details: {
+                    name: 'Jenny Rosen',
                 },
-                stripe_user_id: stripe_uid.content,
-                order,
-                payload: {
+                type: 'card'
+            });
+            console.log(1148, pm.paymentMethod.id);
+
+            0 > 1 ? stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
                     card,
-                    clientSecret,
                     billing_details
                 }
-            }),
-            dataType: "POST"
-        }).then(function(result) {
-            console.log(774, {
-                result
+            }).then(function(result) {
+                if (result.error) {
+                    // Show error to your customer (for example, insufficient funds)
+                    console.log(result.error.message);
+                } else {
+                    // The payment has been processed!
+                    if (result.paymentIntent.status === 'succeeded') {
+                        console.log(774, result);
+                        localStorage.removeItem('cart');
+                        ('/cart/checkout/order').router();
+                        // Show a success message to your customer
+                        // There's a risk of the customer closing the window before callback
+                        // execution. Set up a webhook or plugin to listen for the
+                        // payment_intent.succeeded event that handles any business critical
+                        // post-payment actions.
+                    }
+                }
+            }) : ajax("https://api.dompad.workers.dev/v1/order", {
+                data: JSON.stringify({
+                    payment_intent_id: payment_intent.id,
+                    payment_method_id: pm.paymentMethod.id,
+                    merch: {
+                        cart: cart_client,
+                        subtotal
+                    },
+                    stripe_user_id: stripe_uid.content,
+                    order,
+                    payload: {
+                        clientSecret,
+                        billing_details,
+                    }
+                }),
+                dataType: "POST"
+            }).then(function(result) {
+                console.log(774, {
+                    result
+                });
+                localStorage.removeItem('cart');
+                ('/cart/checkout/order').router();
             });
-            localStorage.removeItem('cart');
-            ('/cart/checkout/order').router();
-        });
+        } catch (e) {
+            console.log(1147, error);
+        }
     }
 }
 controller.cart.update = obj=>{
