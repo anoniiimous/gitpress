@@ -115,8 +115,22 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 0 < 1 ? controller.nav.hide() : controller.nav.close();
                 if (get.length > 1) {
 
-                    var repository = await github.repos.get({
+                    var apps = await github.repos.contents({
                         owner: window.owner.login,
+                        repo: "db.dompad.io",
+                        path: "/v1/apps/index.json"
+                    }, {
+                        accept: "application/vnd.github.raw",
+                        cache: "reload"
+                    });
+                    var app = apps.find(o=>o.name === get[1]);
+                    console.log(127, {
+                        apps,
+                        app
+                    });
+
+                    var repository = await github.repos.get({
+                        owner: app.owner.login,
                         repo: get[1]
                     }, {
                         accept: "application/vnd.github.raw",
@@ -150,7 +164,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     //const user = await github.user.get();
                     try {
                         var json = await github.repos.contents({
-                            owner: window.owner.login,
+                            owner: app.owner.login,
                             path: "/site.webmanifest",
                             repo: get[1]
                         }, {
@@ -1608,22 +1622,26 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                     }, {
                                         accept: "application/vnd.github.raw"
                                     });
-                                    orders = orders.filter(o => o.created ? o.created : null).sort((a,b) => b.created - a.created);
-                                    console.log(1606, orders);
+                                    orders = orders.filter(o=>o.created ? o.created : null).sort((a,b)=>b.created - a.created);
+                                    //console.log(1606, orders);
 
                                     var feed = vp.find('[data-value="feed.orders"]');
                                     var template = feed.nextElementSibling
                                     feed.innerHTML = "";
                                     orders.forEach(function(order) {
                                         var row = template.content.firstElementChild.cloneNode(true);
-                                        row.find('[data-value="order.id"]').textContent = order.id;
-                                        row.find('[data-value="order.created"]').textContent = mvc.m.time.date(order.created);
-                                        row.find('[data-value="order.customer"]').textContent = order.id;
-                                        row.find('[data-value="order.fulfillment"]').textContent = order.id;
-                                        row.find('[data-value="order.total"]').textContent = "$" + (order.amount_due / 100).toFixed(2);
-                                        row.find('[data-value="order.status"]').textContent = order.id;
-                                        row.find('[data-value="order.updated"]').textContent = order.id;
-                                        feed.insertAdjacentHTML('beforeend', row.outerHTML);
+                                        var payment_intent = order.payment_intent;
+                                        if (payment_intent && !payment_intent.hasOwnProperty('error')) {
+                                            row.find('[data-value="order.id"]').textContent = order.id;
+                                            row.find('[data-value="order.created"]').textContent = mvc.m.time.date(order.created);
+                                            row.find('[data-value="order.customer"]').textContent = order.id;
+                                            row.find('[data-value="order.fulfillment"]').textContent = order.id;
+                                            row.find('[data-value="order.total"]').textContent = "$" + (order.amount_due / 100).toFixed(2);
+                                            row.find('[data-value="order.status"]').textContent = payment_intent.status;
+                                            row.find('[data-value="order.updated"]').textContent = order.id;
+                                            feed.insertAdjacentHTML('beforeend', row.outerHTML);
+                                            console.log(1643, order);
+                                        }
                                     });
                                 } else if (get[3] === "product") {
                                     var vp = dom.body.find('pages[data-page="/dashboard/*/merch/product"]');

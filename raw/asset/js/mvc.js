@@ -1144,29 +1144,7 @@ controller.cart.order = async(event)=>{
             });
             console.log(1148, pm.paymentMethod.id);
 
-            0 > 1 ? stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card,
-                    billing_details
-                }
-            }).then(function(result) {
-                if (result.error) {
-                    // Show error to your customer (for example, insufficient funds)
-                    console.log(result.error.message);
-                } else {
-                    // The payment has been processed!
-                    if (result.paymentIntent.status === 'succeeded') {
-                        console.log(774, result);
-                        localStorage.removeItem('cart');
-                        ('/cart/checkout/order').router();
-                        // Show a success message to your customer
-                        // There's a risk of the customer closing the window before callback
-                        // execution. Set up a webhook or plugin to listen for the
-                        // payment_intent.succeeded event that handles any business critical
-                        // post-payment actions.
-                    }
-                }
-            }) : ajax("https://api.dompad.workers.dev/v1/order", {
+            ajax("https://api.dompad.workers.dev/v1/order", {
                 data: JSON.stringify({
                     payment_intent_id: payment_intent.id,
                     payment_method_id: pm.paymentMethod.id,
