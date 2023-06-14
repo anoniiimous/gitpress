@@ -24,17 +24,42 @@ async function init() {
     var html = ``;
     if (window.self === window.top) {
 
-        var json = await ajax('site.webmanifest');
-        var manifest = JSON.parse(json);
-        document.head.find('title').textContent = manifest.name;
-        document.head.find('[name="apple-mobile-web-app-title"]').content = manifest.name;
-        document.head.find('[name="apple-mobile-web-app-status-bar-style"]').content = manifest.theme_color;
-        document.head.find('[name="application-name"]').content = manifest.name;
-        document.head.find('[name="application-shortname"]').content = manifest.short_name;
-        document.head.find('[name="msapplication-TileColor"]').content = manifest.theme_color;
-        document.head.find('[name="theme-color"]').content = manifest.theme_color;
-        //console.log(25, manifest);
-        
+        //WEBMANIFEST
+        try {
+            var json = await ajax('site.webmanifest');
+            var manifest = JSON.parse(json);
+            console.log(31, manifest);
+            
+            document.head.find('title').textContent = manifest.name;
+            document.head.find('[name="apple-mobile-web-app-title"]').content = manifest.name;
+            document.head.find('[name="apple-mobile-web-app-status-bar-style"]').content = manifest.theme_color;
+            document.head.find('[name="application-name"]').content = manifest.name;
+            document.head.find('[name="application-shortname"]').content = manifest.short_name;
+            document.head.find('[name="msapplication-TileColor"]').content = manifest.theme_color;
+            document.head.find('[name="theme-color"]').content = manifest.theme_color;
+        } catch (e) {
+            console.log(41, e);
+        }
+
+        //STRIPE
+        try {
+            var json = await ajax('raw/asset/json/stripe.json');
+            var stripe = JSON.parse(json);            
+            console.log(48, stripe);
+            
+            var key = document.createElement('meta');
+            key.content = stripe.publishable_key;
+            key.name = "stripe_publishable_key";
+            document.head.find('base').insertAdjacentHTML('beforebegin', key.outerHTML);
+            
+            var key = document.createElement('meta');
+            key.content = stripe.user_id;
+            key.name = "stripe_user_id";
+            document.head.find('base').insertAdjacentHTML('beforebegin', key.outerHTML);
+        } catch (e) {
+            console.log(60, e);
+        }
+
         html = await ajax('/raw/style/template.html');
         html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
 
@@ -188,7 +213,7 @@ async function init() {
     is.iframe(window) ? null : window.addEventListener("message", (e)=>{
         var event = e.data[0]
         var data = e.data[1];
-        if (is.iframe(window)=== false) {
+        if (is.iframe(window) === false) {
             if (event === "router") {
                 var page = route.page;
                 var path = route.path;
