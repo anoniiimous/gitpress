@@ -23,6 +23,18 @@ async function init() {
     //SHELL
     var html = ``;
     if (window.self === window.top) {
+
+        var json = await ajax('site.webmanifest');
+        var manifest = JSON.parse(json);
+        document.head.find('title').textContent = manifest.name;
+        document.head.find('[name="apple-mobile-web-app-title"]').content = manifest.name;
+        document.head.find('[name="apple-mobile-web-app-status-bar-style"]').content = manifest.theme_color;
+        document.head.find('[name="application-name"]').content = manifest.name;
+        document.head.find('[name="application-shortname"]').content = manifest.short_name;
+        document.head.find('[name="msapplication-TileColor"]').content = manifest.theme_color;
+        document.head.find('[name="theme-color"]').content = manifest.theme_color;
+        //console.log(25, manifest);
+        
         html = await ajax('/raw/style/template.html');
         html.length > 0 ? dom.body.find('boot').insertAdjacentHTML('afterend', html) : null;
 
@@ -39,9 +51,7 @@ async function init() {
                 f++;
             } while (f < fetching.length);
         }
-        //dom.body.all('[data-page][data-fetch]').forEach(a=>console.log(1234, a.outerHTML))
-        
-
+        //dom.body.all('[data-page][data-fetch]').forEach(a=>console.log(1234, a.outerHTML))       
     } else {
         const user = await github.user.get();
         const owner = user.login;
