@@ -1613,7 +1613,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         }
                                     }
                                 } else if (get[3] === "orders") {
-                                    var vp = dom.body.find('pages[data-page="/dashboard/*/merch/orders"]');
+                                    var vp = dom.body.find('page[data-page="/dashboard/*/merch/orders"]');
 
                                     var orders = await github.repos.contents({
                                         owner: window.owner.login,
