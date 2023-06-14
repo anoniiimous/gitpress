@@ -1632,6 +1632,8 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         var row = template.content.firstElementChild.cloneNode(true);
                                         var payment_intent = order.payment_intent;
                                         if (payment_intent && !payment_intent.hasOwnProperty('error')) {
+                                            row.find('[data-value="order.id"]').dataset.href = "/dashboard/" + get[1] + "/merch/orders/" + order.id;
+                                                            
                                             row.find('[data-value="order.id"]').textContent = order.id;
                                             row.find('[data-value="order.created"]').textContent = mvc.m.time.date(order.created);
                                             row.find('[data-value="order.customer"]').textContent = order.id;
