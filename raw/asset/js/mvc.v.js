@@ -2150,7 +2150,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         const dir = rout.ed.dir(full_name);
                                         var repo = dir[1];
                                         const arr = repo.split('.');
-                                        const name = arr[arr.length - 1];
+                                        const name = row.name;
                                         var owner = row.owner;
                                         console.log({
                                             full_name,
@@ -2175,7 +2175,9 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                                 accept: "application/vnd.github.raw"
                                             });
                                             template.find('picture img').src = "raw/asset/png/template/template." + repo.split('.')[2] + ".png";
-                                        } catch (e) {}
+                                        } catch (e) {
+                                            console.log(2179, e);
+                                        }
 
                                         feed.insertAdjacentHTML('beforeend', template.outerHTML);
                                         x++;

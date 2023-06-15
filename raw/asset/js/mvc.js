@@ -190,7 +190,11 @@ window.mvc.m ? null : (window.mvc.m = model = {
                             accept: "application/vnd.github.raw"
                         });
                     } else {
-                        posts = JSON.parse(await ajax('raw/posts/posts.json'));
+                        try {
+                            posts = JSON.parse(await ajax('raw/posts/posts.json'));
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
 
                     if (posts.length > 0) {
@@ -208,7 +212,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
 
                             var date = elem.find('[placeholder="Date"]');
                             var title = elem.find('[placeholder="Title"]');
-                            var description = elem.find('[placeholder="Description"]');
+                            var description = elem.find('[data-value="post.description"]');
                             var picture = elem.find('[data-value="post.image"]');
 
                             0 < 1 ? console.log(57, {
@@ -344,6 +348,17 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
                 console.log(338, i, feeds.length);
             }
+            0 < 1 && Masonry ? $('[data-masonry]').forEach(feed=>{
+                console.log(352, feed, feed.clientWidth, (feed.firstElementChild.clientWidth - 120) / 4);
+                imagesLoaded(feed, function() {
+                    var msnry = new Masonry(feed,{
+                        itemSelector: 'card box',
+                        gutter: parseInt(feed.dataset.gutter)
+                    });
+
+                })
+            }
+            ) : null;
 
             //MERCH PRODUCT
             var merch = vp.find('[data-merch]');
@@ -738,6 +753,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 post.date ? vp.find('[data-value="post.date"]').textContent = mvc.m.date.time(post.date) : null;
                 post.category ? vp.find('[data-value="post.category"]').textContent = post.category : null;
                 post.title ? vp.find('[data-value="post.title"]').textContent = post.title : null;
+                post.description ? vp.find('[data-value="post.description"]').textContent = post.description : null;
                 vp.find('article') && doc.body.find('article') ? vp.find('article').innerHTML = doc.body.find('article').outerHTML : null;
                 0 < 1 ? console.log(733, {
                     article: vp.find('article'),
