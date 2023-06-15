@@ -31,7 +31,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
             var win = feed.ownerWindow();
             //feed.innerHTML = "";
 
-            //console.log(861, feed);
+            console.log(861, feed, feed.nextElementSibling);
             var template = feed.nextElementSibling.content;
             var limit = template.children.length;
             var media = feed.getAttribute('media');
@@ -197,6 +197,8 @@ window.mvc.m ? null : (window.mvc.m = model = {
 
                         var p = 0;
                         var html = "";
+
+                        posts = posts.filter(o=>o.created ? o.created : null).sort((a,b)=>b.created - a.created);
 
                         do {
 
