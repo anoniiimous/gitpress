@@ -1,6 +1,21 @@
 window.mvc ? null : (window.mvc = {});
 
 window.mvc.m ? null : (window.mvc.m = model = {
+    date: {
+        time: (stamp,format)=>{
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            if (format) {
+                var time = date;
+            } else {
+                var date = new Date(stamp * 1000);
+                var month = monthNames[date.getMonth()]
+                var day = date.getDate();
+                var year = date.getFullYear();
+                var time = month + " " + day + ", " + year;
+            }
+            return time;
+        }
+    },
     error: {
         image: e=>{
             console.log('model.error.image', e);
@@ -89,16 +104,13 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                     posts
                                 }) : null;
 
-                                elem.dataset.display = "flex";
-                                elem.dataset.href = "/shop/merch/" + post.slug;
-
                                 if (win.self !== win.top && dom.body.getAttribute('buildable')) {
                                     //console.log(178, 'buildable', p);
                                     elem.dataset.id = Crypto.uid.create(1);
                                 }
 
                                 var image = elem.find('picture img');
-                                0 > 1 ? console.log(94, {
+                                0 < 1 ? console.log(94, {
                                     elem,
                                     image
                                 }) : null;
@@ -117,6 +129,9 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                     image.src = post.images[0];
                                 }
                                 //image && post.images ? image.src = post.images[0] : null;
+
+                                elem.dataset.display = "flex";
+                                elem.dataset.href = "/shop/merch/" + post.slug;
 
                                 var date = elem.find('[placeholder="Date"]');
                                 date && post.date ? date.textContent = post.date : null;
@@ -165,7 +180,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                 if (media === "pages") {
                     //var json = await ajax('raw/posts/posts.json')
                     var posts = [];
-                    if (is.iframe) {
+                    if (is.iframe(window)) {
                         var user = await github.user.get();
                         posts = await github.repos.contents({
                             owner: user.login,
@@ -186,24 +201,27 @@ window.mvc.m ? null : (window.mvc.m = model = {
                         do {
 
                             var post = posts[p];
-                            var elem = 0 < 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                            var elem = 0 > 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                            console.log(205, elem, feed);
 
                             var date = elem.find('[placeholder="Date"]');
                             var title = elem.find('[placeholder="Title"]');
                             var description = elem.find('[placeholder="Description"]');
-                            var picture = elem.find('picture');
+                            var picture = elem.find('[data-value="post.image"]');
 
-                            console.log(57, {
+                            0 < 1 ? console.log(57, {
                                 title,
-                                post
-                            });
+                                post,
+                                picture
+                            }) : null;
 
-                            date ? date.textContent = post.date ? date.textContent = post.date : date.remove() : null;
-                            title.textContent = post.title;
-                            description.textContent = post.description;
-                            post.image ? picture.find('img').dataset.src = post.image : null;
+                            feed.dataset.slug && post.slug ? elem.dataset.href = feed.dataset.slug.replace('*', post.slug) : null;
+                            date && post.date ? (date.textContent = post.date ? date.textContent = mvc.m.date.time(post.date) : date.remove()) : null;
+                            title && post.title ? title.textContent = post.title : null;
+                            description && post.description ? description.textContent = post.description : null;
+                            picture && post.image ? picture.dataset.src = post.image : null;
 
-                            //html += elem.outerHTML;
+                            html += elem.outerHTML;
 
                             p++;
 
@@ -276,7 +294,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
             //MODIFIER
             if (0 < 1) {
-                if (is.iframe) {
+                if (is.iframe(window)) {
                     var TEG = window.parent.GET;
                     if (TEG.length > 3 && TEG[0] === "dashboard" && TEG[2] === "build" && TEG[3] === "er") {
                         dom.body.dataset.router = "disabled";
@@ -304,15 +322,25 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
             //MEDIA FEED
             var feeds = vp.all('[media]');
+            console.log(307, {
+                vp,
+                feeds
+            });
             if (feeds.length > 0) {
-                feeds.forEach(async function(feed) {
-                    feed.innerHTML = "";
-                    var html = await model.feed.media(feed);
-                    0 > 2 ? console.log(91, {
-                        html
-                    }) : null;
-                    feed.innerHTML = html;
-                })
+                var i = 0;
+                if (feeds.length > 0) {
+                    do {
+                        var feed = feeds[i];
+                        feed.innerHTML = "";
+                        var html = await model.feed.media(feed);
+                        0 < 2 ? console.log(91, {
+                            html
+                        }) : null;
+                        feed.innerHTML = html;
+                        i++;
+                    } while (i < feeds.length);
+                }
+                console.log(338, i, feeds.length);
             }
 
             //MERCH PRODUCT
@@ -684,6 +712,35 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     checkout.classList.add('display-none');
                     quantity.classList.add('display-none');
                 }
+            }
+
+            //ARTICLE
+            var vp = vp.find('[data-post]');
+            if (vp) {
+                var slug = get[1];
+                var json = await ajax("/raw/posts/" + slug + "/index.json");
+                var post = JSON.parse(json);
+                console.log(721, {
+                    slug,
+                    json,
+                    post
+                });
+
+                var html = await ajax("/raw/posts/" + slug + "/index.html");
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                console.log(731, {
+                    html
+                });
+
+                post.image ? vp.find('[data-value="post.image"]').dataset.src = post.image : null;
+                post.date ? vp.find('[data-value="post.date"]').textContent = mvc.m.date.time(post.date) : null;
+                post.category ? vp.find('[data-value="post.category"]').textContent = post.category : null;
+                post.title ? vp.find('[data-value="post.title"]').textContent = post.title : null;
+                vp.find('article') && doc.body.find('article') ? vp.find('article').innerHTML = doc.body.find('article').outerHTML : null;
+                0 < 1 ? console.log(733, {
+                    article: vp.find('article'),
+                    html
+                }) : null;
             }
 
             //CART        

@@ -70,15 +70,16 @@
 @media screen {
     html, body {
         /* min-height: 100%; */
+        height: 100%;
     }
     html, body, main, page, pages, blocks {
-        display: flex;
+        /* display: flex; */
         flex-direction: column;
         flex: 1;
+        /* min-height: 100%; */
     }
     
     html {
-        height: 100%;
         width: 100%;
     }
 
@@ -322,8 +323,8 @@
     }
 
     main {
-        /* display: flex; */
-        /* display: -webkit-flex; */
+        display: flex;
+        display: -webkit-flex;
         display: inherit;
         width: 100%;
         /* min-height: 100%; */
@@ -444,6 +445,7 @@
         display: inherit;
         position: relative;
         overflow: hidden;
+        height: 100%;
     }
 
     pre {
@@ -556,7 +558,7 @@
 @media screen {
     body > footer, body > header, body > nav {
         position: relative;
-        z-index: 123456789;
+        /* z-index: 123456789; */
     }
 
     body block, body card, body card box {
