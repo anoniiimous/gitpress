@@ -37,5 +37,15 @@
         "owner": {
             "login": "dapmod"
         }
+    },
+    {
+        "full_name": "dapmod/emmah.dompad.design",
+        "media": [
+            "merch"
+        ],
+        "name": "Emmah",
+        "owner": {
+            "login": "dapmod"
+        }
     }
 ]
