@@ -1781,6 +1781,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             params
                         });
                         await github.crud.update(params, sprout);
+                        ('/dashboard/' + GET[1] + '/build/er').router();
                     }
 
                 }
