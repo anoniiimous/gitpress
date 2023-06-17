@@ -1663,9 +1663,10 @@ window.mvc.c ? null : (window.mvc.c = controller = {
         install: async (target) => {
             var user = await github.user.get();
             var card = target.closest('card');
+            var full_name = card.dataset.full_name;
             var theme = card.find('box text').textContent;
-            var owner = "dompad";
-            var repo = "design.dompad." + theme;
+            var owner = full_name.split('/')[0];
+            var repo = full_name.split('/')[1];
             if (theme) {
                 var confirm = await modal.confirm({
                     title: "Install " + theme.capitalize(),
@@ -1682,8 +1683,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     //REFERENCES
                     var references = await github.database.references(params = {
                         branch: "main",
-                        owner: "dompad",
-                        repo: "design.dompad." + theme
+                        owner: owner,
+                        repo: repo
                     }, {
                         dataType: "GET"
                     });
@@ -1717,7 +1718,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                         accept: "application/vnd.github.raw"
                                     })
                                     sprout[t] = {
-                                        content,
+                                        content: typeof content === 'object' ? JSON.stringify(content) : content,
                                         path
                                     };
                                     0 > 1 ? console.log(1363, {
@@ -1773,10 +1774,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         var params = {
                             message: "Install " + theme.capitalize(),
                             repo: GET[1],
-                            owner: user.login
+                            owner: window.owner.login
                         };
                         console.log(2452, 'controller.posts.update', "array", {
-                            array: sprout
+                            array: sprout,
+                            params
                         });
                         await github.crud.update(params, sprout);
                     }

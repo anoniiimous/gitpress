@@ -160,7 +160,8 @@ window.modal = {
         modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
     }
     ,
-    confirm: async(h,opt,ppp=document.createElement('aside'))=>{
+    confirm: async(h,opt)=>{
+        var ppp = document.createElement('aside');
         return new Promise(async(resolve,reject)=>{
             var innerHTML = await ajax('raw/asset/html/modal/modal.confirm.html');
             var html = new DOMParser().parseFromString(innerHTML, 'text/html').body.firstElementChild;
@@ -184,7 +185,6 @@ window.modal = {
                     }
                 }
             }
-            ;
             dom.body.insertBefore(ppp, byId('boot').nextElementSibling);
             modal.zIndex(document.querySelectorAll('aside:not(#body-ppp)'));
         }

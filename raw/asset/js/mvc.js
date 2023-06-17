@@ -328,10 +328,10 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 
             //MEDIA FEED
             var feeds = vp.all('[media]');
-            console.log(307, {
+            0 > 1 ? console.log(307, {
                 vp,
                 feeds
-            });
+            }) : null;
             if (feeds.length > 0) {
                 var i = 0;
                 if (feeds.length > 0) {
@@ -348,7 +348,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                 }
                 console.log(338, i, feeds.length);
             }
-            0 < 1 && Masonry ? $('[data-masonry]').forEach(feed=>{
+            0 < 1 && window.Masonry ? $('[data-masonry]').forEach(feed=>{
                 console.log(352, feed, feed.clientWidth, (feed.firstElementChild.clientWidth - 120) / 4);
                 imagesLoaded(feed, function() {
                     var msnry = new Masonry(feed,{
@@ -1080,6 +1080,11 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 );
 
 window.mvc.c ? null : (window.mvc.c = controller = {});
+
+controller.account = {};
+controller.account.login = (event) => {
+    event.preventDefault();
+}
 
 controller.cart = {};
 controller.cart.checkout = async(target)=>{

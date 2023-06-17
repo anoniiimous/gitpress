@@ -2152,16 +2152,16 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                                         const arr = repo.split('.');
                                         const name = row.name;
                                         var owner = row.owner;
-                                        console.log({
+                                        0 > 1 ? console.log({
                                             full_name,
                                             dir,
                                             name,
                                             owner
-                                        })
+                                        }) : null;
                                         //var repository = row['_links'].html.split('/');
                                         //var user = repository[0];
                                         //var repo = repository[1];
-                                        //template.dataset["full_name"] = row.repository["full_name"];
+                                        template.dataset["full_name"] = row["full_name"];
                                         //template.find('ico').dataset.href = "/" + root + "/" + name + "/editor/";
                                         //mtemplate.find('text').dataset.href = "/templates/" + name + "/";
                                         template.find('text').textContent = name;
