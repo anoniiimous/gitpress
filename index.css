@@ -741,7 +741,7 @@
     /*UI*/
     body[buildable] block, body[buildable] > header, body[buildable] > footer {
         transition: 0.3s transform;
-        margin: 2px 0;
+        /* margin: 2px 0; */
     }
 
     body:not([insertable]) insertable {
