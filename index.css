@@ -638,12 +638,12 @@
             outline-offset: 0px;
         }
 
-        body[buildable="true"] > header card:has(> :not(template):empty), body[buildable="true"] block card:not([focus]):not(:hover):has(> :not(template):empty), body[buildable="true"] > footer card:has(> :not(template):empty) {
+        body[buildable="true"] > header card:has(> :not(picture):not(template):empty), body[buildable="true"] block card:not([focus]):not(:hover):has(> :not(picture):not(template):empty), body[buildable="true"] > footer card:has(> :not(picture):not(template):empty) {
             outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
 
-        body[buildable="true"] > footer card box:has(> :not(template):empty), body[buildable="true"] > header card box:has(> :not(template):empty), body[buildable="true"] card box:has(> :not(template):empty) {
+        body[buildable="true"] > footer card box:has(> :not(picture):not(template):empty), body[buildable="true"] > header card box:has(> :not(picture):not(template):empty), body[buildable="true"] card box:has(> :not(picture):not(template):empty) {
             outline: 2px dashed #77777780;
             outline-offset: 0px;
         }
@@ -698,11 +698,12 @@
     }
 
     /*ELEMENTS*/
-    body[buildable="true"] card:has(card > :not(backdrop):not(empty):not(template):empty) {
+    body[buildable="true"] card:has(> :not(backdrop):not(empty):not(template):empty) {
         min-height: 50px;
         min-width: 100%;
+        max-width: 100%;
     }
-
+    
     body[buildable="true"] box:has(> :not(backdrop):not(empty):not(template):empty) {
         min-height: 50px;
         min-width: 50px;
@@ -741,22 +742,24 @@
     /*UI*/
     body[buildable] block, body[buildable] > header, body[buildable] > footer {
         transition: 0.3s transform;
-        /* margin: 2px 0; */
+        margin: 1px 0;
     }
 
     body:not([insertable]) insertable {
         display: none;
     }
 
-    body[insertable="true"] block, body[insertable="true"] > header, body[insertable="true"] > footer {
-        box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+    body[insertable="true"] block, body[insertable="true"] > header, body[insertable="true"] > footer, insertable {
+        /* box-shadow: 0 1px 6px rgb(32 33 36 / 28%); */
         position: relative;
-        transform: scale(calc(75%));
+        transform: scale(calc(100%));
+        margin: 0;
     }
 
     body[insertable="true"] insertable {
         z-index: 123456789;
         position: relative;
+        padding: 10px 0;
         /* transform: scale(.75); */
         /* box-shadow: 0 1px 6px rgb(32 33 36 / 28%); */
     }

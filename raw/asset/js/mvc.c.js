@@ -461,11 +461,29 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             var elems = {
                                 iframe,
                                 head: iframe.contentWindow.document.head,
-                                body: iframe.contentWindow.document.body
+                                body: iframe.contentWindow.document.body,
+                                main: iframe.contentWindow.document.body.find('main')
                             };
                             console.log(422, "controller.build.iframe iframe.onload", elems);
                             //window.top.css.style.sheet(elems.body);
-                            iframe.contentWindow.document.body.setAttribute('buildable', true);
+                            elems.body.setAttribute('buildable', true);
+
+                            elems.body.addEventListener('mouseover', (e) => {
+                                var target = e.target;
+                                var selectors = target.closest('blocks block, blocks card, blocks box, body > header, body > header card, body > header box, body > footer, body > footer card, body > footer box');
+                                if(selectors) {
+                                    var tagName = selectors.tagName.toLowerCase();
+                                    if(['block', 'box', 'card', 'footer', 'header'].includes(tagName)) {
+                                        var block = target.closest('block, footer, header');
+                                        console.log('hovering block', {
+                                            block,
+                                            tagName,
+                                            target
+                                        });                                        
+                                    }
+                                }
+                            })
+                            
                             resolve(elems.iframe);
                         } :
                         resolve(iframe);
@@ -742,7 +760,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
             } else {
 
-                if (target.closest('ico').getAttribute("css-tranform") === "rotate(45deg)") {
+                if (target.closest('ico').getAttribute("css-transform") === "rotate(45deg)") {
 
                     doc.body.removeAttribute('insertable');
 
@@ -761,7 +779,6 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     });
 
                     var main = doc.body.find('main');
-                    var section = main.previousElementSibling.content.firstElementChild.cloneNode(true);
                     var sections = $(doc.body.all('body > section'));
                     if (sections.length > 0) {
                         sections.forEach(function(block) {
@@ -772,8 +789,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                             //block.nextElementSibling ? null : block.insertAdjacentHTML('afterend', add.outerHTML);
                         });
                     } else {
-                        main.insertAdjacentHTML('beforebegin', section.outerHTML);
-                        main.insertAdjacentHTML('afterend', section.outerHTML);
+                        //var section = main.previousElementSibling.content.firstElementChild.cloneNode(true);
+                        //main.insertAdjacentHTML('beforebegin', section.outerHTML);
+                        //main.insertAdjacentHTML('afterend', section.outerHTML);
                     }
 
                     $(doc.body.all('blocks block')).forEach(function(block) {
@@ -812,7 +830,7 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     declarations
                 }) : null;
 
-                var card = toolbar.find('[data-declaration]');
+                //var card = toolbar.find('[data-declaration]');
                 //card.dataset.property = declarations[3].closest('[data-property]').dataset.property;
                 //card.innerHTML = declarations[3].outerHTML;
                 //declarations.forEach(function(declaration) { });

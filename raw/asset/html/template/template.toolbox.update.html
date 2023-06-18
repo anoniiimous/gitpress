@@ -1,12 +1,6 @@
 <block class="align-items-center height-100pct justify-content-center width-100pct">
-    <picture data-tap="                      
-                    var dock = dom.body.find('tool').closest('pages > header');
-                    var toolset = dock.children[0];
-                    var toolbar = dock.children[1];
-                    $([toolset, toolbar]).toggleClass('display-none');
-                    modal.exit(event.target);
-"></picture>
-    <flex style="margin: auto auto 20px auto">
+    <picture data-tap="modal.exit(event.target);"></picture>
+    <flex style="margin: auto auto 30px 50px">
         <card class="background-color-fff border-radius-10px display-inline-flex flex-direction-column margin-auto overflow-hidden" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-element="main">
             <header class="line-height-50px" css-columns="3" data-tap="tool.set.tab(event.target)">
                 <box class="border-bottom-1px-solid border-color-ccc">
