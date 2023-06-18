@@ -651,17 +651,17 @@
 
     @media screen {
         body[buildable="true"][wireframe="true"] > header, body[buildable="true"][wireframe="true"] block, body[buildable="true"][wireframe="true"] footer {
-            outline: 2px dashed #77777780;
+            /* outline: 2px dashed #77777780; */
             outline-offset: 0px;
         }
 
         body[buildable="true"][wireframe="true"] > header card, body[buildable="true"][wireframe="true"] block card, body[buildable="true"][wireframe="true"] > footer card {
-            outline: 2px dashed #77777780;
+            /* outline: 2px dashed #77777780; */
             outline-offset: 0px;
         }
 
         body[buildable="true"][wireframe="true"] > footer card box, body[buildable="true"][wireframe="true"] > header card box, body[buildable="true"][wireframe="true"] card box {
-            outline: 2px dashed #77777780;
+            /* outline: 2px dashed #77777780; */
             outline-offset: 0px;
         }
     }

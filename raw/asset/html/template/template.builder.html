@@ -24,11 +24,17 @@
                     </row>
                 </box>
                 <box class="position-relative" data-page="/dashboard/*/build/er">
-                    <row class="align-items-center justify-content-center">
-                        <ico>
-                            <n class="gg-options"></n>
+                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
+                        <ico class="margin-left-5px">
+                            <n class="gg-menu"></n>
+                            <n class="--ggs-50pct gg-chevron-down" css-width="10px"></n>
                         </ico>
                     </row>
+                    <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 line-height-30px margin-auto padding-y-10px position-absolute white-space-nowrap width-auto" data-command="fontName" css-display="none" data-hidden="tap" css-left="5px" css-top="calc(100% - 5px)">
+                        <text class="-hover-background-color-eb padding-x-20px" data-tap="controller.builder.push()">Save</text>
+                        <text class="-hover-background-color-eb padding-x-20px" data-href="/dashboard/:get/build/preview">Preview</text>
+                        <text class="-hover-background-color-eb color-ff3b30 padding-x-20px" data-href="/dashboard/:get/build">Exit</text>
+                    </column>
                 </box>
                 <box class="margin-x-5px">
                     <column>
@@ -67,17 +73,11 @@
                     </row>
                 </box>
                 <box class="position-relative" data-page="/dashboard/*/build/er">
-                    <row class="align-items-center justify-content-center" data-dropdown data-ignore>
-                        <ico class="margin-left-5px">
-                            <n class="gg-menu"></n>
-                            <n class="--ggs-50pct gg-chevron-down" css-width="10px"></n>
+                    <row class="align-items-center justify-content-center">
+                        <ico>
+                            <n class="gg-options"></n>
                         </ico>
                     </row>
-                    <column class="-hd-width-100pct- background-color-fff border-radius-10px box-shadow-0-1px-6px-0 color-000 line-height-30px margin-auto padding-y-10px position-absolute top-5px white-space-nowrap width-auto" data-command="fontName" css-display="none" data-hidden="tap" css-right="-5px" data-top="calc(100% - 5px)">
-                        <text class="-hover-background-color-eb padding-x-20px" data-tap="controller.builder.push()">Save</text>
-                        <text class="-hover-background-color-eb padding-x-20px" data-href="/dashboard/:get/build/preview">Preview</text>
-                        <text class="-hover-background-color-eb color-ff3b30 padding-x-20px" data-href="/dashboard/:get/build">Discard Changes</text>
-                    </column>
                 </box>
             </row>
         </card>
@@ -85,7 +85,7 @@
 </header>
 <block class="flex-1 position-relative">
     <iframe class="background-color-fff height-100pct width-100pct" id="iframe-editor"></iframe>
-    <tool class="bottom-10px left-0 margin-auto right-0 position-absolute" css-height="50px" css-width="50px" data-page="/dashboard/*/build/er">
+    <tool class="bottom-20px left-20px margin-auto right-auto position-absolute" css-height="50px" css-width="50px" data-page="/dashboard/*/build/er">
         <card class="background-color-ffffff border-radius-50px box-shadow-0-1px-6px-0" data-mode="tip">
             <row>
                 <ico data-tap="controller.builder.create(event.target)" css-transition="0.3s">
