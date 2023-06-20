@@ -1086,6 +1086,9 @@ window.tool.box.value = async function(event) {
         focus = target.closest('card').node;
         var nodeName = focus.nodeName.toLowerCase();
         if (element === "node" && ["background", "background-color"].includes(attribute) && target.dataset.value === "hex") {
+            if(!focus.find(tagName + ' > picture')) {
+                focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
+            }
             focus = focus.find(tagName + ' > picture');
         }
         if (["picture"].includes(nodeName) && attribute === "src") {
