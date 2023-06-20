@@ -1,0 +1,29 @@
+@media screen {
+    [css-background-color="rgba(0,0,0,0.5)"] {
+        background-color: rgba(0,0,0,0.5)
+    }
+}
+
+@media screen {
+    .bottom-100pct {
+        bottom: 100%;
+    }
+}
+
+@media screen {
+    .height-100vh {
+        height: 100vh;
+    }
+}
+
+@media screen {
+    .width-100vw {
+        width: 100vw;
+    }
+}
+
+@media screen {
+    .top-100pct {
+        top: 100%;
+    }
+}

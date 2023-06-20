@@ -189,8 +189,21 @@ framework.on = async function(event) {
 
                         var tool = window.top.dom.body.find('tool');
 
+                        //FOCUS
                         $([dom.body]).attr('focus', el);
                         $([elem, elem.closest('block, footer, header')]).attr('focus', el);
+                        if(['block', 'card', 'box'].includes(el)) {
+                            var blur = `
+                                <blur class="bottom-0 display-flex height-100pct left-0 position-absolute right-0 top-0 width-100pct">
+                                    <div class="height-100vh position-absolute top-100pct width-100vw" css-background-color="rgba(0,0,0,0.5)"></div>
+                                    <div class="height-100vh position-absolute width-100vw" css-background-color="rgba(0,0,0,0.5)"></div>
+                                    <div class="height-100vh position-absolute width-100vw" css-background-color="rgba(0,0,0,0.5)"></div>
+                                    <div class="bottom-100pct height-100vh position-absolute width-100vw" css-background-color="rgba(0,0,0,0.5)"></div>
+                                </blur>
+                            `;
+                            //dom.body.insertAdjacentHTML('beforeend', blur);
+                        }
+                        
 
                         if (focused === "true") {} else {
                             if (tagName === "box") {
@@ -213,7 +226,10 @@ framework.on = async function(event) {
                             node,
                             nodeName
                         })) : null;
-                        window.top.toolbelt(mode);
+                        elem.node = elem;
+                        window.top.toolbelt(mode, {
+                            element: elem
+                        });
 
                         //$(window.top.dom.body.find('tool').all('ico')).forEach(o=>o.classList.remove('display-none'));
 

@@ -475,11 +475,11 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                                     var tagName = selectors.tagName.toLowerCase();
                                     if(['block', 'box', 'card', 'footer', 'header'].includes(tagName)) {
                                         var block = target.closest('block, footer, header');
-                                        console.log('hovering block', {
+                                        0 > 1 ? console.log('hovering block', {
                                             block,
                                             tagName,
                                             target
-                                        });                                        
+                                        }) : null;                                        
                                     }
                                 }
                             })
@@ -850,7 +850,9 @@ window.mvc.c ? null : (window.mvc.c = controller = {
 
                 var box = ppp.find('text[data-before="' + element + '"]').closest('box');
                 box.classList.remove('border-bottom-1px-solid');
-                //console.log({ppp, focus: ppp.focus})
+                console.log({ppp, focus: ppp.focus})
+
+                var card = ppp.find('card > column:not([css-display="none"])');
 
                 var header = ppp.find('card header');
 
@@ -866,7 +868,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                     var tab = index === box.index() ? column : null;
                     if (tab) {
                         tab.removeAttribute('css-display');
-                        //console.log(tab);
+                        tab.closest('card').node = ppp.focus;
+                        console.log(tab);
                         tool.box.css(tab);
                     }
                 }) : null;

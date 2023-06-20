@@ -745,23 +745,25 @@ window.tool.box.css = function(tab) {
 
         if (["header", "footer", "block", "card", "box"].includes(nodeName)) {
 
-            classList.concat(Array.from(focus.find('flex, column, row, section').classList));
-            var e1 = {
-                focus: focus.find('flex, column, row, section').attributes,
-                wrapper: focus.find('flex, column, row, section').attributes
-            };
+            if (focus.find('flex, column, row, section')) {
+                classList.concat(Array.from(focus.find('flex, column, row, section').classList));
+                var e1 = {
+                    focus: focus.find('flex, column, row, section').attributes,
+                    wrapper: focus.find('flex, column, row, section').attributes
+                };
 
-            var c2 = Array.from(focus.find('flex, column, row, section').classList);
-            var c3 = c1.concat(c2);
+                var c2 = Array.from(focus.find('flex, column, row, section').classList);
+                var c3 = c1.concat(c2);
 
-            for (const [i,a] of Object.entries(focus.find('flex, column, row, section').attributes)) {
-                var key = a.name;
-                var value = a.value;
-                a2[key] = value;
+                for (const [i,a] of Object.entries(focus.find('flex, column, row, section').attributes)) {
+                    var key = a.name;
+                    var value = a.value;
+                    a2[key] = value;
+                }
+
+                var a3 = Object.assign(a1, a2);
+                a3.class = c3.join(' ');
             }
-
-            var a3 = Object.assign(a1, a2);
-            a3.class = c3.join(' ');
 
         } else {
 
@@ -774,194 +776,196 @@ window.tool.box.css = function(tab) {
         0 < 1 ? console.log(334, {
             a3
         }) : null;
-        for (var [key,value] of Object.entries(a3)) {
-            value = value.replace('pct', '%');
-            0 > 1 ? console.log(329, {
-                key,
-                value
-            }) : null;
-            if (key.startsWith('css')) {
-                var camel = [];
-                var split = key.rfo('css-').split('-');
-                split.forEach(function(s) {
-                    if (s.startsWith('dw') || s.startsWith('_')) {
-                        //split;
-                        camel.push(s);
-                    } else {
-                        camel.push(s);
-                    }
-                });
-                key = camel.join('-').camelPhynate();
-                attrs[key] = value;
-            } else if (key.startsWith('class')) {
-                //console.log(value);
-                value.split(' ').forEach(function(c) {
-                    var split = c.split('-');
-                    var value = split.splice(split.length - 1)[0];
-                    var properties = [];
+        if (a3) {
+            for (var [key,value] of Object.entries(a3)) {
+                value = value.replace('pct', '%');
+                0 > 1 ? console.log(329, {
+                    key,
+                    value
+                }) : null;
+                if (key.startsWith('css')) {
+                    var camel = [];
+                    var split = key.rfo('css-').split('-');
                     split.forEach(function(s) {
                         if (s.startsWith('dw') || s.startsWith('_')) {
-                            split;
+                            //split;
+                            camel.push(s);
                         } else {
-                            properties.push(s);
+                            camel.push(s);
                         }
                     });
-                    var property = properties.join('-');
-                    rules[property] = value;
-                    0 > 1 ? console.log(339, {
-                        c,
-                        split,
-                        property,
-                        value
-                    }) : null;
-                    attrs[property] = value;
-                });
-            } else {
-                attrs[key] = value;
-            }
-            //key.startsWith('css-') ? attrs[key] = value : null;
-        }
-        var rules = attrs;
-        0 > 1 ? console.log(718, {
-            a1,
-            a2,
-            a3,
-            rules,
-            declarations
-        }) : null;
-        declarations.forEach(function(el) {
-            var declaration = el.dataset.declaration;
-            var row = el.closest('[data-property]');
-            if (row) {
-                var property = row.dataset.property.camelPhynate();
-                Object.entries(rules).forEach(function(rule) {
-                    var key = rule[0];
-                    var value = rule[1];
-                    0 > 1 ? console.log(537, {
-                        el,
-                        rules,
-                        property,
-                        declaration
-                    }) : null;
-
-                    if (key === property) {
-                        0 > 1 ? console.log(517, {
-                            el,
+                    key = camel.join('-').camelPhynate();
+                    attrs[key] = value;
+                } else if (key.startsWith('class')) {
+                    //console.log(value);
+                    value.split(' ').forEach(function(c) {
+                        var split = c.split('-');
+                        var value = split.splice(split.length - 1)[0];
+                        var properties = [];
+                        split.forEach(function(s) {
+                            if (s.startsWith('dw') || s.startsWith('_')) {
+                                split;
+                            } else {
+                                properties.push(s);
+                            }
+                        });
+                        var property = properties.join('-');
+                        rules[property] = value;
+                        0 > 1 ? console.log(339, {
+                            c,
+                            split,
                             property,
-                            declaration
-                        }, property, {
-                            key,
                             value
                         }) : null;
+                        attrs[property] = value;
+                    });
+                } else {
+                    attrs[key] = value;
+                }
+                //key.startsWith('css-') ? attrs[key] = value : null;
+            }
+            var rules = attrs;
+            0 > 1 ? console.log(718, {
+                a1,
+                a2,
+                a3,
+                rules,
+                declarations
+            }) : null;
+            declarations.forEach(function(el) {
+                var declaration = el.dataset.declaration;
+                var row = el.closest('[data-property]');
+                if (row) {
+                    var property = row.dataset.property.camelPhynate();
+                    Object.entries(rules).forEach(function(rule) {
+                        var key = rule[0];
+                        var value = rule[1];
+                        0 > 1 ? console.log(537, {
+                            el,
+                            rules,
+                            property,
+                            declaration
+                        }) : null;
 
-                        var tabs = el.closest('box').all('box > [data-tab]');
-                        if (tabs.length > 0) {
-                            //$(tabs).addClass('display-none');
-                            var tab = el.closest('box').find('box > [data-tab="' + value + '"]');
-                            if (tab) {
-                                tab.classList.remove('display-none');
-                            }
-                        }
-
-                        if (declaration === "array") {
-                            var checkboxes = el.all('input[type="checkbox"]');
-                            var json = is.json(value) ? JSON.parse(value) : [value];
-                            0 > 1 ? console.log(536, property, {
-                                json,
-                                checkboxes
-                            }) : null;
-                            checkboxes.forEach(function(checkbox) {
-                                var name = checkbox.name;
-                                if (json.includes(name)) {
-                                    checkbox.checked = true;
-                                }
-                            });
-                        }
-                        if (declaration === "checkbox") {
-                            var checkboxes = el.all('input[type="checkbox"]');
-                            var json = is.json(value) ? JSON.parse(value) : [value];
-                            0 < 1 ? console.log(536, property, {
-                                json,
-                                checkboxes
-                            }) : null;
-                            checkboxes.forEach(function(checkbox) {
-                                var name = checkbox.name;
-                                if (json.includes(name)) {
-                                    checkbox.checked = true;
-                                }
-                            });
-                        }
-                        if (declaration === "dimension") {
-                            var dimension = value.cssValue();
-                            var number = el.find('input[type="number"]');
-                            var unit = el.find('[data-value="unit"]');
-                            if (number) {
-                                if (isNaN(parseInt(dimension.number))) {
-                                    number.classList.add('display-none');
-                                    unit.textContent = dimension.number;
-                                } else {
-                                    number.classList.remove('display-none');
-                                    number.value = dimension.number;
-                                    unit.textContent = dimension.unit;
-                                }
-                            }
-                            0 < 1 ? console.log(562, property, {
-                                dimension,
-                                number,
-                                unit
-                            }, dimension.number, parseInt(dimension.number), typeof parseInt(dimension.number)) : null;
-                        }
-                        if (declaration === "number") {
-                            var number = el.find('input[type="number"]');
-                            if (number) {
-                                String.prototype.formulate = function(formula) {
-                                    var variable = this.toString();
-                                    var v = variable;
-                                    formula.split('{var}').forEach(function(x) {
-                                        v = v.replace(x, '');
-                                        0 > 1 ? console.log(593, {
-                                            v,
-                                            x,
-                                            variable,
-                                            formula
-                                        }) : null;
-                                    });
-                                    var reg = variable.matchAll("{var}");
-                                    0 > 1 ? console.log({
-                                        variable,
-                                        formula,
-                                        v,
-                                        reg
-                                    }) : null;
-                                    return v;
-                                }
-                                var formula = number.dataset.formula;
-                                if (formula) {
-                                    value = value.formulate(formula);
-                                }
-                                number.value = value;
-                            }
-                            0 > 1 ? console.log(583, property, {
-                                formula,
-                                number,
-                                value
-                            }) : null;
-                        }
-                        if (declaration === "select") {
-                            0 > 1 ? console.log(621, {
+                        if (key === property) {
+                            0 > 1 ? console.log(517, {
+                                el,
+                                property,
+                                declaration
+                            }, property, {
                                 key,
                                 value
                             }) : null;
-                            el.find('[data-value="value"]').textContent = value;
-                            el.find('[data-value="value"]').setAttribute('value', value);
+
+                            var tabs = el.closest('box').all('box > [data-tab]');
+                            if (tabs.length > 0) {
+                                //$(tabs).addClass('display-none');
+                                var tab = el.closest('box').find('box > [data-tab="' + value + '"]');
+                                if (tab) {
+                                    tab.classList.remove('display-none');
+                                }
+                            }
+
+                            if (declaration === "array") {
+                                var checkboxes = el.all('input[type="checkbox"]');
+                                var json = is.json(value) ? JSON.parse(value) : [value];
+                                0 > 1 ? console.log(536, property, {
+                                    json,
+                                    checkboxes
+                                }) : null;
+                                checkboxes.forEach(function(checkbox) {
+                                    var name = checkbox.name;
+                                    if (json.includes(name)) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            }
+                            if (declaration === "checkbox") {
+                                var checkboxes = el.all('input[type="checkbox"]');
+                                var json = is.json(value) ? JSON.parse(value) : [value];
+                                0 < 1 ? console.log(536, property, {
+                                    json,
+                                    checkboxes
+                                }) : null;
+                                checkboxes.forEach(function(checkbox) {
+                                    var name = checkbox.name;
+                                    if (json.includes(name)) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            }
+                            if (declaration === "dimension") {
+                                var dimension = value.cssValue();
+                                var number = el.find('input[type="number"]');
+                                var unit = el.find('[data-value="unit"]');
+                                if (number) {
+                                    if (isNaN(parseInt(dimension.number))) {
+                                        number.classList.add('display-none');
+                                        unit.textContent = dimension.number;
+                                    } else {
+                                        number.classList.remove('display-none');
+                                        number.value = dimension.number;
+                                        unit.textContent = dimension.unit;
+                                    }
+                                }
+                                0 < 1 ? console.log(562, property, {
+                                    dimension,
+                                    number,
+                                    unit
+                                }, dimension.number, parseInt(dimension.number), typeof parseInt(dimension.number)) : null;
+                            }
+                            if (declaration === "number") {
+                                var number = el.find('input[type="number"]');
+                                if (number) {
+                                    String.prototype.formulate = function(formula) {
+                                        var variable = this.toString();
+                                        var v = variable;
+                                        formula.split('{var}').forEach(function(x) {
+                                            v = v.replace(x, '');
+                                            0 > 1 ? console.log(593, {
+                                                v,
+                                                x,
+                                                variable,
+                                                formula
+                                            }) : null;
+                                        });
+                                        var reg = variable.matchAll("{var}");
+                                        0 > 1 ? console.log({
+                                            variable,
+                                            formula,
+                                            v,
+                                            reg
+                                        }) : null;
+                                        return v;
+                                    }
+                                    var formula = number.dataset.formula;
+                                    if (formula) {
+                                        value = value.formulate(formula);
+                                    }
+                                    number.value = value;
+                                }
+                                0 > 1 ? console.log(583, property, {
+                                    formula,
+                                    number,
+                                    value
+                                }) : null;
+                            }
+                            if (declaration === "select") {
+                                0 > 1 ? console.log(621, {
+                                    key,
+                                    value
+                                }) : null;
+                                el.find('[data-value="value"]').textContent = value;
+                                el.find('[data-value="value"]').setAttribute('value', value);
+                            }
+                            if (declaration === "string") {
+                                el.find('input[type="text"]').value = value;
+                            }
                         }
-                        if (declaration === "string") {
-                            el.find('input[type="text"]').value = value;
-                        }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
     }
 
 }
@@ -1070,6 +1074,7 @@ window.tool.box.value = async function(event) {
     var focus = focused[focused.length - 1];
     var attribute = target.closest('[data-property]').dataset.property;
     var element = target.closest('[data-element]').dataset.element;
+    console.log(1077, element);
     if (element === "wrapper") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
     }
@@ -1077,8 +1082,12 @@ window.tool.box.value = async function(event) {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");
     }
     if (element === "node") {
+        console.log(1085, target.closest('card'));
         focus = target.closest('card').node;
         var nodeName = focus.nodeName.toLowerCase();
+        if (element === "node" && ["background", "background-color"].includes(attribute) && target.dataset.value === "hex") {
+            focus = focus.find(tagName + ' > picture');
+        }
         if (["picture"].includes(nodeName) && attribute === "src") {
             focus = focus.find('img');
         }
@@ -1115,6 +1124,12 @@ window.tool.box.value = async function(event) {
     }
     if (declaration === "checkbox") {
         value = target.checked ? target.name : null;
+    }
+    if (declaration === "color") {
+        var selected = target.closest('[data-value]');
+        if (selected) {
+            value = selected.dataset.value.replace('#', '');
+        }
     }
     if (declaration === "dimension") {
         var unit = target.nextElementSibling.find('[data-dropdown]').firstElementChild.textContent;
@@ -1316,7 +1331,7 @@ window.tool.box.style = async function(focus, declaration, options) {
     //DATASET
     attribute = attribute.camelPhenate();
     var dttribute = options ? options.dttribute : null;
-    var className = [declaration.attribute, declaration.value.replace('%', 'pct')].join('-');
+    var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
     var obj = {};
     obj[className] = {
         className,
@@ -1518,9 +1533,14 @@ window.css.style.done = function(doc, rule, decs) {
                 declaration += selector + ' { ' + property + ": " + value.replace('pct', '%') + " }";
                 declaration += '}';
             } else {
-                declaration = selector + ' { ' + property + ": " + value.replace('pct', '%') + " }";
+                declaration = selector.replace('#', '') + ' { ' + property + ": " + value.replace('pct', '%') + " }";
+                console.log({
+                    declaration,
+                    property,
+                    prop: property.replace('#', '')
+                });
             }
-            0 > 1 ? console.log(864, sheet, {
+            0 < 1 ? console.log(864, sheet, {
                 declaration,
                 style,
                 head: doc.head.find('#' + sheet),
@@ -1759,7 +1779,7 @@ async function toolbelt(mode, options) {
 
     if (mode) {
 
-        console.log(tools, mode);
+        console.log(1784, {tools, mode, options});
         $(tools.all('[data-mode]')).attr('css-display', 'none');
         tools.find('[data-mode="' + mode + '"]').removeAttribute('css-display');
 
@@ -1771,12 +1791,12 @@ async function toolbelt(mode, options) {
         }
 
         if (mode === "box") {
-              
-            tools.setAttribute('css-height', 'auto');          
+
+            tools.setAttribute('css-height', 'auto');
             tools.setAttribute('css-min-height', '50px');
             tools.setAttribute('css-width', '320px');
 
-            if(options && options.element) {
+            if (options && options.element) {
 
                 var node = options.element;
                 var nodeName = element = node.tagName.toLowerCase();
@@ -1786,7 +1806,7 @@ async function toolbelt(mode, options) {
                     options
                 });
 
-                var html = '';    
+                var html = '';
                 if (nodeName === 'text') {
                     html = await ajax('raw/asset/html/tool/tool.box.text.html', {
                         cache: "reload"
@@ -1800,7 +1820,8 @@ async function toolbelt(mode, options) {
                 if (nodeName === 'video') {
                     html = await ajax('raw/asset/html/tool/tool.box.video.html', {
                         cache: "reload"
-                    });                }
+                    });
+                }
                 if (nodeName === 'audio') {
                     html = await ajax('raw/asset/html/tool/tool.box.audio.html', {
                         cache: "reload"
@@ -1816,23 +1837,23 @@ async function toolbelt(mode, options) {
                         cache: "reload"
                     });
                 }
-                
+
                 var doc = new DOMParser().parseFromString(html, "text/html");
                 var card = tools.find('[data-mode="' + mode + '"]');
                 card.innerHTML = doc.body.innerHTML;
                 //var ppp = await window.top.modal.popup(html);
                 //var cards = ppp.all('card');
-                    
+
                 //0 > 1 ? cards.forEach(function(card) {
-                    //alert(card);
-                    //if (card.dataset.tag === element) {
-                        //card.node = card.closest('aside').focus = node;
-                        card.node = node;
-                        card.removeAttribute('css-display')                        
-                        window.tool.box.css(card);
-                    //}
+                //alert(card);
+                //if (card.dataset.tag === element) {
+                //card.node = card.closest('aside').focus = node;
+                card.node = node;
+                card.removeAttribute('css-display')
+                window.tool.box.css(card);
+                //}
                 //}) : null;
-                
+
             }
 
             0 > 2 ? console.log({
@@ -1847,12 +1868,11 @@ async function toolbelt(mode, options) {
         }
 
         if (mode === "bar") {
-                        
+
             tools.setAttribute('css-height', '50px');
             tools.setAttribute('css-width', '150px');
 
-
-            if(options && options.element) {
+            if (options && options.element) {
                 var node = options.element;
                 var nodeName = element = node.tagName.toLowerCase();
                 console.log({
@@ -1860,6 +1880,8 @@ async function toolbelt(mode, options) {
                     nodeName,
                     options
                 });
+                var card = tools.find('[data-mode="' + mode + '"]');
+                card.node = node;
             }
 
             if (nodeName === 'text') {}
@@ -1868,20 +1890,20 @@ async function toolbelt(mode, options) {
             if (nodeName === 'audio') {}
             if (nodeName === 'line') {}
             if (nodeName === 'embed') {}
-            
-            if(0 > 1) {
+
+            if (0 > 1) {
                 var html = await ajax('raw/asset/html/tool/tool.box.element.html', {
                     cache: "reload"
                 });
                 var doc = new DOMParser().parseFromString(html, "text/html");
                 var ppp = await window.top.modal.popup(html);
                 var cards = ppp.all('card');
-    
+
                 cards.forEach(function(card) {
                     if (card.dataset.tag === element) {
                         card.node = card.closest('aside').focus = node;
                         card.removeAttribute('css-display');
-    
+
                         var fetching = card.all('[data-fetch]');
                         console.log(1305, {
                             fetching
@@ -1917,10 +1939,8 @@ function toolset(mode, options) {
 
     var tools = window.top.byId('iframe-editor').nextElementSibling;
 
-    if (mode) {
-
-        //$(tools.all('[data-mode]')).addClass('display-none');
-        //tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
+    if (mode) {//$(tools.all('[data-mode]')).addClass('display-none');
+    //tools.find('[data-mode="' + mode + '"]').classList.remove('display-none');
 
     }
 
