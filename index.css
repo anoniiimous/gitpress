@@ -157,7 +157,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 0;
+        /* z-index: 0; */
         width: 100%;
         height: 100%;
     }
@@ -187,6 +187,7 @@
     box > * > picture {
         display: flex;
         display: -webkit-flex;
+        position: relative;
         /* width: 100%; */
     }
 
@@ -598,19 +599,19 @@
     }
 
     body block > * {
-        z-index: 1;
+        /* z-index: 1; */
     }
 
     body card > * {
-        z-index: 1;
+        /* z-index: 1; */
     }
 
     body card box > * {
-        z-index: 1;
+        /* z-index: 1; */
     }
 
     body block > picture, body card > picture, body card box > picture {
-        z-index: 0;
+        /* z-index: 0; */
     }
 
     body block > video, body card > video, body card box > video {
@@ -713,11 +714,24 @@
         min-height: 20px;
     }
 
-    body[buildable="true"] box picture:empty, body[buildable="true"] box picture:has(img:not([src])) {
+    body[buildable="true"] box > * > picture:empty, body[buildable="true"] box > * > picture:has(img:not([src])) {
         height: 0;
         min-width: 100%;
         padding-top: 100%;
+        /* background-color: #f7f7f7; */
+    }
+
+    body[buildable="true"] block picture:empty:before, body[buildable="true"] block picture:has(img:not([src])):before,
+    body[buildable="true"] card picture:empty:before, body[buildable="true"] card picture:has(img:not([src])):before, 
+    body[buildable="true"] box picture:empty:before, body[buildable="true"] box picture:has(img:not([src])):before {
+        content: '';
+        position: absolute;
+        top: 0;
+        height: 0;
+        width: 100%;
+        height: 100%;
         background-color: #f7f7f7;
+        z-index: -1;
     }
 
     body[buildable="true"] box clip:empty {
@@ -742,7 +756,7 @@
     /*UI*/
     body[buildable] block, body[buildable] > header, body[buildable] > footer {
         transition: 0.3s transform;
-        margin: 1px 0;
+        /* margin: 1px 0; */
     }
 
     body:not([insertable]) insertable {
