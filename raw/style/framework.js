@@ -1005,6 +1005,10 @@ window.tool.box.element = async function(target) {
         }
     }
 }
+window.tool.box.file = async function(target) {
+    console.log(1009, target);
+    var ppp = await ajax('raw/asset/html/template/template.files.html');
+}
 window.tool.box.values = function(target) {
     var button = target.closest('[data-tap] > [data-value]');
     if (button) {
@@ -1074,6 +1078,8 @@ window.tool.box.value = async function(event) {
     var focus = focused[focused.length - 1];
     var attribute = target.closest('[data-property]').dataset.property;
     var element = target.closest('[data-element]').dataset.element;
+    var declaration = target.closest('[data-declaration]').dataset.declaration;
+    var property = target.closest('[data-property]').dataset.property;
     console.log(1077, element);
     if (element === "wrapper") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
@@ -1085,11 +1091,20 @@ window.tool.box.value = async function(event) {
         console.log(1085, target.closest('card'));
         focus = target.closest('card').node;
         var nodeName = focus.nodeName.toLowerCase();
-        if (element === "node" && ["background", "background-color"].includes(attribute) && target.dataset.value === "hex") {
-            if(!focus.find(tagName + ' > picture')) {
-                focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
+        if (element === "node") {
+            if (["background", "background-color"].includes(attribute)) {
+                if (!focus.find(tagName + ' > picture')) {
+                    focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
+                }
+                focus = focus.find(tagName + ' > picture');
             }
-            focus = focus.find(tagName + ' > picture');
+            if (["background-image"].includes(attribute)) {
+                if (!focus.find(tagName + ' > picture img')) {
+                    focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
+                }
+                focus = focus.find(tagName + ' > picture img');
+                property = "src";
+            }
         }
         if (["picture"].includes(nodeName) && attribute === "src") {
             focus = focus.find('img');
@@ -1109,8 +1124,6 @@ window.tool.box.value = async function(event) {
     var file = null;
     var node = null;
     var value = null;
-    var declaration = target.closest('[data-declaration]').dataset.declaration;
-    var property = target.closest('[data-property]').dataset.property;
     if (declaration === "array") {
         var checked = target.closest('[data-declaration]').all(':checked');
         value = [];
@@ -1341,7 +1354,7 @@ window.tool.box.style = async function(focus, declaration, options) {
         pseudo,
         rule,
         attribute,
-        value,
+        value
     };
     0 < 1 ? console.log(472, {
         focus,
@@ -1782,7 +1795,11 @@ async function toolbelt(mode, options) {
 
     if (mode) {
 
-        console.log(1784, {tools, mode, options});
+        console.log(1784, {
+            tools,
+            mode,
+            options
+        });
         $(tools.all('[data-mode]')).attr('css-display', 'none');
         tools.find('[data-mode="' + mode + '"]').removeAttribute('css-display');
 
