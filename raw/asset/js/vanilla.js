@@ -411,6 +411,10 @@ window.$ = e=>{
 window.tld = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 1];
 window.domain = ()=>window.location.hostname.split('.')[window.location.hostname.split('.').length - 2];
 window.is = {
+    alphaNumeric(str) {
+        let regex = /^[a-zA-Z0-9]+$/;
+        return regex.test(str);
+    },
     email: (email)=>{
         return email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     }
@@ -574,7 +578,7 @@ function fullscreen(elem) {
 }
 
 function compareObjects(a, b) {
-    return JSON.stringify(a.sort((a,b) => (a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0))) === JSON.stringify(b.sort((a,b) => (a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0)))
+    return JSON.stringify(a.sort((a,b)=>(a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0))) === JSON.stringify(b.sort((a,b)=>(a.slug > b.slug) ? 1 : ((b.slug > a.slug) ? -1 : 0)))
 }
 
 function toQueryString(obj) {

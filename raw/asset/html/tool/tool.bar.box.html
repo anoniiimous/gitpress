@@ -31,15 +31,19 @@
                 <input class="border-1px-solid border-color-db border-radius-3px height-30px width-100px" data-value="hex" onkeyup="tool.box.value(event)" type="text">
             </flex>
         </row>
-        <row class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="focus" data-property="height" tabindex="1">
-            <text class="font-weight-bolder">Image</text>
-            <flex class="gap-5px" data-declaration="dimension">
-                <input class="border-1px-solid border-color-db border-radius-3px display-none text-align-center width-50px" data-value="number" onchange="tool.box.value(event)" type="number" value="50">
-                <flex class="flex-1 gap-5px" data-declaration="string">
+        <column class="flex-1 gap-5px justify-content-space-between padding-y-10px" data-element="node" data-property="background-image" tabindex="1">
+            <row class="justify-content-space-between">
+                <text class="font-weight-bolder">Image</text>
+                <flex class="font-size-13px gap-5px" data-tap="tool.box.file(event.target)">
+                    <text class="border-1px-solid border-radius-50px color-777 padding-x-10px">Browse Files</text>
+                </flex>
+            </row>
+            <column>
+                <flex class="flex-1 gap-5px" data-declaration="background">
                     <input class="border-1px-solid border-color-db border-radius-3px flex-1 height-30px padding-x-10px" data-value="text" onkeyup="tool.box.value(event)" type="text">
                 </flex>
-            </flex>
-        </row>
+            </column>
+        </column>
     </box>
     <box class="display-flex flex-direction-column justify-content-space-between line-height-30px" tabindex="1">
         <header>

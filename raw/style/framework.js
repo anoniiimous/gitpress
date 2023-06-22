@@ -753,7 +753,7 @@ window.tool.box.css = function(tab) {
                 };
 
                 var c2 = Array.from(focus.find('flex, column, row, section').classList);
-                var c3 = c1.concat(c2);
+                var c5 = c1.concat(c2);
 
                 for (const [i,a] of Object.entries(focus.find('flex, column, row, section').attributes)) {
                     var key = a.name;
@@ -762,7 +762,19 @@ window.tool.box.css = function(tab) {
                 }
 
                 var a3 = Object.assign(a1, a2);
+
+                var c4 = Array.from(focus.find(focus.nodeName.toLowerCase() + ' > picture').classList);
+                var c3 = c5.concat(c4);
+
+                console.log(focus.find(focus.nodeName.toLowerCase() + ' > picture'));
+
                 a3.class = c3.join(' ');
+
+                var bg = focus.find(focus.nodeName.toLowerCase() + ' > picture img');
+                if (bg) {
+                    var c4 = ['background-image'];
+                    a3['background-image'] = focus.find(focus.nodeName.toLowerCase() + ' > picture img').src;
+                }
             }
 
         } else {
@@ -774,7 +786,16 @@ window.tool.box.css = function(tab) {
         }
 
         0 < 1 ? console.log(334, {
+            a1,
+            a2,
             a3
+        }, {
+            c3,
+            c4,
+            c5
+        }, {
+            focus,
+            attributes: focus.attributes
         }) : null;
         if (a3) {
             for (var [key,value] of Object.entries(a3)) {
@@ -825,7 +846,7 @@ window.tool.box.css = function(tab) {
                 //key.startsWith('css-') ? attrs[key] = value : null;
             }
             var rules = attrs;
-            0 > 1 ? console.log(718, {
+            0 < 1 ? console.log(828, {
                 a1,
                 a2,
                 a3,
@@ -840,7 +861,7 @@ window.tool.box.css = function(tab) {
                     Object.entries(rules).forEach(function(rule) {
                         var key = rule[0];
                         var value = rule[1];
-                        0 > 1 ? console.log(537, {
+                        0 > 1 ? console.log(843, {
                             el,
                             rules,
                             property,
@@ -908,7 +929,7 @@ window.tool.box.css = function(tab) {
                                         unit.textContent = dimension.unit;
                                     }
                                 }
-                                0 < 1 ? console.log(562, property, {
+                                0 < 1 ? console.log(911, property, {
                                     dimension,
                                     number,
                                     unit
@@ -960,6 +981,7 @@ window.tool.box.css = function(tab) {
                             }
                             if (declaration === "string") {
                                 el.find('input[type="text"]').value = value;
+                                console.log(963, value, declaration);
                             }
                         }
                     });
@@ -1069,7 +1091,7 @@ window.tool.box.unit = function(event) {
 }
 window.tool.box.value = async function(event) {
     var target = event.target;
-    console.log(event, target);
+    //console.log(event, target);
     var iframe = byId('iframe-editor');
     var win = iframe.contentWindow;
     var doc = win.document;
@@ -1080,7 +1102,13 @@ window.tool.box.value = async function(event) {
     var element = target.closest('[data-element]').dataset.element;
     var declaration = target.closest('[data-declaration]').dataset.declaration;
     var property = target.closest('[data-property]').dataset.property;
-    console.log(1077, element);
+    var val = target.value;
+    console.log(1077, {
+        attribute,
+        element,
+        property,
+        val
+    });
     if (element === "wrapper") {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template)");
     }
@@ -1088,41 +1116,38 @@ window.tool.box.value = async function(event) {
         focus = focus.find(tagName + " > :not(backdrop):not(empty):not(template) > *");
     }
     if (element === "node") {
-        console.log(1085, target.closest('card'));
+        //console.log(1085, target.closest('card'));
         focus = target.closest('card').node;
         var nodeName = focus.nodeName.toLowerCase();
-        if (element === "node") {
-            if (["background", "background-color"].includes(attribute)) {
-                if (!focus.find(tagName + ' > picture')) {
-                    focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
-                }
-                focus = focus.find(tagName + ' > picture');
+        if (["background", "background-color"].includes(attribute)) {
+            if (!focus.find(tagName + ' > picture')) {
+                focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
             }
-            if (["background-image"].includes(attribute)) {
-                if (!focus.find(tagName + ' > picture img')) {
-                    focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
-                }
-                focus = focus.find(tagName + ' > picture img');
-                property = "src";
+            focus = focus.find(tagName + ' > picture');
+        }
+        if (["background-image"].includes(attribute)) {
+            if (!focus.find(tagName + ' > picture img')) {
+                focus.insertAdjacentHTML('afterbegin', '<picture><img></picture>');
             }
+            focus = focus.find(tagName + ' > picture img');
+            property = "src";
         }
         if (["picture"].includes(nodeName) && attribute === "src") {
             focus = focus.find('img');
+            node = target.closest('card').node;
         }
         if (["clip"].includes(nodeName) && attribute === "src") {
             focus = focus.find('video');
         }
-        console.log(626, {
+        0 > 1 ? console.log(626, {
             attribute,
             element,
             focus,
             nodeName,
             tagName
-        });
+        }) : null;
     }
 
-    var file = null;
-    var node = null;
     var value = null;
     if (declaration === "array") {
         var checked = target.closest('[data-declaration]').all(':checked');
@@ -1157,6 +1182,17 @@ window.tool.box.value = async function(event) {
         file = target.files[0];
         node = target.closest('card').node;
     }
+    if (declaration === "background") {
+        file = target;
+        node = focus.closest('picture');
+        console.log(1188, {
+            target,
+            focus,
+            file,
+            node,
+            tagName
+        });
+    }
     if (declaration === "number") {
         var formula = target.dataset.formula ? target.dataset.formula : null;
         value = formula ? formula.replace('{var}', target.value) : target.value.replace('%', 'pct');
@@ -1171,6 +1207,9 @@ window.tool.box.value = async function(event) {
     }
     if (declaration === "string") {
         value = target.value;
+        if (target.dataset.value === "hex" && !target.value.startsWith('#')) {
+            value = "#" + target.value;
+        }
     }
     if (declaration === "value") {
         var selected = target.closest('[data-value]');
@@ -1180,58 +1219,34 @@ window.tool.box.value = async function(event) {
         }
     }
 
+    //Update Element
     attribute = property.camelPhenate();
     var supports = CSS.supports(attribute, value);
-    0 < 1 ? console.log(729, {
+    0 < 1 ? console.log(729, 'update-element', {
+        isAlphaNumeric: is.alphaNumeric(value),
         supports,
         declaration
     }, {
         attribute,
         value
     }, {
+        property,
+        value,
+        supports
+    }, {
         file,
         node
     }) : null;
-    if (file && node) {
-        var name = node.nodeName.toLowerCase();
-        console.log(695, {
-            file,
-            node,
-            name
-        });
-        if (name === "picture") {
-            var img = document.createElement('img');
-            var file = await on.change.file(event);
-            var src = file.result;
-            img.src = src;
-            node.innerHTML = img.outerHTML;
-        }
-        if (name === "clip") {
-            var vid = document.createElement('video');
-            var file = await on.change.file(event);
-            var src = file.result;
-            vid.controls = true;
-            vid.src = src;
-            node.innerHTML = vid.outerHTML;
-        }
-        if (name === "sound") {
-            var wave = document.createElement('sound');
-            var file = await on.change.file(event);
-            var src = file.result;
-            wave.src = src;
-            node.innerHTML = img.outerHTML;
-        }
-        target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
-        target.remove();
-    } else {
-        if (supports) {
-            var dttribute = target.closest('[data-attribute]') ? target.closest('[data-attribute]').dataset.attribute : null;
-            var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
-            console.log(723, {
+    if (supports) {
+        var formula = null;
+        var dttribute = target.closest('[data-attribute]') ? target.closest('[data-attribute]').dataset.attribute : null;
+        var rule = target.closest('[data-at-rule]') ? target.closest('[data-at-rule]').dataset.atRule : null;
+        if (is.alphaNumeric(value)) {
+            0 < 1 ? console.log(723, 'css-classList', {
                 attribute,
                 value,
                 dttribute
-            });
+            }) : null;
             window.tool.box.style(focus, {
                 attribute,
                 value
@@ -1241,19 +1256,69 @@ window.tool.box.value = async function(event) {
                 dttribute
             });
         } else {
-            console.log(734, {
+            0 < 1 ? console.log(734, 'css-attribute', {
                 property,
                 value
-            });
+            }) : null;
             if (["innerHTML"].includes(property)) {
                 focus[property] = value;
             } else {
-                if (property && value) {
-                    focus.setAttribute(property, value);
-                } else {
-                    focus.removeAttribute(property);
+                if (property && value) {//focus.setAttribute('css-' + property, value);
+                } else {//focus.removeAttribute(property);
                 }
             }
+        }
+        window.tool.box.style(focus, {
+            attribute,
+            value
+        }, {
+            rule,
+            formula,
+            dttribute
+        });
+    } else {
+        console.log(1269, {
+            file,
+            node
+        });
+        if (file && node) {
+            var name = node.nodeName.toLowerCase();
+            0 < 1 ? console.log(695, 'file-node', {
+                file,
+                node,
+                name,
+                val
+            }) : null;
+            if (name === "picture") {
+                var img = document.createElement('img');
+                var src = "";
+                console.log({
+                    name,
+                    file,
+                    src,
+                    value,
+                    val
+                });
+                img.src = val;
+                node.innerHTML = img.outerHTML;
+            }
+            if (name === "clip") {
+                var vid = document.createElement('video');
+                var file = await on.change.file(event);
+                var src = file.result;
+                vid.controls = true;
+                vid.src = src;
+                node.innerHTML = vid.outerHTML;
+            }
+            if (name === "sound") {
+                var wave = document.createElement('sound');
+                var file = await on.change.file(event);
+                var src = file.result;
+                wave.src = src;
+                node.innerHTML = img.outerHTML;
+            }
+            target.insertAdjacentHTML('afterend', target.cloneNode().outerHTML);
+            target.remove();
         }
     }
 
@@ -1278,11 +1343,11 @@ window.tool.box.value = async function(event) {
 window.tool.box.style = async function(focus, declaration, options) {
 
     declaration.value ? declaration.value = declaration.value.replace('%', 'pct') : null;
-    console.log(616, {
+    0 < 1 ? console.log(616, {
         focus,
         declaration,
         options
-    });
+    }) : null;
     var pseudo = options ? options.pseudo : null;
     var rule = options ? options.rule : null;
     var formula = options ? options.formula : null;
@@ -1299,12 +1364,12 @@ window.tool.box.style = async function(focus, declaration, options) {
         });
     }
     var value = v = formula ? v : declaration.value.replace('%', 'pct');
-    console.log(785, {
+    0 > 1 ? console.log(785, {
         focus,
         declaration,
         options,
         value
-    });
+    }) : null;
 
     //STYLE SHEETS
     var iframe = byId('iframe-editor');
@@ -1337,70 +1402,102 @@ window.tool.box.style = async function(focus, declaration, options) {
     }
 
     //INLINE STYLE
-    0 < 1 ? console.log(520, {
-        focus,
-        attribute,
-        value
-    }) : null;
-    //focus.style[attribute] = value;
-
-    //DATASET
-    attribute = attribute.camelPhenate();
-    var dttribute = options ? options.dttribute : null;
-    var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
-    var obj = {};
-    obj[className] = {
-        className,
-        pseudo,
-        rule,
-        attribute,
-        value
-    };
-    0 < 1 ? console.log(472, {
-        focus,
-        attribute,
-        value
-    }, obj) : null;
-    if (formula || dttribute) {
-        focus.setAttribute((dttribute ? dttribute + '-' : 'css-') + declaration.attribute, declaration.value);
+    if (is.alphaNumeric(value)) {
+        var dttribute = options ? options.dttribute : null;
+        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
+        0 > 1 ? console.log(520, {
+            focus,
+            attribute,
+            value
+        }) : null;
+        //focus.style[attribute] = value;
     } else {
-        //INLINE CLASS
-        //else {
-        var classExists = false;
-        var classList = focus.classList;
-        classList.forEach(function(classVal) {
-            var cns1 = classVal.split('-');
-            var val1 = cns1.pop();
-            var cn1 = cns1.join('-')
+        //DATASET
+        attribute = attribute.camelPhenate();
+        var dttribute = options ? options.dttribute : null;
+        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
+        var obj = {};
+        obj[className] = {
+            className,
+            pseudo,
+            rule,
+            attribute,
+            value
+        };
+        0 < 1 ? console.log(472, {
+            focus,
+            options,
+            formula
+        }, {
+            attribute,
+            dttribute,
+            value
+        }, obj) : null;
+        if (formula || dttribute) {
+            focus.setAttribute((dttribute ? dttribute + '-' : 'css-') + declaration.attribute, declaration.value);
+        } else {
+            //INLINE CLASS
+            //else {
+            var classExists = false;
+            var classList = focus.classList;
+            classList.forEach(function(classVal) {
+                var cns1 = classVal.split('-');
+                var val1 = cns1.pop();
+                var cn1 = cns1.join('-')
 
-            var cns = className.split('-');
-            var val = cns.pop();
-            var cn = cns.join('-')
-            if (cn1 == cn) {
-                classExists = true;
-            }
-            0 > 1 ? console.log(557, className, cn, cn1) : null;
-            if (classExists) {
-                focus.classList.remove(classVal);
-            }
-        });
-        focus.classList.add(className);
-        //}
+                var cns = className.split('-');
+                var val = cns.pop();
+                var cn = cns.join('-')
+                if (cn1 == cn) {
+                    classExists = true;
+                }
+                0 > 1 ? console.log(557, className, cn, cn1) : null;
+                if (classExists) {
+                    focus.classList.remove(classVal);
+                }
+            });
+            //focus.classList.add(className);
+            //}
+        }
+
+        var rules = null;
+        //formula || dttribute === 'css' ? 'css' : 'class';
+        var property = attr;
+
+        0 < 1 ? console.log(702, {
+            type,
+            value,
+            styleExists
+        }) : null;
     }
-
-    var rules = null;
-    var type = formula || dttribute === 'css' ? 'css' : 'class';
-    var property = attr;
-
-    console.log(702, {
-        styleExists
-    });
+    var type = is.alphaNumeric(value) ? 'class' : 'css';
     var decs = [{
         type,
         property: declaration.attribute,
         value: declaration.value
     }];
-    console.log(716, decs);
+    if (["innerHTML"].includes(property)) {
+        focus[property] = value;
+    } else {
+        console.log(1482, {
+            value,
+            property
+        });
+        if (is.alphaNumeric(value)) {
+            focus.classList.add(property);
+        } else {
+            if (property && value) {
+                focus.setAttribute('css-' + property, value);
+            } else {
+                focus.removeAttribute(property);
+            }
+        }
+    }
+    0 < 1 ? console.log(716, {
+        doc,
+        className,
+        decs
+    }) : null;
     css.style.done(doc, className, decs);
 }
 window.tool.box.group = function(event) {
@@ -1505,7 +1602,9 @@ window.css.style.declaration = function(c) {
 
 window.css.style.done = function(doc, rule, decs) {
     doc.head.cssTexts ? null : doc.head.cssTexts = {};
-    0 > 1 ? console.log(947, 'css.style.done', {
+    0 < 1 ? console.log(947, 'css.style.done', {
+        doc,
+        rule,
         decs
     }) : null;
     return new Promise(function(resolve, reject) {
@@ -1549,14 +1648,14 @@ window.css.style.done = function(doc, rule, decs) {
                 declaration += selector + ' { ' + property + ": " + value.replace('pct', '%') + " }";
                 declaration += '}';
             } else {
-                declaration = selector.replace('#', '') + ' { ' + property + ": " + value.replace('pct', '%') + " }";
-                console.log({
+                declaration = selector.replace('', '') + ' { ' + property + ": " + value.replace('pct', '%') + " }";
+                0 > 1 ? console.log({
                     declaration,
                     property,
                     prop: property.replace('#', '')
-                });
+                }) : null;
             }
-            0 < 1 ? console.log(864, sheet, {
+            0 > 1 ? console.log(864, sheet, {
                 declaration,
                 style,
                 head: doc.head.find('#' + sheet),
@@ -1602,7 +1701,7 @@ window.css.style.done = function(doc, rule, decs) {
 
         var entries = Object.entries(doc.head.cssTexts);
         entries = Array.from(new Set(entries.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-        0 > 1 ? console.log(1065, 'doc.head.cssTexts', {
+        0 < 1 ? console.log(1065, 'doc.head.cssTexts', {
             head: doc.head,
             cssTexts: doc.head.cssTexts,
             entries,
@@ -1619,7 +1718,7 @@ window.css.style.done = function(doc, rule, decs) {
 
                 var link = doc.head.find('#' + id);
                 if (link) {
-                    0 < 1 ? console.log(1071, {
+                    0 > 1 ? console.log(1071, {
                         entry: entry[1],
                         link,
                         id,
@@ -1627,9 +1726,8 @@ window.css.style.done = function(doc, rule, decs) {
                     }) : null;
                     link.href = blob(href, 'text/css');
                     link.id = id;
-                    link.onload = function() {
-                        console.log(876, link.id);
-                        //resolve(link);
+                    link.onload = function() {//console.log(876, link.id);
+                    //resolve(link);
                     }
                     link.rel = "stylesheet";
                     doc.head.appendChild(link);
@@ -1699,10 +1797,10 @@ window.css.style.sheet = async function(el) {
     })
     //classNames = [...new Set(classNames)];
     //classNames = Array.from(new Set(classNames.map(e=>JSON.stringify(e)))).map(e=>JSON.parse(e));
-    console.log(989, {
+    0 > 1 ? console.log(989, {
         classNames,
         styleset
-    });
+    }) : null;
 
     var declarations = [];
     if (0 > 1) {
@@ -1771,7 +1869,7 @@ window.css.style.sheet = async function(el) {
         value
     }, classNames);
 
-    console.log(858, 'css.style.sheet', {
+    0 > 1 ? console.log(858, 'css.style.sheet', {
         el,
         els
     }, {
@@ -1780,7 +1878,7 @@ window.css.style.sheet = async function(el) {
     }, {
         classNames,
         declarations
-    });
+    }) : null;
 }
 ;
 
