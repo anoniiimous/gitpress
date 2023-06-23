@@ -752,13 +752,23 @@ window.tool.box.css = function(tab) {
                     wrapper: focus.find('flex, column, row, section').attributes
                 };
 
+                var container = focus.find('flex, column, row, section');
+                var tagName = container.tagName.toLowerCase();
+                console.log(757, tagName, ["column", "flex", "row"].includes(tagName));
+                if(["column", "flex", "row"].includes(tagName)) {
+                    c1 = c1.concat('display-flex')
+                    console.log(759, tagName, c1);
+                }
+
                 var c2 = Array.from(focus.find('flex, column, row, section').classList);
                 var c5 = c1.concat(c2);
+                console.log(756, tagName, c5);
 
                 for (const [i,a] of Object.entries(focus.find('flex, column, row, section').attributes)) {
                     var key = a.name;
                     var value = a.value;
                     a2[key] = value;
+                    console.log(value);
                 }
 
                 var a3 = Object.assign(a1, a2);
@@ -766,15 +776,14 @@ window.tool.box.css = function(tab) {
                 var c4 = Array.from(focus.find(focus.nodeName.toLowerCase() + ' > picture').classList);
                 var c3 = c5.concat(c4);
 
-                console.log(focus.find(focus.nodeName.toLowerCase() + ' > picture'));
+                var background = focus.find(focus.nodeName.toLowerCase() + ' > picture');
+                var image = background.find('img');
+                if(image.src) {
+                    var c4 = ['background-image'];
+                    a3['background-image'] = focus.find(focus.nodeName.toLowerCase() + ' > picture img').src;                    
+                }
 
                 a3.class = c3.join(' ');
-
-                var bg = focus.find(focus.nodeName.toLowerCase() + ' > picture img');
-                if (bg) {
-                    var c4 = ['background-image'];
-                    a3['background-image'] = focus.find(focus.nodeName.toLowerCase() + ' > picture img').src;
-                }
             }
 
         } else {
@@ -1402,7 +1411,7 @@ window.tool.box.style = async function(focus, declaration, options) {
     }
 
     //INLINE STYLE
-    if (is.alphaNumeric(value)) {
+    //if (is.alphaNumeric(value)) {
         var dttribute = options ? options.dttribute : null;
         var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
         0 > 1 ? console.log(520, {
@@ -1411,7 +1420,7 @@ window.tool.box.style = async function(focus, declaration, options) {
             value
         }) : null;
         //focus.style[attribute] = value;
-    } else {
+    //} else {
         //DATASET
         attribute = attribute.camelPhenate();
         var dttribute = options ? options.dttribute : null;
@@ -1469,7 +1478,7 @@ window.tool.box.style = async function(focus, declaration, options) {
             value,
             styleExists
         }) : null;
-    }
+    //}
     var type = is.alphaNumeric(value) ? 'class' : 'css';
     var decs = [{
         type,
@@ -1480,11 +1489,14 @@ window.tool.box.style = async function(focus, declaration, options) {
         focus[property] = value;
     } else {
         console.log(1482, {
+            className,
             value,
-            property
+            property,
+            declaration,
+            an: is.alphaNumeric(value)
         });
         if (is.alphaNumeric(value)) {
-            focus.classList.add(property);
+            focus.classList.add(className);
         } else {
             if (property && value) {
                 focus.setAttribute('css-' + property, value);

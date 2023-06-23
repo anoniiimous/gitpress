@@ -620,7 +620,7 @@
     }
 
     body block > picture, body card > picture, body card box > picture {
-        /* z-index: 0; */
+        z-index: -1;
     }
 
     body block > video, body card > video, body card box > video {
@@ -679,12 +679,12 @@
     /*FOCUS*/
     body[buildable="true"]:not([insertable]) > header:not([focus]):hover, body[buildable="true"]:not([insertable]) block:not([focus]):hover, body[buildable="true"]:not([insertable]) > footer:not([focus]):hover {
         outline: 2px dashed #ff3b3080;
-        outline-offset: 0px;
+        outline-offset: -2px;
     }
 
     body[buildable="true"]:not([insertable])[focus] > header[focus="header"], body[buildable="true"]:not([insertable])[focus] block[focus="block"], body[buildable="true"]:not([insertable])[focus] > footer[focus="footer"] {
         outline: 2px solid #ff3b30;
-        outline-offset: 0px;
+        outline-offset: -2px;
     }
 
     body[buildable="true"]:not([insertable]) > header card:hover, body[buildable="true"]:not([insertable]) block:not([focus="box"]) card:hover, body[buildable="true"]:not([insertable]):not([focus="box"]) > footer card:hover {
