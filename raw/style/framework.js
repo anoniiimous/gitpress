@@ -841,11 +841,12 @@ window.tool.box.css = function(tab) {
                         });
                         var property = properties.join('-');
                         rules[property] = value;
-                        0 > 1 ? console.log(339, {
+                        0 < 1 ? console.log(339, {
                             c,
                             split,
                             property,
-                            value
+                            value,
+                            attrs
                         }) : null;
                         attrs[property] = value;
                     });
@@ -909,6 +910,10 @@ window.tool.box.css = function(tab) {
                                         checkbox.checked = true;
                                     }
                                 });
+                            }
+                            if (declaration === "background") {
+                                el.find('[type="text"]').value = value;
+                                console.log(963, value, declaration);
                             }
                             if (declaration === "checkbox") {
                                 var checkboxes = el.all('input[type="checkbox"]');
@@ -990,6 +995,10 @@ window.tool.box.css = function(tab) {
                             }
                             if (declaration === "string") {
                                 el.find('input[type="text"]').value = value;
+                                console.log(963, value, declaration);
+                            }
+                            if (declaration === "value") {
+                                el.find('[data-value="value"]').textContent = value;
                                 console.log(963, value, declaration);
                             }
                         }

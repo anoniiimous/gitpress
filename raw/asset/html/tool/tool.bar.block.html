@@ -72,7 +72,7 @@
             <text class="font-weight-bolder">Text Align</text>
             <flex class="gap-5px" data-declaration="value">
                 <field class="position-relative">
-                    <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                    <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                         <text data-value="value" value="left">left</text>
                         <ico class="color-777" css-height="20px" css-width="20px">
                             <n class="gg-chevron-down"></n>
@@ -95,7 +95,7 @@
             <text class="font-weight-bolder">Display</text>
             <flex class="gap-5px" data-declaration="select">
                 <field class="position-relative">
-                    <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                    <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                         <text data-value="value" value="value">flex</text>
                         <ico class="color-777" css-height="20px" css-width="20px">
                             <n class="gg-chevron-down"></n>
@@ -110,11 +110,29 @@
             </flex>
         </row>
         <column class="display-none" data-tab="flex">
+            <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="align-items" tabindex="2">
+                <text class="font-weight-bolder">Align Items</text>
+                <flex class="gap-5px" data-declaration="value">
+                    <field class="position-relative">
+                        <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
+                            <text data-value="value">Flex Start</text>
+                            <ico class="color-777" css-height="20px" css-width="20px">
+                                <n class="gg-chevron-down"></n>
+                            </ico>
+                        </row>
+                        <column class="-hd-width-100pct- background-color-fff border-radius-10px color-000 line-height-30px margin-auto padding-y-10px position-absolute right-0 white-space-nowrap width-auto" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" css-display="none" data-hidden="tap" data-tap="tool.box.value(event)" css-top="100%">
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="flex-start">Flex Start</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="flex-end">Flex End</text>
+                            <text class="-hover-background-color-eb padding-x-20px" data-value="center">Center</text>
+                        </column>
+                    </field>
+                </flex>
+            </row>
             <row class="border-top-1px-solid border-color-ddd gap-5px justify-content-space-between padding-y-10px" data-element="wrapper" data-property="flex-direction" tabindex="2">
                 <text class="font-weight-bolder">Flex Direction</text>
                 <flex class="gap-5px" data-declaration="value">
                     <field class="position-relative">
-                        <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                        <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                             <text data-value="value">Column</text>
                             <ico class="color-777" css-height="20px" css-width="20px">
                                 <n class="gg-chevron-down"></n>
@@ -132,7 +150,7 @@
                 <text class="font-weight-bolder">Justify Content</text>
                 <flex class="gap-5px" data-declaration="value">
                     <field class="position-relative">
-                        <row class="align-items-center color-ddd gap-5px justify-content-center" data-dropdown data-ignore>
+                        <row class="align-items-center gap-5px justify-content-center" data-dropdown data-ignore>
                             <text data-value="value">unset</text>
                             <ico class="color-777" css-height="20px" css-width="20px">
                                 <n class="gg-chevron-down"></n>
