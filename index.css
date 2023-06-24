@@ -729,10 +729,11 @@
         padding-top: 100%;
         /* background-color: #f7f7f7; */
     }
-
-    body[buildable="true"] block picture:empty:before, body[buildable="true"] block picture:has(img:not([src])):before,
-    body[buildable="true"] card picture:empty:before, body[buildable="true"] card picture:has(img:not([src])):before, 
-    body[buildable="true"] box picture:empty:before, body[buildable="true"] box picture:has(img:not([src])):before {
+    
+    body[buildable="true"] block picture:empty:before, body[buildable="true"] block picture:not([css-background-color]):has(img:not([src])):before,
+    body[buildable="true"] block picture:empty:before, body[buildable="true"] block picture:not([css-background-color]):has(img:not([src])):before,
+    body[buildable="true"] card picture:empty:before, body[buildable="true"] card picture:not([css-background-color]):has(img:not([src])):before, 
+    body[buildable="true"] box picture:empty:before, body[buildable="true"] box picture:not([css-background-color]):has(img:not([src])):before {
         content: '';
         position: absolute;
         top: 0;
