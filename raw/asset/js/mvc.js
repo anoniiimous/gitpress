@@ -46,6 +46,94 @@ window.mvc.m ? null : (window.mvc.m = model = {
             if (json.length === 1) {
                 media = json[0];
                 //console.log(878, media);
+                if (media === "audio") {
+                    //var json = await ajax('raw/posts/posts.json')
+                    var posts = [];
+                    if (is.iframe(window)) {
+                        var user = await github.user.get();
+                        posts = await github.repos.contents({
+                            owner: user.login,
+                            path: '/raw/media/audio/audio.json',
+                            repo: window.parent.GET[1]
+                        }, {
+                            accept: "application/vnd.github.raw"
+                        });
+                    } else {
+                        try {
+                            posts = JSON.parse(await ajax('/raw/media/audio/audio.json'));
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                    console.log(204, posts);
+
+                    if (posts.length > 0) {
+
+                        var p = 0;
+                        var html = "";
+
+                        posts = posts.filter(o=>o.created ? o.created : null).sort((a,b)=>b.created - a.created);
+                        console.log(212, posts);
+
+                        do {
+
+                            var post = posts[p];
+                            var elem = 0 > 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                            console.log(205, elem, feed);
+
+                            var date = elem.find('[data-value="post.date"]') || elem.find('[placeholder="Date"]');
+                            var title = elem.find('[data-value="post.title"]') || elem.find('[placeholder="Title"]');
+                            var description = elem.find('[data-value="post.description"]') || elem.find('[data-value="post.description"]');
+                            var picture = elem.find('[data-value="post.image"]') || elem.find('picture img');
+
+                            0 < 1 ? console.log(57, {
+                                title,
+                                post,
+                                picture
+                            }) : null;
+
+                            if (post) {
+                                feed.dataset.slug && post.slug ? elem.dataset.href = feed.dataset.slug.replace('*', post.slug) : null;
+                                date && post.date ? (date.textContent = post.date ? date.textContent = mvc.m.date.time(post.date) : date.remove()) : null;
+                                title && post.title ? title.textContent = post.title : null;
+                                description && post.description ? description.textContent = post.description : null;
+                                if (picture && post.image) {
+                                    picture.dataset.src = post.image.startsWith('blob:') ? 'raw/posts/' + post.slug + '/image.jpeg' : null;
+                                    picture.src = post.image.startsWith('blob:') ? await github.raw.blob({
+                                        owner: user.login,
+                                        resource: '/raw/media/audio/' + post.slug + '/image.jpg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    }) : null;
+                                } else {
+                                    picture.dataset.src = picture.src = await github.raw.blob({
+                                        owner: user.login,
+                                        resource: '/raw/media/audio/' + post.slug + '/image.jpg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    });                                            
+                                }
+                            }
+
+                            html += elem.outerHTML;
+
+                            p++;
+
+                        } while (p < limit);
+
+                        //feed.innerHTML = html;
+
+                    }
+
+                    console.log(37, {
+                        feed,
+                        media,
+                        posts
+                    });
+                }
+                        
                 if (media === "merch") {
                     //var json = await ajax('raw/posts/posts.json')
                     var posts = [];
@@ -242,6 +330,182 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                     }, {
                                         accept: "application/vnd.github.raw"
                                     }) : null;
+                                }
+                            }
+
+                            html += elem.outerHTML;
+
+                            p++;
+
+                        } while (p < limit);
+
+                        //feed.innerHTML = html;
+
+                    }
+
+                    console.log(37, {
+                        feed,
+                        media,
+                        posts
+                    });
+                }
+
+                if (media === "photo") {
+                    //var json = await ajax('raw/posts/posts.json')
+                    var posts = [];
+                    if (is.iframe(window)) {
+                        var user = await github.user.get();
+                        posts = await github.repos.contents({
+                            owner: user.login,
+                            path: '/raw/media/photo/photo.json',
+                            repo: window.parent.GET[1]
+                        }, {
+                            accept: "application/vnd.github.raw"
+                        });
+                    } else {
+                        try {
+                            posts = JSON.parse(await ajax('/raw/media/photo/photo.json'));
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                    console.log(204, posts);
+
+                    if (posts.length > 0) {
+
+                        var p = 0;
+                        var html = "";
+
+                        posts = posts.filter(o=>o.created ? o.created : null).sort((a,b)=>b.created - a.created);
+                        console.log(212, posts);
+
+                        do {
+
+                            var post = posts[p];
+                            var elem = 0 > 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                            console.log(205, elem, feed);
+
+                            var date = elem.find('[data-value="post.date"]') || elem.find('[placeholder="Date"]');
+                            var title = elem.find('[data-value="post.title"]') || elem.find('[placeholder="Title"]');
+                            var description = elem.find('[data-value="post.description"]') || elem.find('[data-value="post.description"]');
+                            var picture = elem.find('[data-value="post.image"]') || elem.find('picture img');
+
+                            0 < 1 ? console.log(57, {
+                                title,
+                                post,
+                                picture
+                            }) : null;
+
+                            if (post) {
+                                feed.dataset.slug && post.slug ? elem.dataset.href = feed.dataset.slug.replace('*', post.slug) : null;
+                                date && post.date ? (date.textContent = post.date ? date.textContent = mvc.m.date.time(post.date) : date.remove()) : null;
+                                title && post.title ? title.textContent = post.title : null;
+                                description && post.description ? description.textContent = post.description : null;
+                                if (picture && post.image) {
+                                    picture.dataset.src = post.image.startsWith('blob:') ? 'raw/posts/' + post.slug + '/image.jpeg' : null;
+                                    picture.src = post.image.startsWith('blob:') ? await github.raw.blob({
+                                        owner: user.login,
+                                        resource: '/raw/media/photo/' + post.slug + '/image.jpg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    }) : null;
+                                } else {
+                                    picture.dataset.src = picture.src = await github.raw.blob({
+                                        owner: user.login,
+                                        resource: '/raw/media/photo/' + post.slug + '/image.jpg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    });                                            
+                                }
+                            }
+
+                            html += elem.outerHTML;
+
+                            p++;
+
+                        } while (p < limit);
+
+                        //feed.innerHTML = html;
+
+                    }
+
+                    console.log(37, {
+                        feed,
+                        media,
+                        posts
+                    });
+                }
+
+                if (media === "video") {
+                    //var json = await ajax('raw/posts/posts.json')
+                    var posts = [];
+                    if (is.iframe(window)) {
+                        var user = await github.user.get();
+                        posts = await github.repos.contents({
+                            owner: user.login,
+                            path: '/raw/media/video/video.json',
+                            repo: window.parent.GET[1]
+                        }, {
+                            accept: "application/vnd.github.raw"
+                        });
+                    } else {
+                        try {
+                            posts = JSON.parse(await ajax('/raw/media/video/video.json'));
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                    console.log(204, posts);
+
+                    if (posts.length > 0) {
+
+                        var p = 0;
+                        var html = "";
+
+                        posts = posts.filter(o=>o.created ? o.created : null).sort((a,b)=>b.created - a.created);
+                        console.log(212, posts);
+
+                        do {
+
+                            var post = posts[p];
+                            var elem = 0 > 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
+                            console.log(205, elem, feed);
+
+                            var date = elem.find('[data-value="post.date"]') || elem.find('[placeholder="Date"]');
+                            var title = elem.find('[data-value="post.title"]') || elem.find('[placeholder="Title"]');
+                            var description = elem.find('[data-value="post.description"]') || elem.find('[data-value="post.description"]');
+                            var picture = elem.find('[data-value="post.image"]') || elem.find('picture img');
+
+                            0 < 1 ? console.log(57, {
+                                title,
+                                post,
+                                picture
+                            }) : null;
+
+                            if (post) {
+                                feed.dataset.slug && post.slug ? elem.dataset.href = feed.dataset.slug.replace('*', post.slug) : null;
+                                date && post.date ? (date.textContent = post.date ? date.textContent = mvc.m.date.time(post.date) : date.remove()) : null;
+                                title && post.title ? title.textContent = post.title : null;
+                                description && post.description ? description.textContent = post.description : null;
+                                if (picture && post.image) {
+                                    picture.dataset.src = post.image.startsWith('blob:') ? 'raw/posts/' + post.slug + '/image.jpeg' : null;
+                                    picture.src = post.image.startsWith('blob:') ? await github.raw.blob({
+                                        owner: user.login,
+                                        resource: '/raw/media/video/' + post.slug + '/image.jpg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    }) : null;
+                                } else {
+                                    picture.dataset.src = picture.src = await github.raw.blob({
+                                        owner: user.login,
+                                        resource: '/raw/media/video/' + post.slug + '/image.jpg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    });                                            
                                 }
                             }
 
