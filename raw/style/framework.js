@@ -1213,7 +1213,7 @@ window.tool.box.value = async function(event) {
     }
     if (declaration === "number") {
         var formula = target.dataset.formula ? target.dataset.formula : null;
-        value = formula ? formula.replace('{var}', target.value) : target.value.replace('%', 'pct');
+        value = formula ? formula.replace('{var}', target.value) :  target.value.replace('%', '%'); //target.value.replace('%', 'pct');
     }
     if (declaration === "radio") {
         value = target.checked ? target.name : null;
@@ -1360,7 +1360,7 @@ window.tool.box.value = async function(event) {
 }
 window.tool.box.style = async function(focus, declaration, options) {
 
-    declaration.value ? declaration.value = declaration.value.replace('%', 'pct') : null;
+    declaration.value ? declaration.value = declaration.value.replace('%', '%') : null;
     0 < 1 ? console.log(616, {
         focus,
         declaration,
@@ -1381,7 +1381,7 @@ window.tool.box.style = async function(focus, declaration, options) {
             });
         });
     }
-    var value = v = formula ? v : declaration.value.replace('%', 'pct');
+    var value = v = formula ? v : declaration.value.replace('%', '%'); //replace('%', 'pct');
     0 > 1 ? console.log(785, {
         focus,
         declaration,
@@ -1422,7 +1422,7 @@ window.tool.box.style = async function(focus, declaration, options) {
     //INLINE STYLE
     //if (is.alphaNumeric(value)) {
         var dttribute = options ? options.dttribute : null;
-        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
+        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', '%')].join('-');
         0 > 1 ? console.log(520, {
             focus,
             attribute,
@@ -1433,7 +1433,7 @@ window.tool.box.style = async function(focus, declaration, options) {
         //DATASET
         attribute = attribute.camelPhenate();
         var dttribute = options ? options.dttribute : null;
-        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', 'pct')].join('-');
+        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', '%')].join('-');
         var obj = {};
         obj[className] = {
             className,
@@ -1505,7 +1505,14 @@ window.tool.box.style = async function(focus, declaration, options) {
             an: is.alphaNumeric(value)
         });
         if (is.alphaNumeric(value)) {
-            focus.classList.add(className);
+            if(focus.getAttribute('css-' + property)) {
+                focus.removeAttribute('css-' + property);                
+            }
+            if(value === 'unset') {
+                focus.classList.remove(className);                
+            } else {
+                focus.classList.add(className);
+            }
         } else {
             if (property && value) {
                 focus.setAttribute('css-' + property, value);
