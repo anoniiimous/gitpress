@@ -109,7 +109,8 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                     elem.dataset.id = Crypto.uid.create(1);
                                 }
 
-                                var image = elem.find('picture img');
+                                var picture = elem.find('picture');
+                                var image = picture.find('img');
                                 0 < 1 ? console.log(94, {
                                     elem,
                                     image
@@ -126,7 +127,11 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                         src: image.src
                                     }) : null;
                                 } else {
+                                    if (!image) {
+                                        var image = win.self.document.createElement('img');
+                                    }
                                     image.src = post.images[0];
+                                    picture.innerHTML = image.outerHTML;
                                 }
                                 //image && post.images ? image.src = post.images[0] : null;
 
@@ -1082,7 +1087,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
 window.mvc.c ? null : (window.mvc.c = controller = {});
 
 controller.account = {};
-controller.account.login = (event) => {
+controller.account.login = (event)=>{
     event.preventDefault();
 }
 

@@ -1166,6 +1166,7 @@ window.tool.box.value = async function(event) {
         }) : null;
     }
 
+    var node = null;
     var value = null;
     if (declaration === "array") {
         var checked = target.closest('[data-declaration]').all(':checked');

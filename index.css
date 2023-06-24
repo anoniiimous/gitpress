@@ -619,7 +619,7 @@
         /* z-index: 1; */
     }
 
-    body block > picture, body card > picture, body card box > picture {
+    blocks block > picture, blocks card > picture, blocks card box > picture {
         z-index: -1;
     }
 
