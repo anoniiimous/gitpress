@@ -23,7 +23,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
         }
     },
     feed: {
-        media: async function mediaFeed(feed) {
+        media: async function mediaFeed(feed, media) {
 
             var htmls = [];
             var html = '';
@@ -34,9 +34,9 @@ window.mvc.m ? null : (window.mvc.m = model = {
             console.log(861, feed, feed.nextElementSibling);
             var template = feed.nextElementSibling.content;
             var limit = template.children.length;
-            var media = feed.getAttribute('media');
+            //var media = feed.getAttribute('media');
             var json = is.json(media) ? JSON.parse(media) : [media];
-            0 > 1 ? console.log(63, {
+            0 < 1 ? console.log(63, {
                 json,
                 limit,
                 media,
@@ -201,6 +201,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                             console.log(e);
                         }
                     }
+                    console.log(204, posts);
 
                     if (posts.length > 0) {
 
@@ -208,6 +209,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                         var html = "";
 
                         posts = posts.filter(o=>o.created ? o.created : null).sort((a,b)=>b.created - a.created);
+                        console.log(212, posts);
 
                         do {
 
@@ -215,10 +217,10 @@ window.mvc.m ? null : (window.mvc.m = model = {
                             var elem = 0 > 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
                             console.log(205, elem, feed);
 
-                            var date = elem.find('[placeholder="Date"]');
-                            var title = elem.find('[placeholder="Title"]');
-                            var description = elem.find('[data-value="post.description"]');
-                            var picture = elem.find('[data-value="post.image"]');
+                            var date = elem.find('[data-value="post.date"]') || elem.find('[placeholder="Date"]');
+                            var title = elem.find('[data-value="post.title"]') || elem.find('[placeholder="Title"]');
+                            var description = elem.find('[data-value="post.description"]') || elem.find('[data-value="post.description"]');
+                            var picture = elem.find('[data-value="post.image"]') || elem.find('picture img');
 
                             0 < 1 ? console.log(57, {
                                 title,
@@ -226,11 +228,22 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                 picture
                             }) : null;
 
-                            feed.dataset.slug && post.slug ? elem.dataset.href = feed.dataset.slug.replace('*', post.slug) : null;
-                            date && post.date ? (date.textContent = post.date ? date.textContent = mvc.m.date.time(post.date) : date.remove()) : null;
-                            title && post.title ? title.textContent = post.title : null;
-                            description && post.description ? description.textContent = post.description : null;
-                            picture && post.image ? picture.dataset.src = post.image : null;
+                            if (post) {
+                                feed.dataset.slug && post.slug ? elem.dataset.href = feed.dataset.slug.replace('*', post.slug) : null;
+                                date && post.date ? (date.textContent = post.date ? date.textContent = mvc.m.date.time(post.date) : date.remove()) : null;
+                                title && post.title ? title.textContent = post.title : null;
+                                description && post.description ? description.textContent = post.description : null;
+                                if (picture && post.image) {
+                                    picture.dataset.src = post.image.startsWith('blob:') ? 'raw/posts/' + post.slug + '/image.jpeg' : null;
+                                    picture.src = post.image.startsWith('blob:') ? await github.raw.blob({
+                                        owner: user.login,
+                                        resource: 'raw/posts/' + post.slug + '/image.jpeg',
+                                        repo: window.parent.GET[1]
+                                    }, {
+                                        accept: "application/vnd.github.raw"
+                                    }) : null;
+                                }
+                            }
 
                             html += elem.outerHTML;
 
@@ -343,7 +356,7 @@ window.mvc.v ? null : (window.mvc.v = view = function(route) {
                     do {
                         var feed = feeds[i];
                         feed.innerHTML = "";
-                        var html = await model.feed.media(feed);
+                        var html = await model.feed.media(feed, feed.getAttribute('media'));
                         0 < 2 ? console.log(91, {
                             html
                         }) : null;

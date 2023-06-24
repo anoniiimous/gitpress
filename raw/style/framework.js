@@ -2142,7 +2142,7 @@ window.tool.function.media = async function(focus, declaration) {
         var property = declaration.property;
         var value = declaration.value;
         var win = focus.ownerWindow();
-        var html = await win.model.feed.media(feed);
+        var html = await win.model.feed.media(feed, declaration.value);
         console.log(1421, focus, feed);
         feed.innerHTML = html;
     } else {
