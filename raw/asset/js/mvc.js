@@ -419,14 +419,14 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                 title && post.title ? title.textContent = post.title : null;
                                 description && post.description ? description.textContent = post.description : null;
                                 if (picture && post.image) {
-                                    picture.dataset.src = post.image.startsWith('blob:') ? 'raw/posts/' + post.slug + '/image.jpeg' : null;
-                                    picture.src = post.image.startsWith('blob:') ? await github.raw.blob({
+                                    picture.dataset.src = post.image[0].startsWith('blob:') ? 'raw/posts/' + post.slug + '/image.jpeg' : null;
+                                    picture.src = post.image[0].startsWith('blob:') ? await github.raw.blob({
                                         owner: user.login,
                                         resource: '/raw/media/photo/' + post.slug + '/image.jpg',
                                         repo: window.parent.GET[1]
                                     }, {
                                         accept: "application/vnd.github.raw"
-                                    }) : null;
+                                    }) : post.image[0];
                                 } else {
                                     picture.dataset.src = picture.src = await github.raw.blob({
                                         owner: user.login,
