@@ -146,7 +146,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                         }, {
                             accept: "application/vnd.github.raw"
                         });
-                        0 > 1 ? console.log(890, {
+                        0 < 1 ? console.log(890, {
                             posts,
                             template
                         }) : null;
@@ -159,7 +159,9 @@ window.mvc.m ? null : (window.mvc.m = model = {
                         }
                     }
 
-                    var ancestors = posts.filter(row=>rout.ed.dir(row.slug).length === 1);
+                    //var ancestors = posts.filter(row=>rout.ed.dir(row.slug).length === 1);
+                    var ancestors = posts.filter(row=>rout.ed.dir(row.slug).length === 1).sort((a,b)=>b.created - a.created);//.filter(o=>o.pricing ? o.pricing : null)
+                    console.log(164, ancestors);
 
                     if (ancestors.length > 0) {
 
@@ -175,6 +177,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                             }) : null;
                             var elem = 0 < 1 ? template.children[p].cloneNode(true) : template.firstElementChild.cloneNode(true);
                             0 > 1 ? console.log(132, {
+                                ancestors,
                                 post,
                                 elem
                             }) : null;
@@ -186,7 +189,7 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                     return dir.length > 1 && dir[0] === post.slug
                                 });
 
-                                0 > 1 ? console.log(57, {
+                                0 < 1 ? console.log(57, {
                                     post,
                                     descendants,
                                     posts
@@ -201,7 +204,8 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                 var image = picture.find('img');
                                 0 < 1 ? console.log(94, {
                                     elem,
-                                    image
+                                    image,
+                                    post
                                 }) : null;
                                 if (win.self !== win.top && image) {
                                     var obj = {
@@ -226,17 +230,30 @@ window.mvc.m ? null : (window.mvc.m = model = {
                                 elem.dataset.display = "flex";
                                 elem.dataset.href = "/shop/merch/" + post.slug;
 
-                                var date = elem.find('[placeholder="Date"]');
+                                var date = elem.find('[data-value="post.date"], [placeholder="Date"]');
                                 date && post.date ? date.textContent = post.date : null;
 
-                                var title = elem.find('[placeholder="Title"]');
-                                title && post.title ? title.textContent = post.title : null
+                                var title = elem.find('[data-value="post.title"], [placeholder="Title"]');
+                                title && post.title ? title.textContent = post.title : null;
 
-                                var description = elem.find('[placeholder="Description"]');
+                                var description = elem.find('[data-value="post.description"], [placeholder="Description"]');
                                 description && post.description ? description.textContent = post.description : null;
 
-                                var pricing = elem.find('[placeholder="$0.00"]');
-                                if (pricing && post.pricing) {}
+                                var pricing = elem.find('[data-value="post.pricing"]');
+                                function th(row) {
+                                    return rout.ed.dir(row.slug)[0] === rout.ed.dir(post.slug)[0]
+                                };
+                                var prices = posts.filter(th)
+                                console.log(75, {prices, title});
+                                if (prices.length > 1) {
+                                    console.log(250, title, post.slug, {pricing, prices});
+                                    var ListPrice = "299.99";
+                                    var SalePrice = "399.99";
+                                    pricing.textContent = '$' + ListPrice + (SalePrice ? ' - $' + SalePrice : '');
+                                } else {
+                                    console.log(256, title, post.slug, {pricing, prices});
+                                    pricing.textContent = '$' + ListPrice;
+                                }
 
                                 html += elem.outerHTML;
 
