@@ -1,0 +1,52 @@
+<block class="align-items-center height-100pct justify-content-center width-100pct">
+    <picture data-tap="modal.exit(event.target)"></picture>
+    <flex style="margin: 60px 30px auto auto">
+        <card class="background-color-fff border-radius-10px display-inline-flex flex-direction-column margin-auto overflow-hidden" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-element="main">
+            <column class="gap-10px overflow-x-hidden padding-20px">
+                <box class="gap-20px">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Elements</text>
+                    </header>
+                    <column class="gap-10px" css-columns="1" data-tap="tool.box.element(event.target)">
+                        <text class="align-items-center display-flex gap-5px" data-value="text">
+                            <ico css-height="30px" css-width="30px">
+                                <n class="gg-text"></n>
+                            </ico>
+                            <span>Text</span>
+                        </text>
+                        <text class="align-items-center display-flex gap-5px" data-value="picture">
+                            <ico css-height="30px" css-width="30px">
+                                <n class="gg-image"></n>
+                            </ico>
+                            <span>Photo</span>
+                        </text>
+                        <text class="align-items-center display-flex gap-5px" data-value="clip">
+                            <ico css-height="30px" css-width="30px">
+                                <n class="gg-film"></n>
+                            </ico>
+                            <span>Video</span>
+                        </text>
+                        <text class="align-items-center display-flex gap-5px" data-value="sound">
+                            <ico css-height="30px" css-width="30px">
+                                <n class="gg-music"></n>
+                            </ico>
+                            <span>Sound</span>
+                        </text>
+                        <text class="align-items-center display-flex gap-5px" data-value="line">
+                            <ico css-height="30px" css-width="30px">
+                                <n class="gg-line"></n>
+                            </ico>
+                            <span>Line</span>
+                        </text>
+                        <text class="align-items-center display-flex gap-5px" data-value="embedded">
+                            <ico css-height="30px" css-width="30px">
+                                <n class="gg-code-slash"></n>
+                            </ico>
+                            <span>Embed</span>
+                        </text>
+                    </column>
+                </box>
+            </column>
+        </card>
+    </flex>
+</block>

@@ -751,7 +751,8 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                         focus
                     });
 
-                    var html = await ajax('raw/asset/html/template/template.toolbox.create.html');
+                    //var html = await ajax('raw/asset/html/template/template.toolbox.create.html');
+                    var html = await ajax('raw/asset/html/template/template.toolbar.cells.html');
                     var ppp = await modal.popup(html);
 
                     var focused = $(doc.body.all('[focus]'));

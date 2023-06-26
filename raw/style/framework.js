@@ -1932,7 +1932,7 @@ async function toolbelt(mode, options) {
 
         if (mode === "tip") {
             tools.setAttribute('css-height', '50px');
-            tools.setAttribute('css-width', '50px');
+            //tools.setAttribute('css-width', '50px');
             //$(tool.all('[tabindex]')).addClass('display-none');
             //toolset.classList.remove('display-none');
         }
@@ -1941,7 +1941,7 @@ async function toolbelt(mode, options) {
 
             tools.setAttribute('css-height', 'auto');
             tools.setAttribute('css-min-height', '50px');
-            tools.setAttribute('css-width', '320px');
+            //tools.setAttribute('css-width', '320px');
 
             if (options && options.element) {
 
@@ -2017,7 +2017,7 @@ async function toolbelt(mode, options) {
         if (mode === "bar") {
 
             tools.setAttribute('css-height', '50px');
-            tools.setAttribute('css-width', '150px');
+            //tools.setAttribute('css-width', '150px');
 
             if (options && options.element) {
                 var node = options.element;
