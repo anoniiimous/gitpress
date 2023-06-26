@@ -755,7 +755,7 @@ window.tool.box.css = function(tab) {
                 var container = focus.find('flex, column, row, section');
                 var tagName = container.tagName.toLowerCase();
                 console.log(757, tagName, ["column", "flex", "row"].includes(tagName));
-                if(["column", "flex", "row"].includes(tagName)) {
+                if (["column", "flex", "row"].includes(tagName)) {
                     c1 = c1.concat('display-flex')
                     console.log(759, tagName, c1);
                 }
@@ -778,9 +778,9 @@ window.tool.box.css = function(tab) {
 
                 var background = focus.find(focus.nodeName.toLowerCase() + ' > picture');
                 var image = background.find('img');
-                if(image.src) {
+                if (image.src) {
                     var c4 = ['background-image'];
-                    a3['background-image'] = focus.find(focus.nodeName.toLowerCase() + ' > picture img').src;                    
+                    a3['background-image'] = focus.find(focus.nodeName.toLowerCase() + ' > picture img').src;
                 }
 
                 a3.class = c3.join(' ');
@@ -1214,7 +1214,8 @@ window.tool.box.value = async function(event) {
     }
     if (declaration === "number") {
         var formula = target.dataset.formula ? target.dataset.formula : null;
-        value = formula ? formula.replace('{var}', target.value) :  target.value.replace('%', '%'); //target.value.replace('%', 'pct');
+        value = formula ? formula.replace('{var}', target.value) : target.value.replace('%', '%');
+        //target.value.replace('%', 'pct');
     }
     if (declaration === "radio") {
         value = target.checked ? target.name : null;
@@ -1382,7 +1383,8 @@ window.tool.box.style = async function(focus, declaration, options) {
             });
         });
     }
-    var value = v = formula ? v : declaration.value.replace('%', '%'); //replace('%', 'pct');
+    var value = v = formula ? v : declaration.value.replace('%', '%');
+    //replace('%', 'pct');
     0 > 1 ? console.log(785, {
         focus,
         declaration,
@@ -1422,72 +1424,72 @@ window.tool.box.style = async function(focus, declaration, options) {
 
     //INLINE STYLE
     //if (is.alphaNumeric(value)) {
-        var dttribute = options ? options.dttribute : null;
-        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', '%')].join('-');
-        0 > 1 ? console.log(520, {
-            focus,
-            attribute,
-            value
-        }) : null;
-        //focus.style[attribute] = value;
+    var dttribute = options ? options.dttribute : null;
+    var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', '%')].join('-');
+    0 > 1 ? console.log(520, {
+        focus,
+        attribute,
+        value
+    }) : null;
+    //focus.style[attribute] = value;
     //} else {
-        //DATASET
-        attribute = attribute.camelPhenate();
-        var dttribute = options ? options.dttribute : null;
-        var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', '%')].join('-');
-        var obj = {};
-        obj[className] = {
-            className,
-            pseudo,
-            rule,
-            attribute,
-            value
-        };
-        0 < 1 ? console.log(472, {
-            focus,
-            options,
-            formula
-        }, {
-            attribute,
-            dttribute,
-            value
-        }, obj) : null;
-        if (formula || dttribute) {
-            focus.setAttribute((dttribute ? dttribute + '-' : 'css-') + declaration.attribute, declaration.value);
-        } else {
-            //INLINE CLASS
-            //else {
-            var classExists = false;
-            var classList = focus.classList;
-            classList.forEach(function(classVal) {
-                var cns1 = classVal.split('-');
-                var val1 = cns1.pop();
-                var cn1 = cns1.join('-')
+    //DATASET
+    attribute = attribute.camelPhenate();
+    var dttribute = options ? options.dttribute : null;
+    var className = [declaration.attribute.replace('#', ''), declaration.value.replace('#', '').replace('%', '%')].join('-');
+    var obj = {};
+    obj[className] = {
+        className,
+        pseudo,
+        rule,
+        attribute,
+        value
+    };
+    0 < 1 ? console.log(472, {
+        focus,
+        options,
+        formula
+    }, {
+        attribute,
+        dttribute,
+        value
+    }, obj) : null;
+    if (formula || dttribute) {
+        focus.setAttribute((dttribute ? dttribute + '-' : 'css-') + declaration.attribute, declaration.value);
+    } else {
+        //INLINE CLASS
+        //else {
+        var classExists = false;
+        var classList = focus.classList;
+        classList.forEach(function(classVal) {
+            var cns1 = classVal.split('-');
+            var val1 = cns1.pop();
+            var cn1 = cns1.join('-')
 
-                var cns = className.split('-');
-                var val = cns.pop();
-                var cn = cns.join('-')
-                if (cn1 == cn) {
-                    classExists = true;
-                }
-                0 > 1 ? console.log(557, className, cn, cn1) : null;
-                if (classExists) {
-                    focus.classList.remove(classVal);
-                }
-            });
-            //focus.classList.add(className);
-            //}
-        }
+            var cns = className.split('-');
+            var val = cns.pop();
+            var cn = cns.join('-')
+            if (cn1 == cn) {
+                classExists = true;
+            }
+            0 > 1 ? console.log(557, className, cn, cn1) : null;
+            if (classExists) {
+                focus.classList.remove(classVal);
+            }
+        });
+        //focus.classList.add(className);
+        //}
+    }
 
-        var rules = null;
-        //formula || dttribute === 'css' ? 'css' : 'class';
-        var property = attr;
+    var rules = null;
+    //formula || dttribute === 'css' ? 'css' : 'class';
+    var property = attr;
 
-        0 < 1 ? console.log(702, {
-            type,
-            value,
-            styleExists
-        }) : null;
+    0 < 1 ? console.log(702, {
+        type,
+        value,
+        styleExists
+    }) : null;
     //}
     var type = is.alphaNumeric(value) ? 'class' : 'css';
     var decs = [{
@@ -1506,11 +1508,11 @@ window.tool.box.style = async function(focus, declaration, options) {
             an: is.alphaNumeric(value)
         });
         if (is.alphaNumeric(value)) {
-            if(focus.getAttribute('css-' + property)) {
-                focus.removeAttribute('css-' + property);                
+            if (focus.getAttribute('css-' + property)) {
+                focus.removeAttribute('css-' + property);
             }
-            if(value === 'unset') {
-                focus.classList.remove(className);                
+            if (value === 'unset') {
+                focus.classList.remove(className);
             } else {
                 focus.classList.add(className);
             }
@@ -1931,7 +1933,7 @@ async function toolbelt(mode, options) {
         tools.find('[data-mode="' + mode + '"]').removeAttribute('css-display');
 
         if (mode === "tip") {
-            tools.setAttribute('css-height', '50px');
+            //tools.setAttribute('css-height', '50px');
             //tools.setAttribute('css-width', '50px');
             //$(tool.all('[tabindex]')).addClass('display-none');
             //toolset.classList.remove('display-none');
@@ -2016,7 +2018,7 @@ async function toolbelt(mode, options) {
 
         if (mode === "bar") {
 
-            tools.setAttribute('css-height', '50px');
+            //tools.setAttribute('css-height', '50px');
             //tools.setAttribute('css-width', '150px');
 
             if (options && options.element) {
@@ -2077,6 +2079,44 @@ async function toolbelt(mode, options) {
                 ppp,
                 cards
             });
+        }
+
+        if (mode === "set") {
+
+            console.log(2084, 'toolbelt.set', {
+                toolset,
+                toolbox,
+                toolbar
+            }, {
+                html,
+                ppp,
+                cards
+            }, {
+                mode,
+                options
+            });
+
+            if (options) {
+                var cell = options.cell;
+                if (cell) {
+                    var cellName = cell.tagName.toLowerCase();
+                    var toolMode = tools.find('[data-mode="' + mode + '"]');
+                    var toolCell = toolMode.find('[data-value="cell.' + cellName + '"]');
+                    console.log(2105, 'tool.cell', {
+                        cellName,
+                        toolMode,
+                        toolCell
+                    }, $(toolCell.parentNode.children).indexOf(toolCell));
+                    if(toolCell) {
+                        var cells = $(toolCell.parentNode.children).attr('css-display', 'none');
+                        toolCell.setAttribute('css-display', 'flex');
+                        var cellSet = toolCell.parentNode.previousElementSibling;
+                        $(cellSet.all('line')).addClass('display-none');
+                        var cellTab = cellSet.children[$(toolCell.parentNode.children).indexOf(toolCell)];
+                        cellTab.find('line').classList.remove('display-none');
+                    }
+                }
+            }
         }
 
     }

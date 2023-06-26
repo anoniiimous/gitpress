@@ -147,7 +147,7 @@ framework.on = async function(event) {
             var toolbar = tool.find('[tabindex="3"]');
             var elements = ["clip", "text", "picture", "video", "audio", "line", "embed", "embedded", "sound"];
             var nodeName = node.tagName.toLowerCase();
-            0 > 1 ? console.log({
+            0 < 1 ? console.log(150, {
                 el,
                 sel,
                 selected,
@@ -192,7 +192,7 @@ framework.on = async function(event) {
                         //FOCUS
                         $([dom.body]).attr('focus', el);
                         $([elem, elem.closest('block, footer, header')]).attr('focus', el);
-                        if(['block', 'card', 'box'].includes(el)) {
+                        if (['block', 'card', 'box'].includes(el)) {
                             var blur = `
                                 <blur class="bottom-0 display-flex height-100pct left-0 position-absolute right-0 top-0 width-100pct">
                                     <div class="height-100vh position-absolute top-100pct width-100vw" css-background-color="rgba(0,0,0,0.5)"></div>
@@ -203,7 +203,6 @@ framework.on = async function(event) {
                             `;
                             //dom.body.insertAdjacentHTML('beforeend', blur);
                         }
-                        
 
                         if (focused === "true") {} else {
                             if (tagName === "box") {
@@ -267,10 +266,32 @@ framework.on = async function(event) {
                     }) : null;
 
                     if (el === "box") {
-                        if (media) {
+                        var cell = target.closest(el + ' > * > *');
+                        if (cell) {
+                            var cellName = cell.tagName.toLowerCase();
+                            console.log(269, {
+                                cell,
+                                cellName
+                            });
+                            0 < 1 ? window.top.toolbelt('set', {
+                                cell
+                            }) : null;
+                        } else {
+                            console.log(285, {
+                                target,
+                                el,
+                                sel,
+                                selected,
+                                focusing,
+                                mode,
+                                buildable,
+                                insertable
+                            });
+                        }
+                        if (0 > 1 && media) {
                             var id = selected.dataset.id;
                             if (id) {
-                                0  > 1 ? window.top.toolbelt('bar', {
+                                0 > 1 ? window.top.toolbelt('bar', {
                                     element: node
                                 }) : null;
                                 console.log(id);
@@ -281,20 +302,29 @@ framework.on = async function(event) {
                                 var json = is.json(media) ? JSON.parse(media) : false;
                                 if (json) {
                                     console.log('mixed', media);
-                                    window.top.toolbelt('set');
+                                    //window.top.toolbelt('set');
                                 } else {
-                                    window.top.toolbelt('set');
-                                    var confirm = await window.top.modal.confirm({
+                                    //window.top.toolbelt('set');
+                                    var confirm = 0 > 1 ? await window.top.modal.confirm({
                                         body: "Do you want to save your changes before creating a new item?",
                                         title: "Unsaved Changes"
-                                    }, ["No", "Yes"]);
-                                    if (confirm) {
+                                    }, ["No", "Yes"]) : null;
+                                    if (0 > 1 && confirm) {
                                         '/dashboard/:get/merch/catalog'.router();
                                     }
                                 }
+                                window.top.toolbelt('set', {
+                                    el,
+                                    sel,
+                                    selected,
+                                    focusing,
+                                    mode,
+                                    buildable,
+                                    insertable
+                                });
                                 console.log(media, json);
                             }
-                        } else {
+                        } else if (0 > 1) {
                             console.log({
                                 node
                             })
@@ -304,7 +334,15 @@ framework.on = async function(event) {
                                         element: node
                                     });
                                 } else {
-                                    window.top.toolbelt('set');
+                                    window.top.toolbelt('set', {
+                                        el,
+                                        sel,
+                                        selected,
+                                        focusing,
+                                        mode,
+                                        buildable,
+                                        insertable
+                                    });
                                 }
                             } else {
                                 window.top.toolbelt('set');

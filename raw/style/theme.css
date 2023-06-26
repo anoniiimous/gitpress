@@ -66,7 +66,7 @@
 
 /*BACKGROUND COLOR*/
 @media screen {
-    .background-color-000 {
+    .background-color-000, [css-background-color="#000"] {
         background-color: #000;
     }
 
@@ -605,8 +605,12 @@
 
 /*BOTTOM*/
 @media screen {
-    .bottom-0 {
+    .bottom-0, [css-bottom="0"] {
         bottom: 0;
+    }
+
+    [css-bottom="-5px"] {
+        bottom: -5px;
     }
 
     [css-bottom="-8px"] {
@@ -1845,6 +1849,10 @@
         margin-top: 1px;
     }
 
+    .margin-top-5px {
+        margin-top: 5px;
+    }
+
     .margin-top-20px {
         margin-top: 20px;
     }
@@ -2207,6 +2215,10 @@
         min-height: 120px;
     }
 
+    .min-height-240px {
+        min-height: 240px;
+    }
+
     .min-height-270px {
         min-height: 270px;
     }
@@ -2414,6 +2426,14 @@
 
     .padding-top-100pct {
         padding-top: 100%;
+    }
+
+    .padding-top-5px {
+        padding-top: 5px;
+    }
+
+    .padding-top-10px {
+        padding-top: 10px;
     }
 
     .padding-top-20px {

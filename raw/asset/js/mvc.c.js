@@ -747,16 +747,17 @@ window.mvc.c ? null : (window.mvc.c = controller = {
                 }
 
                 if (focus === "box") {
-                    console.log({
-                        focus
+                    console.log(750, 'focus.box', {
+                        focus,
                     });
+                    window.top.toolbelt('set');
 
                     //var html = await ajax('raw/asset/html/template/template.toolbox.create.html');
-                    var html = await ajax('raw/asset/html/template/template.toolbar.cells.html');
-                    var ppp = await modal.popup(html);
+                    //var html = await ajax('raw/asset/html/template/template.toolbar.cells.html');
+                    //var ppp = await modal.popup(html);
 
-                    var focused = $(doc.body.all('[focus]'));
-                    ppp.focus = focused[focused.length - 1];
+                    //var focused = $(doc.body.all('[focus]'));
+                    //ppp.focus = focused[focused.length - 1];
                 }
 
             } else {

@@ -85,7 +85,7 @@
 </header>
 <block class="flex-1 position-relative">
     <iframe class="background-color-fff height-100pct width-100pct" id="iframe-editor"></iframe>
-    <tool class="bottom-20px left-20px margin-auto right-auto position-absolute" css-height="50px" data-page="/dashboard/*/build/er">
+    <tool class="bottom-20px left-20px margin-auto right-auto position-absolute" data-page="/dashboard/*/build/er">
         <card class="background-color-ffffff border-radius-50px" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" data-mode="tip">
             <row>
                 <ico data-tap="controller.builder.create(event.target)" css-transition="0.3s">
@@ -105,24 +105,17 @@
                     <n class="gg-trash"></n>
                 </ico>
             </row>
-            <row css-display="none" css-width="300px">
-                <ico css-height="50px" css-width="50px">
-                    <n class="gg-text"></n>
+        </card>
+        <card class="background-color-ffffff border-radius-50px" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" css-display="none" data-mode="belt">
+            <row css-width="150px">
+                <ico data-tap="controller.builder.update(event.target)">
+                    <n class="gg-pen"></n>
                 </ico>
-                <ico css-height="50px" css-width="50px">
-                    <n class="gg-image"></n>
+                <ico data-tap="controller.builder.create(event.target)" css-transition="0.3s">
+                    <n class="gg-add"></n>
                 </ico>
-                <ico css-height="50px" css-width="50px">
-                    <n class="gg-film"></n>
-                </ico>
-                <ico css-height="50px" css-width="50px">
-                    <n class="gg-music"></n>
-                </ico>
-                <ico css-height="50px" css-width="50px">
-                    <n class="gg-line"></n>
-                </ico>
-                <ico css-height="50px" css-width="50px">
-                    <n class="gg-code-slash"></n>
+                <ico data-tap="controller.builder.delete(event.target)">
+                    <n class="gg-trash"></n>
                 </ico>
             </row>
         </card>
@@ -130,6 +123,96 @@
             <row>
                 <box css-height="320px" css-width="320px"></box>
             </row>
+        </card>
+        <card class="background-color-ffffff border-radius-10px" css-box-shadow="0 1px 6px rgb(32 33 36 / 28%)" css-display="none" data-mode="set">
+            <row css-width="300px">
+                <box css-height="50px" css-width="50px">
+                    <column class="align-items-center flex-1 justify-content-center">
+                        <ico css-height="30px" css-width="30px">
+                            <n class="gg-text"></n>
+                        </ico>
+                    </column>
+                    <line class="display-none position-absolute" css-background-color="#000" css-bottom="-5px" css-height="5px" css-width="100%"></line>
+                </box>
+                <box css-height="50px" css-width="50px">
+                    <column class="align-items-center flex-1 justify-content-center">
+                        <ico css-height="30px" css-width="30px">
+                            <n class="gg-image"></n>
+                        </ico>
+                    </column>
+                    <line class="display-none position-absolute" css-background-color="#000" css-bottom="-5px" css-height="5px" css-width="100%"></line>
+                </box>
+                <box css-height="50px" css-width="50px">
+                    <column class="align-items-center flex-1 justify-content-center">
+                        <ico css-height="30px" css-width="30px">
+                            <n class="gg-film"></n>
+                        </ico>
+                    </column>
+                    <line class="display-none position-absolute" css-background-color="#000" css-bottom="-5px" css-height="5px" css-width="100%"></line>
+                </box>
+                <box css-height="50px" css-width="50px">
+                    <column class="align-items-center flex-1 justify-content-center">
+                        <ico css-height="30px" css-width="30px">
+                            <n class="gg-music"></n>
+                        </ico>
+                    </column>
+                    <line class="display-none position-absolute" css-background-color="#000" css-bottom="-5px" css-height="5px" css-width="100%"></line>
+                </box>
+                <box css-height="50px" css-width="50px">
+                    <column class="align-items-center flex-1 justify-content-center">
+                        <ico css-height="30px" css-width="30px">
+                            <n class="gg-line"></n>
+                        </ico>
+                    </column>
+                    <line class="display-none position-absolute" css-background-color="#000" css-bottom="-5px" css-height="5px" css-width="100%"></line>
+                </box>
+                <box css-height="50px" css-width="50px">
+                    <column class="align-items-center flex-1 justify-content-center">
+                        <ico css-height="30px" css-width="30px">
+                            <n class="gg-code-slash"></n>
+                        </ico>
+                    </column>
+                    <line class="display-none position-absolute" css-background-color="#000" css-bottom="-5px" css-height="5px" css-width="100%"></line>
+                </box>
+            </row>
+            <flex class="margin-top-5px padding-bottom-20px padding-top-10px padding-x-20px">
+                <box class="min-height-120px" css-display="none" data-value="cell.text">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Text</text>
+                    </header>
+                    <column></column>
+                </box>
+                <box class="min-height-120px" css-display="none" data-value="cell.picture">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Picture</text>
+                    </header>
+                    <column></column>
+                </box>
+                <box class="min-height-120px" css-display="none" data-value="cell.video">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Video</text>
+                    </header>
+                    <column></column>
+                </box>
+                <box class="min-height-120px" css-display="none" data-value="cell.audio">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Audio</text>
+                    </header>
+                    <column></column>
+                </box>
+                <box class="min-height-120px" css-display="none" data-value="cell.line">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Line</text>
+                    </header>
+                    <column></column>
+                </box>
+                <box class="min-height-120px" css-display="none" data-value="cell.embed">
+                    <header>
+                        <text class="font-weight-bolder line-height-30px">Embed</text>
+                    </header>
+                    <column></column>
+                </box>
+            </flex>
         </card>
     </tool>
     <template id="focus-element">
