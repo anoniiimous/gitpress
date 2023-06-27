@@ -400,14 +400,14 @@ window.mvc.m ? null : (window.mvc.m = model = {
 
                             var post = posts[p];
                             var elem = 0 > 1 ? feed.children[p] : feed.nextElementSibling.content.firstElementChild.cloneNode(true);
-                            console.log(205, elem, feed);
+                            //console.log(205, elem, feed);
 
                             var date = elem.find('[data-value="post.date"]') || elem.find('[placeholder="Date"]');
                             var title = elem.find('[data-value="post.title"]') || elem.find('[placeholder="Title"]');
                             var description = elem.find('[data-value="post.description"]') || elem.find('[data-value="post.description"]');
                             var picture = elem.find('[data-value="post.image"]') || elem.find('picture img');
 
-                            0 < 1 ? console.log(57, {
+                            0 > 1 ? console.log(57, {
                                 title,
                                 post,
                                 picture

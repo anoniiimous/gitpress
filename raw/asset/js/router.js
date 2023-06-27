@@ -479,7 +479,10 @@ async function viewPage(vp) {
             console.log("router.js 33", path, vp, vp.dataset.fetch);
         }
         const fetching2 = vp.all('[data-fetch]');
-        //console.log(fetching2);
+        console.log(482, {
+            vp,
+            fetching2
+        });
         if (fetching2.length > 0) {
             var ff = 0;
             do {
