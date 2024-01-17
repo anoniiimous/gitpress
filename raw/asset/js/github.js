@@ -52,7 +52,7 @@ window.github = {
         config: {
             client_id: 0 > 1 ? "Iv1.cbe275c17b8db02d" : "d100ccbc44112f0d5a92",
             redirect_uri: window.location.protocol + "//" + window.location.host,// + "/dashboard/",
-            scope: "delete_repo,user,public_repo,repo"
+            scope: "delete_repo,gist,user,public_repo,repo"
         },
         login: (target)=>{
             var client_id = github.oauth.client_id[location.host];
@@ -238,8 +238,7 @@ window.github = {
                                 settings
                             });
                             ajax(url, settings).then(a).catch(b);
-                        }
-                        );
+                        });
                     }
                 }
             } else {

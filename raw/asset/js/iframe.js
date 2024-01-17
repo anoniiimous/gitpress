@@ -128,9 +128,9 @@ framework.on = async function(event) {
             var buildable = dom.body.getAttribute('buildable') === "true";
             var insertable = dom.body.getAttribute('insertable') === "true";
             var elem = target.closest('box, card, block, body > header, body > footer');
-            var focused = elem.getAttribute('focus');
-            var tagName = elem.tagName.toLowerCase();
-            var el = ["block", "card", "footer", "header"].includes(tagName) ? tagName : 'box';
+            var focused = elem && elem.getAttribute('focus');
+            var tagName = elem && elem.tagName.toLowerCase();
+            var el = elem && ["block", "card", "footer", "header"].includes(tagName) ? tagName : 'box';
             var element = dom.body.getAttribute('focus');
             var sel = element ? ':not(body)[focus="' + element + '"] ' + element + '' : null;
             var selected = sel ? event.target.closest(sel) : null;
@@ -146,7 +146,7 @@ framework.on = async function(event) {
             var toolbox = tool.find('[tabindex="2"]');
             var toolbar = tool.find('[tabindex="3"]');
             var elements = ["clip", "text", "picture", "video", "audio", "line", "embed", "embedded", "sound"];
-            var nodeName = node.tagName.toLowerCase();
+            var nodeName = node && node.tagName.toLowerCase();
             0 < 1 ? console.log(150, {
                 el,
                 sel,
